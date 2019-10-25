@@ -1,0 +1,76 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/bundles/jquery")
+<script src="~/Scripts/app/searchdatatable.js"></script>
+<div class="row" id="underwriterSetupAddEdit"></div>
+<div class="row" id="underwriterSetupList"></div>
+<script>
+
+    var PkiUnderWriterSetupId = '@ViewBag.PkiUnderWriterSetupId';
+     var hasRight = '@ViewBag.HasAccess';
+    jQuery(function ($) {
+        $(document).ready(function () {
+            @*if (hasRight == 'False') {
+                var url = '@Url.Action("Error403", "Error", new { Area = "Admin" })';
+                window.location.href = url;
+            }
+            else {*@
+                LoadUnderwriterSetupList();
+                LoadUnderwriterSetupAddEdit();
+                DOMIDs.List = "underwriterSetupList";
+                DOMIDs.AddEdit = "underwriterSetupAddEdit";
+            //}
+        });
+    })
+
+    function LoadUnderwriterSetupList() {
+        jQuery.ajax({
+            url: '@Url.Action("List", "UnderwriterSetup", new { area = "Tools" },Request.Url.Scheme)',
+            type: "Get",
+            contentType: "application/html; charset=utf-8",
+            dataType: 'html'
+        })
+        .success(function (result) {
+            jQuery("#" + DOMIDs.List).html(result);
+        })
+        .error(function (xhr, status) {
+            alert(status);
+        });
+    }
+
+    function LoadUnderwriterSetupAddEdit() {
+
+            var model = {
+                PkiUnderWriterSetupId: 0,
+                UnderwriterName: '',
+                ContactPerson: '',
+                AddressLine1: '',
+                AddressLine2: '',
+                City: '',
+                Province: '',
+                PostalCode: '',
+                Country: '',
+                ContactNumber: '',
+                ContactEmail: '',
+                FSPNNumber: '',
+                Parlourid: '',
+            };
+
+            jQuery.ajax({
+                url: '@Url.Action("Add", "UnderwriterSetup", new { area = "Tools" },Request.Url.Scheme)',
+                type: "Get",
+                data: JSON.stringify(model),
+                contentType: "application/html; charset=utf-8",
+                dataType: 'html'
+            })
+            .success(function (result) {
+                jQuery("#" + DOMIDs.AddEdit).html(result);
+            })
+            .error(function (xhr, status) {
+                alert(status);
+            });
+        }
+</script>

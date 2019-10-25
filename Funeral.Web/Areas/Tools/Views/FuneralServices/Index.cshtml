@@ -1,0 +1,68 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/bundles/jquery")
+
+<script src="~/Scripts/app/searchdatatable.js"></script>
+<div class="row" id="FuneralServicesaddedit"></div>
+<div class="row" id="FuneralServiceslist"></div>
+
+<script>
+	var FuneralServicesId = '@ViewBag.FuneralServicesId';
+    var hasRight = '@ViewBag.HasAccess';
+
+	jQuery(function (jQuery) {
+        jQuery(document).ready(function () {
+            @*if (hasRight == 'False') {
+                var url = '@Url.Action("Error403", "Error", new { Area = "Admin" })';
+                window.location.href = url;
+            }
+            else {*@
+                jQuery.noConflict();
+                LoadFuneralServicesList();
+                LoadFuneralServicesAddEdit();
+                DOMIDs.AddEdit = "FuneralServicesaddedit";
+                DOMIDs.List = "FuneralServiceslist";
+            //}
+        });
+	});
+
+
+	function LoadFuneralServicesList() {
+
+        jQuery.ajax({
+            url: '@Url.Action("List", "FuneralServices", new {},Request.Url.Scheme)',
+            type: "Get",
+            contentType: "application/html; charset=utf-8",
+            dataType: 'html'
+        })
+			.success(function (result) {
+            jQuery("#" + DOMIDs.List).html(result);
+        })
+        .error(function (xhr, status) {
+            alert(status);
+        });
+	}
+
+
+	function LoadFuneralServicesAddEdit() {
+		var model = {};
+
+            jQuery.ajax({
+                url: '@Url.Action("Add", "FuneralServices", new {},Request.Url.Scheme)',
+                type: "Post",
+                data: JSON.stringify(model),
+                contentType: "application/html; charset=utf-8",
+                dataType: 'html'
+            })
+            .success(function (result) {
+                jQuery("#" + DOMIDs.AddEdit).html(result);
+            })
+            .error(function (xhr, status) {
+                alert(status);
+            });
+	}
+
+</script>

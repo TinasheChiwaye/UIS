@@ -1,0 +1,136 @@
+﻿@model Funeral.Model.QuotationModel
+@Scripts.Render("~/bundles/jqueryval")
+@{
+    List<SelectListItem> ddlMethod = new List<SelectListItem>()
+{
+new SelectListItem() { Text = "Mr", Value = "Mr" },
+new SelectListItem() { Text = "Dr", Value = "Dr" },
+new SelectListItem() { Text = "Miss", Value = "Miss" },
+new SelectListItem() { Text = "Mrs", Value = "Mrs" },
+new SelectListItem() { Text = "Prof", Value = "Prof" }
+};
+}
+
+@using (Html.BeginForm("Save", "Quotation", FormMethod.Post, new { id = "quotationAddEditForm" }))
+{
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+
+                <h5>Quotations Contact Info</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="dropdown-toggle">
+                        <i class="fa fa-wrench"></i>
+                    </a>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content" id="ibox-contenet">
+                @Html.HiddenFor(m => m.QuotationID)
+                @Html.HiddenFor(m => m.parlourid)
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Title</label>
+                            @Html.DropDownListFor(m => m.ContactTitle, ddlMethod, "Select an option", new { Name = "ContactTitle", @class = "form-control  " })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Last Name", new { @class = "control-label" })
+                            <strong><span class="text-danger"><em>*</em></span></strong>
+                            @Html.TextBoxFor(m => m.ContactLastName, null, new { @class = "form-control", @maxlength = "25", placeholder = "Last Name" })
+                            @Html.ValidationMessageFor(m => m.ContactLastName, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("First Name", new { @class = "control-label" })
+                            <strong><span class="text-danger"><em>*</em></span></strong>
+                            @Html.TextBoxFor(m => m.ContactFirstName, null, new { @class = "form-control", @maxlength = "25", placeholder = "First Name" })
+                            @Html.ValidationMessageFor(m => m.ContactFirstName, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Cellphone Number", new { @class = "control-label" })
+                            <strong><span class="text-danger"><em>*</em></span></strong>
+                            @Html.TextBoxFor(m => m.CellNumber, null, new { @class = "form-control", @maxlength = "10", placeholder = "Cellphone Number" })
+                            @Html.ValidationMessageFor(m => m.CellNumber, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Telephone Number", new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.TelNumber, null, new { @class = "form-control", @maxlength = "10", placeholder = "Telephone Number" })
+                        </div>
+
+                        @if (Model.QuotationID != 0)
+                        {
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <input type="submit" name="btnService" value="Update" id="btnService" class="btn btn-md btn-primary" style="width:95%;">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <a href="@Url.Action("QuotationService", "Quotation", new { qutId = Model.QuotationID })" name="SelectServices" value="" id="SelectServices" class="aspNetDisabled btn btn-md btn-primary" style="width:95%;">Select Services</a>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-lg-6">
+                                @if (ViewBag.HasCreateRight)
+                                {
+                                    <div class="form-group">
+                                        <input type="submit" name="btnService" value="Create Quotation" id="btnService" class="btn btn-md btn-primary" style="width:95%;">
+                                    </div>
+                                }
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <input type="submit" name="SelectServices" value="Select Services" id="SelectServices" disabled="disabled" class="aspNetDisabled btn btn-md btn-primary" style="width:95%;">
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.Label("Physical Address", new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.AddressLine1, null, new { @class = "form-control", @maxlength = "50", placeholder = "Physical Address" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Street Address", new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.AddressLine2, null, new { @class = "form-control", @maxlength = "50", placeholder = "Street Address" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Town or City", new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.AddressLine3, null, new { @class = "form-control", @maxlength = "50", placeholder = "Town or City" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Province", new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.AddressLine4, null, new { @class = "form-control", @maxlength = "10", placeholder = "Province" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Code", new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.Code, null, new { @class = "form-control", @maxlength = "50", placeholder = "Code" })
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <a name="btnClear" value="Clear" onclick="ClearAllFields()" id="btnClear" class="btn btn-md btn-primary" style="width:95%;">Clear</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        eventConfigs.pageChange.action(RefreshAddEditData);
+        eventConfigs.searchClick.action(RefreshAddEditData);
+    });
+    function RefreshAddEditData(e) {
+    }
+</script>
+

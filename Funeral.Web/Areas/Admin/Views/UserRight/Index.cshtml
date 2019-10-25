@@ -1,0 +1,213 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Scripts.Render("~/bundles/jquery")
+
+@model Funeral.Model.ProgressStatus
+<style>
+    .imagwidth {
+        width: 10%;
+    }
+</style>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox ">
+            <div class="ibox-title">
+                <h5>Setup Details</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row form-group">
+                    <label id="lblRegistration" class="col-lg-2">Registration Done</label>
+                    <div class="col-lg-2">
+                        <img src="~/Admin/Images/True.png" class="imagwidth" />
+                    </div>
+                    <div class="col-lg-8"></div>
+                </div>
+                <div class="row form-group">
+                    @Html.Label("Company Setup", new { @id = "lblCompany", @class = "col-lg-2" })
+                    @if (Model.CompanyStatus)
+                    {
+                        <div class="col-lg-2">
+                            <img src="~/Admin/Images/True.png" class="imagwidth" />
+                        </div>
+                        <div class="col-lg-8"></div>
+                    }
+                    else
+                    {
+                        <div class="col-lg-2">
+                            <img src="~/Admin/Images/False.png" style="width:4%" />
+                        </div>
+                        <div class="col-lg-8"></div>
+                    }
+                </div>
+                <div class="row form-group">
+                    @Html.Label("Branch Setup", new { @id = "lblBranch", @class = "col-lg-2" })
+                    @if (Model.BranchStatus)
+                    {
+                        <div class="col-lg-2">
+                            <img src="~/Admin/Images/True.png" class="imagwidth" />
+                        </div>
+                        <div class="col-lg-8"></div>
+                    }
+                    else
+                    {
+                        <div class="col-lg-2">
+                            <img src="~/Admin/Images/False.png" style="width:4%" />
+                        </div>
+                        <div class="col-lg-8"></div>
+                    }
+                </div>
+                <div class="row form-group">
+                    @Html.Label("Users Setup", new { @id = "lblUsers", @class = "col-lg-2" })
+                    @if (Model.UserStatus)
+                    {
+                        <div class="col-lg-2">
+                            <img src="~/Admin/Images/True.png" class="imagwidth" />
+                        </div>
+                        <div class="col-lg-8"></div>
+                    }
+                    else
+                    {
+                        <div class="col-lg-2">
+                            <img src="~/Admin/Images/False.png" style="width:4%" />
+                        </div>
+                        <div class="col-lg-8"></div>
+                    }
+                </div>
+                <div class="row form-group">
+                    @Html.Label("Plans Setup", new { @id = "lblPlans", @class = "col-lg-2" })
+                    @if (Model.PlanStatus)
+                    {
+                        <div class="col-lg-2">
+                            <img src="~/Admin/Images/True.png" class="imagwidth" />
+                        </div>
+                        <div class="col-lg-8"></div>
+                    }
+                    else
+                    {
+                        <div class="col-lg-2">
+                            <img src="~/Admin/Images/False.png" style="width:4%" />
+                        </div>
+                        <div class="col-lg-8"></div>
+                    }
+                </div>
+                <div class="row form-group">
+                    @Html.Label("Underwriter Plan Setup", new { @id = "lblUnderwriterPlanSetup", @class = "col-lg-2" })
+                    @if (Model.UnderWriterStatus)
+                    {
+                        <div class="col-lg-2">
+                            <img src="~/Admin/Images/True.png" class="imagwidth" />
+                        </div>
+                        <div class="col-lg-8"></div>
+                    }
+                    else
+                    {
+                        <div class="col-lg-2">
+                            <img src="~/Admin/Images/False.png" style="width:4%" />
+                        </div>
+                        <div class="col-lg-8"></div>
+                    }
+                </div>
+                <div class="row form-group">
+                    @Html.Label("Societies Setup", new { @id = "lblSocieties", @class = "col-lg-2" })
+                    @if (Model.SocietyStatus)
+                    {
+                        <div class="col-lg-2">
+                            <img src="~/Admin/Images/True.png" class="imagwidth" />
+                        </div>
+                        <div class="col-lg-8"></div>
+                    }
+                    else
+                    {
+                        <div class="col-lg-2">
+                            <img src="~/Admin/Images/False.png" style="width:4%" />
+                        </div>
+                        <div class="col-lg-8"></div>
+                    }
+                </div>
+                <div class="row form-group">
+                @Html.Label("SMS Messages", new { @id = "lblSMS", @class = "col-lg-2" })
+                <div class="col-lg-2">
+                    <img src="~/Admin/Images/False.png" class="imagwidth" />
+                </div>
+                <div class="col-lg-8"></div>
+                    </div>
+
+                <div class="row form-group">
+                @Html.Label("Funeral Services Pricing Setup", new { @id = "lblServices", @class = "col-lg-2" })
+                @if (Model.FuneralServiceStatus)
+                {
+                    <div class="col-lg-2">
+                        <img src="~/Admin/Images/True.png" class="imagwidth" />
+                    </div>
+                    <div class="col-lg-8"></div>
+                }
+                else
+                {
+                    <div class="col-lg-2">
+                        <img src="~/Admin/Images/False.png" style="width:4%" />
+                    </div>
+                    <div class="col-lg-8"></div>
+                }
+                </div>
+
+                <div class="row form-group">
+                @Html.Label("Addon Product Setup", new { @id = "lblProduct", @class = "col-lg-2" })
+                @if (Model.AddonProductStatus)
+                {
+                    <div class="col-lg-2">
+                        <img src="~/Admin/Images/True.png" class="imagwidth" />
+                    </div>
+                    <div class="col-lg-8"></div>
+                }
+                else
+                {
+                    <div class="col-lg-2">
+                        <img src="~/Admin/Images/False.png" style="width:4%" />
+                    </div>
+                    <div class="col-lg-8"></div>
+                }
+                </div>
+
+                <div class="row form-group">
+                @Html.Label("main Lifes Imported", new { @id = "lblLifes", @class = "col-lg-2" })
+                @if (Model.MemberStatus)
+                {
+                    <div class="col-lg-2">
+                        <img src="~/Admin/Images/True.png" class="imagwidth" />
+                    </div>
+                    <div class="col-lg-8"></div>
+                }
+                else
+                {
+                    <div class="col-lg-2">
+                        <img src="~/Admin/Images/False.png" style="width:4%" />
+                    </div>
+                    <div class="col-lg-8"></div>
+                }
+                </div>
+
+                <div class="row form-group">
+                @Html.Label("Dependents Imported", new { @id = "lblDependents", @class = "col-lg-2" })
+                @if (Model.DependentStatus)
+                {
+                    <div class="col-lg-2">
+                        <img src="~/Admin/Images/True.png" class="imagwidth" />
+                    </div>
+                    <div class="col-lg-8"></div>
+                }
+                else
+                {
+                    <div class="col-lg-2">
+                        <img src="~/Admin/Images/False.png" class="imagwidth" />
+                    </div>
+                    <div class="col-lg-8"></div>
+                }
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

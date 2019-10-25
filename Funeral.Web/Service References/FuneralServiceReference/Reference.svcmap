@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="39024090-cd08-42af-b54c-dddd0784a52a" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:3213/FuneralServices.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="FuneralServices.xsd" MetadataType="Schema" ID="f6b2ca02-d3a6-4bef-8bf8-248d3b5b3436" SourceId="1" SourceUrl="http://localhost:3213/FuneralServices.svc?xsd=xsd2" />
+    <MetadataFile FileName="FuneralServices4.xsd" MetadataType="Schema" ID="409dce0c-2e23-40c1-b0c0-efe6057132c8" SourceId="1" SourceUrl="http://localhost:3213/FuneralServices.svc?xsd=xsd4" />
+    <MetadataFile FileName="FuneralServices5.xsd" MetadataType="Schema" ID="01238a6c-d206-42ed-95ea-ceca62aa476f" SourceId="1" SourceUrl="http://localhost:3213/FuneralServices.svc?xsd=xsd5" />
+    <MetadataFile FileName="FuneralServices1.xsd" MetadataType="Schema" ID="ec71bddc-1540-48f4-be2c-f0db0a598565" SourceId="1" SourceUrl="http://localhost:3213/FuneralServices.svc?xsd=xsd0" />
+    <MetadataFile FileName="FuneralServices2.xsd" MetadataType="Schema" ID="c6b6e24f-8902-48f9-9428-8e856cbee8a3" SourceId="1" SourceUrl="http://localhost:3213/FuneralServices.svc?xsd=xsd1" />
+    <MetadataFile FileName="FuneralServices.wsdl" MetadataType="Wsdl" ID="0e66e780-9970-4c11-837d-b103858ffadf" SourceId="1" SourceUrl="http://localhost:3213/FuneralServices.svc?wsdl" />
+    <MetadataFile FileName="FuneralServices3.xsd" MetadataType="Schema" ID="a25970ee-d8bd-4d0f-88d5-647026f9a2ee" SourceId="1" SourceUrl="http://localhost:3213/FuneralServices.svc?xsd=xsd3" />
+    <MetadataFile FileName="FuneralServices.disco" MetadataType="Disco" ID="39b2fbbc-3aed-4b16-8037-ec5709053e08" SourceId="1" SourceUrl="http://localhost:3213/FuneralServices.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

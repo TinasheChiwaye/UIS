@@ -1,0 +1,2338 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AD9662A8-E0E0-4028-A222-4CF67A7CA71D}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Funeral.Web</RootNamespace>
+    <AssemblyName>Funeral.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SccProjectName>Svn</SccProjectName>
+    <SccLocalPath>Svn</SccLocalPath>
+    <SccAuxPath>Svn</SccAuxPath>
+    <SccProvider>SubversionScc</SccProvider>
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+    <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime">
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="ClosedXML, Version=0.76.0.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClosedXML.0.76.0\lib\net40-client\ClosedXML.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.2.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.2.1.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.2.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.11.0.3366.16\lib\Microsoft.ReportViewer.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.11.0.3366.16\lib\Microsoft.ReportViewer.DataVisualization.DLL</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.11.0.3366.16\lib\Microsoft.ReportViewer.Design.DLL</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.11.0.3366.16\lib\Microsoft.ReportViewer.ProcessingObjectModel.DLL</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebDesign, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.11.0.3366.16\lib\Microsoft.ReportViewer.WebDesign.DLL</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.11.0.3366.16\lib\Microsoft.ReportViewer.WebForms.DLL</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.11.0.3366.16\lib\Microsoft.ReportViewer.WinForms.DLL</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.11.0.1\lib\net20\Microsoft.SqlServer.Types.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Neodynamic.SDK.WebClientPrint">
+      <HintPath>..\packages\Neodynamic.SDK.WebClientPrint.2.0.2013.1216\lib\Neodynamic.SDK.WebClientPrint.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.4\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.4\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.4\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WebGrease">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\packages\Microsoft.SqlServer.Types.11.0.1\nativeBinaries\x64\msvcr100.dll">
+      <Link>SqlServerTypes\x64\msvcr100.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Microsoft.SqlServer.Types.11.0.1\nativeBinaries\x64\SqlServerSpatial110.dll">
+      <Link>SqlServerTypes\x64\SqlServerSpatial110.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Microsoft.SqlServer.Types.11.0.1\nativeBinaries\x86\msvcr100.dll">
+      <Link>SqlServerTypes\x86\msvcr100.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Microsoft.SqlServer.Types.11.0.1\nativeBinaries\x86\SqlServerSpatial110.dll">
+      <Link>SqlServerTypes\x86\SqlServerSpatial110.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Admin\403Error.aspx" />
+    <Content Include="Admin\Activation.aspx" />
+    <Content Include="Admin\AddTax.aspx" />
+    <Content Include="Admin\CarTrack.aspx" />
+    <Content Include="Admin\Claims.aspx" />
+    <Content Include="Admin\FuneralPayment.aspx" />
+    <Content Include="Admin\FuneralServicesSelect.aspx" />
+    <Content Include="Admin\HtmlPage1.html" />
+    <Content Include="Admin\Images\False.png" />
+    <Content Include="Admin\Images\True.png" />
+    <Content Include="Admin\Images\unpluggit.png" />
+    <Content Include="Admin\ImportExcel.aspx" />
+    <Content Include="Admin\NewRegistration.aspx" />
+    <Content Include="Admin\OtherPayment.aspx" />
+    <Content Include="Admin\OtherPayments.aspx" />
+    <Content Include="Admin\PrintForm.aspx" />
+    <Content Include="Admin\PrintPaymentReceipt.aspx" />
+    <Content Include="Admin\PrintStatement.aspx" />
+    <Content Include="Admin\QuotationServices.aspx" />
+    <Content Include="Admin\ManageMember.aspx" />
+    <Content Include="Admin\ManageMembersPayment.aspx" />
+    <Content Include="Admin\MemberPayment.aspx" />
+    <Content Include="Admin\Reports\AllMembers.aspx" />
+    <Content Include="Admin\Reports\AllReportGenerator.aspx" />
+    <Content Include="Admin\Reports\CrystalReport.aspx" />
+    <Content Include="Admin\Reports\FinancialReportGenerator.aspx" />
+    <Content Include="Admin\Reports\JoinedMembersByDate.aspx" />
+    <Content Include="Admin\Reports\MembersPerBranch.aspx" />
+    <Content Include="Admin\Reports\MembersPerPolicyStatus.aspx" />
+    <Content Include="Admin\Reports\ReportGenerator.aspx" />
+    <Content Include="Admin\Reports\AllReportTypeService.asmx" />
+    <Content Include="Admin\Reports\reportrdlc.aspx" />
+    <Content Include="Admin\Funeral.aspx" />
+    <Content Include="Admin\GroupPayment.aspx" />
+    <Content Include="Admin\Qoutation.aspx" />
+    <Content Include="Admin\PrinterConfig.aspx" />
+    <Content Include="Admin\PrinterReciept.aspx" />
+    <Content Include="Admin\Reports\Reports.aspx" />
+    <Content Include="Admin\ScheduleEmailReport.aspx" />
+    <Content Include="Admin\Tombstone.aspx" />
+    <Content Include="Admin\TombstonePayment.aspx" />
+    <Content Include="Admin\TombStoneServiceSelect.aspx" />
+    <Content Include="Admin\UserRight.aspx" />
+    <Content Include="Content\animate.css" />
+    <Content Include="Content\bootstrap-datetimepicker.min.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\DataTables\css\demo_table_jui.css" />
+    <Content Include="Content\DataTables\css\jquery.dataTables.css" />
+    <Content Include="Content\DataTables\css\jquery.dataTables.min.css" />
+    <Content Include="Content\DataTables\images\back_disabled.png" />
+    <Content Include="Content\DataTables\images\back_enabled.png" />
+    <Content Include="Content\DataTables\images\back_enabled_hover.png" />
+    <Content Include="Content\DataTables\images\favicon.ico" />
+    <Content Include="Content\DataTables\images\forward_disabled.png" />
+    <Content Include="Content\DataTables\images\forward_enabled.png" />
+    <Content Include="Content\DataTables\images\forward_enabled_hover.png" />
+    <Content Include="Content\DataTables\images\sort_asc.png" />
+    <Content Include="Content\DataTables\images\sort_asc_disabled.png" />
+    <Content Include="Content\DataTables\images\sort_both.png" />
+    <Content Include="Content\DataTables\images\sort_desc.png" />
+    <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\fontCss.css" />
+    <Content Include="Content\images\45.gif" />
+    <Content Include="Content\images\ajax-loader.gif" />
+    <Content Include="Content\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="Content\Invoice\dimension.png" />
+    <Content Include="Content\Invoice\index.html" />
+    <Content Include="Content\Invoice\logo.png" />
+    <Content Include="Content\Invoice\style.css" />
+    <Content Include="Content\jquery-ui.min.css" />
+    <Content Include="Content\patterns\congruent_pentagon.png" />
+    <Content Include="Content\patterns\header-profile-skin-1.png" />
+    <Content Include="Content\patterns\header-profile-skin-2.png" />
+    <Content Include="Content\patterns\header-profile-skin-3.png" />
+    <Content Include="Content\patterns\header-profile.png" />
+    <Content Include="Content\patterns\otis_redding.png" />
+    <Content Include="Content\patterns\shattered.png" />
+    <Content Include="Content\patterns\triangular.png" />
+    <Content Include="Content\plugins\blueimp\css\blueimp-gallery-indicator.css" />
+    <Content Include="Content\plugins\blueimp\css\blueimp-gallery-video.css" />
+    <Content Include="Content\plugins\blueimp\css\blueimp-gallery.css" />
+    <Content Include="Content\plugins\blueimp\css\blueimp-gallery.min.css" />
+    <Content Include="Content\plugins\blueimp\css\demo.css" />
+    <Content Include="Content\plugins\blueimp\img\error.png" />
+    <Content Include="Content\plugins\blueimp\img\error.svg" />
+    <Content Include="Content\plugins\blueimp\img\loading.gif" />
+    <Content Include="Content\plugins\blueimp\img\play-pause.png" />
+    <Content Include="Content\plugins\blueimp\img\play-pause.svg" />
+    <Content Include="Content\plugins\blueimp\img\video-play.png" />
+    <Content Include="Content\plugins\blueimp\img\video-play.svg" />
+    <Content Include="Content\plugins\bootstrap-rtl\bootstrap-rtl.css" />
+    <Content Include="Content\plugins\bootstrap-rtl\bootstrap-rtl.min.css" />
+    <Content Include="Content\plugins\chosen\chosen-sprite%402x.png" />
+    <Content Include="Content\plugins\chosen\chosen-sprite.png" />
+    <Content Include="Content\plugins\chosen\chosen.css" />
+    <Content Include="Content\plugins\codemirror\ambiance.css" />
+    <Content Include="Content\plugins\codemirror\codemirror.css" />
+    <Content Include="Content\plugins\colorpicker\bootstrap-colorpicker.min.css" />
+    <Content Include="Content\plugins\cropper\cropper.min.css" />
+    <Content Include="Content\plugins\datapicker\bootstrap-timepicker.css" />
+    <Content Include="Content\plugins\datapicker\bootstrap-timepicker.min.css" />
+    <Content Include="Content\plugins\datapicker\datepicker3.css" />
+    <Content Include="Content\plugins\dataTables\dataTables.bootstrap.css" />
+    <Content Include="Content\plugins\dataTables\dataTables.responsive.css" />
+    <Content Include="Content\plugins\dataTables\dataTables.tableTools.min.css" />
+    <Content Include="Content\plugins\dropzone\basic.css" />
+    <Content Include="Content\plugins\dropzone\dropzone.css" />
+    <Content Include="Content\plugins\fullcalendar\fullcalendar.css" />
+    <Content Include="Content\plugins\fullcalendar\fullcalendar.print.css" />
+    <Content Include="Content\plugins\iCheck\custom.css" />
+    <Content Include="Content\plugins\iCheck\green%402x.png" />
+    <Content Include="Content\plugins\iCheck\green.png" />
+    <Content Include="Content\plugins\images\bootstrap-colorpicker\alpha-horizontal.png" />
+    <Content Include="Content\plugins\images\bootstrap-colorpicker\alpha.png" />
+    <Content Include="Content\plugins\images\bootstrap-colorpicker\hue-horizontal.png" />
+    <Content Include="Content\plugins\images\bootstrap-colorpicker\hue.png" />
+    <Content Include="Content\plugins\images\bootstrap-colorpicker\saturation.png" />
+    <Content Include="Content\plugins\images\sort.png" />
+    <Content Include="Content\plugins\images\sort_asc.png" />
+    <Content Include="Content\plugins\images\sort_desc.png" />
+    <Content Include="Content\plugins\images\sprite-skin-flat.png" />
+    <Content Include="Content\plugins\images\sprite-skin-flat2.png" />
+    <Content Include="Content\plugins\images\sprite-skin-nice.png" />
+    <Content Include="Content\plugins\images\sprite-skin-simple.png" />
+    <Content Include="Content\plugins\images\spritemap%402x.png" />
+    <Content Include="Content\plugins\images\spritemap.png" />
+    <Content Include="Content\plugins\ionRangeSlider\ion.rangeSlider.css" />
+    <Content Include="Content\plugins\ionRangeSlider\ion.rangeSlider.skinFlat.css" />
+    <Content Include="Content\plugins\ionRangeSlider\ion.rangeSlider.skinNice.css" />
+    <Content Include="Content\plugins\ionRangeSlider\ion.rangeSlider.skinSimple.css" />
+    <Content Include="Content\plugins\jasny\jasny-bootstrap.min.css" />
+    <Content Include="Content\plugins\jqGrid\ui.jqgrid.css" />
+    <Content Include="Content\plugins\jQueryUI\images\animated-overlay.gif" />
+    <Content Include="Content\plugins\jQueryUI\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\plugins\jQueryUI\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\plugins\jQueryUI\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\plugins\jQueryUI\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\plugins\jQueryUI\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\plugins\jQueryUI\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\plugins\jQueryUI\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\plugins\jQueryUI\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\plugins\jQueryUI\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\plugins\jQueryUI\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\plugins\jQueryUI\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\plugins\jQueryUI\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\plugins\jQueryUI\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\plugins\jQueryUI\jquery-ui-1.10.4.custom.min.css" />
+    <Content Include="Content\plugins\jsTree\32px.png" />
+    <Content Include="Content\plugins\jsTree\39px.png" />
+    <Content Include="Content\plugins\jsTree\40px.png" />
+    <Content Include="Content\plugins\jsTree\style.css" />
+    <Content Include="Content\plugins\jsTree\style.min.css" />
+    <Content Include="Content\plugins\jsTree\throbber.gif" />
+    <Content Include="Content\plugins\morris\morris-0.4.3.min.css" />
+    <Content Include="Content\plugins\nouslider\jquery.nouislider.css" />
+    <Content Include="Content\plugins\social-buttons\social-buttons.css" />
+    <Content Include="Content\plugins\steps\jquery.steps.css" />
+    <Content Include="Content\plugins\summernote\summernote-bs3.css" />
+    <Content Include="Content\plugins\summernote\summernote.css" />
+    <Content Include="Content\plugins\switchery\switchery.css" />
+    <Content Include="Content\plugins\toastr\toastr.min.css" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\style.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\jquery.ui.all.css" />
+    <Content Include="Admin\Default.aspx" />
+    <Content Include="Admin\Error.aspx" />
+    <Content Include="DatabaseChanges\Funeral%281-9-16%29%28Noon%29.sql" />
+    <Content Include="DatabaseChanges\Funeral%2816-8-16%29.sql" />
+    <Content Include="DatabaseChanges\Funeral%2819-8-16%29.sql" />
+    <Content Include="DatabaseChanges\Funeral%2822-8-16%29.sql" />
+    <Content Include="DatabaseChanges\Funeral%2823-08-16%29Evening.sql" />
+    <Content Include="DatabaseChanges\Funeral%2823-8-16%29Noon.sql" />
+    <Content Include="DatabaseChanges\Funeral%2824-8-16%29Morninig.sql" />
+    <Content Include="DatabaseChanges\Funeral17-8-16.sql" />
+    <Content Include="DatabaseChanges\Funeral20-08-16.sql" />
+    <Content Include="DatabaseChanges\FuneralScript%2812-08-16%29.sql" />
+    <Content Include="DatabaseChanges\Funral%2802-08-2017%29.sql" />
+    <Content Include="DatabaseChanges\Funral%2823-06-2017%29.sql" />
+    <Content Include="DatabaseChanges\funral%2824-06-2017%29.sql" />
+    <Content Include="DatabaseChanges\Funral%2831-07-2017%29.sql" />
+    <Content Include="Database_Changes_By_Mahipatsinh.txt" />
+    <Content Include="font-awesome\css\font-awesome.css" />
+    <Content Include="font-awesome\css\font-awesome.min.css" />
+    <Content Include="font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\font-awesome\css\font-awesome.css" />
+    <Content Include="fonts\font-awesome\css\font-awesome.min.css" />
+    <Content Include="fonts\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Admin\Members.aspx" />
+    <Content Include="Scripts\app\inspinia.js" />
+    <Content Include="Scripts\app\messagebox.js" />
+    <Content Include="Scripts\app\multisearchdatatable.js" />
+    <Content Include="Scripts\app\searchdatatable.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
+    <Content Include="Scripts\bootstrap-timepicker.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Properties\DataSources\Funeral.Model.BankModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.AccountTypeModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.MembersPaymentViewModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.MembersPaymentDetailsModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.FuneralPaymentsModel.datasource" />
+    <Content Include="Admin\Reports\DataSets\MembersJoinedByDate.xsc">
+      <DependentUpon>MembersJoinedByDate.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Admin\Reports\DataSets\dsExpenses.xsc">
+      <DependentUpon>dsExpenses.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Admin\Reports\DataSets\dsDetailedPayment.xsc">
+      <DependentUpon>dsDetailedPayment.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Admin\Reports\DataSets\dsAgentCommision.xsc">
+      <DependentUpon>dsAgentCommision.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Admin\Reports\DataSets\dsAgentCommision.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsAgentCommision.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="Admin\Reports\DataSets\dsAgentCommision.xss">
+      <DependentUpon>dsAgentCommision.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Admin\Reports\DataSets\dsAllMember.xsc">
+      <DependentUpon>dsAllMember.xsd</DependentUpon>
+    </Content>
+    <None Include="Admin\Reports\DataSets\dsAllMember.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsAllMember.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Admin\Reports\DataSets\dsAllMember.xss">
+      <DependentUpon>dsAllMember.xsd</DependentUpon>
+    </Content>
+    <None Include="Admin\Reports\DataSets\dsDetailedPayment.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsDetailedPayment.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="Admin\Reports\DataSets\dsDetailedPayment.xss">
+      <DependentUpon>dsDetailedPayment.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Admin\Reports\DataSets\dsExpenses.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsExpenses.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="Admin\Reports\DataSets\dsExpenses.xss">
+      <DependentUpon>dsExpenses.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Admin\Reports\DataSets\dsFuneralPayment.xsc">
+      <DependentUpon>dsFuneralPayment.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Admin\Reports\DataSets\dsFuneralPayment.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsFuneralPayment.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="Admin\Reports\DataSets\dsFuneralPayment.xss">
+      <DependentUpon>dsFuneralPayment.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Admin\Reports\DataSets\dsQuotationByDate.xsc">
+      <DependentUpon>dsQuotationByDate.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Admin\Reports\DataSets\dsMemberTransactionHist.xsc">
+      <DependentUpon>dsMemberTransactionHist.xsd</DependentUpon>
+    </Content>
+    <None Include="Admin\Reports\DataSets\dsMemberTransactionHist.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsMemberTransactionHist.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Admin\Reports\DataSets\dsMemberTransactionHist.xss">
+      <DependentUpon>dsMemberTransactionHist.xsd</DependentUpon>
+    </Content>
+    <None Include="Admin\Reports\DataSets\dsQuotationByDate.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsQuotationByDate.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="Admin\Reports\DataSets\dsQuotationByDate.xss">
+      <DependentUpon>dsQuotationByDate.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Admin\Reports\DataSets\MembersJoinedByDate.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>MembersJoinedByDate.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="Admin\Reports\DataSets\MembersJoinedByDate.xss">
+      <DependentUpon>MembersJoinedByDate.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Properties\DataSources\Funeral.Model.CountryModel.datasource" />
+    <Content Include="Admin\Reports\FINANCIAL_REPORTS\DataSets\dsClaimsReport.xsc">
+      <DependentUpon>dsClaimsReport.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Admin\Reports\FINANCIAL_REPORTS\DataSets\dsBankPayment.xsc">
+      <DependentUpon>dsBankPayment.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Admin\Reports\DataSets\OutstandingPayment.xsc">
+      <DependentUpon>OutstandingPayment.xsd</DependentUpon>
+    </Content>
+    <None Include="Admin\Reports\DataSets\OutstandingPayment.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>OutstandingPayment.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Admin\Reports\DataSets\OutstandingPayment.xss">
+      <DependentUpon>OutstandingPayment.xsd</DependentUpon>
+    </Content>
+    <None Include="Admin\Reports\FINANCIAL_REPORTS\DataSets\dsBankPayment.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsBankPayment.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="Admin\Reports\FINANCIAL_REPORTS\DataSets\dsBankPayment.xss">
+      <DependentUpon>dsBankPayment.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Admin\Reports\FINANCIAL_REPORTS\DataSets\dsClaimsReport.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsClaimsReport.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="Admin\Reports\FINANCIAL_REPORTS\DataSets\dsClaimsReport.xss">
+      <DependentUpon>dsClaimsReport.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Admin\Reports\FINANCIAL_REPORTS\DataSets\dsUnderwriterPatment.xsc">
+      <DependentUpon>dsUnderwriterPatment.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Admin\Reports\FINANCIAL_REPORTS\DataSets\dsMemberBranches.xsc">
+      <DependentUpon>dsMemberBranches.xsd</DependentUpon>
+    </Content>
+    <None Include="Admin\Reports\FINANCIAL_REPORTS\DataSets\dsMemberBranches.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsMemberBranches.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Admin\Reports\FINANCIAL_REPORTS\DataSets\dsMemberBranches.xss">
+      <DependentUpon>dsMemberBranches.xsd</DependentUpon>
+    </Content>
+    <None Include="Admin\Reports\FINANCIAL_REPORTS\DataSets\dsUnderwriterPatment.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsUnderwriterPatment.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="Admin\Reports\FINANCIAL_REPORTS\DataSets\dsUnderwriterPatment.xss">
+      <DependentUpon>dsUnderwriterPatment.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Properties\DataSources\Funeral.Model.PlanModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.AgentModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.ApplicationSettingsModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.SecureGroupModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.SecureUsersModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.SecureUserGroupsModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.VendorModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.ExpensesModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.smsTempletModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.smsSendingGroupModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.BankingDetailSending.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.AgentInfoSetupModel.datasource" />
+    <Content Include="DevDataDataSet.xsc">
+      <DependentUpon>DevDataDataSet.xsd</DependentUpon>
+    </Content>
+    <Content Include="Content\timepicker.less" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Members\ManageMembers.cshtml" />
+    <Content Include="Areas\Admin\Views\Members\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Payments\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AgentInfoSetup\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AgentInfoSetup\_AgentInfoSetupList.cshtml" />
+    <Content Include="Areas\Admin\Views\AgentInfoSetup\_AgentInfoSetupAddEdit.cshtml" />
+    <Content Include="Areas\Admin\Views\Payments\ManageMembersPayment.cshtml" />
+    <!--<Content Include="Areas\Admin\Views\AgentInfoSetup\Index.cshtml" />-->
+    <!--<Content Include="Areas\Admin\Views\AgentInfoSetup\_AgentInfoSetupList.cshtml" />-->
+    <!--<Content Include="Areas\Admin\Views\AgentInfoSetup\_AgentInfoSetupAddEdit.cshtml" />-->
+    <Content Include="Areas\Tools\Views\web.config" />
+    <Content Include="Areas\Tools\Views\BranchSetup\_BranchSetupList.cshtml" />
+    <Content Include="Areas\Tools\Views\BranchSetup\Index.cshtml" />
+    <Content Include="Areas\Tools\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Tools\Views\BranchSetup\_BranchSetupAddEdit.cshtml" />
+    <Content Include="Areas\Tools\Views\CompanySetup\Index.cshtml" />
+    <Content Include="Areas\Tools\Views\CompanySetup\_CompanySetupAddEdit.cshtml" />
+    <Content Include="Areas\Tools\Views\CompanySetup\_CompanySetupList.cshtml" />
+    <Content Include="Areas\Tools\Views\CustomManagement\_CustomManagementAddEdit.cshtml" />
+    <Content Include="Areas\Tools\Views\CustomManagement\_CustomManagementList.cshtml" />
+    <Content Include="Areas\Tools\Views\CustomManagement\Index.cshtml" />
+    <Content Include="Areas\Tools\Views\ExpenseCategory\_ExpenseCategoryAddEdit.cshtml" />
+    <Content Include="Areas\Tools\Views\ExpenseCategory\_ExpenseCategoryList.cshtml" />
+    <Content Include="Areas\Tools\Views\ExpenseCategory\Index.cshtml" />
+    <Content Include="Areas\Tools\Views\Package\_PackageAddEdit.cshtml" />
+    <Content Include="Areas\Tools\Views\Package\_PackageList.cshtml" />
+    <Content Include="Areas\Tools\Views\Package\Index.cshtml" />
+    <Content Include="Areas\Tools\Views\PackageService\_PackageServiceList.cshtml" />
+    <Content Include="Areas\Admin\Views\Payments\GroupPayment.cshtml" />
+    <Content Include="Areas\Admin\Views\Payments\PrintPaymentReceipt.cshtml" />
+    <Content Include="Areas\Admin\Views\OtherPayment\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\OtherPayment\EditOtherPayment.cshtml" />
+    <Content Include="Areas\Admin\Views\OtherPayment\_OtherPaymentList.cshtml" />
+    <Content Include="Areas\Admin\Views\OtherPayment\_OtherPaymentAddEdit.cshtml" />
+    <Content Include="Areas\Admin\Views\Payments\_PaymentList.cshtml" />
+    <Content Include="Areas\Admin\Views\GroupPayment\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Quotation\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Quotation\_QuotationList.cshtml" />
+    <Content Include="Areas\Admin\Views\Quotation\_QuotationAddEdit.cshtml" />
+    <Content Include="Areas\Tools\Views\AddOnProductSetup\_AddOnProductSetupAddEdit.cshtml" />
+    <Content Include="Areas\Tools\Views\AddOnProductSetup\_AddOnProductSetupList.cshtml" />
+    <Content Include="Areas\Tools\Views\AddOnProductSetup\Index.cshtml" />
+    <Content Include="Areas\Tools\Views\Menu\MenuAddEdit.cshtml" />
+    <Content Include="Areas\Tools\Views\Menu\_MenuList.cshtml" />
+    <Content Include="Areas\Tools\Views\Menu\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\UserRight\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Quotation\QuotationService.cshtml" />
+    <Content Include="Areas\Admin\Views\Quotation\PrintForm.cshtml" />
+    <Content Include="Areas\Admin\Views\Funeral\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Funeral\_FuneralList.cshtml" />
+    <Content Include="Areas\Admin\Views\Funeral\_FuneralAddEdit.cshtml" />
+    <Content Include="Areas\Admin\Views\Funeral\FuneralPayment.cshtml" />
+    <Content Include="Areas\Tools\Views\UnderwriterSetup\_UnderWriterList.cshtml" />
+    <Content Include="Areas\Tools\Views\UnderwriterSetup\Index.cshtml" />
+    <Content Include="Areas\Tools\Views\UnderwriterSetup\_UnderwriterSetupAddEdit.cshtml" />
+    <Content Include="Areas\Admin\Views\Funeral\PrintForm.cshtml" />
+    <Content Include="Areas\Admin\Views\Funeral\_PaymentHistory.cshtml" />
+    <Content Include="Areas\Admin\Views\Tombstone\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Tombstone\_TombstoneList.cshtml" />
+    <Content Include="Areas\Admin\Views\Tombstone\_TombstoneAddEdit.cshtml" />
+    <Content Include="Areas\Admin\Views\Tombstone\TombStoneServiceSelect.cshtml" />
+    <Content Include="Areas\Admin\Views\Tombstone\TombstonePayment.cshtml" />
+    <Content Include="Areas\Admin\Views\Tombstone\PrintForm.cshtml" />
+    <Content Include="Areas\Tools\Views\UnderwriterPremiums\Index.cshtml" />
+    <Content Include="Areas\Tools\Views\UnderwriterPremiums\_UnderwriterPremiumAddEdit.cshtml" />
+    <Content Include="Areas\Tools\Views\UnderwriterPremiums\_UnderwriterPremiumList.cshtml" />
+    <Content Include="Areas\Admin\Views\Funeral\FuneralServiceSelect.cshtml" />
+    <Content Include="Areas\Tools\Views\PlanSetup\Index.cshtml" />
+    <Content Include="Areas\Tools\Views\PlanSetup\_PlanSetupAddEdit.cshtml" />
+    <Content Include="Areas\Tools\Views\PlanSetup\_PlanSetupList.cshtml" />
+    <Content Include="Areas\Tools\Views\SocietySetup\Index.cshtml" />
+    <Content Include="Areas\Tools\Views\SocietySetup\_SocietySetupList.cshtml" />
+    <Content Include="Areas\Tools\Views\SocietySetup\_SocietySetupAddEdit.cshtml" />
+    <Content Include="Areas\Tools\Views\FuneralServices\Index.cshtml" />
+    <Content Include="Areas\Tools\Views\FuneralServices\_FuneralServicesAddEdit.cshtml" />
+    <Content Include="Areas\Tools\Views\FuneralServices\_FuneralServicesList.cshtml" />
+    <Content Include="Areas\Tools\Views\TombstonePackage\_TombstonePackageAddEdit.cshtml" />
+    <Content Include="Areas\Tools\Views\TombstonePackage\Index.cshtml" />
+    <Content Include="Areas\Tools\Views\TombstonePackage\_TombstonePackageList.cshtml" />
+    <Content Include="Areas\Admin\Views\Error\Error403.cshtml" />
+    <Content Include="Areas\Admin\Views\Members\_AddEditBeneficiary.cshtml" />
+    <Content Include="Areas\Admin\Views\GroupPayment\_AddGroupPayment.cshtml" />
+    <Content Include="Areas\Admin\Views\GroupPayment\_GroupPaymentList.cshtml" />
+    <Content Include="Areas\Admin\Views\GroupPayment\_PaymentList.cshtml" />
+    <Content Include="Areas\Admin\Views\GroupPayment\GroupPaymentView.cshtml" />
+    <None Include="DevDataDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DevDataDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="DevDataDataSet.xss">
+      <DependentUpon>DevDataDataSet.xsd</DependentUpon>
+    </Content>
+    <Content Include="MemberSelect.xsc">
+      <DependentUpon>MemberSelect.xsd</DependentUpon>
+    </Content>
+    <Content Include="GET_Dependent_And_Extended_Family.xsc">
+      <DependentUpon>GET_Dependent_And_Extended_Family.xsd</DependentUpon>
+    </Content>
+    <Content Include="Admin\Reports\DataSets\dsQuotationByDate1.xsc">
+      <DependentUpon>dsQuotationByDate1.xsd</DependentUpon>
+    </Content>
+    <None Include="Admin\Reports\DataSets\dsQuotationByDate1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsQuotationByDate1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Admin\Reports\DataSets\dsQuotationByDate1.xss">
+      <DependentUpon>dsQuotationByDate1.xsd</DependentUpon>
+    </Content>
+    <Content Include="dsTermsAndConditionOfApplication.xsc">
+      <DependentUpon>dsTermsAndConditionOfApplication.xsd</DependentUpon>
+    </Content>
+    <Content Include="Admin\Reports\DataSets\dsBankDetails.xsc">
+      <DependentUpon>dsBankDetails.xsd</DependentUpon>
+    </Content>
+    <None Include="Admin\Reports\DataSets\dsBankDetails.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsBankDetails.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Admin\Reports\DataSets\dsBankDetails.xss">
+      <DependentUpon>dsBankDetails.xsd</DependentUpon>
+    </Content>
+    <Content Include="Admin\Reports\DataSets\dsPolicyDocTotalPremium.xsc">
+      <DependentUpon>dsPolicyDocTotalPremium.xsd</DependentUpon>
+    </Content>
+    <None Include="Admin\Reports\DataSets\dsPolicyDocTotalPremium.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsPolicyDocTotalPremium.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Admin\Reports\DataSets\dsPolicyDocTotalPremium.xss">
+      <DependentUpon>dsPolicyDocTotalPremium.xsd</DependentUpon>
+    </Content>
+    <Content Include="Admin\Reports\DataSets\dsGetPlanDetailsByPlanId.xsc">
+      <DependentUpon>dsGetPlanDetailsByPlanId.xsd</DependentUpon>
+    </Content>
+    <None Include="Admin\Reports\DataSets\dsGetPlanDetailsByPlanId.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsGetPlanDetailsByPlanId.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Admin\Reports\DataSets\dsGetPlanDetailsByPlanId.xss">
+      <DependentUpon>dsGetPlanDetailsByPlanId.xsd</DependentUpon>
+    </Content>
+    <Content Include="Admin\Reports\DataSets\dsFuneralDataset.xsc">
+      <DependentUpon>dsFuneralDataset.xsd</DependentUpon>
+    </Content>
+    <None Include="Admin\Reports\DataSets\dsFuneralDataset.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsFuneralDataset.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Admin\Reports\DataSets\dsFuneralDataset.xss">
+      <DependentUpon>dsFuneralDataset.xsd</DependentUpon>
+    </Content>
+    <None Include="dsTermsAndConditionOfApplication.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsTermsAndConditionOfApplication.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="dsTermsAndConditionOfApplication.xss">
+      <DependentUpon>dsTermsAndConditionOfApplication.xsd</DependentUpon>
+    </Content>
+    <None Include="GET_Dependent_And_Extended_Family.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>GET_Dependent_And_Extended_Family.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="GET_Dependent_And_Extended_Family.xss">
+      <DependentUpon>GET_Dependent_And_Extended_Family.xsd</DependentUpon>
+    </Content>
+    <None Include="MemberSelect.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>MemberSelect.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="MemberSelect.xss">
+      <DependentUpon>MemberSelect.xsd</DependentUpon>
+    </Content>
+    <Content Include="MemberSelectList.xsc">
+      <DependentUpon>MemberSelectList.xsd</DependentUpon>
+    </Content>
+    <None Include="MemberSelectList.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>MemberSelectList.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="MemberSelectList.xss">
+      <DependentUpon>MemberSelectList.xsd</DependentUpon>
+    </Content>
+    <Content Include="MemberSelectList1.xsc">
+      <DependentUpon>MemberSelectList1.xsd</DependentUpon>
+    </Content>
+    <None Include="MemberSelectList1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>MemberSelectList1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="MemberSelectList1.xss">
+      <DependentUpon>MemberSelectList1.xsd</DependentUpon>
+    </Content>
+    <Content Include="Properties\DataSources\Funeral.Model.QuotationModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.QuotationServicesModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.QuotationDiscountModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.QuotationMessageModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.FuneralModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.FuneralServiceSelectModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.ApplicationTnCModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.TombStoneModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.TombStoneServiceSelectModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.FuneralDocumentModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.FuneralServiceManageModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.ClaimsModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.ClaimsViewModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.ClaimDocumentModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.NewMemberInvoiceModel.datasource" />
+    <Content Include="Properties\DataSources\System.Data.DataTable.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.AdditionalApplicationSettingsModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.PolicyPremiumDashboardModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.TombStonesPaymentModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.PackageServiceModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.PackageServicesSelectionModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.TombstonePackageModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.JoiningFeeModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.CustomDetails.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.RightsModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.OtherPaymentModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.NewRightsModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.tblPageModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.UnderwriterModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.StatusModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.UnderwriterPremiumModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.UnderwriterSetupModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.RolePlayerModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.TaxSetting.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.ScheduleEmailReportModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.MembersPaymentModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.ProgressStatus.datasource" />
+    <None Include="Properties\PublishProfiles\Funeral.Web.pubxml" />
+    <None Include="Properties\PublishProfiles\Publish From Server.pubxml" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery-1.4.3.min.js" />
+    <None Include="Scripts\jquery-1.7.2-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.7.2.js" />
+    <Content Include="Scripts\jquery-1.8.1.min.js" />
+    <None Include="Scripts\jquery-2.1.1.intellisense.js" />
+    <Content Include="Scripts\jquery-2.1.1.js" />
+    <Content Include="Scripts\jquery-2.1.1.min.js" />
+    <Content Include="Scripts\jquery-3.2.1.min %281%29.js" />
+    <Content Include="Scripts\jquery-ui-1.8.20.js" />
+    <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
+    <Content Include="Scripts\jquery-ui-1.8.23.min.js" />
+    <Content Include="Scripts\jquery.json-2.3.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\Pages\Common.js" />
+    <Content Include="Scripts\plugins\blueimp\jquery.blueimp-gallery.min.js" />
+    <Content Include="Scripts\plugins\ChartJScript\Chart.bundle.js" />
+    <Content Include="Scripts\plugins\ChartJScript\jquery.min.js" />
+    <Content Include="Scripts\plugins\chartJs\Chart.min.js" />
+    <Content Include="Scripts\plugins\chosen\chosen.jquery.js" />
+    <Content Include="Scripts\plugins\codemirror\codemirror.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\apl\apl.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\apl\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\asterisk\asterisk.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\asterisk\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\clike\clike.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\clike\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\clike\scala.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\clojure\clojure.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\clojure\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\cobol\cobol.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\cobol\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\coffeescript\coffeescript.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\coffeescript\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\commonlisp\commonlisp.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\commonlisp\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\css\css.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\css\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\css\less.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\css\less_test.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\css\scss.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\css\scss_test.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\css\test.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\cypher\cypher.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\cypher\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\diff\diff.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\diff\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\django\django.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\django\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\dtd\dtd.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\dtd\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\dylan\dylan.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\dylan\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\d\d.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\d\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\ecl\ecl.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\ecl\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\eiffel\eiffel.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\eiffel\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\erlang\erlang.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\erlang\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\fortran\fortran.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\fortran\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\gas\gas.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\gas\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\gfm\gfm.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\gfm\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\gfm\test.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\gherkin\gherkin.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\gherkin\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\go\go.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\go\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\groovy\groovy.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\groovy\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\haml\haml.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\haml\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\haml\test.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\haskell\haskell.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\haskell\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\haxe\haxe.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\haxe\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\htmlembedded\htmlembedded.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\htmlembedded\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\htmlmixed\htmlmixed.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\htmlmixed\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\http\http.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\http\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\jade\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\jade\jade.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\javascript\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\javascript\javascript.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\javascript\json-ld.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\javascript\test.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\javascript\typescript.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\jinja2\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\jinja2\jinja2.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\julia\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\julia\julia.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\kotlin\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\kotlin\kotlin.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\livescript\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\livescript\livescript.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\lua\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\lua\lua.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\markdown\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\markdown\markdown.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\markdown\test.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\meta.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\mirc\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\mirc\mirc.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\mllike\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\mllike\mllike.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\modelica\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\modelica\modelica.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\nginx\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\nginx\nginx.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\ntriples\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\ntriples\ntriples.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\octave\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\octave\octave.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\pascal\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\pascal\pascal.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\pegjs\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\pegjs\pegjs.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\perl\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\perl\perl.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\php\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\php\php.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\php\test.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\pig\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\pig\pig.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\properties\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\properties\properties.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\puppet\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\puppet\puppet.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\python\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\python\python.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\q\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\q\q.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\rpm\changes\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\rpm\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\rpm\rpm.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\rst\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\rst\rst.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\ruby\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\ruby\ruby.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\ruby\test.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\rust\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\rust\rust.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\r\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\r\r.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\sass\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\sass\sass.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\scheme\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\scheme\scheme.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\shell\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\shell\shell.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\shell\test.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\sieve\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\sieve\sieve.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\slim\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\slim\slim.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\slim\test.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\smalltalk\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\smalltalk\smalltalk.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\smartymixed\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\smartymixed\smartymixed.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\smarty\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\smarty\smarty.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\solr\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\solr\solr.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\sparql\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\sparql\sparql.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\sql\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\sql\sql.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\stex\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\stex\stex.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\stex\test.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\tcl\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\tcl\tcl.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\textile\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\textile\test.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\textile\textile.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\tiddlywiki\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\tiddlywiki\tiddlywiki.css" />
+    <Content Include="Scripts\plugins\codemirror\mode\tiddlywiki\tiddlywiki.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\tiki\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\tiki\tiki.css" />
+    <Content Include="Scripts\plugins\codemirror\mode\tiki\tiki.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\toml\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\toml\toml.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\tornado\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\tornado\tornado.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\turtle\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\turtle\turtle.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\vbscript\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\vbscript\vbscript.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\vb\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\vb\vb.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\velocity\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\velocity\velocity.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\verilog\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\verilog\test.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\verilog\verilog.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\xml\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\xml\test.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\xml\xml.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\xquery\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\xquery\test.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\xquery\xquery.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\yaml\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\yaml\yaml.js" />
+    <Content Include="Scripts\plugins\codemirror\mode\z80\index.html" />
+    <Content Include="Scripts\plugins\codemirror\mode\z80\z80.js" />
+    <Content Include="Scripts\plugins\colorpicker\bootstrap-colorpicker.min.js" />
+    <Content Include="Scripts\plugins\cropper\cropper.min.js" />
+    <Content Include="Scripts\plugins\datapicker\bootstrap-datepicker.js" />
+    <Content Include="Scripts\plugins\datapicker\bootstrap-timepicker.js" />
+    <Content Include="Scripts\plugins\datapicker\bootstrap-timepicker.min.js" />
+    <Content Include="Scripts\plugins\dataTables\dataTables.bootstrap.js" />
+    <Content Include="Scripts\plugins\dataTables\dataTables.responsive.js" />
+    <Content Include="Scripts\plugins\dataTables\dataTables.tableTools.min.js" />
+    <Content Include="Scripts\plugins\dataTables\jquery.dataTables.js" />
+    <Content Include="Scripts\plugins\dataTables\jquery.dataTables.min.js" />
+    <Content Include="Scripts\plugins\dataTables\swf\copy_csv_xls.swf" />
+    <Content Include="Scripts\plugins\dataTables\swf\copy_csv_xls_pdf.swf" />
+    <Content Include="Scripts\plugins\dateformat\DateFormat.js" />
+    <Content Include="Scripts\plugins\diff_match_patch\javascript\diff_match_patch.js" />
+    <Content Include="Scripts\plugins\diff_match_patch\README.txt" />
+    <Content Include="Scripts\plugins\dropzone\dropzone.js" />
+    <Content Include="Scripts\plugins\easypiechart\easypiechart.js" />
+    <Content Include="Scripts\plugins\easypiechart\jquery.easypiechart.js" />
+    <Content Include="Scripts\plugins\flot\curvedLines.js" />
+    <Content Include="Scripts\plugins\flot\excanvas.min.js" />
+    <Content Include="Scripts\plugins\flot\jquery.flot.js" />
+    <Content Include="Scripts\plugins\flot\jquery.flot.pie.js" />
+    <Content Include="Scripts\plugins\flot\jquery.flot.resize.js" />
+    <Content Include="Scripts\plugins\flot\jquery.flot.spline.js" />
+    <Content Include="Scripts\plugins\flot\jquery.flot.symbol.js" />
+    <Content Include="Scripts\plugins\flot\jquery.flot.time.js" />
+    <Content Include="Scripts\plugins\flot\jquery.flot.tooltip.min.js" />
+    <Content Include="Scripts\plugins\fullcalendar\fullcalendar.min.js" />
+    <Content Include="Scripts\plugins\fullcalendar\moment.min.js" />
+    <Content Include="Scripts\plugins\gritter\images\gritter-light.png" />
+    <Content Include="Scripts\plugins\gritter\images\gritter-long.png" />
+    <Content Include="Scripts\plugins\gritter\images\gritter.png" />
+    <Content Include="Scripts\plugins\gritter\images\ie-spacer.gif" />
+    <Content Include="Scripts\plugins\gritter\jquery.gritter.css" />
+    <Content Include="Scripts\plugins\gritter\jquery.gritter.min.js" />
+    <Content Include="Scripts\plugins\iCheck\icheck.min.js" />
+    <Content Include="Scripts\plugins\idle-timer\idle-timer.min.js" />
+    <Content Include="Scripts\plugins\ionRangeSlider\ion.rangeSlider.min.js" />
+    <Content Include="Scripts\plugins\jasny\jasny-bootstrap.min.js" />
+    <Content Include="Scripts\plugins\jeditable\jquery.jeditable.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-ar.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-bg.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-bg1251.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-cat.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-cn.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-cs.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-da.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-de.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-dk.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-el.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-en.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-es.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-fa.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-fi.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-fr.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-gl.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-he.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-hr.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-hr1250.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-hu.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-id.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-is.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-it.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-ja.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-kr.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-lt.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-mne.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-nl.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-no.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-pl.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-pt-br.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-pt.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-ro.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-ru.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-sk.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-sr-latin.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-sr.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-sv.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-th.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-tr.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-tw.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-ua.js" />
+    <Content Include="Scripts\plugins\jqGrid\i18n\grid.locale-vi.js" />
+    <Content Include="Scripts\plugins\jqGrid\jquery.jqGrid.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery-ui-i18n.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-af.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-ar-DZ.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-ar.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-az.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-be.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-bg.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-bs.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-ca.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-cs.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-cy-GB.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-da.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-de.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-el.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-en-AU.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-en-GB.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-en-NZ.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-eo.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-es.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-et.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-eu.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-fa.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-fi.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-fo.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-fr-CA.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-fr-CH.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-fr.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-gl.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-he.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-hi.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-hr.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-hu.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-hy.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-id.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-is.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-it.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-ja.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-ka.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-kk.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-km.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-ko.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-ky.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-lb.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-lt.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-lv.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-mk.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-ml.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-ms.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-nb.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-nl-BE.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-nl.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-nn.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-no.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-pl.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-pt-BR.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-pt.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-rm.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-ro.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-ru.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-sk.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-sl.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-sq.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-sr-SR.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-sr.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-sv.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-ta.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-th.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-tj.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-tr.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-uk.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-vi.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-zh-CN.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-zh-HK.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\i18n\jquery.ui.datepicker-zh-TW.min.js" />
+    <Content Include="Scripts\plugins\jquery-ui\images\animated-overlay.gif" />
+    <Content Include="Scripts\plugins\jquery-ui\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Scripts\plugins\jquery-ui\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Scripts\plugins\jquery-ui\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Scripts\plugins\jquery-ui\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Scripts\plugins\jquery-ui\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Scripts\plugins\jquery-ui\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Scripts\plugins\jquery-ui\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Scripts\plugins\jquery-ui\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Scripts\plugins\jquery-ui\images\ui-icons_222222_256x240.png" />
+    <Content Include="Scripts\plugins\jquery-ui\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Scripts\plugins\jquery-ui\images\ui-icons_454545_256x240.png" />
+    <Content Include="Scripts\plugins\jquery-ui\images\ui-icons_888888_256x240.png" />
+    <Content Include="Scripts\plugins\jquery-ui\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Scripts\plugins\jquery-ui\jquery-ui.css" />
+    <Content Include="Scripts\plugins\jquery-ui\jquery-ui.js" />
+    <Content Include="Scripts\plugins\jquery-ui\jquery-ui.min.css" />
+    <Content Include="Scripts\plugins\jquery-ui\jquery-ui.min.js" />
+    <Content Include="Scripts\plugins\jsKnob\jquery.knob.js" />
+    <Content Include="Scripts\plugins\jsTree\jstree.min.js" />
+    <Content Include="Scripts\plugins\justified-gallery\jquery.justifiedgallery.css" />
+    <Content Include="Scripts\plugins\justified-gallery\jquery.justifiedgallery.js" />
+    <Content Include="Scripts\plugins\justified-gallery\jquery.justifiedgallery.min.css" />
+    <Content Include="Scripts\plugins\justified-gallery\jquery.justifiedgallery.min.js" />
+    <Content Include="Scripts\plugins\justified-gallery\loading.gif" />
+    <Content Include="Scripts\plugins\jvectormap\jquery-jvectormap-1.2.2.min.js" />
+    <Content Include="Scripts\plugins\jvectormap\jquery-jvectormap-world-mill-en.js" />
+    <Content Include="Scripts\plugins\metisMenu\jquery.metisMenu.js" />
+    <Content Include="Scripts\plugins\metisMenu\metisMenu.min.js" />
+    <Content Include="Scripts\plugins\morris\morris.js" />
+    <Content Include="Scripts\plugins\morris\raphael-2.1.0.min.js" />
+    <Content Include="Scripts\plugins\nestable\jquery.nestable.js" />
+    <Content Include="Scripts\plugins\nouslider\jquery.nouislider.min.js" />
+    <Content Include="Scripts\plugins\pace\pace.min.js" />
+    <Content Include="Scripts\plugins\peity\jquery.peity.min.js" />
+    <Content Include="Scripts\plugins\preetyTextDiff\jquery.pretty-text-diff.min.js" />
+    <Content Include="Scripts\plugins\rickshaw\rickshaw.min.js" />
+    <Content Include="Scripts\plugins\rickshaw\vendor\d3.v3.js" />
+    <Content Include="Scripts\plugins\slimscroll\jquery.slimscroll.min.js" />
+    <Content Include="Scripts\plugins\sparkline\jquery.sparkline.min.js" />
+    <Content Include="Scripts\plugins\staps\jquery.steps.min.js" />
+    <Content Include="Scripts\plugins\summernote\summernote.min.js" />
+    <Content Include="Scripts\plugins\switchery\switchery.js" />
+    <Content Include="Scripts\plugins\tinycon\tinycon.min.js" />
+    <Content Include="Scripts\plugins\toastr\toastr.min.js" />
+    <Content Include="Scripts\plugins\validate\jquery.validate.min.js" />
+    <Content Include="Scripts\plugins\velocity\velocity.min.js" />
+    <Content Include="Scripts\plugins\velocity\velocity.ui.min.js" />
+    <Content Include="Scripts\plugins\video\responsible-video.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <None Include="Scripts\_references.js" />
+    <Content Include="Global.asax" />
+    <Content Include="Properties\DataSources\Funeral.Model.MembersModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.MembersViewModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.PolicyModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.FamilyDependencyModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.MemberInvoiceModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.BranchModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.SocietyModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.MemberNotesModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.SupportedDocument.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.ProductModal.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.MemberAddonProductsModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.AddonProductsModal.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.SupportedDocumentModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.FamilyDependencyTypeModel.datasource" />
+    <Content Include="Properties\DataSources\Funeral.Model.RelationShipModel.datasource" />
+    <Content Include="Handler\DocumentHandler.ashx" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\DataTables\images\Sorting icons.psd" />
+    <Content Include="Content\plugins\bootstrap-rtl\bootstrap-rtl.css.map" />
+    <Content Include="font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="font-awesome\less\animated.less" />
+    <Content Include="font-awesome\less\bordered-pulled.less" />
+    <Content Include="font-awesome\less\core.less" />
+    <Content Include="font-awesome\less\fixed-width.less" />
+    <Content Include="font-awesome\less\font-awesome.less" />
+    <Content Include="font-awesome\less\icons.less" />
+    <Content Include="font-awesome\less\larger.less" />
+    <Content Include="font-awesome\less\list.less" />
+    <Content Include="font-awesome\less\mixins.less" />
+    <Content Include="font-awesome\less\path.less" />
+    <Content Include="font-awesome\less\rotated-flipped.less" />
+    <Content Include="font-awesome\less\stacked.less" />
+    <Content Include="font-awesome\less\variables.less" />
+    <Content Include="font-awesome\scss\font-awesome.scss" />
+    <Content Include="font-awesome\scss\_animated.scss" />
+    <Content Include="font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="font-awesome\scss\_core.scss" />
+    <Content Include="font-awesome\scss\_fixed-width.scss" />
+    <Content Include="font-awesome\scss\_icons.scss" />
+    <Content Include="font-awesome\scss\_larger.scss" />
+    <Content Include="font-awesome\scss\_list.scss" />
+    <Content Include="font-awesome\scss\_mixins.scss" />
+    <Content Include="font-awesome\scss\_path.scss" />
+    <Content Include="font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="font-awesome\scss\_stacked.scss" />
+    <Content Include="font-awesome\scss\_variables.scss" />
+    <Content Include="fonts\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="fonts\font-awesome\less\animated.less" />
+    <Content Include="fonts\font-awesome\less\bordered-pulled.less" />
+    <Content Include="fonts\font-awesome\less\core.less" />
+    <Content Include="fonts\font-awesome\less\fixed-width.less" />
+    <Content Include="fonts\font-awesome\less\font-awesome.less" />
+    <Content Include="fonts\font-awesome\less\icons.less" />
+    <Content Include="fonts\font-awesome\less\larger.less" />
+    <Content Include="fonts\font-awesome\less\list.less" />
+    <Content Include="fonts\font-awesome\less\mixins.less" />
+    <Content Include="fonts\font-awesome\less\path.less" />
+    <Content Include="fonts\font-awesome\less\rotated-flipped.less" />
+    <Content Include="fonts\font-awesome\less\stacked.less" />
+    <Content Include="fonts\font-awesome\less\variables.less" />
+    <Content Include="fonts\font-awesome\scss\font-awesome.scss" />
+    <Content Include="fonts\font-awesome\scss\_animated.scss" />
+    <Content Include="fonts\font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="fonts\font-awesome\scss\_core.scss" />
+    <Content Include="fonts\font-awesome\scss\_fixed-width.scss" />
+    <Content Include="fonts\font-awesome\scss\_icons.scss" />
+    <Content Include="fonts\font-awesome\scss\_larger.scss" />
+    <Content Include="fonts\font-awesome\scss\_list.scss" />
+    <Content Include="fonts\font-awesome\scss\_mixins.scss" />
+    <Content Include="fonts\font-awesome\scss\_path.scss" />
+    <Content Include="fonts\font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="fonts\font-awesome\scss\_stacked.scss" />
+    <Content Include="fonts\font-awesome\scss\_variables.scss" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Scripts\jquery-2.1.1.min.map" />
+    <Content Include="Scripts\plugins\diff_match_patch\COPYING" />
+    <Content Include="Scripts\plugins\justified-gallery\README.md" />
+    <Content Include="packages.config" />
+    <None Include="Service References\FuneralServiceReference\FuneralServices.wsdl">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\FuneralServiceReference\FuneralServices.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\FuneralServiceReference\FuneralServices1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\FuneralServiceReference\FuneralServices2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\FuneralServiceReference\FuneralServices3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\FuneralServiceReference\FuneralServices4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\FuneralServiceReference\FuneralServices5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Upload\CompanyImage\CreditProtection_1.png" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\web.config" />
+    <Content Include="Views\Member\Index.cshtml" />
+    <Content Include="Views\Shared\MessageBox.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\Dashboard.aspx" />
+    <Content Include="Admin\Login.aspx" />
+    <None Include="Reference Thing\UISBL.vb.exclude" />
+    <Content Include="Properties\DataSources\Funeral.Model.AdminModel.datasource" />
+    <Content Include="Admin\Admin.Master" />
+    <None Include="Service References\FuneralServiceReference\FuneralServices.disco" />
+    <None Include="Service References\FuneralServiceReference\configuration91.svcinfo" />
+    <None Include="Service References\FuneralServiceReference\configuration.svcinfo" />
+    <None Include="Service References\FuneralServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="SqlServerTypes\readme.htm" />
+    <Content Include="SSRSReport.aspx" />
+    <Content Include="Tools\AddEditMenu.aspx" />
+    <Content Include="Tools\AddonProductSetup.aspx" />
+    <Content Include="Tools\AgentInfoSetup.aspx" />
+    <Content Include="Tools\BranchSetup.aspx" />
+    <Content Include="Tools\CompanySetup.aspx" />
+    <Content Include="Tools\CustomManagement.aspx" />
+    <Content Include="Tools\ExpensesCategorySetup.aspx" />
+    <Content Include="Tools\FuneralPackage.aspx" />
+    <Content Include="Tools\FuneralServices.aspx" />
+    <Content Include="Tools\ManageMenu.aspx" />
+    <Content Include="Tools\PackageSetup.aspx" />
+    <Content Include="Tools\PlanSetup.aspx" />
+    <Content Include="Tools\Rights.aspx" />
+    <Content Include="Tools\smsSendingSetup.aspx" />
+    <Content Include="Tools\smsTempletSetup.aspx" />
+    <Content Include="Tools\SocietySetup.aspx" />
+    <Content Include="Tools\TombstonePackage.aspx" />
+    <Content Include="Tools\Underwriter.aspx" />
+    <Content Include="Tools\UnderwriterPremiums.aspx" />
+    <Content Include="Tools\UnderwriterSetup.aspx" />
+    <Content Include="Tools\UserSetup.aspx" />
+    <Content Include="Tools\VendorSetup.aspx" />
+    <Content Include="UserControl\ctrDashboardChart.ascx" />
+    <Content Include="UserControl\ctrlFuneralPaymentHistory.ascx" />
+    <Content Include="UserControl\ctrlTombstonePaymentHistory.ascx" />
+    <Content Include="UserControl\ctrPieChartDeshboard.ascx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Admin\403Error.aspx.cs">
+      <DependentUpon>403Error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\403Error.aspx.designer.cs">
+      <DependentUpon>403Error.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Activation.aspx.cs">
+      <DependentUpon>Activation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Activation.aspx.designer.cs">
+      <DependentUpon>Activation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\AddTax.aspx.cs">
+      <DependentUpon>AddTax.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\AddTax.aspx.designer.cs">
+      <DependentUpon>AddTax.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Admin.Master.cs">
+      <DependentUpon>Admin.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Admin.Master.designer.cs">
+      <DependentUpon>Admin.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\CarTrack.aspx.cs">
+      <DependentUpon>CarTrack.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\CarTrack.aspx.designer.cs">
+      <DependentUpon>CarTrack.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Claims.aspx.cs">
+      <DependentUpon>Claims.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Claims.aspx.designer.cs">
+      <DependentUpon>Claims.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Dashboard.aspx.cs">
+      <DependentUpon>Dashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Dashboard.aspx.designer.cs">
+      <DependentUpon>Dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Error.aspx.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Error.aspx.designer.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\FuneralPayment.aspx.cs">
+      <DependentUpon>FuneralPayment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\FuneralPayment.aspx.designer.cs">
+      <DependentUpon>FuneralPayment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\FuneralServicesSelect.aspx.cs">
+      <DependentUpon>FuneralServicesSelect.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\FuneralServicesSelect.aspx.designer.cs">
+      <DependentUpon>FuneralServicesSelect.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\ImportExcel.aspx.cs">
+      <DependentUpon>ImportExcel.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\ImportExcel.aspx.designer.cs">
+      <DependentUpon>ImportExcel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\NewRegistration.aspx.cs">
+      <DependentUpon>NewRegistration.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\NewRegistration.aspx.designer.cs">
+      <DependentUpon>NewRegistration.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\OtherPayment.aspx.cs">
+      <DependentUpon>OtherPayment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\OtherPayment.aspx.designer.cs">
+      <DependentUpon>OtherPayment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\OtherPayments.aspx.cs">
+      <DependentUpon>OtherPayments.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\OtherPayments.aspx.designer.cs">
+      <DependentUpon>OtherPayments.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\PrintForm.aspx.cs">
+      <DependentUpon>PrintForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\PrintForm.aspx.designer.cs">
+      <DependentUpon>PrintForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\PrintPaymentReceipt.aspx.cs">
+      <DependentUpon>PrintPaymentReceipt.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\PrintPaymentReceipt.aspx.designer.cs">
+      <DependentUpon>PrintPaymentReceipt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\PrintStatement.aspx.cs">
+      <DependentUpon>PrintStatement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\PrintStatement.aspx.designer.cs">
+      <DependentUpon>PrintStatement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\QuotationServices.aspx.cs">
+      <DependentUpon>QuotationServices.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\QuotationServices.aspx.designer.cs">
+      <DependentUpon>QuotationServices.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\ManageMember.aspx.cs">
+      <DependentUpon>ManageMember.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\ManageMember.aspx.designer.cs">
+      <DependentUpon>ManageMember.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\ManageMembersPayment.aspx.cs">
+      <DependentUpon>ManageMembersPayment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\ManageMembersPayment.aspx.designer.cs">
+      <DependentUpon>ManageMembersPayment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\MemberPayment.aspx.cs">
+      <DependentUpon>MemberPayment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\MemberPayment.aspx.designer.cs">
+      <DependentUpon>MemberPayment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Members.aspx.cs">
+      <DependentUpon>Members.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Members.aspx.designer.cs">
+      <DependentUpon>Members.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Reports\AllMembers.aspx.cs">
+      <DependentUpon>AllMembers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Reports\AllMembers.aspx.designer.cs">
+      <DependentUpon>AllMembers.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Reports\AllReportGenerator.aspx.cs">
+      <DependentUpon>AllReportGenerator.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Reports\AllReportGenerator.aspx.designer.cs">
+      <DependentUpon>AllReportGenerator.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Reports\CrystalReport.aspx.cs">
+      <DependentUpon>CrystalReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Reports\CrystalReport.aspx.designer.cs">
+      <DependentUpon>CrystalReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Reports\DataSets\dsAgentCommision.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsAgentCommision.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Admin\Reports\DataSets\dsAllMember.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsAllMember.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Reports\DataSets\dsDetailedPayment.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsDetailedPayment.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Admin\Reports\DataSets\dsExpenses.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsExpenses.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Admin\Reports\DataSets\dsFuneralPayment.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsFuneralPayment.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Admin\Reports\DataSets\dsMemberTransactionHist.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsMemberTransactionHist.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Reports\DataSets\dsQuotationByDate.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsQuotationByDate.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Admin\Reports\DataSets\OutstandingPayment.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OutstandingPayment.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Reports\FinancialReportGenerator.aspx.cs">
+      <DependentUpon>FinancialReportGenerator.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Reports\FinancialReportGenerator.aspx.designer.cs">
+      <DependentUpon>FinancialReportGenerator.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Reports\FINANCIAL_REPORTS\DataSets\dsBankPayment.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsBankPayment.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Admin\Reports\FINANCIAL_REPORTS\DataSets\dsClaimsReport.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsClaimsReport.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Admin\Reports\FINANCIAL_REPORTS\DataSets\dsMemberBranches.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsMemberBranches.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Reports\FINANCIAL_REPORTS\DataSets\dsUnderwriterPatment.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsUnderwriterPatment.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Admin\Reports\JoinedMembersByDate.aspx.cs">
+      <DependentUpon>JoinedMembersByDate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Reports\JoinedMembersByDate.aspx.designer.cs">
+      <DependentUpon>JoinedMembersByDate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Reports\DataSets\MembersJoinedByDate.cs">
+      <DependentUpon>MembersJoinedByDate.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Admin\Reports\DataSets\MembersJoinedByDate.Designer.cs">
+      <DependentUpon>MembersJoinedByDate.xsd</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Admin\Reports\MembersPerBranch.aspx.cs">
+      <DependentUpon>MembersPerBranch.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Reports\MembersPerBranch.aspx.designer.cs">
+      <DependentUpon>MembersPerBranch.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Reports\MembersPerPolicyStatus.aspx.cs">
+      <DependentUpon>MembersPerPolicyStatus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Reports\MembersPerPolicyStatus.aspx.designer.cs">
+      <DependentUpon>MembersPerPolicyStatus.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Reports\ReportGenerator.aspx.cs">
+      <DependentUpon>ReportGenerator.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Reports\ReportGenerator.aspx.designer.cs">
+      <DependentUpon>ReportGenerator.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Reports\AllReportTypeService.asmx.cs">
+      <DependentUpon>AllReportTypeService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Admin\Reports\reportrdlc.aspx.cs">
+      <DependentUpon>reportrdlc.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Reports\reportrdlc.aspx.designer.cs">
+      <DependentUpon>reportrdlc.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Funeral.aspx.cs">
+      <DependentUpon>Funeral.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Funeral.aspx.designer.cs">
+      <DependentUpon>Funeral.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\GroupPayment.aspx.cs">
+      <DependentUpon>GroupPayment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\GroupPayment.aspx.designer.cs">
+      <DependentUpon>GroupPayment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Qoutation.aspx.cs">
+      <DependentUpon>Qoutation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Qoutation.aspx.designer.cs">
+      <DependentUpon>Qoutation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\PrinterConfig.aspx.cs">
+      <DependentUpon>PrinterConfig.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\PrinterConfig.aspx.designer.cs">
+      <DependentUpon>PrinterConfig.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\PrinterReciept.aspx.cs">
+      <DependentUpon>PrinterReciept.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\PrinterReciept.aspx.designer.cs">
+      <DependentUpon>PrinterReciept.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Reports\Reports.aspx.cs">
+      <DependentUpon>Reports.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Reports\Reports.aspx.designer.cs">
+      <DependentUpon>Reports.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\ScheduleEmailReport.aspx.cs">
+      <DependentUpon>ScheduleEmailReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\ScheduleEmailReport.aspx.designer.cs">
+      <DependentUpon>ScheduleEmailReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Tombstone.aspx.cs">
+      <DependentUpon>Tombstone.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Tombstone.aspx.designer.cs">
+      <DependentUpon>Tombstone.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\TombstonePayment.aspx.cs">
+      <DependentUpon>TombstonePayment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\TombstonePayment.aspx.designer.cs">
+      <DependentUpon>TombstonePayment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\TombStoneServiceSelect.aspx.cs">
+      <DependentUpon>TombStoneServiceSelect.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\TombStoneServiceSelect.aspx.designer.cs">
+      <DependentUpon>TombStoneServiceSelect.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\UserRight.aspx.cs">
+      <DependentUpon>UserRight.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\UserRight.aspx.designer.cs">
+      <DependentUpon>UserRight.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="App_Start\Basepage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="App_Start\BaseUserControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\EnumatorExtention.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\MyReportServerCredentials.cs" />
+    <Compile Include="App_Start\PageRightsAttribute.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AgentInfoSetupController.cs" />
+    <Compile Include="Areas\Admin\Controllers\BaseAdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CarTrackController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ClaimsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ErrorController.cs" />
+    <Compile Include="Areas\Admin\Controllers\FuneralController.cs" />
+    <Compile Include="Areas\Admin\Controllers\GroupPaymentController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MembersController.cs" />
+    <Compile Include="Areas\Admin\Controllers\OtherPaymentController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PaymentsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\QuotationController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ReportController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TombstoneController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserRightController.cs" />
+    <Compile Include="Areas\Admin\Models\ViewModel\FuneralPaymentVM.cs" />
+    <Compile Include="Areas\Admin\Models\ViewModel\FuneralPrintVM.cs" />
+    <Compile Include="Areas\Admin\Models\ViewModel\FuneralServiceVM.cs" />
+    <Compile Include="Areas\Admin\Models\ViewModel\MembersOtherPaymentDetailsVM.cs" />
+    <Compile Include="Areas\Admin\Models\ViewModel\PrintViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ViewModel\TombStoneServiceVM.cs" />
+    <Compile Include="Areas\Tools\Controllers\AddOnProductSetupController.cs" />
+    <Compile Include="Areas\Tools\Controllers\FuneralServicesController.cs" />
+    <Compile Include="Areas\Tools\Controllers\PlanSetupController.cs" />
+    <Compile Include="Areas\Tools\Controllers\MenuController.cs" />
+    <Compile Include="Areas\Admin\Models\ViewModel\QuotationServiceVM.cs" />
+    <Compile Include="Areas\Tools\Controllers\PackageController.cs" />
+    <Compile Include="Areas\Tools\Controllers\SocietySetupController.cs" />
+    <Compile Include="Areas\Tools\Controllers\TombstonePackageController.cs" />
+    <Compile Include="Areas\Tools\Controllers\UnderwriterController.cs" />
+    <Compile Include="Areas\Tools\Controllers\UnderwriterPremiumsController.cs" />
+    <Compile Include="Areas\Tools\Controllers\UnderwriterSetupController.cs" />
+    <Compile Include="Common\FuneralAuthAttribute.cs" />
+    <Compile Include="Common\OtherPaymentsWebApiResult.cs" />
+    <Compile Include="Common\WebApiResult.cs" />
+    <Compile Include="Areas\Admin\Models\ViewModel\ManageMembersVM.cs" />
+    <Compile Include="Areas\Tools\Controllers\PackageServiceController.cs" />
+    <Compile Include="Areas\Tools\Controllers\ExpenseCategoryController.cs" />
+    <Compile Include="Areas\Tools\Controllers\BranchSetupController.cs" />
+    <Compile Include="Areas\Tools\Controllers\CompanySetupController.cs" />
+    <Compile Include="Areas\Tools\Controllers\CustomManagementController.cs" />
+    <Compile Include="Areas\Tools\ToolsAreaRegistration.cs" />
+    <Compile Include="Common\IdValidationClass.cs" />
+    <Compile Include="Common\ReportPrintDocument.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Common\WebMsgBox.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\MemberController.cs" />
+    <Compile Include="DevDataDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DevDataDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Reports\DataSets\dsQuotationByDate1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsQuotationByDate1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Reports\DataSets\dsBankDetails.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsBankDetails.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Reports\DataSets\dsPolicyDocTotalPremium.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsPolicyDocTotalPremium.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Reports\DataSets\dsGetPlanDetailsByPlanId.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsGetPlanDetailsByPlanId.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Reports\DataSets\dsFuneralDataset.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsFuneralDataset.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="dsTermsAndConditionOfApplication.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsTermsAndConditionOfApplication.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="GET_Dependent_And_Extended_Family.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GET_Dependent_And_Extended_Family.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\DocumentHandler.ashx.cs">
+      <DependentUpon>DocumentHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="MemberSelect.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MemberSelect.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="MemberSelectList.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MemberSelectList.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="MemberSelectList1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MemberSelectList1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\FuneralServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="SSRSReport.aspx.cs">
+      <DependentUpon>SSRSReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SSRSReport.aspx.designer.cs">
+      <DependentUpon>SSRSReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\AddEditMenu.aspx.cs">
+      <DependentUpon>AddEditMenu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tools\AddEditMenu.aspx.designer.cs">
+      <DependentUpon>AddEditMenu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\AddonProductSetup.aspx.cs">
+      <DependentUpon>AddonProductSetup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tools\AddonProductSetup.aspx.designer.cs">
+      <DependentUpon>AddonProductSetup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\AgentInfoSetup.aspx.cs">
+      <DependentUpon>AgentInfoSetup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tools\AgentInfoSetup.aspx.designer.cs">
+      <DependentUpon>AgentInfoSetup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\BranchSetup.aspx.cs">
+      <DependentUpon>BranchSetup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tools\BranchSetup.aspx.designer.cs">
+      <DependentUpon>BranchSetup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\CompanySetup.aspx.cs">
+      <DependentUpon>CompanySetup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tools\CompanySetup.aspx.designer.cs">
+      <DependentUpon>CompanySetup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\CustomManagement.aspx.cs">
+      <DependentUpon>CustomManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tools\CustomManagement.aspx.designer.cs">
+      <DependentUpon>CustomManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\ExpensesCategorySetup.aspx.cs">
+      <DependentUpon>ExpensesCategorySetup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tools\ExpensesCategorySetup.aspx.designer.cs">
+      <DependentUpon>ExpensesCategorySetup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\FuneralPackage.aspx.cs">
+      <DependentUpon>FuneralPackage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tools\FuneralPackage.aspx.designer.cs">
+      <DependentUpon>FuneralPackage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\FuneralServices.aspx.cs">
+      <DependentUpon>FuneralServices.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tools\FuneralServices.aspx.designer.cs">
+      <DependentUpon>FuneralServices.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\ManageMenu.aspx.cs">
+      <DependentUpon>ManageMenu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tools\ManageMenu.aspx.designer.cs">
+      <DependentUpon>ManageMenu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\PackageSetup.aspx.cs">
+      <DependentUpon>PackageSetup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tools\PackageSetup.aspx.designer.cs">
+      <DependentUpon>PackageSetup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\PlanSetup.aspx.cs">
+      <DependentUpon>PlanSetup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tools\PlanSetup.aspx.designer.cs">
+      <DependentUpon>PlanSetup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Rights.aspx.cs">
+      <DependentUpon>Rights.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tools\Rights.aspx.designer.cs">
+      <DependentUpon>Rights.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\smsSendingSetup.aspx.cs">
+      <DependentUpon>smsSendingSetup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tools\smsSendingSetup.aspx.designer.cs">
+      <DependentUpon>smsSendingSetup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\smsTempletSetup.aspx.cs">
+      <DependentUpon>smsTempletSetup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tools\smsTempletSetup.aspx.designer.cs">
+      <DependentUpon>smsTempletSetup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\SocietySetup.aspx.cs">
+      <DependentUpon>SocietySetup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tools\SocietySetup.aspx.designer.cs">
+      <DependentUpon>SocietySetup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\TombstonePackage.aspx.cs">
+      <DependentUpon>TombstonePackage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tools\TombstonePackage.aspx.designer.cs">
+      <DependentUpon>TombstonePackage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Underwriter.aspx.cs">
+      <DependentUpon>Underwriter.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tools\Underwriter.aspx.designer.cs">
+      <DependentUpon>Underwriter.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\UnderwriterPremiums.aspx.cs">
+      <DependentUpon>UnderwriterPremiums.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tools\UnderwriterPremiums.aspx.designer.cs">
+      <DependentUpon>UnderwriterPremiums.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\UnderwriterSetup.aspx.cs">
+      <DependentUpon>UnderwriterSetup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tools\UnderwriterSetup.aspx.designer.cs">
+      <DependentUpon>UnderwriterSetup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\UserSetup.aspx.cs">
+      <DependentUpon>UserSetup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tools\UserSetup.aspx.designer.cs">
+      <DependentUpon>UserSetup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\VendorSetup.aspx.cs">
+      <DependentUpon>VendorSetup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tools\VendorSetup.aspx.designer.cs">
+      <DependentUpon>VendorSetup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\ctrDashboardChart.ascx.cs">
+      <DependentUpon>ctrDashboardChart.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControl\ctrDashboardChart.ascx.designer.cs">
+      <DependentUpon>ctrDashboardChart.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\ctrlFuneralPaymentHistory.ascx.cs">
+      <DependentUpon>ctrlFuneralPaymentHistory.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControl\ctrlFuneralPaymentHistory.ascx.designer.cs">
+      <DependentUpon>ctrlFuneralPaymentHistory.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\ctrlTombstonePaymentHistory.ascx.cs">
+      <DependentUpon>ctrlTombstonePaymentHistory.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControl\ctrlTombstonePaymentHistory.ascx.designer.cs">
+      <DependentUpon>ctrlTombstonePaymentHistory.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\ctrPieChartDeshboard.ascx.cs">
+      <DependentUpon>ctrPieChartDeshboard.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControl\ctrPieChartDeshboard.ascx.designer.cs">
+      <DependentUpon>ctrPieChartDeshboard.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\Encryptor.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Views\CarTrack\" />
+    <Folder Include="Areas\Admin\Views\Claims\" />
+    <Folder Include="Areas\Admin\Views\Report\" />
+    <Folder Include="Areas\Tools\Models\" />
+    <Folder Include="Areas\Tools\Views\Underwriter\" />
+    <Folder Include="ErrorLog\" />
+    <Folder Include="Models\" />
+    <Folder Include="Unplugg IT Solution BI Reporting\" />
+    <Folder Include="Uploads\" />
+    <Folder Include="Upload\FuneralDocument\ba15e16e-8352-4460-b332-d7d4fa1acb13\" />
+    <Folder Include="Upload\TombImage\2c195786-ed83-4060-bb0d-98cee55ba3b9\" />
+    <Folder Include="Upload\TombImage\6dcba090-f363-47e6-93f5-6def8f80703e\" />
+    <Folder Include="Upload\TombImage\ba15e16e-8352-4460-b332-d7d4fa1acb13\" />
+    <Folder Include="Upload\TombImage\e69618e0-2bb7-4424-a53f-c7ebe6e42e54\" />
+    <Folder Include="Views\Account\" />
+    <Folder Include="Views\Error\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\FuneralServiceReference\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\Reports\FINANCIAL_REPORTS\ReportLayouts\rdlcAgentCommision.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Admin\Reports\FINANCIAL_REPORTS\ReportLayouts\rdlcPaymentbyBranch.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Admin\Reports\FINANCIAL_REPORTS\ReportLayouts\rptBankPayments.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Admin\Reports\FINANCIAL_REPORTS\ReportLayouts\rptClaimsReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Admin\Reports\FINANCIAL_REPORTS\ReportLayouts\rptUnderwriterPayments.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Admin\Reports\ReportLayouts\FuneralPayments.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Admin\Reports\ReportLayouts\JoinedMembersByDate.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Admin\Reports\ReportLayouts\rdlcDetailedPayment.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Admin\Reports\ReportLayouts\rdlcExpenses.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Admin\Reports\ReportLayouts\rdlcQuotationByDate.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\Reports\ReportLayouts\rptAgentReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Admin\Reports\ReportLayouts\rptOutstandingPayment.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\Reports\ReportLayouts\rptFuneralArrangement.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\Reports\FINANCIAL_REPORTS\ReportLayouts\rdlcBankPayment.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Admin\Reports\ReportLayouts\rptMemberTransaction.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>4</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\Reports\ReportLayouts\rptAllMember.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\Reports\FINANCIAL_REPORTS\ReportLayouts\rdlcMemberBranches.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Admin\Reports\ReportLayouts\PolicyDocReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Funeral.BAL\Funeral.BAL.csproj">
+      <Project>{bcb95f76-ee8d-4731-a135-dcc61892b6ad}</Project>
+      <Name>Funeral.BAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Funeral.DAL\Funeral.DAL.csproj">
+      <Project>{60b989dd-65e9-40d1-8ae3-8d4fd653610b}</Project>
+      <Name>Funeral.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Funeral.Model\Funeral.Model.csproj">
+      <Project>{712492d7-52f0-4ab9-8433-42a9bc65d5f2}</Project>
+      <Name>Funeral.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Funral.Validation\Funeral.Validation.vbproj">
+      <Project>{afc5d78f-45e8-4712-804f-7a405e859b87}</Project>
+      <Name>Funeral.Validation</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\Reports\ReportLayouts\ReservationClaim.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>3863</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:3863/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,148 @@
+﻿@model Funeral.Model.AgentInfoSetupModel
+
+@*@Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/bootstrap")*@
+
+@*@Scripts.Render("~/bundles/jquery")*@
+@Scripts.Render("~/bundles/jqueryval")
+
+@using (Html.BeginForm("Save", "AgentInfoSetup", FormMethod.Post, new { id = "agentInfoSetupAdddEditform" }))
+{
+    <div class="col-lg-12">
+        <div class="ibox ">
+            <div class="ibox-title">
+                <h5>Agent Setup</h5>
+            </div>
+            <div class="ibox-content">
+                @Html.HiddenFor(m => m.ID)
+                @Html.HiddenFor(m => m.parlourid)
+                <div class="form-group row">
+                    <div class="messagealert" id="alert_container"></div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Surname, new { @class = "control-label" })
+                            <span class="text-danger"><em>*</em></span>
+                            @Html.TextBoxFor(m => m.Surname, null, new { @class = "form-control", @maxlength = "50", placeholder = "SurName" })
+                            @Html.ValidationMessageFor(m => m.Surname, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Fullname, new { @class = "control-label" })
+                            <span class="text-danger"><em>*</em></span>
+                            @Html.TextBoxFor(m => m.Fullname, null, new { @class = "form-control", @maxlength = "50", placeholder = "Full Name" })
+                            @Html.ValidationMessageFor(m => m.Fullname, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.percentage, new { @class = "control-label" })
+                            <span class="text-danger"><em>*</em></span>
+                            @Html.TextBoxFor(m => m.percentage, null, new { @class = "form-control", @maxlength = "4", placeholder = "PerCentage" })
+                            @Html.ValidationMessageFor(m => m.percentage, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ContactNumber, new { @class = "control-label" })
+                            <span class="text-danger"><em>*</em></span>
+                            @Html.TextBoxFor(m => m.ContactNumber, null, new { @class = "form-control", @maxlength = "10", placeholder = "Contact Number" })
+                            @Html.ValidationMessageFor(m => m.ContactNumber, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Email, new { @class = "control-label" })
+                            <span class="text-danger"><em>*</em></span>
+                            @Html.TextBoxFor(m => m.Email, null, new { @class = "form-control", @maxlength = "50", placeholder = "EMail" })
+                            @Html.ValidationMessageFor(m => m.Email, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Address1, new { @class = "control-label" })
+                            <span class="text-danger"><em>*</em></span>
+                            @Html.TextBoxFor(m => m.Address1, null, new { @class = "form-control", @maxlength = "50", placeholder = "Address1" })
+                            @Html.ValidationMessageFor(m => m.Address1, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Address2, new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.Address2, null, new { @class = "form-control", @maxlength = "50", placeholder = "Address2" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Address3, new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.Address3, null, new { @class = "form-control", @maxlength = "50", placeholder = "Address2" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Address4, new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.Address4, null, new { @class = "form-control", @maxlength = "50", placeholder = "Address4" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Code, new { @class = "control-label" })
+                            <span class="text-danger"><em>*</em></span>
+                            @Html.TextBoxFor(m => m.Code, null, new { @class = "form-control", @maxlength = "30", placeholder = "Code" })
+                            @Html.ValidationMessageFor(m => m.Code, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="form-group">
+            <div class="btn-group">
+                <input id="btnCancel" value="Cancel" class="btn btn-w-m btn-primary" />
+            </div>
+            <div class="btn-group">
+                @if (ViewBag.HasCreateRight)
+                {
+                    <input id="btnSubmit" type="submit" value="Save" class="btn btn-w-m btn-primary" />
+                }
+            </div>
+        </div>
+    </div>
+
+    if (TempData.Peek("IsAgentInfoSetupSaved") != null && (bool)TempData.Peek("IsAgentInfoSetupSaved") == true)
+    {
+        <script>
+            setTimeout(function () {
+                jQuery('#alert_container').append('<div id="alert_div" style="margin: 0 0.5%; -webkit-box-shadow: 3px 4px 6px #999;" class="alert fade in alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>AgentInfo setup saved successfully!</strong> </div>');
+                jQuery(".alert").fadeTo(7000, 0).slideUp(1000, function () {
+                    jQuery(this).remove();
+                });
+            }, 100);
+        </script>
+
+        TempData.Remove("IsAgentInfoSetupSaved");
+    }
+
+    <script type="text/javascript">
+		jQuery(document).ready(function () {
+
+			jQuery("#btnCancel").click(function (event) {
+				$("#Surname").val("");
+				$("#Fullname").val("");
+				$("#percentage").val("");
+				$("#ContactNumber").val("");
+				$("#Email").val("");
+				$("#Address1").val("");
+				$("#Address2").val("");
+				$("#Address3").val("");
+				$("#Address4").val("");
+				$("#Code").val("");
+			});
+
+
+            var form = jQuery("#agentInfoSetupAdddEditform");
+            form.validate();
+            jQuery("#btnSubmit").click(function (event) {
+                if (jQuery(form).valid()) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            });
+            eventConfigs.pageChange.action(RefreshAddEditData);
+            eventConfigs.searchClick.action(RefreshAddEditData);
+        });
+        function RefreshAddEditData(e) {
+            LoadAgentInfoAddEdit();
+        }
+    </script>
+
+}

@@ -3,3 +3,18 @@
 ################################################################################
 
 /Funeral.BAL/bin
+/Funeral.BAL/obj
+/Funeral.DAL/bin
+/Funeral.DAL/obj
+/Funeral.Model/bin
+/Funeral.Model/obj
+/Funeral.Services/.vs/config
+/Funeral.Services/.vs/Funeral.Services/v15
+/Funeral.Services/bin
+/Funeral.Services/obj
+/Funeral.Web/bin
+/Funeral.Web/obj
+/Funral.Validation/bin
+/Funral.Validation/obj
+/packages
+/.vs

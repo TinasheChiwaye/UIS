@@ -1,0 +1,165 @@
+﻿@model Funeral.Model.CustomDetails
+
+@Scripts.Render("~/bundles/jqueryval")
+
+@using (Html.BeginForm("Save", "CustomManagement", FormMethod.Post, new { id = "customManagementAddEditform" }))
+{
+    <div class="col-lg-12">
+        <div class="ibox ">
+            <div class="ibox-title">
+                <h5>Custom Management</h5>
+            </div>
+            <div class="ibox-content">
+                @Html.HiddenFor(m => m.Id)
+                @Html.HiddenFor(m => m.ParlourId)
+                <div class="form-group row">
+                    <div class="messagealert" id="alert_container"></div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.Label("Select Custom Grouping Type", new { @class = "control-label" })
+                            @Html.EnumDropDownListFor(m => m.CustomType, new { @id = "customType", @class = "form-control", onchange = "CustomTypeChange()" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Name", new { @class = "control-label" })
+                            <strong><span class="text-danger"><em>*</em></span></strong>
+                            @Html.TextBoxFor(m => m.Name, null, new { @class = "form-control", @maxlength = "35", placeholder = "Name" })
+                            @Html.HiddenFor(m => m.Name)
+                            @Html.ValidationMessageFor(m => m.Name, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.Label("Description", new { @class = "control-label" })
+                            <strong><span class="text-danger"><em>*</em></span></strong>
+                            @Html.TextAreaFor(m => m.Description, 5, 50, new { @class = "form-control", placeholder = "Description" })
+                            @Html.HiddenFor(m => m.Description)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="form-group">
+            <div class="btn-group">
+                <input type="button" id="btnCancel" value="Cancel" class="btn btn-w-m btn-primary" />
+            </div>
+            @if (ViewBag.HasCreateRight)
+            {
+                <div class="btn-group">
+                    <input id="btnSubmit" type="submit" value="Save" class="btn btn-w-m btn-primary" />
+                </div>
+            }
+            </div>
+    </div>
+
+    if (TempData.Peek("IsCustomManagementSaved") != null && (bool)TempData.Peek("IsCustomManagementSaved") == true)
+    {
+        <script>
+            ShowSaveMessage('#alert_container', 'Custom Management saved successfully!');
+        </script>
+
+        TempData.Remove("IsCustomManagementSaved");
+    }
+
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            jQuery.noConflict();
+
+            var customManagementId = '@Model.Id';
+
+            //Fill DropDown and select Item in Dropdown
+            if (customManagementId <= 0) {
+                var customType = '@((int)Model.CustomType)';
+
+                if (customType == 0) {
+                    jQuery(jQuery("select#customType")[0].options[1]).attr("selected", "selected")
+                    jQuery("select#customType")[0].options[0].remove();
+                    customType = jQuery("select#customType").val();
+                }
+                else {
+                    $('select#customType').val(customType);
+                }
+
+                LoadCustomManagementList(customType);
+            }
+            else {
+                LoadCustomManagementListData();
+            }
+
+            var form = jQuery("#customManagementAddEditform");
+            form.validate();
+
+            jQuery("#btnSubmit").click(function (event) {
+                if (jQuery(form).valid()) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            });
+
+            eventConfigs.pageChange.action(RefreshAddEditData);
+            eventConfigs.searchClick.action(RefreshAddEditData);
+
+        });
+
+        function CustomTypeChange() {
+
+            var customType = $("#customType").val();
+            eventConfigs.searchClick.data = { customType: customType };
+
+            jQuery("#Name").val('');
+            jQuery("#Description").val('');
+
+            model1.SarchText = '';            
+            LoadCustomManagementList(customType);
+        }
+
+        function LoadCustomManagementList(customType) {
+            eventConfigs.searchClick.data = { customType: customType };
+
+            var listUrl = '@Url.Action("List", "CustomManagement", new { customType = "CustomTypeVal" },Request.Url.Scheme)';
+            listUrl = listUrl.replace("CustomTypeVal", customType);
+
+            jQuery.ajax({
+                url: listUrl,
+                type: "Post",
+                contentType: 'application/json',
+                data: JSON.stringify(model1),
+                dataType: 'html'
+            })
+            .success(function (result) {
+                jQuery("#" + DOMIDs.List).html(result);
+            })
+            .error(function (xhr, status) {
+                alert(status);
+            });
+        }
+
+        function LoadCustomManagementListData() {
+
+            var customType = jQuery("#customType").val();
+
+            var listUrl = '@Url.Action("SearchData", "CustomManagement", new { customType = "CustomTypeVal" },Request.Url.Scheme)';
+            listUrl = listUrl.replace("CustomTypeVal", customType);
+
+            tableConfigs.SearchUrls = listUrl;
+            tableConfigs.table.DataTable().ajax.url(listUrl).load();
+        }
+
+        function RefreshAddEditData(e) {
+            LoadCustomManagementAddEdit(e.detail.customType);
+        }
+
+        jQuery("#btnCancel").click(function () {
+			jQuery("#customType").val("");
+            jQuery("#Name").val("");
+            jQuery("#Description").val("");
+        })
+
+    </script>
+
+}

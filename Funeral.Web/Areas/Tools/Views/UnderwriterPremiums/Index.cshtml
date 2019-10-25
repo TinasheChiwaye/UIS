@@ -1,0 +1,78 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/bundles/jquery")
+
+<script src="~/Scripts/app/searchdatatable.js"></script>
+<div class="row" id="UnderwriterPremiumsAddEdit"></div>
+<div class="row" id="UnderwriterPremiumsList"></div>
+<script>
+
+    var PkiUnderWriterSetupId = '@ViewBag.PkiUnderWriterSetupId';
+    var hasRight = '@ViewBag.HasAccess';
+
+    jQuery(function ($) {
+        $(document).ready(function () {
+            @*if (hasRight == 'False') {
+                var url = '@Url.Action("Error403", "Error", new { Area = "Admin" })';
+                window.location.href = url;
+            }
+            else {*@
+                LoadUnderwriterPremiumsList();
+                LoadUnderwriterPremiumsAddEdit();
+                DOMIDs.List = "UnderwriterPremiumsList";
+                DOMIDs.AddEdit = "UnderwriterPremiumsAddEdit";
+            //}
+        });
+    })
+
+    function LoadUnderwriterPremiumsList() {
+        jQuery.ajax({
+            url: '@Url.Action("List", "UnderwriterPremiums", new { area = "Tools" },Request.Url.Scheme)',
+            type: "Get",
+            contentType: "application/html; charset=utf-8",
+            dataType: 'html'
+        })
+        .success(function (result) {
+            jQuery("#" + DOMIDs.List).html(result);
+        })
+        .error(function (xhr, status) {
+            alert(status);
+        });
+    }
+
+    function LoadUnderwriterPremiumsAddEdit() {
+        var model = {
+            pkiUnderwriterID: 0,
+            PlanUnderwriter: '',
+            PlanId: '',
+            PlanName: '',
+            DependencyType: '',
+            PremiumAmount: '',
+            CoverAmount: '',
+            CoverAgeFrom: '',
+            CoverAgeTo: 0,
+            ApplysToDependents: true,
+            Parlourid: '00000000-0000-0000-0000-000000000000',
+            LastModified: '',
+            ModifiedUser: '',
+            UnderwriterPremium: 0,
+            UnderwriterCover: 0
+        };
+        jQuery.ajax({
+            url: '@Url.Action("Add", "UnderwriterPremiums", new { area = "Tools" },Request.Url.Scheme)',
+            type: "Get",
+            data: JSON.stringify(model),
+            contentType: "application/html; charset=utf-8",
+            dataType: 'html'
+        })
+        .success(function (result) {
+            jQuery("#" + DOMIDs.AddEdit).html(result);
+        })
+        .error(function (xhr, status) {
+            alert(status);
+        });
+    }
+</script>

@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/app/searchdatatable.js"></script>
+<div class="row" id="menulist"></div>
+
+<script>
+
+    var menuId = '@ViewBag.MenuId';
+    var hasRight = '@ViewBag.HasAccess';
+    jQuery(function ($){
+        $(document).ready(function () {
+            @*if (hasRight == 'False') {
+                var url = '@Url.Action("Error403", "Error", new { Area = "Admin" })';
+                window.location.href = url;
+            }
+            else {*@
+                LoadMenuList();
+                DOMIDs.List = "menulist";
+            //}
+        });
+    });
+
+    function LoadMenuList() {
+        jQuery.ajax({
+            url: '@Url.Action("List","Menu",new {},Request.Url.Scheme)',
+            type: "Get",
+            contentType: "application/html; charset=utf-8",
+            dataType: 'html'
+        })
+            .success(function (result) {
+                jQuery("#" + DOMIDs.List).html(result);
+        })
+        .error(function (xhr, status) {
+            alert(status);
+        });
+    }
+    
+</script>

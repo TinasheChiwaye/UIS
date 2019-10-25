@@ -1,0 +1,87 @@
+﻿@{
+	ViewBag.Title = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/bundles/jquery")
+
+<script src="~/Scripts/app/searchdatatable.js"></script>
+<div class="row" id="TombstonePakageaddedit"></div>
+<div class="row" id="TombstonePakagelist"></div>
+
+<script>
+    var TombstonePakageId = '@ViewBag.TombstonePakageId';
+    var hasRight = '@ViewBag.HasAccess';
+
+	jQuery(function (jQuery) {
+        jQuery(document).ready(function () {
+            @*if (hasRight == 'False') {
+                var url = '@Url.Action("Error403", "Error", new { Area = "Admin" })';
+                window.location.href = url;
+            }
+            else {*@
+                jQuery.noConflict();
+                LoadTombstonePakageList();
+                LoadTombstonePakageAddEdit();
+                DOMIDs.AddEdit = "TombstonePakageaddedit";
+                DOMIDs.ListPackage = "TombstonePakagelist";
+			//DOMIDs.ListServices = "TombstonePakagelist";
+            //}
+
+        });
+	});
+	
+
+	function LoadTombstonePakageList() {
+
+        jQuery.ajax({
+            url: '@Url.Action("ListPackage", "TombstonePackage", new {},Request.Url.Scheme)',
+            type: "Get",
+            contentType: "application/html; charset=utf-8",
+            dataType: 'html'
+        })
+			.success(function (result) {
+				jQuery("#" + DOMIDs.ListPackage).html(result);
+				//LoadTombstoneServicesList();
+
+        })
+        .error(function (xhr, status) {
+            alert(status);
+        });
+	}
+
+	@*function LoadTomstonrServicesList() {
+
+		jQuery.ajax({
+			url: '@Url.Action("ListServices", "TombstonePackage", new {}, Request.Url.Scheme)',
+			type: "Get",
+			concat: "application/html; charset=utf-8",
+			data: 'html'
+		})
+			.success(function (result) {
+				jQuery("#" + DOMIDs.ListServices).html(result);
+			})
+			.error(function (xhr, status) {
+				alert(status);
+			});
+
+	}*@
+
+	function LoadTombstonePakageAddEdit() {
+		var model = {};
+
+            jQuery.ajax({
+                url: '@Url.Action("Add", "TombstonePackage", new {},Request.Url.Scheme)',
+                type: "Post",
+                data: JSON.stringify(model),
+                contentType: "application/html; charset=utf-8",
+                dataType: 'html'
+            })
+            .success(function (result) {
+                jQuery("#" + DOMIDs.AddEdit).html(result);
+            })
+            .error(function (xhr, status) {
+                alert(status);
+            });
+	}
+</script>

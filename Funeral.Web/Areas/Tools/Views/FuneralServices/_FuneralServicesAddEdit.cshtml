@@ -1,0 +1,109 @@
+﻿@model Funeral.Model.FuneralServiceManageModel
+
+@Scripts.Render("~/bundles/jqueryval")
+@using (Html.BeginForm("Save", "FuneralServices", FormMethod.Post, new { id = "FuneralServicesAdddEditform" }))
+{
+    <div class="col-lg-12">
+        <div class="ibox ">
+            <div class="ibox-title">
+                <h5>Funeral Services</h5>
+            </div>
+            <div class="ibox-content">
+                @Html.HiddenFor(m => m.pkiServiceID)
+                @Html.HiddenFor(m => m.parlourid)
+                <div class="form-group row">
+                    <div class="messagealert" id="alert_container"></div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ServiceName, new { @class = "control-label" })
+                            <span class="text-danger"><em>*</em></span>
+                            @Html.TextBoxFor(m => m.ServiceName, null, new { @class = "form-control", @maxlength = "50" })
+                            @Html.ValidationMessageFor(m => m.ServiceName, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ServiceCost, new { @class = "control-label" })
+                            <span class="text-danger"><em>*</em></span>
+                            @Html.TextBoxFor(m => m.ServiceCost, null, new { @class = "form-control", @maxlength = "50" })
+                            @Html.ValidationMessageFor(m => m.ServiceCost, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.VendorName, new { @class = "control-label" })
+                            @Html.DropDownListFor(M => M.VendorId, new SelectList(ViewBag.VendorName, "Value", "Text"), "Select Value", new { @class = "form-control", @maxlength = "50" })
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ServiceDesc, new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.ServiceDesc, null, new { @class = "form-control", @maxlength = "50" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.QTY, new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.QTY, null, new { @class = "form-control", @maxlength = "50" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CostOfSale, new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.CostOfSale, null, new { @class = "form-control", @maxlength = "50" })
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <div class="btn-group">
+                                <a id="btnCancel" value="Cancel" class="btn btn-w-m btn-primary">Reset Field</a>  @*href="@Url.Action("Index", "FuneralServices")"*@
+                            </div>
+                            @if (ViewBag.HasCreateRight)
+                            {
+                                <div class="btn-group">
+                                    <input id="btnSubmit" type="submit" value="Save My Services" class="btn btn-w-m btn-primary" />
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    if (TempData.Peek("IsFuneralServicesSaved") != null && (bool)TempData.Peek("IsFuneralServicesSaved") == true)
+    {
+        <script>
+            ShowSaveMessage('#alert_container', 'Funeral Services saved successfully!');
+        </script>
+
+        TempData.Remove("IsFuneralServicesSaved");
+    }
+
+    <script type="text/javascript">
+
+        jQuery(document).ready(function () {
+            jQuery("#btnCancel").click(function (event) {
+                $("#ServiceName").val("");
+                $("#ServiceCost").val("");
+                $("#VendorId").val("");
+                $("#ServiceDesc").val("");
+                $("#QTY").val("");
+                $("#CostOfSale").val("");
+            });
+
+            var form = jQuery("#funeralServicesAdddEditform");
+            form.validate();
+            jQuery("#btnSubmit").click(function (event) {
+                if (jQuery(form).valid()) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            });
+
+            eventConfigs.pageChange.action(RefreshAddEditData);
+            eventConfigs.searchClick.action(RefreshAddEditData);
+        });
+
+        function RefreshAddEditData(e) {
+            LoadFuneralServicesAddEdit();
+        }
+    </script>
+
+}

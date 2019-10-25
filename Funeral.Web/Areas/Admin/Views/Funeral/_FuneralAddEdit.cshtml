@@ -1,0 +1,441 @@
+﻿@model Funeral.Model.FuneralModel
+
+@Scripts.Render("~/bundles/jqueryval")
+@{
+    Layout = null;
+}
+<script>
+    $('#BirthDay').datepicker({
+        format: 'dd MM yyyy'
+    });
+    $('#DOD').datepicker({
+        format: 'dd MM yyyy'
+    });
+    $('#DOF').datepicker({
+        format: 'dd MM yyyy'
+    });
+    //$('#TOF').datepicker({
+    //    format: 'dd MM yyyy'
+    //});
+
+    function convertToJSONDate(strDate) {
+        var splitted = strDate.split(".");
+        var dt = new Date(splitted[2], splitted[0], splitted[1]);
+        var newDate = new Date(Date.UTC(dt.getFullYear(), dt.getMonth(), dt.getDate(), dt.getHours(), dt.getMinutes(), dt.getSeconds(), dt.getMilliseconds()));
+        return '/Date(' + newDate.getTime() + ')/';
+    }
+    convertToJSONDate("12.1.2014");
+</script>
+@using (Html.BeginForm("Save", "Funeral", FormMethod.Post, new { id = "FuneralAddEditForm" }))
+{
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="col-lg-12">
+                <div class="ibox ">
+                    <div class="ibox-title">
+                        <h5>Deceased Info</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div id="vSummaryFuneral" style="color:Red;display:none;">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @Html.HiddenFor(m => m.pkiFuneralID)
+                            @Html.HiddenFor(m => m.parlourid)
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Last Name  <em class="text-danger">*</em> </label>
+                                    @Html.TextBoxFor(m => m.Surname, null, new { @class = "form-control", @id = "Surname", @maxlength = "25", placeholder = "Last Name" })
+                                </div>
+                                <div class="form-group">
+                                    <label>First Name  <em class="text-danger">*</em>  </label>
+                                    @Html.TextBoxFor(m => m.FullNames, null, new { @class = "form-control", @id = "FullNames", @maxlength = "25", placeholder = "First Name" })
+                                </div>
+                                <div class="form-group">
+                                    <label>ID Number <em class="text-danger">*</em>  </label>
+                                    @Html.TextBoxFor(m => m.IDNumber, null, new { @class = "form-control", @id = "IDNumber", @pattern = "/d*", @maxlength = "20", placeholder = "ID Number", onkeyup = "DateComparisionJavascriptFun();" })
+                                </div>
+                                <div class="form-group">
+                                    <label>Date of Birth </label>
+                                    @Html.TextBoxFor(m => m.DateOfBirth, null, new { @class = "form-control", @id = "BirthDay", @maxlength = "25", placeholder = "DD/MM/YYYY" })
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Gender</label>
+                                    <br>
+                                    &nbsp; &nbsp;
+                                    <input id="MainContent_rdbtnMale" type="radio" name="ctl00$MainContent$Gender" value="rdbtnMale" checked="checked"><label for="MainContent_rdbtnMale">Male</label>&nbsp; &nbsp;  &nbsp; &nbsp;
+                                    <input id="MainContent_rdbtnFemale" type="radio" name="ctl00$MainContent$Gender" value="rdbtnFemale"><label for="MainContent_rdbtnFemale">Female</label>
+
+                                </div>
+                                <div class="form-group">
+                                    <label>Cause of Death</label>
+                                    @Html.TextBoxFor(m => m.CourseOfDearth, null, new { @class = "form-control", @id = "COD", @maxlength = "50", placeholder = "" })
+                                </div>
+                                <div class="form-group">
+                                    <label>Date of Death </label>
+                                    @Html.TextBoxFor(m => m.DateOfDeath, null, new { @class = "form-control", @id = "DOD", @maxlength = "50", placeholder = "" })
+                                </div>
+                                <div class="form-group">
+                                    <label>Collected From</label>
+                                    @Html.TextBoxFor(m => m.BodyCollectedFrom, null, new { @class = "form-control", @id = "Collection", @maxlength = "50", placeholder = "" })
+                                </div>
+                                <div class="form-group">
+                                    <label>BI663 Serial No</label>
+                                    @Html.TextBoxFor(m => m.BI1663, null, new { @class = "form-control", @id = "SerialNo", @maxlength = "50", placeholder = "" })
+                                </div>
+                                <div class="form-group">
+                                    <label>Contact Person</label>
+                                    @Html.TextBoxFor(m => m.ContactPerson, null, new { @class = "form-control", @id = "ContactPerson", @maxlength = "50", placeholder = "" })
+                                </div>
+                                <div class="form-group">
+                                    <label>Burial Order No</label>
+                                    @Html.TextBoxFor(m => m.BurialOrderNo, null, new { @class = "form-control", @id = "BurialOrderNo", @maxlength = "50", placeholder = "" })
+                                </div>
+
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Street Address <em class="text-danger">*</em> </label>
+                                    @Html.TextBoxFor(m => m.Address1, null, new { @class = "form-control", @id = "StreetAddress", @maxlength = "50", placeholder = "" })
+                                </div>
+                                <div class="form-group">
+                                    <label>Town or City</label>
+                                    @Html.TextBoxFor(m => m.Address2, null, new { @class = "form-control", @id = "TownOrCity", @maxlength = "50", placeholder = "" })
+                                </div>
+                                <div class="form-group">
+                                    <label>Province</label>
+                                    @Html.TextBoxFor(m => m.Address3, null, new { @class = "form-control", @id = "Province", @maxlength = "50", placeholder = "" })
+                                </div>
+                                <div class="form-group">
+                                    <label>Code</label>
+                                    @Html.TextBoxFor(m => m.Address4, null, new { @class = "form-control", @id = "Code", @maxlength = "50", placeholder = "" })
+                                </div>
+                                <div class="form-group">
+                                    <label>Date of Funeral <em class="text-danger">*</em>  </label>
+                                    @Html.TextBoxFor(m => m.DateOfFuneral, null, new { @class = "form-control", @id = "DOF", @maxlength = "50", placeholder = "" })
+                                </div>
+                                <div class="form-group">
+                                    <label>Time of Funeral <em class="text-danger">*</em> </label>
+                                    @Html.TextBoxFor(m => m.TimeOfFuneral, null, new { @class = "form-control", @id = "TOF", @maxlength = "50", @type = "time", placeholder = "" })
+                                </div>
+                                <div class="form-group">
+                                    <label>Driver and Car </label>
+                                    @Html.TextBoxFor(m => m.DriverAndCars, null, new { @class = "form-control", @id = "DriverAndCar", @maxlength = "50", placeholder = "" })
+                                </div>
+                                <div class="form-group">
+                                    <label>Cemetery / Crematorium</label>
+                                    @Html.TextBoxFor(m => m.FuneralCemetery, null, new { @class = "form-control", @id = "Cemetery", @maxlength = "50", placeholder = "" })
+                                </div>
+                                <div class="form-group">
+                                    <label>Grave No</label>
+                                    @Html.TextBoxFor(m => m.GraveNo, null, new { @class = "form-control", @id = "GraveNo", @maxlength = "50", placeholder = "" })
+                                </div>
+                               <div class="form-group">
+                                    <label>Contact Number</label>
+                                    @Html.TextBoxFor(m => m.ContactPersonNumber, null, new { @class = "form-control", @id = "ContactNumber", @maxlength = "50", placeholder = "" })
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    @if (Model.pkiFuneralID == 0)
+                                    {
+                                        <div class="btn-group">
+                                            <input type="submit" name="btnProcessPayment" value="Process Payment" id="btnProcessPayment" disabled="disabled" class="aspNetDisabled btn btn-sm btn-primary">
+                                        </div>
+
+                                        <div class="btn-group">
+                                            <input type="submit" name="btnViewPayments" value="View Payments" id="btnViewPayments" disabled="disabled" class="aspNetDisabled btn btn-sm btn-primary">
+                                            <button type="button" style="display: none;" id="btnShowPopup" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#ucPaymentHistory">
+                                                View Payment
+                                            </button>
+                                        </div>
+                                        <div class="btn-group">
+                                            <div id="UpdatePanel2">
+                                                <input type="submit" name="BtnAddDocs" value="Add Docs" id="BtnAddDocs" disabled="disabled" class="aspNetDisabled btn btn-sm btn-primary" data-target="#GSCCModal" data-toggle="modal">
+                                            </div>
+                                        </div>
+
+                                        <div class="btn-group">
+                                            <input type="submit" name="btnService" value="Services" id="btnService" disabled="disabled" class="aspNetDisabled btn btn-sm btn-primary">
+                                        </div>
+                                        <div class="btn-group">
+                                            <input type="submit" name="btnClear" value="Clear Section" id="btnClear" disabled="disabled" class="aspNetDisabled btn btn-sm btn-primary">
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="btn-group">
+                                            <a href="@Url.Action("FuneralPayment", "Funeral", new { funeralId = Model.pkiFuneralID })" name="btnProcessPayment" value="Process Payment" id="btnProcessPayment" class="aspNetDisabled btn btn-sm btn-primary">Process Payment</a>
+                                        </div>
+
+                                        <div class="btn-group">
+                                            <a onclick="PaymentHistory(@Model.pkiFuneralID)" name="btnViewPayments" value="View Payments" id="btnViewPayments" class="aspNetDisabled btn btn-sm btn-primary">View Payments</a>
+                                        </div>
+                                        <div class="btn-group">
+                                            <div id="UpdatePanel2">
+                                                <input type="submit" name="BtnAddDocs" value="Add Docs" id="BtnAddDocs" class="aspNetDisabled btn btn-sm btn-primary" data-target="#GSCCModal" data-toggle="modal">
+                                            </div>
+                                        </div>
+
+                                        <div class="btn-group">
+                                            <a name="btnService" href="@Url.Action("FuneralServiceSelect", "Funeral", new { pkiFuneralID = Model.pkiFuneralID })" value="Services" id="btnService" class="btn btn-sm btn-primary">Services</a>
+                                            @*<input type="submit" name="btnService" value="Services" id="btnService" class="aspNetDisabled btn btn-sm btn-primary">*@
+                                        </div>
+                                        <div class="btn-group">
+                                            <input type="submit" name="btnClear" value="Clear Section" id="btnClear" class="aspNetDisabled btn btn-sm btn-primary">
+                                        </div>
+                                    }
+
+                                    <div class="btn-group">
+                                        @if (ViewBag.HasCreateRight)
+                                        {
+                                            <input type="submit" name="btnSave" value="Save" onclick="" id="btnSave" class="btn btn-sm btn-primary">
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ucPaymentHistory" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
+                    <h4 class="modal-title">Payment history</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped table-bordered table-hover" cellspacing="0" rules="all" border="1" id="ucPaymenthistory" style="width:100%;border-collapse:collapse;">
+                        <thead></thead>
+                        <tbody id="tbodyPaymentHistory"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="modal fade" id="GSCCModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
+                <h4 class="modal-title">Funeral Documents</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Select Supported Document File</label>
+                    <input type="file" name="flFuneral" id="flFuneral" class="form-control">
+                    @*<label>Only image formats (jpg, png, gif) are accepted</label>*@
+                    <span id="lblExtension1" style="color:Red;visibility:hidden;">Please Select Image</span>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <input type="radio" name="rdbDocument" id="rdbB1663Document" value="B1663Document" checked />
+                            <label>B1663 Document</label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="radio" name="rdbDocument" id="rdbDeathCertificate" value="DeathCertificate" />
+                            <label>Death Certificate</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-7"></div>
+                        <div class="col-sm-2">
+                            <input type="button" class="btn btn-primary" value="Save Document" onclick="SaveDocument()" />
+                        </div>
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-2">
+                            <button type="button" class="btn btn-primary close" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    jQuery(document).ready(function () {
+        var form = jQuery("#FuneralAddEditForm");
+        form.validate();
+        eventConfigs.pageChange.action(RefreshAddEditData);
+        eventConfigs.searchClick.action(RefreshAddEditData);
+
+        var birthDate = $('#BirthDay').val();
+        $('#BirthDay').datepicker({ format: 'dd MM yyyy',autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(birthDate)), "dd/mm/yyyy", false));
+        var dateOfDeath = $('#DOD').val();
+        $('#DOD').datepicker({ format: 'dd MM yyyy',autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(dateOfDeath)), "dd/mm/yyyy", false));
+        var dateOfFuneral = $('#DOF').val();
+        $('#DOF').datepicker({ format: 'dd MM yyyy',autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(dateOfFuneral)), "dd/mm/yyyy", false));
+        var timeoffuneral = $('#tof').val();
+        $('#tof').datepicker({ format: 'dd mm yyyy',autoclose: true }).datepicker("setdate", new Date(new Date().getTime() + 4 * 60 * 60 * 1000).toLocaleTimeString());
+        //$('#tof').datepicker({ format: 'dd mm yyyy' }).datepicker("setdate", dateformat(new Date(convertdate(timeoffuneral)), "dd/mm/yyyy", false));
+
+    });
+
+    function SaveDocument() {
+                                        var documentType = 0;
+                                        var doument = $("input[name='rdbDocument']:checked").val();
+                                        if (document = "DeathCertificate") {
+                                            documentType = 1;
+                                        }
+                                        if (window.FormData !== undefined) {
+
+                                            var funeralID = @Model.pkiFuneralID;
+                                            var fileUpdload = $("#flFuneral").get(0);
+                                            var files = fileUpdload.files;
+
+                                            var fileData = new FormData();
+
+                                            for (var i = 0; i < files.length; i++) {
+                                                fileData.append(files[i].name, files[i]);
+                                            }
+
+                                            fileData.append('username', 'Manas');
+                                            fileData.append('funeralID',funeralID);
+                                            fileData.append('docType',documentType)
+                                        }
+
+        $.ajax({
+                                            url: '/Funeral/SaveFuneralDocument',
+            type: "POST",
+            contentType: false,
+            processData: false,
+            data: fileData,
+            success: function (result) {
+                                                alert(result.ResponseStatus);
+                $("#GSCCModal .close").click()
+            },
+            error: function (err) {
+                                                alert(err.statusText);
+                                            }
+                                        });
+                                    }
+
+                                    function RefreshAddEditData(e) {
+                                        LoadFuneralAddEdit();
+                                    }
+
+                                    function DateComparisionJavascriptFun() {
+                                        var idNumber = $("#IDNumber").val();
+                                        var textLength = idNumber.length;
+                                        if (textLength == 13) {
+                                            Validate();
+                                        }
+                                    }
+                                    function isNumber(n) {
+                                        return !isNaN(parseFloat(n)) && isFinite(n);
+                                    }
+
+                                    Date.prototype.monthNames = [
+                                        "January", "February", "March",
+                                        "April", "May", "June",
+                                        "July", "August", "September",
+                                        "October", "November", "December"
+    ];
+
+    Date.prototype.getMonthName = function () {
+                                        return this.monthNames[this.getMonth()];
+                                    };
+
+                                    Date.prototype.getShortMonthName = function () {
+                                        return this.getMonthName().substr(0, 3);
+                                    };
+
+    $("#BtnAddDocs").click(function () {
+        event.preventDefault();
+        jQuery.noConflict();
+        window.$('#GSCCModal').modal();
+                                });
+
+    function Validate() {
+                                    var idNumber = $("#IDNumber").val();
+                                    // assume everything is correct and if it later turns out not to be, just set this to false
+                                    var correct = true;
+
+                                    //Ref: http://www.sadev.co.za/content/what-south-african-id-number-made
+                                    // SA ID Number have to be 13 digits, so check the length
+                                    if (idNumber.length != 13 || !isNumber(idNumber)) {
+                                        correct = false;
+                                    }
+
+
+                                    // get first 6 digits as a valid date
+
+                                    var tempDate = new Date(idNumber.substring(0, 2), idNumber.substring(2, 4) - 1, idNumber.substring(4, 6));
+                                    var id_date = tempDate.getDate();
+                                    var id_month = tempDate.getMonth();
+                                    var dMonth = id_month + 1;
+                                    var dMonthName = tempDate.getMonthName();
+                                    var id_year = tempDate.getFullYear();
+
+                                    var fullDate = id_date + " " + dMonthName + " " + id_year;
+                                    if (!((tempDate.getYear() == idNumber.substring(0, 2)) && (id_month == idNumber.substring(2, 4) - 1) && (id_date == idNumber.substring(4, 6)))) {
+                                        correct = false;
+                                    }
+
+                                    // get country ID for citzenship
+                                    var citzenship = parseInt(idNumber.substring(10, 11)) == 0 ? "Yes" : "No";
+
+                                    // apply Luhn formula for check-digits
+                                    var tempTotal = 0;
+                                    var checkSum = 0;
+                                    var multiplier = 1;
+                                    for (var i = 0; i < 13; ++i) {
+                                        tempTotal = parseInt(idNumber.charAt(i)) * multiplier;
+                                        if (tempTotal > 9) {
+                                            tempTotal = parseInt(tempTotal.toString().charAt(0)) + parseInt(tempTotal.toString().charAt(1));
+                                        }
+                                        checkSum = checkSum + tempTotal;
+                                        multiplier = (multiplier % 2 == 0) ? 1 : 2;
+                                    }
+                                    if ((checkSum % 10) != 0) {
+                                        //    error.append('<p>ID number does not appear to be authentic - check digit is not valid</p>');
+                                        correct = false;
+                                    };
+
+
+                                    // if no error found, hide the error message
+                                    if (correct) {
+            $("#BirthDay").val(fullDate);
+            $("#BirthDay").val(fullDate).datepicker('update');
+                                        var genderCode = idNumber.substring(6, 10);
+                                        var gender = parseInt(genderCode) < 5000 ? "Female" : "Male";
+
+                                        if (gender == "Female") {
+                $("#MainContent_rdbtnFemale").prop('checked', true)
+
+            } else {
+                $("#MainContent_rdbtnMale").prop('checked', true)
+            }
+                                    }
+                                    return false;
+                                }
+</script>

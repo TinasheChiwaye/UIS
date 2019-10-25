@@ -1,0 +1,93 @@
+﻿@{
+	ViewBag.Title = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/bundles/jquery")
+
+<script src="~/Scripts/app/searchdatatable.js"></script>
+<div class="row" id="Societysetupaddedit"></div>
+<div class="row" id="Societysetuplist"></div>
+<script>
+
+    var societyId = '@ViewBag.SocietyId';
+    var hasRight = '@ViewBag.HasAccess';
+
+	jQuery(function (jQuery) {
+        jQuery(document).ready(function () {
+            @*if (hasRight == 'False') {
+                var url = '@Url.Action("Error403", "Error", new { Area = "Admin" })';
+                window.location.href = url;
+            }
+            else {*@
+                jQuery.noConflict();
+                LoadSocietyList();
+                LoadSocietyAddEdit();
+                DOMIDs.AddEdit = "Societysetupaddedit";
+                DOMIDs.List = "Societysetuplist";
+            //}
+        });
+    });
+
+	function LoadSocietyList() {
+
+        jQuery.ajax({
+            url: '@Url.Action("List", "SocietySetup", new {},Request.Url.Scheme)',
+            type: "Get",
+            contentType: "application/html; charset=utf-8",
+            dataType: 'html'
+        })
+			.success(function (result) {
+            jQuery("#" + DOMIDs.List).html(result);
+        })
+        .error(function (xhr, status) {
+            alert(status);
+        });
+    }
+
+	function LoadSocietyAddEdit() {
+
+    //        var model = {
+				//pkiPlanID = 0,
+				//PlanName = '',
+				//PlanDesc = '',
+				//PlanSubscription = 0,
+				//Spouse = 0,
+				//Children = 0,
+				//Cover = 0,
+				//WaitingPeriod = 0,
+				//AgentSplit = 0,
+				//PolicyLaps = 0,
+				//SpouseCover = 0,
+				//AdultCover = 0,
+				//JoiningFee = 0,
+				//HeadManagerSplit = 0,
+				//OfficeSplit = 0,
+				//AdminSplit = 0,
+				//CompanySplit = 0,
+				//Cover0to5year = 0,
+				//Cover6to13year = 0,
+				//Cover14to21year = 0,
+				//Cover22to40year = 0,
+				//Cover41to59year = 0,
+				//Cover60to65year = 0,
+				//Cover66to75year = 0,
+				//CashPayout = 0
+    //    };
+		var model = {};
+
+            jQuery.ajax({
+                url: '@Url.Action("Add", "SocietySetup", new {},Request.Url.Scheme)',
+                type: "Post",
+                data: JSON.stringify(model),
+                contentType: "application/html; charset=utf-8",
+                dataType: 'html'
+            })
+            .success(function (result) {
+                jQuery("#" + DOMIDs.AddEdit).html(result);
+            })
+            .error(function (xhr, status) {
+                alert(status);
+            });
+    }
+</script>

@@ -1,0 +1,211 @@
+﻿@model Funeral.Model.Search.CustomManagementSearch
+
+<div class="dataTables_wrapper" id="tblCustomManagementSearch_wrapper">
+    <div class="col-lg-12">
+        <div class="ibox ">
+            <div class="ibox-title">
+                <h5>Custom Management List</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-lg-1" id="dvAdministrator">
+                        <div class="form-group">
+                            <label>Show entries</label>
+                            @Html.DropDownListFor(m => m.PageSize, new SelectList(ViewBag.EntriesCount, "Value", "Key"), new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-sm-5 col-sm-offset-6">
+                        <div class="form-group">
+                            <label>Search Branch:</label>
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.SarchText, null, new { @class = "form-control", @maxlength = "50", placeholder = "Search by keyword" })
+                                <span class="input-group-btn">
+                                    <input type="button" id="btnSearch" value="Search" class="btn btn-w-m btn-primary" />
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-9">
+                        <asp:Label ID="lblRecords" runat="server" Text=""></asp:Label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 ">
+                        <div class="table-responsive">
+                            @Html.EditorFor(model => model.PageNum, new { htmlAttributes = new { @class = "hidden", id = "PageNum1" } })
+                            @Html.EditorFor(model => model.PageSize, new { htmlAttributes = new { @class = "hidden", id = "PageSize1" } })
+                            @Html.Hidden("ItemId")
+                            <table id="customManagementDataTable" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>BranchName</th>
+                                        <th>Custom Type</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+        //var customType = "";
+
+        jQuery(document).ready(function ($) {
+            $.noConflict();
+
+            ConfigureDatatable();
+            InitDataTable();
+
+            eventConfigs.pageChange.eventName = 'btnPageChanged';
+            eventConfigs.pageChange.domElement = $('#PageSize')[0];
+            eventConfigs.searchClick.eventName = 'btnSearchClicked';
+            eventConfigs.searchClick.domElement = $('#btnSearch')[0];
+            eventConfigs.searchClick.data = { customType: @ViewBag.CustomType };
+
+            $('#PageSize').change(function () {
+                InitModel();
+                tableConfigs.table.DataTable().page.len(model1.PageSize).draw();
+                eventConfigs.pageChange.dispatchEvent();
+            });
+
+            $("#btnSearch").click(function () {
+                InitModel();                
+                eventConfigs.searchClick.attachEvent();
+                eventConfigs.searchClick.dispatchEvent();
+                tableConfigs.table.fnDraw();
+            });
+
+        });
+
+        function ConfigureDatatable(){
+            customType = '@ViewBag.CustomType';
+            eventConfigs.searchClick.data = { customType: customType };
+
+            var sortOrder = @Html.Raw(Json.Encode(@Model.SortOrder));
+            var sortBy =@Html.Raw(Json.Encode(@Model.SortBy));
+            var totalRecord =@Html.Raw(Json.Encode(@Model.TotalRecord));
+            var pageNum =@Html.Raw(Json.Encode(@Model.PageNum));
+            var pageSize =@Html.Raw(Json.Encode(@Model.PageSize));
+            var searchText =@Html.Raw(Json.Encode(@Model.SarchText));
+
+            DOMIDs.Datatable = "customManagementDataTable";
+            tableConfigs.SearchUrls = '@Url.Action("SearchData", "CustomManagement", new { customType = ViewBag.CustomType }, Request.Url.Scheme)';
+            setsearchmodel('200', sortOrder, sortBy, totalRecord, pageNum, pageSize, searchText);
+
+            columnsArray =
+                [{ "data": "Id", "name": "Id", "autoWidth": true, "visible": false },
+                { "data": "Name", "name": "Branch Name", "autoWidth": true },
+                { "data": "CustomType", "name": "Custom Type", "autoWidth": true, "visible": false },
+                {
+                    "render": function (data, type, full, meta) {
+
+                            var hasEditRights = '@ViewBag.HasEditRight' == "True" ? true : false;
+                            var hasDeleteRights = '@ViewBag.HasDeleteRight' == "True" ? true : false;
+
+                            if (hasEditRights || hasDeleteRights) {
+                                tableConfigs.table.DataTable().columns([3]).visible(true)
+                                var dom = "<div class='row'>";
+
+                                if (hasEditRights) {
+                                    var editMemberUrl = '<div class="col-sm-4 text-center"><a  onclick="EditCustomManagement(\'' + full.Id + '\',\'' + full.CustomType + '\')"><i class="fa fa-edit"></i></a></div>';
+                                    dom = dom + editMemberUrl;
+                                }
+
+                                if (hasDeleteRights) {
+                                    var deleteMemberUrl = '<div class="col-sm-4 text-center"> <a onclick="DeleteCustomManagement(\'' + full.Id + '\',\'' + full.CustomType + '\')"; ><i class="fa fa-trash-o"></i></a></div>';
+                                    dom = dom + deleteMemberUrl;
+                                }
+
+                                dom = dom + "</div>";
+                                return dom;
+                            }
+                            else {
+                                tableConfigs.table.DataTable().columns([3]).visible(false);
+                                return "";
+                            }
+
+                        //return '<div class="row"><div class="col-sm-4 text-center"><a  onclick="EditCustomManagement(\'' + full.Id + '\',\'' + full.CustomType + '\')"><i class="fa fa-edit"></i></a></div><div class="col-sm-4 text-center"> <a onclick="DeleteCustomManagement(\'' + full.Id + '\',\'' + full.CustomType + '\')"; ><i class="fa fa-trash-o"></i></a></div></div>';
+                    }
+                }];
+        }
+
+        function InitModel() {
+            model1.PageNum = 1;
+            model1.PageSize = $('#PageSize').val();
+            model1.SarchText = $("#SarchText").val();
+            $("#PageNum1").val(model1.PageNum);
+        }
+
+        function EditCustomManagement(id, customType) {            
+
+            $("#ItemId").val(id);
+
+            var editUrl = '@Url.Action("Edit","CustomManagement",new { id = "CustomManagementIdVal", customType= "CustomTypeVal" },Request.Url.Scheme)';
+            editUrl = editUrl.replace("CustomManagementIdVal", id);
+            editUrl = editUrl.replace("CustomTypeVal", customType);
+
+            $.ajax({
+                url: editUrl,
+                type: "Get",
+                contentType: "application/html; charset=utf-8",
+                dataType: 'html'
+            })
+            .success(function (result) {
+                $("#" + DOMIDs.AddEdit).html(result);
+                $('html, body').animate({
+                    scrollTop: $("#customManagementAddEditform").offset().top
+                }, 50);
+            })
+            .error(function (xhr, status) {
+                alert(status);
+            });
+        }
+
+        function DeleteCustomManagement(customTypeId,customType) {            
+
+            var isConfirmed = confirm('Are you sure you want to delete?');
+
+            if (isConfirmed) {
+                $("#ItemId").val(customTypeId);
+
+                var deleteUrl = '@Html.Raw(Url.Action("Delete","CustomManagement",new { @customTypeId = "CustomManagementIdVal", @customType = "CustomTypeVal" },Request.Url.Scheme))';
+                deleteUrl = deleteUrl.replace("CustomManagementIdVal", parseInt(customTypeId));
+                deleteUrl = deleteUrl.replace("CustomTypeVal", parseInt(customType));
+
+                model1.PageNum = 1;
+
+                $.ajax({
+                    url: deleteUrl,
+                    type: "Get",
+                    contentType: "application/html; charset=utf-8",
+                    dataType: 'html'
+                })
+                .success(function (result) {
+                    InitModel();
+                    LoadCustomManagementData(customType);
+                })
+                .error(function (xhr, status) {
+                    alert(status);
+                });
+            }
+        }
+
+        function LoadCustomManagementData(customType) {            
+
+            var listUrl = '@Url.Action("SearchData", "CustomManagement", new { customType = "CustomTypeVal" },Request.Url.Scheme)';
+            listUrl = listUrl.replace("CustomTypeVal", customType);            
+
+            tableConfigs.SearchUrls = listUrl;
+            tableConfigs.table.DataTable().ajax.url(listUrl).load();
+        }
+</script>
+}

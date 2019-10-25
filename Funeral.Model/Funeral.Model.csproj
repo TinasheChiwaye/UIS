@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{712492D7-52F0-4AB9-8433-42A9BC65D5F2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Funeral.Model</RootNamespace>
+    <AssemblyName>Funeral.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>Svn</SccProjectName>
+    <SccLocalPath>Svn</SccLocalPath>
+    <SccAuxPath>Svn</SccAuxPath>
+    <SccProvider>SubversionScc</SccProvider>
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime">
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WebGrease">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccountTypeModel.cs" />
+    <Compile Include="AdditionalApplicationSettingsModel.cs" />
+    <Compile Include="AdditionalMemberInfoModel.cs" />
+    <Compile Include="AddonProductsModal.cs" />
+    <Compile Include="AdminModel.cs" />
+    <Compile Include="AgentInfoSetupModel.cs" />
+    <Compile Include="AgentModel.cs" />
+    <Compile Include="ApplicationSettingsModel.cs" />
+    <Compile Include="ApplicationTnCModel.cs" />
+    <Compile Include="Attributes\ValidateDateAttribute.cs" />
+    <Compile Include="Attributes\ValidateIdAttribute.cs" />
+    <Compile Include="BankingDetailSending.cs" />
+    <Compile Include="BankModel.cs" />
+    <Compile Include="BaseViewModel.cs" />
+    <Compile Include="Base\BaseResult.cs" />
+    <Compile Include="Beneficiary_model.cs" />
+    <Compile Include="BranchModel.cs" />
+    <Compile Include="ChangeStatusReason.cs" />
+    <Compile Include="ClaimsModel.cs" />
+    <Compile Include="ClaimsViewModel.cs" />
+    <Compile Include="ConsumableOrders.cs" />
+    <Compile Include="CountryModel.cs" />
+    <Compile Include="CustomDetails.cs" />
+    <Compile Include="CustomDetailsEnum.cs" />
+    <Compile Include="ExpensesModel.cs" />
+    <Compile Include="FamilyDependencyModel.cs" />
+    <Compile Include="FamilyDependencyTypeModel.cs" />
+    <Compile Include="ClaimDocumentModel.cs" />
+    <Compile Include="FileUploadModel.cs" />
+    <Compile Include="FuneralDocumentModel.cs" />
+    <Compile Include="FuneralEnum.cs" />
+    <Compile Include="FuneralModel.cs" />
+    <Compile Include="FuneralServiceManageModel.cs" />
+    <Compile Include="FuneralServiceSelectModel.cs" />
+    <Compile Include="GroupPayment.cs" />
+    <Compile Include="ISiteSettings.cs" />
+    <Compile Include="JoiningFeeModel.cs" />
+    <Compile Include="KeyName.cs" />
+    <Compile Include="KeyValue.cs" />
+    <Compile Include="MemberExcelData.cs" />
+    <Compile Include="MemberInvoiceModel.cs" />
+    <Compile Include="MemberNotesModel.cs" />
+    <Compile Include="MembersModel.cs" />
+    <Compile Include="MembersPaymentModel.cs" />
+    <Compile Include="MembersViewModel.cs" />
+    <Compile Include="NewMemberInvoiceModel.cs" />
+    <Compile Include="NewRightsModel.cs" />
+    <Compile Include="OtherPaymentModel.cs" />
+    <Compile Include="PackageServiceModel.cs" />
+    <Compile Include="PackageServicesSelectionModel.cs" />
+    <Compile Include="ResponseResult.cs" />
+    <Compile Include="OtherPaymentsSearchResult.cs" />
+    <Compile Include="Search\AddOnProductSearch.cs" />
+    <Compile Include="Search\OthrePaymentSearch.cs" />
+    <Compile Include="Search\MenuSearch.cs" />
+    <Compile Include="Search\PackageServiceSearch.cs" />
+    <Compile Include="Search\PackageSearch.cs" />
+    <Compile Include="Search\ExpenseCategorySearch.cs" />
+    <Compile Include="Search\CustomManagementSearch.cs" />
+    <Compile Include="Search\CompanySearch.cs" />
+    <Compile Include="Search\BranchSearch.cs" />
+    <Compile Include="Search\AgentSearch.cs" />
+    <Compile Include="Search\MemberSearch.cs" />
+    <Compile Include="PlanModel.cs" />
+    <Compile Include="PolicyModel.cs" />
+    <Compile Include="MemberAddonProductsModel.cs" />
+    <Compile Include="ProgressStatus.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuotationDiscountModel.cs" />
+    <Compile Include="QuotationDiscountsModel.cs" />
+    <Compile Include="QuotationMessageModel.cs" />
+    <Compile Include="QuotationModel.cs" />
+    <Compile Include="QuotationServicesModel.cs" />
+    <Compile Include="QuotationViewModel.cs" />
+    <Compile Include="RelationShipModel.cs" />
+    <Compile Include="RightsModel.cs" />
+    <Compile Include="RolePlayerModel.cs" />
+    <Compile Include="ScheduleEmailReport.cs" />
+    <Compile Include="Search\BaseSearch.cs" />
+    <Compile Include="SearchResult.cs" />
+    <Compile Include="Search\PaymentSearch.cs" />
+    <Compile Include="Search\SearchResult.cs" />
+    <Compile Include="SecureGroupModel.cs" />
+    <Compile Include="SecureUserGroupsModel.cs" />
+    <Compile Include="SecureUsersModel.cs" />
+    <Compile Include="SendReminderModel.cs" />
+    <Compile Include="SiteSettings.cs" />
+    <Compile Include="smsSendingGroupModel.cs" />
+    <Compile Include="smsTempletModel.cs" />
+    <Compile Include="SocietyModel.cs" />
+    <Compile Include="StatusModel.cs" />
+    <Compile Include="SupportedDocumentModel.cs" />
+    <Compile Include="TaxSetting.cs" />
+    <Compile Include="tblPageModel.cs" />
+    <Compile Include="TombStoneModel.cs" />
+    <Compile Include="TombstonePackageModel.cs" />
+    <Compile Include="TombStoneServiceSelectModel.cs" />
+    <Compile Include="TombStonesPaymentModel.cs" />
+    <Compile Include="UnderwriterModel.cs" />
+    <Compile Include="UnderwriterPremiumEnums.cs" />
+    <Compile Include="UnderwriterPremiumModel.cs" />
+    <Compile Include="UnderwriterSetupModel.cs" />
+    <Compile Include="VendorModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="PageSearch\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Funral.Validation\Funeral.Validation.vbproj">
+      <Project>{afc5d78f-45e8-4712-804f-7a405e859b87}</Project>
+      <Name>Funeral.Validation</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

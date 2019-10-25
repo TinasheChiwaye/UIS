@@ -1,0 +1,194 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Scripts.Render("~/bundles/jquery")
+
+<script src="~/Scripts/app/searchdatatable.js"></script>
+<script src="~/Scripts/plugins/dateformat/DateFormat.js"></script>
+
+<div class="row" id="Funeraladdedit"></div>
+<div class="row" id="Funerallist"></div>
+<style>
+    .modal-backdrop {
+        position: fixed;
+        top: auto !important;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1040;
+        background-color: #000;
+    }
+
+    .modal {
+        position: fixed;
+        top: 48% !important;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1050;
+        display: none;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+        outline: 0;
+    }
+</style>
+<script>
+    var FuneralId = '@ViewBag.FuneralIdS';
+    var hasRight = '@ViewBag.HasAccess';
+    jQuery(function ($) {
+        $(document).ready(function () {
+            @*if (hasRight == 'False') {
+                var url = '@Url.Action("Error403", "Error", new { })';
+                window.location.href = url;
+            }
+            else {*@
+                $.noConflict();
+                LoadFuneralList();
+                LoadFuneralAddEdit();
+                DOMIDs.AddEdit = "Funeraladdedit";
+                DOMIDs.List = "Funerallist";
+            //}
+        });
+    });
+
+    function LoadFuneralList() {
+        jQuery.ajax({
+            url: '@Url.Action("List", "Funeral", new {},Request.Url.Scheme)',
+            type: "Get",
+            contentType: "application/html; charset=utf-8",
+            dataType: 'html'
+        })
+           .success(function (result) {
+            jQuery("#" + DOMIDs.List).html(result);
+        })
+        .error(function (xhr, status) {
+            alert(status);
+        });
+    }
+
+    function LoadFuneralAddEdit() {
+
+        var model = {
+            pkiFuneralID: 0,
+            Title: '',
+            FullNames: '',
+            Surname: '',
+            Gender: '',
+            IDNumber: '',
+            DateOfBirth: '',
+            DateOfDeath: '',
+            DateOfFuneral: '',
+            TimeOfFuneral: '',
+            FuneralCemetery: '',
+            Address1: '',
+            Address2: '',
+            Address3: '',
+            Address4: '',
+            Code: '',
+            MemeberNumber: '',
+            ContactPerson: '',
+            ContactPersonNumber: '',
+            BodyCollectedFrom: '',
+            CourseOfDearth: '',
+            Claimnumber: '',
+            BI1663: '',
+            DriverAndCars: '',
+            GraveNo: '',
+        };
+
+        jQuery.ajax({
+            url: '@Url.Action("Add", "Funeral", new {},Request.Url.Scheme)',
+            type: "Post",
+            data: JSON.stringify(model),
+            contentType: "application/html; charset=utf-8",
+            dataType: 'html'
+        })
+        .success(function (result) {
+            jQuery("#" + DOMIDs.AddEdit).html(result);
+        })
+        .error(function (xhr, status) {
+            alert(status);
+        });
+    }
+
+
+    function ClearAllFields() {
+        $("#ContactTitle").val('')
+        $("#ContactLastName").val('');
+        $("#ContactFirstName").val('');
+        $("#CellNumber").val('');
+        $("#TelNumber").val('');
+        $("#AddressLine1").val('');
+        $("#AddressLine2").val('');
+        $("#AddressLine3").val('');
+        $("#AddressLine4").val('');
+        $("#Code").val('');
+    }
+
+    //#region ConvertDate
+    function ConvertDate(date) {
+        if (date != undefined && date != '' && date != null) {
+            return dateFormat(new Date(parseInt(date.replace('/Date(', ''))), "yyyy/mm/dd", false)
+            //return dateFormat(new Date(parseInt(date.replace('/Date(', ''))), "mm/dd/yyyy", true)
+        }
+        else {
+            return dateFormat(new Date(0001, 00, 01), "yyyy/mm/dd", false);
+        }
+    }
+    //#endregion
+
+    function PaymentHistory(funeralID) {
+
+        jQuery("#ucPaymentHistory").modal({
+            show: 'true'
+        });
+
+        data = {
+            FuneralId: funeralID
+        }
+        $.ajax({
+            url: '@Url.Action("PaymentHistory","Funeral")',
+            data: data,
+            type: "Get",
+        })
+        .success(function (result) {
+            if (result.FunerlaPaymentList != null) {
+                var test = "";
+                for (var i = 0; i < result.FunerlaPaymentList.length; i++) {
+                    test += "<tr>";
+                    var data = result.FunerlaPaymentList[i].DatePaid;
+
+                    var date = new Date(parseInt(data.replace('/Date(', '')));
+                    date = dateFormat(date, dateFormat.masks.isoDate, true);
+                    test += "<td class='visible-lg'>" + date.toString("dd-mm-yyyy") + "</td>";
+                    test += "<td align='right'>" + result.FunerlaPaymentList[i].AmountPaid + "</td>";
+                    test += "<td class='visible-lg'>" + result.FunerlaPaymentList[i].RecievedBy + "</td>";
+                    test += "<td class='visible-lg'>" + result.FunerlaPaymentList[i].Notes + "</td>";
+                    test += "<td class='visible-lg'>&nbsp;<a id='ucPaymenthistory' title='Click here Print' target='_blank' href='" + '@Url.Action("PrintForm","Funeral")' + "'><i class='glyphicon glyphicon-print'></i></a></td>";
+                    test += "</tr>";
+                    $("#tbodyPaymentHistory").html(test);
+
+
+                }
+
+            } else {
+
+            }
+        })
+                    .error(function (xhr, status) {
+                        alert(status);
+                    })
+    }
+
+</script>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div id="ErrorModel"></div>
+</body>
+</html>

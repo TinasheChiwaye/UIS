@@ -1,0 +1,103 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Scripts.Render("~/bundles/jquery")
+<script src="~/Scripts/app/searchdatatable.js"></script>
+<div class="row" id="Quotationaddedit"></div>
+<div class="row" id="Quotationlist"></div>
+
+<style>
+    .table-responsive {
+        min-height: .01%;
+        overflow-x: hidden !important;
+    }
+</style>
+<script>
+
+    var QuotationId = '@ViewBag.QuotationId';
+     var hasRight = '@ViewBag.HasAccess';
+    jQuery(function ($) {
+        $(document).ready(function () {
+                $.noConflict();
+                LoadQuotationList();
+                LoadQuotationAddEdit();
+                DOMIDs.AddEdit = "Quotationaddedit";
+                DOMIDs.List = "Quotationlist";
+        });
+    });
+
+    function LoadQuotationList() {
+        jQuery.ajax({
+            url: '@Url.Action("List", "Quotation", new {},Request.Url.Scheme)',
+            type: "Get",
+            contentType: "application/html; charset=utf-8",
+            dataType: 'html'
+        })
+        .success(function (result) {
+            jQuery("#" + DOMIDs.List).html(result);
+        })
+        .error(function (xhr, status) {
+            alert(status);
+        });
+    }
+
+    function LoadQuotationAddEdit() {
+
+        var model = {
+            QuotationID: 0,
+            ContactTitle: '',
+            ContactFirstName: '',
+            ContactLastName: '',
+            TelNumber: '',
+            CellNumber: '',
+            AddressLine1: '',
+            AddressLine2: '',
+            AddressLine3: '',
+            AddressLine4: '',
+            Code: '',
+            DateOfQuotation: '',
+            Region: '',
+        };
+
+        jQuery.ajax({
+            url: '@Url.Action("Add", "Quotation", new {},Request.Url.Scheme)',
+            type: "Post",
+            data: JSON.stringify(model),
+            contentType: "application/html; charset=utf-8",
+            dataType: 'html'
+        })
+        .success(function (result) {
+            jQuery("#" + DOMIDs.AddEdit).html(result);
+        })
+        .error(function (xhr, status) {
+            alert(status);
+        });
+    }
+
+
+    function ClearAllFields() {
+        $("#ContactTitle").val('')
+        $("#ContactLastName").val('');
+        $("#ContactFirstName").val('');
+        $("#CellNumber").val('');
+        $("#TelNumber").val('');
+        $("#AddressLine1").val('');
+        $("#AddressLine2").val('');
+        $("#AddressLine3").val('');
+        $("#AddressLine4").val('');
+        $("#Code").val('');
+    }
+</script>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+
+
+
+</body>
+</html>

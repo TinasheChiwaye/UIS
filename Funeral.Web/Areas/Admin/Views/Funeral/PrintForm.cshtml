@@ -1,0 +1,396 @@
+﻿@model Funeral.Web.Areas.Admin.Models.ViewModel.FuneralServiceVM
+
+@{
+    Layout = null;
+    var totalServiceAmount = 0.00;
+    var taxAmount = 0.00;
+    var discAmount = 0.00;
+    var totalAmount = 0.00;
+    var base64 = Convert.ToBase64String(Model.ApplicationSettings.ApplicationLogo);
+    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+}
+<link href="~/Content/Invoice/style.css" rel="stylesheet" />
+<script>
+    function printDiv(divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+    }
+</script>
+<style>
+    #project span {
+        color: #5D6975;
+        text-align: right;
+        margin-right: 10px;
+        display: inline-block;
+        font-size: 0.9em;
+    }
+</style>
+<html>
+<head>
+</head>
+<body>
+    <input type="button" onclick="printDiv('PrintDiv')" value="Print This..">
+    <div id="PrintDiv">
+        <div>
+            <div>
+                <header class="clearfix">
+                    <h1>
+                        <span id="lblHeading">Funeral</span>
+                    </h1>
+                    <div id="logo">
+                        <img id="ImagePreview" src="@imgSrc" align="left" style="height:100px;width:100px;">
+                    </div>
+                    <div id="project" style="font-size: 15px; padding-left: 50px">
+                        <table style="padding: 0">
+                            <tbody>
+                                <tr>
+                                    <td style="padding-top: .0em; padding-bottom: .0em; text-align: left;">
+                                        <div>
+                                            <span>
+                                                <strong style="font-size: 15px;">
+                                                    @Model.ApplicationSettings.ApplicationName
+                                                </strong>
+                                            </span>
+                                        </div>
+
+
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-top: .0em; padding-bottom: .0em; text-align: left;">
+                                        <div>
+                                            <span id="lblAdd1">@Model.ApplicationSettings.BusinessAddressLine1</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-top: .0em; padding-bottom: .0em; text-align: left;">
+                                        <div>
+                                            <span id="lblAdd2">@Model.ApplicationSettings.BusinessAddressLine2</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-top: .0em; padding-bottom: .0em; text-align: left;">
+                                        <div>
+                                            <span id="lblAdd3">@Model.ApplicationSettings.BusinessAddressLine3</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-top: .0em; padding-bottom: .0em; text-align: left; padding-left: 0">
+                                        <div>
+                                            <span id="lblAdd4">@Model.ApplicationSettings.BusinessAddressLine4</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-top: .0em; padding-bottom: .0em; text-align: left;">
+                                        <div>
+                                            <span>
+                                                Code:
+                                                <span id="lblCode">@Model.ApplicationSettings.BusinessPostalCode</span>
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-top: .0em; padding-bottom: .0em; text-align: left;">
+                                        <div>
+                                            <span>
+                                                Email:
+                                                @Model.ApplicationSettings.ManageEmail
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-top: .0em; padding-bottom: .0em; text-align: left;">
+                                        <div><span>VAT:@Model.ApplicationSettings.VatNo</span></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-top: .0em; padding-bottom: .0em; text-align: left;">
+                                        <div><span>Telephone:&nbsp;@Model.ApplicationSettings.ManageCellNumber</span></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-top: .0em; padding-bottom: .0em; text-align: left;">
+                                        <div><span>Cell number:&nbsp;@Model.ApplicationSettings.OwnerCellNumber</span></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-top: .0em; padding-bottom: .0em; text-align: left;">
+                                        <div><span>Email:&nbsp;@Model.ApplicationSettings.OwnerEmail</span></div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="company" class="clearfix">
+                        <table style="font-size:12px;">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <b><span id="lblNumber1">Funeral Number</span></b>
+                                    </td>
+                                    <td><b>:</b></td>
+                                    <td style="text-align: left;">
+                                        <span id="lblNumber2">@Model.objFuneralModel.MemeberNumber</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>Date</b></td>
+                                    <td><b>:</b></td>
+                                    <td style="text-align: left;">
+                                        <span id="lblDate">@Model.objFuneralModel.DateOfFuneral.ToString("dd MM yyyy")</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span id="lblDueDate"></span>
+                                    </td>
+                                    <td>
+                                        <span id="lblsemi"></span>
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <span id="lblDueDate1"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </header>
+
+                <h1></h1>
+                <div id="company" class="clearfix" style="text-align: right">
+                    <div>
+                        <span id="lblInvoiceDateTitle">Funeral date</span>:<span id="lblInvoiceDate">@Model.objFuneralModel.DateOfFuneral.ToString("dd MM yyyy")</span>
+                    </div>
+                    <div>
+                        <span id="lblDecename1"></span>:<span id="lblDecename2"></span>
+                    </div>
+                    <div>
+                        <span id="lblDeceIDnum1"></span><span id="lblDeceIDnum2"></span>
+                    </div>
+                    <div>
+                        <span id="lblDeceBI1"></span><span id="lblDeceBI2"></span>
+                    </div>
+                    <div>
+                        <span id="lblCemetery1"></span><span id="lblCemetery2"></span>
+                    </div>
+                    <div>
+                        <span id="lblDeceDate1"></span><span id="lblDeceDate2"></span>
+                    </div>
+                </div>
+                <h2>To</h2>
+                <div id="project2">
+
+                    <div>
+                        <span>
+                            <span id="lblName">@Model.objFuneralModel.ContactPerson &nbsp; @Model.objFuneralModel.FullNames</span>
+                        </span>
+                    </div>
+                    <div>
+                        <span>
+                            <span id="lblcAdd1">@Model.objFuneralModel.Address1 </span>
+                        </span>
+                    </div>
+                    <div>
+                        <span>
+                            <span id="lblcAdd2">@Model.objFuneralModel.Address2 </span>
+                        </span>
+                    </div>
+                    <div>
+                        <span>
+                            <span id="lblcAdd3">@Model.objFuneralModel.Address3 </span>
+                        </span>
+                    </div>
+                    <div>
+                        <span>
+                            <span id="lblcAdd4">@Model.objFuneralModel.Address4 </span>
+                        </span>
+                    </div>
+                    <div>
+                        <span>
+                            <span id="lblcCode">@Model.objFuneralModel.Code </span>
+                        </span>
+                    </div>
+                </div>
+                <br>
+                <br>
+
+                <h1></h1>
+
+
+                <table border="1" style="font-size:12px !important;">
+                    <thead>
+                        <tr>
+                            <th class="service">SERVICE</th>
+                            <th class="desc">DESCRIPTION</th>
+                            <th>PRICE</th>
+                            <th>QTY</th>
+                            <th>TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.ServiceList.Count > 0)
+                        {
+                            foreach (var item in Model.ServiceList)
+                            {
+                                totalServiceAmount = totalServiceAmount + Convert.ToInt32(item.Amount * item.Quantity);
+                                <tr>
+                                    <td class="service">@item.ServiceName</td>
+                                    <td class="desc">@item.ServiceDesc</td>
+                                    <td class="unit">@item.Amount</td>
+                                    <td class="qty">@item.Quantity</td>
+                                    <td class="total">@Model.Currency @(item.Amount * item.Quantity)</td>
+                                </tr>
+                            }
+
+                        }
+                        <tr>
+                            <td colspan="4">SUBTOTAL</td>
+                            <td class="total">@Model.Currency @totalServiceAmount.ToString("0.00")</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table style="float: right; text-align: right;font-size:12px !important;">
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td colspan="4"><b style="font-size: 11px"></b></td>
+                            <td class="total">
+                                TAX:
+                                <span id="lblTax">@Model.objFuneralModel.Tax.ToString("0.00")</span>%
+                            </td>
+                            <td>
+                                @{
+                                    taxAmount = totalServiceAmount * Convert.ToInt64(Model.objFuneralModel.Tax.ToString("0.")) / 100;
+                                }
+                                <span id="lblTax2">+ @taxAmount.ToString("0.00")</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td colspan="4"><b style="font-size: 11px"></b></td>
+                            <td class="total">
+                                Discount:
+                                <span id="lblDiscount">@Model.objFuneralModel.Discount</span>%
+                            </td>
+                            <td>
+                                @{
+                                    discAmount = (totalServiceAmount + taxAmount) * Convert.ToInt64(Model.objFuneralModel.Discount.ToString("0.")) / 100;
+                                }
+                                <span id="lblDisAmt2">- @discAmount.ToString("0.00")</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td colspan="4"><b style="font-size: 11px"></b></td>
+                            <td class="total">Paid</td>
+                            <td>
+                                <span id="lblTotalPayment">0.00</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td colspan="4" class="grand total"><b style="font-size: 11px">GRAND TOTAL OUTSTANDING </b></td>
+                            <td class="grand total">
+                                @{
+                                    totalAmount = (totalServiceAmount + taxAmount) - discAmount;
+                                }
+                                <span id="lblGtotal">@Model.Currency @totalAmount.ToString("0.00")</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+            <br>
+            <h1></h1>
+
+            <div id="notices">
+
+                <div>NOTES:</div>
+                <div class="notice">
+                    <span id="lblNotes"></span>
+                </div>
+            </div>
+
+            <hr>
+            <div>Terms and Conditions:</div>
+            <div class="notice">
+                <span id="lblTNC">@Model.ModelTermsAndCondition.TermsAndCondition</span>
+            </div>
+            <br>
+
+            <h1></h1>
+            <div>Bank Details</div>
+            <hr>
+            <div class="notice">
+                <table style="width: 100%; font-size:12px;">
+                    <tbody>
+                        <tr>
+                            <td style="text-align: left;">
+                                <b>Account Holder 	:</b>@Model.ModelBankDetails.AccountHolder<br>
+                                <b>Bank name 	:</b>@Model.ModelBankDetails.Bankname<br>
+                                <b>Account Number 	:</b>@Model.ModelBankDetails.AccountNumber<br>
+                                <b>Account type 	:</b>@Model.ModelBankDetails.Accounttype<br>
+                                <b>Branch 	:</b>@Model.ModelBankDetails.Branch<br>
+                                <b>Branch code 	:</b>@Model.ModelBankDetails.Branchcode<br>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    <span id="lblMsg1"></span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span id="lblMsg2"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <footer>
+                                    <div style="text-align: center;">
+                                        <span id="lblSlogan">@Model.ApplicationSettings.ManageSlogan</span>
+                                    </div>
+                                </footer>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

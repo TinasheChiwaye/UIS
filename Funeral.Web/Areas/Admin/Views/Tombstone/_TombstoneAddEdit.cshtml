@@ -1,0 +1,368 @@
+﻿@model Funeral.Model.TombStoneModel
+
+@Scripts.Render("~/bundles/jqueryval")
+<script>
+    $('#DateOfApplication').datepicker({
+        format: 'dd MM yyyy'
+    });
+    function convertToJSONDate(strDate) {
+        var splitted = strDate.split(".");
+        var dt = new Date(splitted[2], splitted[0], splitted[1]);
+        var newDate = new Date(Date.UTC(dt.getFullYear(), dt.getMonth(), dt.getDate(), dt.getHours(), dt.getMinutes(), dt.getSeconds(), dt.getMilliseconds()));
+        return '/Date(' + newDate.getTime() + ')/';
+    }
+    convertToJSONDate("12.1.2014");
+</script>
+
+@using (Html.BeginForm("Save", "Tombstone", FormMethod.Post, new { id = "TombstoneAddEditForm" }))
+{
+    <div class="col-lg-12">
+        <span id="MainContent_lblMessage"></span>
+        <div class="ibox ">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>TombStone</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12" id="tombstone">
+        <div class="ibox">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Member</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div id="vSummaryFuneral" style="color:Red;display:none;">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @Html.HiddenFor(m => m.pkiTombstoneID)
+                        @Html.HiddenFor(m => m.parlourid)
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Last Name   <em class="text-danger">*</em> </label>
+                                @Html.TextBoxFor(m => m.LastName, null, new { @class = "form-control", @id = "LastName", @maxlength = "25", placeholder = "Last Name" })
+                            </div>
+                            <div class="form-group">
+                                <label>First Name   <em class="text-danger">*</em>  </label>
+                                @Html.TextBoxFor(m => m.FirstName, null, new { @class = "form-control", @id = "FirstName", @maxlength = "25", placeholder = "First Name" })
+                            </div>
+                            <div class="form-group">
+                                <label>ID Number <em class="text-danger">*</em>  </label>
+                                @Html.TextBoxFor(m => m.IDNumber, null, new { @class = "form-control", @id = "IDNumber", @pattern = "/d*", @maxlength = "20", placeholder = "ID Number" })
+                            </div>
+                            <div class="form-group">
+                                <label>Date of Application </label>
+                                @Html.TextBoxFor(m => m.DateOfApplication, null, new { @class = "form-control", @id = "DateOfApplication", @maxlength = "25", placeholder = "DD/MM/YYYY" })
+                            </div>
+                            <div class="form-group">
+                                <label>Tell Number </label>
+                                @Html.TextBoxFor(m => m.TelNumber, null, new { @class = "form-control", @id = "TelNumber", @maxlength = "10" })
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Street Address</label>
+                                @Html.TextBoxFor(m => m.Address1, null, new { @class = "form-control", @id = "Address1", @maxlength = "50", placeholder = "" })
+                            </div>
+                            <div class="form-group">
+                                <label>Town or City </label>
+                                @Html.TextBoxFor(m => m.Address2, null, new { @class = "form-control", @id = "Address2", @maxlength = "50", placeholder = "" })
+                            </div>
+                            <div class="form-group">
+                                <label>Province</label>
+                                @Html.TextBoxFor(m => m.Address3, null, new { @class = "form-control", @id = "Address3", @maxlength = "50", placeholder = "" })
+                            </div>
+                            <div class="form-group">
+                                <label>Code</label>
+                                @Html.TextBoxFor(m => m.Address4, null, new { @class = "form-control", @id = "Address4", @maxlength = "50", placeholder = "" })
+                            </div>
+                            <div class="form-group">
+                                <label>Cell Number</label>
+                                @Html.TextBoxFor(m => m.CellNumber, null, new { @class = "form-control", @id = "CellNumber", @maxlength = "50", placeholder = "" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ibox-title">
+                    <h5>Deceased Info</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div id="vSummaryFuneral" style="color:Red;display:none;">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Last Name   <em class="text-danger">*</em> </label>
+                                @Html.TextBoxFor(m => m.LastName, null, new { @class = "form-control", @id = "LastName", @maxlength = "25", placeholder = "Last Name" })
+                            </div>
+                            <div class="form-group">
+                                <label>First Name   <em class="text-danger">*</em>  </label>
+                                @Html.TextBoxFor(m => m.FirstName, null, new { @class = "form-control", @id = "FirstName", @maxlength = "25", placeholder = "First Name" })
+                            </div>
+                            <div class="form-group">
+                                <label>ID Number <em class="text-danger">*</em>  </label>
+                                @Html.TextBoxFor(m => m.IDNumber, null, new { @class = "form-control", @id = "IDNumber",@pattern = "/d*", @maxlength = "20", placeholder = "ID Number" })
+                            </div>
+                            <div class="form-group">
+                                <label>Deceased</label><br>
+                                &nbsp; &nbsp;
+                                <input id="rdbBuried" type="radio" name="Deceased" value="rdbBuried" checked="checked"><label for="rdbBuried">Buried</label>&nbsp; &nbsp;  &nbsp; &nbsp;
+                                <input id="rdbCremated" type="radio" name="Deceased" value="rdbCremated"><label for="rdbCremated">Cremated</label>
+
+                            </div>
+                            <div class="form-group">
+                                <label>Contact Person </label>
+                                @Html.TextBoxFor(m => m.ContactPerson, null, new { @class = "form-control", @id = "DateOfApplication", @maxlength = "25" })
+                            </div>
+                            <div class="form-group">
+                                <label>Contact Number </label>
+                                @Html.TextBoxFor(m => m.ContactPersonNumber, null, new { @class = "form-control", @id = "TelNumber", @maxlength = "10" })
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Date of Memorial </label>
+                                @Html.TextBoxFor(m => m.DateOFMemorial, null, new { @class = "form-control", @id = "DateOfApplication", @maxlength = "25", placeholder = "DD/MM/YYYY" })
+                            </div>
+                            <div class="form-group">
+                                <label>Cemetery / Crematorium </label>
+                                @Html.TextBoxFor(m => m.CemeterOrCrematorium, null, new { @class = "form-control", @id = "Address2", @maxlength = "50", placeholder = "" })
+                            </div>
+                            <div class="form-group">
+                                <label>Grave No</label>
+                                @Html.TextBoxFor(m => m.GraveNo, null, new { @class = "form-control", @id = "Address3", @maxlength = "50", placeholder = "" })
+                            </div>
+                            <div class="form-group">
+                                <label>Erect</label><br>
+                                &nbsp; &nbsp;
+                                <input id="rdbYes" type="radio" name="erect" value="rdbYes" checked="checked"><label for="rdbYes">Yes</label>&nbsp; &nbsp;  &nbsp; &nbsp;
+                                <input id="rdbNo" type="radio" name="erect" value="rdbNo"><label for="rdbNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ibox-title">
+                    <h5>Tombstone</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="col-lg-6">
+
+                                <div class="form-group">
+                                    <label>Select Tombstone</label>
+                                    <input type="file" name="flTombStone" id="flTombStone" class="form-control">
+                                    <label>Only image formats (jpg, png, gif) are accepted</label>
+                                    <span id="lblExtension1" style="color:Red;visibility:hidden;">Please Select Image</span>
+                                </div>
+                                @if (Model.pkiTombstoneID != 0)
+                                {
+                                    <div class="form-group">
+                                        <a name="btnCreateInvoice" value="Process Payment" id="btnUpload" onclick="uploadImage()" class="btn btn-sm btn-primary pull-right">Upload</a>
+                                    </div>
+                                }
+                                <div class="form-group">
+                                    <label for="textarea">Tombstone</label>
+                                </div>
+                                <div class="form-group">
+                                    @if (Model.ImagePath != "")
+                                    {
+                                        <img id="ImagePreview" src="..@Model.ImagePath.Split('~')[1]" style="height:164px;width:375px;">
+                                    }
+                                    else
+                                    {
+                                        <img id="ImagePreview" src="" style="height:164px;width:375px;">
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Notes </label>
+                                    @*<textarea name="txtNotes" rows="4" cols="20" id="txtNotes" type="text" class="form-control"></textarea>*@
+                                    @Html.TextAreaFor(m => m.Notes, new { @class = "form-control", @id = "txtNotes", placeholder = "", @rows = "4", @cols = "20" })
+
+
+                                </div>
+                                <div class="form-group">
+                                    <label>Message </label>
+                                    @*<textarea name="txtMessage" rows="4" cols="20" id="txtMessage" type="text" class="form-control"></textarea>*@
+                                    @Html.TextAreaFor(m => m.TombStoneMessage, new { @class = "form-control", @id = "txtMessage", placeholder = "", @rows = "4", @cols = "20" })
+                                </div>
+                            </div>
+                        </div>
+
+
+                        @if (Model.pkiTombstoneID == 0)
+                        {
+                            <div class="col-lg-6">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div class="btn-group">
+                                            <div class="form-group">
+                                                <a name="btnCreateInvoice" value="Process Payment" id="btnCreateInvoice" class="btn btn-sm btn-primary" disabled>Process Payment</a>
+                                            </div>
+                                        </div>
+                                        <div class="btn-group">
+                                            <div class="form-group">
+                                                <a name="btnViewPayments" value="View Payments" id="btnViewPayments" class="btn btn-sm btn-primary" disabled>View Payments</a>
+                                            </div>
+                                        </div>
+                                        @if (ViewBag.HasCreateRight)
+                                        {
+                                            <div class="btn-group">
+                                                <div class="form-group">
+                                                    <input type="submit" name="btnSave" value="Save" id="btnSave" class="btn btn-sm btn-primary" />
+                                                </div>
+                                            </div>
+                                        }
+                                            <div class="btn-group">
+                                                <div class="form-group">
+                                                    <a name="btnCancel" value="Clear" href="@Url.Action("Index", "Tombstone")" id="btnCancel" class="btn btn-sm btn-primary">Clear</a>
+                                                </div>
+                                            </div>
+                                            <div class="btn-group">
+                                                <div class="form-group">
+                                                    <a name="btnService" value="Services" id="btnService" class="btn btn-sm btn-primary" disabled>Services</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <div class="btn-group">
+                                        <div class="form-group">
+                                            <a name="btnCreateInvoice" href="@Url.Action("TombstonePayment","Tombstone",new { pkiTombstoneID = Model.pkiTombstoneID})" value="Process Payment" id="btnCreateInvoice" class="btn btn-sm btn-primary">Process Payment</a>
+                                        </div>
+                                    </div>
+                                    <div class="btn-group">
+                                        <div class="form-group">
+                                            <a name="btnViewPayments" onclick="PaymentHistory(@Model.pkiTombstoneID)" value="View Payments" id="btnViewPayments" class="btn btn-sm btn-primary">View Payments</a>
+                                        </div>
+                                    </div>
+
+                                    <div class="btn-group">
+                                        @if (ViewBag.HasCreateRight)
+                                        {
+                                            <div class="form-group">
+                                                <input type="submit" name="btnSave" value="Save" id="btnSave" class="btn btn-sm btn-primary" />
+                                            </div>
+                                        }
+
+                                    </div>
+                                    <div class="btn-group">
+                                        <div class="form-group">
+                                            <a name="btnCancel" value="Clear" id="btnCancel" href="@Url.Action("Index", "Tombstone")" class="btn btn-sm btn-primary">Clear</a>
+                                        </div>
+                                    </div>
+                                    <div class="btn-group">
+                                        <div class="form-group">
+                                            <a name="btnService" href="@Url.Action("TombStoneServiceSelect","Tombstone",new { pkiTombstoneID = Model.pkiTombstoneID})" value="Services" id="btnService" class="btn btn-sm btn-primary">Services</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script>
+    jQuery(document).ready(function () {
+        var dateOfDeath = $('#DateOfApplication').val();
+        $('#DateOfApplication').datepicker({ format: 'dd MM yyyy',autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(dateOfDeath)), "dd/mm/yyyy", false));
+        eventConfigs.pageChange.action(RefreshAddEditData);
+        eventConfigs.searchClick.action(RefreshAddEditData);
+    });
+    function RefreshAddEditData(e) {
+        //LoadAgentInfoAddEdit();
+    }
+    function uploadImage() {
+        if (window.FormData !== undefined) {
+
+            var fileUpload = $("#flTombStone").get(0);
+            var files = fileUpload.files;
+
+            var fileData = new FormData();
+
+            for (var i = 0; i < files.length; i++) {
+                fileData.append(files[i].name, files[i]);
+            }
+
+            fileData.append('username', 'Manas');
+
+            $.ajax({
+                url: '@Url.Action("fileUpload", "Tombstone", new { }, Request.Url.Scheme)',
+                type: "POST",
+                contentType: false,
+                processData: false,
+                data: fileData,
+                success: function (result) {
+                    alert(result.ResponseStatus);
+                    $('#ImagePreview').attr('src', result.ResponseData);
+                },
+                error: function (err) {
+                    alert(err.statusText);
+                }
+            });
+        } else {
+            alert("FormData is not supported.");
+        }
+    }
+</script>

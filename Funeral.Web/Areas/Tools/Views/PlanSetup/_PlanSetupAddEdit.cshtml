@@ -1,0 +1,305 @@
+﻿@model Funeral.Model.PlanModel
+
+@Scripts.Render("~/bundles/jqueryval")
+
+
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+
+@using (Html.BeginForm("Save", "PlanSetup", FormMethod.Post, new { id = "planSetupAdddEditform" }))
+{
+    var NumericDropdownList = Enumerable.Range(0, 101).Select(p => new SelectListItem { Text = p.ToString(), Value = p.ToString() });
+    <div class="col-lg-12">
+        <div class="ibox ">
+            <div class="ibox-title">
+                <h5>Plan Setup</h5>
+            </div>
+            <div class="ibox-content">
+                @Html.HiddenFor(m => m.pkiPlanID)
+                @Html.HiddenFor(m => m.parlourid)
+                <div class="form-group row">
+                    <div class="messagealert" id="alert_container"></div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.Label("Plan Name", new { @class = "control-label" })
+                            <strong><span class="text-danger"><em>*</em></span></strong>
+                            @Html.TextBoxFor(m => m.PlanName, null, new { @class = "form-control", @maxlength = "30", placeholder = "Plan Name" })
+                            @Html.ValidationMessageFor(m => m.PlanName, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Description of plan/Package", new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.PlanDesc, null, new { @class = "form-control", @maxlength = "25", placeholder = "Description of plan/Package" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Premium ", new { @class = "control-label" })
+                            <strong>(R)<span class="text-danger"><em>*</em></span></strong>
+                            @Html.TextBoxFor(m => m.PlanSubscription, null, new { @class = "form-control", @maxlength = "15", placeholder = "Premium" })
+                            @Html.ValidationMessageFor(m => m.PlanSubscription, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.JoiningFee, new { @class = "control-label" })
+                              <strong>(R)</strong>
+                            @Html.TextBoxFor(m => m.JoiningFee, null, new { @class = "form-control", @maxlength = "15", placeholder = "Joining Fee" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Cover Amount", new { @class = "control-label" })
+                            <strong>(R)<span class="text-danger"><em>*</em></span></strong>
+                            @Html.TextBoxFor(m => m.Cover, null, new { @class = "form-control", @maxlength = "35", placeholder = "Cover Amount" })
+                            @Html.ValidationMessageFor(m => m.Cover, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Admin Split", new { @class = "control-label" })
+                            <strong>(R)<span class="text-danger"><em>*</em></span></strong>
+                            @Html.TextBoxFor(m => m.AdminSplit, null, new { @class = "form-control", @maxlength = "25", placeholder = "Admin Split" })
+                            @Html.ValidationMessageFor(m => m.AdminSplit, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Waiting Period", new { @class = "control-label" })
+                            @Html.DropDownListFor(m => m.WaitingPeriod, new SelectList(NumericDropdownList.Take(19).ToList(), "Text", "Value", Model.WaitingPeriod), new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.Label("Cash Payout", new { @class = "control-label" })
+                               <strong>(R)</strong>
+                            @Html.TextBoxFor(m => m.CashPayout, string.Empty, new { @class = "form-control", @maxlength = "25", placeholder = "Cash Payout" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Agent split", new { @class = "control-label" })
+                               <strong>(R)</strong>
+                            @Html.TextBoxFor(m => m.AgentSplit, null, new { @class = "form-control", @maxlength = "25", placeholder = "Agent split" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Office Split", new { @class = "control-label" })
+                               <strong>(R)</strong>
+                            @Html.TextBoxFor(m => m.OfficeSplit, null, new { @class = "form-control", @maxlength = "25", placeholder = "Office Split" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Company Split", new { @class = "control-label" })
+                            <strong>(R)<span class="text-danger"><em>*</em></span></strong>
+                            @Html.TextBoxFor(m => m.CompanySplit, null, new { @class = "form-control", @maxlength = "30", placeholder = "Company Split" })
+                            @Html.ValidationMessageFor(m => m.CompanySplit, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Head Manager", new { @class = "control-label" })
+                            <strong>(R)<span class="text-danger"><em>*</em></span></strong>
+                            @Html.TextBoxFor(m => m.HeadManagerSplit, null, new { @class = "form-control", @maxlength = "30", placeholder = "Head Manager" })
+                            @Html.ValidationMessageFor(m => m.HeadManagerSplit, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Policy Laps", new { @class = "control-label" })
+                            @Html.DropDownListFor(m => m.PolicyLaps, new SelectList(NumericDropdownList.Take(13).ToList(), "Text", "Value", Model.PolicyLaps), new { @class = "form-control" })
+                        </div>
+                         <div class="form-group">
+                            @Html.Label("Select Underwriter", new { @class = "control-label" })
+                            @Html.DropDownListFor(m => m.UnderwriterId, new SelectList(Model.UnderwriterList, "PkiUnderwriterId", "UnderwriterName", Model.UnderwriterId),"Select Underwriter", new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="ibox ">
+            <div class="ibox-title">
+                <h5>Plan Creator</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="form-group row">
+                    <div class="messagealert_1" id="alert_container_1"></div>
+                </div>
+                <div class="row">
+                    <div class="pull-right">
+                        <input type="button" id="btnAddNewRow" value="Add New" class="btn btn-primary" onclick="AddNewColumn('tblDynamicRowBodyId')" />
+                    </div>
+                    <table class="table table-hover table-responsive table-striped  ">
+                        <thead>
+                            <tr>
+                                <th>User Type</th>
+                                <th>Age From</th>
+                                <th>Age To</th>
+                                <th>Cover <b>(R)</b></th>
+                                <th>Premium <b>(R)</b></th>
+                                <th>Underwriter Cover <b>(R)</b></th>
+                                <th>Underwriter Premium <b>(R)</b></th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tblDynamicRowBodyId">
+                            @{
+                                if (Model.planCreators.Count > 0)
+                                {
+                                    for (int i = 0; i < Model.planCreators.Count; i++)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.HiddenFor(m => m.planCreators[i].PlanCreatorId, new Dictionary<string, object> { { "data-val", false } })
+                                                @Html.HiddenFor(m => m.planCreators[i].TableRawStatus, new { @class = "TableRawStatus" })
+                                                @Html.DropDownListFor(m => m.planCreators[i].UserTypeId, new SelectList(Funeral.BAL.CommonBAL.GetUserTypes(), "UserTypeId", "UserTypeName", Model.planCreators[i].UserTypeId), new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(m => m.planCreators[i].UserTypeId, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                            </td>
+                                            <td>
+                                                @Html.DropDownListFor(m => m.planCreators[i].FromAge, new SelectList(NumericDropdownList, "Text", "Value", Model.planCreators[i].FromAge), new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(m => m.planCreators[i].FromAge, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                            </td>
+                                            <td>
+                                                @Html.DropDownListFor(m => m.planCreators[i].ToAge, new SelectList(NumericDropdownList, "Text", "Value", Model.planCreators[i].ToAge), new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(m => m.planCreators[i].ToAge, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(m => m.planCreators[i].Cover, null, new { @class = "form-control", @type = "number", placeholder = "Enter Cover Amount" })
+                                                @Html.ValidationMessageFor(m => m.planCreators[i].Cover, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(m => m.planCreators[i].Premium, null, new { @class = "form-control", @type = "number", placeholder = "Enter Premium Amount" })
+                                                @Html.ValidationMessageFor(m => m.planCreators[i].Premium, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(m => m.planCreators[i].UnderwriterCover, null, new { @class = "form-control", @type = "number", placeholder = "Enter Underwriter Cover Amount" })
+                                                @Html.ValidationMessageFor(m => m.planCreators[i].UnderwriterCover, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(m => m.planCreators[i].UnderwriterPremium, null, new { @class = "form-control", @type = "number", placeholder = "Enter Underwriter Premium Amount" })
+                                                @Html.ValidationMessageFor(m => m.planCreators[i].UnderwriterPremium, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                            </td>
+                                            @if (i == 0)
+                                            {
+                                                <td>-</td>
+                                            }
+                                            else
+                                            {
+                                                <td><input type="button" placeholder="Header" value="Delete" class="btn btn-danger DeleteDynamicRow" /></td>
+                                            }
+                                        </tr>
+                                    }
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row" style="height: 25px;">
+                    <div class="col-lg-6">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <div class="btn-group">
+                                    <div class="form-group">
+                                        <input type="button" id="btnCancel" value="Cancel" class="btn btn-w-m btn-primary" />
+                                    </div>
+                                </div>
+                                <div class="btn-group">
+                                    <div class="form-group">
+                                        <input id="btnSubmit" type="submit" value="Save" class="btn btn-w-m btn-primary" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    if (TempData.Peek("IsPlanSetupSaved") != null && (bool)TempData.Peek("IsPlanSetupSaved") == true)
+    {
+        <script>
+            ShowSaveMessage('#alert_container', 'Plan setup saved successfully!');
+        </script>
+
+        TempData.Remove("IsPlanSetupSaved");
+    }
+
+    <script type="text/javascript">
+
+     jQuery("#btnCancel").click(function (event) {
+        $("#PlanSubscription").val("");
+        $("#JoiningFee").val("");
+        $("#Cover").val("");
+        $("#AdminSplit").val("");
+        $("#CashPayout").val("");
+        $("#AgentSplit").val("");
+        $("#OfficeSplit").val("");
+        $("#CompanySplit").val("");
+        $("#HeadManagerSplit").val("");
+        $("#SpouseCover").val("");
+
+        $("#PlanName").val("");
+        $("#PlanDesc").val("");
+    });
+
+    jQuery(document).ready(function () {
+
+        var form = jQuery("#planSetupAdddEditform");
+        form.validate();
+        jQuery("#btnSubmit").click(function (event) {
+            $.validator.setDefaults({ignore: ':hidden, [readonly=readonly]'});
+            if (jQuery(form).valid()) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        });
+        eventConfigs.pageChange.action(RefreshAddEditData);
+        eventConfigs.searchClick.action(RefreshAddEditData);
+    });
+
+    function RefreshAddEditData(e) {
+        LoadPlanAddEdit();
+    }
+    function AddNewColumn(tableBodyId) {
+        var rowCount = $('#' + tableBodyId + ' tr').length;
+        var msg = "";
+        console.log(rowCount);
+        msg += '<tr><td>';
+        msg += '<input data-val="false" name="planCreators['+rowCount+'].PlanCreatorId" type="hidden" value="0">';
+        msg += '<select class="form-control usertypeDropdown"   name="planCreators['+rowCount+'].UserTypeId"><span class="field-validation-valid text-danger" data-valmsg-for="planCreators['+rowCount+'].UserTypeId" data-valmsg-replace="true" style="font-weight:bold"></span></select></td>';
+        msg += ' <td><select class="form-control AgeDropdown"  name="planCreators['+rowCount+'].FromAge"><span class="field-validation-valid text-danger" data-valmsg-for="planCreators['+rowCount+'].FromAge" data-valmsg-replace="true" style="font-weight:bold"></span></select></td>';
+        msg += '<td><select class="form-control AgeDropdown"  name="planCreators['+rowCount+'].ToAge"><span class="field-validation-valid text-danger" data-valmsg-for="planCreators['+rowCount+'].ToAge" data-valmsg-replace="true" style="font-weight:bold"></span></select></td>';
+        msg += '<td><input type="number" class="form-control" type="number" placeholder="Enter Cover Amount"  value="0"  name="planCreators['+rowCount+'].Cover" required/><span class="field-validation-valid text-danger" data-valmsg-for="planCreators['+rowCount+'].Cover" data-valmsg-replace="true" style="font-weight:bold"></span></td>';
+        msg += '<td><input type="number" class="form-control" type="number" placeholder="Enter Premium Amount" value="0"  name="planCreators['+rowCount+'].Premium" required/><span class="field-validation-valid text-danger" data-valmsg-for="planCreators['+rowCount+'].Premium" data-valmsg-replace="true" style="font-weight:bold"></span></td>';
+        msg += '<td><input type="number" class="form-control" type="number" placeholder="Enter Underwriter Cover Amount" value="0"  name="planCreators['+rowCount+'].UnderwriterCover" required/><span class="field-validation-valid text-danger" data-valmsg-for="planCreators['+rowCount+'].UnderwriterCover" data-valmsg-replace="true" style="font-weight:bold"></span></td>';
+        msg += '<td><input type="number" class="form-control" type="number" placeholder="Enter Underwriter Premium Amount" value="0"  name="planCreators['+rowCount+'].UnderwriterPremium"  required/><span class="field-validation-valid text-danger" data-valmsg-for="planCreators['+rowCount+'].UnderwriterPremium" data-valmsg-replace="true" style="font-weight:bold"></span></td>';
+        msg += '<td><input type="button"  placeholder="Header" value="Delete" class="btn btn-danger DeleteDynamicRow" />';
+          msg+='<input class="TableRawStatus" data-val="true" data-val-required="The TableRawStatus field is required." id="planCreators_'+rowCount+'__TableRawStatus" name="planCreators['+rowCount+'].TableRawStatus" type="hidden" value="False">'
+        msg += '</td></tr>';
+        $("#" + tableBodyId).append(msg);
+        FillDynamicDropdown();
+    }
+    $("#tblDynamicRowBodyId").on('click', '.DeleteDynamicRow', function () {
+        $(this).parent().parent().hide();
+        $(this).closest('tr').find('.TableRawStatus').val(true)
+    });
+    function FillDynamicDropdown() {
+         var ddlCustomers = $(".usertypeDropdown");
+            ddlCustomers.empty().append('<option selected="selected" value="0" disabled = "disabled">Loading.....</option>');
+        $.ajax({
+                type: "POST",
+                url: "@Url.Action("getUserTypeList", "PlanSetup", new {})",
+                data: '{}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    ddlCustomers.empty();
+                    $.each(response, function () {
+                        ddlCustomers.append($("<option></option>").val(this['UserTypeId']).html(this['UserTypeName']));
+                    });
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        option = '';
+        for (var p = 1; p <= 100; p++) {
+            option += '<option value="' + p + '">' + p + '</option>';
+        }
+        $('.AgeDropdown').append(option);
+    }
+    </script>
+
+}

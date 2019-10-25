@@ -1,0 +1,240 @@
+﻿@model Funeral.Model.Search.BaseSearch
+@Styles.Render("~/Content/datatablecss")
+
+<script src="~/Scripts/plugins/dateformat/DateFormat.js"></script>
+
+@using (Html.BeginForm())
+{
+    <div class="dataTables_wrapper" id="tblBranchSetupSearch_wrapper">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>Funeral List</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-1" id="dvAdministrator">
+                            <div class="form-group">
+                                <label>Show entries</label>
+                                @Html.DropDownListFor(m => m.PageSize, new SelectList(ViewBag.EntriesCount, "Value", "Key"), new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-sm-5 col-sm-offset-6">
+                            <div class="form-group">
+                                <label>Search Members:</label>
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.SarchText, null, new { @class = "form-control", @maxlength = "50", placeholder = "Search by keyword" })
+                                    <span class="input-group-btn">
+                                        <input type="button" id="btnSearch" value="Search" class="btn btn-w-m btn-primary" />
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-9">
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 ">
+                            <div class="table-responsive">
+                                @*@Html.EditorFor(model => model.PageNum, new { htmlAttributes = new { @class = "hidden", id = "PageNum1" } })
+                                    @Html.EditorFor(model => model.PageSize, new { htmlAttributes = new { @class = "hidden", id = "PageSize1" } })*@
+                                @Html.Hidden("ItemId")
+                                <table id="funeralDataTable" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th class="hidden"></th>
+                                            <th>Name</th>
+                                            <th>Surname</th>
+                                            <th>ID Number</th>
+                                            <th>Date Of Death</th>
+                                            <th>Date Of Funeral</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="ucPaymentHistory" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
+                    <h4 class="modal-title">Payment history</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            ConfigureDatatable();
+            InitDataTable();
+
+            eventConfigs.pageChange.eventName = 'btnPageChanged';
+            eventConfigs.pageChange.domElement = jQuery('#PageSize')[0];
+            eventConfigs.searchClick.eventName = 'btnSearchClicked';
+            eventConfigs.searchClick.domElement = jQuery('#btnSearch')[0];
+
+            $('#PageSize').change(function () {
+                InitModel();
+                tableConfigs.table.DataTable().page.len(model1.PageSize).draw();
+                eventConfigs.pageChange.dispatchEvent();
+            });
+
+            $("#btnSearch").click(function () {
+                InitModel();
+                tableConfigs.table.fnDraw();
+                eventConfigs.searchClick.dispatchEvent();
+            });
+        });
+
+        function ConfigureDatatable() {
+            var sortOrder = @Html.Raw(Json.Encode(@Model.SortOrder));
+            var sortBy =@Html.Raw(Json.Encode(@Model.SortBy));
+            var totalRecord =@Html.Raw(Json.Encode(@Model.TotalRecord));
+            var pageNum =@Html.Raw(Json.Encode(@Model.PageNum));
+            var pageSize =@Html.Raw(Json.Encode(@Model.PageSize));
+            var searchText =@Html.Raw(Json.Encode(@Model.SarchText));
+
+            DOMIDs.Datatable = "funeralDataTable";
+            tableConfigs.SearchUrls = '@Url.Action("SearchData", "Funeral", new { }, Request.Url.Scheme)';
+            setsearchmodel('200', sortOrder, sortBy, totalRecord, pageNum, pageSize, searchText);
+
+            columnsArray =
+            [{ "data": "pkiFuneralID", "name": "pkiFuneralID", "autoWidth": true, "visible": false },
+            { "data": "FullNames","name": "Full Name", "autoWidth": true},
+            { "data": "Surname", "name": "Surname", "autoWidth": true },
+            { "data": "IDNumber", "name": "ID Number", "autoWidth": true },
+            {
+                "data": "DateOfDeath", "name": "Date Of Death", "autoWidth": true,
+                "render": function (data) {
+                    if (data != null) {
+                        var date = new Date(parseInt(data.replace('/Date(', '')));
+                        return dateFormat(date, dateFormat.masks.isoDate, true);
+                    }
+                    else {
+                        return null;
+                    }
+                    
+                }
+            },
+            {
+                "data": "DateOfFuneral", "name": "Date Of Funeral", "autoWidth": true,
+                "render": function (data) {
+                    //var date = new Date(parseInt(data.replace('/Date(', '')));
+                    var date = new Date(parseInt(data.replace("/Date(", "").replace(")/")));
+                    return dateFormat(date, dateFormat.masks.isoDate, true);
+                }
+            },
+            {
+                "render": function (data, type, full, meta) {
+                    var hasEditRights = '@ViewBag.HasEditRight' == "True" ? true : false;
+                    var hasDeleteRights = '@ViewBag.HasDeleteRight' == "True" ? true : false;
+
+                    if (hasEditRights || hasDeleteRights) {
+                        tableConfigs.table.DataTable().columns([6]).visible(true)
+                        var dom = "<div class='row'>";
+
+                        if (hasEditRights) {
+                            var editMemberUrl = '<div class="col-sm-4 text-center"><a  onclick="EditFuneral(\'' + full.pkiFuneralID + '\')"><i class="fa fa-edit"></i></a></div>';
+                            dom = dom + editMemberUrl;
+                        }
+                        if (hasDeleteRights) {
+							var deleteMemberUrl = '<div class="col-sm-4 text-center"> <a onclick="DeleteFuneral(\'' + full.pkiFuneralID + '\')"; ><i class="fa fa-trash-o"></i></a></div>';
+                            dom = dom + deleteMemberUrl;
+                        }
+                        var printMemberDataUrl = '<div class="col-sm-4 text-center"> <a href=@Url.Action("PrintForm", "Quotation",new { qutId = "QuotationIdVal" }, Request.Url.Scheme)><i class="fa fa-search"></i></a></div>';
+                        printMemberDataUrl = printMemberDataUrl.replace("QuotationIdVal", full.pkiFuneralID);
+                        dom = dom + printMemberDataUrl;
+
+                        dom = dom + "</div>";
+                        return dom;
+                    }
+                    else {
+
+                        tableConfigs.table.DataTable().columns([6]).visible(false);
+                        return "";
+                    }
+                }
+            }];
+        }
+
+        function InitModel() {
+            model1.PageNum = 1;
+            model1.PageSize = jQuery('#PageSize').val();
+            model1.SarchText = jQuery("#SarchText").val();
+            jQuery("#PageNum1").val(model1.PageNum);
+        }
+
+        function EditFuneral(pkiFuneralID) {
+
+            jQuery("#ItemId").val(pkiFuneralID);
+            var editUrl = '@Url.Action("Edit", "Funeral", new { pkiFuneralID = "pkiFuneralIDVal" },Request.Url.Scheme)';
+            editUrl = editUrl.replace("pkiFuneralIDVal", pkiFuneralID);
+
+            jQuery.ajax({
+                url: editUrl,
+                type: "Get",
+                contentType: "application/html; charset=utf-8",
+                dataType: 'html'
+            })
+            .success(function (result) {
+                jQuery("#" + DOMIDs.AddEdit).html(result);                
+            })
+            .error(function (xhr, status) {
+                alert(status);
+                });
+            window.scrollTo(0, 0);
+        }
+
+		function DeleteFuneral(pkiFuneralID)
+		{
+			debugger
+            var isConfirmed = confirm('Are you sure you want to delete?');
+            if (isConfirmed) {
+				jQuery("#ItemId").val(pkiFuneralID);
+                var deleteUrl = '@Url.Action("Delete", "Funeral", new { ID = "FuneralIdVal" },Request.Url.Scheme)';
+				deleteUrl = deleteUrl.replace("FuneralIdVal", pkiFuneralID);
+
+                model1.PageNum = 1;
+
+                jQuery.ajax({
+                    url: deleteUrl,
+                    type: "Get",
+                    contentType: "application/html; charset=utf-8",
+                    dataType: 'html'
+                })
+                .success(function (result) {
+                    InitModel();
+                    tableConfigs.table.fnDraw();
+                })
+                .error(function (xhr, status) {
+                    alert(status);
+                });
+            }
+        }
+    </script>
+}

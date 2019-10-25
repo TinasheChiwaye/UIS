@@ -1,0 +1,150 @@
+﻿@model Funeral.Model.Search.PackageServiceSearch
+
+@using (Html.BeginForm())
+{
+    <div class="dataTables_wrapper" id="tblPackageServiceSearch_wrapper">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>Package Service List</h5>
+                </div>
+                <div class="ibox-content" id="PackageServiceList">
+                    <div class="row">
+                        <div class="col-lg-4" id="dvAdministrator">
+                            <div class="form-group">
+                                <label>Show entries</label>
+                                @Html.DropDownListFor(m => m.PageSize, new SelectList(ViewBag.EntriesCount, "Value", "Key"), new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-sm-7 col-sm-offset-1">
+                            <div class="form-group">
+                                <label>Search Branch:</label>
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.SarchText, null, new { @class = "form-control", @maxlength = "50", placeholder = "Search by keyword" })
+                                    <span class="input-group-btn">
+                                        <input type="button" id="btnSearch" value="Search" class="btn btn-w-m btn-primary" />
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <asp:Label ID="lblRecords" runat="server" Text=""></asp:Label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 ">
+                            <div class="table-responsive">
+                                @Html.EditorFor(model => model.PageNum, new { htmlAttributes = new { @class = "hidden", id = "PageNum1" } })
+                                @Html.EditorFor(model => model.PageSize, new { htmlAttributes = new { @class = "hidden", id = "PageSize1" } })
+                                @Html.Hidden("ItemId")
+                                <table id="packageServiceDataTable" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>PackageId</th>
+                                            <th>ServiceID</th>
+                                            <th>PackageName</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        
+        var packageserviceListTableConfig = datatables.find(x => { return x.tableConfigs.Name == 'packageservice' });
+
+        jQuery(document).ready(function ($) {
+            
+            ConfigureDatatable();
+
+            packageserviceListTableConfig.InitDataTable(packageserviceListTableConfig.tableConfigs.Name);
+            
+            jQuery('#PackageServiceList #PageSize').change(function () {
+                InitPageServiceModel();
+                packageserviceListTableConfig.tableConfigs.table.DataTable().page.len(packageserviceListTableConfig.model1.PageSize).draw();            
+            });
+
+            jQuery("#PackageServiceList #btnSearch").click(function () {
+                InitPageServiceModel();
+                packageserviceListTableConfig.tableConfigs.table.fnDraw();
+            });
+        });
+
+        function ConfigureDatatable(){
+            
+            var sortOrder = @Html.Raw(Json.Encode(@Model.SortOrder));
+            var sortBy =@Html.Raw(Json.Encode(@Model.SortBy));
+            var totalRecord =@Html.Raw(Json.Encode(@Model.TotalRecord));
+            var pageNum =@Html.Raw(Json.Encode(@Model.PageNum));
+            var pageSize =@Html.Raw(Json.Encode(@Model.PageSize));
+            var searchText =@Html.Raw(Json.Encode(@Model.SarchText));
+            var packageId=@Html.Raw(Json.Encode(Model.PackageId));
+
+            packageserviceListTableConfig.DOMIDs.Datatable = "packageServiceDataTable";
+            packageserviceListTableConfig.tableConfigs.SearchUrls = '@Url.Action("SearchData", "PackageService", new { }, Request.Url.Scheme)';
+            packageserviceListTableConfig.setsearchmodel('200', sortOrder, sortBy, totalRecord, pageNum, pageSize, searchText);
+            packageserviceListTableConfig.model1.PackageId = packageId;
+
+            packageserviceListTableConfig.columnsArray =
+                [{ "data": "fkiPackageID", "name": "PackageId", "autoWidth": true, "visible": false },
+                { "data": "fkiServiceID", "name": "ServiceId", "autoWidth": true, "visible": false },
+                { "data": "ServiceName", "name": "Service Name", "autoWidth": true },
+            {
+                "render": function (data, type, full, meta) {
+                    return '<div class="row"><div class="col-sm-4 text-center"> <a onclick="DeletePackageService(\'' + full.fkiPackageID + '\',\'' + full.fkiServiceID + '\')"; ><i class="fa fa-trash-o"></i></a></div></div>';
+                }
+            }];
+        }
+
+        function InitPageServiceModel() {
+            
+            packageserviceListTableConfig.model1.PageNum = 1;
+            packageserviceListTableConfig.model1.PageSize = jQuery('#PackageServiceList #PageSize').val();
+            packageserviceListTableConfig.model1.SarchText = jQuery("#PackageServiceList #SarchText").val();
+
+            var packageId =@Html.Raw(Json.Encode(Model.PackageId));
+            packageserviceListTableConfig.model1.PackageId = packageId;
+
+            jQuery("#PackageServiceList #PageNum1").val(packageserviceListTableConfig.model1.PageNum);
+        }
+
+        function DeletePackageService(packageId,serviceId) {
+            
+            var isConfirmed = confirm('Are you sure you want to delete?');
+
+            if (isConfirmed) {
+
+                jQuery("#ItemId").val(packageId);
+                var deleteUrl = '@Url.Action("Delete", "PackageService", new { packageId = "PackageIdVal", serviceId = "ServiceIdVal" },Request.Url.Scheme)';
+                deleteUrl = deleteUrl.replace("PackageIdVal", packageId);
+                deleteUrl = deleteUrl.replace("ServiceIdVal", serviceId);
+
+                packageserviceListTableConfig.model1.PageNum = 1;
+
+                jQuery.ajax({
+                    url: deleteUrl,
+                    type: "Get",
+                    contentType: "application/html; charset=utf-8",
+                    dataType: 'html'
+                })
+                .success(function (result) {
+                    InitPageServiceModel();
+                    packageserviceListTableConfig.tableConfigs.table.fnDraw();
+                })
+                .error(function (xhr, status) {
+                    alert(status);
+                });
+
+            }
+        }
+    </script>
+}

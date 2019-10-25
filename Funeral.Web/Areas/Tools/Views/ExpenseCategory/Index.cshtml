@@ -1,0 +1,68 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Scripts.Render("~/bundles/jquery")
+<script src="~/Scripts/app/searchdatatable.js"></script>
+
+<div class="row" id="expensecategoryaddedit"></div>
+<div class="row" id="expensecategorylist"></div>
+
+<script>
+
+    var expenseCategoryId = '@ViewBag.ExpenseCategoryId';
+    var hasRight = '@ViewBag.HasAccess';
+
+    jQuery(function (jQuery) {
+        jQuery(document).ready(function () {
+            @*if (hasRight == 'False') {
+                var url = '@Url.Action("Error403", "Error", new { Area = "Admin" })';
+                window.location.href = url;
+            }
+            else {*@
+                jQuery.noConflict();
+                LoadExpenseCategoryList();
+                LoadExpenseCategoryAddEdit();
+                DOMIDs.AddEdit = "expensecategoryaddedit";
+                DOMIDs.List = "expensecategorylist";
+            //}
+        });
+    });
+    function LoadExpenseCategoryList() {
+        jQuery.ajax({
+            url: '@Url.Action("List","ExpenseCategory",new {},Request.Url.Scheme)',
+            type: "Get",
+            contentType: "application/html; charset=utf-8",
+            dataType: 'html'
+        })
+            .success(function (result) {
+                jQuery("#" + DOMIDs.List).html(result);
+        })
+        .error(function (xhr, status) {
+            alert(status);
+        });
+    }
+
+    function LoadExpenseCategoryAddEdit() {
+
+            var model = {
+                pkiExpenseCategoryID:0,
+                Category: '',
+                BranchCode: ''
+        };
+
+            jQuery.ajax({
+                url: '@Url.Action("Add","ExpenseCategory",new {},Request.Url.Scheme)',
+                type: "Post",
+                data: JSON.stringify(model),
+                contentType: "application/html; charset=utf-8",
+                dataType: 'html'
+            })
+                .success(function (result) {
+                    jQuery("#" + DOMIDs.AddEdit).html(result);
+            })
+            .error(function (xhr, status) {
+                alert(status);
+            });
+    }
+</script>

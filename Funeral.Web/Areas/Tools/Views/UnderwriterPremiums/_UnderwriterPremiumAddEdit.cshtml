@@ -1,0 +1,161 @@
+﻿@model Funeral.Model.UnderwriterPremiumModel
+
+@Scripts.Render("~/bundles/jqueryval")
+
+@using (Html.BeginForm("Save", "UnderwriterPremiums", FormMethod.Post, new { id = "UnderwriterPremiumAdddEditform" }))
+{
+    List<SelectListItem> CoverType = new List<SelectListItem>()
+{
+new SelectListItem() { Text = "Month", Value = "Month" },
+new SelectListItem() { Text = "Year", Value = "Year" }
+};
+<div class="col-lg-12">
+    <div class="ibox ">
+        <div class="ibox-title">
+            <h5>Underwriter Premiums</h5>
+        </div>
+        <div class="ibox-content">
+            @Html.HiddenFor(m => m.PkiUnderwriterPremiumId)
+            @Html.HiddenFor(m => m.Parlourid)
+            <div class="form-group row">
+                <div class="messagealert" id="alert_container"></div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.UnderwriterName, new { @class = "control-label" })
+                        <span class="text-danger"><em>*</em></span>
+                        @*@Html.TextBoxFor(m => m.UnderwriterName, null, new { @class = "form-control", @maxlength = "50" })*@
+                        @Html.DropDownListFor(M => M.FkiUnderwriterId, new SelectList(ViewBag.UnderwriterName, "Value", "Text"), "Select Value", new { @class = "form-control", @maxlength = "50" })
+                        @Html.ValidationMessageFor(m => m.UnderwriterName, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PremiumAmount, new { @class = "control-label" })
+                        <span class="text-danger"><em>*</em></span>
+                        @Html.TextBoxFor(m => m.PremiumAmount, null, new { @class = "form-control", @maxlength = "50" })
+                        @Html.ValidationMessageFor(m => m.PremiumAmount, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.UnderwriterPremium, new { @class = "control-label" })
+                        <span class="text-danger"><em>*</em></span>
+                        @Html.TextBoxFor(m => m.UnderwriterPremium, null, new { @class = "form-control", @maxlength = "50" })
+                        @Html.ValidationMessageFor(m => m.UnderwriterPremium, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            @Html.LabelFor(model => model.CoverAgeFrom, new { @class = "control-label" })
+                            <span class="text-danger"><em>*</em></span>
+                            @*@Html.TextBoxFor(m => m.CoverAgeFrom, null, new { @class = "form-control", @maxlength = "50" })*@
+                            @Html.DropDownListFor(M => M.CoverAgeFrom, new SelectList(ViewBag.CoverAge, "Value", "Text"), "Select Value", new { @class = "form-control", @maxlength = "50" })
+                            @Html.ValidationMessageFor(m => m.CoverAgeFrom, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                        <div class="col-lg-6">
+                            @Html.LabelFor(model => model.CoverAgeFromType, new { @class = "control-label" })
+                            <span class="text-danger"><em>*</em></span>
+                            @*@Html.TextBoxFor(m => m.CoverAgeFromType, null, new { @class = "form-control", @maxlength = "50" })*@
+                            @Html.DropDownListFor(M => M.CoverAgeFromType, new SelectList(CoverType, "Value", "Text"), "Select Value", new { @class = "form-control", @maxlength = "50" })
+                            @Html.ValidationMessageFor(m => m.CoverAgeFromType, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-top: 15px;">
+                        @Html.LabelFor(model => model.RolePlayerType, new { @class = "control-label" })
+                        <span class="text-danger"><em>*</em></span>
+                        @*@Html.TextBoxFor(m => m.RolePlayerType, null, new { @class = "form-control", @maxlength = "10" })*@
+                        @Html.DropDownListFor(M => M.RolePlayerType, new SelectList(ViewBag.RolePlayerType, "Value", "Text"), "Select Value", new { @class = "form-control", @maxlength = "50" })
+                        @Html.ValidationMessageFor(m => m.RolePlayerType, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PlanName, new { @class = "control-label" })
+                        @*@Html.TextBoxFor(m => m.PlanName, null, new { @class = "form-control", @maxlength = "50" })*@
+                        @Html.DropDownListFor(M => M.PlanId, new SelectList(ViewBag.PlanName, "Value", "Text"), "Select Value", new { @class = "form-control", @maxlength = "50" })
+                        @Html.ValidationMessageFor(m => m.PlanName, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CoverAmount, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.CoverAmount, null, new { @class = "form-control", @maxlength = "50" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.UnderwriterCover, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.UnderwriterCover, null, new { @class = "form-control", @maxlength = "50" })
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            @Html.LabelFor(model => model.CoverAgeTo, new { @class = "control-label" })
+                            <span class="text-danger"><em>*</em></span>
+                            @*@Html.TextBoxFor(m => m.CoverAgeTo, null, new { @class = "form-control", @maxlength = "50" })*@
+                            @Html.DropDownListFor(M => M.CoverAgeTo, new SelectList(ViewBag.CoverAge, "Value", "Text"), "Select Value", new { @class = "form-control", @maxlength = "50" })
+                            @Html.ValidationMessageFor(m => m.CoverAgeTo, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                        <div class="col-lg-6">
+                            @Html.LabelFor(model => model.CoverAgeToType, new { @class = "control-label" })
+                            <span class="text-danger"><em>*</em></span>
+                            @*@Html.TextBoxFor(m => m.CoverAgeToType, null, new { @class = "form-control", @maxlength = "30", placeholder = "Code" })*@
+                            @Html.DropDownListFor(M => M.CoverAgeToType, new SelectList(CoverType, "Value", "Text"), "Select Value", new { @class = "form-control", @maxlength = "50" })
+                            @Html.ValidationMessageFor(m => m.CoverAgeToType, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <div class="btn-group">
+                            <a id="btnCancel" href="@Url.Action("Index", "UnderwriterSetup")" value="Cancel" class="btn btn-w-m btn-primary">Cancel</a>
+                        </div>
+                        @if (ViewBag.HasCreateRight)
+                        {
+                            <div class="btn-group">
+                                <input id="btnSubmit" type="submit" value="Save" class="btn btn-w-m btn-primary" />
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+if (TempData.Peek("IsUnderwriterPremiumSaved") != null && (bool)TempData.Peek("IsUnderwriterPremiumSaved") == true)
+{
+    <script>
+        ShowSaveMessage('#alert_container', 'Underwriter Premium saved successfully!');
+    </script>
+
+    TempData.Remove("IsUnderwriterPremiumSaved");
+}
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        jQuery("#btnCancel").click(function (event) {
+            $("#UnderwriterPremiumName").val("");
+            $("#UnderwriterPremiumName").val("");
+            $("#UnderwriterPremiumName").val("");
+            $("#UnderwriterPremiumName").val("");
+            $("#UnderwriterPremiumName").val("");
+            $("#UnderwriterPremiumName").val("");
+            $("#UnderwriterPremiumName").val("");
+            $("#UnderwriterPremiumName").val("");
+            $("#UnderwriterPremiumName").val("");
+            $("#UnderwriterPremiumName").val("");
+            $("#UnderwriterPremiumName").val("");
+        });
+
+        var form = jQuery("#UnderwriterPremiumAdddEditform");
+        form.validate();
+        jQuery("#btnSubmit").click(function (event) {
+            if (jQuery(form).valid()) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        });
+
+        eventConfigs.pageChange.action(RefreshAddEditData);
+        eventConfigs.searchClick.action(RefreshAddEditData);
+    });
+
+    function RefreshAddEditData(e) {
+        LoadUnderwriterPremiumsAddEdit();
+    }
+</script>
+
+}

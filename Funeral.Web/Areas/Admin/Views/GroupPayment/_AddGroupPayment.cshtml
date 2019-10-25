@@ -1,0 +1,99 @@
+﻿@model Funeral.Model.GroupPayment
+@Scripts.Render("~/bundles/jqueryval")
+@{
+    var paymentMethodList = new List<SelectListItem>
+{
+new SelectListItem() {Text = "Cash", Value="Cash"},
+new SelectListItem() {Text = "Easy Pay", Value="Easy Pay"},
+new SelectListItem() {Text = "Debit Order", Value="Debit Order"},
+new SelectListItem() {Text = "Bank Depost", Value="Bank Depost"},
+new SelectListItem() {Text = "EFT", Value="EFT"},
+new SelectListItem() {Text = "Other", Value="Other"}
+};
+}
+@using (Html.BeginForm("Save", "GroupPayment", FormMethod.Post, new { id = "GroupPaymentAddEditform" }))
+{
+    @Html.HiddenFor(x => x.GroupInvoiceID, new { @id = "txtGroupInvoiceID" })
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Group Payment Details</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="form-group row">
+                    <div class="messagealert" id="alert_container"></div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        @Html.HiddenFor(x => x.SocietyId, new { })
+                        <label>Payment Method</label>
+                        @Html.DropDownListFor(x => x.PaymentMethod, paymentMethodList, new { @id = "ddl_PaymentMethodSelection", @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.PaymentMethod, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(x => x.SocietyId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label>Amount</label>
+                        @Html.TextBoxFor(x => x.AmountPaid, new { @type = "number", @id = "txtPaymentAmount", @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.AmountPaid, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label>Payment Date</label>
+                        @Html.TextBoxFor(x => x.DatePaid, "{0:dd MMMM yyyy}", new { @id = "txtPaymentDate", @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.DatePaid, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Notes</label>
+                        @Html.TextAreaFor(x => x.Notes, new { @id = "txtNotes", @rows = "8", @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Notes, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <input type="submit" value="Add Payment" id="btnSubmit" class="btn btn-md btn-primary" style="width:95%;">
+                        </div>
+                    </div>
+                    @*<div class="col-lg-6">
+                            <div class="form-group">
+                                <input type="submit" name="ctl00$MainContent$btnPrint" value="Print" id="MainContent_btnPrint" class="btn btn-md btn-primary" style="width:95%;">
+                            </div>
+                        </div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+    if (TempData.Peek("IsSocietySetupSaved") != null && (bool)TempData.Peek("IsSocietySetupSaved") == true)
+    {
+        <script>
+            ShowSaveMessage('#alert_container', 'Group Payment successfully!');
+        </script>
+
+        TempData.Remove("IsSocietySetupSaved");
+    }
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            $('#txtPaymentDate').datepicker({ format: 'dd MM yyyy' })
+            // $("#txtPaymentDate").datepicker("update");
+            var form = jQuery("#GroupPaymentAddEditform");
+            form.validate();
+            jQuery("#btnSubmit").click(function (event) {
+                if (jQuery(form).valid()) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            });
+
+            eventConfigs.pageChange.action(RefreshAddEditData);
+            eventConfigs.searchClick.action(RefreshAddEditData);
+        });
+
+        function RefreshAddEditData(e) {
+            LoadSocietyAddEdit();
+        }
+    </script>
+}

@@ -1,0 +1,115 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Scripts.Render("~/bundles/jquery")
+
+<script src="~/Scripts/app/searchdatatable.js"></script>
+<script src="~/Scripts/app/multisearchdatatable.js"></script>
+<div class="row">
+    <div class="col-sm-6" id="packageaddedit"></div>
+    <div class="col-sm-6" id="packageservices"></div>
+</div>
+<div class="row" id="packagelist"></div>
+
+<script type="text/javascript">
+    var packageId = '@ViewBag.PackageId';
+    var hasRight = '@ViewBag.HasAccess';
+
+    var packageDatatableConfigs = new datatableConfigs();
+    var packageServiceDatatableConfigs = new datatableConfigs();
+    jQuery.noConflict();
+
+    jQuery(function (jQuery) {
+        jQuery(document).ready(function () {
+            @*if (hasRight == 'False') {
+                var url = '@Url.Action("Error403", "Error", new { Area = "Admin" })';
+                window.location.href = url;
+            }
+            else {*@
+                    jQuery.noConflict();
+
+                    packageDatatableConfigs.tableConfigs.Name = 'package';
+                    packageDatatableConfigs.DOMIDs.AddEdit = "packageaddedit";
+                    packageDatatableConfigs.DOMIDs.List = "packagelist";
+                    packageDatatableConfigs.DOMIDs.PackageServiceAddEdit = "packageservices";
+
+                    packageServiceDatatableConfigs.tableConfigs.Name = 'packageservice';
+                    packageServiceDatatableConfigs.DOMIDs.AddEdit = "packageserviceaddedit";
+                    packageServiceDatatableConfigs.DOMIDs.List = "packageservicelist";
+
+                    datatables.push(packageDatatableConfigs);
+                    datatables.push(packageServiceDatatableConfigs);
+
+                    LoadPackageList();
+
+                     var model = @Html.Raw(Json.Encode(ViewBag.Package));
+                     if (model == null) {
+                         model = {
+                             pkiPackageID: 0,
+                             PackageName: '',
+                             Total: 0,
+                             fkiPackageID:0
+                         };
+                     }
+
+                    LoadPackageAddEdit(model);
+
+            //}
+        });
+    });
+
+    function LoadPackageList() {
+
+        jQuery.ajax({
+            url: '@Url.Action("List","Package",new {},Request.Url.Scheme)',
+            type: "Get",
+            contentType: "application/html; charset=utf-8",
+            dataType: 'html'
+        })
+        .success(function (result) {
+            jQuery("#" + packageDatatableConfigs.DOMIDs.List).html(result);
+        })
+        .error(function (xhr, status) {
+            alert(status);
+        });
+    }
+
+    function LoadPackageAddEdit(model) {
+
+        jQuery.ajax({
+            url: '@Url.Action("Add", "Package", new {},Request.Url.Scheme)',
+            type: "Post",
+            data: JSON.stringify(model),
+            contentType: 'application/json',
+            dataType: 'html'
+        })
+            .success(function (result) {
+                jQuery("#" + packageDatatableConfigs.DOMIDs.AddEdit).html(result);
+            LoadPackageServices(model.fkiPackageID);
+        })
+        .error(function (xhr, status) {
+            alert(status);
+        });
+    }
+
+    function LoadPackageServices(packageId) {
+
+        var listUrl = '@Url.Action("List", "PackageService", new { packageId = "PackageIdVal" },Request.Url.Scheme)';
+        listUrl = listUrl.replace("PackageIdVal", packageId);
+
+        jQuery.ajax({
+            url: listUrl,
+            type: "Post",
+            contentType: 'application/json',
+            dataType: 'html'
+        })
+        .success(function (result) {
+            jQuery("#" + packageDatatableConfigs.DOMIDs.PackageServiceAddEdit).html(result);
+        })
+        .error(function (xhr, status) {
+            alert(status);
+        });
+    }
+
+</script>

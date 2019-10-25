@@ -1,0 +1,76 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/bundles/jquery")
+<script src="~/Scripts/app/searchdatatable.js"></script>
+<div class="row" id="agentinfosetupaddedit"></div>
+<div class="row" id="agentinfosetuplist"></div>
+<script>
+
+    var agentInfoSetupId = '@ViewBag.AgentInfoSetupId';
+    var hasRight = '@ViewBag.HasAccess';
+    jQuery(function ($) { 
+        $(document).ready(function () {
+            if (hasRight == 'False') {
+                var url = '@Url.Action("Error403", "Error", new { })';
+                window.location.href = url;
+            }
+            else {
+                //$.noConflict();
+                LoadAgentInfoSetupList();
+                LoadAgentInfoAddEdit();
+                DOMIDs.AddEdit = "agentinfosetupaddedit";
+                DOMIDs.List = "agentinfosetuplist";
+                
+            }
+        });
+    })
+
+    function LoadAgentInfoSetupList() {
+        jQuery.ajax({
+            url: '@Url.Action("List","AgentInfoSetup",new {},Request.Url.Scheme)',
+            type: "Get",
+            contentType: "application/html; charset=utf-8",
+            dataType: 'html'
+        })
+        .success(function (result) {
+            jQuery("#" + DOMIDs.List).html(result);
+        })
+        .error(function (xhr, status) {
+            alert(status);
+        });
+    }
+
+    function LoadAgentInfoAddEdit() {
+
+            var model = {
+                ID:0,
+                Surname: '',
+                Fullname: '',
+                ContactNumber: '',
+                Address1: '',
+                Address2: '',
+                Address3: '',
+                Address4: '',
+                Code: '',
+                Email: '',
+                ModifiedUser: '',
+            };
+
+            jQuery.ajax({
+                url: '@Url.Action("Add","AgentInfoSetup",new {},Request.Url.Scheme)',
+                type: "Post",
+                data: JSON.stringify(model),
+                contentType: "application/html; charset=utf-8",
+                dataType: 'html'
+            })
+            .success(function (result) {
+                jQuery("#" + DOMIDs.AddEdit).html(result);
+            })
+            .error(function (xhr, status) {
+                alert(status);
+            });
+        }
+</script>

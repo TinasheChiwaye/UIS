@@ -1,0 +1,216 @@
+﻿@model Funeral.Model.Search.PackageSearch
+
+@using (Html.BeginForm())
+{
+    <div class="dataTables_wrapper" id="tblPackageSearch_wrapper">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>Package List</h5>
+                </div>
+                <div class="ibox-content" id="PackageList">
+                    <div class="row">
+                        <div class="col-lg-1" id="dvAdministrator">
+                            <div class="form-group">
+                                <label>Show entries</label>
+                                @Html.DropDownListFor(m => m.PageSize, new SelectList(ViewBag.EntriesCount, "Value", "Key"), new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-sm-5 col-sm-offset-6">
+                            <div class="form-group">
+                                <label>Search Branch:</label>
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.SarchText, null, new { @class = "form-control", @maxlength = "50", placeholder = "Search by keyword" })
+                                    <span class="input-group-btn">
+                                        <input type="button" id="btnSearch" value="Search" class="btn btn-w-m btn-primary" />
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <asp:Label ID="lblRecords" runat="server" Text=""></asp:Label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 ">
+                            <div class="table-responsive">
+                                @Html.EditorFor(model => model.PageNum, new { htmlAttributes = new { @class = "hidden", id = "PageNum1" } })
+                                @Html.EditorFor(model => model.PageSize, new { htmlAttributes = new { @class = "hidden", id = "PageSize1" } })
+                                @Html.Hidden("ItemId")
+                                <table id="packageDataTable" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>PackageId</th>
+                                            <th>PackageName</th>
+                                            <th>Total</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var packageListTableConfig = datatables.find(x => { return x.tableConfigs.Name == 'package' });
+        jQuery(document).ready(function (jQuery) {
+            jQuery.noConflict();
+            ConfigurePackageDatatable();
+
+            packageListTableConfig.InitDataTable(packageListTableConfig.tableConfigs.Name);
+            packageListTableConfig.eventConfigs.pageChange.eventName = 'btnPackagePageChanged';
+            packageListTableConfig.eventConfigs.pageChange.domElement = jQuery('#PackageList #PageSize')[0];
+            packageListTableConfig.eventConfigs.searchClick.eventName = 'btnPackageSearchClicked';
+            packageListTableConfig.eventConfigs.searchClick.domElement = jQuery('#PackageList #btnSearch')[0];
+
+            jQuery('#PackageList #PageSize').change(function () {
+
+                InitModel();
+                packageListTableConfig.tableConfigs.table.DataTable().page.len(packageListTableConfig.model1.PageSize).draw();
+                packageListTableConfig.eventConfigs.pageChange.dispatchEvent();
+            });
+
+            jQuery("#PackageList #btnSearch").click(function () {
+
+                    InitModel();
+                    packageListTableConfig.tableConfigs.table.fnDraw();
+                    packageListTableConfig.eventConfigs.searchClick.dispatchEvent();
+            });
+        });
+
+        function ConfigurePackageDatatable() {
+
+            var sortOrder = @Html.Raw(Json.Encode(@Model.SortOrder));
+            var sortBy =@Html.Raw(Json.Encode(@Model.SortBy));
+            var totalRecord =@Html.Raw(Json.Encode(@Model.TotalRecord));
+            var pageNum =@Html.Raw(Json.Encode(@Model.PageNum));
+            var pageSize =@Html.Raw(Json.Encode(@Model.PageSize));
+            var searchText =@Html.Raw(Json.Encode(@Model.SarchText));
+
+            packageListTableConfig.DOMIDs.Datatable = "packageDataTable";
+            packageListTableConfig.tableConfigs.SearchUrls = '@Url.Action("SearchData", "Package", new { }, Request.Url.Scheme)';
+            packageListTableConfig.setsearchmodel('200', sortOrder, sortBy, totalRecord, pageNum, pageSize, searchText);
+
+            packageListTableConfig.columnsArray =
+            [{ "data": "pkiPackageID", "name": "PackageId", "autoWidth": true, "visible": false },
+            { "data": "PackageName", "name": "Package Name", "autoWidth": true },
+            { "data": "Total", "name": "Total", "autoWidth": true },
+            {
+                "render": function (data, type, full, meta) {
+
+                    var hasEditRights = '@ViewBag.HasEditRight' == "True" ? true : false;
+                    var hasDeleteRights = '@ViewBag.HasDeleteRight' == "True" ? true : false;
+
+                    if (hasEditRights || hasDeleteRights) {
+                        packageListTableConfig.tableConfigs.table.DataTable().columns([3]).visible(true)
+                        var dom = "<div class='row'>";
+
+                        if (hasEditRights) {
+                            var editMemberUrl = '<div class="col-sm-4 text-center"><a  onclick="EditPackage(\'' + full.pkiPackageID + '\')"><i class="fa fa-edit"></i></a></div>';
+                            dom = dom + editMemberUrl;
+                        }
+
+                        if (hasDeleteRights) {
+                            var deleteMemberUrl = '<div class="col-sm-4 text-center"> <a onclick="DeleteBranchSetup(\'' + full.pkiPackageID + '\')"; ><i class="fa fa-trash-o"></i></a></div>';
+                            dom = dom + deleteMemberUrl;
+                        }
+
+                        dom = dom + "</div>";
+                        return dom;
+                    }
+                    else {
+                        packageListTableConfig.tableConfigs.table.DataTable().columns([3]).visible(false);
+                        return "";
+                    }
+
+                    //return '<div class="row"><div class="col-sm-4 text-center"><a  onclick="EditPackage(\'' + full.pkiPackageID + '\')"><i class="fa fa-edit"></i></a></div><div class="col-sm-4 text-center"> <a onclick="DeletePackage(\'' + full.pkiPackageID + '\')"; ><i class="fa fa-trash-o"></i></a></div></div>';
+                }
+            }];
+        }
+
+        function InitModel() {
+            packageListTableConfig.model1.PageNum = 1;
+            packageListTableConfig.model1.PageSize = jQuery('#PackageList #PageSize').val();
+            packageListTableConfig.model1.SarchText = jQuery("#PackageList #SarchText").val();
+            jQuery("#PackageList #PageNum1").val(packageListTableConfig.model1.PageNum);
+        }
+
+        function EditPackage(packageId) {
+
+            jQuery("#ItemId").val(packageId);
+            var editUrl = '@Url.Action("Edit","Package",new { packageID = "PackageIdVal" },Request.Url.Scheme)';
+            editUrl = editUrl.replace("PackageIdVal", packageId);
+
+            jQuery.ajax({
+                url: editUrl,
+                type: "Get",
+                contentType: "application/html; charset=utf-8",
+                dataType: 'html'
+            })
+            .success(function (result) {
+                jQuery("#" + packageListTableConfig.DOMIDs.AddEdit).html(result);
+                LoadPackageServices(packageId);
+                jQuery('html, body').animate({
+                    scrollTop: jQuery("#packageAddEditform").offset().top
+                }, 50);
+            })
+            .error(function (xhr, status) {
+                alert(status);
+            });
+        }
+
+        function DeleteBranchSetup(packageId) {
+
+            var isConfirmed = confirm('Are you sure you want to delete?');
+
+            if (isConfirmed) {
+
+                jQuery("#ItemId").val(packageId);
+                var deleteUrl = '@Url.Action("Delete", "Package", new { packageId = "PackageIdVal" },Request.Url.Scheme)';
+                deleteUrl = deleteUrl.replace("PackageIdVal", packageId);
+
+                packageListTableConfig.model1.PageNum = 1;
+
+                jQuery.ajax({
+                    url: deleteUrl,
+                    type: "Get",
+                    contentType: "application/html; charset=utf-8",
+                    dataType: 'html'
+                })
+                .success(function (result) {
+                    InitModel();
+                    packageListTableConfig.tableConfigs.table.fnDraw();
+                })
+                .error(function (xhr, status) {
+                    alert(status);
+                });
+            }
+        }
+
+        function LoadPackageServices(packageId) {
+
+            var listUrl = '@Url.Action("List", "PackageService", new { packageId = "PackageIdVal" },Request.Url.Scheme)';
+            listUrl = listUrl.replace("PackageIdVal", packageId);
+
+            jQuery.ajax({
+                url: listUrl,
+                type: "Post",
+                contentType: 'application/json',
+                dataType: 'html'
+            })
+            .success(function (result) {
+                jQuery("#" + packageListTableConfig.DOMIDs.PackageServiceAddEdit).html(result);
+            })
+            .error(function (xhr, status) {
+                alert(status);
+            });
+        }
+    </script>
+}

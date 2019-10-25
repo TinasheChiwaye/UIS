@@ -1,0 +1,137 @@
+﻿@model Funeral.Model.BranchModel
+
+@Scripts.Render("~/bundles/jqueryval")
+
+@using (Html.BeginForm("Save", "BranchSetup", FormMethod.Post, new { id = "branchSetupAdddEditform" }))
+{
+    <div class="col-lg-12">
+        <div class="ibox ">
+            <div class="ibox-title">
+                <h5>Branch Setup</h5>
+            </div>
+            <div class="ibox-content">
+                @Html.HiddenFor(m => m.Brancheid)
+                @Html.HiddenFor(m => m.Parlourid)
+                <div class="form-group row">
+                    <div class="messagealert" id="alert_container"></div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.Label("Branch Name", new { @class = "control-label" })
+                            <strong><span class="text-danger"><em>*</em></span></strong>
+                            @Html.TextBoxFor(m => m.BranchName, null, new { @class = "form-control", @maxlength = "30", placeholder = "Branch Name" })
+                            @Html.ValidationMessageFor(m => m.BranchName, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Branch Code", new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.BranchCode, null, new { @class = "form-control", @maxlength = "25", placeholder = "Branch Code" })
+                            @Html.ValidationMessageFor(m => m.BranchCode, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Phone Number", new { @class = "control-label" })
+                            <strong><span class="text-danger"><em>*</em></span></strong>
+                            @Html.TextBoxFor(m => m.TelNumber, null, new { @class = "form-control", @maxlength = "15", placeholder = "Phone Number" })
+                            @Html.ValidationMessageFor(m => m.TelNumber, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CellNumber, new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.CellNumber, null, new { @class = "form-control", @maxlength = "15", placeholder = "Cell Number" })
+                            @Html.ValidationMessageFor(m => m.CellNumber, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.Label("Physical Address", new { @class = "control-label" })
+                            <strong><span class="text-danger"><em>*</em></span></strong>
+                            @Html.TextBoxFor(m => m.Address1, null, new { @class = "form-control", @maxlength = "35", placeholder = "Physical Address" })
+                            @Html.ValidationMessageFor(m => m.Address1, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Street", new { @class = "control-label" })
+                            <strong><span class="text-danger"><em>*</em></span></strong>
+                            @Html.TextBoxFor(m => m.Address2, null, new { @class = "form-control", @maxlength = "25", placeholder = "Street" })
+                            @Html.ValidationMessageFor(m => m.Address2, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Town", new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.Address3, null, new { @class = "form-control", @maxlength = "25", placeholder = "Town" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Province", new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.Address3, null, new { @class = "form-control", @maxlength = "25", placeholder = "Province" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Region", new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.Region, null, new { @class = "form-control", @maxlength = "25", placeholder = "Region" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Code", new { @class = "control-label" })
+                            <strong><span class="text-danger"><em>*</em></span></strong>
+                            @Html.TextBoxFor(m => m.Code, null, new { @class = "form-control", @maxlength = "30", placeholder = "Code" })
+                            @Html.ValidationMessageFor(m => m.Code, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="form-group">
+            <div class="btn-group">
+                <input type="button" id="btnCancel" value="Cancel" class="btn btn-w-m btn-primary" />
+            </div>
+            @if (ViewBag.HasCreateRight)
+            {
+                <div class="btn-group">
+                    <input id="btnSubmit" type="submit" value="Save" class="btn btn-w-m btn-primary" />
+                </div>
+            }
+        </div>
+    </div>
+
+    if (TempData.Peek("IsBranchSetupSaved") != null && (bool)TempData.Peek("IsBranchSetupSaved") == true)
+    {
+        <script>
+            ShowSaveMessage('#alert_container', 'Branch setup saved successfully!');
+        </script>
+
+        TempData.Remove("IsBranchSetupSaved");
+    }
+    
+    <script type="text/javascript">
+		jQuery(document).ready(function () {
+
+			jQuery("#btnCancel").click(function (event) {
+				$("#BranchName").val("");
+				$("#BranchCode").val("");
+				$("#TelNumber").val("");
+				$("#CellNumber").val("");
+				$("#Address1").val("");
+				$("#Address2").val("");
+				$("#Address3").val("");
+				$("#Region").val("");
+				$("#Code").val("");
+			});
+
+            var form = jQuery("#branchSetupAdddEditform");
+            form.validate();
+            jQuery("#btnSubmit").click(function (event) {                
+                if (jQuery(form).valid()) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            });
+
+            eventConfigs.pageChange.action(RefreshAddEditData);
+            eventConfigs.searchClick.action(RefreshAddEditData);
+        });
+
+        function RefreshAddEditData(e) {
+            LoadBranchAddEdit();
+        }
+    </script>
+
+}

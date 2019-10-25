@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Scripts.Render("~/bundles/jquery")
+<script src="~/Scripts/app/searchdatatable.js"></script>
+<div class="row" id="custommanagementaddedit"></div>
+<div class="row" id="custommanagementlist"></div>
+
+<script>
+    var hasRight = '@ViewBag.HasAccess';
+
+    jQuery(function ($) {
+        $(document).ready(function () {
+            @*if (hasRight == 'False') {
+                var url = '@Url.Action("Error403", "Error", new { Area = "Admin" })';
+                window.location.href = url;
+            }
+            else {*@
+                $.noConflict();
+                LoadCustomManagementAddEdit();
+                DOMIDs.AddEdit = "custommanagementaddedit";
+                DOMIDs.List = "custommanagementlist";
+            //}
+        });
+    });
+
+    function LoadCustomManagementAddEdit(customType) {
+        var type = customType == undefined ? 0 : parseInt(customType);
+        var model = {
+                Id: 0,
+                Name: '',
+                CustomType:type,
+                Description: ''
+            };
+
+            $.ajax({
+                url: '@Url.Action("Add","CustomManagement",new {},Request.Url.Scheme)',
+                type: "Post",
+                data: JSON.stringify(model),
+                contentType: 'application/json',
+                dataType: 'html'
+            })
+            .success(function (result) {
+                $("#" + DOMIDs.AddEdit).html(result);
+            })
+            .error(function (xhr, status) {
+                alert(status);
+            });
+    }
+</script>

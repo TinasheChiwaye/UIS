@@ -1,0 +1,1333 @@
+﻿
+
+<!DOCTYPE html>
+<!--[if IE 7 ]>   <html lang="en" class="ie7 lte8"> <![endif]-->
+<!--[if IE 8 ]>   <html lang="en" class="ie8 lte8"> <![endif]-->
+<!--[if IE 9 ]>   <html lang="en" class="ie9"> <![endif]-->
+<!--[if gt IE 9]> <html lang="en"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+        - Funeral
+    </title>
+    <link href='/Content/bootstrap.min.css' rel="stylesheet" type="text/css" />
+    <link href='/fonts/font-awesome/css/font-awesome.min.css' rel="stylesheet" type="text/css" />
+    <link href='/Content/animate.css' rel="stylesheet" type="text/css" />
+    <link href='/Content/style.css' rel="stylesheet" type="text/css" />
+    <link href="../favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link href='/Content/plugins/datapicker/datepicker3.css' rel="stylesheet" />
+    <style type="text/css">
+        input.form-control {
+            float: left;
+            width: 98%;
+        }
+
+        .btn {
+            margin: 10px;
+        }
+
+        .footer {
+            position: relative !important;
+        }
+
+        input[type=radio] {
+            margin-left: 4px !important;
+        }
+
+        .row {
+            background-color: white;
+        }
+
+        em {
+            color: red;
+        }
+
+        .popup, #popup {
+            position: fixed;
+            width: 350px;
+            height: 171px;
+            top: 24%;
+            left: 33%;
+            margin: 0 auto;
+            text-align: center;
+            /*z-index: 2003;*/
+            background-color: white;
+            display: none;
+        }
+
+        .wrap, #wrap {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: .7;
+            background-color: black;
+            /*z-index: 2002;*/
+            display: none;
+        }
+
+        #poptable {
+            margin: 25px;
+        }
+
+            #poptable td, #poptable tr, #poptable td input[type=text] {
+                margin: 10px;
+            }
+
+        .selectors {
+            padding: 0;
+        }
+
+        .WrapLayout {
+            height: 100%;
+            width: 100%;
+            background-color: black;
+            opacity: .7;
+            position: fixed;
+            top: 0;
+            left: 0;
+            /*z-index: 999;*/
+        }
+
+        .noteHead {
+            width: 100%;
+        }
+
+        .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default; {
+            border: 1px solid #d3d3d3 /*{borderColorDefault}*/;
+            background: #e6e6e6 /*{bgColorDefault}*/ url(images/ui-bg_glass_75_e6e6e6_1x400.png) 50% /*{bgDefaultXPos}*/ 50% /*{bgDefaultYPos}*/ repeat-x /*{bgDefaultRepeat}*/ /*{bgDefaultRepeat}*/ /*{bgDefaultRepeat}*/ /*{bgDefaultRepeat}*/;
+            font-weight: normal /*{fwDefault}*/;
+            color: #555555 /*{fcDefault}*/;
+        }
+
+        .noteHead h3 {
+            float: left;
+        }
+
+        .noteDate {
+            float: right;
+            margin-right: 5px;
+        }
+
+        .noteContainer {
+            margin-top: 44px;
+            float: left;
+        }
+
+        #ddlDependencyTypeFormInput, #ddlDependencyRelationshipFormInput {
+            max-width: 60% !important;
+        }
+
+        #NotePopUp {
+            width: 50%;
+            height: 50%;
+            z-index: 5000;
+            position: fixed;
+            background-color: white;
+            top: 22%;
+            left: 25%;
+            padding: 12px;
+            display: none;
+        }
+
+        #NotePopUpWrap {
+            height: 100%;
+            width: 100%;
+            position: fixed;
+            z-index: 4000;
+            background-color: black;
+            opacity: .7;
+            display: none;
+            top: 0;
+            left: 0;
+        }
+
+        #NotePopUp .row {
+            margin: 0 !important;
+        }
+
+        tr.even {
+            background-color: white !important;
+        }
+
+        tr.odd {
+            background-color: #E2E4FF !important;
+        }
+
+        table.dataTable thead th, table.dataTable thead td {
+            padding: 3px 18px;
+            border-bottom: 1px solid #CCC;
+            border-top: 1px solid #CCC;
+            border-left: 1px solid #CCC;
+        }
+
+        table.dataTable {
+            margin-top: 15px;
+        }
+
+        .dataTables_wrapper .dataTables_filter {
+            float: none;
+        }
+
+        .NoteCss {
+            float: right;
+            margin-right: 50Px;
+        }
+
+
+
+
+        .modalPopup {
+            top: 20%;
+            background-color: #FFFFFF;
+            width: 500px;
+            height: auto;
+            border-radius: 5px;
+            position: fixed;
+            font-size: 12px;
+            margin: 0 auto;
+            /*z-index: 1003;*/
+        }
+
+        .dataTables_wrapper no-footer {
+            position: inherit;
+        }
+
+        .lnkClose {
+            float: right;
+        }
+
+        .spaceMargin {
+            margin: 0;
+            margin-left: 20px;
+        }
+
+        #Notes_wrapper, .modalPopup {
+            min-height: 50%;
+        }
+
+        .ddlDependencyType {
+            float: none;
+        }
+    </style>
+
+    <style type="text/css">
+        .pagination-ys {
+            /*display: inline-block;*/
+            padding-left: 0;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+            .pagination-ys table > tbody > tr > td {
+                display: inline;
+            }
+
+                .pagination-ys table > tbody > tr > td > a,
+                .pagination-ys table > tbody > tr > td > span {
+                    position: relative;
+                    float: left;
+                    padding: 8px 12px;
+                    line-height: 1.42857143;
+                    text-decoration: none;
+                    color: #dd4814;
+                    background-color: #ffffff;
+                    border: 1px solid #dddddd;
+                    margin-left: -1px;
+                }
+
+                .pagination-ys table > tbody > tr > td > span {
+                    position: relative;
+                    float: left;
+                    padding: 8px 12px;
+                    line-height: 1.42857143;
+                    text-decoration: none;
+                    margin-left: -1px;
+                    z-index: 2;
+                    color: #aea79f;
+                    background-color: #f5f5f5;
+                    border-color: #dddddd;
+                    cursor: default;
+                }
+
+                .pagination-ys table > tbody > tr > td:first-child > a,
+                .pagination-ys table > tbody > tr > td:first-child > span {
+                    margin-left: 0;
+                    border-bottom-left-radius: 4px;
+                    border-top-left-radius: 4px;
+                }
+
+                .pagination-ys table > tbody > tr > td:last-child > a,
+                .pagination-ys table > tbody > tr > td:last-child > span {
+                    border-bottom-right-radius: 4px;
+                    border-top-right-radius: 4px;
+                }
+
+                .pagination-ys table > tbody > tr > td > a:hover,
+                .pagination-ys table > tbody > tr > td > span:hover,
+                .pagination-ys table > tbody > tr > td > a:focus,
+                .pagination-ys table > tbody > tr > td > span:focus {
+                    color: #97310e;
+                    background-color: #eeeeee;
+                    border-color: #dddddd;
+                }
+    </style>
+</head>
+<body>
+    <form method="post" action="ManageMember.aspx?Id=176994" onsubmit="javascript:return WebForm_OnSubmit();" id="ctl01" enctype="multipart/form-data">
+      
+        <div id="wrapper">
+            <nav class="navbar-default navbar-static-side" role="navigation">
+                <div class="sidebar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="nav-header">
+                            <div class="dropdown profile-element">
+                                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                    <span class="clear">
+                                        <span class="block m-t-xs">
+                                            <strong class="font-bold">
+                                                <span id="lnLoginName">admin</span>
+                                            </strong>
+                                        </span>
+                                    </span>
+                                </a>
+                                <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                    <li>
+                                        <a id="loginStatusControl" href="/Admin/login.aspx">Log out</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="logo-element">
+                                IN+
+                            </div>
+                        </li>
+                        <li>
+                            <a href="/Admin/Dashboard.aspx"><i class="fa fa-th-large"></i><span class="nav-label">Dashboard</span></a>
+                        </li>
+                        <li>
+                            <a href="/Default.aspx"><i class="fa  fa-home"></i><span class="nav-label ">Members</span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="/Admin/ManageMember.aspx">Add New</a></li>
+                                <li><a href="/Admin/Members.aspx">Members</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <div id="page-wrapper" class="gray-bg">
+                <div class="row border-bottom">
+                    <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+                        <div class="navbar-header">
+                            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i></a>
+                            <div role="search" class="navbar-form-custom">
+                                <div class="form-group">
+                                    <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="nav navbar-top-links navbar-right">
+                            <li>
+                                <!--<a href="javascript:__doPostBack(&#39;ctl00$ctl11$ctl00&#39;,&#39;&#39;)">Log out</a>-->
+                                <a href="/Admin/login.aspx">Log out</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="wrapper wrapper-content animated fadeInRight">
+
+                    <div class="row">
+                        <div class="alert alert-danger">The server was unable to process the request due to an internal error.  For more information about the error, either turn on IncludeExceptionDetailInFaults (either from ServiceBehaviorAttribute or from the <servicedebug> configuration behavior) on the server in order to send the exception information back to the client, or turn on tracing as per the Microsoft .NET Framework SDK documentation and inspect the server trace logs.</div>
+                        <input type="hidden" name="ctl00$MainContent$TabName" id="MainContent_TabName" />
+                        <input type="hidden" name="ctl00$MainContent$hdnNoteId" id="MainContent_hdnNoteId" />
+                        <div class="col-lg-12">
+                            <div class="panel blank-panel">
+                                <div class="panel-heading">
+                                    <div class="panel-title m-b-md">
+                                        <h4>Members Details</h4>
+                                        <input type="hidden" name="ctl00$MainContent$hdnId" id="MainContent_hdnId" value="1" />
+                                    </div>
+                                    <div class="panel-options" id="Tabs">
+                                        <ul class="nav nav-tabs" id="myTab">
+                                            <li class="active" id="tab1"><a data-toggle="tab" href="#tab-1" aria-expanded="true">Personal Details</a></li>
+                                            <li class="" id="tab2"><a data-toggle="tab" href="#tab-2" aria-expanded="false">Physical Address</a></li>
+                                            <li class="" id="tab3"><a data-toggle="tab" href="#tab-3" aria-expanded="false">Policy Details</a></li>
+                                            <li class="" id="tab4"><a data-toggle="tab" href="#tab-4" aria-expanded="false">Debit Order Details</a></li>
+                                            <li class="" id="tab5"><a data-toggle="tab" href="#tab-5" aria-expanded="false">Dependent & Extended Family</a></li>
+                                            <li class="" id="tab6"><a data-toggle="tab" href="#tab-6" aria-expanded="false">Payment History</a></li>
+                                            <li class="" id="tab7"><a data-toggle="tab" href="#tab-7" aria-expanded="false">Note</a></li>
+                                            <li class="" id="tab8"><a data-toggle="tab" href="#tab-8" aria-expanded="false">Supported Documents</a></li>
+                                            <li class="" id="tab9"><a data-toggle="tab" href="#tab-9" aria-expanded="false">Product</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="tab-content">
+                                        <div id="tab-1" class="tab-pane active">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Last Name  <em>*</em> </label>
+                                                        <input name="ctl00$MainContent$txtLastName" value="Yadav" maxlength="255" id="MainContent_txtLastName" placeholder="Something " name="name" type="text" class="form-control" />
+                                                        <span id="MainContent_RequiredFieldValidator1" style="color:Red;visibility:hidden;">*</span>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>First Name  <em>*</em>  </label>
+                                                        <input name="ctl00$MainContent$txtFirstname" value="Hemant" maxlength="255" id="MainContent_txtFirstname" placeholder="Joe " name="name" type="text" class="form-control" />
+                                                        <span id="MainContent_RequiredFieldValidator2" style="color:Red;visibility:hidden;">*</span>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>ID Number <em>*</em>  </label>
+                                                        <input name="ctl00$MainContent$txtIdNumber" value="10000" maxlength="255" id="MainContent_txtIdNumber" placeholder="0808845544087 " name="name" type="text" class="form-control" />
+                                                        <span id="MainContent_RequiredFieldValidator3" style="color:Red;visibility:hidden;">*</span>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Date of Birth </label>
+                                                        <input name="ctl00$MainContent$txtBirthDay" value="08 Apr 1984" maxlength="255" id="MainContent_txtBirthDay" placeholder="08 Aug 1984 " name="name" type="text" class="form-control" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Gender</label>
+                                                        <table id="MainContent_rbtnlGender" class="radio radiogroup ">
+                                                            <tr>
+                                                                <td><input id="MainContent_rbtnlGender_0" type="radio" name="ctl00$MainContent$rbtnlGender" value="1" checked="checked" /><label for="MainContent_rbtnlGender_0">Male</label></td>
+                                                                <td><input id="MainContent_rbtnlGender_1" type="radio" name="ctl00$MainContent$rbtnlGender" value="1" /><label for="MainContent_rbtnlGender_1">Female</label></td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Cellphone Number <em>*</em>  </label>
+                                                        <input name="ctl00$MainContent$txtCellphone" value="12313" maxlength="255" id="MainContent_txtCellphone" placeholder="082 123 4567 " name="txtCellphone" type="text" class="form-control" />
+                                                        <span id="MainContent_RequiredFieldValidator6" style="color:Red;visibility:hidden;">*</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Telephone Number</label>
+                                                        <input name="ctl00$MainContent$txtTelePhone" value="07764253893" maxlength="255" id="MainContent_txtTelePhone" placeholder="Telephone Number " name="txtTelePhone" type="text" class="form-control" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Email Address</label>
+                                                        <input name="ctl00$MainContent$txtEmail" value="Development@nwdesignstudios.co.uk" maxlength="255" id="MainContent_txtEmail" placeholder="A valid email address" name="txtEmail" type="text" class="form-control" />
+                                                        <span id="MainContent_revEmailValidation" style="color:Red;visibility:hidden;">Please enter valid email id</span>
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Citizenship</label>
+                                                        <input name="ctl00$MainContent$txtCitizenship" value="Indian" maxlength="255" id="MainContent_txtCitizenship" placeholder="Enter Citizenship" name="txtCitizenship" type="text" class="form-control" />
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Passport</label>
+                                                        <input name="ctl00$MainContent$txtPassport" value="12313" maxlength="255" id="MainContent_txtPassport" placeholder="Passport " name="txtPassport" type="text" class="form-control" />
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Age</label>
+                                                        <input name="ctl00$MainContent$txtAge" value="31" maxlength="255" id="MainContent_txtAge" placeholder="Enter " name="txtAge" type="text" class="form-control" />
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <label>Search Members:</label>
+                                                        <div id="MainContent_pnlSearch" class="input-group">
+
+                                                            <input type="submit" name="ctl00$MainContent$btnResetTab1" value="Reset" onclick="this.form.reset();return false;" id="MainContent_btnResetTab1" class="btn btn-sm btn-primary pull-right m-t-n-xs" />
+
+                                                            <input type="submit" name="ctl00$MainContent$btnNextStep" value="Next" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$MainContent$btnNextStep&quot;, &quot;&quot;, true, &quot;tab1&quot;, &quot;&quot;, false, false))" id="MainContent_btnNextStep" class="btn btn-sm btn-primary pull-right m-t-n-xs" />
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="tab-2" class="tab-pane">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Street Address <em>*</em> </label>
+                                                        <input name="ctl00$MainContent$txtStreetAddress" value="16/A New Maharathi Soceit" maxlength="255" id="MainContent_txtStreetAddress" placeholder="Church Street " name="name" type="text" class="form-control" />
+                                                        <span id="MainContent_RequiredFieldValidator5" style="color:Red;visibility:hidden;">*</span>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Town or City</label>
+                                                        <input name="ctl00$MainContent$txtTown" value="Ahmedabad" maxlength="255" id="MainContent_txtTown" placeholder="Sebokeng " name="name" type="text" class="form-control" />
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Province</label>
+                                                        <input name="ctl00$MainContent$txtProvince" value="GJ" maxlength="255" id="MainContent_txtProvince" placeholder="Gauteng " name="name" type="text" class="form-control" />
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Code</label>
+                                                        <input name="ctl00$MainContent$txtCode" value="1001" maxlength="255" id="MainContent_txtCode" placeholder="0000 " name="name" type="text" class="form-control" />
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Postal Address</label>
+                                                        <input name="ctl00$MainContent$txtStreetPostalAddress" value="10015" maxlength="255" id="MainContent_txtStreetPostalAddress" placeholder="Postal Address " name="name" type="text" class="form-control" />
+
+                                                    </div>
+                                                    <div>
+                                                        <button class="btn btn-sm btn-primary pull-right m-t-n-xs" onclick="return goToTab(1);">Back</button>
+                                                        <input type="submit" name="ctl00$MainContent$btnResetTab2" value="Reset" id="MainContent_btnResetTab2" class="btn btn-sm btn-primary pull-right m-t-n-xs" />
+
+                                                        <input type="submit" name="ctl00$MainContent$btnTab2" value="Next" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$MainContent$btnTab2&quot;, &quot;&quot;, true, &quot;tab2&quot;, &quot;&quot;, false, false))" id="MainContent_btnTab2" class="btn btn-sm btn-primary pull-right m-t-n-xs" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="tab-3" class="tab-pane">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Policy Name</label>
+                                                        <select name="ctl00$MainContent$ddlPolicy" id="MainContent_ddlPolicy" class="form-control">
+                                                            <option value="0">Select Branch</option>
+                                                            <option value="60">DIGNITY PLAN</option>
+                                                            <option selected="selected" value="59">EXECUTIVE PLAN</option>
+                                                            <option value="58">N2 PLAN</option>
+                                                            <option value="56">NDUMISO</option>
+                                                            <option value="57">SAE PLAN</option>
+                                                            <option value="55">ZOLISWA</option>
+
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Policy Premium </label>
+                                                        <input name="ctl00$MainContent$txtPolicyPremium" maxlength="255" id="MainContent_txtPolicyPremium" placeholder="R 100.00" name="name" type="text" class="form-control" />
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Policy No<em>*</em> </label>
+                                                        <input name="ctl00$MainContent$txtPolicyNo" value="10000" maxlength="255" id="MainContent_txtPolicyNo" placeholder="UNP001 " name="name" type="text" class="form-control" />
+                                                        <span id="MainContent_RequiredFieldValidator18" style="color:Red;visibility:hidden;">*</span>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Select Branch</label>
+                                                        <select name="ctl00$MainContent$ddlBankBranch" id="MainContent_ddlBankBranch" class="form-control">
+                                                            <option selected="selected" value="0">Select Branch</option>
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Society</label>
+                                                        <select name="ctl00$MainContent$ddlMemberSociety" id="MainContent_ddlMemberSociety" class="form-control m-b">
+                                                            <option value="0">Select Society</option>
+                                                            <option selected="selected" value="8">N - A</option>
+
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Policy Inception Date</label>
+                                                        <input name="ctl00$MainContent$txtInception" value="31 Dec 9999" maxlength="255" id="MainContent_txtInception" placeholder="01 Jan 2000" name="name" type="text" class="form-control" />
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Policy Underwritten By</label>
+                                                        <input name="ctl00$MainContent$txtUnderwriter" maxlength="255" id="MainContent_txtUnderwriter" placeholder="Policy Underwritten By" name="name" type="text" class="form-control" />
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Policy Agent or Broker</label>
+                                                        <input name="ctl00$MainContent$txtAgent" value="ACA" maxlength="255" id="MainContent_txtAgent" placeholder="Policy Agent or Broker" name="name" type="text" class="form-control" />
+
+                                                    </div>
+                                                    <div>
+                                                        <button class="btn btn-sm btn-primary pull-right m-t-n-xs" onclick="return goToTab(2);">Back</button>
+                                                        <input type="submit" name="ctl00$MainContent$btnResetTab3" value="Reset" id="MainContent_btnResetTab3" class="btn btn-sm btn-primary pull-right m-t-n-xs" />
+
+                                                        <input type="submit" name="ctl00$MainContent$btnTab3" value="Next" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$MainContent$btnTab3&quot;, &quot;&quot;, true, &quot;tab3&quot;, &quot;&quot;, false, false))" id="MainContent_btnTab3" class="btn btn-sm btn-primary pull-right m-t-n-xs" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="tab-4" class="tab-pane">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Account Holder</label>
+                                                        <input name="ctl00$MainContent$txtAccountholder" value="AC1001010" maxlength="255" id="MainContent_txtAccountholder" placeholder="Enter Account Holder" name="name" type="text" class="form-control" />
+                                                        <span id="MainContent_RequiredFieldValidator20" style="color:Red;visibility:hidden;">*</span>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Bank Name</label>
+                                                        <input name="ctl00$MainContent$txtbank" value="State Bank of India" maxlength="255" id="MainContent_txtbank" placeholder="Enter Bank Name " name="name" type="text" class="form-control" />
+                                                        <span id="MainContent_RequiredFieldValidator21" style="color:Red;visibility:hidden;">*</span>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Bank Branch</label>
+                                                        <input name="ctl00$MainContent$txtBranch" value="Ahmedabad" maxlength="255" id="MainContent_txtBranch" placeholder="Enter Bank Branch " name="name" type="text" class="form-control" />
+                                                        <span id="MainContent_RequiredFieldValidator24" style="color:Red;visibility:hidden;">*</span>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label>Branh Code</label>
+                                                        <input name="ctl00$MainContent$txtBranchcode" value="10100" maxlength="255" id="MainContent_txtBranchcode" placeholder="Enter Branh Code " name="name" type="text" class="form-control" />
+                                                        <span id="MainContent_RequiredFieldValidator25" style="color:Red;visibility:hidden;">*</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Account Number</label>
+                                                        <input name="ctl00$MainContent$txtAccountno" value="ASASASA" maxlength="255" id="MainContent_txtAccountno" placeholder="Enter Account Number " name="name" type="text" class="form-control" />
+                                                        <span id="MainContent_RequiredFieldValidator26" style="color:Red;visibility:hidden;">*</span>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Account Type</label>
+                                                        <input name="ctl00$MainContent$txtAccounttype" value="SB" maxlength="255" id="MainContent_txtAccounttype" placeholder="Enter  " name="name" type="text" class="form-control" />
+                                                        <span id="MainContent_RequiredFieldValidator27" style="color:Red;visibility:hidden;">*</span>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Debit Date</label>
+                                                        <input name="ctl00$MainContent$txtDebitdate" value="21 May 2015" maxlength="255" id="MainContent_txtDebitdate" placeholder="Enter Debit Date " name="name" type="text" class="form-control" />
+                                                        <span id="MainContent_RequiredFieldValidator28" style="color:Red;visibility:hidden;">*</span>
+                                                    </div>
+                                                    <div>
+                                                        <button class="btn btn-sm btn-primary pull-right m-t-n-xs" onclick="return goToTab(3);">Back</button>
+                                                        <input type="submit" name="ctl00$MainContent$btnResetTab4" value="Reset" id="MainContent_btnResetTab4" class="btn btn-sm btn-primary pull-right m-t-n-xs" />
+                                                        <input type="submit" name="ctl00$MainContent$btnSave" value="Save" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$MainContent$btnSave&quot;, &quot;&quot;, true, &quot;tab4&quot;, &quot;&quot;, false, false))" id="MainContent_btnSave" class="btn btn-sm btn-primary pull-right m-t-n-xs" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="tab-5" class="tab-pane">
+                                            <div class="row">
+                                                <div class="col-lg-12 ">
+                                                    <div class="ibox float-e-margins">
+                                                        <div class="ibox-title">
+                                                            <h5>Dependent & Extended Family</h5>
+                                                            <div class="ibox-tools">
+                                                                <a class="collapse-link">
+                                                                    <i class="fa fa-chevron-up"></i>
+                                                                </a>
+                                                                <a class="close-link">
+                                                                    <i class="fa fa-times"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="ibox-content">
+                                                            <div class="row">
+                                                                <div class="col-lg-12 ">
+                                                                    <div class="table-responsive">
+                                                                        <div>
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 ">
+                                                    <div class="ibox float-e-margins">
+                                                        <div class="ibox-title">
+                                                            <h5>Add/Update Dependent</h5>
+                                                            <div class="ibox-tools">
+                                                                <a class="collapse-link">
+                                                                    <i class="fa fa-chevron-up"></i>
+                                                                </a>
+                                                                <a class="close-link">
+                                                                    <i class="fa fa-times"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="ibox-content">
+                                                            <div class="row">
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label>Last Name <em>*</em></label>
+                                                                        <input name="ctl00$MainContent$txtDependencyLastName" maxlength="255" id="MainContent_txtDependencyLastName" placeholder="Enter Last Name" name="name" type="text" class="form-control" />
+                                                                        <span id="MainContent_RequiredFieldValidator19" style="color:Red;visibility:hidden;">*</span>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <label>First Name <em>*</em></label>
+                                                                        <input name="ctl00$MainContent$txtDependencyFirstName" maxlength="255" id="MainContent_txtDependencyFirstName" placeholder="Enter First Name" name="name" type="text" class="form-control" />
+                                                                        <span id="MainContent_RequiredFieldValidator29" style="color:Red;visibility:hidden;">*</span>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label>Select Dependency Type</label>
+                                                                        <select name="ctl00$MainContent$ddlDependencyType" id="MainContent_ddlDependencyType" class="form-control m-b">
+                                                                            <option value="Select">Select</option>
+                                                                            <option value="1">Adult Dependant &lt; 41</option>
+                                                                            <option value="2">Adult Dependant 41-59</option>
+                                                                            <option value="10">Adult Dependant 60-65</option>
+                                                                            <option value="11">Adult Dependant 66-74</option>
+                                                                            <option value="19">Brother</option>
+                                                                            <option value="12">Burial Society Member</option>
+                                                                            <option value="3">Child 0-5</option>
+                                                                            <option value="4">Child 14-21</option>
+                                                                            <option value="5">Child 6-13</option>
+                                                                            <option value="20">Dependant</option>
+                                                                            <option value="13">Extended Family</option>
+                                                                            <option value="16">Father</option>
+                                                                            <option value="15">Grand Child</option>
+                                                                            <option value="6">Minor Dependant</option>
+                                                                            <option value="17">Mother</option>
+                                                                            <option value="14">Mother</option>
+                                                                            <option value="7">Parent</option>
+                                                                            <option value="8">Parent-in-law</option>
+                                                                            <option value="18">Sister</option>
+                                                                            <option value="9">Spouse</option>
+
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label>Select RelationShip</label>
+                                                                        <select name="ctl00$MainContent$ddlDependencyRelationship" id="MainContent_ddlDependencyRelationship" class="form-control m-b">
+                                                                            <option value="Select">Select</option>
+                                                                            <option value="1">Married</option>
+                                                                            <option value="2">UnMarried</option>
+
+                                                                        </select>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <label>Preminum <em>*</em></label>
+                                                                        <input name="ctl00$MainContent$txtDependencyPremium" maxlength="255" id="MainContent_txtDependencyPremium" placeholder="Enter Preminum" name="name" type="text" class="form-control" />
+                                                                        <span id="MainContent_RequiredFieldValidator32" style="color:Red;visibility:hidden;">*</span>
+
+                                                                    </div>
+
+
+                                                                    <div class="form-group">
+                                                                        <label>Cover Date <em>*</em></label>
+                                                                        <input name="ctl00$MainContent$txtDependencyCovertDate" maxlength="255" id="MainContent_txtDependencyCovertDate" placeholder="Enter Cover Date" name="name" type="text" class="form-control" />
+                                                                        <span id="MainContent_RequiredFieldValidator33" style="color:Red;visibility:hidden;">*</span>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label>Inception Date <em>*</em></label>
+                                                                        <input name="ctl00$MainContent$txtDependencyInceptionDate" maxlength="255" id="MainContent_txtDependencyInceptionDate" placeholder="Enter Inception Date" name="name" type="text" class="form-control" />
+                                                                        <span id="MainContent_RequiredFieldValidator34" style="color:Red;visibility:hidden;">*</span>
+
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <label>Date Of Birth <em>*</em></label>
+                                                                        <input name="ctl00$MainContent$txtDependencyDOB" maxlength="255" id="MainContent_txtDependencyDOB" placeholder="Enter Date Of Birth" name="name" type="text" class="form-control" />
+                                                                        <span id="MainContent_RequiredFieldValidator35" style="color:Red;visibility:hidden;">*</span>
+
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <label>ID Number <em>*</em></label>
+                                                                        <input name="ctl00$MainContent$txtDependencyIdNumber" maxlength="255" id="MainContent_txtDependencyIdNumber" placeholder="Enter ID Number" name="name" type="text" class="form-control" />
+                                                                        <span id="MainContent_RequiredFieldValidator36" style="color:Red;visibility:hidden;">*</span>
+
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <label>Age <em>*</em></label>
+                                                                        <input name="ctl00$MainContent$txtDependencyAge" type="text" value="Will be Calculated From Date Of Birth" maxlength="255" readonly="readonly" id="MainContent_txtDependencyAge" name="name" class="form-control" />
+                                                                        <span id="MainContent_RequiredFieldValidator37" style="color:Red;visibility:hidden;">*</span>
+                                                                    </div>
+
+
+                                                                    <div>
+                                                                        <input type="hidden" name="ctl00$MainContent$hfDependentId" id="MainContent_hfDependentId" />
+
+                                                                        <input type="submit" name="ctl00$MainContent$btnDependecyReset" value="Reset" id="MainContent_btnDependecyReset" class="btn btn-sm btn-primary pull-right m-t-n-xs" />
+                                                                        <input type="submit" name="ctl00$MainContent$btnDependecySubmit" value="Submit" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$MainContent$btnDependecySubmit&quot;, &quot;&quot;, true, &quot;tab5&quot;, &quot;&quot;, false, false))" id="MainContent_btnDependecySubmit" class="btn btn-sm btn-primary pull-right m-t-n-xs" />
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="tab-6" class="tab-pane">
+                                            <br />
+                                            <br />
+                                            <div class="col-lg-12 ">
+                                                <div class="table-responsive">
+                                                    <div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="tab-7" class="tab-pane">
+                                            <br />
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Enter note description</label>
+                                                        <textarea name="ctl00$MainContent$txtArea" rows="12" cols="20" id="MainContent_txtArea" placeholder="Enter Note" name="name" type="text" class="form-control"></textarea>
+                                                        <span id="MainContent_RequiredFieldValidator31" style="color:Red;visibility:hidden;">*</span>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="submit" name="ctl00$MainContent$BtnAddNote" value="Add Note" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$MainContent$BtnAddNote&quot;, &quot;&quot;, true, &quot;tab7&quot;, &quot;&quot;, false, false))" id="MainContent_BtnAddNote" class="btn btn-sm btn-primary pull-right m-t-n-xs" />
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12 ">
+                                                    <div class="table-responsive">
+                                                        <div>
+                                                            <table class="table table-striped table-bordered table-hover" cellspacing="0" rules="all" border="1" id="MainContent_gvNotes" style="width:100%;border-collapse:collapse;">
+                                                                <tr>
+                                                                    <th scope="col">Note</th>
+                                                                    <th class="visible-lg" scope="col">Note Date</th>
+                                                                    <th class="visible-lg" scope="col">Last Modified</th>
+                                                                    <th scope="col">Actions</th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>I am working on this ing and i asd</td>
+                                                                    <td class="visible-lg">5/8/2015 4:54:39 PM</td>
+                                                                    <td class="visible-lg">5/8/2015 4:54:39 PM</td>
+                                                                    <td>
+                                                                        <div class="modal inmodal fade" id="myModal43927>" role="dialog" hidden="true">
+                                                                            <div class="modal-dialog modal-lg">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+
+                                                                                        <h4 class="modal-title">Modal title</h4>
+                                                                                        <small class="font-bold">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small>
+                                                                                    </div>
+                                                                                    <div class="modal-body">
+                                                                                        I am working on this ing and i asd
+                                                                                    </div>
+                                                                                    <div class="modal-footer">
+                                                                                        <button type="button" class="btn btn-sm btn-primary close" data-dismiss="modal">Close</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <button type="button" onclick="ViewNote('43927'); return false;" class="btn btn-primary">
+                                                                            <i class="fa fa-search"></i>
+                                                                        </button>
+                                                                        <a id="MainContent_gvNotes_lbtnEdit_0" href="javascript:__doPostBack(&#39;ctl00$MainContent$gvNotes$ctl02$lbtnEdit&#39;,&#39;&#39;)"><i class="fa fa-edit"></i></a>
+
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                        <div id="tab-8" class="tab-pane">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <label>Select Supported Document File</label>
+                                                        <div class="input-group">
+                                                            <input type="file" name="ctl00$MainContent$fuSupportDocument" id="MainContent_fuSupportDocument" />
+                                                            <span class="input-group-btn">
+                                                                &nbsp;
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="radio">
+                                                            <table id="MainContent_rdbdocument">
+                                                                <tr>
+                                                                    <td><input id="MainContent_rdbdocument_0" type="radio" name="ctl00$MainContent$rdbdocument" value="1" checked="checked" /><label for="MainContent_rdbdocument_0">Id Documents/ passports – main member – spouse</label></td>
+                                                                    <td><input id="MainContent_rdbdocument_1" type="radio" name="ctl00$MainContent$rdbdocument" value="2" /><label for="MainContent_rdbdocument_1">Marriage certificate</label></td>
+                                                                    <td><input id="MainContent_rdbdocument_2" type="radio" name="ctl00$MainContent$rdbdocument" value="3" /><label for="MainContent_rdbdocument_2">Dependants – birth certificate</label></td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="submit" name="ctl00$MainContent$btnDocumentSubmit" value="Save Document" id="MainContent_btnDocumentSubmit" class="btn btn-sm btn-primary pull-right m-t-n-xs" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12 ">
+                                                    <div class="table-responsive">
+                                                        <div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="tab-9" class="tab-pane">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Product Name <em>*</em></label>
+                                                        <select name="ctl00$MainContent$drpProductName" id="MainContent_drpProductName" class="form-control m-b">
+                                                            <option value="Select">Select</option>
+                                                            <option value="d7b01615-4bdd-403c-898b-a9f0c9ae2204">Tomb Stove Benefit</option>
+                                                            <option value="ab42f3eb-6baa-44e3-9223-f526f0a82f86">mahlatse</option>
+                                                            <option value="0f937798-4f86-4b80-b50c-d2135455c2a4">Hloni</option>
+                                                            <option value="e696904e-5d9a-490d-ad73-cfb5d2fcbdc5">THULISILE</option>
+                                                            <option value="ffbb66cd-05c5-4eb8-adeb-837b1119905f">Hloni</option>
+                                                            <option value="c79a6b94-ed2e-4e47-8b3a-2654bac54204">Tomb Stove Benefit</option>
+                                                            <option value="0e6bf4c7-738e-4945-aea4-33a00a874a52">THULISILE</option>
+                                                            <option value="dad465d8-8eb3-4fb8-a7fd-5dde2ec40842">Tomb Stove Benefit</option>
+                                                            <option value="a971a375-4e13-45cf-b1cf-4ce9d60d186f">MPSIBIYA</option>
+                                                            <option value="8d29c19d-4071-4d83-9f49-83d8c06a776a"></option>
+                                                            <option value="fa014dfb-bfba-41fd-840f-c4911d5a9644"></option>
+                                                            <option value="9c6d804c-74b6-40a4-b183-0b064a8de024"></option>
+                                                            <option value="aa5348cb-871a-4491-8738-6d9f3953661b"></option>
+                                                            <option value="2a1b0df3-6681-4533-84a2-fae856c8d3ed"></option>
+                                                            <option value="13da7dca-aada-4285-a3f0-b90106c1c988">Tomb Stove Benefit</option>
+                                                            <option value="c5fc340d-fe37-4eba-8f71-36aa2f124ea0"></option>
+                                                            <option value="daa1658b-ba11-4bab-b516-b9da35af42f8"></option>
+                                                            <option value="fb02765c-0890-4aea-8804-9d911afc2fa7"></option>
+                                                            <option value="a4190c45-9a66-49b6-9715-8ad02e3d729a"></option>
+                                                            <option value="3b34fc48-2ffb-487e-b02c-e8e8e5b2f3f7"></option>
+                                                            <option value="b678af5e-4a89-49cd-bdd6-bb37a08c6a1c"></option>
+                                                            <option value="799b7b7f-55e2-4478-b11e-b6b0153b18a1"></option>
+                                                            <option value="d9a9cb54-98ce-43a9-ad7a-f5c87680ba32">Tomb Stove Benefit</option>
+                                                            <option value="cddb6d98-fbc0-4bff-9a94-52f7d7ecb839"></option>
+                                                            <option value="6678696b-6bed-4cbd-a2b1-a8e3f5398a69"></option>
+
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Premium<em>*</em></label>
+                                                        <input name="ctl00$MainContent$txtPremium" maxlength="255" id="MainContent_txtPremium" placeholder="Premium " name="name" type="text" class="form-control" />
+                                                        <span id="MainContent_RequiredFieldValidator30" style="color:Red;visibility:hidden;">*</span>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="submit" name="ctl00$MainContent$btnAdd" value="Save AddonProducts" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$MainContent$btnAdd&quot;, &quot;&quot;, true, &quot;tabs-9&quot;, &quot;&quot;, false, false))" id="MainContent_btnAdd" class="btn btn-sm btn-primary pull-right m-t-n-xs" />
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="table-responsive">
+                                                        <div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="footer">
+                    <div class="pull-right">
+                    </div>
+                    <div>
+                        <strong>Copyright</strong> WeDrawFast &copy; 2014-2015
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+        <script src='/Scripts/jquery-2.1.1.min.js' type="text/javascript"></script>
+        <script src='/Scripts/bootstrap.min.js' type="text/javascript"></script>
+        <script src='/Scripts/plugins/metisMenu/jquery.metisMenu.js' type="text/javascript"></script>
+        <script src='/Scripts/plugins/pace/pace.min.js' type="text/javascript"></script>
+        <script src='/Scripts/plugins/slimScroll/jquery.slimscroll.min.js' type="text/javascript"></script>
+        <script src='/Scripts/app/inspinia.js' type="text/javascript"></script>
+        <script type="text/javascript" src='/Scripts/Plugins/dataTables/jquery.dataTables.js'></script>
+        <script src="/Scripts/plugins/datapicker/bootstrap-datepicker.js"></script>
+        <script>
+            $(document).ready(function () {
+                enabledisabletab();
+                $("#MainContent_txtDependencyDOB").datepicker({ dateFormat: 'dd MMM yy' });
+                $("#MainContent_txtDependencyInceptionDate").datepicker({ dateFormat: 'dd MMM yy' });
+                $("#MainContent_txtDependencyCovertDate").datepicker({ dateFormat: 'dd MMM yy' });
+                $("#MainContent_txtDependencyDOB").datepicker({ dateFormat: 'dd MMM yy' });
+                $("#MainContent_txtBirthDay").datepicker({ dateFormat: 'dd MMM yy' });
+                $("#MainContent_txtInception").datepicker({ dateFormat: 'dd MMM yy' });
+                $("#MainContent_txtDebitdate").datepicker({ dateFormat: 'dd MMM yy' });
+
+                var tab = $("[id*=TabName]").val();
+                $('#myTab a[href="#' + tab + '"]').tab('show');
+                var liId = tab.replace("tab-", "");
+                $('["#tab' + liId + '"]').addClass("active");
+
+                //Hide Calender on date selected
+                $("#MainContent_txtDependencyDOB").on('changeDate', function (ev) {
+                    $(this).datepicker('hide');
+                })
+                $("#MainContent_txtDependencyInceptionDate").on('changeDate', function (ev) {
+                    $(this).datepicker('hide');
+                })
+                $("#MainContent_txtDependencyCovertDate").on('changeDate', function (ev) {
+                    $(this).datepicker('hide');
+                })
+                $("#MainContent_txtDependencyDOB").on('changeDate', function (ev) {
+                    $(this).datepicker('hide');
+                })
+                $("#MainContent_txtBirthDay").on('changeDate', function (ev) {
+                    $(this).datepicker('hide');
+                })
+                $("#MainContent_txtInception").on('changeDate', function (ev) {
+                    $(this).datepicker('hide');
+                })
+                $("#MainContent_txtDebitdate").on('changeDate', function (ev) {
+                    $(this).datepicker('hide');
+                })
+
+
+                $("li").has('a[data-toggle="tab"]').removeClass("active");
+                $("li").has('a[href="#tab-3"]').addClass("active");
+
+            })
+            $(function () {
+                $('#invoices').DataTable();
+                $('#policy').DataTable();
+                $('#SupportedDocuments').DataTable();
+                $('#Notes').DataTable();
+                $('#Product').DataTable();
+
+            });
+            function makeReset(target) {
+                $('#tabs-' + target + ' input').val('');
+                $('#tabs-' + target + ' select').val('0');
+                return false;
+            }
+
+            $("#MainContent_ddlPolicy").change(function () {
+                FillAjaxdata();
+            });
+            function FillAjaxdata() {
+                $.ajax({
+                    type: "POST",
+                    url: '/admin/ManageMember.aspx/ddlPolicy_SelectedIndexChanged',
+                    data: '{"id":' + $('#MainContent_ddlPolicy').val() + '}',
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        $('#MainContent_txtPolicyPremium').val(data.d[0]);
+                        $('#MainContent_txtUnderwriter').val(data.d[1]);
+
+                    },
+                    failure: function (response) {
+                        alert(response.d);
+                    }
+                });
+            }
+
+            $(function () {
+                $("#MainContent_drpProductName").change(function () {
+                    $.ajax({
+                        type: "POST",
+                        url: '/admin/ManageMember.aspx/ddlProductNameChanged',
+                        data: '{"id":"' + $('#MainContent_drpProductName').val() + '"}',
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            //  $('#MainContent_txtPolicyPremium').val(data.d);
+                            $('#MainContent_txtPremium').val(data.d);
+
+                        },
+                        failure: function (response) {
+                            alert(response.d);
+                        }
+                    });
+                    return false;
+                })
+            });
+
+            function ViewNote(NoteId) {
+                $.ajax({
+                    type: "POST",
+                    url: '/admin/ManageMember.aspx/ViewNoteDetails',
+                    data: '{"id":"' + NoteId + '"}',
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        $("#NoteDesription").html(data.d);
+                        document.getElementById("NotePopUpWrap").style.display = "block";
+                        document.getElementById("NotePopUp").style.display = "block";
+
+                    },
+                    failure: function (response) {
+                        alert(response.d);
+                    }
+                });
+                return false;
+
+            }
+            function hideNotePopUp() {
+                document.getElementById("NotePopUpWrap").style.display = "none";
+                document.getElementById("NotePopUp").style.display = "none";
+            }
+
+            function enabledisabletab() {
+                var IsNew = $("#MainContent_hdnId").val();
+                if (eval(IsNew) == 0) {
+                    DisableTab();
+                }
+                else
+                    EnableTab();
+
+            }
+
+            function goToTab(id) {
+                $("[id*=TabName]").val("tab-" + id + "");
+            }
+            function DisableTab() {
+                $("#tab5").hide()
+                $("#tab6").hide()
+                $("#tab7").hide()
+                $("#tab8").hide()
+                $("#tab9").hide()
+            }
+            function EnableTab() {
+                $("#tab5").show()
+                $("#tab6").show()
+                $("#tab7").show()
+                $("#tab8").show()
+                $("#tab9").show()
+            }
+        </script>
+        <div id="NotePopUp">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h2>Note</h2>
+                </div>
+                <div class="col-lg-6">
+                    <a onclick="hideNotePopUp();return false;" class="pull-right">[x]</a>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-lg-8">
+                    <p id="NoteDesription"></p>
+                </div>
+
+            </div>
+        </div>
+        <div id="NotePopUpWrap" onclick="hideNotePopUp();"></div>
+
+
+        <script type="text/javascript">
+            //<![CDATA[
+            var Page_Validators =  new Array(document.getElementById("MainContent_RequiredFieldValidator1"), document.getElementById("MainContent_RequiredFieldValidator2"), document.getElementById("MainContent_RequiredFieldValidator3"), document.getElementById("MainContent_RequiredFieldValidator6"), document.getElementById("MainContent_revEmailValidation"), document.getElementById("MainContent_RequiredFieldValidator5"), document.getElementById("MainContent_RequiredFieldValidator18"), document.getElementById("MainContent_RequiredFieldValidator20"), document.getElementById("MainContent_RequiredFieldValidator21"), document.getElementById("MainContent_RequiredFieldValidator24"), document.getElementById("MainContent_RequiredFieldValidator25"), document.getElementById("MainContent_RequiredFieldValidator26"), document.getElementById("MainContent_RequiredFieldValidator27"), document.getElementById("MainContent_RequiredFieldValidator28"), document.getElementById("MainContent_RequiredFieldValidator19"), document.getElementById("MainContent_RequiredFieldValidator29"), document.getElementById("MainContent_RequiredFieldValidator32"), document.getElementById("MainContent_RequiredFieldValidator33"), document.getElementById("MainContent_RequiredFieldValidator34"), document.getElementById("MainContent_RequiredFieldValidator35"), document.getElementById("MainContent_RequiredFieldValidator36"), document.getElementById("MainContent_RequiredFieldValidator37"), document.getElementById("MainContent_RequiredFieldValidator31"), document.getElementById("MainContent_RequiredFieldValidator30"));
+            //]]>
+        </script>
+
+        <script type="text/javascript">
+            //<![CDATA[
+            var MainContent_RequiredFieldValidator1 = document.all ? document.all["MainContent_RequiredFieldValidator1"] : document.getElementById("MainContent_RequiredFieldValidator1");
+            MainContent_RequiredFieldValidator1.controltovalidate = "MainContent_txtLastName";
+            MainContent_RequiredFieldValidator1.errormessage = "*";
+            MainContent_RequiredFieldValidator1.validationGroup = "tab1";
+            MainContent_RequiredFieldValidator1.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+            MainContent_RequiredFieldValidator1.initialvalue = "";
+            var MainContent_RequiredFieldValidator2 = document.all ? document.all["MainContent_RequiredFieldValidator2"] : document.getElementById("MainContent_RequiredFieldValidator2");
+            MainContent_RequiredFieldValidator2.controltovalidate = "MainContent_txtFirstname";
+            MainContent_RequiredFieldValidator2.errormessage = "*";
+            MainContent_RequiredFieldValidator2.validationGroup = "tab1";
+            MainContent_RequiredFieldValidator2.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+            MainContent_RequiredFieldValidator2.initialvalue = "";
+            var MainContent_RequiredFieldValidator3 = document.all ? document.all["MainContent_RequiredFieldValidator3"] : document.getElementById("MainContent_RequiredFieldValidator3");
+            MainContent_RequiredFieldValidator3.controltovalidate = "MainContent_txtIdNumber";
+            MainContent_RequiredFieldValidator3.errormessage = "*";
+            MainContent_RequiredFieldValidator3.validationGroup = "tab1";
+            MainContent_RequiredFieldValidator3.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+            MainContent_RequiredFieldValidator3.initialvalue = "";
+            var MainContent_RequiredFieldValidator6 = document.all ? document.all["MainContent_RequiredFieldValidator6"] : document.getElementById("MainContent_RequiredFieldValidator6");
+            MainContent_RequiredFieldValidator6.controltovalidate = "MainContent_txtCellphone";
+            MainContent_RequiredFieldValidator6.errormessage = "*";
+            MainContent_RequiredFieldValidator6.validationGroup = "tab1";
+            MainContent_RequiredFieldValidator6.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+            MainContent_RequiredFieldValidator6.initialvalue = "";
+            var MainContent_revEmailValidation = document.all ? document.all["MainContent_revEmailValidation"] : document.getElementById("MainContent_revEmailValidation");
+            MainContent_revEmailValidation.controltovalidate = "MainContent_txtEmail";
+            MainContent_revEmailValidation.errormessage = "Please enter valid email id";
+            MainContent_revEmailValidation.validationGroup = "tab1";
+            MainContent_revEmailValidation.evaluationfunction = "RegularExpressionValidatorEvaluateIsValid";
+            MainContent_revEmailValidation.validationexpression = "\\w+([-+.\']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*";
+            var MainContent_RequiredFieldValidator5 = document.all ? document.all["MainContent_RequiredFieldValidator5"] : document.getElementById("MainContent_RequiredFieldValidator5");
+            MainContent_RequiredFieldValidator5.controltovalidate = "MainContent_txtStreetAddress";
+            MainContent_RequiredFieldValidator5.errormessage = "*";
+            MainContent_RequiredFieldValidator5.validationGroup = "tab2";
+            MainContent_RequiredFieldValidator5.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+            MainContent_RequiredFieldValidator5.initialvalue = "";
+            var MainContent_RequiredFieldValidator18 = document.all ? document.all["MainContent_RequiredFieldValidator18"] : document.getElementById("MainContent_RequiredFieldValidator18");
+            MainContent_RequiredFieldValidator18.controltovalidate = "MainContent_txtPolicyNo";
+            MainContent_RequiredFieldValidator18.errormessage = "*";
+            MainContent_RequiredFieldValidator18.validationGroup = "tab3";
+            MainContent_RequiredFieldValidator18.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+            MainContent_RequiredFieldValidator18.initialvalue = "";
+            var MainContent_RequiredFieldValidator20 = document.all ? document.all["MainContent_RequiredFieldValidator20"] : document.getElementById("MainContent_RequiredFieldValidator20");
+            MainContent_RequiredFieldValidator20.controltovalidate = "MainContent_txtAccountholder";
+            MainContent_RequiredFieldValidator20.errormessage = "*";
+            MainContent_RequiredFieldValidator20.validationGroup = "tab4";
+            MainContent_RequiredFieldValidator20.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+            MainContent_RequiredFieldValidator20.initialvalue = "";
+            var MainContent_RequiredFieldValidator21 = document.all ? document.all["MainContent_RequiredFieldValidator21"] : document.getElementById("MainContent_RequiredFieldValidator21");
+            MainContent_RequiredFieldValidator21.controltovalidate = "MainContent_txtbank";
+            MainContent_RequiredFieldValidator21.errormessage = "*";
+            MainContent_RequiredFieldValidator21.validationGroup = "tab4";
+            MainContent_RequiredFieldValidator21.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+            MainContent_RequiredFieldValidator21.initialvalue = "";
+            var MainContent_RequiredFieldValidator24 = document.all ? document.all["MainContent_RequiredFieldValidator24"] : document.getElementById("MainContent_RequiredFieldValidator24");
+            MainContent_RequiredFieldValidator24.controltovalidate = "MainContent_txtBranch";
+            MainContent_RequiredFieldValidator24.errormessage = "*";
+            MainContent_RequiredFieldValidator24.validationGroup = "tab4";
+            MainContent_RequiredFieldValidator24.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+            MainContent_RequiredFieldValidator24.initialvalue = "";
+            var MainContent_RequiredFieldValidator25 = document.all ? document.all["MainContent_RequiredFieldValidator25"] : document.getElementById("MainContent_RequiredFieldValidator25");
+            MainContent_RequiredFieldValidator25.controltovalidate = "MainContent_txtBranchcode";
+            MainContent_RequiredFieldValidator25.errormessage = "*";
+            MainContent_RequiredFieldValidator25.validationGroup = "tab4";
+            MainContent_RequiredFieldValidator25.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+            MainContent_RequiredFieldValidator25.initialvalue = "";
+            var MainContent_RequiredFieldValidator26 = document.all ? document.all["MainContent_RequiredFieldValidator26"] : document.getElementById("MainContent_RequiredFieldValidator26");
+            MainContent_RequiredFieldValidator26.controltovalidate = "MainContent_txtAccountno";
+            MainContent_RequiredFieldValidator26.errormessage = "*";
+            MainContent_RequiredFieldValidator26.validationGroup = "tab4";
+            MainContent_RequiredFieldValidator26.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+            MainContent_RequiredFieldValidator26.initialvalue = "";
+            var MainContent_RequiredFieldValidator27 = document.all ? document.all["MainContent_RequiredFieldValidator27"] : document.getElementById("MainContent_RequiredFieldValidator27");
+            MainContent_RequiredFieldValidator27.controltovalidate = "MainContent_txtAccounttype";
+            MainContent_RequiredFieldValidator27.errormessage = "*";
+            MainContent_RequiredFieldValidator27.validationGroup = "tab4";
+            MainContent_RequiredFieldValidator27.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+            MainContent_RequiredFieldValidator27.initialvalue = "";
+            var MainContent_RequiredFieldValidator28 = document.all ? document.all["MainContent_RequiredFieldValidator28"] : document.getElementById("MainContent_RequiredFieldValidator28");
+            MainContent_RequiredFieldValidator28.controltovalidate = "MainContent_txtDebitdate";
+            MainContent_RequiredFieldValidator28.errormessage = "*";
+            MainContent_RequiredFieldValidator28.validationGroup = "tab4";
+            MainContent_RequiredFieldValidator28.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+            MainContent_RequiredFieldValidator28.initialvalue = "";
+            var MainContent_RequiredFieldValidator19 = document.all ? document.all["MainContent_RequiredFieldValidator19"] : document.getElementById("MainContent_RequiredFieldValidator19");
+            MainContent_RequiredFieldValidator19.controltovalidate = "MainContent_txtDependencyLastName";
+            MainContent_RequiredFieldValidator19.errormessage = "*";
+            MainContent_RequiredFieldValidator19.validationGroup = "tab5";
+            MainContent_RequiredFieldValidator19.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+            MainContent_RequiredFieldValidator19.initialvalue = "";
+            var MainContent_RequiredFieldValidator29 = document.all ? document.all["MainContent_RequiredFieldValidator29"] : document.getElementById("MainContent_RequiredFieldValidator29");
+            MainContent_RequiredFieldValidator29.controltovalidate = "MainContent_txtDependencyFirstName";
+            MainContent_RequiredFieldValidator29.errormessage = "*";
+            MainContent_RequiredFieldValidator29.validationGroup = "tab5";
+            MainContent_RequiredFieldValidator29.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+            MainContent_RequiredFieldValidator29.initialvalue = "";
+            var MainContent_RequiredFieldValidator32 = document.all ? document.all["MainContent_RequiredFieldValidator32"] : document.getElementById("MainContent_RequiredFieldValidator32");
+            MainContent_RequiredFieldValidator32.controltovalidate = "MainContent_txtDependencyPremium";
+            MainContent_RequiredFieldValidator32.errormessage = "*";
+            MainContent_RequiredFieldValidator32.validationGroup = "tab5";
+            MainContent_RequiredFieldValidator32.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+            MainContent_RequiredFieldValidator32.initialvalue = "";
+            var MainContent_RequiredFieldValidator33 = document.all ? document.all["MainContent_RequiredFieldValidator33"] : document.getElementById("MainContent_RequiredFieldValidator33");
+            MainContent_RequiredFieldValidator33.controltovalidate = "MainContent_txtDependencyCovertDate";
+            MainContent_RequiredFieldValidator33.errormessage = "*";
+            MainContent_RequiredFieldValidator33.validationGroup = "tab5";
+            MainContent_RequiredFieldValidator33.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+            MainContent_RequiredFieldValidator33.initialvalue = "";
+            var MainContent_RequiredFieldValidator34 = document.all ? document.all["MainContent_RequiredFieldValidator34"] : document.getElementById("MainContent_RequiredFieldValidator34");
+            MainContent_RequiredFieldValidator34.controltovalidate = "MainContent_txtDependencyInceptionDate";
+            MainContent_RequiredFieldValidator34.errormessage = "*";
+            MainContent_RequiredFieldValidator34.validationGroup = "tab5";
+            MainContent_RequiredFieldValidator34.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+            MainContent_RequiredFieldValidator34.initialvalue = "";
+            var MainContent_RequiredFieldValidator35 = document.all ? document.all["MainContent_RequiredFieldValidator35"] : document.getElementById("MainContent_RequiredFieldValidator35");
+            MainContent_RequiredFieldValidator35.controltovalidate = "MainContent_txtDependencyDOB";
+            MainContent_RequiredFieldValidator35.errormessage = "*";
+            MainContent_RequiredFieldValidator35.validationGroup = "tab5";
+            MainContent_RequiredFieldValidator35.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+            MainContent_RequiredFieldValidator35.initialvalue = "";
+            var MainContent_RequiredFieldValidator36 = document.all ? document.all["MainContent_RequiredFieldValidator36"] : document.getElementById("MainContent_RequiredFieldValidator36");
+            MainContent_RequiredFieldValidator36.controltovalidate = "MainContent_txtDependencyIdNumber";
+            MainContent_RequiredFieldValidator36.errormessage = "*";
+            MainContent_RequiredFieldValidator36.validationGroup = "tab5";
+            MainContent_RequiredFieldValidator36.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+            MainContent_RequiredFieldValidator36.initialvalue = "";
+            var MainContent_RequiredFieldValidator37 = document.all ? document.all["MainContent_RequiredFieldValidator37"] : document.getElementById("MainContent_RequiredFieldValidator37");
+            MainContent_RequiredFieldValidator37.controltovalidate = "MainContent_txtDependencyAge";
+            MainContent_RequiredFieldValidator37.errormessage = "*";
+            MainContent_RequiredFieldValidator37.validationGroup = "tab5";
+            MainContent_RequiredFieldValidator37.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+            MainContent_RequiredFieldValidator37.initialvalue = "";
+            var MainContent_RequiredFieldValidator31 = document.all ? document.all["MainContent_RequiredFieldValidator31"] : document.getElementById("MainContent_RequiredFieldValidator31");
+            MainContent_RequiredFieldValidator31.controltovalidate = "MainContent_txtArea";
+            MainContent_RequiredFieldValidator31.errormessage = "*";
+            MainContent_RequiredFieldValidator31.validationGroup = "tab7";
+            MainContent_RequiredFieldValidator31.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+            MainContent_RequiredFieldValidator31.initialvalue = "";
+            var MainContent_RequiredFieldValidator30 = document.all ? document.all["MainContent_RequiredFieldValidator30"] : document.getElementById("MainContent_RequiredFieldValidator30");
+            MainContent_RequiredFieldValidator30.controltovalidate = "MainContent_txtPremium";
+            MainContent_RequiredFieldValidator30.errormessage = "*";
+            MainContent_RequiredFieldValidator30.validationGroup = "tabs-9";
+            MainContent_RequiredFieldValidator30.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+            MainContent_RequiredFieldValidator30.initialvalue = "";
+            //]]>
+        </script>
+
+        <div class="aspNetHidden">
+
+            <input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="51B7CEED" />
+            <input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="sv/61574yYx6Nhw6hKHK4z8FxyzVsgDNvI8q6D2GiGBTYE2nC4HoDwIhPs27m+kNtH4Oaes606YTT1WLxmBEjkryS4NZ7SAixXmZUwuylKANgIFMeDwQmG2uTsuKtD9TWOAnpQoZR88r5E4fZDCaQk/nDonh7AN7SqHnYazHMe46wAG89F6Bcw4j3ZJ3j5TsoWy00OC4d/NbgJm3j50A/qTgTYuysha/ydaLD3LUKFGoxdjVKZDrRIaHMjp9DHSJnb2ZiI2i7eAyPOJgbRQodhfSYH4pl9Sj2OFlJ1jOGsX5iWvEDTAP/8ZaXQa69Vb5+bx+TzRGG6vaC5AvpaIKv99emq6CauhqFzpjSydDmFZ7DwOiSiY9W7dzXxvqjwuKYpcTVYHk9SmPb/Ed/2Z2FaI8FlZFR7jYkkCmwkeGflJQKBYHiyJ/fEXS+nNw6a8vLcR/BXd44Aqsby9OFzNLKy2Cq9cKicZXo/TVck1AP17LmqF8y635JhiiNXe2f7c8zKr6L3sbo5XDvOrKwT8qkrqMUiUfphmwTvwkMWvbp4y0bphcBB1/fYAksffob9GLM1nhEplDL8F2yANZElHoh9ddPJvpqvN9v2VDPponrLHEWZSes14abA5O2QhP4WDkk1E1K/WBIOtcndJEmRq6esxvl0J0u4f7IMnbJt3HcuxlxPRsy8L7FksoQNLf9uiJd12ugUPVO48NUkzaj7PMWM2oSaaiXIjAATQPmhlQzTw3SO4srVLrSpEBnbpg5DLTCakcpETbzxWejAQa1OYknREuffc+sgfgtDtrmVKDBd1OHw157ShOPKKAjHszljl0PzdPQTGVDX8QxPIXyGTLk7ZLwHDNOejFd9KbHoyimeHj+xvcaJiyEyX0goWpnjWDUBg9s1cMxWxrZDDUO3dzqTV0LLs2QFFVnbBBWCRSoR895iib5IAA0Qz6nPLyWuilSGW3G7NmHhFHyyUA0MgJbzutiRMTHNDy91LcZBs+8SKngCpTRxRLK0a7tEo/7sD85gf87YlcIfoGT8jSD3Cg/HhRDICeWFkw7AxNVnvkg7adhCLfbZ2bIDB+AjH6OJCUGeCc2q/+vNrDO/95cK2PcnOKN1JqQ0RJZJR6hlu9HilgdBEb+VoAAdae3Ez5gcQr8cUMKN7K90VOYUgJIaZK7So0fT9yiTLgGcIej4Dpt4HX4/qyg2+vIv4J6oWvNQTYoiZY1zuLvu2nuk1RrMw+Ue+XohOL/xMIgv0wdOm3c6qfBW1GrRgpQoD90HdlQsKrGGRyI6tZNDhQoPkKJPUZjnIyEMaF66KXUdbimvKzRH3ar5jqDHJ/Fbf0XS4lcLRvRIA+kQsuv/hjoi8gr9M6qRpsht7+HakEkgg1avmrYaofGaJ0L44xTQd9/+cKSianpxogSBSgKLNeHQkBW5BB0L6b3DN7txlSxAFlwVje3VZI10Mau2Tc36dclZ1IBtDwQ7MeKpsZgp+SEo1jH1JKOROQT8UC1g+JGLep67ZH6olp8c1khzNmAPR9TMwFGz/+/LDIvBs8RDGaeUvctgrpJMsGPBkJJR9IdHCvYstDzh86Lz36/NJH+FkdaVNosta4mzSI/K8szH696XofxUUWz8ZeY2knzPlsf3HMA3gbtzqmsiKwTLnqTTJPNZSuFRtrgS0wdUbMYhquU6MqptwKoq6JcxDoRjDGWWocXJYacjzdFyHVQ+SCrxCEsM4uWNQYu90aRL8Mc4lfXq18L2ayZxf/l6nOy5laa0A/hZd+b6abvPNX5VzYCAGjRBJzBSPqO/VGTQ/W/chKwmzd6CV7+oFu2zSC8ycvS/N8pB/FGw3nyZWwMPss7A4GYwuCAWM4jML1IbcbaXsolEnRGb72Ad2XL94egfwge7WRJsLXXRg1bTKQGR38Wg1aYLDR8yNIAhvjvr8yYreMfl8yGKTaRi06DzWt970wu84BCqHxr6bQz8bRBZ/zW6f8icVG9RmX42KZkh3jcIBuZBdHz/Fz84PZ3JGRM/ET+YtE27XTfSYBPLXZwSxTDZkvci5KE5+ELxfipgVUE1UC/MAH09OJ/PvfwnoIrCD1IxiB8W3lR2CMs4+Hws88nXEaUw4FRNhxXx4hlzO9VSs9ihxQljqtrXGg2a6rrfPO5afNtEs6gqXkGv4jXRkrHRRmejSfZ4yAu5ZA3t87HBrOoNWjedSJLAOlh8DVq/pT4QO102gk5h9Imk3o2tyIvjkzAhSnw8hDqOVt0fuDsYARDGAkB8MNj5BR/eGHy10/XLstnAw1x8rLukaN6Hg04YvSYZua/HJJ4aITzu2MEtKAjUbH2Td93EvKDcx11FLcZbqlxcveijH2CR98pquQ+vWZdp3b0WRuXx9o7uCOPM3sat7qvMOhIB7FtM4ZK1LDVsN8tsqtJxdqFZgY6fkC/Z/oRCwNkUxIOk2DkUevCsAhjeM0gdMJ3t/84KT9xSTwxEe2C6ckV/rkiqM4eVC+jWMRC0QbMESfuVytycykBxDPy/Otb7VLBSH/PAwBq5vS/Y2vcVSk+NiwYWdFYjE5bJIlikfjHtmCya89vtMwqNqDMXV/GjdvRbwxIQt/qoDBI/Qce3cW9BxXxcRJa8Hr4KnmjzAa0pxGGapH6o78zCDn2KrqJF8LMAZk72SOIE1ZBMWogELToZ4JHPejgLCKjzB5q9A2pndOT9qr5aEd9nbFW0PQ94PosEjG4pq04CR10M/2gT7KvtY=" />
+        </div>
+
+        <script type="text/javascript">
+            //<![CDATA[
+            EnableTab()
+            var Page_ValidationActive = false;
+            if (typeof(ValidatorOnLoad) == "function") {
+                ValidatorOnLoad();
+            }
+
+            function ValidatorOnSubmit() {
+                if (Page_ValidationActive) {
+                    return ValidatorCommonOnSubmit();
+                }
+                else {
+                    return true;
+                }
+            }
+            //]]>
+        </script>
+    </form>
+    <script>
+        $(document).ready(function () {
+            $('.nav li').removeClass("active"); // if you want to style the li
+            $('.nav li a').removeClass("active"); // if you want to style a specific a
+            var pageTitle = window.location.pathname.replace(/^.*\/([^/]*)/, "$1");
+            ///// Apply active class to selected page link
+            $('.nav a').each(function () {
+                var arr = $(this).attr('href').toLowerCase().split('.');
+                $(this).removeClass('active');// // if you want to style a specific a
+                $(this).closest('li').removeClass('active');// if you want to style the li
+                $(this).closest('li').closest('ul').removeClass('active in');
+                $("li").removeClass('active');
+                $("li a").removeClass('active');
+                $("ul").removeClass('active in');
+                if (arr[0] == window.location.pathname.toLocaleLowerCase()) {
+                    $(this).addClass('active');// // if you want to style a specific a
+                    $(this).closest('li').addClass('active');// if you want to style the li
+                    $(this).closest('li').closest('ul').addClass('active in');
+                }
+            });
+        });
+    </script>
+
+    <!-- Visual Studio Browser Link -->
+    <script type="application/json" id="__browserLink_initializationData">
+        {"appName":"Chrome","requestId":"f33ce5d54fe349369d552e2bced2b695"}
+    </script>
+    <script type="text/javascript" src="http://localhost:49878/46b8e37e26404278ab379cba091067b4/browserLink" async="async"></script>
+    <!-- End Browser Link -->
+
+</body>
+</html>

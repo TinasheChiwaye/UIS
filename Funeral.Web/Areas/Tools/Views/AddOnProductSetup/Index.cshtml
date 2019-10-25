@@ -1,0 +1,71 @@
+﻿@{
+	ViewBag.Title = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/bundles/jquery")
+
+<script src="~/Scripts/app/searchdatatable.js"></script>
+<div class="row" id="addonproductsetupaddedit"></div>
+<div class="row" id="addonproductsetuplist"></div>
+<script>
+
+    var productId = '@ViewBag.ProductID';
+    var hasRight = '@ViewBag.HasAccess';
+    jQuery(function ($){
+        $(document).ready(function () {
+            if (hasRight == 'False') {
+                var url = '@Url.Action("Error403", "Error", new { Area = "Admin" })';
+                window.location.href = url;
+            }
+            else {
+                LoadAddOnProductSetupList();
+                LoadAddOnProductSetupAddEdit();
+                DOMIDs.AddEdit = "addonproductsetupaddedit";
+                DOMIDs.List = "addonproductsetuplist";
+            }
+        });
+    });
+
+    function LoadAddOnProductSetupList() {
+        jQuery.ajax({
+            url: '@Url.Action("List", "AddOnProductSetup", new {},Request.Url.Scheme)',
+            type: "Get",
+            contentType: "application/html; charset=utf-8",
+            dataType: 'html'
+        })
+            .success(function (result) {
+                jQuery("#" + DOMIDs.List).html(result);
+        })
+        .error(function (xhr, status) {
+            alert(status);
+        });
+    }
+
+    function LoadAddOnProductSetupAddEdit()
+    {
+        var model = {
+            pkiProductID:0,
+            ProductName: '',
+            ProductCost: 0,
+            ProductDesc: '',
+            ProductCover: 0,
+            IsProductOngoing: 0,
+            IsProductLaybye: 0
+        };
+
+        jQuery.ajax({
+            url: '@Url.Action("Add","AddOnProductSetup",new {},Request.Url.Scheme)',
+            type: "Post",
+            data: JSON.stringify(model),
+            contentType: "application/html; charset=utf-8",
+            dataType: 'html'
+        })
+        .success(function (result) {
+            jQuery("#" + DOMIDs.AddEdit).html(result);
+        })
+        .error(function (xhr, status) {
+            alert(status);
+        });
+    }
+</script>

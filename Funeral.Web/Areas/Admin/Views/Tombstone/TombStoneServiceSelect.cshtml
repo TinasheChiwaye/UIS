@@ -1,0 +1,601 @@
+﻿@model Funeral.Web.Areas.Admin.Models.ViewModel.TombStoneServiceVM
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var totalServiceAmount = 0.0;
+    var discId = ViewBag.DiscId;
+    var billFromText = string.Empty;
+    var billTo = string.Empty;
+    var dueDate = ViewBag.DueDate;
+    var createdDate = ViewBag.CreatedDate;
+}
+
+<style>
+    .modal-backdrop {
+        position: inherit !important;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1040;
+        background-color: #000;
+    }
+</style>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Quotations</title>
+</head>
+@Html.HiddenFor(m => m.objTombStoneModel.pkiTombstoneID)
+<body>
+    <input type="hidden" value="@discId" id="discID">
+    <div class="col-lg-12">
+        <span id="MainContent_lblMessage"></span>
+    </div>
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h5>Invoice</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label>Bill From</label>
+                                @{
+                                    billFromText += @Model.ApplicationSettings.ApplicationName + "\n";
+                                    billFromText += @Model.ApplicationSettings.BusinessAddressLine1 + "\n";
+                                    billFromText += @Model.ApplicationSettings.BusinessAddressLine2 + "\n";
+                                    billFromText += @Model.ApplicationSettings.BusinessAddressLine3 + "\n";
+                                    billFromText += @Model.ApplicationSettings.BusinessAddressLine4 + "\n";
+                                    billFromText += @Model.ApplicationSettings.BusinessPostalCode;
+                                }
+                                <textarea name="txtcompanyRules" rows="7" readonly="readonly" id="txtcompanyRules" type="text" class="form-control pull-left">
+                                    @billFromText
+                                </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Bill to </label>
+                                @{
+                                    billTo += @Model.objTombStoneModel.LastName + " " + @Model.objTombStoneModel.FirstName + "\n";
+                                    billTo += @Model.objTombStoneModel.Address1 + "\n";
+                                    billTo += @Model.objTombStoneModel.Address2 + "\n";
+                                    billTo += @Model.objTombStoneModel.Address3 + "\n";
+                                    billTo += @Model.objTombStoneModel.Address4 + "\n";
+                                    billTo += @Model.objTombStoneModel.Code;
+                                }
+                                <textarea name="txtTo" rows="7" readonly="readonly" id="txtTo" type="text" class="form-control pull-left">
+                                    @billTo
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label>Invoice Number</label>
+                                            <input name="txtQuotationNumber" value="@Model.objTombStoneModel.InvoiceNumber" maxlength="10" readonly="readonly" id="txtQuotationNumber" type="text" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Date</label>
+                                            <input name="txtDate" value="@createdDate" maxlength="10" readonly="readonly" id="txtDate" type="text" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Due Date</label>
+                                            <input name="txtDate" value="@dueDate" maxlength="10" id="txtDate" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Services</h5>
+            </div>
+            <div class="ibox-content">
+                <div id="MainContent_UpddlBranch">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Package</label>
+                            @Html.DropDownListFor(m => m.GetAllPackage, Model.GetAllPackage, "Select Package", new { Name = "GetAllPackageList", @placeholder = "Select Package", @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <label>Services</label>
+                            @Html.DropDownListFor(m => m.ServiceType, Model.ServiceType, "Select ServiceType", new { Name = "GetServiceType", @placeholder = "Select ServiceType", @class = "form-control" })
+                            <span id="RequiredFieldValidator3" style="color:red;" hidden>Please select something</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Qty</label>
+                            <input name="txtNumber" maxlength="10" onchange="" onkeypress="" id="txtNumber" type="number" class="form-control" min="0">
+                            <span id="MainContent_RequiredFieldValidator2" style="visibility:hidden;">This Field Required</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Desctiption</label>
+                            <input name="txtSerDes" maxlength="10" readonly="readonly" id="txtSerDes" type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Rate</label>
+                            <input name="txtRate" value="0" maxlength="10" id="txtRate" type="text" class="form-control">
+                            <span id="RequiredFieldValidator1" style="visibility:hidden;">This Field Required</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Total</label>
+                            <input name="txtTotal" maxlength="10" readonly="readonly" id="txtTotal" type="text" class="form-control">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <a name="btnPackage" value="Add Package" id="btnPackage" class="btn btn-sm btn-primary">Add Package</a>
+                    <a name="btnService" value="Add Service" id="btnService" class="btn btn-sm btn-primary">Add Service</a>
+                </div>
+
+                <div>
+                    <table class="table table-striped table-bordered table-hover" cellspacing="0" rules="all" border="1" id="MainContent_gvServiceList" style="width:100%;border-collapse:collapse;">
+                        <tbody>
+                            <tr>
+                                <th class="visible-lg" scope="col">Service Name</th>
+                                <th class="visible-lg" scope="col">Desctiption</th>
+                                <th class="visible-lg" scope="col">Rate</th>
+                                <th class="visible-lg" scope="col">QTY</th>
+                                <th class="visible-lg" scope="col">Amount</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                            @if (Model.ServiceList.Count > 0)
+                            {
+                                foreach (var item in Model.ServiceList)
+                                {
+                                    @*<input type="hidden" id="totalServiceAmountHidden" value="" />*@
+                                    totalServiceAmount = totalServiceAmount + Convert.ToInt32(item.Amount);
+                                    <tr>
+                                        <td class="service" width="auto">@item.ServiceName</td>
+                                        <td class="desc" width="auto">@item.ServiceDesc</td>
+                                        <td class="unit" width="auto">@item.ServiceRate</td>
+                                        <td class="qty" width="auto">@item.Quantity</td>
+                                        <td class="total" width="auto" style="text-align: right;">@Model.Currency @(item.ServiceRate * item.Quantity)</td>
+                                        <td width="auto">
+                                            <a id="lbtnEditService" title="Click here To Edit Service" onclick="GetDataEditService(@item.pkiTombStoneSelectionID,@item.fkiTombstoneID)"><i class="fa fa-edit"></i></a>
+                                            &nbsp;
+                                            <a onclick="DeleteServiceById(@item.pkiTombStoneSelectionID)" id="lbtnDelete" title="Click here To Delete Service"><i class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Payment</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <div>
+                                <table class="table table-striped table-bordered table-hover" cellspacing="0" rules="all" border="1" id="MainContent_ucPaymentHistory1_gvInvoices" style="width:100%;border-collapse:collapse;">
+                                    <tbody>
+                                        <tr>
+                                            <th class="visible-lg" scope="col">Date paid</th>
+                                            <th scope="col">Amount</th>
+                                            <th class="visible-lg" scope="col">Recieved by</th>
+                                            <th class="visible-lg" scope="col">Months Paid &amp; Notes</th>
+                                            <th scope="col">Actions</th>
+                                        </tr>
+
+                                        @if (Model.TombStonesPaymentModelList.Count > 0)
+                                        {
+                                            foreach (var item in Model.TombStonesPaymentModelList)
+                                            {
+                                                <tr>
+                                                    <td class="visible-lg">@item.DatePaid</td>
+                                                    <td>@item.AmountPaid</td>
+                                                    <td class="visible-lg">@item.RecievedBy</td>
+                                                    <td class="visible-lg">@item.Notes</td>
+                                                    <td>
+
+                                                        &nbsp;
+                                                        <a id="gvInvoices" title="Click here Print " href="@Url.Action("PrintForm","Tombstone")"><i class="glyphicon glyphicon-print"></i></a>
+
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Notes</label>
+                                <div class="col-sm-10">
+                                    @Html.TextAreaFor(m => m.objTombStoneModel.Notes, new { name = "txtNotes", rows = "4", cols = "20", id = "txtNotes", @class = "form-control" })
+                                    @*<textarea name="txtNotes" rows="4" cols="20" id="txtNotes" type="text" class="form-control">Todays Invoice</textarea>*@
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Terms and Condition </label>
+                                <div class="col-sm-10">
+                                    @Html.TextAreaFor(m => m.ModelTermsAndCondition.TermsAndCondition, new { name = "txtNotes", rows = "4", cols = "20", id = "txtTnc", @class = "form-control", @readOnly = "readonly" })
+                                    @*<textarea name="txtTnc" rows="4" cols="20" readonly="readonly" id="txtTnc" type="text" class="form-control">New Terms And Conditions</textarea>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div id="MainContent_UpdatePanel1">
+
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">SubTotal</label>
+                                    <div class="col-sm-10">
+                                        <input name="SubTotal" value="@totalServiceAmount" maxlength="10" id="SubTotal" disabled="disabled" class="aspNetDisabled form-control" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Tax</label>
+                                    <div class="col-sm-10">
+                                        @Html.DropDownListFor(m => m.TaxSettings, Model.TaxSettings, "Select Tax.", new { Name = "TaxSettingsList", @placeholder = "Select Tax.", @class = "form-control" })
+                                        <span id="MainContent_lblTax1">Tax Amount:</span>
+                                        <span id="MainContent_lblTax2"> + 0.00</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Discount in %</label>
+                                    <div class="col-sm-10">
+                                        <input name="txtDiscount" value="0.00" maxlength="10" onchange="" id="txtDiscount" type="text" class="form-control">
+                                        <span id="lblDisAmt1">Discount Amount:</span>
+                                        <span id="lblDisAmt2"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Total</label>
+                                    <div class="col-sm-10">
+                                        <input name="txtGrandTotal" value="" maxlength="30" readonly="readonly" id="txtGrandTotal" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <a name="ReCalculate" value="ReCalculate" id="ReCalculate" class="btn btn-sm btn-primary">ReCalculate</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <div class="col-lg-6">
+                                <div class="btn-group">
+                                    <div class="form-group">
+                                        <a href="@Url.Action("Index","Tombstone")" name="btnCancel" value="Cancel" id="btnCancel" class="btn btn-sm btn-primary">Cancel</a>
+                                    </div>
+                                </div>
+                                <div class="btn-group">
+                                    <div class="form-group">
+                                        <input type="submit" name="btnSave" value="Save" id="btnSave" class="btn btn-sm btn-primary">
+                                    </div>
+                                </div>
+                                <div class="btn-group">
+                                    <div class="form-group">
+
+                                        @{
+                                            string id = Model.objTombStoneModel.pkiTombstoneID.ToString();
+                                            var plaintextBytes = System.Text.Encoding.UTF8.GetBytes(id);
+                                            var encryptedValue = MachineKey.Encode(plaintextBytes, MachineKeyProtection.All);
+                                            <a href="~/Admin/PrintForm.aspx?TBID=@encryptedValue" name="btnPrint" value="" id="btnPrint" class="btn btn-sm btn-primary">Print</a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="GSCCModal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="padding-right: 17px;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×  </button>
+                    <h4 class="modal-title" id="myModalLabel">Quotation Reject Message</h4>
+                </div>
+                <div class="modal-body">
+                    <input name="txtReject" value="" maxlength="30" id="txtReject" type="text" class="form-control">
+                    <span id="RequiredFieldValidator4" style="visibility:hidden;">This Field Required</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" name="Submit" value="Submit" onclick="" id="RejectSubmit" class="btn btn-primary">Submit</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>
+
+
+<script>
+    $(document).ready(function () {
+        var subTotal = $("#SubTotal").val();
+        var discValue = $("#txtDiscount").val();
+        var total = (subTotal * discValue) / 100;
+        $("#lblDisAmt2").html("Less:" + total);
+        $("#txtGrandTotal").val(subTotal - total);
+    })
+
+    $("#ServiceType").change(function () {
+        var ServiceID = $("#ServiceType").val();
+        if (ServiceID == "") {
+            alert("Please Select Service");
+        } else {
+            jQuery("#ItemId").val(ServiceID);
+            var editUrl = '@Url.Action("GetServiceDataOnChange", "TombStone", new { ServiceID = "ServiceIDVal" },Request.Url.Scheme)';
+            editUrl = editUrl.replace("ServiceIDVal", ServiceID);
+
+            jQuery.ajax({
+                url: editUrl,
+                type: "Get",
+                contentType: "application/html; charset=utf-8",
+            })
+            .success(function (result) {
+                $("#txtSerDes").val(result.ServiceDesc);
+                $("#txtRate").val(result.ServiceCost);
+                $("#txtTotal").val(result.ServiceCost);
+            })
+            .error(function (xhr, status) {
+                alert(status);
+            });
+        }
+    })
+
+    $("#txtNumber").focusout(function () {
+        var qty = $("#txtNumber").val();
+        if (qty == 0) {
+            alert("Please insert qty");
+        } else {
+            var rate = $("#txtRate").val();
+            var total = rate * qty;
+            $("#txtTotal").val('');
+            $("#txtTotal").val(parseFloat(total));
+        }
+    })
+
+    $("#btnPackageService").click(function () {
+        objServiceVm = {
+            PackageName: $("#GetAllPackage :selected").text(),
+            serviceId: $("#ServiceType").val(),
+            Quantity: $("#txtNumber").val(),
+            ServiceDesc: $("#txtSerDes").val(),
+            ServiceRate: $("#txtRate").val(),
+            Amount: $("#txtTotal").val()
+        }
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SavePackageForQuatationService","Quotation")',
+            data: objServiceVm,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                alert("We returned: " + result);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
+            }
+        });
+    })
+
+    $("#TaxSettings").change(function () {
+        var taxVal = $("#TaxSettings").val();
+        var testTotal = $("#SubTotal").val();
+        var subTotal = parseFloat(testTotal)
+        var disc = $("#txtDiscount").val();
+        var TaxAmount = subTotal * taxVal / 100;
+        $("#MainContent_lblTax2").html(" " + "+" + " " + TaxAmount);
+        var testDiscAmt = subTotal + TaxAmount;
+        var testDisc = testDiscAmt * parseInt(disc);
+        var DiscAmount = testDisc / 100;
+        $("#lblDisAmt2").html(DiscAmount);
+        var totalAmount = (subTotal + TaxAmount) - DiscAmount;
+        $("#txtGrandTotal").val(totalAmount);
+    })
+
+    $("#txtDiscount").focusout(function () {
+        var tempSubTotal = $("#SubTotal").val();
+        var subTotal = parseFloat(tempSubTotal);
+        var tempTaxAmount = $("#MainContent_lblTax2").html().split(' ');
+        var taxAmount = parseFloat(tempTaxAmount[2]);
+        var tempTotal = subTotal + taxAmount;
+        var tempDisc = $("#txtDiscount").val();
+        var tempDiscValue = parseFloat(tempDisc);
+        var discValue = tempTotal * tempDiscValue / 100;
+        $("#lblDisAmt2").html("Less:" + discValue);
+
+        var tempGrandTotal = subTotal + taxAmount - discValue;
+        $("#txtGrandTotal").val(tempGrandTotal);
+
+    })
+
+    function GetDataEditService(ServiceID, TombstoneID) {
+        data = {
+            serviceID: ServiceID,
+            TBID: TombstoneID
+        }
+        $.ajax({
+            type: "get",
+            url: '@Url.Action("GetDataForServiceSelect", "Tombstone")',
+            data: data,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                if (result == "Sorry!you are not authorized to perform edit on this Quotation.") {
+                    alert("Sorry!you are not authorized to perform edit on this Quotation.");
+                } else {
+                    $("#ServiceType").val(result.pkiServiceID);
+                    $("#txtSerDes").val(result.ServiceDesc);
+                    $("#txtRate").val(result.ServiceRate);
+                    $("#txtNumber").val(result.Quantity);
+                    var totalPremium = result.ServiceRate * result.Quantity;
+                    $("#txtTotal").val(totalPremium);
+                    $("#btnService").text('Update');
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
+            }
+        });
+    }
+
+    function DeleteServiceById(ServiceId) {
+        if (confirm("Are you sure you want to delete this?")) {
+            data = {
+                serviceID: ServiceId
+            }
+            $.ajax({
+                type: "get",
+                url: '@Url.Action("DeletePackageForServiceSelect", "Tombstone")',
+                data: data,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (result) {
+                    if (result == 0) {
+                        alert("Service deleted successfully ...!!");
+                        window.location.reload();
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
+                }
+            });
+        } else {
+            return false;
+        }
+    }
+
+    $("#btnPackage").click(function () {
+        if ($("#ServiceType :selected").val() == "") {
+            $("#RequiredFieldValidator3").show()
+        } else {
+            $("#RequiredFieldValidator3").hide()
+        }
+        tssp = {
+            PackageName: $("#GetAllPackage :selected").text(),
+            fkiServiceID: $("#ServiceType :selected").val(),
+            Quantity: $("#txtNumber").val(),
+            ServiceDesc: $("#txtSerDes").val(),
+            ServiceCost: $("#txtRate").val(),
+            ServiceRate: $("#txtTotal").val(),
+            fkiTombstoneID: $("#objTombStoneModel_pkiTombstoneID").val(),
+            PackageID: $("#GetAllPackage :selected").val()
+        }
+        $.ajax({
+            type: "post",
+            url: '@Url.Action("SaveServiceForTombStoneService", "Tombstone")',
+            data: tssp,
+            success: function (result) {
+                if (result != null) {
+                    alert("Service Successfully Added.");
+                    window.location.reload();
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
+            }
+        });
+    })
+
+
+    $("#btnService").click(function () {
+        if ($("#ServiceType :selected").val() == "") {
+            $("#RequiredFieldValidator3").show()
+        } else {
+            $("#RequiredFieldValidator3").hide()
+        }
+        tssp = {
+            PackageName: $("#GetAllPackage :selected").text(),
+            fkiServiceID: $("#ServiceType :selected").val(),
+            Quantity: $("#txtNumber").val(),
+            ServiceDesc: $("#txtSerDes").val(),
+            ServiceCost: $("#txtRate").val(),
+            ServiceRate: $("#txtTotal").val(),
+            fkiTombstoneID: $("#objTombStoneModel_pkiTombstoneID").val(),
+            PackageID: $("#GetAllPackage :selected").val()
+        }
+        $.ajax({
+            type: "post",
+            url: '@Url.Action("SaveServiceForTombStoneService", "Tombstone")',
+            data: tssp,
+            success: function (result) {
+                if (result != null) {
+                    alert("Service Successfully Added.");
+                    window.location.reload();
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
+            }
+        });
+    })
+
+    $("#btnSave").click(function () {
+        data = {
+            pkiTombstoneID: $("#objTombStoneModel_pkiTombstoneID").val(),
+            Tax: $("#TaxSettings :selected").val(),
+            DisCount: $("#txtDiscount").val(),
+            InvoiceNumber: $("#txtQuotationNumber").val()
+        }
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SaveTombStoneService", "Tombstone")',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                if (result == "Successfully Saved.") {
+                    $("#MainContent_lblMessage").append('<div class="alert alert-success">Successfully Saved.</div>')
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
+            }
+        });
+        window.scrollTo(0, 100);
+    })
+
+</script>

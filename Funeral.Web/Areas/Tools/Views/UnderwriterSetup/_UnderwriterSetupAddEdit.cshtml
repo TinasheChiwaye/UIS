@@ -1,0 +1,150 @@
+﻿@model Funeral.Model.UnderwriterSetupModel
+
+@*@Styles.Render("~/Content/css")
+	@Scripts.Render("~/bundles/bootstrap")*@
+
+@*@Scripts.Render("~/bundles/jquery")*@
+@Scripts.Render("~/bundles/jqueryval")
+
+@using (Html.BeginForm("Save", "UnderwriterSetup", FormMethod.Post, new { id = "underWriterSetupAdddEditform" }))
+{
+	<div class="col-lg-12">
+		<div class="ibox ">
+			<div class="ibox-title">
+				<h5>Underwriter Setup</h5>
+			</div>
+			<div class="ibox-content">
+				@*@Html.HiddenFor(m => m.ID)
+					@Html.HiddenFor(m => m.parlourid)*@
+				<div class="form-group row">
+					<div class="messagealert" id="alert_container"></div>
+				</div>
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="form-group">
+							@Html.LabelFor(model => model.UnderwriterName, new { @class = "control-label" })
+							<span class="text-danger"><em>*</em></span>
+							@Html.TextBoxFor(m => m.UnderwriterName, null, new { @class = "form-control", @maxlength = "50" })
+							@Html.ValidationMessageFor(m => m.UnderwriterName, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+						</div>
+						<div class="form-group">
+							@Html.LabelFor(model => model.AddressLine1, new { @class = "control-label" })
+							<span class="text-danger"><em>*</em></span>
+							@Html.TextBoxFor(m => m.AddressLine1, null, new { @class = "form-control", @maxlength = "50" })
+							@Html.ValidationMessageFor(m => m.AddressLine1, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+						</div>
+						<div class="form-group">
+							@Html.LabelFor(model => model.AddressLine2, new { @class = "control-label" })
+							<span class="text-danger"><em>*</em></span>
+							@Html.TextBoxFor(m => m.AddressLine2, null, new { @class = "form-control", @maxlength = "50" })
+							@Html.ValidationMessageFor(m => m.AddressLine2, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+						</div>
+						<div class="form-group">
+							@Html.LabelFor(model => model.City, new { @class = "control-label" })
+							<span class="text-danger"><em>*</em></span>
+							@Html.TextBoxFor(m => m.City, null, new { @class = "form-control", @maxlength = "50" })
+							@Html.ValidationMessageFor(m => m.City, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+						</div>
+						<div class="form-group">
+							@Html.LabelFor(model => model.Province, new { @class = "control-label" })
+							<span class="text-danger"><em>*</em></span>
+							@Html.TextBoxFor(m => m.Province, null, new { @class = "form-control", @maxlength = "50" })
+							@Html.ValidationMessageFor(m => m.Province, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+						</div>
+						<div class="form-group">
+							@Html.LabelFor(model => model.ContactNumber, new { @class = "control-label" })
+							<span class="text-danger"><em>*</em></span>
+							@Html.TextBoxFor(m => m.ContactNumber, null, new { @class = "form-control", @maxlength = "10" })
+							@Html.ValidationMessageFor(m => m.ContactNumber, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="form-group">
+							@Html.LabelFor(model => model.ContactPerson, new { @class = "control-label" })
+							@Html.TextBoxFor(m => m.ContactPerson, null, new { @class = "form-control", @maxlength = "50" })
+							@Html.ValidationMessageFor(m => m.ContactNumber, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+						</div>
+						<div class="form-group">
+							@Html.LabelFor(model => model.PostalCode, new { @class = "control-label" })
+							@Html.TextBoxFor(m => m.PostalCode, null, new { @class = "form-control", @maxlength = "50" })
+						</div>
+						<div class="form-group">
+							@Html.LabelFor(model => model.Country, new { @class = "control-label" })
+							@Html.TextBoxFor(m => m.Country, null, new { @class = "form-control", @maxlength = "50" })
+						</div>
+						<div class="form-group">
+							@Html.LabelFor(model => model.ContactEmail, new { @class = "control-label" })
+							<span class="text-danger"><em>*</em></span>
+							@Html.TextBoxFor(m => m.ContactEmail, null, new { @class = "form-control", @maxlength = "50" })
+							@Html.ValidationMessageFor(m => m.ContactEmail, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+						</div>
+						<div class="form-group">
+							@Html.LabelFor(model => model.FSPNNumber, new { @class = "control-label" })
+							<span class="text-danger"><em>*</em></span>
+							@Html.TextBoxFor(m => m.FSPNNumber, null, new { @class = "form-control", @maxlength = "30", placeholder = "Code" })
+							@Html.ValidationMessageFor(m => m.FSPNNumber, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-12">
+        <div class="form-group">
+            <div class="btn-group">
+                <a id="btnCancel" value="Cancel" class="btn btn-w-m btn-primary">Cancel</a>
+            </div>
+            @if (ViewBag.HasCreateRight)
+            {
+                <div class="btn-group">
+                    <input id="btnSubmit" type="submit" value="Save" class="btn btn-w-m btn-primary" />
+                </div>
+            }
+
+        </div>
+	</div>
+	if (TempData.Peek("IsSocietySetupSaved") != null && (bool)TempData.Peek("IsSocietySetupSaved") == true)
+	{
+		<script>
+			ShowSaveMessage('#alert_container', 'Society setup saved successfully!');
+		</script>
+
+		TempData.Remove("IsSocietySetupSaved");
+	}
+	<script type="text/javascript">
+		jQuery(document).ready(function () {
+			jQuery("#btnCancel").click(function (event) {
+				$("#UnderwriterName").val("");
+				$("#AddressLine1").val("");
+				$("#AddressLine2").val("");
+				$("#City").val("");
+				$("#Province").val("");
+				$("#ContactNumber").val("");
+				$("#ContactPerson").val("");
+				$("#PostalCode").val("");
+				$("#Country").val("");
+				$("#ContactEmail").val("");
+				$("#FSPNNumber").val("");
+			});
+
+			var form = jQuery("#societySetupAdddEditform");
+			form.validate();
+			jQuery("#btnSubmit").click(function (event) {
+				if (jQuery(form).valid()) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			});
+
+			eventConfigs.pageChange.action(RefreshAddEditData);
+			eventConfigs.searchClick.action(RefreshAddEditData);
+		});
+
+		function RefreshAddEditData(e) {
+			LoadSocietyAddEdit();
+		}
+	</script>
+
+}

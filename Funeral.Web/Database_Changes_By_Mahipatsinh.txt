@@ -1,0 +1,106 @@
+﻿Funeral  Database Changes
+=========================
+1.Add New Table 
+     ->[PlanCreator]
+2.Add Store Procedure
+      ->[SavePlanCreatorDetails]
+      ->[SaveNewPlanDetails]
+      ->[EditPlanCreatorbyID]
+      ->[DeletePlanAndPlanCreator]
+      -
+
+[NewGetPlanSubscriptionByPlanIdNewMember]
+
+
+
+Funeral  Database Changes 10-02-2019
+============================
+alter SP
+->[GET_Dependent_And_Extended_Family]
+->[SaveFamilyDependency]
+->[UpdateFamilyDependency]
+->[GET_Dependent_And_Extended_Family]
+
+Change Table
+1.Dependencies add Column 
+      Status nvarchar(50)
+2.Funerals
+      BurialOrderNo nvarchar(100)
+
+3.GroupInvoices
+
+ALTER TABLE [GroupInvoices] ADD SocietyId int NULL DEFAULT (0) WITH VALUES 
+ALTER TABLE [GroupInvoices] ADD SocietyName nvarchar(255) NULL 
+ALTER TABLE [GroupInvoices] ADD PaymentMethod nvarchar(100) NULL 
+
+
+New SP
+--------------
+1.[NewAddMemberAddonProducts]
+2.[NewUpdateAddonProduct]
+3.[DeleteBeneficiary]
+4.SelectMemberBeneficiaries
+5.NewAddEditBeneficiaries
+6.[GetAllPolicyByPassport]
+7.[GETDependentExtendedFamily]
+8.[GetAllPolicyByFKMemberId]
+9.[GetUnderWriterList]
+10.[SaveFuneral_New]
+11.[GetAllSocietyesList]
+12.[AddEditGroupPayment]
+13.[GetAllGroupPaymentList]
+14.[EditGroupPaymentByID]
+15.[DeleteGroupPayment]
+16.[GetTAX_Setting]
+
+
+
+======================================AFter 10-10-2019 Local Database==================
+
+Add new Store Procedure
+------------------------------
+1.[SavePackages_new]
+
+
+
+=====================================10-10-2019=============
+
+Alter SP
+---------
+1.[NewAddEditBeneficiaries]
+
+=====================================15-10-2019=============
+
+Add New SP
+---------
+1.[GetDashboardTodayPayment]
+
+
+=====================================16-10-2019=============
+
+Alter SP
+---------
+1.[GetDashboardTodayPayment]
+
+
+add New SP
+----------
+1.[AddSMSQTY]
+
+
+
+
+--------------------------script
+ALTER TABLE [GroupInvoices] ADD SocietyId int NULL DEFAULT (0) WITH VALUES 
+ALTER TABLE [GroupInvoices] ADD SocietyName nvarchar(255) NULL 
+ALTER TABLE [GroupInvoices] ADD PaymentMethod nvarchar(100) NULL 
+ALTER TABLE [Dependencies] ADD Status nvarchar(50) NULL
+ALTER TABLE [Funerals] ADD BurialOrderNo nvarchar(100) NULL
+
+
+
+
+=================================23-10-2019
+Alter Store pROCEDURE
+-------------
+1.[GetDashboardTodayPayment]

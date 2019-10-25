@@ -1,0 +1,159 @@
+﻿@model Funeral.Model.RightsModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@Scripts.Render("~/bundles/jqueryval")
+
+@using (Html.BeginForm("Save", "Menu", FormMethod.Post, new { id = "menuAddEditform" }))
+{
+    <div class="col-lg-12">
+        <div class="ibox ">
+            <div class="ibox-title">
+                <h5>Menu</h5>
+            </div>
+            <div class="ibox-content">
+                @Html.HiddenFor(m => m.ID)
+                <div class="form-group row">
+                    <div class="messagealert" id="alert_container"></div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.Label("Application", new { @class = "control-label" })
+                            <strong><span class="text-danger"><em>*</em></span></strong>
+                            @Html.DropDownListFor(m => m.ApplicationID, new SelectList(ViewBag.Applications, "Key", "Name"), "Please Select Application", new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label class="control-label">@Html.CheckBox("IsMenu")Is Menu</label>                                
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Menu Name", new { @class = "control-label" })
+                            <strong><span class="text-danger"><em>*</em></span></strong>
+                            @Html.TextBoxFor(m => m.MenuName, null, new { @class = "form-control", placeholder = "Menu Name" })
+                            @Html.ValidationMessageFor(m => m.MenuName, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Menu URL", new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.MenuURL, null, new { @class = "form-control", placeholder = "Menu Url" })
+                            @Html.ValidationMessageFor(m => m.MenuURL, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Menu Level", new { @class = "control-label" })
+                            @Html.DropDownListFor(m => m.MenuLevel, new SelectList(ViewBag.MenuLevels, "Key", "Name"), "Please Select Menu", new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Parent Role Form", new { @class = "control-label" })
+                            @Html.DropDownListFor(m => m.ParentRightId, new SelectList(ViewBag.ParentRoles, "Key", "Name"), "Please Select Parent Role Form", new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label class="control-label">@Html.CheckBox("IsMenu")Is Menu</label>                                
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label class="control-label">@Html.CheckBox("IsOthers")Is Other</label>                                
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Menu Order", new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.MenuOrder, null, new { @class = "form-control", placeholder = "Menu Order" })
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label class="control-label">@Html.CheckBox("IsForm")Is Form</label>                                
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Form Name", new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.FormName, null, new { @class = "form-control", placeholder = "Form Name" })
+                            @Html.ValidationMessageFor(m => m.FormName, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Form Key", new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.Formkey, null, new { @class = "form-control", placeholder = "Form Key" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Icon ClassName", new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.IconClassName, null, new { @class = "form-control", placeholder = "Icon ClassName" })
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label class="control-label">@Html.CheckBox("IsRead")Is Read</label>                                
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label class="control-label">@Html.CheckBox("IsCreate")Is Create</label>                                
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label class="control-label">@Html.CheckBox("IsUpdate")Is Update</label>                                
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label class="control-label">@Html.CheckBox("IsDelete")Is Delete</label>                                
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Description", new { @class = "control-label" })
+                            @Html.TextAreaFor(m => m.Description, 4, 100, new { @class = "form-control", placeholder = "Description" })
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="form-group">
+            <div class="btn-group">
+                @Html.ActionLink("Cancel", null, null, null, new { @class= "btn btn-w-m btn-primary", href = Request.UrlReferrer})                
+            </div>
+            <div class="btn-group">
+                <input id="btnSubmit" type="submit" value="Save" class="btn btn-w-m btn-primary" />
+            </div>
+        </div>
+    </div>
+
+    if (TempData.Peek("IsMenuRightSaved") != null && (bool)TempData.Peek("IsMenuRightSaved") == true)
+    {
+        <script>
+            ShowSaveMessage('#alert_container', 'Menu saved successfully!');
+        </script>
+
+        TempData.Remove("IsMenuRightSaved");
+    }
+    
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            var form = jQuery("#menuAddEditform");
+            form.validate();
+            jQuery("#btnSubmit").click(function (event) {                
+                if (jQuery(form).valid()) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            });
+
+            eventConfigs.pageChange.action(RefreshAddEditData);
+            eventConfigs.searchClick.action(RefreshAddEditData);
+        });
+
+        function RefreshAddEditData(e) {
+            LoadBranchAddEdit();
+        }
+    </script>
+
+}

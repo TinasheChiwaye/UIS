@@ -1,0 +1,98 @@
+﻿@model Funeral.Model.SocietyModel
+
+@Scripts.Render("~/bundles/jqueryval")
+
+@using (Html.BeginForm("Save", "SocietySetup", FormMethod.Post, new { id = "societySetupAdddEditform" }))
+{
+    <div class="col-lg-12">
+        <div class="ibox ">
+            <div class="ibox-title">
+                <h5>Group Setup</h5>
+            </div>
+            <div class="ibox-content">
+                @Html.HiddenFor(m => m.pkiSocietyID)
+                @Html.HiddenFor(m => m.parlourid)
+                <div class="form-group row">
+                    <div class="messagealert" id="alert_container"></div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-5">
+                        @Html.Label("Group Name", new { @class = "control-label" })
+                        <strong><span class="text-danger"><em>*</em></span></strong>
+                        @Html.TextBoxFor(m => m.SocietyName, null, new { @class = "form-control", @maxlength = "30", placeholder = "Society Name" })
+                        @Html.ValidationMessageFor(m => m.SocietyName, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                    </div>
+                    <div class="row form-group col-sm-7" style="margin-top: 22px;">
+                        <div class="col-sm-3">
+                            <input type="button" id="btnCancel" value="Cancel" class="btn btn-w-m btn-primary" />
+                        </div>
+                        @if (ViewBag.HasCreateRight)
+                        {
+                            <div class="col-sm-3">
+                                <input id="btnSubmit" type="submit" value="Save" class="btn btn-w-m btn-primary" />
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    if (TempData.Peek("IsSocietySetupSaved") != null && (bool)TempData.Peek("IsSocietySetupSaved") == true)
+    {
+        <script>
+            ShowSaveMessage('#alert_container', 'Group setup saved successfully!');
+        </script>
+
+        TempData.Remove("IsSocietySetupSaved");
+    }
+
+    <script type="text/javascript">
+
+        //if (i == 0) {
+        //	$("#PlanSubscription").val("");
+        //	$("#JoiningFee").val("");
+        //	$("#Cover").val("");
+        //	$("#AdminSplit").val("");
+        //	$("#CashPayout").val("");
+        //	$("#AgentSplit").val("");
+        //	$("#OfficeSplit").val("");
+        //	$("#CompanySplit").val("");
+        //	$("#HeadManagerSplit").val("");
+        //	$("#SpouseCover").val("");
+        //	$("#Cover0to5year").val("");
+        //	$("#Cover6to13year").val("");
+        //	$("#Cover14to21year").val("");
+        //	$("#Cover22to40year").val("");
+        //	$("#Cover41to59year").val("");
+        //	$("#Cover60to65year").val("");
+        //	$("#Cover66to75year").val("");
+        //	i = 1;
+        //}
+
+        jQuery(document).ready(function () {
+            jQuery("#btnCancel").click(function (event) {
+                $("#SocietyName").val("");
+            });
+
+            var form = jQuery("#societySetupAdddEditform");
+            form.validate();
+            jQuery("#btnSubmit").click(function (event) {
+                if (jQuery(form).valid()) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            });
+
+            eventConfigs.pageChange.action(RefreshAddEditData);
+            eventConfigs.searchClick.action(RefreshAddEditData);
+        });
+
+        function RefreshAddEditData(e) {
+            LoadSocietyAddEdit();
+        }
+    </script>
+
+}
+
