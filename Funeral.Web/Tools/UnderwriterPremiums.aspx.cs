@@ -1,20 +1,17 @@
-﻿using System;
+﻿using Funeral.BAL;
+using Funeral.Model;
+using Funeral.Web.App_Start;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Funeral.Web.App_Start;
-using Funeral.Model;
-using System.Globalization;
 
 namespace Funeral.Web.Tools
 {
     public partial class UnderwriterPremiums : AdminBasePage
     {
         #region Page Property
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
-        
+
         public int PageSize
         {
             get
@@ -85,7 +82,7 @@ namespace Funeral.Web.Tools
                 BindUndrewriterSetupName();
                 BindPlanList();
                 BindRolePlayerType();
-               // BindUndewriterList();
+                // BindUndewriterList();
             }
         }
         public int UnderwriterPremiumId
@@ -110,32 +107,32 @@ namespace Funeral.Web.Tools
             if (Page.IsValid)
             {
                 UnderwriterPremiumModel Underwriterpremiummodel;
-                Underwriterpremiummodel = client.SelectUnderwriterPremiumByName(Convert.ToInt32(ddlPlanUnderwriter.SelectedValue), ParlourId);
-                
-                    Underwriterpremiummodel = new UnderwriterPremiumModel();
-                    Underwriterpremiummodel.PkiUnderwriterPremiumId = UnderwriterPremiumId;
-                    Underwriterpremiummodel.FkiUnderwriterId = Convert.ToInt32(ddlPlanUnderwriter.SelectedValue);
-                    Underwriterpremiummodel.PlanId = Convert.ToInt32(ddlPlanName.SelectedValue);
-                    Underwriterpremiummodel.RolePlayerType = ddlDependencyType.SelectedValue;
-                    Underwriterpremiummodel.PremiumAmount = Convert.ToDecimal(TxtPremiumAmount.Text);
-                    Underwriterpremiummodel.CoverAmount = Convert.ToDecimal(txtCoverAmount.Text);
-                    Underwriterpremiummodel.CoverAgeFrom = Convert.ToInt32(ddlCoverAgeFromNum.SelectedValue);
-                    Underwriterpremiummodel.CoverAgeTo = Convert.ToInt32(ddlCoverAgeToNum.SelectedValue);
-                    Underwriterpremiummodel.ApplysToDependents = false;
-                    Underwriterpremiummodel.LastModified = System.DateTime.Now;
-                    Underwriterpremiummodel.ModifiedUser = UserName;
-                    Underwriterpremiummodel.CreatedDate = System.DateTime.Now;
-                    Underwriterpremiummodel.CreatedUser = UserName;
-                    Underwriterpremiummodel.Parlourid = ParlourId;
-                    Underwriterpremiummodel.CoverAgeFromType = ddlCoverAgeFromMonthYear.SelectedValue;
-                    Underwriterpremiummodel.CoverAgeToType = ddlCoverAgeToMonthYear.SelectedValue;
-                    Underwriterpremiummodel.UnderwriterPremium = Convert.ToDecimal(txtUnderWriterPremium.Text);
+                Underwriterpremiummodel = UnderwriterPremiumBAL.SelectUnderwriterPremiumByName(Convert.ToInt32(ddlPlanUnderwriter.SelectedValue), ParlourId);
+
+                Underwriterpremiummodel = new UnderwriterPremiumModel();
+                Underwriterpremiummodel.PkiUnderwriterPremiumId = UnderwriterPremiumId;
+                Underwriterpremiummodel.FkiUnderwriterId = Convert.ToInt32(ddlPlanUnderwriter.SelectedValue);
+                Underwriterpremiummodel.PlanId = Convert.ToInt32(ddlPlanName.SelectedValue);
+                Underwriterpremiummodel.RolePlayerType = ddlDependencyType.SelectedValue;
+                Underwriterpremiummodel.PremiumAmount = Convert.ToDecimal(TxtPremiumAmount.Text);
+                Underwriterpremiummodel.CoverAmount = Convert.ToDecimal(txtCoverAmount.Text);
+                Underwriterpremiummodel.CoverAgeFrom = Convert.ToInt32(ddlCoverAgeFromNum.SelectedValue);
+                Underwriterpremiummodel.CoverAgeTo = Convert.ToInt32(ddlCoverAgeToNum.SelectedValue);
+                Underwriterpremiummodel.ApplysToDependents = false;
+                Underwriterpremiummodel.LastModified = System.DateTime.Now;
+                Underwriterpremiummodel.ModifiedUser = UserName;
+                Underwriterpremiummodel.CreatedDate = System.DateTime.Now;
+                Underwriterpremiummodel.CreatedUser = UserName;
+                Underwriterpremiummodel.Parlourid = ParlourId;
+                Underwriterpremiummodel.CoverAgeFromType = ddlCoverAgeFromMonthYear.SelectedValue;
+                Underwriterpremiummodel.CoverAgeToType = ddlCoverAgeToMonthYear.SelectedValue;
+                Underwriterpremiummodel.UnderwriterPremium = Convert.ToDecimal(txtUnderWriterPremium.Text);
                 Underwriterpremiummodel.UnderwriterCover = Convert.ToDecimal(txtUnderWriterCover.Text);
 
-                    int retID = client.SaveUnderwriterPremium(Underwriterpremiummodel);
-                    UnderwriterPremiumId = retID;
-                
-                    ClearControl();
+                int retID = UnderwriterPremiumBAL.SaveUnderwriterPremium(Underwriterpremiummodel);
+                UnderwriterPremiumId = retID;
+
+                ClearControl();
                 BindUndewriterPremiumList();
             }
             else
@@ -151,10 +148,10 @@ namespace Funeral.Web.Tools
         private void ClearControl()
         {
             btnSubmite.Text = "Save";
-            ddlPlanUnderwriter.SelectedValue="0";
+            ddlPlanUnderwriter.SelectedValue = "0";
             ddlPlanName.SelectedValue = "0";
             ddlDependencyType.SelectedValue = "0";
-           // ddlApplysToDependants.ClearSelection();
+            // ddlApplysToDependants.ClearSelection();
             TxtPremiumAmount.Text = string.Empty;
             txtCoverAmount.Text = string.Empty;
             ddlCoverAgeFromMonthYear.SelectedValue = "0";
@@ -164,50 +161,50 @@ namespace Funeral.Web.Tools
             UnderwriterPremiumId = 0;
             txtUnderWriterCover.Text = string.Empty;
             txtUnderWriterPremium.Text = string.Empty;
-           // UnderwriterPremiumId = 0;
+            // UnderwriterPremiumId = 0;
             // TxtCoverAgeFrom.Text = string.Empty;
             //TxtCoverAgeTo.Text = string.Empty;
         }
-             
+
         private void BindNumbers()
         {
-            int Numbers =100;
+            int Numbers = 100;
             for (int i = 0; i <= Numbers; i++)
             {
-                ddlCoverAgeFromNum.Items.Add(new ListItem(i.ToString(),i.ToString()));
+                ddlCoverAgeFromNum.Items.Add(new ListItem(i.ToString(), i.ToString()));
                 ddlCoverAgeToNum.Items.Add(new ListItem(i.ToString(), i.ToString()));
-                
+
             }
 
         }
 
         public void BindUndrewriterSetupName()
         {
-            UnderwriterSetupModel[] objUndrewriterSetupNameModel = client.GetUnderwriterSetupNameByParlourId(ParlourId);
+            List<UnderwriterSetupModel> objUndrewriterSetupNameModel = CommonBAL.GetUnderwriterSetupNameByParlourId(ParlourId);
             foreach (UnderwriterSetupModel UnderwriterName in objUndrewriterSetupNameModel)
             {
-               ListItem li = new ListItem();
+                ListItem li = new ListItem();
                 li.Text = UnderwriterName.UnderwriterName;
-               li.Value = UnderwriterName.PkiUnderWriterSetupId.ToString();//branch.Brancheid.ToString();
-               ddlPlanUnderwriter.Items.Add(li);
-             }
+                li.Value = UnderwriterName.PkiUnderWriterSetupId.ToString();//branch.Brancheid.ToString();
+                ddlPlanUnderwriter.Items.Add(li);
+            }
         }
         public void BindPlanList()
         {
-            PlanModel[] model = client.GetAllPlansList(ParlourId);
-            foreach(PlanModel Planlist in model)
+            List<PlanModel> model = ToolsSetingBAL.GetAllPlansList(ParlourId);
+            foreach (PlanModel Planlist in model)
             {
                 ListItem li = new ListItem();
                 li.Text = Planlist.PlanName;
                 li.Value = Planlist.pkiPlanID.ToString();
                 ddlPlanName.Items.Add(li);
-               
+
             }
         }
         public void BindRolePlayerType()
         {
             // gvUnderwriterPremium.PageSize = PageSize;
-            RolePlayerModel[] model = client.GetAllRolePlayer(ParlourId);
+            List<RolePlayerModel> model = ToolsSetingBAL.GetAllRolePlayer(ParlourId);
             // gvUnderwriterPremium.DataSource = model;
             //gvUnderwriterPremium.DataBind();
 
@@ -229,8 +226,8 @@ namespace Funeral.Web.Tools
         #region Bind Underwriter Premium
         private void BindUnderwriterPremium()
         {
-            var PlanUnderwriter = client.GetAllUnderwriterPlansByParlourID(this.ParlourId, Convert.ToInt32(UnderwriterPremiumEnums.UnderwriterPlans.PlanUnderwriter));
-            var PlanName = client.GetAllUnderwriterPlansByParlourID(this.ParlourId, Convert.ToInt32(UnderwriterPremiumEnums.UnderwriterPlans.PlanName));
+            var PlanUnderwriter = ToolsSetingBAL.GetAllUnderwriterPlansByParlourID(this.ParlourId, Convert.ToInt32(UnderwriterPremiumEnums.UnderwriterPlans.PlanUnderwriter));
+            var PlanName = ToolsSetingBAL.GetAllUnderwriterPlansByParlourID(this.ParlourId, Convert.ToInt32(UnderwriterPremiumEnums.UnderwriterPlans.PlanName));
             ddlPlanUnderwriter.DataSource = PlanUnderwriter;
             ddlPlanUnderwriter.DataTextField = "Name";
             ddlPlanUnderwriter.DataValueField = "Id";
@@ -251,15 +248,15 @@ namespace Funeral.Web.Tools
         public void BindUndewriterPremiumList()
         {
             gvUnderwriterPremium.PageSize = PageSize;
-            UnderwriterPremiumModel[] model = client.SelectAllUnderwriterPremiumByParlourId(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
+            List<UnderwriterPremiumModel> model = UnderwriterPremiumBAL.SelectAllUnderwriterPremiumByParlourId(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
             gvUnderwriterPremium.DataSource = model;
             gvUnderwriterPremium.DataBind();
         }
 
         public void BindUndewriterToUpdate()
         {
-           // UnderwriterPremiumModel model = client.EditPlanbyID(UnderwriterPremiumId, ParlourId);
-             UnderwriterPremiumModel model = client.EditUnderwriterPremiumbyID(UnderwriterPremiumId, ParlourId);
+            // UnderwriterPremiumModel model = client.EditPlanbyID(UnderwriterPremiumId, ParlourId);
+            UnderwriterPremiumModel model = UnderwriterPremiumBAL.EditUnderwriterPremiumbyID(UnderwriterPremiumId, ParlourId);
 
             if ((model == null) || (model.Parlourid != ParlourId))
             {
@@ -268,15 +265,15 @@ namespace Funeral.Web.Tools
             else
             {
                 UnderwriterPremiumId = model.PkiUnderwriterPremiumId;
-                if(ddlPlanUnderwriter.Items.FindByValue(model.FkiUnderwriterId.ToString())!= null)
+                if (ddlPlanUnderwriter.Items.FindByValue(model.FkiUnderwriterId.ToString()) != null)
                 {
                     ddlPlanUnderwriter.SelectedValue = model.FkiUnderwriterId.ToString();
                 }
-                
+
                 ddlDependencyType.SelectedValue = model.RolePlayerType.ToString();
-                    //txtPremium.Text = model.PlanSubscription.ToString("#,0.00");
+                //txtPremium.Text = model.PlanSubscription.ToString("#,0.00");
                 //txtJoiningfee.Text = model.JoiningFee.ToString("#,0.00");
-               ddlPlanName.SelectedValue = model.PlanId.ToString();
+                ddlPlanName.SelectedValue = model.PlanId.ToString();
                 //ddlPlanName.SelectedIndex = ddlPlanName.Items.IndexOf(ddlPlanName.Items.FindByValue(model.PlanID.ToString()));
                 //  txtDescription.Text = model.PlanDesc;
                 try
@@ -324,7 +321,7 @@ namespace Funeral.Web.Tools
                 int SPkiUnderwriterPremiumId = Convert.ToInt32(e.CommandArgument);
                 try
                 {
-                    int retID = client.DeleteUnderwriterPremium(SPkiUnderwriterPremiumId,UserName);
+                    int retID = UnderwriterPremiumBAL.DeleteUnderwriterPremium(SPkiUnderwriterPremiumId, UserName);
                     ShowMessage(ref lblMessage, MessageType.Success, "Record deleted successfully.");
                     lblMessage.Visible = true;
                     BindUndewriterPremiumList();
@@ -338,7 +335,7 @@ namespace Funeral.Web.Tools
             }
         }
 
-     
+
         #region "Sorting Event"
 
         private const string ASCENDING = "ASC";
@@ -402,7 +399,7 @@ namespace Funeral.Web.Tools
         protected void gvUnderwriterPremium_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gvUnderwriterPremium.PageIndex = e.NewPageIndex;
-           // BindPlanList();
+            // BindPlanList();
         }
 
     }

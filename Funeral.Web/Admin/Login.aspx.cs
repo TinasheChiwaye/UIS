@@ -1,20 +1,17 @@
 ﻿using Funeral.Model;
 using Funeral.Web.FuneralServiceReference;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 
 namespace Funeral.Web.Admin
 {
     public partial class Login : System.Web.UI.Page
     {
-        FuneralServiceReference.FuneralServicesClient serviceClient = new FuneralServiceReference.FuneralServicesClient();
+        //   FuneralServiceReference.FuneralServicesClient serviceClient = new FuneralServiceReference.FuneralServicesClient();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -31,28 +28,29 @@ namespace Funeral.Web.Admin
             {
                 try
                 {
-                    AdminModel model = serviceClient.DoLogin(username.Text, password.Text);
+                    AdminModel model = BAL.AdminBAL.AdminLogin(username.Text, password.Text);
                     if (model != null)
                     {
-                        
-                            string UserName = username.Text;
-                            string cookiestr;
-                            FormsAuthenticationTicket tkt = new FormsAuthenticationTicket(1, UserName, DateTime.Now,
-                                DateTime.Now.AddMinutes(30), false, model.parlourid.ToString() + "|" + model.ApplicationName + "|" + model.Name + "|" + model.PkiUserID + "|" + model.Currency);
-                            cookiestr = FormsAuthentication.Encrypt(tkt);
-                            HttpCookie ck = new HttpCookie(FormsAuthentication.FormsCookieName, cookiestr);
-                            ck.Expires = tkt.Expiration;
-                            ck.Path = FormsAuthentication.FormsCookiePath;
-                            FormsAuthentication.SetAuthCookie(UserName, false);
-                            Response.Cookies.Add(ck);
-                            try
-                            {
-                                //Session["SessionVariablesClass"] = serviceClient.tblRightGetAll();
-                                Session["SessionVariablesClass"] = serviceClient.LoadSideMenu(model.parlourid, model.PkiUserID);
-                            }
-                            catch { }
-                            Response.Redirect("Dashboard.aspx", false);
-                       
+
+                        string UserName = username.Text;
+                        string cookiestr;
+                        FormsAuthenticationTicket tkt = new FormsAuthenticationTicket(1, UserName, DateTime.Now,
+                            DateTime.Now.AddMinutes(30), false, model.parlourid.ToString() + "|" + model.ApplicationName + "|" + model.Name + "|" + model.PkiUserID + "|" + model.Currency);
+                        cookiestr = FormsAuthentication.Encrypt(tkt);
+                        HttpCookie ck = new HttpCookie(FormsAuthentication.FormsCookieName, cookiestr);
+                        ck.Expires = tkt.Expiration;
+                        ck.Path = FormsAuthentication.FormsCookiePath;
+                        FormsAuthentication.SetAuthCookie(UserName, false);
+                        Response.Cookies.Add(ck);
+                        try
+                        {
+                            //Session["SessionVariablesClass"] = serviceClient.tblRightGetAll();
+                            Session["SessionVariablesClass"] = BAL.RightsBAL.LoadSideMenu(model.parlourid, model.PkiUserID);
+                        }
+                        catch { }
+                        //Response.Redirect("~/Admin/Dashboard/Index");
+                        Response.Redirect("Dashboard.aspx", false);
+
                     }
                     else
                     {
@@ -62,8 +60,8 @@ namespace Funeral.Web.Admin
                 }
                 catch (FaultException<FuneralServiceFault> fault)
                 {
-                    lblMessage.Text = "<div class='ibox-content'><div class='alert alert-Danger'>" +  fault.Detail.Message + "</div>";
-                   
+                    lblMessage.Text = "<div class='ibox-content'><div class='alert alert-Danger'>" + fault.Detail.Message + "</div>";
+
                 }
                 catch (Exception ex)
                 {

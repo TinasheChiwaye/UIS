@@ -18,7 +18,6 @@ namespace Funeral.Web.Tools
     public partial class BranchSetup : AdminBasePage
     {
         #region Page Property
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
         public Guid BranchID
         {
             get
@@ -74,13 +73,13 @@ namespace Funeral.Web.Tools
 
         public void BindBranchesList()
         {
-            BranchModel[] model = client.GetAllBranches(ParlourId);
+            List<BranchModel> model = ToolsSetingBAL.GetAllBranches(ParlourId);
             gvBranches.DataSource = model;
             gvBranches.DataBind();
         }
         public void BindBranchToUpdate()
         {
-            BranchModel model = client.EditBranchbyID(BranchID, ParlourId);
+            BranchModel model = ToolsSetingBAL.EditBranchbyID(BranchID, ParlourId);
             if ((model == null) || (model.Parlourid != ParlourId))
             {
                 Response.Write("<script>alert('Sorry!you are not authorized to perform edit on this Branch.');</script>");
@@ -128,7 +127,7 @@ namespace Funeral.Web.Tools
             {
 
                 BranchModel model;
-                model = client.GetBranchByID(txtBranchName.Text, ParlourId);
+                model = ToolsSetingBAL.GetBranchByID(txtBranchName.Text, ParlourId);
                 if (model != null && BranchID == new Guid("00000000-0000-0000-0000-000000000000"))
                 {
                     ShowMessage(ref lblMessage, MessageType.Danger, "Branch Already Exists.");
@@ -153,7 +152,7 @@ namespace Funeral.Web.Tools
                    
 
                     //================================================================ 
-                    Guid retID = client.SaveBranchDetails(model);
+                    Guid retID = ToolsSetingBAL.SaveBranchDetails(model);
                     BranchID = retID;
 
                     ShowMessage(ref lblMessage, MessageType.Success, "Branch Details successfully saved");
@@ -193,7 +192,7 @@ namespace Funeral.Web.Tools
                 Guid SBranchId = new Guid(e.CommandArgument.ToString());
                 try
                 {
-                    int retID = client.DeleteBranch(SBranchId);
+                    int retID = ToolsSetingBAL.DeleteBranch(SBranchId);
                     ShowMessage(ref lblMessage, MessageType.Success, "Record deleted successfully.");
                     lblMessage.Visible = true;
                     BindBranchesList();

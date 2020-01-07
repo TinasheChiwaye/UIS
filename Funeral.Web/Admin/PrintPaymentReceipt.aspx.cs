@@ -1,4 +1,5 @@
-﻿using Funeral.Model;
+﻿using Funeral.BAL;
+using Funeral.Model;
 using Funeral.Web.App_Start;
 using Funeral.Web.UserControl;
 using System;
@@ -8,7 +9,7 @@ namespace Funeral.Web.Admin
     public partial class PrintPaymentReceipt : AdminBasePage
     {
         #region Fields
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
+        
         #endregion
 
         #region Page PreInit
@@ -154,8 +155,8 @@ namespace Funeral.Web.Admin
         #region Function
         public void BindData()
         {
-            MembersModel Mmodel = client.GetMemberByID(MemberId, ParlourId);
-            NewMemberInvoiceModel getmodel = client.GetInvoiceByid(InvoiceId);
+            MembersModel Mmodel = MembersBAL.GetMemberByID(MemberId, ParlourId);
+            NewMemberInvoiceModel getmodel = MembersBAL.GetInvoiceByid(InvoiceId);
             //string[] MonthPaid = getmodel.Notes.Split('-');
             lblReceiptId.Text = InvoiceId.ToString();
             tableTitle.Text = ApplicationName;
@@ -176,7 +177,7 @@ namespace Funeral.Web.Admin
 
         public void BindOtherInvoiceData()
         {
-            OtherPaymentModel model = client.GetOtherPayment(OtherInvoiceId, ParlourId);
+            OtherPaymentModel model = OtherPaymentBAL.OtherPaymentSelect(OtherInvoiceId, ParlourId);
 
             //string[] MonthPaid = getmodel.Notes.Split('-');
             tableTitle.Text = ApplicationName;
@@ -198,7 +199,7 @@ namespace Funeral.Web.Admin
         public void BindAddress()
         {
 
-            ApplicationSettingsModel model = client.GetApplictionByParlourID(ParlourId);
+            ApplicationSettingsModel model = ToolsSetingBAL.GetApplictionByParlourID(ParlourId);
             lblReceiptNumber.Text = "Receipt Number : " + InvoiceId.ToString();
             lbladd1.Text = model.BusinessAddressLine1.ToString();
             lbladd2.Text = model.BusinessAddressLine2.ToString();
@@ -211,7 +212,7 @@ namespace Funeral.Web.Admin
         private void PrintDuplicateOrNot()
         {
             ltrHead.Text = string.Empty;
-            int counter = client.GetPrintCounter(InvoiceId, this.ParlourId);
+            int counter = MemberPaymentBAL.GetPrintCounter(InvoiceId, this.ParlourId);
             if (counter > 0)
             {
                 ltrHead.Text = "Duplicate";

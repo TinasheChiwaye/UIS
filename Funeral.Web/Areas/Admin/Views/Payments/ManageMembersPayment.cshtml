@@ -1,127 +1,126 @@
 ﻿@model Funeral.Model.MembersPaymentDetailsModel
 
 @{
-	Layout = "~/Views/Shared/_Layout.cshtml";
-	var nextPaymentDate = ViewBag.PaymentDate;
-	var date = ViewBag.Date;
-	var totalPremium = ViewBag.totalPremium;
-	var policyStatus = ViewBag.PolicyStatus;
-	var policyBalance = ViewBag.policyBalance;
-	var LatePanelty = ViewBag.LatePanelty;
-	var MemberId = ViewBag.MemberID;
-	var InvoiceId = 0;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var nextPaymentDate = ViewBag.PaymentDate;
+    var date = ViewBag.Date;
+    var totalPremium = ViewBag.totalPremium;
+    var policyStatus = ViewBag.PolicyStatus;
+    var policyBalance = ViewBag.policyBalance;
+    var LatePanelty = ViewBag.LatePanelty;
+    var MemberId = ViewBag.MemberID;
 }
 
 <style>
-	.ibox-title h5 {
-		display: inline-block;
-		font-size: 14px;
-		margin: 0 0 27px !important;
-		padding: 0;
-		text-overflow: ellipsis;
-		float: none !important;
-	}
+    .ibox-title h5 {
+        display: inline-block;
+        font-size: 14px;
+        margin: 0 0 27px !important;
+        padding: 0;
+        text-overflow: ellipsis;
+        float: none !important;
+    }
 </style>
 @Html.Hidden("CalculateAmount", Url.Action("CalculateAmount"))
 @Html.Hidden("AddPayments", Url.Action("AddPayments"))
 
 <div class="row">
-	<div class="col-lg-12">
-		<div class="row">
+    <div class="col-lg-12">
+        <div class="row">
 
-			@*@Html.Hidden("AddPayments", Url.Action("AddPayments"))*@
+            @*@Html.Hidden("AddPayments", Url.Action("AddPayments"))*@
 
-			<div class="col-lg-6">
-			</div>
-		</div>
-		<div class="ibox ">
-			<div class="row">
-				@Html.HiddenFor(m => m.NextPaymentDate)
-				@Html.HiddenFor(m => m.pkiMemberID)
-				@Html.HiddenFor(m => m.ParlourId)
-				<div class="col-lg-6">
-					<div class="ibox float-e-margins">
-						<div class="ibox-title">
-							<h5>Payment Details</h5>
-						</div>
-						<div class="ibox-content">
-							<div class="form-group">
-								<label>Member No  <em>*</em> </label>
-								@Html.EditorFor(Model => Model.MemeberNumber, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtMemberNo", @name = "name" } })
-							</div>
-							<div class="row">
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label>Member    </label>
-										@Html.EditorFor(Model => Model.FullNames, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtMember", @name = "name", @readonly = "readonly" } })
-									</div>
-								</div>
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label>Received By  </label>
-										@*@Html.EditorFor(Model =>Model.ReceivedBy, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtReceivedBy", @name = "name", @readonly = "readonly" } })*@
-										<input type="text" readonly value="@HttpContext.Current.User.Identity.Name" class="form-control" maxlength="255" id="txtReceivedBy" name="name">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label>Amount</label>
-										@Html.EditorFor(Model => Model.Amount, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtAmount", @name = "name" } })
-									</div>
-								</div>
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label>Method</label>
-										<select id="ddlMethod" class="form-control m-b">
-											<option value="0">Select</option>
-											<option value="1">Cash</option>
-											<option value="2">Easy Pay</option>
-											<option value="3">Debit Order</option>
-											<option value="4">Bank Deposit</option>
-											<option value="5">EFT</option>
-											<option value="6">Other</option>
-										</select>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label>Date</label>
-										@*@Html.EditorFor(Model => Model.PaymentDate, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtNextPaymentDate", @name = "name", @readonly = "readonly" } })*@
-										<input type="text" class="form-control" maxlength="255" id="txtNextPaymentDate" readonly="readonly" value="@date">
-									</div>
-								</div>
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label>No of Months</label>
-										<select id="ddlNoOfMonths" class="form-control m-b">
-											<option Value="0">Select</option>
-											<option Value="1">1</option>
-											<option Value="2">2</option>
-											<option Value="3">3</option>
-											<option Value="4">4</option>
-											<option Value="5">5</option>
-											<option Value="6">6</option>
-											<option Value="7">7</option>
-											<option Value="8">8</option>
-											<option Value="9">9</option>
-											<option Value="10">10</option>
-											<option Value="11">11</option>
-											<option Value="12">12</option>
-										</select>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label>Month Paid<em>*</em>  </label>
-										@*@Html.EditorFor(, new { htmlAttributes = new { @class = "form-control", @id = "txtMonthPaid", @name = "name", @rows = "4" } })*@
-										<textarea class="form-control" id="txtMonthPaid" rows="2">@nextPaymentDate</textarea>
-									</div>
+            <div class="col-lg-6">
+            </div>
+        </div>
+        <div class="ibox ">
+            <div class="row">
+                @Html.HiddenFor(m => m.NextPaymentDate)
+                @Html.HiddenFor(m => m.pkiMemberID)
+                @Html.HiddenFor(m => m.ParlourId)
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Payment Details</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="form-group">
+                                <label>Member No  <em>*</em> </label>
+                                @Html.EditorFor(Model => Model.MemeberNumber, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtMemberNo", @name = "name" } })
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Member    </label>
+                                        @Html.EditorFor(Model => Model.FullNames, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtMember", @name = "name", @readonly = "readonly" } })
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Received By  </label>
+                                        @*@Html.EditorFor(Model =>Model.ReceivedBy, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtReceivedBy", @name = "name", @readonly = "readonly" } })*@
+                                        <input type="text" readonly value="@HttpContext.Current.User.Identity.Name" class="form-control" maxlength="255" id="txtReceivedBy" name="name">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Amount</label>
+                                        @Html.EditorFor(Model => Model.Amount, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtAmount", @name = "name" } })
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Method</label>
+                                        <select id="ddlMethod" class="form-control m-b">
+                                            <option value="0">Select</option>
+                                            <option value="1">Cash</option>
+                                            <option value="2">Easy Pay</option>
+                                            <option value="3">Debit Order</option>
+                                            <option value="4">Bank Deposit</option>
+                                            <option value="5">EFT</option>
+                                            <option value="6">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Date</label>
+                                        @*@Html.EditorFor(Model => Model.PaymentDate, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtNextPaymentDate", @name = "name", @readonly = "readonly" } })*@
+                                        <input type="text" class="form-control" maxlength="255" id="txtNextPaymentDate" readonly="readonly" value="@date">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>No of Months</label>
+                                        <select id="ddlNoOfMonths" class="form-control m-b">
+                                            <option Value="0">Select</option>
+                                            <option Value="1">1</option>
+                                            <option Value="2">2</option>
+                                            <option Value="3">3</option>
+                                            <option Value="4">4</option>
+                                            <option Value="5">5</option>
+                                            <option Value="6">6</option>
+                                            <option Value="7">7</option>
+                                            <option Value="8">8</option>
+                                            <option Value="9">9</option>
+                                            <option Value="10">10</option>
+                                            <option Value="11">11</option>
+                                            <option Value="12">12</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Month Paid<em>*</em>  </label>
+                                        @*@Html.EditorFor(, new { htmlAttributes = new { @class = "form-control", @id = "txtMonthPaid", @name = "name", @rows = "4" } })*@
+                                        <textarea class="form-control" id="txtMonthPaid" rows="2">@nextPaymentDate</textarea>
+                                    </div>
 
                                     <div class="form-group">
                                         @if (ViewBag.HasCreateRight)
@@ -129,239 +128,226 @@
                                             <button id="btnPay" class="btn btn-md btn-primary" value="Add Payment" style="width: 96%;">Add Payment</button>
                                         }
                                     </div>
-								</div>
-								<div class="col-lg-6">
-									<div class="form-group">
-										@*<button id="btnPrint" class="btn btn-md btn-primary" value="Print"></button>*@
-										@*<asp:Button runat="server" ID="btnPrint" CssClass="btn btn-md btn-primary" Text="Print" Width="95%" OnClick="btnPrint_Click" />*@
-									</div>
-								</div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        @*<button id="btnPrint" class="btn btn-md btn-primary" value="Print"></button>*@
+                                        @*<asp:Button runat="server" ID="btnPrint" CssClass="btn btn-md btn-primary" Text="Print" Width="95%" OnClick="btnPrint_Click" />*@
+                                    </div>
+                                </div>
 
-							</div>
-							<div class="row">
-								<div class="col-lg-6">
-									@if (policyStatus == "Active" || policyStatus == "1")
-									{
-										<div class="form-group">
-											<button id="btnReunstate" class="btn btn-md btn-primary" value="Reinstate Policy" style="width: 96%;" disabled>Reinstate Policy</button>
-										</div>
-									}
-									else
-									{
-										<div class="form-group">
-											<button id="btnReunstate" class="btn btn-md btn-primary" value="Reinstate Policy" style="width: 96%;">Reinstate Policy</button>
-										</div>
-									}
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    @if (policyStatus == "Active" || policyStatus == "1")
+                                    {
+                                        <div class="form-group">
+                                            <button id="btnReunstate" class="btn btn-md btn-primary" value="Reinstate Policy" style="width: 96%;" disabled>Reinstate Policy</button>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="form-group">
+                                            <button id="btnReunstate" class="btn btn-md btn-primary" value="Reinstate Policy" style="width: 96%;">Reinstate Policy</button>
+                                        </div>
+                                    }
 
-								</div>
-								<div class="col-lg-6">
-									@if (policyStatus == "Active" || policyStatus == "1")
-									{
-										<div class="form-group">
-											<button id="btnRejoin" class="btn btn-md btn-primary" value="Rejoin Policy" style="width: 96%;" disabled>Rejoin Policy</button>
-										</div>
-									}
-									else
-									{
-										<div class="form-group">
-											<button id="btnRejoin" class="btn btn-md btn-primary" value="Rejoin Policy" style="width: 96%;">Rejoin Policy</button>
-										</div>
-									}
+                                </div>
+                                <div class="col-lg-6">
+                                    @if (policyStatus == "Active" || policyStatus == "1")
+                                    {
+                                        <div class="form-group">
+                                            <button id="btnRejoin" class="btn btn-md btn-primary" value="Rejoin Policy" style="width: 96%;" disabled>Rejoin Policy</button>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="form-group">
+                                            <button id="btnRejoin" class="btn btn-md btn-primary" value="Rejoin Policy" style="width: 96%;">Rejoin Policy</button>
+                                        </div>
+                                    }
 
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-3">
-									<div class="form-group">
-										<div class="form-group">
-											<input action="action" onclick="window.history.go(-1); return false;" type="button" value="Back" id="btnBack" class="btn btn-md btn-primary" />
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-6">
-					<div class="ibox float-e-margins">
-						<div class="ibox-title">
-							<h5>Member Plan Details</h5>
-						</div>
-						<div class="ibox-content">
-							<div class="row">
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label>Plan  <em>*</em> </label>
-										@Html.EditorFor(Model => Model.PlanName, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtPlan", @name = "name", @readonly = "readonly" } })
-									</div>
-								</div>
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label>Premium  <em>*</em> </label>
-										@Html.EditorFor(Model => Model.PlanSubscription, new { @class = "form-control", @maxlength = "255", @id = "txtPremium", @name = "txtPremium", @readonly = "readonly" })
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label>Spouse</label>
-										@Html.EditorFor(Model => Model.Spouse, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtSpouse", @name = "name", @readonly = "readonly" } })
-									</div>
-								</div>
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label>Children</label>
-										@Html.EditorFor(Model => Model.Children, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtChildren", @name = "name", @readonly = "readonly" } })
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label>Adults</label>
-										@Html.EditorFor(Model => Model.Adults, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtAdults", @name = "name", @readonly = "readonly" } })
-									</div>
-								</div>
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label>Waiting Period</label>
-										@Html.EditorFor(Model => Model.WaitingPeriod, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtWaitingPeriod", @name = "name", @readonly = "readonly" } })
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label>Cover</label>
-										@Html.EditorFor(Model => Model.Cover, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtCover", @name = "name", @readonly = "readonly" } })
-									</div>
-								</div>
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label>Total Premium</label>
-										@*@Html.TextBoxFor(Model => Model.PlanSubscription, null,new { @class = "form-control", @maxlength = "255", @id = "txtTotalPremium",  @readonly = "readonly" } )*@
-										<input type="text" class="form-control" maxlength="255" id="txtTotalPremium" readonly="readonly" value="@totalPremium">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label>Member Status</label>
-										@Html.EditorFor(Model => Model.PolicyStatus, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtPolicyBalance", @name = "name", @readonly = "readonly" } })
-									</div>
-								</div>
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label>Policy Balance</label>
-										@*@Html.EditorFor(Model => Model.Balance, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtPolicyBalance", @name = "name", @readonly = "readonly" } })*@
-										<input type="text" class="form-control" maxlength="255" id="txtPolicyBalance" readonly="readonly" value="@policyBalance">
-									</div>
-								</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <a href="@Url.Action("Index","Payments")" value="Back" id="btnBack" class="btn btn-md btn-primary" >Back</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Member Plan Details</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Plan  <em>*</em> </label>
+                                        @Html.EditorFor(Model => Model.PlanName, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtPlan", @name = "name", @readonly = "readonly" } })
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Premium  <em>*</em> </label>
+                                        @Html.EditorFor(Model => Model.PlanSubscription, new { @class = "form-control", @maxlength = "255", @id = "txtPremium", @name = "txtPremium", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Spouse</label>
+                                        @Html.EditorFor(Model => Model.Spouse, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtSpouse", @name = "name", @readonly = "readonly" } })
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Children</label>
+                                        @Html.EditorFor(Model => Model.Children, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtChildren", @name = "name", @readonly = "readonly" } })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Adults</label>
+                                        @Html.EditorFor(Model => Model.Adults, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtAdults", @name = "name", @readonly = "readonly" } })
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Waiting Period</label>
+                                        @Html.EditorFor(Model => Model.WaitingPeriod, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtWaitingPeriod", @name = "name", @readonly = "readonly" } })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Cover</label>
+                                        @Html.EditorFor(Model => Model.Cover, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtCover", @name = "name", @readonly = "readonly" } })
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Total Premium</label>
+                                        @*@Html.TextBoxFor(Model => Model.PlanSubscription, null,new { @class = "form-control", @maxlength = "255", @id = "txtTotalPremium",  @readonly = "readonly" } )*@
+                                        <input type="text" class="form-control" maxlength="255" id="txtTotalPremium" readonly="readonly" value="@totalPremium">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Member Status</label>
+                                        @Html.EditorFor(Model => Model.PolicyStatus, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtPolicyBalance", @name = "name", @readonly = "readonly" } })
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Policy Balance</label>
+                                        @*@Html.EditorFor(Model => Model.Balance, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtPolicyBalance", @name = "name", @readonly = "readonly" } })*@
+                                        <input type="text" class="form-control" maxlength="255" id="txtPolicyBalance" readonly="readonly" value="@policyBalance">
+                                    </div>
+                                </div>
 
-							</div>
-							<div class="row">
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label>Policy Laps</label>
-										@Html.EditorFor(Model => Model.PolicyLaps, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtPolicyLaps", @name = "name", @readonly = "readonly" } })
-									</div>
-								</div>
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label>Month Owing</label>
-										@Html.EditorFor(Model => Model.MonthOwing, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtMonthOwing", @name = "name", @readonly = "readonly" } })
-									</div>
-								</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Policy Laps</label>
+                                        @Html.EditorFor(Model => Model.PolicyLaps, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtPolicyLaps", @name = "name", @readonly = "readonly" } })
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Month Owing</label>
+                                        @Html.EditorFor(Model => Model.MonthOwing, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtMonthOwing", @name = "name", @readonly = "readonly" } })
+                                    </div>
+                                </div>
 
-							</div>
-							<div class="row">
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label>Joining Fee</label>
-										@Html.EditorFor(Model => Model.JoiningFee, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtJoiningFee", @name = "name", @readonly = "readonly" } })
-									</div>
-								</div>
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label>Late Penalty  <em>*</em> </label>
-										@*@Html.EditorFor(Model => Model.LatePaymentPenalty, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtLatePenalty", @name = "name", @readonly = "readonly" } })*@
-										<input type="text" class="form-control" maxlength="255" id="txtLatePenalty" readonly="readonly" value="@LatePanelty">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-3">
-									<div class="form-group">
-										<a href="@Url.Action("btnStatement", "Payments", new { memberId = MemberId })" class="btn btn-md btn-primary" id="lbtnStatement">Statement</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <a href="@Url.Action("btnStatement", "Payments", new { memberId = MemberId })" class="btn btn-md btn-primary" id="lbtnStatement">Statement</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
 @{
-	var model = ViewBag.MemberInvoiceList;
+    var model = ViewBag.MemberInvoiceList;
 }
 <div class="row">
-	<div class="col-lg-12">
-		<div class="ibox ">
-			<div class="ibox-title">
-				<h5>Payment History</h5>
-				<div class="table-responsive">
-					<div>
-						<table class="table table-striped table-bordered table-hover" cellspacing="0" rules="all" border="1" id="MainContent_gvInvoices" style="width:100%;border-collapse:collapse;">
-							<tbody>
-								<tr>
-									<th class="visible-lg" scope="col">Date paid</th>
-									<th scope="col">Amount</th>
-									<th class="visible-lg" scope="col">Recieved by</th>
-									<th class="visible-lg" scope="col">Months Paid &amp; Notes</th>
-									<th scope="col">Actions</th>
-									<th scope="col">&nbsp;</th>
-								</tr>
-								@if (model != null && model.Count > 0)
-								{
-									foreach (var item in model)
-									{
-										InvoiceId = item.InvoiceID;
-										<tr>
-											<td>@item.DatePaid</td>
-											<td>@item.AmountPaid</td>
-											<td>@item.RecievedBy</td>
-											<td>@item.Notes</td>
-											<td>
-												<a href="@Url.Action("PrintPaymentReceipt", "Payments", new { id = item.InvoiceID, Type = 1, PolicyNumber = Model.MemeberNumber, DatePaid = item.DatePaid, AmountPaid = item.AmountPaid, PaidBy = item.PaidBy, ReceivedBy = item.RecievedBy, MonthPaid = item.Notes ,memberId=Model.pkiMemberID, parlourId=Model.ParlourId})">
-													<i class="glyphicon glyphicon-print"></i>
-												</a>&nbsp;&nbsp;<a href="@Url.Action("PrintPaymentReceipt", "Payments", new { id = item.InvoiceID, Type = 2, PolicyNumber = Model.MemeberNumber, DatePaid = item.DatePaid, AmountPaid = item.AmountPaid, PaidBy = item.PaidBy, ReceivedBy = item.RecievedBy, MonthPaid = item.Notes,MemberId=Model.pkiMemberID, parlourId=Model.ParlourId })">
-													<i class="glyphicon glyphicon-export"></i>
-												</a>
-											</td>
+    <div class="col-lg-12">
+        <div class="ibox ">
+            <div class="ibox-title">
+                <h5>Payment History</h5>
+                <div class="table-responsive">
+                    <div>
+                        <table class="table table-striped table-bordered table-hover" cellspacing="0" rules="all" border="1" id="MainContent_gvInvoices" style="width:100%;border-collapse:collapse;">
+                            <tbody>
+                                <tr>
+                                    <th class="visible-lg" scope="col">Date paid</th>
+                                    <th scope="col">Amount</th>
+                                    <th class="visible-lg" scope="col">Recieved by</th>
+                                    <th class="visible-lg" scope="col">Months Paid &amp; Notes</th>
+                                    <th scope="col">Actions</th>
+                                    <th scope="col">&nbsp;</th>
+                                </tr>
+                                @if (model != null && model.Count > 0)
+                                {
+                                    foreach (var item in model)
+                                    {
+                                        <tr>
+                                            <td>@item.DatePaid</td>
+                                            <td>@item.AmountPaid</td>
+                                            <td>@item.RecievedBy</td>
+                                            <td>@item.Notes</td>
                                             <td>
-                                                @*href="@Url.Action("PaymentReversal", "Payments", new { id = item.InvoiceID })"*@
+                                                <a href="@Url.Action("PrintPaymentReceipt", "Payments", new { id = item.InvoiceID, Type = 1, PolicyNumber = Model.MemeberNumber, DatePaid = item.DatePaid, AmountPaid = item.AmountPaid, PaidBy = item.PaidBy, ReceivedBy = item.RecievedBy, MonthPaid = item.Notes ,memberId=Model.pkiMemberID, parlourId=Model.ParlourId})">
+                                                    <i class="glyphicon glyphicon-print"></i>
+                                                </a>&nbsp;&nbsp;<a href="@Url.Action("PrintPaymentReceipt", "Payments", new { id = item.InvoiceID, Type = 2, PolicyNumber = Model.MemeberNumber, DatePaid = item.DatePaid, AmountPaid = item.AmountPaid, PaidBy = item.PaidBy, ReceivedBy = item.RecievedBy, MonthPaid = item.Notes,MemberId=Model.pkiMemberID, parlourId=Model.ParlourId })">
+                                                    <i class="glyphicon glyphicon-export"></i>
+                                                </a>
+                                            </td>
+                                            <td>
                                                 @if (ViewBag.HasReversalPayment)
                                                 {
-                                                    <a class="btn btn-w-m btn-primary" id="btnReversalPayment">Reversal Payment</a>
+                                                    if (item.IsReversal == false && item.AmountPaidNumeric > 0)
+                                                    {
+                                                        <a class="btn btn-w-m btn-primary paymentreversal" role="@item.InvoiceID" id="btnReversalPayment">Reversal Payment</a>
+                                                    }
                                                 }
                                             </td>
-										</tr>
-									}
-								}
+                                        </tr>
+                                    }
+                                }
 
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -371,7 +357,7 @@
         var data = {
             noOfMonths: $("#ddlNoOfMonths").val(),
 			TotalPremieum: parseInt($("#txtTotalPremium").val().replace("@Model.Currency ", "")),
-			LatePanelty: parseInt($("#txtLatePenalty").val().replace("@Model.Currency", "")),
+			LatePanelty: parseInt(0),
             NextDate: $("#NextPaymentDate").val()
         };
         if ($("#ddlPolicy :selected").val() != "") {
@@ -412,7 +398,7 @@
             pkiMemberID: $("#pkiMemberID").val(),
             //Amount: $("#txtAmount").val().replace("USD ", ""),
             Amount: $("#txtAmount").val().replace("@Model.Currency", ""),
-            LatePaymentPenalty: $("#txtLatePenalty").val(),
+            LatePaymentPenalty: 0,
             ReceivedBy: $("#txtReceivedBy").val(),
             Notes: $("#ddlMethod :selected").text() + ' - ' + $("#txtMonthPaid").val(),
             MethodOfPayment: $("#ddlMethod :selected").text(),
@@ -445,20 +431,27 @@
         //}
     });
 
-    $("#btnReversalPayment").click(function () {
-        alert("You are about to make a REVERSAL PAYMENT.Continue?");
-        jQuery.ajax({
-            url: '@Url.Action("PaymentReversal", "Payments", new { id = InvoiceId},Request.Url.Scheme)',
-            type: "Get",
-            contentType: "application/html; charset=utf-8",
-            dataType: 'html'
-        })
-        .success(function (Message) {
-            alert(Message);
-        })
-        .error(function (xhr, status) {
-            alert(status);
-        });
+    $(".paymentreversal").click(function () {
+        var confirmStatus =confirm("You are about to make a REVERSAL PAYMENT.Continue?");
+        if (confirmStatus == true) {
+            var ivnoiceId = $(this).attr("role");
+            jQuery.ajax({
+                url: '@Url.Action("PaymentReversal", "Payments", new { },Request.Url.Scheme)?id=' + ivnoiceId,
+                type: "Get",
+                contentType: "application/html; charset=utf-8",
+                dataType: 'html'
+            })
+                .success(function (Message) {
+                    alert(Message);
+                    location.reload();
+                })
+                .error(function (xhr, status) {
+                    alert(status);
+                });
+        }
+        else {
+            return false;
+        }
     })
 
 </script>

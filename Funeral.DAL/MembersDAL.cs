@@ -1,5 +1,6 @@
 ﻿using Funeral.Model;
 using System;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -225,7 +226,7 @@ namespace Funeral.DAL
             DbParameter[] ObjParam = new DbParameter[2];
             ObjParam[0] = new DbParameter("@parlourId", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
             ObjParam[1] = new DbParameter("@MemberId", DbParameter.DbType.VarChar, 0, MemberId);
-            return DbConnection.GetDataReader(CommandType.StoredProcedure, "GetInvoices", ObjParam);
+            return DbConnection.GetDataReader(CommandType.StoredProcedure, "GetInvoices_new", ObjParam);
         }
 
         public static DataTable GetInvoicesByMemberIDdt(Guid Parlourid, int MemberId)
@@ -233,7 +234,7 @@ namespace Funeral.DAL
             DbParameter[] ObjParam = new DbParameter[2];
             ObjParam[0] = new DbParameter("@parlourId", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
             ObjParam[1] = new DbParameter("@MemberId", DbParameter.DbType.VarChar, 0, MemberId);
-            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetInvoices", ObjParam);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetInvoices_new", ObjParam);
         }
 
         public static SqlDataReader GetSocietyByParlourId(Guid Parlourid)
@@ -315,6 +316,14 @@ namespace Funeral.DAL
             ObjParam[1] = new DbParameter("@UserTypeId", DbParameter.DbType.Int, 0, UserTypeId);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "NewGetPlanSubscriptionByPlanIdNewMember", ObjParam);
         }
+        public static DataTable GetPolicyDetailsBetweenAge(int pkiPlanID, int Age, int UserTypeId)
+        {
+            DbParameter[] ObjParam = new DbParameter[3];
+            ObjParam[0] = new DbParameter("@pkiPlanID", DbParameter.DbType.Int, 0, pkiPlanID);
+            ObjParam[1] = new DbParameter("@Age", DbParameter.DbType.Int, 0, Age);
+            ObjParam[2] = new DbParameter("@UserTypeId", DbParameter.DbType.Int, 0, UserTypeId);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetPolicyDetailsBetweenAge_NEW", ObjParam);
+        }
         public static DataTable GetPlanSubscriptionByPlanIddt(int pkiPlanID, Guid parlorId)
         {
             DbParameter[] ObjParam = new DbParameter[2];
@@ -322,6 +331,15 @@ namespace Funeral.DAL
             ObjParam[1] = new DbParameter("@ParlouId", DbParameter.DbType.UniqueIdentifier, 0, parlorId);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetPlanSubscriptionByPlanId", ObjParam);
         }
+        //public static DataTable GetPlanSubscriptionByPlanIddt(int pkiPlanID, Guid parlorId, int UserType, int Age )
+        //{
+        //    DbParameter[] ObjParam = new DbParameter[4];
+        //    ObjParam[0] = new DbParameter("@pkiPlanID", DbParameter.DbType.Int, 0, pkiPlanID);
+        //    ObjParam[1] = new DbParameter("@ParlouId", DbParameter.DbType.UniqueIdentifier, 0, parlorId);
+        //    ObjParam[2] = new DbParameter("@UserType", DbParameter.DbType.Int, 0, UserType);
+        //    ObjParam[3] = new DbParameter("@Age", DbParameter.DbType.Int, 0, Age);
+        //    return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetPolicyDetailsBetweenAge_NEW", ObjParam);
+        //}
 
         public static SqlDataReader GetWaitingPeriodByPlanId(int pkiPlanID)
         {
@@ -672,7 +690,7 @@ namespace Funeral.DAL
         #region Familydependencty
         public static int SaveFamilyDependency(FamilyDependencyModel model)
         {
-            DbParameter[] ObjParam = new DbParameter[15];
+            DbParameter[] ObjParam = new DbParameter[16];
             ObjParam[0] = new DbParameter("@FullName", DbParameter.DbType.VarChar, 0, model.FullName);
             // ObjParam[1] = new DbParameter("@ImageFile", SqlDbType.Binary , 1000, model.ImageFile);
             ObjParam[1] = new DbParameter("@Surname", DbParameter.DbType.VarChar, 0, model.Surname);
@@ -689,12 +707,22 @@ namespace Funeral.DAL
             ObjParam[12] = new DbParameter("@Gender", DbParameter.DbType.NVarChar, 0, model.Gender);
             ObjParam[13] = new DbParameter("@StartDate", DbParameter.DbType.DateTime, 0, model.StartDate);
             ObjParam[14] = new DbParameter("@DependentStatus", DbParameter.DbType.NVarChar, 0, model.DependentStatus);
-            return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "SaveFamilyDependency", ObjParam));
+            ObjParam[15] = new DbParameter("@Cover", DbParameter.DbType.Decimal, 0, model.Cover);
+            return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "SaveFamilyDependency_NEW", ObjParam));
         }
-
+        public static DataSet CheckFamilyDependency(FamilyDependencyModel model)
+        {
+            DbParameter[] ObjParam = new DbParameter[2];
+            ObjParam[0] = new DbParameter("@fkiMemberID", DbParameter.DbType.Int, 0, model.MemberId);
+            ObjParam[1] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, model.parlourid);
+            var dt = (DbConnection.GetDataTable(CommandType.StoredProcedure, "GetDependenciesCount_ByMemberId", ObjParam));
+            DataSet ds = new DataSet();
+            ds.Tables.Add(dt);
+            return ds;
+        }
         public static int UpdateFamilyDependency(FamilyDependencyModel model)
         {
-            DbParameter[] ObjParam = new DbParameter[16];
+            DbParameter[] ObjParam = new DbParameter[17];
             ObjParam[0] = new DbParameter("@FullName", DbParameter.DbType.VarChar, 0, model.FullName);
             ObjParam[1] = new DbParameter("@Surname", DbParameter.DbType.VarChar, 0, model.Surname);
             ObjParam[2] = new DbParameter("@IDNumber", DbParameter.DbType.VarChar, 0, model.IDNumber);
@@ -711,6 +739,7 @@ namespace Funeral.DAL
             ObjParam[13] = new DbParameter("@Gender", DbParameter.DbType.NVarChar, 0, model.Gender);
             ObjParam[14] = new DbParameter("@StartDate", DbParameter.DbType.DateTime, 0, model.StartDate);
             ObjParam[15] = new DbParameter("@DependentStatus", DbParameter.DbType.NVarChar, 0, model.DependentStatus);
+            ObjParam[16] = new DbParameter("@Cover", DbParameter.DbType.Decimal, 0, model.Cover);
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "UpdateFamilyDependency", ObjParam));
         }
 
@@ -904,14 +933,24 @@ namespace Funeral.DAL
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "DeleteMemberNotesBypkiNoteID", ObjParam));
         }
 
-        public static void MemberRowImportToMember(string MemberType)
+        public static void MemberRowImportToMember(string MemberType, Guid ImportId)
         {
-            string query = "MemberRowImportToMember";
-            DbParameter[] ObjParam = new DbParameter[1];
-            ObjParam[0] = new DbParameter("@MemberType", DbParameter.DbType.NVarChar, 0, MemberType);
-            DbConnection.ExecuteNonQuery(CommandType.StoredProcedure, query, ObjParam);
-            //var test = DbConnection.GetDataTable(CommandType.StoredProcedure, "MemberRowImportToMember", ObjParam);
-            //return test;
+            //string query = "MemberRowImportToMember";
+            //DbParameter[] ObjParam = new DbParameter[2];
+            //ObjParam[0] = new DbParameter("@MemberType", DbParameter.DbType.NVarChar, 0, MemberType);
+            //ObjParam[1] = new DbParameter("@ImportId", DbParameter.DbType.UniqueIdentifier, 0, ImportId);
+            //DbConnection.ExecuteNonQuery(CommandType.StoredProcedure, query, ObjParam);
+            using (SqlCommand sqlCommand = new SqlCommand("MemberRowImportToMember"))
+            {
+                SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["FuneralConnection"].ToString());
+                sqlConnection.Open();
+                sqlCommand.Connection = sqlConnection;
+                sqlCommand.CommandType = CommandType.StoredProcedure;
+                sqlCommand.CommandTimeout = 0;
+                sqlCommand.Parameters.AddWithValue("@MemberType", MemberType);
+                sqlCommand.Parameters.AddWithValue("@ImportId", ImportId);
+                sqlCommand.ExecuteNonQuery();
+            }
         }
 
         public static int GetLastCopiedMemberForDependency()
@@ -968,5 +1007,6 @@ namespace Funeral.DAL
             ObjParam[0] = new DbParameter("@Parlourid", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetUnderWriterList", ObjParam);
         }
+       
     }
 }

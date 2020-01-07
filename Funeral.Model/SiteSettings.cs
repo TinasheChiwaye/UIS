@@ -27,5 +27,10 @@ namespace Funeral.Model
         {
             get { return System.Configuration.ConfigurationSettings.AppSettings["SSRSUrl"]; }
         }
+
+        public string SSRSFolderName
+        {
+            get { return System.Configuration.ConfigurationSettings.AppSettings["SSRSFolderName"]; }
+        }
     }
 }

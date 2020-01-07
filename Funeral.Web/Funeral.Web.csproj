@@ -63,6 +63,12 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="ExcelDataReader, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.3.6.0\lib\net45\ExcelDataReader.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelDataReader.DataSet, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.DataSet.3.6.0\lib\net35\ExcelDataReader.DataSet.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
@@ -132,6 +138,7 @@
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.4\lib\net45\System.Net.Http.Formatting.dll</HintPath>
@@ -278,6 +285,11 @@
     <Content Include="Content\fontCss.css" />
     <Content Include="Content\images\45.gif" />
     <Content Include="Content\images\ajax-loader.gif" />
+    <Content Include="Content\images\LoginPageImage\screensRight1.png" />
+    <Content Include="Content\images\LoginPageImage\featureLeft1.png" />
+    <Content Include="Content\images\LoginPageImage\PlatformRight1.png" />
+    <Content Include="Content\images\LoginPageImage\SalesLeft1.png" />
+    <Content Include="Content\images\mailuis1.jpg" />
     <Content Include="Content\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
     <Content Include="Content\Invoice\dimension.png" />
     <Content Include="Content\Invoice\index.html" />
@@ -292,6 +304,7 @@
     <Content Include="Content\patterns\otis_redding.png" />
     <Content Include="Content\patterns\shattered.png" />
     <Content Include="Content\patterns\triangular.png" />
+    <Content Include="Content\plugins\awesome-bootstrap-checkbox\awesome-bootstrap-checkbox.css" />
     <Content Include="Content\plugins\blueimp\css\blueimp-gallery-indicator.css" />
     <Content Include="Content\plugins\blueimp\css\blueimp-gallery-video.css" />
     <Content Include="Content\plugins\blueimp\css\blueimp-gallery.css" />
@@ -704,6 +717,26 @@
     <Content Include="Areas\Admin\Views\GroupPayment\_GroupPaymentList.cshtml" />
     <Content Include="Areas\Admin\Views\GroupPayment\_PaymentList.cshtml" />
     <Content Include="Areas\Admin\Views\GroupPayment\GroupPaymentView.cshtml" />
+    <Content Include="Areas\Admin\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Dashboard\_DashboardCharts.cshtml" />
+    <Content Include="Areas\Admin\Views\Dashboard\_PolicyPremiumList.cshtml" />
+    <Content Include="Areas\Admin\Views\Dashboard\_DashboardModal.cshtml" />
+    <Content Include="Areas\Tools\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Tools\Views\QuotationEngine\Index.cshtml" />
+    <Content Include="Areas\Tools\Views\QuotationEngine\_UploadedExcelFileList.cshtml" />
+    <Content Include="Areas\Admin\Views\Login\ForgotPassword.cshtml" />
+    <Content Include="Areas\Admin\Views\Login\ResetNewPassword.cshtml" />
+    <Content Include="Areas\Tools\Views\ClaimTools\ClaimStatus.cshtml" />
+    <Content Include="Areas\Tools\Views\ClaimTools\_ClaimRightsPage.cshtml" />
+    <Content Include="Areas\Admin\Views\Claims\_ClaimStatusForm.cshtml" />
+    <Content Include="Areas\Admin\Views\Claims\ClaimStatusHistory.cshtml" />
+    <Content Include="Areas\Admin\Views\Claims\_ClaimStatusHistoryDetails.cshtml" />
+    <Content Include="Areas\Admin\Views\Claims\ClaimAddEdit.cshtml" />
+    <Content Include="Areas\Admin\Views\Claims\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Claims\ClaimDashboard.cshtml" />
+    <Content Include="Areas\Admin\Views\Claims\_UploadClaimDocumentForm.cshtml" />
+    <Content Include="Areas\Admin\Views\Claims\_DocumentStatusForm.cshtml" />
+    <Content Include="Areas\Admin\Views\Claims\_DocumentFollowUpHistory.cshtml" />
     <None Include="DevDataDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DevDataDataSet.Designer.cs</LastGenOutput>
@@ -860,7 +893,9 @@
     <Content Include="Properties\DataSources\Funeral.Model.MembersPaymentModel.datasource" />
     <Content Include="Properties\DataSources\Funeral.Model.ProgressStatus.datasource" />
     <None Include="Properties\PublishProfiles\Funeral.Web.pubxml" />
-    <None Include="Properties\PublishProfiles\Publish From Server.pubxml" />
+    <None Include="Properties\PublishProfiles\uispolicy - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\uispolicy - ReadOnly - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\uispolicy - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -887,6 +922,7 @@
     <Content Include="Scripts\Pages\Common.js" />
     <Content Include="Scripts\plugins\blueimp\jquery.blueimp-gallery.min.js" />
     <Content Include="Scripts\plugins\ChartJScript\Chart.bundle.js" />
+    <Content Include="Scripts\plugins\ChartJScript\ChartJS_script.js" />
     <Content Include="Scripts\plugins\ChartJScript\jquery.min.js" />
     <Content Include="Scripts\plugins\chartJs\Chart.min.js" />
     <Content Include="Scripts\plugins\chosen\chosen.jquery.js" />
@@ -1893,33 +1929,41 @@
     <Compile Include="Areas\Admin\Controllers\BaseAdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\CarTrackController.cs" />
     <Compile Include="Areas\Admin\Controllers\ClaimsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Admin\Controllers\ErrorController.cs" />
     <Compile Include="Areas\Admin\Controllers\FuneralController.cs" />
     <Compile Include="Areas\Admin\Controllers\GroupPaymentController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\MembersController.cs" />
     <Compile Include="Areas\Admin\Controllers\OtherPaymentController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ParlourController.cs" />
     <Compile Include="Areas\Admin\Controllers\PaymentsController.cs" />
     <Compile Include="Areas\Admin\Controllers\QuotationController.cs" />
     <Compile Include="Areas\Admin\Controllers\ReportController.cs" />
     <Compile Include="Areas\Admin\Controllers\TombstoneController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserRightController.cs" />
+    <Compile Include="Areas\Admin\Models\StaticMessages.cs" />
     <Compile Include="Areas\Admin\Models\ViewModel\FuneralPaymentVM.cs" />
     <Compile Include="Areas\Admin\Models\ViewModel\FuneralPrintVM.cs" />
     <Compile Include="Areas\Admin\Models\ViewModel\FuneralServiceVM.cs" />
+    <Compile Include="Areas\Admin\Models\ViewModel\ManageClaimsVM.cs" />
     <Compile Include="Areas\Admin\Models\ViewModel\MembersOtherPaymentDetailsVM.cs" />
     <Compile Include="Areas\Admin\Models\ViewModel\PrintViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ViewModel\TombStoneServiceVM.cs" />
     <Compile Include="Areas\Tools\Controllers\AddOnProductSetupController.cs" />
+    <Compile Include="Areas\Tools\Controllers\ClaimToolsController.cs" />
     <Compile Include="Areas\Tools\Controllers\FuneralServicesController.cs" />
     <Compile Include="Areas\Tools\Controllers\PlanSetupController.cs" />
     <Compile Include="Areas\Tools\Controllers\MenuController.cs" />
     <Compile Include="Areas\Admin\Models\ViewModel\QuotationServiceVM.cs" />
     <Compile Include="Areas\Tools\Controllers\PackageController.cs" />
+    <Compile Include="Areas\Tools\Controllers\QuotationEngineController.cs" />
     <Compile Include="Areas\Tools\Controllers\SocietySetupController.cs" />
     <Compile Include="Areas\Tools\Controllers\TombstonePackageController.cs" />
     <Compile Include="Areas\Tools\Controllers\UnderwriterController.cs" />
     <Compile Include="Areas\Tools\Controllers\UnderwriterPremiumsController.cs" />
     <Compile Include="Areas\Tools\Controllers\UnderwriterSetupController.cs" />
+    <Compile Include="Areas\Tools\Models\ExcelModel.cs" />
     <Compile Include="Common\FuneralAuthAttribute.cs" />
     <Compile Include="Common\OtherPaymentsWebApiResult.cs" />
     <Compile Include="Common\WebApiResult.cs" />
@@ -2202,9 +2246,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Views\CarTrack\" />
-    <Folder Include="Areas\Admin\Views\Claims\" />
+    <Folder Include="Areas\Admin\Views\Parlour\" />
     <Folder Include="Areas\Admin\Views\Report\" />
-    <Folder Include="Areas\Tools\Models\" />
     <Folder Include="Areas\Tools\Views\Underwriter\" />
     <Folder Include="ErrorLog\" />
     <Folder Include="Models\" />

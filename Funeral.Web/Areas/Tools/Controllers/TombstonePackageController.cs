@@ -6,7 +6,6 @@ using Funeral.Web.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using System.Web.UI.WebControls;
@@ -16,8 +15,6 @@ namespace Funeral.Web.Areas.Tools.Controllers
 
     public class TombstonePackageController : BaseAdminController
     {
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
-
         //public int pkiPackageID
         //{
         //    get
@@ -62,11 +59,8 @@ namespace Funeral.Web.Areas.Tools.Controllers
         }
         public List<ListItem> BindFuneralServiceList()
         {
-
             List<ListItem> liList = new List<ListItem>();
-
-            QuotationServicesModel[] objQuoSer = client.GetAllQuotationServices(ParlourId);
-
+            List<QuotationServicesModel> objQuoSer = QuotationBAL.GetAllQuotationServices(ParlourId);
             foreach (QuotationServicesModel FuneralService in objQuoSer)
             {
                 ListItem li = new ListItem();
@@ -77,7 +71,7 @@ namespace Funeral.Web.Areas.Tools.Controllers
             return liList;
         }
 
-        [PageRightsAttribute(CurrentPageId = 15, Right = new isPageRight[] { isPageRight.HasAccess})]
+        [PageRightsAttribute(CurrentPageId = 15, Right = new isPageRight[] { isPageRight.HasAccess })]
         public ActionResult Index()
         {
             //ViewBag.HasAccess = HasAccess;
@@ -98,7 +92,7 @@ namespace Funeral.Web.Areas.Tools.Controllers
             search.SortOrder = "Asc";
             search.TotalRecord = 0;
 
-            List<TombstonePackageModel> TombstonePackageList = client.GetTombstoneAllPackage(ParlourId).ToList();
+            List<TombstonePackageModel> TombstonePackageList = TombstonePackageBAL.SelectAllPackage(ParlourId);
 
             var searchResult = new SearchResult<Model.Search.BaseSearch, TombstonePackageModel>(search, TombstonePackageList, o => o.ServiceName.Contains(search.SarchText));
 
@@ -122,7 +116,7 @@ namespace Funeral.Web.Areas.Tools.Controllers
             search.SortOrder = "Asc";
             search.TotalRecord = 0;
             //const int testId = pkiPackageID;
-            List<TombstonePackageModel> TombstonePackageList = client.GetTombstonePackageServiceByPackgeId(ParlourId, pkiPackageID).ToList();
+            List<TombstonePackageModel> TombstonePackageList = TombstonePackageBAL.SelectPackageServiceByPackgeId(ParlourId, pkiPackageID);
 
             var searchResult = new SearchResult<Model.Search.BaseSearch, TombstonePackageModel>(search, TombstonePackageList, o => o.ServiceName.Contains(search.SarchText));
 
@@ -164,7 +158,7 @@ namespace Funeral.Web.Areas.Tools.Controllers
             {
                 if (Convert.ToInt32(Session["pkiPackageID"]) == 0)
                 {
-                    List<TombstonePackageModel> TombstonePackageList = client.GetTombstoneAllPackage(ParlourId).ToList();
+                    List<TombstonePackageModel> TombstonePackageList = TombstonePackageBAL.SelectAllPackage(ParlourId).ToList();
 
                     searchResult = new SearchResult<Model.Search.BaseSearch, TombstonePackageModel>(search, TombstonePackageList, o => o.ServiceName.Contains(search.SarchText));
 
@@ -176,7 +170,7 @@ namespace Funeral.Web.Areas.Tools.Controllers
                     //var pkiPackageID  = Session["pkiPackageID"] as Int32?; ;
                     int pkiPackageID = Convert.ToInt32(Session["pkiPackageID"]);
 
-                    List <TombstonePackageModel> TombstonePackageList = client.GetTombstonePackageServiceByPackgeId(ParlourId, pkiPackageID).ToList();
+                    List<TombstonePackageModel> TombstonePackageList = TombstonePackageBAL.SelectPackageServiceByPackgeId(ParlourId, pkiPackageID).ToList();
 
                     var searchResult1 = new SearchResult<Model.Search.BaseSearch, TombstonePackageModel>(search, TombstonePackageList, o => o.ServiceName.Contains(search.SarchText));
                     Session.Clear();
@@ -197,12 +191,12 @@ namespace Funeral.Web.Areas.Tools.Controllers
             return PartialView("~/Areas/Tools/Views/TombstonePackage/_TombstonePackageAddEdit.cshtml", TombstonePackage);
         }
 
-        [PageRightsAttribute(CurrentPageId = 15, Right = new isPageRight[] { isPageRight.HasEdit})]
+        [PageRightsAttribute(CurrentPageId = 15, Right = new isPageRight[] { isPageRight.HasEdit })]
         public PartialViewResult Edit(int pkiPackageID)
         {
             TombstonePackageModel model = new TombstonePackageModel();
 
-            var SocietySetup = client.GetTombstonePackageServiceByPackgeId(ParlourId, pkiPackageID);
+            var SocietySetup = TombstonePackageBAL.SelectPackageServiceByPackgeId(ParlourId, pkiPackageID);
             model.pkiPackageID = SocietySetup[0].pkiPackageID;
             model.PackageName = SocietySetup[0].PackageName;
             model.IsActive = SocietySetup[0].IsActive;
@@ -236,9 +230,7 @@ namespace Funeral.Web.Areas.Tools.Controllers
                     SavePackage.ModifiedUser = formIdentity.Name;
                     SavePackage.ParlourId = SavePackage.ParlourId;
                     SavePackage.IsActive = true;
-
-                    client.SaveTombstonePackage(SavePackage);
-
+                    TombstonePackageBAL.SavePackage(SavePackage);
                     TempData["IsTombstonePackageSaved"] = true;
                     TempData.Keep("IsTombstonePackageSaved");
 
@@ -293,10 +285,10 @@ namespace Funeral.Web.Areas.Tools.Controllers
         //    return RedirectToAction(ControllerContext.RouteData.Values["action"] as string, ControllerContext.RouteData.Values["controller"] as string, new { area = "Tools" });
         //}
 
-        [PageRightsAttribute(CurrentPageId = 15, Right = new isPageRight[] { isPageRight.HasDelete})]
+        [PageRightsAttribute(CurrentPageId = 15, Right = new isPageRight[] { isPageRight.HasDelete })]
         public JsonResult Delete(int pkiPackageID)
         {
-            client.DeleteTombstonePackage(pkiPackageID);
+            TombstonePackageBAL.DeleteTombstonePackage(pkiPackageID);
             var result = new ResponseResult() { Error = null, Message = "Deleted Successfully.", StatusCode = (int)Enum.Parse(typeof(System.Net.HttpStatusCode), System.Net.HttpStatusCode.OK.ToString()) };
             return Json(result, JsonRequestBehavior.AllowGet);
         }

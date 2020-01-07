@@ -1241,7 +1241,7 @@ namespace Funeral.Services
         [OperationContract]
         [WebInvoke(ResponseFormat = WebMessageFormat.Json)]
 
-        void MemberRowImportToMember(string MemberType);
+        void MemberRowImportToMember(string memberType, Guid importId);
 
         [OperationContract]
         [WebInvoke(ResponseFormat = WebMessageFormat.Json)]

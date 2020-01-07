@@ -1,4 +1,5 @@
-﻿using Funeral.Model;
+﻿using Funeral.BAL;
+using Funeral.Model;
 using Funeral.Web.App_Start;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace Funeral.Web.Tools
 {
     public partial class CustomManagement : AdminBasePage
     {
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
+
 
         #region Page PreInit
         protected void Page_PreInit(object sender, EventArgs e)
@@ -44,14 +45,14 @@ namespace Funeral.Web.Tools
                 int Id = 0;
                 if (string.IsNullOrEmpty(hdnId.Value))
                 {                    
-                    Id = client.SaveCustomDetails(model);
+                    Id = CustomDetailsBAL.CustomDetailsSave(model);
                     ClearControl();
                     this.ShowMessage(ref lblMessage, MessageType.Success, "Custom detail saved successfully");
                 }
                 else
                 {
                     model.Id = Convert.ToInt32(hdnId.Value);
-                    client.UpdateCustomDetails(model);
+                    CustomDetailsBAL.CustomDetailsUpdate(model);
                     this.ShowMessage(ref lblMessage, MessageType.Success, "Custom detail udpated successfully");
                 }
 
@@ -70,7 +71,7 @@ namespace Funeral.Web.Tools
         #region Private function & Methods
         private void BindAllData()
         {            
-            gvCustom.DataSource = client.GetAllCustomDetailsByParlourId(this.ParlourId, Convert.ToInt32(ddlCustomType.SelectedValue));
+            gvCustom.DataSource = CustomDetailsBAL.GetAllCustomDetailsByParlourId(this.ParlourId, Convert.ToInt32(ddlCustomType.SelectedValue));
             gvCustom.DataBind();
         }
 
@@ -89,7 +90,7 @@ namespace Funeral.Web.Tools
 
         private void BindAllDataToControl(int Id)
         {
-            CustomDetails model = client.GetCustomDetails(this.ParlourId, Id, Convert.ToInt32(ddlCustomType.SelectedValue));
+            CustomDetails model = CustomDetailsBAL.GetCustomDetails(Id, this.ParlourId, Convert.ToInt32(ddlCustomType.SelectedValue));
             if (model != null)
             {
                 hdnId.Value = model.Id.ToString();
@@ -112,7 +113,7 @@ namespace Funeral.Web.Tools
                     model.Id = Convert.ToInt32(e.CommandArgument);
                     model.ParlourId = this.ParlourId;
                     model.CustomType = (CustomDetailsEnums.CustomDetailsType)Convert.ToInt32(ddlCustomType.SelectedValue);
-                    client.DeleteCustomDetails(model);
+                    CustomDetailsBAL.CustomDetailsDelete(model);
                     model = null;
                     BindAllData();
                     break;

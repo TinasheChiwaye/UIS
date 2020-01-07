@@ -1,4 +1,5 @@
-﻿using Funeral.Model;
+﻿using Funeral.BAL;
+using Funeral.Model;
 using Funeral.Web.App_Start;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,6 @@ namespace Funeral.Web.Tools
             }
         }
 
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
         public string sortBYExpression
         {
             get
@@ -87,7 +87,7 @@ namespace Funeral.Web.Tools
             if (Page.IsValid)
             {
                 UnderwriterSetupModel Setupmodel;
-                Setupmodel = client.SelectUnderwriterSetupByName(TxtUnderwriterName.Text, ParlourId);
+                Setupmodel = UnderwriterSetupBAL.SelectUnderwriterSetupByName(TxtUnderwriterName.Text, ParlourId);
                 if (Setupmodel != null && Setupmodel.PkiUnderWriterSetupId == 0)
                 {
                     ShowMessage(ref lblMessage, MessageType.Danger, "UnderwriterSetup Already Exists.");
@@ -118,7 +118,7 @@ namespace Funeral.Web.Tools
                     Setupmodel.CreatedBy = UserName;
 
 
-                    int retID = client.SaveUnderwriterSetup(Setupmodel);
+                    int retID = UnderwriterSetupBAL.SaveUnderwriterSetup(Setupmodel);
                     PkiUnderWriterSetupId = retID;
                     if(PkiUnderWriterSetupId != 0)
                     {
@@ -141,7 +141,7 @@ namespace Funeral.Web.Tools
         public void BindUndewriterSetupToUpdate()
         {
             // UnderwriterPremiumModel model = client.EditPlanbyID(UnderwriterPremiumId, ParlourId);
-            UnderwriterSetupModel model = client.EditUnderwriterSetupbyID(PkiUnderWriterSetupId, ParlourId);
+            UnderwriterSetupModel model = UnderwriterSetupBAL.EditUnderwriterSetupbyID(PkiUnderWriterSetupId, ParlourId);
 
             if ((model == null) || (model.Parlourid != ParlourId))
             {
@@ -205,7 +205,7 @@ namespace Funeral.Web.Tools
         public void BindUndewriterSetupList()
         {
             gvUnderwriterSetup.PageSize = PageSize;
-            UnderwriterSetupModel[] model = client.SelectAllUnderwriterSetupByParlourId(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
+            List<UnderwriterSetupModel> model = UnderwriterSetupBAL.SelectAllUnderwriterSetupByParlourId(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
             gvUnderwriterSetup.DataSource = model;
             gvUnderwriterSetup.DataBind();
         }
@@ -232,7 +232,7 @@ namespace Funeral.Web.Tools
                 int PkiUnderWriterSetupId = Convert.ToInt32(e.CommandArgument);
                 try
                 {
-                    int retID = client.DeleteUnderwriterSetupByID(PkiUnderWriterSetupId, UserName);
+                    int retID = UnderwriterSetupBAL.DeleteUnderwriterSetupByID(PkiUnderWriterSetupId, UserName);
                     ShowMessage(ref lblMessage, MessageType.Success, "Record deleted successfully.");
                     lblMessage.Visible = true;
                     

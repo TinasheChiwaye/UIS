@@ -26,7 +26,7 @@
                                                     <div class="col-sm-6" runat="server" id="dvAdministrator">
                                                         <div class="form-group">
                                                             <label class="m-l">Company </label>
-                                                            <asp:DropDownList ID="ddlCompanyList" Width="97%" CssClass="form-control m-l" runat="server"></asp:DropDownList>
+                                                            <asp:DropDownList ID="ddlCompanyList" Width="97%" CssClass="form-control m-l" AutoPostBack="true" OnSelectedIndexChanged="ddlCompanyList_SelectedIndexChanged" runat="server"></asp:DropDownList>
                                                         </div>
                                                     </div>
                                                     <div role="form" class="form col-sm-12">

@@ -1,22 +1,18 @@
-﻿using Funeral.Model;
+﻿using Funeral.BAL;
+using Funeral.Model;
 using Funeral.Web.UserControl;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace Funeral.Web.Admin
 {
     public partial class PrintStatement : System.Web.UI.Page
     {
-     //   List<MemberInvoiceModel> obj = new List<MemberInvoiceModel>();
+        //   List<MemberInvoiceModel> obj = new List<MemberInvoiceModel>();
         #region Fields
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
         #endregion
         #region PageProperty
-       
+
         public int MemberId
         {
             get
@@ -33,7 +29,7 @@ namespace Funeral.Web.Admin
             }
         }
 
-      
+
         public string PolicyNum
         {
             get
@@ -56,7 +52,7 @@ namespace Funeral.Web.Admin
                 string query = (Request.QueryString["InID"]).ToString();
                 string decryptedValue = EncryptionHelper.Decrypt(query);
                 string[] arry = decryptedValue.ToString().Split('&');
-                Guid ParlourId = new Guid( arry[0]);
+                Guid ParlourId = new Guid(arry[0]);
                 PolicyNum = arry[1].ToString();
                 MemberId = Convert.ToInt32(arry[2]);
                 lblPolicy.Text = PolicyNum;
@@ -67,10 +63,10 @@ namespace Funeral.Web.Admin
 
         public void BindData(Guid ParlourId, int MemberId)
         {
-            MemberInvoiceModel[] objMemberInvoiceModel = client.GetInvoices(ParlourId, MemberId);
+            List<MemberInvoiceModel> objMemberInvoiceModel = MembersBAL.GetInvoicesByMemberID(ParlourId, MemberId);
             gvInvoices.DataSource = objMemberInvoiceModel;
             gvInvoices.DataBind();
-            
+
         }
     }
 }

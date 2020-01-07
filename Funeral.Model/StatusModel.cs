@@ -10,6 +10,7 @@ namespace Funeral.Model
     {
         public int ID { get; set; }
         public string Status { get; set; }
-        public string AssociatedTable { get; set; }      
+        public string AssociatedTable { get; set; }
+        public int SequencePriority { get; set; }
     }
 }

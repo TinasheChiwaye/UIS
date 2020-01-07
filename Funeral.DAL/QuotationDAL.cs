@@ -29,11 +29,11 @@ namespace Funeral.DAL
             ObjParam[2] = new DbParameter("@ContactLastName", DbParameter.DbType.NVarChar, 0, model.ContactLastName);
             ObjParam[3] = new DbParameter("@TelNumber", DbParameter.DbType.NVarChar, 0, model.TelNumber);
             ObjParam[4] = new DbParameter("@CellNumber", DbParameter.DbType.NVarChar, 0, model.CellNumber);
-            ObjParam[5] = new DbParameter("@AddressLine1", DbParameter.DbType.NVarChar, 0, model.AddressLine1);
-            ObjParam[6] = new DbParameter("@AddressLine2", DbParameter.DbType.NVarChar, 0, model.AddressLine2);
-            ObjParam[7] = new DbParameter("@AddressLine3", DbParameter.DbType.NVarChar, 0, model.AddressLine3);
-            ObjParam[8] = new DbParameter("@AddressLine4", DbParameter.DbType.NVarChar, 0, model.AddressLine4);
-            ObjParam[9] = new DbParameter("@Code", DbParameter.DbType.NVarChar, 0, model.Code);
+            ObjParam[5] = new DbParameter("@AddressLine1", DbParameter.DbType.NVarChar, 0, model.AddressLine1 == null ? "" : model.AddressLine1);
+            ObjParam[6] = new DbParameter("@AddressLine2", DbParameter.DbType.NVarChar, 0, model.AddressLine2 == null ? "" : model.AddressLine2);
+            ObjParam[7] = new DbParameter("@AddressLine3", DbParameter.DbType.NVarChar, 0, model.AddressLine3 == null ? "" : model.AddressLine3);
+            ObjParam[8] = new DbParameter("@AddressLine4", DbParameter.DbType.NVarChar, 0, model.AddressLine4 == null ? "" : model.AddressLine4);
+            ObjParam[9] = new DbParameter("@Code", DbParameter.DbType.NVarChar, 0, model.Code == null ? "" : model.Code);
             ObjParam[10] = new DbParameter("@DateOfQuotation", DbParameter.DbType.DateTime, 0, System.DateTime.Now);
             ObjParam[11] = new DbParameter("@Parlourid", DbParameter.DbType.UniqueIdentifier, 0, model.parlourid);
             ObjParam[12] = new DbParameter("@LastModified", DbParameter.DbType.DateTime, 0, System.DateTime.Now);

@@ -28,7 +28,7 @@ namespace Funeral.Web
 
                     ssrsReportViewer1.ProcessingMode = ProcessingMode.Remote;
                     ssrsReportViewer1.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
-                    ssrsReportViewer1.ServerReport.ReportPath = "/Unplugg IT Solution BI Reporting/UIS_RPT_AllMembersReport";
+                    ssrsReportViewer1.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/UIS_RPT_AllMembersReport";
                     ssrsReportViewer1.ServerReport.Refresh();
                 }
                 catch (Exception ex)

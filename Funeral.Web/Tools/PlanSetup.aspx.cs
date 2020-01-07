@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Funeral.BAL;
 using Funeral.Model;
 using Funeral.Web.App_Start;
 
@@ -10,7 +12,6 @@ namespace Funeral.Web.Tools
     public partial class PlanSetup : AdminBasePage
     {
         #region Page Property
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
         public int PlanID
         {
             get
@@ -147,13 +148,13 @@ namespace Funeral.Web.Tools
         public void BindPlanList()
         {
             gvPlan.PageSize = PageSize;
-            PlanModel[] model = client.GetAllPlans(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
+            List<PlanModel> model = ToolsSetingBAL.GetAllPlans(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
             gvPlan.DataSource = model;
             gvPlan.DataBind();
         }
         public void BindPlanToUpdate()
         {
-            PlanModel model = client.EditPlanbyID(PlanID, ParlourId);
+            PlanModel model = ToolsSetingBAL.EditPlanbyID(PlanID, ParlourId);
             if ((model == null) || (model.parlourid != ParlourId))
             {
                 Response.Write("<script>alert('Sorry!you are not authorized to perform edit on this Plan.');</script>");
@@ -258,7 +259,7 @@ namespace Funeral.Web.Tools
             {
 
                 PlanModel model;
-                model = client.GetPlanByID(txtPlanName.Text, ParlourId);
+                model = ToolsSetingBAL.GetPlanByID(txtPlanName.Text, ParlourId);
                 if (model != null && PlanID == 0)
                 {
                     ShowMessage(ref lblMessage, MessageType.Danger, "Plan Already Exists.");
@@ -313,7 +314,7 @@ namespace Funeral.Web.Tools
                     model.ModifiedUser = UserName;
 
                     //================================================================ 
-                    int retID = client.SavePlanDetails(model);
+                    int retID = ToolsSetingBAL.SavePlanDetails(model);
                     PlanID = retID;
 
                     ShowMessage(ref lblMessage, MessageType.Success, "Plan Details successfully saved");
@@ -363,7 +364,7 @@ namespace Funeral.Web.Tools
                 int SPlanId = Convert.ToInt32(e.CommandArgument);
                 try
                 {
-                    int retID = client.DeletePlan(SPlanId);
+                    int retID = ToolsSetingBAL.DeletePlan(SPlanId);
                     ShowMessage(ref lblMessage, MessageType.Success, "Record deleted successfully.");
                     lblMessage.Visible = true;
                     BindPlanList();

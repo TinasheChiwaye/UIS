@@ -1,4 +1,5 @@
-﻿using Funeral.Model;
+﻿using Funeral.BAL;
+using Funeral.Model;
 using Funeral.Web.App_Start;
 using Funeral.Web.Common;
 using System;
@@ -16,7 +17,6 @@ namespace Funeral.Web.Admin
     public partial class TombStone : AdminBasePage
     {
         #region Fields
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
         #endregion
 
         #region Page Property
@@ -130,7 +130,7 @@ namespace Funeral.Web.Admin
         public void bindTombStoneList()
         {
             gvTombStonelList.PageSize = PageSize;
-            TombStoneModel[] objTombModel = client.SelectAllTombStoneByParlourId(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
+            List<TombStoneModel> objTombModel = TombStoneBAL.SelectAllTombStoneByParlourId(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
             gvTombStonelList.DataSource = objTombModel;
             gvTombStonelList.DataBind();
         }
@@ -169,7 +169,7 @@ namespace Funeral.Web.Admin
         }
         public void bindTombStoneUpdateList()
         {
-            TombStoneModel model = client.SelectTombStoneByParlAndPki(TSID, ParlourId);
+            TombStoneModel model = TombStoneBAL.SelectTombStoneByParlAndPki(TSID, ParlourId);
             if ((model == null) || (model.parlourid != ParlourId))
             {
                 Response.Write("<script>alert('Sorry!you are not authorized to perform edit on this TombStone.');</script>");
@@ -252,7 +252,7 @@ namespace Funeral.Web.Admin
                         FuneralGeneralMethods.GetUploadPath("TombImage");
                         flTombStone.SaveAs(FuneralGeneralMethods.CreateFolder("~/Upload/TombImage/" + ParlourId) + filename);                        
                         string ImagePath = "~/Upload/TombImage/" + ParlourId+"/" + filename;
-                        int b = client.UploadTombImage(filename, ImagePath, TSID, ParlourId);
+                        int b = TombStoneBAL.UploadTombImage(filename, ImagePath, TSID, ParlourId);
                         bindTombStoneUpdateList();
                     }
                 }
@@ -297,7 +297,7 @@ namespace Funeral.Web.Admin
             {
                 try
                 {
-                    TombStoneModel objTomb = client.SelectTombStoneByParlAndPki(TSID, ParlourId);
+                    TombStoneModel objTomb = TombStoneBAL.SelectTombStoneByParlAndPki(TSID, ParlourId);
                     if (objTomb != null && TSID == 0)
                     {
                         ShowMessage(ref lblMessage, MessageType.Danger, "TombStone Details  Already Exists.");
@@ -348,7 +348,7 @@ namespace Funeral.Web.Admin
                         objTomb.ContactPerson = txtContactPerson.Text;
                         objTomb.ContactPersonNumber = txtContactNumber.Text;
 
-                        int a = client.SaveTombStone(objTomb);
+                        int a = TombStoneBAL.SaveTombStone(objTomb);
                         UploadImage(a);
                         ShowMessage(ref lblMessage, MessageType.Success, "TombStone Details Successfully Saved.");
                         ClearControl();
@@ -428,7 +428,7 @@ namespace Funeral.Web.Admin
             }
             if (e.CommandName == "DeleteTombStone")
             {
-                client.TombStoneDelete(Convert.ToInt32(e.CommandArgument), UserName);
+                TombStoneBAL.TombStoneDelete(Convert.ToInt32(e.CommandArgument), UserName);
                 bindTombStoneList();
             }
             if (e.CommandName == "PrintTombstone")

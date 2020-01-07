@@ -1286,9 +1286,9 @@ namespace Funeral.Services
             return ToolsSetingBAL.GetVendorNameByParlourId(parlourid);
         }
 
-        public void MemberRowImportToMember(string MemberType)
+        public void MemberRowImportToMember(string memberType,Guid importId)
         {
-            MembersBAL.MemberRowImportToMember(MemberType);
+            MembersBAL.MemberRowImportToMember(memberType, importId);
             //return MembersBAL.MemberRowImportToMember(MemberType);
         }
 

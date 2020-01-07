@@ -17,7 +17,6 @@ namespace Funeral.Web.Tools
     public partial class VendorSetup : AdminBasePage
     {
         #region Page Property
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
         public int VendorID
         {
             get
@@ -138,13 +137,13 @@ namespace Funeral.Web.Tools
         public void BindVendorList()
         {
             gvVendores.PageSize = PageSize;
-            VendorModel[] model = client.GetAllVendores(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
+            List<VendorModel> model = ToolsSetingBAL.GetAllVendores(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
             gvVendores.DataSource = model;
             gvVendores.DataBind();
         }
         public void BindVendorToUpdate()
         {
-            VendorModel model = client.EditVendorbyID(VendorID, ParlourId);
+            VendorModel model = ToolsSetingBAL.EditVendorbyID(VendorID, ParlourId);
             if (model == null)
             {
                 Response.Write("<script>alert('Sorry!you are not authorized to perform edit on this Branch.');</script>");
@@ -178,7 +177,7 @@ namespace Funeral.Web.Tools
             {
 
                 VendorModel model;
-                model = client.GetVendorByID(txtVendorName.Text, ParlourId);
+                model = ToolsSetingBAL.GetVendorByID(txtVendorName.Text, ParlourId);
                 if (model != null && VendorID == 0)
                 {
                     ShowMessage(ref lblMessage, MessageType.Danger, "Vendor Already Exists.");
@@ -194,7 +193,7 @@ namespace Funeral.Web.Tools
 
 
                     //================================================================ 
-                    int retID = client.SaveVendorDetails(model);
+                    int retID = ToolsSetingBAL.SaveVendorDetails(model);
                     VendorID = retID;
 
                     ShowMessage(ref lblMessage, MessageType.Success, "Vendor Details successfully saved");
@@ -243,7 +242,7 @@ namespace Funeral.Web.Tools
                 int SBranchId = Convert.ToInt32(e.CommandArgument);
                 try
                 {
-                    int retID = client.DeleteVendor(SBranchId);
+                    int retID = ToolsSetingBAL.DeleteVendor(SBranchId);
                     ShowMessage(ref lblMessage, MessageType.Success, "Record deleted successfully.");
                     lblMessage.Visible = true;
                     BindVendorList();

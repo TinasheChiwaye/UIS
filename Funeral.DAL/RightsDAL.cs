@@ -168,7 +168,6 @@ namespace Funeral.DAL
             ObjParam[1] = new DbParameter("@UserId", DbParameter.DbType.Int, 0, UserId);
             return DbConnection.GetDataReader(CommandType.StoredProcedure, "LoadSideMenu", ObjParam);
         }
-
         public static DataTable LoadSideMenudt(Guid ParlourId, int UserId)
         {
             DbParameter[] ObjParam = new DbParameter[2];
@@ -177,6 +176,6 @@ namespace Funeral.DAL
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "LoadSideMenu", ObjParam);
         }
 
-       
+
     }
 }

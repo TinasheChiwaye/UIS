@@ -12,4 +12,9 @@ namespace Funeral.Model
        public string BankName { get; set; }
        public string BranchCode { get; set; }
     }
+    public class Provinces
+    {
+        public int ProvinceId { get; set; }
+        public string ProvinceName { get; set; }
+    }
 }

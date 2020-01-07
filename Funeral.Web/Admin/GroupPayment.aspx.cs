@@ -1,4 +1,5 @@
-﻿using Funeral.Model;
+﻿using Funeral.BAL;
+using Funeral.Model;
 using Funeral.Web.App_Start;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,6 @@ namespace Funeral.Web.Admin
 {
     public partial class WebForm2 : AdminBasePage
     {
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
         protected void Page_Load(object sender, EventArgs e)
         {
             BindBranches();
@@ -20,7 +20,7 @@ namespace Funeral.Web.Admin
         }
         public void BindBranches()
         {
-            BranchModel[] objBranchModel = client.BranchByparlourId(ParlourId);
+            List<BranchModel> objBranchModel = CommonBAL.BranchByparlourId(ParlourId);
             foreach (BranchModel branch in objBranchModel)
             {
                 ListItem li = new ListItem();

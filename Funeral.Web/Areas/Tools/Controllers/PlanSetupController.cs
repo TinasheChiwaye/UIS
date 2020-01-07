@@ -76,8 +76,8 @@ namespace Funeral.Web.Areas.Tools.Controllers
             List<PlanCreator> planCreators = new List<PlanCreator>();
             planCreators.Add(new PlanCreator { });
             planModel.planCreators = planCreators;
-            
 
+            BindCompanyList();
             FormsIdentity id = (FormsIdentity)System.Web.HttpContext.Current.User.Identity;
             FormsAuthenticationTicket ticket = id.Ticket;
             string[] strData = ticket.UserData.Split('|');
@@ -87,6 +87,27 @@ namespace Funeral.Web.Areas.Tools.Controllers
                 planModel.parlourid = new Guid("00000000-0000-0000-0000-000000000000");
             planModel.UnderwriterList = CommonBAL.GetUnderwriterList(planModel.parlourid).ToList();
             return PartialView("~/Areas/Tools/Views/PlanSetup/_PlanSetupAddEdit.cshtml", planModel);
+        }
+        public void BindCompanyList()
+        {
+            List<SelectListItem> companyListItems = new List<SelectListItem>();
+            List<ApplicationSettingsModel> model = new List<ApplicationSettingsModel>();
+
+            if (this.IsAdministrator)
+            {
+                model = ToolsSetingBAL.GetAllApplicationList(ParlourId, 1, 0).ToList();
+
+                if (model == null)
+                {
+                    model.Add(new ApplicationSettingsModel() { ApplicationName = ApplicationName, parlourid = ParlourId });
+                }
+            }
+            else
+            {
+                model.Add(new ApplicationSettingsModel() { ApplicationName = ApplicationName, parlourid = ParlourId });
+            }
+
+            ViewBag.Companies = model;
         }
         [FuneralAuth(PageId = 15, Right = new Rights[] { Rights.HasEdit })]
         public PartialViewResult Edit(int ID)
@@ -115,6 +136,7 @@ namespace Funeral.Web.Areas.Tools.Controllers
             planSetup.OfficeSplit = Convert.ToDecimal(planSetup.OfficeSplit.ToString("0.00"));
             planSetup.planCreators = ToolsSetingBAL.EditPlanCreatorbyID(planSetup.pkiPlanID);
             planSetup.UnderwriterList = CommonBAL.GetUnderwriterList(ParlourId).ToList();
+            BindCompanyList();
             return PartialView("~/Areas/Tools/Views/PlanSetup/_PlanSetupAddEdit.cshtml", planSetup);
         }
         public ActionResult Update(int ID)
@@ -126,26 +148,30 @@ namespace Funeral.Web.Areas.Tools.Controllers
         {
             try
             {
-                planSetup.planCreators = planSetup.planCreators.Where(x => x.TableRawStatus == false).ToList();
+                if (planSetup.planCreators != null)
+                    planSetup.planCreators = planSetup.planCreators.Where(x => x.TableRawStatus == false).ToList();
                 if (ModelState.IsValid)
                 {
                     FormsIdentity formIdentity = (FormsIdentity)User.Identity;
                     planSetup.LastModified = System.DateTime.Now;
                     planSetup.ModifiedUser = formIdentity.Name;
                     var agentInfoSetupData = ToolsSetingBAL.NewSavePlanDetails(planSetup);
-                    if (planSetup.planCreators.Count > 0)
+                    if (planSetup.planCreators != null)
                     {
-                        for (int i = 0; i < planSetup.planCreators.Count; i++)
+                        if (planSetup.planCreators.Count > 0)
                         {
-                            var context = new ValidationContext(planSetup.planCreators[i], null, null);
-                            var results = new List<ValidationResult>();
-                            if (Validator.TryValidateObject(planSetup.planCreators[i], context, results, true))
+                            for (int i = 0; i < planSetup.planCreators.Count; i++)
                             {
-                                planSetup.planCreators[i].CreatedBy = planSetup.ModifiedUser;
-                                planSetup.planCreators[i].CreatedDate = planSetup.LastModified;
-                                planSetup.planCreators[i].IsActive = true;
-                                planSetup.planCreators[i].PlanID = agentInfoSetupData;
-                                ToolsSetingBAL.SavePlanCreatorDetails(planSetup.planCreators[i]);
+                                var context = new ValidationContext(planSetup.planCreators[i], null, null);
+                                var results = new List<ValidationResult>();
+                                if (Validator.TryValidateObject(planSetup.planCreators[i], context, results, true))
+                                {
+                                    planSetup.planCreators[i].CreatedBy = planSetup.ModifiedUser;
+                                    planSetup.planCreators[i].CreatedDate = planSetup.LastModified;
+                                    planSetup.planCreators[i].IsActive = true;
+                                    planSetup.planCreators[i].PlanID = agentInfoSetupData;
+                                    ToolsSetingBAL.SavePlanCreatorDetails(planSetup.planCreators[i]);
+                                }
                             }
                         }
                     }

@@ -1,9 +1,9 @@
-﻿using Funeral.Model;
+﻿using Funeral.BAL;
+using Funeral.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Web;
 using System.Web.Security;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -135,8 +135,7 @@ namespace Funeral.Web.App_Start
             {
                 if (Session["SideMenuModelList"] == null)
                 {
-                    FuneralServiceReference.FuneralServicesClient privateClient = new FuneralServiceReference.FuneralServicesClient();
-                    Funeral.Model.tblPageModel[] obj = privateClient.LoadSideMenu(ParlourId, UserID);
+                    List<tblPageModel> obj = RightsBAL.LoadSideMenu(ParlourId, UserID);
                     Session["SideMenuModelList"] = obj.ToList();
                     return obj.ToList();
                 }
@@ -157,8 +156,7 @@ namespace Funeral.Web.App_Start
             {
                 if (Session["SecurUserGroupModel"] == null)
                 {
-                    FuneralServiceReference.FuneralServicesClient privateClient = new FuneralServiceReference.FuneralServicesClient();
-                    Funeral.Model.SecureUserGroupsModel[] obj = privateClient.EditSecurUserbyID(UserID);
+                    List<SecureUserGroupsModel> obj = ToolsSetingBAL.EditSecurUserbyID(UserID);
                     Session["SecurUserGroupModel"] = obj.ToList();
                     return obj.ToList();
                 }
@@ -202,14 +200,20 @@ namespace Funeral.Web.App_Start
                 return true;
             }
         }
+        public List<SecureUserGroupsModel> RoleId_List
+        {
+            get
+            {
+                return ToolsSetingBAL.GetSuperUserAccessByUserId(UserID);
+            }
+        }
         public List<SecureUserGroupsModel> GetUserGroupRole
         {
             get
             {
                 if (Session["GetUserGroupRole"] == null)
                 {
-                    FuneralServiceReference.FuneralServicesClient privateClient = new FuneralServiceReference.FuneralServicesClient();
-                    Funeral.Model.SecureUserGroupsModel[] secureModelList = privateClient.GetSuperUserAccessByID(UserID, ParlourId);
+                    List<SecureUserGroupsModel> secureModelList = ToolsSetingBAL.GetSuperUserAccessByID(UserID, ParlourId);
                     Session["GetUserGroupRole"] = secureModelList.ToList();
                     return secureModelList.ToList();
                 }
@@ -226,7 +230,6 @@ namespace Funeral.Web.App_Start
 
                 if (dbPageId != 0)
                 {
-                    FuneralServiceReference.FuneralServicesClient privateClient = new FuneralServiceReference.FuneralServicesClient();
                     List<Model.tblPageModel> obj = SideMenuModelList;
 
                     if (!(obj.Where(x => x.ID == dbPageId).Any()))
@@ -243,7 +246,7 @@ namespace Funeral.Web.App_Start
                         HasReversalPayment = obj.Where(x => x.ID == dbPageId).Select(x => x.IsReversalPayment).FirstOrDefault();
                     }
 
-                    List<Funeral.Model.SecureUserGroupsModel> grp = SecurUserGroupModel;//privateClient.EditSecurUserbyID(UserID);
+                    List<SecureUserGroupsModel> grp = SecurUserGroupModel;
                     List<int> list = new List<int>();
                     list.Add(4);
                     list.Add(12);
@@ -322,11 +325,10 @@ namespace Funeral.Web.App_Start
 
         public void BindCompanyList(DropDownList ddlCompanyList, HtmlControl dvAdministrator)
         {
-            FuneralServiceReference.FuneralServicesClient privateClient = new FuneralServiceReference.FuneralServicesClient();
             dvAdministrator.Visible = IsAdministrator;
             if (this.IsAdministrator)
             {
-                List<ApplicationSettingsModel> model = privateClient.GetAllApplicationList(ParlourId, 1, 0).ToList();
+                List<ApplicationSettingsModel> model = ToolsSetingBAL.GetAllApplicationList(ParlourId, 1, 0);
                 if (model != null)
                 {
                     ddlCompanyList.Visible = true;

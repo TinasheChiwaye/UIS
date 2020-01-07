@@ -1,17 +1,16 @@
-﻿using Funeral.Model;
+﻿using Funeral.BAL;
+using Funeral.Model;
 using Funeral.Web.App_Start;
+using Funeral.Web.FuneralServiceReference;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace Funeral.Web.Admin
 {
     public partial class Admin : System.Web.UI.MasterPage
     {
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
+        FuneralServicesClient client = new FuneralServicesClient();
         public bool ToolAuth { get; set; }
         AdminBasePage ABP = new AdminBasePage();
         public Admin()
@@ -21,7 +20,7 @@ namespace Funeral.Web.Admin
         #region PageInit
         protected void Page_Init(object sender, EventArgs e)
         {
-            SecureUserGroupsModel[] obj = client.EditSecurUserbyID(ABP.UserID);
+            List<SecureUserGroupsModel> obj = ToolsSetingBAL.EditSecurUserbyID(ABP.UserID);
             List<int> list = new List<int>();
             list.Add(4);
             list.Add(12);
@@ -45,9 +44,7 @@ namespace Funeral.Web.Admin
         }
         public void BindDashbordDetails()
         {
-
-            ApplicationSettingsModel modelCompany;
-            modelCompany = client.GetApplictionByParlourID(ABP.ParlourId);
+            ApplicationSettingsModel modelCompany = ToolsSetingBAL.GetApplictionByParlourID(ABP.ParlourId);
             if (modelCompany != null)
             {
                 if (modelCompany.ApplicationLogo != null)

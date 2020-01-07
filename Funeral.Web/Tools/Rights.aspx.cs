@@ -1,4 +1,5 @@
-﻿using Funeral.Model;
+﻿using Funeral.BAL;
+using Funeral.Model;
 using Funeral.Web.App_Start;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,6 @@ namespace Funeral.Web.Tools
 {
     public partial class Rights : AdminBasePage
     {
-        readonly FuneralServiceReference.FuneralServicesClient _client = new FuneralServiceReference.FuneralServicesClient();
-
         #region Page PreInit
         protected void Page_PreInit(object sender, EventArgs e)
         {
@@ -31,8 +30,7 @@ namespace Funeral.Web.Tools
         }
         public void LoadDropdownGroupData()
         {
-            List<SecureGroupModel> data = _client.GetSecureGrouList().ToList()
-                .Where(sg => sg.pkiSecureGroupID != 12 && sg.pkiSecureGroupID != 4).ToList();
+            List<SecureGroupModel> data = ToolsSetingBAL.GetSecureGrouList().Where(sg => sg.pkiSecureGroupID != 12 && sg.pkiSecureGroupID != 4).ToList();
             ddlGroupId.DataSource = data;
             ddlGroupId.DataTextField = "sSecureGroupName";
             ddlGroupId.DataValueField = "pkiSecureGroupID";
@@ -53,7 +51,7 @@ namespace Funeral.Web.Tools
         {
             if (!string.IsNullOrEmpty(ddlGroupId.SelectedItem.Value))
             {
-                List<NewRightsModel> model = _client.GetRightsByGroupId(ParlourId, Convert.ToInt32(ddlGroupId.SelectedItem.Value)).OrderBy(x=>x.PageName).ToList();
+                List<NewRightsModel> model = RightsBAL.GetRightsByGroupId(ParlourId, Convert.ToInt32(ddlGroupId.SelectedItem.Value)).OrderBy(x=>x.PageName).ToList();
                 //List<tblPageModel> model = client.GetAllActiveTblPages().ToList();
                 if (!model.Any()) return;
                 bntSubmintData.Enabled = true;
@@ -84,7 +82,7 @@ namespace Funeral.Web.Tools
                     rightsModel.IsReversalPayment = Convert.ToBoolean((row.FindControl("chkIsPaymentReversal") as CheckBox).Checked);
                     
                     rightsModel.ParlourId = ParlourId;
-                    _client.SaveTblRights(rightsModel);
+                    RightsBAL.SaveTblRights(rightsModel);
                 }
                 catch { }
             }

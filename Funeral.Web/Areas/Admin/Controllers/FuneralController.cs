@@ -18,7 +18,6 @@ namespace Funeral.Web.Areas.Admin.Controllers
     public class FuneralController : BaseAdminController
     {
 
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
 
         /// <summary>
         /// Base of Page which allow to access the page
@@ -196,7 +195,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
         [PageRightsAttribute(CurrentPageId = 10, Right = new isPageRight[] { isPageRight.HasDelete })]
         public JsonResult Delete(int ID)
         {
-            int quotationID = client.FuneralDelete(ID, UserName);
+            int quotationID = FuneralBAL.FuneralDelete(ID, UserName);
             var result = new ResponseResult() { Error = null, Message = "Deleted Successfully.", StatusCode = (int)Enum.Parse(typeof(System.Net.HttpStatusCode), System.Net.HttpStatusCode.OK.ToString()) };
             return Json(result, JsonRequestBehavior.AllowGet);
         }

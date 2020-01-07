@@ -6,7 +6,6 @@ using Funeral.Web.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using System.Web.UI.WebControls;
@@ -15,9 +14,6 @@ namespace Funeral.Web.Areas.Tools.Controllers
 {
     public class FuneralServicesController : BaseAdminController
     {
-
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
-
         public FuneralServicesController() : base(15)
         {
             ViewBag.VendorName = BindVenderName();
@@ -47,7 +43,7 @@ namespace Funeral.Web.Areas.Tools.Controllers
 
             List<ListItem> liList = new List<ListItem>();
 
-            VendorModel[] obVendorNameModel = client.GetVendorNameByParlourId(ParlourId);
+            List<VendorModel> obVendorNameModel = ToolsSetingBAL.GetVendorNameByParlourId(ParlourId);
 
             foreach (VendorModel FuneralService in obVendorNameModel)
             {
@@ -93,7 +89,7 @@ namespace Funeral.Web.Areas.Tools.Controllers
 
             try
             {
-                List<FuneralServiceManageModel> FuneralServicesList = client.SelectFuneralManageServiceByParlID(ParlourId, search.PageSize, search.PageNum, search.SarchText, search.SortBy, search.SortOrder).ToList();
+                List<FuneralServiceManageModel> FuneralServicesList = ToolsSetingBAL.SelectFuneralManageServiceByParlID(ParlourId, search.PageSize, search.PageNum, search.SarchText, search.SortBy, search.SortOrder).ToList();
 
                 return Json(new SearchResult<Model.Search.BaseSearch, FuneralServiceManageModel>(search, FuneralServicesList, o => o.ServiceName.Contains(search.SarchText)));
             }
@@ -115,7 +111,7 @@ namespace Funeral.Web.Areas.Tools.Controllers
         [PageRightsAttribute(CurrentPageId = 15, Right = new isPageRight[] { isPageRight.HasEdit })]
         public PartialViewResult Edit(int ID)
         {
-            var FuneralServices = client.SelectFuneralManageServiceByParlANdID(ID, ParlourId);
+            var FuneralServices = ToolsSetingBAL.SelectFuneralManageServiceByParlANdID(ID, ParlourId);
             FuneralServices.CostOfSale = Convert.ToDecimal(FuneralServices.CostOfSale.ToString("0.00"));
             FuneralServices.ServiceCost = Convert.ToDecimal(FuneralServices.ServiceCost.ToString("0.00"));
             return PartialView("~/Areas/Tools/Views/FuneralServices/_FuneralServicesAddEdit.cshtml", FuneralServices);
@@ -135,7 +131,7 @@ namespace Funeral.Web.Areas.Tools.Controllers
                     FuneralServices.LastModified = System.DateTime.Now;
                     FuneralServices.ModifiedUser = formIdentity.Name;
 
-                    var agentInfoSetupData = client.SaveFuneralManageService(FuneralServices);
+                    var agentInfoSetupData = ToolsSetingBAL.SaveFuneralManageService(FuneralServices);
 
                     TempData["IsFuneralServicesSaved"] = true;
                     TempData.Keep("IsFuneralServicesSaved");

@@ -75,7 +75,13 @@ namespace Funeral.BAL
             DataTable dr = FuneralPackageDAL.SelectPackageServiceByPackgeAndServiceddt(parlourId, packageId);
             return FuneralHelper.DataTableMapToList<Service>(dr);
         }
-
-
+        public static List<PackageServicesSelectionModel> GetPackageService(Guid parlourId, string PackageName)
+        {
+            return FuneralPackageBAL.SelectPackageService(parlourId, PackageName);
+        }
+        public static List<PackageServiceModel> GetAllPackage(Guid parlourId)
+        {
+            return FuneralPackageBAL.SelectPackage(parlourId);
+        }
     }
 }

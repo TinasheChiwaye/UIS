@@ -75,7 +75,7 @@ new SelectListItem() {Text = "Other", Value="Other"}
     }
     <script type="text/javascript">
         jQuery(document).ready(function () {
-            $('#txtPaymentDate').datepicker({ format: 'dd MM yyyy' })
+            $('#txtPaymentDate').datepicker({ format: 'dd MM yyyy',autoclose: true,setDate: new Date()  })
             // $("#txtPaymentDate").datepicker("update");
             var form = jQuery("#GroupPaymentAddEditform");
             form.validate();

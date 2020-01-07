@@ -17,7 +17,6 @@ namespace Funeral.Web.Tools
     public partial class AddonProductSetup : AdminBasePage
     {
         #region Page Property
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
         public Guid ProductID
         {
             get
@@ -74,13 +73,13 @@ namespace Funeral.Web.Tools
 
         public void BindAddonProductList()
         {
-            AddonProductsModal[] model = client.GetAllAddonProductes(ParlourId);
+            List<AddonProductsModal> model = ToolsSetingBAL.GetAllAddonProductes(ParlourId);
             gvAddones.DataSource = model;
             gvAddones.DataBind();
         }
         public void BindAddonProductToUpdate()
         {
-            AddonProductsModal model = client.EditAddonProductbyID(ProductID, ParlourId);
+            AddonProductsModal model = ToolsSetingBAL.EditAddonProductbyID(ProductID, ParlourId);
             if (model == null)
             {
                 Response.Write("<script>alert('Sorry!you are not authorized to perform edit on this Branch.');</script>");
@@ -130,7 +129,7 @@ namespace Funeral.Web.Tools
             {
 
                 AddonProductsModal model;
-                model = client.GetAddonProductByID(txtAddonName.Text, ParlourId);
+                model = ToolsSetingBAL.GetAddonProductByID(txtAddonName.Text, ParlourId);
                 if (model != null && ProductID == new Guid("00000000-0000-0000-0000-000000000000"))
                 {
                     ShowMessage(ref lblMessage, MessageType.Danger, "Addon Product Already Exists.");
@@ -158,7 +157,7 @@ namespace Funeral.Web.Tools
 
 
                     //================================================================ 
-                    Guid retID = client.SaveAddonProductDetails(model);
+                    Guid retID = ToolsSetingBAL.SaveAddonProductDetails(model);
                     ProductID = retID;
 
                     ShowMessage(ref lblMessage, MessageType.Success, "Addon Product Details successfully saved");
@@ -194,7 +193,7 @@ namespace Funeral.Web.Tools
                 Guid SBranchId = new Guid(e.CommandArgument.ToString());
                 try
                 {
-                    int retID = client.DeleteAddonProduct(SBranchId);
+                    int retID = ToolsSetingBAL.DeleteAddonProduct(SBranchId);
                     ShowMessage(ref lblMessage, MessageType.Success, "Record deleted successfully.");
                     lblMessage.Visible = true;
                     BindAddonProductList();

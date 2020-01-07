@@ -603,6 +603,13 @@ namespace Funeral.DAL
             return DbConnection.GetDataReader(CommandType.StoredProcedure, "GetAllSocietyes", ObjParam);
         }
 
+        public static DataTable GetAllSocietye_PaymentList(Guid ParlourId)
+        {
+            DbParameter[] ObjParam = new DbParameter[1];
+
+            ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "SchemeSummary", ObjParam);
+        }
         public static DataTable GetAllSocietyesdt(Guid ParlourId)
         {
             DbParameter[] ObjParam = new DbParameter[1];
@@ -1244,6 +1251,12 @@ namespace Funeral.DAL
             ObjParam[1] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetSuperUserAccessByID", ObjParam);
         }
+        public static DataTable GetSuperUserAccessByUserId(int ID)
+        {
+            DbParameter[] ObjParam = new DbParameter[1];
+            ObjParam[0] = new DbParameter("@ID", DbParameter.DbType.Int, 0, ID);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetSuperUserAccessByUserId", ObjParam);
+        }
 
         public static SqlDataReader GetAllPlansList(Guid ParlourId)
         {
@@ -1297,14 +1310,40 @@ namespace Funeral.DAL
             ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetAllSocietyesList", ObjParam);
         }
-        public static DataTable GetDashboardLableDetails(Guid ParlourId,bool IsAdministrator, bool IsSuperUser,string UserName)
+        public static DataTable GetDashboardLableDetails(Guid ParlourId, bool IsAdministrator, bool IsSuperUser, string UserName)
         {
             DbParameter[] ObjParam = new DbParameter[4];
-            ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);            
+            ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
             ObjParam[1] = new DbParameter("@IsAdmin", DbParameter.DbType.Bit, 0, IsAdministrator);
             ObjParam[2] = new DbParameter("@IsSuperUser", DbParameter.DbType.Bit, 0, IsSuperUser);
             ObjParam[3] = new DbParameter("@UserName", DbParameter.DbType.NVarChar, 0, UserName);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetDashboardTodayPayment", ObjParam);
         }
+        public static DataTable GetClaimRightsCollectionByRoleId(int RoleId)
+        {
+            DbParameter[] ObjParam = new DbParameter[1];
+            ObjParam[0] = new DbParameter("@RoleID", DbParameter.DbType.Int, 0, RoleId);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetClaimRightsByRoleId", ObjParam);
+        }
+        public static int SaveClaimRights(ClaimRightsList model)
+        {
+            string query = "SaveClaimRightsWorkflow";
+            DbParameter[] ObjParam = new DbParameter[3];
+            ObjParam[0] = new DbParameter("@ClaimStatusId", DbParameter.DbType.Int, 0, model.ClaimStatusId);
+            ObjParam[1] = new DbParameter("@RoleId", DbParameter.DbType.Int, 0, model.RoleId);
+            ObjParam[2] = new DbParameter("@CreatedBy", DbParameter.DbType.NVarChar, 0, model.CreatedBy);
+            return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
+
+        }
+        public static int DeleteClaimRights(int RoleId, string CreatedBy)
+        {
+            string query = "DeleteClaimRightsWorkflow";
+            DbParameter[] ObjParam = new DbParameter[2];
+            ObjParam[0] = new DbParameter("@RoleId", DbParameter.DbType.Int, 0, RoleId);
+            ObjParam[1] = new DbParameter("@CreatedBy", DbParameter.DbType.NVarChar, 0, CreatedBy);
+            return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
+
+        }
+
     }
 }

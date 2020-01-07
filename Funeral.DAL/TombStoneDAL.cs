@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Funeral.Model;
+using System;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Funeral.Model;
 
 namespace Funeral.DAL
 {
     public sealed class TombStoneDAL
     {
-        private TombStoneDAL() 
+        private TombStoneDAL()
         {
         }
 
@@ -58,28 +54,28 @@ namespace Funeral.DAL
             ObjParam[2] = new DbParameter("@FirstName", DbParameter.DbType.NVarChar, 0, model.FirstName);
             ObjParam[3] = new DbParameter("@IDNumber", DbParameter.DbType.NVarChar, 0, model.IDNumber);
             ObjParam[4] = new DbParameter("@DateOfApplication", DbParameter.DbType.DateTime, 0, model.DateOfApplication);
-            ObjParam[5] = new DbParameter("@Address1", DbParameter.DbType.NVarChar, 0, model.Address1);
-            ObjParam[6] = new DbParameter("@Address2", DbParameter.DbType.NVarChar, 0, model.Address2);
-            ObjParam[7] = new DbParameter("@Address3", DbParameter.DbType.NVarChar, 0, model.Address3);
+            ObjParam[5] = new DbParameter("@Address1", DbParameter.DbType.NVarChar, 0, (model.Address1 == null ? "" : model.Address1));
+            ObjParam[6] = new DbParameter("@Address2", DbParameter.DbType.NVarChar, 0, (model.Address2 == null ? "" : model.Address2));
+            ObjParam[7] = new DbParameter("@Address3", DbParameter.DbType.NVarChar, 0, (model.Address3 == null ? "" : model.Address3));
             ObjParam[8] = new DbParameter("@Code", DbParameter.DbType.NVarChar, 0, model.Code);
-            ObjParam[9] = new DbParameter("@TelNumber", DbParameter.DbType.NVarChar, 0, model.TelNumber);
-            ObjParam[10] = new DbParameter("@CellNumber", DbParameter.DbType.NVarChar, 0,model.CellNumber);
+            ObjParam[9] = new DbParameter("@TelNumber", DbParameter.DbType.NVarChar, 0, (model.TelNumber == null ? "" : model.TelNumber));
+            ObjParam[10] = new DbParameter("@CellNumber", DbParameter.DbType.NVarChar, 0, (model.CellNumber == null ? "" : model.CellNumber));
             ObjParam[11] = new DbParameter("@DeceasedLastName", DbParameter.DbType.NVarChar, 0, model.DeceasedLastName);
             ObjParam[12] = new DbParameter("@DeceasedFirstName", DbParameter.DbType.NVarChar, 0, model.DeceasedFirstName);
             ObjParam[13] = new DbParameter("@DeceasedIDNumber", DbParameter.DbType.NVarChar, 0, model.DeceasedIDNumber);
             ObjParam[14] = new DbParameter("@Deceased", DbParameter.DbType.NVarChar, 0, model.Deceased);
             ObjParam[15] = new DbParameter("@DateOFMemorial", DbParameter.DbType.DateTime, 0, model.DateOFMemorial);
-            ObjParam[16] = new DbParameter("@CemeterOrCrematorium", DbParameter.DbType.NVarChar, 0, model.CemeterOrCrematorium);
-            ObjParam[17] = new DbParameter("@GraveNo", DbParameter.DbType.NVarChar, 0, model.GraveNo);
+            ObjParam[16] = new DbParameter("@CemeterOrCrematorium", DbParameter.DbType.NVarChar, 0, (model.CemeterOrCrematorium == null ? "" : model.CemeterOrCrematorium));
+            ObjParam[17] = new DbParameter("@GraveNo", DbParameter.DbType.NVarChar, 0, (model.GraveNo == null ? "" : model.GraveNo));
             ObjParam[18] = new DbParameter("@Erect", DbParameter.DbType.NVarChar, 0, model.Erect);
-            ObjParam[19] = new DbParameter("@TombStoneMessage", DbParameter.DbType.NVarChar, 0, model.TombStoneMessage);
-            ObjParam[20] = new DbParameter("@Notes", DbParameter.DbType.NVarChar, 0, model.Notes);
+            ObjParam[19] = new DbParameter("@TombStoneMessage", DbParameter.DbType.NVarChar, 0, (model.TombStoneMessage == null ? "" : model.TombStoneMessage));
+            ObjParam[20] = new DbParameter("@Notes", DbParameter.DbType.NVarChar, 0, (model.Notes == null ? "" : model.Notes));
             ObjParam[21] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, model.parlourid);
             ObjParam[22] = new DbParameter("@ModifiedUser", DbParameter.DbType.NVarChar, 0, model.ModifiedUser);
             ObjParam[23] = new DbParameter("@InvoiceNumber", DbParameter.DbType.NVarChar, 0, model.InvoiceNumber);
 
-            ObjParam[24] = new DbParameter("@ContactPerson", DbParameter.DbType.NVarChar, 0, model.ContactPerson);
-            ObjParam[25] = new DbParameter("@ContactPersonNumber", DbParameter.DbType.NVarChar, 0, model.ContactPersonNumber);
+            ObjParam[24] = new DbParameter("@ContactPerson", DbParameter.DbType.NVarChar, 0, (model.ContactPerson == null ? "" : model.ContactPerson));
+            ObjParam[25] = new DbParameter("@ContactPersonNumber", DbParameter.DbType.NVarChar, 0, (model.ContactPersonNumber == null ? "" : model.ContactPersonNumber));
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
         }
 
@@ -99,7 +95,7 @@ namespace Funeral.DAL
 
             return DbConnection.GetDataReader(CommandType.StoredProcedure, "SelectTombStoneByParlAndPki", ObjParam);
         }
-        public static DataTable  SelectTombStoneByParlAndPkidt(int pkiTombstoneID, Guid ParlourId)
+        public static DataTable SelectTombStoneByParlAndPkidt(int pkiTombstoneID, Guid ParlourId)
         {
             DbParameter[] ObjParam = new DbParameter[2];
             ObjParam[0] = new DbParameter("@pkiTombstoneID", DbParameter.DbType.Int, 0, pkiTombstoneID);
@@ -138,7 +134,7 @@ namespace Funeral.DAL
             ObjParam[0] = new DbParameter("@fkiTombstoneID", DbParameter.DbType.Int, 0, fkiTombstoneID);
             return (DbConnection.GetDataReader(CommandType.StoredProcedure, "SelectServiceByTombStoneID", ObjParam));
         }
-        public static DataTable  SelectServiceByTombStoneIDdt(int fkiTombstoneID)
+        public static DataTable SelectServiceByTombStoneIDdt(int fkiTombstoneID)
         {
             DbParameter[] ObjParam = new DbParameter[1];
             ObjParam[0] = new DbParameter("@fkiTombstoneID", DbParameter.DbType.Int, 0, fkiTombstoneID);
@@ -190,7 +186,7 @@ namespace Funeral.DAL
             ObjParam[0] = new DbParameter("@pkiTombstoneID", DbParameter.DbType.Int, 0, pkiTombstoneID);
             ObjParam[1] = new DbParameter("@DisCount", DbParameter.DbType.Decimal, 0, DisCount);
             ObjParam[2] = new DbParameter("@Tax", DbParameter.DbType.Money, 0, Tax);
-            
+
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.Text, query, ObjParam));
         }
 

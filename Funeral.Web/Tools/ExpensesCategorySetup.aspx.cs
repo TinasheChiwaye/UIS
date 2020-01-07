@@ -17,7 +17,6 @@ namespace Funeral.Web.Tools
     public partial class ExpensesCategorySetup : AdminBasePage
     {
         #region Page Property
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
         public int ExpensesID
         {
             get
@@ -74,13 +73,13 @@ namespace Funeral.Web.Tools
 
         public void BindExpensesList()
         {
-            ExpensesModel[] model = client.GetAllExpenseses(ParlourId);
+            List<ExpensesModel> model = ToolsSetingBAL.GetAllExpenseses(ParlourId);
             gvExpenses.DataSource = model;
             gvExpenses.DataBind();
         }
         public void BindExpensesToUpdate()
         {
-            ExpensesModel model = client.EditExpensesbyID(ExpensesID, ParlourId);
+            ExpensesModel model = ToolsSetingBAL.EditExpensesbyID(ExpensesID, ParlourId);
             if (model == null)
             {
                 Response.Write("<script>alert('Sorry!you are not authorized to perform edit on this Branch.');</script>");
@@ -114,7 +113,7 @@ namespace Funeral.Web.Tools
             {
 
                 ExpensesModel model;
-                model = client.GetExpensesByID(txtExpensesName.Text, ParlourId);
+                model = ToolsSetingBAL.GetExpensesByID(txtExpensesName.Text, ParlourId);
                 if (model != null && ExpensesID == 0)
                 {
                     ShowMessage(ref lblMessage, MessageType.Danger, "Expenses Category Already Exists.");
@@ -130,7 +129,7 @@ namespace Funeral.Web.Tools
 
 
                     //================================================================ 
-                    int retID = client.SaveExpensesDetails(model);
+                    int retID = ToolsSetingBAL.SaveExpensesDetails(model);
                     ExpensesID = retID;
 
                     ShowMessage(ref lblMessage, MessageType.Success, "Expenses Category Details successfully saved");
@@ -165,7 +164,7 @@ namespace Funeral.Web.Tools
                 int SBranchId = Convert.ToInt32(e.CommandArgument);
                 try
                 {
-                    int retID = client.DeleteExpenses(SBranchId);
+                    int retID = ToolsSetingBAL.DeleteExpenses(SBranchId);
                     ShowMessage(ref lblMessage, MessageType.Success, "Record deleted successfully.");
                     lblMessage.Visible = true;
                     BindExpensesList();

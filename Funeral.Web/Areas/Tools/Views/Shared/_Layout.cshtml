@@ -11,7 +11,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <link href="~/Content/animate.css" rel="stylesheet" />
     <link href="~/Content/style.css" rel="stylesheet" />
@@ -156,7 +156,7 @@
                     else
                     {
                         List<Funeral.Model.tblPageModel>
-                            RightsModels = ((Funeral.Model.tblPageModel[])Session["SessionVariablesClass"]).ToList();
+                            RightsModels = Session["SessionVariablesClass"] as List<Funeral.Model.tblPageModel>; 
                         foreach (var item in RightsModels.Where(x => x.MenuLevel == 0 && x.IsMenu).OrderBy(x => x.MenuOrder).ToList())
                         {
                             if (item.MVCURL == "#")

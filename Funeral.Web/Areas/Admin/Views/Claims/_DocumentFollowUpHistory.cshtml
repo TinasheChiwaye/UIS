@@ -1,0 +1,40 @@
+﻿@model List<Funeral.Model.ClaimFollowUp>
+
+<div class="modal fade" id="dvChangeStatusModel" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
+                <h4 class="modal-title">Document FollowUp History</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                      <table class="fixed_header fixed_header-bordered" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Comment</th>
+                                    <th>commented By</th>
+                                    <th>commented Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td style="white-space: pre-line">@item.Comment</td>
+                                            <td>@item.CreatedBy</td>
+                                            <td>@item.CreatedDate.ToString("dd MMM yyyy hh:mm tt")</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

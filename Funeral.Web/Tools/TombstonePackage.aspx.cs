@@ -1,4 +1,5 @@
-﻿using Funeral.Model;
+﻿using Funeral.BAL;
+using Funeral.Model;
 using Funeral.Web.App_Start;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,6 @@ namespace Funeral.Web.Tools
     public partial class TombstonePackage : AdminBasePage
     {
         #region Fields
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
         private int PackageId
         {
             get
@@ -54,7 +54,7 @@ namespace Funeral.Web.Tools
 
         private void BindFuneralServiceList()
         {
-            QuotationServicesModel[] objQuoSer = client.GetAllQuotationServices(ParlourId);
+            List<QuotationServicesModel> objQuoSer = QuotationBAL.GetAllQuotationServices(ParlourId);
             ddlServices.DataTextField = "ServiceName";
             ddlServices.DataValueField = "pkiServiceID";
             ddlServices.DataSource = objQuoSer;
@@ -64,7 +64,7 @@ namespace Funeral.Web.Tools
 
         private void GetPackageList()
         {
-            gvPackageList.DataSource = client.GetTombstoneAllPackage(this.ParlourId);
+            gvPackageList.DataSource = TombstonePackageBAL.SelectAllPackage(this.ParlourId);
             gvPackageList.DataBind();
         }
 
@@ -80,7 +80,7 @@ namespace Funeral.Web.Tools
             }
             else
             {
-                client.DeleteTombstonePackage(Convert.ToInt32(e.CommandArgument));
+                TombstonePackageBAL.DeleteTombstonePackage(Convert.ToInt32(e.CommandArgument));
                 GetPackageList();
             }
         }
@@ -89,7 +89,7 @@ namespace Funeral.Web.Tools
 
         private void BindSelectedService()
         {
-            gvPackageService.DataSource = client.GetTombstonePackageServiceByPackgeId(this.ParlourId, this.PackageId);
+            gvPackageService.DataSource = TombstonePackageBAL.SelectPackageServiceByPackgeId(this.ParlourId, this.PackageId);
             gvPackageService.DataBind();
         }
 
@@ -97,7 +97,7 @@ namespace Funeral.Web.Tools
         {
             if (e.CommandName == "DeleteService")
             {
-                client.DeleteTombstonePackageService(Convert.ToInt32(e.CommandArgument));
+                TombstonePackageBAL.DeletePackageService(Convert.ToInt32(e.CommandArgument));
                 BindSelectedService();
             }
         }
@@ -115,7 +115,7 @@ namespace Funeral.Web.Tools
             model.ModifiedUser = this.UserName;
             model.ParlourId = this.ParlourId;
             model.IsActive = true;
-            this.PackageId = client.SaveTombstonePackage(model);
+            this.PackageId = TombstonePackageBAL.SavePackage(model);
             GetPackageList();
             btnAddService.Visible = true;
             btnAddService_Click(null, null);
@@ -129,7 +129,7 @@ namespace Funeral.Web.Tools
             model.ParlourId = this.ParlourId;
             model.fkiPackageID = this.PackageId;
             model.fkiServiceID = Convert.ToInt32(ddlServices.SelectedValue);
-            client.SaveTombstonePackageService(model);
+            TombstonePackageBAL.SavePackageService(model);
             BindSelectedService();
         }
     }

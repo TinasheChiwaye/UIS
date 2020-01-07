@@ -31,9 +31,6 @@ namespace Funeral.Web.Tools
                 ViewState["_ID"] = value;
             }
         }
-
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
-
         #endregion
 
         #region Page PreInit
@@ -75,7 +72,7 @@ namespace Funeral.Web.Tools
 
         public void BindTempletList()
         {
-            smsTempletModel[] ModelTemplet = client.GetTemplateList(ParlourId);
+            List<smsTempletModel> ModelTemplet = ToolsSetingBAL.GetTemplateList(ParlourId);
             ddlTemplate.DataSource = ModelTemplet;
             ddlTemplate.DataValueField = "ID";
             ddlTemplate.DataTextField = "Name";
@@ -107,7 +104,7 @@ namespace Funeral.Web.Tools
                         _EmailTemplate.smsText = txtMessage.Text;
                         _EmailTemplate.ModifiedUser = UserName;
 
-                        int retID = client.UpdatesmsTemplate(_EmailTemplate);
+                        int retID = ToolsSetingBAL.UpdatesmsTemplate(_EmailTemplate);
 
                         if (retID > 0)
                         {
@@ -137,7 +134,7 @@ namespace Funeral.Web.Tools
         protected void ddlTemplate_SelectedIndexChanged(object sender, EventArgs e)
         {
             ID = Convert.ToInt32(ddlTemplate.SelectedItem.Value);
-            smsTempletModel ObjList = client.GetEmailTemplateByID(ID,ParlourId);
+            smsTempletModel ObjList = ToolsSetingBAL.GetEmailTemplateByID(ID,ParlourId);
             ID = 0;
             txtMessage.Text = string.Empty;
             if (ObjList != null)

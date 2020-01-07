@@ -141,7 +141,7 @@
                             </div>
                         </li>
                         <li>
-                            <a href="<%=ResolveUrl("~/Admin/Dashboard.aspx")%>"><i class="fa fa-th-large"></i><span class="nav-label">Dashboard</span></a>
+                            <a href="<%=ResolveUrl("~/Admin/Dashboard/Index")%>"><i class="fa fa-th-large"></i><span class="nav-label">Dashboard</span></a>
                         </li>
                         <%if (Session["SessionVariablesClass"] == null)
                             {
@@ -149,7 +149,7 @@
                             }
                             else
                             {
-                                List<Funeral.Model.tblPageModel> RightsModels = ((Funeral.Model.tblPageModel[])Session["SessionVariablesClass"]).ToList();
+                                List<Funeral.Model.tblPageModel> RightsModels = Session["SessionVariablesClass"] as List<Funeral.Model.tblPageModel>; ;
                                 foreach (var item in RightsModels.Where(x => x.MenuLevel == 0 && x.IsMenu).OrderBy(x => x.MenuOrder).ToList())
                                 {
                                     if (item.MVCURL == "#")

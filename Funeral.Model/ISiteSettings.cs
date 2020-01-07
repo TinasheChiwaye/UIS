@@ -12,5 +12,6 @@ namespace Funeral.Model
         string SSRSPassword { get; }
         string SSRSDomain { get; }
         string SSRSUrl { get; }
+        string SSRSFolderName { get; }
     }
 }

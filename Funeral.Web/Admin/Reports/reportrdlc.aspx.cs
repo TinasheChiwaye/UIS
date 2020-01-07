@@ -1,4 +1,5 @@
 ﻿using ClosedXML.Excel;
+using Funeral.BAL;
 using Funeral.Model;
 using Funeral.Web.App_Start;
 using Microsoft.Reporting.WebForms;
@@ -21,8 +22,6 @@ namespace Funeral.Web.Admin.Reports
 
     public partial class reportrdlc : AdminBasePage
     {
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
-
         #region Properties
         string ReportName
         {
@@ -1069,7 +1068,6 @@ namespace Funeral.Web.Admin.Reports
         protected void btnReminder_Click(object sender, EventArgs e)
         {
             lblMassageChk1.Text = string.Empty;
-            FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
             SendReminderModel objPayment = new SendReminderModel();
             int SuccessCount = 0;
             int FailedCount = 0;
@@ -1091,7 +1089,7 @@ namespace Funeral.Web.Admin.Reports
                         objPayment.MemeberToNumber = Convert.ToInt64(item.Cells[6].Text.Replace(" ", ""));
                     objPayment.parlourid = ParlourId;
 
-                    int SendOpration = client.InsertSendReminder(objPayment);
+                    int SendOpration = MemberPaymentBAL.InsertSendReminder(objPayment);
                     if (SendOpration != 0)
 
                         SuccessCount++;
@@ -1136,7 +1134,6 @@ namespace Funeral.Web.Admin.Reports
         protected void btnSendReminderDpndc_Click(object sender, EventArgs e)
         {
             lblMassageChk1.Text = string.Empty;
-            FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
             SendReminderModel objPayment = new SendReminderModel();
             int SuccessCount = 0;
             int FailedCount = 0;
@@ -1158,7 +1155,7 @@ namespace Funeral.Web.Admin.Reports
                         objPayment.MemeberToNumber = Convert.ToInt64(item.Cells[4].Text.Replace(" ", ""));
                     objPayment.parlourid = ParlourId;
 
-                    int SendOpration = client.InsertSendReminder(objPayment);
+                    int SendOpration = MemberPaymentBAL.InsertSendReminder(objPayment);
                     if (SendOpration != 0)
                         SuccessCount++;
                     FailedCount++;

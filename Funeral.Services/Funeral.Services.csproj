@@ -48,22 +48,13 @@
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.WindowsAzure.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.3.2.3\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.WindowsAzure.Storage, Version=9.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\WindowsAzure.Storage.9.1.1\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -91,6 +82,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="FuneralServices.svc" />
+    <Content Include="Properties\PublishProfiles\new.pubxml.user" />
+    <Content Include="Properties\PublishProfiles\uispolicy - FTP.pubxml.user" />
+    <Content Include="Properties\PublishProfiles\uispolicy - FTP1.pubxml.user" />
+    <Content Include="Properties\PublishProfiles\uispolicy - ReadOnly - FTP.pubxml.user" />
+    <Content Include="Properties\PublishProfiles\uispolicy - ReadOnly - FTP1.pubxml.user" />
+    <Content Include="Properties\PublishProfiles\uispolicy - Web Deploy.pubxml.user" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -108,9 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <None Include="Properties\PublishProfiles\local deployment.pubxml" />
     <None Include="Properties\PublishProfiles\new.pubxml" />
-    <None Include="Properties\PublishProfiles\ServiceLatest.pubxml" />
     <None Include="Properties\PublishProfiles\uispolicy - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\uispolicy - FTP1.pubxml" />
     <None Include="Properties\PublishProfiles\uispolicy - ReadOnly - FTP.pubxml" />
@@ -136,9 +131,6 @@
       <Project>{712492d7-52f0-4ab9-8433-42a9bc65d5f2}</Project>
       <Name>Funeral.Model</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

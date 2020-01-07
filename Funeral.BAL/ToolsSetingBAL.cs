@@ -1,12 +1,11 @@
-﻿using Funeral.DAL;
+﻿using ExcelDataReader;
+using Funeral.DAL;
 using Funeral.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Funeral.BAL
 {
@@ -171,6 +170,11 @@ namespace Funeral.BAL
         {
             DataTable dr = ToolsSetingDAL.GetAllSocietyesdt(ParlourId);
             return FuneralHelper.DataTableMapToList<SocietyModel>(dr);
+        }
+        public static List<GroupPaymentList> GetAllSocietyes_PaymentList(Guid ParlourId)
+        {
+            DataTable dr = ToolsSetingDAL.GetAllSocietye_PaymentList(ParlourId);
+            return FuneralHelper.DataTableMapToList<GroupPaymentList>(dr);
         }
         public static List<SocietyModel> GetAllSocietye(Guid ParlourId)
         {
@@ -387,6 +391,11 @@ namespace Funeral.BAL
             DataTable dr = ToolsSetingDAL.GetSuperUserAccessByIDdt(ID, ParlourId);
             return FuneralHelper.DataTableMapToList<SecureUserGroupsModel>(dr);
         }
+        public static List<SecureUserGroupsModel> GetSuperUserAccessByUserId(int ID)
+        {
+            DataTable dr = ToolsSetingDAL.GetSuperUserAccessByUserId(ID);
+            return FuneralHelper.DataTableMapToList<SecureUserGroupsModel>(dr);
+        }
 
 
 
@@ -402,9 +411,9 @@ namespace Funeral.BAL
             return null;
         }
 
-        public static ProgressStatus CheckProgressStatus(int ID,Guid ParlourId)
+        public static ProgressStatus CheckProgressStatus(int ID, Guid ParlourId)
         {
-            DataTable dr = ToolsSetingDAL.CheckProgressStatus(ID,ParlourId);
+            DataTable dr = ToolsSetingDAL.CheckProgressStatus(ID, ParlourId);
             return FuneralHelper.DataTableMapToList<ProgressStatus>(dr).FirstOrDefault();
 
         }
@@ -413,7 +422,63 @@ namespace Funeral.BAL
             DataTable dr = ToolsSetingDAL.GetVendorNameByParlourId(parlourid);
             return FuneralHelper.DataTableMapToList<VendorModel>(dr);
         }
+        public static List<string> ValidateExcelColumns(string filePath)
+        {
+            List<string> ColumnNameList = new List<string>();
+            int ColumCount = 0;
+            using (var stream = System.IO.File.Open(filePath, FileMode.Open, FileAccess.Read))
+            {
+                using (var reader = ExcelReaderFactory.CreateReader(stream))
+                {
+                    var result = reader.AsDataSet(new ExcelDataSetConfiguration()
+                    {
+                        ConfigureDataTable = (tableReader) => new ExcelDataTableConfiguration()
+                        {
+                            UseHeaderRow = true,
+                        }
+                    });
 
+                    var column = result.Tables[0].Columns;
+                    ColumCount = result.Tables[0].Columns.Count;
+                    int cnt = column.Count;
+                    for (int i = 0; i < cnt; i++)
+                    {
+                        ColumnNameList.Add(column[i].ColumnName);
+                    }
+                }
+            }
+            return ColumnNameList;
+        }
+        public static DataSet ReadExcel(string fileName, string fileExt)
+        {
+            using (var stream = File.Open(fileName, FileMode.Open, FileAccess.Read))
+            {
+                using (var reader = ExcelReaderFactory.CreateReader(stream))
+                {
+                    var result = reader.AsDataSet(new ExcelDataSetConfiguration()
+                    {
+                        ConfigureDataTable = (tableReader) => new ExcelDataTableConfiguration()
+                        {
+                            UseHeaderRow = true,
+                        }
+                    });
+                    return result;
+                }
+            }
+        }
+        public static List<ClaimRightsList> GetClaimRightsCollectionByRoleId(int RoleID)
+        {
+            DataTable dr = ToolsSetingDAL.GetClaimRightsCollectionByRoleId(RoleID);
+            return FuneralHelper.DataTableMapToList<ClaimRightsList>(dr);
+        }
+        public static int SaveClaimRights(ClaimRightsList model)
+        {
+            return ToolsSetingDAL.SaveClaimRights(model);
+        }
+        public static int DeleteClaimRights(int RoleId, string CreatedBy)
+        {
+            return ToolsSetingDAL.DeleteClaimRights(RoleId, CreatedBy);
+        }
 
     }
 }

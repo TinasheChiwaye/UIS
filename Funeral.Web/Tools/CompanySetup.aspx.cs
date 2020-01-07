@@ -6,6 +6,7 @@ using Funeral.Model;
 using Funeral.Web.App_Start;
 using Funeral.BAL;
 using System.IO;
+using System.Collections.Generic;
 
 namespace Funeral.Web.Tools
 {
@@ -13,7 +14,6 @@ namespace Funeral.Web.Tools
 	{
 
 		#region Page Property
-		FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
 		public int ApplicationID
 		{
 			get
@@ -128,7 +128,7 @@ namespace Funeral.Web.Tools
 			if (!Page.IsPostBack)
 			{
 				BindsmsGroupList();
-			    var model = client.GetSuperUserAccessByID(UserID, ParlourId).FirstOrDefault(x => x.fkiSecureGroupID == 12); ;
+			    var model = ToolsSetingBAL.GetSuperUserAccessByID(UserID, ParlourId).FirstOrDefault(x => x.fkiSecureGroupID == 12); ;
 				if (model != null)
 					BindAllApplicationDetails();
 				else
@@ -162,14 +162,13 @@ namespace Funeral.Web.Tools
 		public void BindAllApplicationDetails()
 		{
 			gvCompany.PageSize = PageSize;
-			ApplicationSettingsModel[] model = client.GetAllCompanys(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
+			List<ApplicationSettingsModel> model = ToolsSetingBAL.GetAllCompanys(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
 			gvCompany.DataSource = model;
 			gvCompany.DataBind();
 		}
 		public void BindsmsGroupList()
 		{
-			smsTempletModel[] model;
-			model = client.GetTemplateList(ParlourId);
+			List<smsTempletModel> model = ToolsSetingBAL.GetTemplateList(ParlourId);
 			if (model != null)
 			{
 				chksmsGroup.DataSource = model;
@@ -181,7 +180,7 @@ namespace Funeral.Web.Tools
 		public void BindApplicationToUpdate()
 		{
 			ApplicationSettingsModel modelCompany;
-			modelCompany = client.GetApplictionByID(ApplicationID);
+			modelCompany = ToolsSetingBAL.GetApplictionByID(ApplicationID);
 			if (modelCompany != null)
 			{
 				ApplicationID = modelCompany.pkiApplicationID;
@@ -226,7 +225,7 @@ namespace Funeral.Web.Tools
 				//{
 				//    lst.Selected = false;
 				//}
-				smsSendingGroupModel[] modelS = client.EditsmsGroupbyID(ApplicationID);
+				List<smsSendingGroupModel> modelS = ToolsSetingBAL.EditsmsGroupbyID(ApplicationID);
 				foreach (smsSendingGroupModel lstModel in modelS)
 				{
 
@@ -241,7 +240,7 @@ namespace Funeral.Web.Tools
 
 
 				BankingDetailSending Modelbank;
-				Modelbank = client.GetBankingByID(modelCompany.parlourid);
+				Modelbank = ToolsSetingBAL.GetBankingByID(modelCompany.parlourid);
 				if (Modelbank != null)
 				{
 					txtaccountholder.Text = Modelbank.AccountHolder;
@@ -252,7 +251,7 @@ namespace Funeral.Web.Tools
 					txtbranchcode.Text = Modelbank.Branchcode;
 				}
 				ApplicationTnCModel ModelTnc;
-				ModelTnc = client.SelectApplicationTermsAndCondition(modelCompany.parlourid);
+				ModelTnc = ToolsSetingBAL.SelectApplicationTermsAndCondition(modelCompany.parlourid);
 				if (ModelTnc != null)
 				{
 					txtTnC.Text = ModelTnc.TermsAndCondition;
@@ -269,7 +268,7 @@ namespace Funeral.Web.Tools
 		{
 			PaymentHistory.Visible = false;
 			ApplicationSettingsModel model;
-			model = client.GetApplictionByParlourID(ParlourId);
+			model = ToolsSetingBAL.GetApplictionByParlourID(ParlourId);
 			if (model != null)
 			{
 				ApplicationID = model.pkiApplicationID;
@@ -306,7 +305,7 @@ namespace Funeral.Web.Tools
 				}
 				
 
-				smsSendingGroupModel[] modelS = client.EditsmsGroupbyID(ApplicationID);
+				List<smsSendingGroupModel> modelS = ToolsSetingBAL.EditsmsGroupbyID(ApplicationID);
 				foreach (smsSendingGroupModel lstModel in modelS)
 				{
 
@@ -321,7 +320,7 @@ namespace Funeral.Web.Tools
 
 
 				BankingDetailSending Modelbank;
-				Modelbank = client.GetBankingByID(model.parlourid);
+				Modelbank = ToolsSetingBAL.GetBankingByID(model.parlourid);
 				if (Modelbank != null)
 				{
 					txtaccountholder.Text = Modelbank.AccountHolder;
@@ -334,7 +333,7 @@ namespace Funeral.Web.Tools
 				}
 
 				ApplicationTnCModel ModelTnc;
-				ModelTnc = client.SelectApplicationTermsAndCondition(model.parlourid);
+				ModelTnc = ToolsSetingBAL.SelectApplicationTermsAndCondition(model.parlourid);
 				if (ModelTnc != null)
 				{
 					txtTnC.Text = ModelTnc.TermsAndCondition;
@@ -528,7 +527,7 @@ namespace Funeral.Web.Tools
 				//=============
 				model.Currentparlourid = ParlourId;
 				//================================================================ 
-				model = client.SaveApplication(model);
+				model = ToolsSetingBAL.SaveApplication(model);
 				UploadImage(model.pkiApplicationID);
 				Guid retID = model.parlourid;
 				//=========================================================================
@@ -548,7 +547,7 @@ namespace Funeral.Web.Tools
 				if (PolicyNumber) { membernumber = "yes"; }
 				Adsmodel.GenerateMember = membernumber;
 
-				Adsmodel = client.SaveAdditionalApplication(Adsmodel);
+				Adsmodel = ToolsSetingBAL.SaveAdditionalApplication(Adsmodel);
 
 				// ==========================[ SMS Group Insert Delete ]===================================
 				int sguserID = 0;
@@ -563,7 +562,7 @@ namespace Funeral.Web.Tools
 						modelS.smstempletName = lst.Text;
 						modelS.LastModified = System.DateTime.Now;
 						modelS.ModifiedUser = UserName;
-						sguserID = client.SaveSmsGroupDetails(modelS);
+						sguserID = ToolsSetingBAL.SaveSmsGroupDetails(modelS);
 					}
 				}
 				//   ==========================[END SMS Group Insert Delete ]===================================
@@ -584,7 +583,7 @@ namespace Funeral.Web.Tools
 				Model.parlourid = retID;
 
 
-				Model = client.SaveBankingDetail(Model);
+				Model = ToolsSetingBAL.SaveBankingDetail(Model);
 
 				//   ==========================[END Banking Detail Insert Delete ]===================================
 				//================================[Insert Update Terms & Condition]===============================
@@ -598,7 +597,7 @@ namespace Funeral.Web.Tools
 				objtc.TermsAndConditionFuneral = txtTncFuneral.Text;
 				objtc.TermsAndConditionTombstone = txtTncTombstone.Text;
 				objtc.Declaration = txtPolicyDeclaration.Text;
-				int a = client.SaveTermsAndCondition(objtc);
+				int a = ToolsSetingBAL.SaveTermsAndCondition(objtc);
 
 		   
 
@@ -671,7 +670,7 @@ namespace Funeral.Web.Tools
 				int SApplicationID = Convert.ToInt32(e.CommandArgument);
 				try
 				{
-					int retID = client.DeleteCompany(SApplicationID);
+					int retID = ToolsSetingBAL.DeleteCompany(SApplicationID);
 					ShowMessage(ref lblMessage, MessageType.Success, "Record deleted successfully.");
 					lblMessage.Visible = true;
 					BindAllApplicationDetails();

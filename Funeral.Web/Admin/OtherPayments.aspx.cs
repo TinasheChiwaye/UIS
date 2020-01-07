@@ -1,4 +1,5 @@
-﻿using Funeral.Model;
+﻿using Funeral.BAL;
+using Funeral.Model;
 using Funeral.Web.App_Start;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,6 @@ namespace Funeral.Web.Admin
     {
 
         #region Page Property
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
         public int PageSize
         {
             get
@@ -116,7 +116,7 @@ namespace Funeral.Web.Admin
         public void BindMember()
         {
             gvMembers.PageSize = PageSize;
-            MembersPaymentViewModel model = client.GetAllPayentMembers(ParlourId, txtPolicyNo.Text, txtIDNo.Text, PageSize, PageNum, SortBy, SortOrder, "");
+            MembersPaymentViewModel model = MemberPaymentBAL.GetAllPayentMembers(ParlourId, txtPolicyNo.Text, txtIDNo.Text, PageSize, PageNum, SortBy, SortOrder, "");
             gvMembers.DataSource = model.MemberList;
             gvMembers.DataBind();
         }

@@ -1,4 +1,5 @@
-﻿using Funeral.Model;
+﻿using Funeral.BAL;
+using Funeral.Model;
 using Funeral.Web.App_Start;
 using Microsoft.Reporting.WebForms;
 using System;
@@ -6,10 +7,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
-using System.Net;
 using System.Net.Mail;
-using System.Net.Security;
-using System.Security.Cryptography.X509Certificates;
 using System.Web.UI.WebControls;
 
 namespace Funeral.Web.Admin.Reports
@@ -17,7 +15,6 @@ namespace Funeral.Web.Admin.Reports
     public partial class Reports : AdminBasePage
     {
         private readonly ISiteSettings _siteConfig = new SiteSettings();
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
         Guid CompanyId;
 
         #region Page PreInit
@@ -35,13 +32,13 @@ namespace Funeral.Web.Admin.Reports
                     btnExport.Enabled = this.HasReadRight;
                     ReportList();
                     BindCompanyList(ddlCompanyList, dvAdministrator);
-                    CompanyId = new Guid(ddlCompanyList.SelectedValue);
+                    CompanyId = ParlourId;
                     BindDdlBranch();
                     BindDdlSociety();
                     BindDdlAgent();
                     BindUnderWriterList();
                     BindCustomDetails();
-                    
+
                 }
                 catch (Exception ex)
                 {
@@ -65,7 +62,7 @@ namespace Funeral.Web.Admin.Reports
 
             rpw.ProcessingMode = ProcessingMode.Remote;
             rpw.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
-            rpw.ServerReport.ReportPath = "/Unplugg IT Solution BI Reporting/Unplugg IT Active Parlours";
+            rpw.ServerReport.ReportPath = "/"+ _siteConfig.SSRSFolderName+ "/Unplugg IT Active Parlours";
 
             //ArrayList reportParam = new ArrayList();
             //reportParam = ReportDefaultPatam();
@@ -109,7 +106,6 @@ namespace Funeral.Web.Admin.Reports
 
             //ssrsReportViewer1.ProcessingMode = ProcessingMode.Remote;
             //ssrsReportViewer1.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
-            //ssrsReportViewer1.ServerReport.ReportPath = "/Unplugg IT Solution BI Reporting/Monthly BI Stats";
             //ssrsReportViewer1.ServerReport.Refresh();
         }
         public void Test()
@@ -123,8 +119,7 @@ namespace Funeral.Web.Admin.Reports
 
             rpw.ProcessingMode = ProcessingMode.Remote;
             rpw.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
-            //rpw.ServerReport.ReportPath = "/Unplugg IT Solution BI Reporting/Unplugg IT Busy Days";
-            rpw.ServerReport.ReportPath = "/Unplugg IT Solution BI Reporting/" + ddlAdminReort.SelectedItem.Text;
+            rpw.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/" + ddlAdminReort.SelectedItem.Text;
 
             //
 
@@ -182,8 +177,7 @@ namespace Funeral.Web.Admin.Reports
         public void BindDdlBranch()
         {
             //var ParlourId= ddlCompanyList.SelectedItem;
-            FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
-            ddlBranch.DataSource = client.GetAllBranch(CompanyId);
+            ddlBranch.DataSource = ToolsSetingBAL.GetAllBranches(CompanyId);
             ddlBranch.DataBind();
             ddlBranch.Items.Insert(0, new ListItem("", ""));
             ddlBranch.Items.Insert(1, new ListItem("ALL", "ALL"));
@@ -201,8 +195,7 @@ namespace Funeral.Web.Admin.Reports
         }
         public void BindDdlSociety()
         {
-            FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
-            ddlSociety.DataSource = client.GetAllSociety(CompanyId);
+            ddlSociety.DataSource = ToolsSetingBAL.GetAllSocietye(CompanyId);
             ddlSociety.DataBind();
             ddlSociety.Items.Insert(0, new ListItem("", ""));
             ddlSociety.Items.Insert(1, new ListItem("ALL", "ALL"));
@@ -226,7 +219,7 @@ namespace Funeral.Web.Admin.Reports
                 ddlAgent.DataBind();
                 ddlAgent.Items.Insert(0, new ListItem("", ""));
                 ddlAgent.Items.Insert(1, new ListItem("ALL", "ALL"));
-                
+
             }
 
         }
@@ -267,8 +260,7 @@ namespace Funeral.Web.Admin.Reports
 
                 rpw.ProcessingMode = ProcessingMode.Remote;
                 rpw.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
-                //rpw.ServerReport.ReportPath = "/Unplugg IT Solution BI Reporting/Unplugg IT Busy Days //UIS All Members Report";
-                rpw.ServerReport.ReportPath = "/Unplugg IT Solution BI Reporting/" + hfAdminReport.Value;        
+                rpw.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/" + hfAdminReport.Value;
                 ReportParameterCollection reportParameters = new ReportParameterCollection();
                 if (!string.IsNullOrEmpty(txtDateFrom.Text))
                     reportParameters.Add(new ReportParameter("DateFrom", txtDateFrom.Text));
@@ -279,7 +271,7 @@ namespace Funeral.Web.Admin.Reports
                     if (!string.IsNullOrEmpty(ddlBranch.SelectedItem.Text))
                         reportParameters.Add(new ReportParameter("Branch", ddlBranch.SelectedItem.Text));
                 }
-                
+
                 if (!string.IsNullOrEmpty(ddlSociety.SelectedItem.Text))
                     reportParameters.Add(new ReportParameter("Society", ddlSociety.SelectedItem.Text));
                 if (!string.IsNullOrEmpty(ddlAgent.SelectedItem.Text))
@@ -300,7 +292,7 @@ namespace Funeral.Web.Admin.Reports
 
                 if (IsAdministrator == true)
                 {
-                    reportParameters.Add(new ReportParameter("Parlourid", ddlBranch.SelectedValue.ToString()));
+                    reportParameters.Add(new ReportParameter("Parlourid", ddlCompanyList.SelectedValue.ToString()));
                 }
                 else
                 {
@@ -325,7 +317,7 @@ namespace Funeral.Web.Admin.Reports
                 else
                     ExportTypeExtensions = "xls";
                 //
- 
+
                 byte[] bytes = rpw.ServerReport.Render(ExportTypeName, null, out mimeType, out encoding, out extension, out streamids, out warnings);
                 filename = string.Format("{0}.{1}", hfAdminReport.Value, ExportTypeExtensions);
                 //MailSend
@@ -365,9 +357,9 @@ namespace Funeral.Web.Admin.Reports
         #region Bind Custom Detailss
         private void BindCustomDetails()
         {
-            var custom1 = client.GetAllCustomDetailsByParlourId(this.CompanyId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom1));
-            var custom2 = client.GetAllCustomDetailsByParlourId(this.CompanyId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom2));
-            var custom3 = client.GetAllCustomDetailsByParlourId(this.CompanyId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom3));
+            var custom1 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(this.CompanyId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom1));
+            var custom2 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(this.CompanyId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom2));
+            var custom3 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(this.CompanyId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom3));
             ddlCustom1.DataSource = custom1;
             ddlCustom1.DataTextField = "Name";
             ddlCustom1.DataValueField = "Id";
@@ -390,5 +382,18 @@ namespace Funeral.Web.Admin.Reports
         #endregion
 
         #endregion
+
+        protected void ddlCompanyList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (IsPostBack)
+            {
+                CompanyId = new Guid(ddlCompanyList.SelectedValue);
+                BindDdlBranch();
+                BindDdlSociety();
+                BindDdlAgent();
+                BindUnderWriterList();
+                BindCustomDetails();
+            }
+        }
     }
 }

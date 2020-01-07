@@ -1,19 +1,14 @@
 ﻿using Funeral.BAL;
 using Funeral.Model;
+using Funeral.Web.App_Start;
+using Funeral.Web.Areas.Admin.Models.ViewModel;
+using Funeral.Web.Common;
+using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
-using System.Web.UI.WebControls;
-using System.Data;
-using Funeral.Web.Common;
-using Funeral.Web.UserControl;
-using Funeral.Web.Areas.Admin.Models.ViewModel;
-using System.Text;
-using Microsoft.Reporting.WebForms;
-using Funeral.Web.App_Start;
 using System.Globalization;
 using System.Threading;
+using System.Web.Mvc;
 
 namespace Funeral.Web.Areas.Admin.Controllers
 {
@@ -61,18 +56,25 @@ namespace Funeral.Web.Areas.Admin.Controllers
         {
             ViewBag.HasEditRight = HasEditRight;
             ViewBag.HasDeleteRight = HasDeleteRight;
-            Model.Search.BaseSearch search = new Model.Search.BaseSearch();
+            Model.Search.PaymentSearchNew search = new Model.Search.PaymentSearchNew();
             search.PageNum = 1;
             search.PageSize = 10;
             search.SarchText = string.Empty;
             search.SortBy = "";
             search.SortOrder = "Asc";
             search.TotalRecord = 0;
-            var searchResult = new SearchResult<Model.Search.BaseSearch, MembersPaymentModel>(search, new List<MembersPaymentModel>(), o => o.FullNames.Contains(search.SarchText));
+            var searchResult = new SearchResult<Model.Search.PaymentSearchNew, MembersPaymentModel>(search, new List<MembersPaymentModel>(), o => o.FullNames.Contains(search.SarchText));
             var pageCountEntries = GetEntriesCount();
             ViewBag.EntriesCount = pageCountEntries;
             var info = CultureInfo.InvariantCulture.Clone() as CultureInfo;
             info.NumberFormat.NumberDecimalSeparator = ".";
+
+            ViewBag.CompanyDropDisplay = false;
+            if (IsAdministrator)
+            {
+                ViewBag.CompanyDropDisplay = true;
+                ViewBag.CompanyList = ToolsSetingBAL.GetAllApplicationList(ParlourId, 1, 0);
+            }
 
             CultureInfo cInfo = new CultureInfo(info.ToString());
             cInfo.NumberFormat.NumberDecimalSeparator = ".";
@@ -81,27 +83,37 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
             return PartialView("~/Areas/Admin/Views/Payments/_PaymentList.cshtml", search);
         }
-        public ActionResult SearchData(Model.Search.BaseSearch search)
+        public ActionResult SearchData(Model.Search.PaymentSearchNew search)
         {
-            var searchResult = new SearchResult<Model.Search.BaseSearch, MembersPaymentModel>(search, new List<MembersPaymentModel>(), o => o.FullNames.Contains(search.SarchText) || o.IDNumber.Contains(search.SarchText) || o.MemeberNumber.Contains(search.SarchText));
+            var searchResult = new SearchResult<Model.Search.PaymentSearchNew, MembersPaymentModel>(search, new List<MembersPaymentModel>(), o => o.FullNames.Contains(search.SarchText) || o.IDNumber.Contains(search.SarchText) || o.MemeberNumber.Contains(search.SarchText) || o.PolicyStatus.Contains(search.SarchText));
             try
             {
-                var otherPayment = MemberPaymentBAL.GetAllPayentMembers(ParlourId, "", "", search.PageSize, search.PageNum, search.SortBy, search.SortOrder, "");
-                return Json(new SearchResult<Model.Search.BaseSearch, MembersPaymentModel>(search, otherPayment.MemberList, o => o.FullNames.Contains(search.SarchText) || o.IDNumber.Contains(search.SarchText) || o.MemeberNumber.Contains(search.SarchText)));
+                if (search.StatusId == Guid.Empty)
+                {
+                    var otherPayment = MemberPaymentBAL.GetAllPayentMembers(ParlourId, "", "", search.PageSize, search.PageNum, search.SortBy, search.SortOrder, "");
+                    return Json(new SearchResult<Model.Search.PaymentSearchNew, MembersPaymentModel>(search, otherPayment.MemberList, o => o.FullNames.Contains(search.SarchText) || o.IDNumber.Contains(search.SarchText) || o.MemeberNumber.Contains(search.SarchText) || o.PolicyStatus.Contains(search.SarchText)));
+                }
+                else
+                {
+                    var otherPayment = MemberPaymentBAL.GetAllPayentMembers(search.StatusId, "", "", search.PageSize, search.PageNum, search.SortBy, search.SortOrder, "");
+                    return Json(new SearchResult<Model.Search.PaymentSearchNew, MembersPaymentModel>(search, otherPayment.MemberList, o => o.FullNames.Contains(search.SarchText) || o.IDNumber.Contains(search.SarchText) || o.MemeberNumber.Contains(search.SarchText) || o.PolicyStatus.Contains(search.SarchText)));
+                }
+
+
             }
             catch (Exception ex)
             {
-                return Json(WebApiResult<Model.Search.BaseSearch, MembersPaymentModel>.Error(searchResult, ex));
+                return Json(WebApiResult<Model.Search.PaymentSearchNew, MembersPaymentModel>.Error(searchResult, ex));
             }
         }
         [HttpGet]
         [PageRightsAttribute(CurrentPageId = 34)]
         public ActionResult ManageMembersPayment(int id, Guid ParlourID)
         {
-            MembersPaymentDetailsModel model = MemberPaymentBAL.ReturnMemberPlanDetailsWithBalance(Convert.ToString(id), ParlourId);
-            model.Currency = Currency;
+            MembersPaymentDetailsModel model = MemberPaymentBAL.ReturnMemberPlanDetailsWithBalance(Convert.ToString(id), ParlourID);
             if (model != null)
             {
+                model.Currency = Currency;
                 if (model.PlanSubscription != null)
                 {
                     ViewBag.totalPremium = model.PlanSubscription;
@@ -118,16 +130,16 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 {
                     ViewBag.PolicyStatus = model.PolicyStatus;
                 }
-            }
-            var policyBalance = model.Currency + " " + Convert.ToDouble(model.Balance) + ".00";
-            ViewBag.policyBalance = policyBalance;
-            var latePanelty = model.Currency + " " + Convert.ToDouble(model.LatePaymentPenalty) + ".00";
-            ViewBag.LatePanelty = latePanelty;
-            var totalPremium = model.Currency + " " + Convert.ToDouble(MembersBAL.SumOfPremium(id, ParlourId)) + ".00";
-            ViewBag.TotalPremium = totalPremium;
-            ViewBag.MemberInvoiceList = MembersBAL.GetInvoicesByMemberID(ParlourId, id);
-            ViewBag.MemberID = model.MemeberNumber;
 
+                var policyBalance = model.Currency + " " + Convert.ToDouble(model.Balance) + ".00";
+                ViewBag.policyBalance = policyBalance;
+                var latePanelty = model.Currency + " " + Convert.ToDouble(model.LatePaymentPenalty) + ".00";
+                ViewBag.LatePanelty = latePanelty;
+                var totalPremium = model.Currency + " " + Convert.ToDouble(MembersBAL.SumOfPremium(id, ParlourID)) + ".00";
+                ViewBag.TotalPremium = totalPremium;
+                ViewBag.MemberInvoiceList = MembersBAL.GetInvoicesByMemberID(ParlourID, id);
+                ViewBag.MemberID = model.MemeberNumber;
+            }
             var info = CultureInfo.InvariantCulture.Clone() as CultureInfo;
             info.NumberFormat.NumberDecimalSeparator = ".";
 
@@ -136,7 +148,6 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
             Thread.CurrentThread.CurrentCulture = cInfo;
             return View(model);
-
         }
         [HttpPost]
         [PageRightsAttribute(CurrentPageId = 34, Right = new isPageRight[] { isPageRight.HasAdd })]
@@ -179,7 +190,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 printObj.BusinessAddressLine2 = model.BusinessAddressLine2;
                 printObj.BusinessAddressLine3 = model.BusinessAddressLine3;
                 printObj.BusinessPostalCode = model.BusinessPostalCode;
-                printObj.FSBNumber = "FPS Number: " + model.FSBNumber;
+                printObj.FSBNumber = "FSB Number: " + model.FSBNumber;
                 printObj.telephoneNumber = model.ManageTelNumber + " | " + model.ManageCellNumber;
                 printObj.Id = id;
                 printObj.Type = Type;
@@ -336,8 +347,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
                 rpw.ProcessingMode = ProcessingMode.Remote;
                 rpw.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
-                //rpw.ServerReport.ReportPath = "/Unplugg IT Solution BI Reporting/Unplugg IT Busy Days //UIS All Members Report";
-                rpw.ServerReport.ReportPath = "/Unplugg IT Solution BI Reporting/UIS_Customer Payments Statement";
+                rpw.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/UIS_Customer Payments Statement";
                 ReportParameterCollection reportParameters = new ReportParameterCollection();
 
                 reportParameters.Add(new ReportParameter("MemberID", memberId));//txtMemberNo.Text

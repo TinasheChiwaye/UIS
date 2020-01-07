@@ -17,5 +17,18 @@ namespace Funeral.Model
             Funerals,
             Expenses
         }
+        public enum FollowUpTypesEnum
+        {
+            Document,
+            Normal,
+            ClaimStatus,
+            AddUpdate,
+        }
+        public enum ClaimDocumentStatusEnum
+        {
+            Approved,
+            Pending,
+            Rejected
+        }
     }
 }

@@ -1,12 +1,11 @@
-﻿using Funeral.Model;
+﻿using Funeral.BAL;
+using Funeral.Model;
 using Funeral.Web.App_Start;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Web;
 using System.Web.Security;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 
@@ -15,8 +14,6 @@ namespace Funeral.Web.Admin
     public partial class PrintForm : AdminBasePage
     {
         #region Fields
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
-
         public int QuotationID
         {
             get
@@ -115,7 +112,7 @@ namespace Funeral.Web.Admin
         public void BindCompany()
         {
             ApplicationSettingsModel modelCompany;
-            modelCompany = client.GetApplictionByParlourID(ParlourId);
+            modelCompany = ToolsSetingBAL.GetApplictionByParlourID(ParlourId);
             if (modelCompany != null)
             {
                 lblAppliName.Text = modelCompany.ApplicationName.ToString();
@@ -133,7 +130,7 @@ namespace Funeral.Web.Admin
 
                 lblContactEmail.Text = modelCompany.OwnerEmail;
 
-                BankingDetailSending Modelbank = client.GetBankingByID(modelCompany.parlourid);
+                BankingDetailSending Modelbank = ToolsSetingBAL.GetBankingByID(modelCompany.parlourid);
                 if (Modelbank != null)
                 {
                     StringBuilder sb = new StringBuilder();
@@ -156,7 +153,7 @@ namespace Funeral.Web.Admin
                     ImagePreview.ImageUrl = string.Empty;
                 }
                 ApplicationTnCModel ModelTnc;
-                ModelTnc = client.SelectApplicationTermsAndCondition(modelCompany.parlourid);
+                ModelTnc = ToolsSetingBAL.SelectApplicationTermsAndCondition(modelCompany.parlourid);
                 if (ModelTnc != null)
                 {
                     if (QuotationID != 0 && ParlourId != Guid.Empty)
@@ -179,7 +176,7 @@ namespace Funeral.Web.Admin
         {
             if (QuotationID != 0 && ParlourId != Guid.Empty)
             {
-                QuotationModel objQuotation = client.SelectQuotationByQuotationId(QuotationID, ParlourId);
+                QuotationModel objQuotation = QuotationBAL.SelectQuotationByQuotationId(QuotationID, ParlourId);
                 lblName.Text = objQuotation.ContactTitle + " " + objQuotation.ContactLastName + " " + objQuotation.ContactFirstName;
                 lblcAdd1.Text = objQuotation.AddressLine1;
                 lblcAdd2.Text = objQuotation.AddressLine2;
@@ -200,7 +197,7 @@ namespace Funeral.Web.Admin
             }
             else if (FID != 0 && ParlourId != Guid.Empty)
             {
-                FuneralModel model = client.SelectFuneralBypkid(FID, ParlourId);
+                FuneralModel model = FuneralBAL.SelectFuneralBypkid(FID, ParlourId);
                 lblName.Text = string.Format("<b>Contact Person : </b>{0}<br/><b>Contact Number : </b>{1}", model.ContactPerson, model.ContactPersonNumber);
                 lblcAdd1.Text = model.Address1;
                 lblcAdd2.Text = model.Address2;
@@ -248,7 +245,7 @@ namespace Funeral.Web.Admin
             }
             else if (TBID != 0 && ParlourId != Guid.Empty)
             {
-                TombStoneModel model = client.SelectTombStoneByParlAndPki(TBID, ParlourId);
+                TombStoneModel model = TombStoneBAL.SelectTombStoneByParlAndPki(TBID, ParlourId);
                 lblName.Text = string.Format("<b>Contact Person : </b>{0}<br/><b>Contact Number : </b>{1}", model.ContactPerson, model.ContactPersonNumber);
                 lblcAdd1.Text = model.Address1;
                 lblcAdd2.Text = model.Address2;
@@ -310,7 +307,7 @@ namespace Funeral.Web.Admin
             StringBuilder sb = new StringBuilder();
             if (QuotationID != 0)
             {
-                QuotationServicesModel[] objServ = client.SelectServiceByQoutationID(QuotationID);
+                List<QuotationServicesModel> objServ = QuotationBAL.SelectServiceByQoutationID(QuotationID);
                 if (objServ != null)
                 {
                     sb.Append("<table  border='1'>");
@@ -360,8 +357,8 @@ namespace Funeral.Web.Admin
             }
             else if (FID != 0)
             {
-                FuneralServiceSelectModel[] objServ = client.SelectServiceByFuneralID(FID);
-                TotalPayment = client.ReturnFuneralPayments(this.ParlourId, FID.ToString()).ToList().Sum(x => x.AmountPaid);
+                List<FuneralServiceSelectModel> objServ = FuneralBAL.SelectServiceByFuneralID(FID);
+                TotalPayment = MemberPaymentBAL.ReturnFuneralPayments(this.ParlourId, FID.ToString()).Sum(x => x.AmountPaid);
                 if (objServ != null)
                 {
                     sb.Append("<table  border='1'>");
@@ -411,8 +408,8 @@ namespace Funeral.Web.Admin
             }
             else if (TBID != 0)
             {
-                TombStoneServiceSelectModel[] objServ = client.SelectServiceByTombStoneID(TBID);
-                TotalPayment = client.TombStonesPaymentSelectByTombstoneId(this.ParlourId, TBID).ToList().Sum(x => x.AmountPaid);
+                List<TombStoneServiceSelectModel> objServ = TombStoneBAL.SelectServiceByTombStoneID(TBID);
+                TotalPayment = TombStonesPaymentBAL.TombStonesPaymentSelectByTombstoneID(this.ParlourId, TBID).ToList().Sum(x => x.AmountPaid);
                 if (objServ != null)
                 {
                     sb.Append("<table  border='1'>");
@@ -476,7 +473,7 @@ namespace Funeral.Web.Admin
                 // lblGtotal.Text = ttl.ToString();
                 string totalPayment = lblTotalPayment.Text.ToString().Replace(Currency.ToString(), string.Empty).Trim();
                 decimal totalPaid = Convert.ToDecimal(totalPayment);
-              
+
                 Decimal Dis = 0;
                 Decimal DisAmt = 0;
 
@@ -500,7 +497,7 @@ namespace Funeral.Web.Admin
 
                 ttl = (a - DisAmt);
 
-                lblGtotal.Text = Currency.Trim() + " " + (ttl - totalPaid).ToString("N2"); 
+                lblGtotal.Text = Currency.Trim() + " " + (ttl - totalPaid).ToString("N2");
             }
         }
         #endregion

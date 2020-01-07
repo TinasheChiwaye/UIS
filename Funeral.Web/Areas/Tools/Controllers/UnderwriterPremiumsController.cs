@@ -5,8 +5,6 @@ using Funeral.Web.Areas.Admin.Controllers;
 using Funeral.Web.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using System.Web.UI.WebControls;
@@ -15,7 +13,6 @@ namespace Funeral.Web.Areas.Tools.Controllers
 {
     public class UnderwriterPremiumsController : BaseAdminController
     {
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
         public UnderwriterPremiumsController() : base(42)
         {
             ViewBag.CoverAge = BindNumbers();
@@ -48,8 +45,7 @@ namespace Funeral.Web.Areas.Tools.Controllers
         }
         public List<ListItem> BindUndrewriterSetupName()
         {
-            UnderwriterSetupModel[] objUndrewriterSetupNameModel = client.GetUnderwriterSetupNameByParlourId(ParlourId);
-
+            List<UnderwriterSetupModel> objUndrewriterSetupNameModel = CommonBAL.GetUnderwriterSetupNameByParlourId(ParlourId);
             List<ListItem> liList = new List<ListItem>();
             foreach (UnderwriterSetupModel UnderwriterName in objUndrewriterSetupNameModel)
             {
@@ -63,8 +59,7 @@ namespace Funeral.Web.Areas.Tools.Controllers
         }
         public List<ListItem> BindPlanList()
         {
-            PlanModel[] model = client.GetAllPlansList(ParlourId);
-
+            List<PlanModel> model = ToolsSetingBAL.GetAllPlansList(ParlourId);
             List<ListItem> liList = new List<ListItem>();
             foreach (PlanModel Planlist in model)
             {
@@ -73,14 +68,13 @@ namespace Funeral.Web.Areas.Tools.Controllers
                 li.Value = Planlist.pkiPlanID.ToString();
                 liList.Add(li);
 
-            }           
+            }
 
             return liList;
         }
         public List<ListItem> BindRolePlayerType()
         {
-            RolePlayerModel[] model = client.GetAllRolePlayer(ParlourId);
-
+            List<RolePlayerModel> model = ToolsSetingBAL.GetAllRolePlayer(ParlourId);
             List<ListItem> liList = new List<ListItem>();
             foreach (RolePlayerModel AllRolePlayer in model)
             {
@@ -132,7 +126,7 @@ namespace Funeral.Web.Areas.Tools.Controllers
                     underwriterPremiumModel.ModifiedUser = formIdentity.Name;
 
 
-                    var agentInfoSetupData = client.SaveUnderwriterPremium(underwriterPremiumModel);
+                    var agentInfoSetupData = UnderwriterPremiumBAL.SaveUnderwriterPremium(underwriterPremiumModel);
 
                     TempData["IsUnderwriterPremiumSaved"] = true;
                     TempData.Keep("IsUnderwriterPremiumSaved");
@@ -198,20 +192,20 @@ namespace Funeral.Web.Areas.Tools.Controllers
         /// </summary>
         /// <param name="quotationModel"></param>
         /// <returns></returns>
-        [PageRightsAttribute(CurrentPageId = 42, Right = new isPageRight[] { isPageRight.HasAdd})]
+        [PageRightsAttribute(CurrentPageId = 42, Right = new isPageRight[] { isPageRight.HasAdd })]
         public PartialViewResult Add()
-        {   
+        {
             return PartialView("~/Areas/Tools/Views/UnderwriterPremiums/_UnderwriterPremiumAddEdit.cshtml");
         }
 
-        [PageRightsAttribute(CurrentPageId = 42, Right = new isPageRight[] { isPageRight.HasEdit})]
+        [PageRightsAttribute(CurrentPageId = 42, Right = new isPageRight[] { isPageRight.HasEdit })]
         public PartialViewResult Edit(int ID)
         {
             var SocietySetup = UnderwriterPremiumBAL.EditUnderwriterPremiumbyID(ID, ParlourId);
             return PartialView("~/Areas/Tools/Views/UnderwriterPremiums/_UnderwriterPremiumAddEdit.cshtml", SocietySetup);
         }
 
-        [PageRightsAttribute(CurrentPageId = 42, Right = new isPageRight[] { isPageRight.HasDelete})]
+        [PageRightsAttribute(CurrentPageId = 42, Right = new isPageRight[] { isPageRight.HasDelete })]
         public JsonResult Delete(int ID)
         {
             int retID = UnderwriterPremiumBAL.DeleteUnderwriterPremium(ID, UserName);

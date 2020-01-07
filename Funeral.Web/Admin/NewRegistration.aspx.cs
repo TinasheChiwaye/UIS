@@ -1,4 +1,5 @@
-﻿using Funeral.Model;
+﻿using Funeral.BAL;
+using Funeral.Model;
 using Funeral.Web.App_Start;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,6 @@ namespace Funeral.Web.Admin
     public partial class NewRegistration : System.Web.UI.Page
     {
         #region Page Property
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
 
         public enum MessageType
         {
@@ -213,7 +213,7 @@ namespace Funeral.Web.Admin
                 Guid ParlourId = Guid.NewGuid();
                 ApplicationSettingsModel model;
                 SecureUsersModel model1;
-                model1 = client.GetUserByEmailID(txtEmail.Text);
+                model1 = ToolsSetingBAL.GetUserByEmailID(txtEmail.Text);
                 if (model1 != null)
                 {
                     ShowMessage(ref lblMessage, MessageType.Danger, "User Already Exists.");
@@ -254,7 +254,7 @@ namespace Funeral.Web.Admin
                   
                     //=============
                     model.Currentparlourid = ParlourId;
-                    model = client.SaveApplication(model);
+                    model = ToolsSetingBAL.SaveApplication(model);
                     Guid retID = model.parlourid;
                     if (retID != null)
                     {
@@ -285,7 +285,7 @@ namespace Funeral.Web.Admin
                         model1.Active = false;
                         //================================================================ 
 
-                        SecureUserId = client.SaveUserDetails(model1);
+                        SecureUserId = ToolsSetingBAL.SaveUserDetails(model1);
                     }
                     // UploadImage(model.pkiApplicationID);
 
@@ -301,7 +301,7 @@ namespace Funeral.Web.Admin
                     modelS.LastModified = System.DateTime.Now;
                     modelS.ModifiedUser = txtFirstName.Text;
 
-                    sguserID = client.SaveUserGroupDetails(modelS);
+                    sguserID = ToolsSetingBAL.SaveUserGroupDetails(modelS);
                     modelS.pkiSecureUserGroups = sguserID;
 
                     //=========================================================================
@@ -322,7 +322,7 @@ namespace Funeral.Web.Admin
                     // if (PolicyNumber) { membernumber = "yes"; }
                     Adsmodel.GenerateMember = "yes";
 
-                    Adsmodel = client.SaveAdditionalApplication(Adsmodel);
+                    Adsmodel = ToolsSetingBAL.SaveAdditionalApplication(Adsmodel);
 
                     //================================[Insert Update Terms & Condition]===============================
                     ApplicationTnCModel objtc = new ApplicationTnCModel();
@@ -339,7 +339,7 @@ namespace Funeral.Web.Admin
                     objtc.TermsAndConditionFuneral = string.Empty;
                     objtc.TermsAndConditionTombstone = string.Empty;
                     objtc.Declaration = string.Empty;
-                    int a = client.SaveTermsAndCondition(objtc);
+                    int a = ToolsSetingBAL.SaveTermsAndCondition(objtc);
 
                     if (retID != null)
                     {

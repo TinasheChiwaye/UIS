@@ -1,11 +1,7 @@
 ﻿using Funeral.Model;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Funeral.DAL
 {
@@ -96,7 +92,7 @@ namespace Funeral.DAL
             DbParameter[] ObjParam = new DbParameter[2];
             ObjParam[0] = new DbParameter("@MemberNo", DbParameter.DbType.NVarChar, 0, strMemberNo);
             ObjParam[1] = new DbParameter("@ParlourID", DbParameter.DbType.UniqueIdentifier, 0, pgParlourID);
-            return DbConnection.GetDataTable(CommandType.StoredProcedure, "MemberParlourIDAndMemberNoByID", ObjParam);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "MemberParlourIDAndMemberNoByID_New", ObjParam);//[MemberParlourIDAndMemberNoByID]
         }
 
         public static SqlDataReader ReturnMemberPlanDetailsWithBalance(string strMemberNo)
@@ -215,7 +211,7 @@ namespace Funeral.DAL
             ObjParam[0] = new DbParameter("@invoiceid", DbParameter.DbType.Int, 0, InvoiceId);
             ObjParam[1] = new DbParameter("@UserID", DbParameter.DbType.NVarChar, 0, UserId);
             ObjParam[2] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
-            int newInvoiceId = Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "Reversal", ObjParam));
+            int newInvoiceId = Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "InvoiceReversalPayment", ObjParam));
             AddAudit(UserId, Parlourid, "Reversal  MemberNumber=('" + InvoiceId + "')");
             return newInvoiceId;
 
@@ -365,7 +361,7 @@ namespace Funeral.DAL
             ObjParam[1] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, parlourId);
             return DbConnection.GetDataReader(CommandType.StoredProcedure, "JoiningFeeSelectByMemberId", ObjParam);
         }
- public static DataTable JoiningFeesdt(int memberId, Guid parlourId)
+        public static DataTable JoiningFeesdt(int memberId, Guid parlourId)
         {
             DbParameter[] ObjParam = new DbParameter[2];
             ObjParam[0] = new DbParameter("@MemberId", DbParameter.DbType.Int, 0, memberId);
@@ -383,4 +379,3 @@ namespace Funeral.DAL
     }
 }
 
-       

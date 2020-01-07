@@ -37,5 +37,27 @@ namespace Funeral.DAL
             ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
             DbConnection.GetDataTable(CommandType.StoredProcedure, "SendsmsAllMembersOutstanding", ObjParam);
         }
+        public static DataTable GetBankList()
+        {
+            string sp = "GetBankList";
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, sp);
+        }
+        public static DataTable GetProvinces()
+        {
+            string sp = "GetProvincesList";
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, sp);
+        }
+        //GetAccountTypeList
+        public static DataTable GetAccountTypeList()
+        {
+            string sp = "GetAccountTypeList";
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, sp);
+        }
+        public static DataTable GetDocumentList(Guid Parlourid)
+        {
+            DbParameter[] ObjParam = new DbParameter[1];
+            ObjParam[0] = new DbParameter("@Parlourid", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetDocumentList_ByParlourId", ObjParam);
+        }
     }
 }

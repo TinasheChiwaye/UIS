@@ -1,4 +1,5 @@
-﻿using Funeral.Model;
+﻿using Funeral.BAL;
+using Funeral.Model;
 using Funeral.Web.App_Start;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,6 @@ namespace Funeral.Web.Admin
     {
 
         #region Page Property
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
         public int PageSize
         {
             get
@@ -114,14 +114,14 @@ namespace Funeral.Web.Admin
         public void BindMember()
         {
             gvMembers.PageSize = PageSize;
-            MembersViewModel model = client.GetAllMembers(new Guid(ddlCompanyList.SelectedValue), PageSize, PageNum, txtKeyword.Text, SortBy, SortOrder,ddlStatusSearch.Text);
+            MembersViewModel model = MembersBAL.GetAllMembers(new Guid(ddlCompanyList.SelectedValue), PageSize, PageNum, txtKeyword.Text, SortBy, SortOrder,ddlStatusSearch.Text);
             StringBuilder sb = new StringBuilder();
             gvMembers.DataSource = model.MemberList;
             gvMembers.DataBind();
         }
         public void LoadStatus()
         {
-            List<StatusModel> statusList = client.GetStatus(FuneralEnum.StatusAssociatedTable.Members.ToString()).ToList();
+            List<StatusModel> statusList = CommonBAL.GetStatus(FuneralEnum.StatusAssociatedTable.Members.ToString()).ToList();
             ddlStatus.DataSource = statusList;
             ddlStatus.DataBind();
             ddlStatus.Items.Insert(0, new ListItem("Select Member Status", "0"));
@@ -187,7 +187,7 @@ namespace Funeral.Web.Admin
                 try
                 {
                     //int retID = client.DeleteMember(Convert.ToInt32(e.CommandArgument));
-                    client.DeleteMember(Convert.ToInt32(e.CommandArgument));
+                    MembersBAL.DeleteMember(Convert.ToInt32(e.CommandArgument));
                     BindMember();
                     ShowMessage(ref lblMessage, MessageType.Success, "Record deleted successfully.");                    
                     lblMessage.Visible = true;
@@ -210,8 +210,8 @@ namespace Funeral.Web.Admin
             model.ChangedBy = this.UserID;
             model.ParlourID = new Guid(hdnParlourId.Value);
             model.ChangeReason = txtChangeReason.Text;
-            client.MemberStatusChangeReason(model);
-            client.UpdateMemberStatus(new Guid(hdnParlourId.Value), Convert.ToInt32(hdnMemberId.Value), ddlStatus.Text);
+            MembersBAL.MemberStatusChangeReason(model);
+            MembersBAL.UpdateMemberStatus(new Guid(hdnParlourId.Value), Convert.ToInt32(hdnMemberId.Value), ddlStatus.Text);
             BindMember();
             txtChangeReason.Text = string.Empty;
             hdnMemberId.Value = string.Empty;

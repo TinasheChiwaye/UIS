@@ -1,0 +1,38 @@
+﻿@model Funeral.Web.Areas.Tools.Models.ExcelModel
+
+@using (Html.BeginForm("SaveExcelRecord", "QuotationEngine", FormMethod.Post))
+{
+    <div class="row">
+        <table class="table table-striped table-bordered dt-responsive nowrap">
+            <thead>
+                <tr>
+                    <th>Set Column</th>
+                    <th>Excel Column</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    if (Model.ExcelColumn.Count > 0)
+                    {
+                        for (int i = 0; i < Model.ExcelColumn.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DropDownListFor(x => x.DyanamicColumn[i].DynamicColumn, Model.StaticColumn, new { @class = "form-control" })
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(x => x.DyanamicColumn[i].StaticColumn, new { @class = "form-control", @readonly = true, @Value = Model.ExcelColumn[i] })
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3" style="text-align:center"><input type="submit" class="btn btn-success" value="Save Data" /></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+}

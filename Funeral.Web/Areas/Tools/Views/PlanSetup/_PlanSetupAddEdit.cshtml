@@ -18,7 +18,6 @@
             </div>
             <div class="ibox-content">
                 @Html.HiddenFor(m => m.pkiPlanID)
-                @Html.HiddenFor(m => m.parlourid)
                 <div class="form-group row">
                     <div class="messagealert" id="alert_container"></div>
                 </div>
@@ -42,7 +41,7 @@
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(model => model.JoiningFee, new { @class = "control-label" })
-                              <strong>(R)</strong>
+                            <strong>(R)</strong>
                             @Html.TextBoxFor(m => m.JoiningFee, null, new { @class = "form-control", @maxlength = "15", placeholder = "Joining Fee" })
                         </div>
                         <div class="form-group">
@@ -61,21 +60,27 @@
                             @Html.Label("Waiting Period", new { @class = "control-label" })
                             @Html.DropDownListFor(m => m.WaitingPeriod, new SelectList(NumericDropdownList.Take(19).ToList(), "Text", "Value", Model.WaitingPeriod), new { @class = "form-control" })
                         </div>
+                        <div class="form-group">
+                            @Html.Label("Select Company ", new { @class = "control-label" })
+                            <strong><span class="text-danger"><em>*</em></span></strong>
+                            @Html.DropDownListFor(m => m.parlourid, new SelectList(ViewBag.Companies, "parlourid", "ApplicationName"), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.parlourid, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
                             @Html.Label("Cash Payout", new { @class = "control-label" })
-                               <strong>(R)</strong>
+                            <strong>(R)</strong>
                             @Html.TextBoxFor(m => m.CashPayout, string.Empty, new { @class = "form-control", @maxlength = "25", placeholder = "Cash Payout" })
                         </div>
                         <div class="form-group">
                             @Html.Label("Agent split", new { @class = "control-label" })
-                               <strong>(R)</strong>
+                            <strong>(R)</strong>
                             @Html.TextBoxFor(m => m.AgentSplit, null, new { @class = "form-control", @maxlength = "25", placeholder = "Agent split" })
                         </div>
                         <div class="form-group">
                             @Html.Label("Office Split", new { @class = "control-label" })
-                               <strong>(R)</strong>
+                            <strong>(R)</strong>
                             @Html.TextBoxFor(m => m.OfficeSplit, null, new { @class = "form-control", @maxlength = "25", placeholder = "Office Split" })
                         </div>
                         <div class="form-group">
@@ -94,9 +99,9 @@
                             @Html.Label("Policy Laps", new { @class = "control-label" })
                             @Html.DropDownListFor(m => m.PolicyLaps, new SelectList(NumericDropdownList.Take(13).ToList(), "Text", "Value", Model.PolicyLaps), new { @class = "form-control" })
                         </div>
-                         <div class="form-group">
+                        <div class="form-group">
                             @Html.Label("Select Underwriter", new { @class = "control-label" })
-                            @Html.DropDownListFor(m => m.UnderwriterId, new SelectList(Model.UnderwriterList, "PkiUnderwriterId", "UnderwriterName", Model.UnderwriterId),"Select Underwriter", new { @class = "form-control" })
+                            @Html.DropDownListFor(m => m.UnderwriterId, new SelectList(Model.UnderwriterList, "PkiUnderwriterId", "UnderwriterName", Model.UnderwriterId), "Select Underwriter", new { @class = "form-control" })
                         </div>
                     </div>
                 </div>
@@ -166,14 +171,7 @@
                                                 @Html.TextBoxFor(m => m.planCreators[i].UnderwriterPremium, null, new { @class = "form-control", @type = "number", placeholder = "Enter Underwriter Premium Amount" })
                                                 @Html.ValidationMessageFor(m => m.planCreators[i].UnderwriterPremium, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                                             </td>
-                                            @if (i == 0)
-                                            {
-                                                <td>-</td>
-                                            }
-                                            else
-                                            {
-                                                <td><input type="button" placeholder="Header" value="Delete" class="btn btn-danger DeleteDynamicRow" /></td>
-                                            }
+                                            <td><input type="button" placeholder="Header" value="Delete" class="btn btn-danger DeleteDynamicRow" /></td>
                                         </tr>
                                     }
                                 }

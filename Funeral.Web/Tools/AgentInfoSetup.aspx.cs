@@ -18,7 +18,6 @@ namespace Funeral.Web.Tools
     {
 
         #region Page Property
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
         public int ApplicationID
         {
             get
@@ -125,7 +124,7 @@ namespace Funeral.Web.Tools
         public void BindAllAgentDetails()
         {
             gvCompany.PageSize = PageSize;
-            AgentInfoSetupModel[] model = client.GetAllAgentInfo(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
+            List<AgentInfoSetupModel> model = ToolsSetingBAL.GetAllAgentInfo(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
             gvCompany.DataSource = model;
             gvCompany.DataBind();
         }
@@ -148,7 +147,7 @@ namespace Funeral.Web.Tools
         public void BindApplicationToUpdate()
         {
             AgentInfoSetupModel ModelAgent;
-            ModelAgent = client.GetAgentByID(ApplicationID);
+            ModelAgent = ToolsSetingBAL.GetAgentByID(ApplicationID);
             if (ModelAgent != null) 
             {
                 txtsurname.Text = ModelAgent.Surname;
@@ -197,7 +196,7 @@ namespace Funeral.Web.Tools
                 model.ModifiedUser = UserName;
                 model.parlourid = ParlourId;
 
-                model = client.SaveAgentInfo(model);
+                model = ToolsSetingBAL.SaveAgentInfo(model);
 
 
                 ShowMessage(ref lblMessage, MessageType.Success, "Agent Info successfully saved");
@@ -240,7 +239,7 @@ namespace Funeral.Web.Tools
                 int SApplicationID = Convert.ToInt32(e.CommandArgument);
                 try
                 {
-                    int retID = client.DeleteAgent(SApplicationID);
+                    int retID = ToolsSetingBAL.DeleteAgent(SApplicationID);
                     ShowMessage(ref lblMessage, MessageType.Success, "Record deleted successfully.");
                     lblMessage.Visible = true;
                     BindAllAgentDetails();

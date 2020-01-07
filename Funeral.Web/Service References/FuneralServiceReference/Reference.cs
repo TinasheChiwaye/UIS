@@ -113,10 +113,10 @@ namespace Funeral.Web.FuneralServiceReference {
         System.Threading.Tasks.Task<Funeral.Model.VendorModel[]> GetVendorNameByParlourIdAsync(System.Guid parlourid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFuneralServices/MemberRowImportToMember", ReplyAction="http://tempuri.org/IFuneralServices/MemberRowImportToMemberResponse")]
-        void MemberRowImportToMember(string MemberType);
+        void MemberRowImportToMember(string memberType, System.Guid importId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFuneralServices/MemberRowImportToMember", ReplyAction="http://tempuri.org/IFuneralServices/MemberRowImportToMemberResponse")]
-        System.Threading.Tasks.Task MemberRowImportToMemberAsync(string MemberType);
+        System.Threading.Tasks.Task MemberRowImportToMemberAsync(string memberType, System.Guid importId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFuneralServices/GetPlanSubscriptionByPlanIdNewMember", ReplyAction="http://tempuri.org/IFuneralServices/GetPlanSubscriptionByPlanIdNewMemberResponse")]
         Funeral.Model.PolicyModel[] GetPlanSubscriptionByPlanIdNewMember(int pkiPlanID);
@@ -1839,12 +1839,12 @@ namespace Funeral.Web.FuneralServiceReference {
             return base.Channel.GetVendorNameByParlourIdAsync(parlourid);
         }
         
-        public void MemberRowImportToMember(string MemberType) {
-            base.Channel.MemberRowImportToMember(MemberType);
+        public void MemberRowImportToMember(string memberType, System.Guid importId) {
+            base.Channel.MemberRowImportToMember(memberType, importId);
         }
         
-        public System.Threading.Tasks.Task MemberRowImportToMemberAsync(string MemberType) {
-            return base.Channel.MemberRowImportToMemberAsync(MemberType);
+        public System.Threading.Tasks.Task MemberRowImportToMemberAsync(string memberType, System.Guid importId) {
+            return base.Channel.MemberRowImportToMemberAsync(memberType, importId);
         }
         
         public Funeral.Model.PolicyModel[] GetPlanSubscriptionByPlanIdNewMember(int pkiPlanID) {

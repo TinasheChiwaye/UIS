@@ -22,6 +22,9 @@ namespace Funeral.Model
         public int MemberID { get; set; }
         public string DatePaid { get; set; }
         public string AmountPaid { get; set; }
+        public decimal AmountPaidNumeric { get; set; }
+        public bool IsReversal { get; set; }
+        public int ReversalInvoiceID { get; set; }
         public string RecievedBy { get; set; }
         public string InvNumber { get; set; }
         public string PaymentBranch { get; set; }
@@ -32,5 +35,5 @@ namespace Funeral.Model
         public string MethodOfPayment { get; set; }
 
     }
-    
+
 }

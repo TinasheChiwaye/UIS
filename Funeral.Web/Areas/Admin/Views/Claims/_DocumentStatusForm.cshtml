@@ -1,0 +1,48 @@
+﻿@model Funeral.Model.ChangeStatusReason
+<div class="modal fade model_popUp" id="dvChangeStatusModel" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
+                <h4 class="modal-title">Claim Status</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    @{
+                        if (ViewBag.Statuses.Count > 0)
+                        {
+                            using (Html.BeginForm("UpdateClaimDocumentStatus", "Claims", FormMethod.Post))
+                            {
+                                @Html.HiddenFor(x => x.ID)
+                                @Html.HiddenFor(x => x.ClaimID)
+                                @Html.HiddenFor(x => x.CurrentStatus)
+                                @Html.HiddenFor(x => x.ParlourID)
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label>Status </label>
+                                        @Html.DropDownListFor(x => x.NewStatus, new SelectList(ViewBag.Statuses, "Value", "Value"), new { @class = "form-control", @required = true })
+                                        @Html.ValidationMessageFor(x => x.NewStatus, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Comment </label>
+                                        @Html.TextAreaFor(x => x.Comment, 3, 10, new { @class = "form-control", @required = true })
+                                        @Html.ValidationMessageFor(x => x.Comment, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <input type="submit" value="Submit" class="btn btn-sm btn-primary pull-right m-t-n-xs" />
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div><h3 class="text-danger text-center">Sorry you dont have rights</h3></div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

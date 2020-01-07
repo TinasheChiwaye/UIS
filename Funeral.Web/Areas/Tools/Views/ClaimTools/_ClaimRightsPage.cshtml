@@ -1,0 +1,44 @@
+﻿@model List<Funeral.Model.ClaimRightsList>
+@using (Html.BeginForm("SaveClaimRights", "ClaimTools", FormMethod.Post))
+{
+    <table id="tblClaimRightsList" class="table table-striped table-bordered dt-responsive nowrap">
+        <thead>
+            <tr>
+                <th hidden>ClaimRightsId</th>
+                <th hidden>ClaimStatusId</th>
+                <th hidden>RoleId</th>
+                <th>Status</th>
+                <th>@Html.CheckBox("SelectAll", false, new { @onclick = "SelectAllCheckbox_ClaimRights(this)" })</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                for (int i = 0; i < Model.Count; i++)
+                {
+                    <tr>
+                        <td hidden>@Html.HiddenFor(x => Model[i].ClaimRightsId)</td>
+                        <td hidden>@Html.HiddenFor(x => Model[i].ClaimStatusId)</td>
+                        <td hidden>@Html.HiddenFor(x => Model[i].RoleId)</td>
+                        <th>@Model[i].StatusName</th>
+                        <td>@Html.CheckBoxFor(x => Model[i].AvailableRights, new { @class = "chk_ClaimRights" })</td>
+                    </tr>
+                }
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5">
+                    <input class="pull-right btn btn-success" type="submit" value="Save" />
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+}
+<script>
+    function SelectAllCheckbox_ClaimRights(Control) {
+        var chkAll = Control;
+        var chkRows = $("#tblClaimRightsList").find(".chk_ClaimRights");
+        chkRows.each(function () { $(this)[0].checked = chkAll.checked; });
+    }
+</script>
+

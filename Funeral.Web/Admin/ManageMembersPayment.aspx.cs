@@ -81,7 +81,6 @@ namespace Funeral.Web.Admin
 
         bool blnFuneralPayment = false;
 
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
         #endregion
 
         #region Page PreInit
@@ -146,7 +145,7 @@ namespace Funeral.Web.Admin
         public void bindMemberPlanDetailsWithBalance()
         {
             Guid ParlourId = new Guid(Request.QueryString["ParlourId"]);
-            MembersPaymentDetailsModel model = client.GetMemberPlanDetailsWithBalance(Request.QueryString["ID"].ToString(), new Guid(Request.QueryString["ParlourId"]));
+            MembersPaymentDetailsModel model = MemberPaymentBAL.ReturnMemberPlanDetailsWithBalance(Request.QueryString["ID"].ToString(), new Guid(Request.QueryString["ParlourId"]));
             if ((model == null))
             {
 
@@ -183,7 +182,7 @@ namespace Funeral.Web.Admin
                 ViewState["_memberId"] = Convert.ToInt32(model.pkiMemberID);
                 ViewState["NextPaymentDate"] = model.NextPaymentDate.ToString("MMM-yyyy");
 
-                txtTotalPremium.Text = Convert.ToDouble(client.SumPremium(Convert.ToInt32(model.pkiMemberID), new Guid(Request.QueryString["ParlourId"]))).ToString(Currency.Trim() + " 0.00");
+                txtTotalPremium.Text = Convert.ToDouble(MembersBAL.SumOfPremium(Convert.ToInt32(model.pkiMemberID), new Guid(Request.QueryString["ParlourId"]))).ToString(Currency.Trim() + " 0.00");
 
 
 
@@ -206,7 +205,7 @@ namespace Funeral.Web.Admin
         public void bindInvoices(Guid ParlourId, int MemberId)
         {
             StringBuilder sb = new StringBuilder();
-            MemberInvoiceModel[] objMemberInvoiceModel = client.GetInvoices(ParlourId, MemberId);
+            List<MemberInvoiceModel> objMemberInvoiceModel = MembersBAL.GetInvoicesByMemberID(ParlourId, MemberId);
             gvInvoices.DataSource = objMemberInvoiceModel;
             gvInvoices.DataBind();
         }
@@ -227,14 +226,14 @@ namespace Funeral.Web.Admin
             {
                 //Member New Registration Welcome SMS Send 
                 int SmsGrupId = Convert.ToInt32(SmsGroupType.Payment);
-                smsSendingGroupModel modelSSG = client.GetsmsGroupbyID(SmsGrupId, ParlourId);
+                smsSendingGroupModel modelSSG = ToolsSetingBAL.GetsmsGroupbyID(SmsGrupId, ParlourId);
                 if (modelSSG != null)
                 {
                     StringBuilder strsb = new StringBuilder();
-                    smsTempletModel _EmailTemplate = client.GetEmailTemplateByID(SmsGrupId, ParlourId);
+                    smsTempletModel _EmailTemplate = ToolsSetingBAL.GetEmailTemplateByID(SmsGrupId, ParlourId);
                     if (_EmailTemplate != null)
                     {
-                        MembersModel objMemberModel = client.GetMemberByID(model.pkiMemberID, ParlourId);
+                        MembersModel objMemberModel = MembersBAL.GetMemberByID(model.pkiMemberID, ParlourId);
 
                         strsb = new StringBuilder(_EmailTemplate.smsText);
                         strsb = strsb.Replace("@Name", "<p>" + objMemberModel.FullNames + " " + objMemberModel.Surname + "</p>");
@@ -251,7 +250,7 @@ namespace Funeral.Web.Admin
                         smsModel.MemeberToNumber = Convert.ToInt64(CellNo.Replace(" ", ""));
                         smsModel.parlourid = ParlourId;
 
-                        int SendOpration = client.InsertSendReminder(smsModel);
+                        int SendOpration = MemberPaymentBAL.InsertSendReminder(smsModel);
                     }
                 }
             }
@@ -379,7 +378,7 @@ namespace Funeral.Web.Admin
                 //    //}
                 //}
                 Guid ParlID = new Guid(Request.QueryString["ParlourId"]);
-                MembersModel objmember = client.GetMemberByID(MemberId, ParlID);
+                MembersModel objmember = MembersBAL.GetMemberByID(MemberId, ParlID);
 
                 if (!blnFuneralPayment)
                 {
@@ -408,12 +407,12 @@ namespace Funeral.Web.Admin
                         objPayment.NextPaymentDate = Convert.ToDateTime(hdnLastpaymentDate.Value).AddMonths(Convert.ToInt32(ddlNoOfMonths.SelectedValue));
                         objPayment.Branch = objmember.MemberBranch;
                         objPayment.ParlourId = ParlID;
-                        client.UpdateMemberStatus(ParlID, MemberId, "Active");
+                        MembersBAL.UpdateMemberStatus(ParlID, MemberId, "Active");
                         string s = objPayment.PolicyStatus;
                       //  objPayment.PolicyStatus = "Active";
                         bool IsJoiningFee = false;
                         IsJoiningFeePaid(out IsJoiningFee);
-                        int PaymentID = client.AddPayments(objPayment, IsJoiningFee);
+                        int PaymentID = MemberPaymentBAL.AddPayments(objPayment, IsJoiningFee);
                         if (PaymentID != 0)
                         {
                             Common.WebMsgBox.Show("Payment not added successfully.");
@@ -475,7 +474,7 @@ namespace Funeral.Web.Admin
                         funeralPayment.Notes = txtMohthPaid.Text.ToString();
                         funeralPayment.ParlourId = new Guid(Request.QueryString["ParlourId"]);
                         funeralPayment.UserName = HttpContext.Current.User.Identity.Name;
-                        int FuneralID = client.AddFuneralPayments(funeralPayment);
+                        int FuneralID = MemberPaymentBAL.AddFuneralPayments(funeralPayment);
                         if (FuneralID != 0)
                         {
                             Common.WebMsgBox.Show("Payment added successfully.");
@@ -501,7 +500,7 @@ namespace Funeral.Web.Admin
                             objFunerals.Notes = txtMohthPaid.Text.ToString();
                             objFunerals.ParlourId = new Guid(Request.QueryString["ParlourId"]);
                             objFunerals.UserName = HttpContext.Current.User.Identity.Name;
-                            int FuneralID = client.AddFuneralPayments(objFunerals);
+                            int FuneralID = MemberPaymentBAL.AddFuneralPayments(objFunerals);
                         }
                         else
                         {
@@ -539,7 +538,7 @@ namespace Funeral.Web.Admin
         #region EVent
         protected void txtMemberNo_TextChanged(object sender, EventArgs e)
         {
-            MembersPaymentDetailsModel model = client.GetMemberPlanDetailsWithByMemberNo(Convert.ToString(txtMemberNo.Text));
+            MembersPaymentDetailsModel model = MemberPaymentBAL.ReturnMemberPlanDetailsWithBalance(Convert.ToString(txtMemberNo.Text));
             if ((model == null))
             {
 
@@ -570,7 +569,7 @@ namespace Funeral.Web.Admin
                 ViewState["_memberId"] = Convert.ToInt32(model.pkiMemberID);
                 ViewState["NextPaymentDate"] = model.NextPaymentDate.ToString("MMM-yyyy");
 
-                txtTotalPremium.Text = Convert.ToDouble(client.SumPremium(Convert.ToInt32(model.pkiMemberID), model.ParlourId)).ToString(Currency.Trim() + " 0.00");
+                txtTotalPremium.Text = Convert.ToDouble(MembersBAL.SumOfPremium(Convert.ToInt32(model.pkiMemberID), model.ParlourId)).ToString(Currency.Trim() + " 0.00");
 
 
 
@@ -663,7 +662,7 @@ namespace Funeral.Web.Admin
             }
             else if (e.CommandName == "PaymentReversal")
             {
-                int PaymentID = client.AddReversalPayments(InvoiceID, this.UserName, this.ParlourId);
+                int PaymentID = MemberPaymentBAL.AddReversalPayments(InvoiceID, this.UserName, this.ParlourId);
                 if (PaymentID != 0)
                 {
                     Guid ParlourId = new Guid(Request.QueryString["ParlourId"]);
@@ -730,7 +729,7 @@ namespace Funeral.Web.Admin
         private void IsJoiningFeePaid(out bool IsJoiningFee)
         {
             IsJoiningFee = false;
-            JoiningFeeModel joiningFeeModel = client.JoiningFees(this.MemberId, this.ParlourId);
+            JoiningFeeModel joiningFeeModel = MemberPaymentBAL.JoiningFees(this.MemberId, this.ParlourId);
             if (joiningFeeModel != null)
             {
                 if (joiningFeeModel.Paid == false)
@@ -772,8 +771,7 @@ namespace Funeral.Web.Admin
 
                 rpw.ProcessingMode = ProcessingMode.Remote;
                 rpw.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
-                //rpw.ServerReport.ReportPath = "/Unplugg IT Solution BI Reporting/Unplugg IT Busy Days //UIS All Members Report";
-                rpw.ServerReport.ReportPath = "/Unplugg IT Solution BI Reporting/UIS_Customer Payments Statement";
+                rpw.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/UIS_Customer Payments Statement";
                 ReportParameterCollection reportParameters = new ReportParameterCollection();
 
                 reportParameters.Add(new ReportParameter("MemberID", txtMemberNo.Text));

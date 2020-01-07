@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using Funeral.BAL;
 using Funeral.Model;
 using Funeral.Web.App_Start;
-using System.Text;
-using System.Web.Services;
-using Funeral.BAL;
-using System.Data.SqlClient;
-using System.IO;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 
 namespace Funeral.Web.Tools
@@ -20,12 +15,11 @@ namespace Funeral.Web.Tools
 
         #region Page Property
 
-        readonly FuneralServiceReference.FuneralServicesClient _client = new FuneralServiceReference.FuneralServicesClient();
         public List<SecureUserGroupsModel> LoginUserRoles
         {
             get
             {
-                return _client.EditSecurUserbyID(UserID).ToList();
+                return ToolsSetingBAL.EditSecurUserbyID(UserID);
             }
 
         }
@@ -136,7 +130,7 @@ namespace Funeral.Web.Tools
                 {
                     CompanyParlourId = new Guid(Request.QueryString["CompanyParlourID"]);
                     ApplicationSettingsModel modelcom;
-                    modelcom = _client.GetApplictionByParlourID(CompanyParlourId);
+                    modelcom = ToolsSetingBAL.GetApplictionByParlourID(CompanyParlourId);
                     if (modelcom != null)
                     {
                         if (Request.QueryString["NewId"] != null)
@@ -159,7 +153,7 @@ namespace Funeral.Web.Tools
                 BindUserList();
             }
             SecureUserGroupsModel model;
-            model = _client.GetUserAccessByID(UserID, ParlourId);
+            model = ToolsSetingBAL.GetUserAccessByID(UserID, ParlourId);
             if (model == null)
             {
 
@@ -186,7 +180,7 @@ namespace Funeral.Web.Tools
         public void BindSecureGroupList()
         {
             List<SecureGroupModel> model;
-            model = _client.GetSecureGrouList().ToList();
+            model = ToolsSetingBAL.GetSecureGrouList();
             if (model.Any())
             {
                 List<int> list = new List<int> { 12 };
@@ -205,12 +199,12 @@ namespace Funeral.Web.Tools
         public void BindUserList()
         {
             gvUsers.PageSize = PageSize;
-            gvUsers.DataSource = _client.GetAllUsers(Request.QueryString["CompanyParlourID"] != null ? CompanyParlourId : ParlourId, PageSize, PageNum, txtKeyword.Text, SortByExpression, SortType);
+            gvUsers.DataSource = ToolsSetingBAL.GetAllUsers(Request.QueryString["CompanyParlourID"] != null ? CompanyParlourId : ParlourId, PageSize, PageNum, txtKeyword.Text, SortByExpression, SortType);
             gvUsers.DataBind();
         }
         public void BindUserToUpdate()
         {
-            SecureUsersModel model = _client.EditUserbyID(SecureUserId, Request.QueryString["CompanyParlourID"] != null ? CompanyParlourId : ParlourId);
+            SecureUsersModel model = ToolsSetingBAL.EditUserbyID(SecureUserId, Request.QueryString["CompanyParlourID"] != null ? CompanyParlourId : ParlourId);
             if ((model == null) || (model.parlourid != ParlourId || model.parlourid != CompanyParlourId))
             {
                 Response.Write("<script>alert('Sorry!you are not authorized to perform edit on this User.');</script>");
@@ -243,7 +237,7 @@ namespace Funeral.Web.Tools
                 /* changes for custom field implemented on 10th April 2017  completed*/
                 ddlBankBranch.SelectedValue = model.BranchId.ToString();
 
-                SecureUserGroupsModel[] modelS = _client.EditSecurUserbyID(SecureUserId);
+                List<SecureUserGroupsModel> modelS = ToolsSetingBAL.EditSecurUserbyID(SecureUserId);
                 foreach (ListItem lst in chkSecurityGroup.Items)
                 {
                     lst.Selected = false;
@@ -300,7 +294,7 @@ namespace Funeral.Web.Tools
             {
 
                 SecureUsersModel model;
-                model = _client.GetUserByID(txtUserNameUser.Text, Request.QueryString["CompanyParlourID"] != null ? CompanyParlourId : ParlourId);
+                model = ToolsSetingBAL.GetUserByID(txtUserNameUser.Text, Request.QueryString["CompanyParlourID"] != null ? CompanyParlourId : ParlourId);
                 if (model != null && SecureUserId == 0)
                 {
                     ShowMessage(ref lblMessage, MessageType.Danger, "User Already Exists.");
@@ -342,7 +336,7 @@ namespace Funeral.Web.Tools
                     // model.AgentSurname = txtAgentSurname.Text;
 
                     //================================================================ 
-                    int retID = _client.SaveUserDetails(model);
+                    int retID = ToolsSetingBAL.SaveUserDetails(model);
                     SecureUserId = retID;
 
                     // ==================[  User Security Group Insert Delete ]=============================
@@ -361,10 +355,10 @@ namespace Funeral.Web.Tools
                             modelS.ModifiedUser = UserName;
                             if (sguserID == 0)
                             {
-                                sguserID = _client.SaveUserGroupDetails(modelS);
+                                sguserID = ToolsSetingBAL.SaveUserGroupDetails(modelS);
                                 modelS.pkiSecureUserGroups = sguserID;
                             }
-                            sguserID = _client.SaveUserGroupDetails(modelS);
+                            sguserID = ToolsSetingBAL.SaveUserGroupDetails(modelS);
                         }
                     }
                     //bindEasyPayNumber();
@@ -417,7 +411,7 @@ namespace Funeral.Web.Tools
                 int suserId = Convert.ToInt32(e.CommandArgument);
                 try
                 {
-                    _client.DeleteUser(suserId);
+                    ToolsSetingBAL.DeleteUser(suserId);
                     ShowMessage(ref lblMessage, MessageType.Success, "Record deleted successfully.");
                     lblMessage.Visible = true;
                     BindUserList();
@@ -477,9 +471,9 @@ namespace Funeral.Web.Tools
         #region Custom field changes
         private void BindCustomDetails(Guid selectedParlourId)
         {
-            var custom1 = _client.GetAllCustomDetailsByParlourId(selectedParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom1));
-            var custom2 = _client.GetAllCustomDetailsByParlourId(selectedParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom2));
-            var custom3 = _client.GetAllCustomDetailsByParlourId(selectedParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom3));
+            var custom1 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(selectedParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom1));
+            var custom2 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(selectedParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom2));
+            var custom3 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(selectedParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom3));
             ddlCustom1.DataSource = custom1;
             ddlCustom1.DataTextField = "Name";
             ddlCustom1.DataValueField = "Id";
@@ -502,7 +496,7 @@ namespace Funeral.Web.Tools
 
         public void BindBranches(Guid selectedParlourId)
         {
-            BranchModel[] objBranchModel = _client.BranchByparlourId(selectedParlourId);
+            List<BranchModel> objBranchModel = CommonBAL.BranchByparlourId(selectedParlourId);
             foreach (BranchModel branch in objBranchModel)
             {
                 ListItem li = new ListItem();

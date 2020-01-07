@@ -224,6 +224,7 @@
         @Html.Hidden("BindPolicyCoverDateUrl", Url.Action("BindPolicyCoverDate"))
         @Html.Hidden("GetMemberToUpdate", Url.Action("GetMember"))
         @Html.Hidden("GetPolicyDetails", Url.Action("GetPolicyDetails"))
+        @Html.Hidden("GetPolicyDetailsBetweenAge", Url.Action("GetPolicyDetailsBetweenAge"))
         @Html.Hidden("SaveAddOnProduct", Url.Action("SaveAddOnProduct"))
         @Html.Hidden("UpdateAddOnProduct", Url.Action("UpdateAddOnProduct"))
         @Html.Hidden("DeleteAddOnProduct", Url.Action("DeleteAddOnProduct"))
@@ -575,6 +576,10 @@
                                                 <input type="text" maxlength="25" id="txtPolicyPremium" name="name" class="form-control" disabled>
                                             </div>
                                             <div class="form-group">
+                                                <label>Policy Cover </label>
+                                                <input type="text" maxlength="25" id="txtPolicyCoverAmount" name="name" class="form-control" disabled>
+                                            </div>
+                                            <div class="form-group">
                                                 <label>
                                                     Policy No / Membership No<em>*</em>
                                                 </label>
@@ -876,7 +881,7 @@
                                                             <div class="form-group">
                                                                 <label>Gender</label>
                                                                 <br />
-                                                                &nbsp &nbsp
+                                                                &nbsp; &nbsp;
                                                                 <input type="radio" name="dependentGender" value="male" id="male" checked="checked"> Male
                                                                 <input type="radio" name="dependentGender" value="female" id="female"> Female<br>
 
@@ -906,10 +911,6 @@
                                                                 @Html.DropDownList("DependencyList", Model.DependencyTypeList, "Select", new { Name = "Dependency", @id = "ddlDependentDependencyType", @style = "width:100%", @class = "form-control" })
                                                             </div>
                                                             <div class="form-group">
-                                                                <label>Premium <em>*</em></label>
-                                                                <input type="text" maxlength="25" id="txtDependentPremium" name="name" class="form-control" disabled>
-                                                            </div>
-                                                            <div class="form-group">
                                                                 <label>Status</label>
                                                                 <select id="ddl_DependentStatus" class="form-control">
                                                                     <option value="Active">Active</option>
@@ -921,49 +922,59 @@
                                                                     <option value="On Trial">On Trial</option>
                                                                 </select>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-lg-12">
+
                                                             <div class="form-group">
-                                                                <div class="btn-group">
-                                                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs">Reset</button>
-                                                                </div>
-                                                                <div class="btn-group">
-                                                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs" id="btnSaveDependent" onclick="SaveDependants()">Save</button>
-                                                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs" id="btnUpdateDependent" onclick="UpdateDependants()">Update</button>
-                                                                </div>
+                                                                <label>Premium <em>*</em></label>
+                                                                <input type="text" maxlength="25" id="txtDependentPremium" name="name" class="form-control" disabled>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>Cover <em>*</em></label>
+                                                                <input type="text" maxlength="25" id="txtDependentCoverAmount" name="name" class="form-control" disabled>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <div class="btn-group">
+                                                                <button class="btn btn-sm btn-primary pull-right m-t-n-xs">Reset</button>
+                                                            </div>
+                                                            <div class="btn-group">
+                                                                <button class="btn btn-sm btn-primary pull-right m-t-n-xs" id="btnSaveDependent" onclick="SaveDependants()">Save</button>
+                                                                <button class="btn btn-sm btn-primary pull-right m-t-n-xs" id="btnUpdateDependent" onclick="UpdateDependants()">Update</button>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-12 ">
-                                            <div class="table-responsive">
-                                                @Html.EditorFor(model => model.DependancySearch.PageNum, new { htmlAttributes = new { @class = "hidden", id = "PageNum1" } })
-                                                @Html.EditorFor(model => model.DependancySearch.PageSize, new { htmlAttributes = new { @class = "hidden", id = "PageSize1" } })
-                                                <table id="dependantExtendedFamilyDataTable" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>pkiDependentID</th>
-                                                            <th>Name</th>
-                                                            <th>IDNumber</th>
-                                                            <th>Start Date</th>
-                                                            <th>InceptionDate</th>
-                                                            <th>CoverDate</th>
-                                                            <th>Premium</th>
-                                                            <th>DependencyType</th>
-                                                            <th>Gender</th>
-                                                            <th>Status</th>
-                                                            <th>Actions</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody></tbody>
-                                                </table>
-                                            </div>
-
-                                        </div>
                                     </div>
+                                    <div class="col-sm-12 ">
+                                        <div class="table-responsive">
+                                            @Html.EditorFor(model => model.DependancySearch.PageNum, new { htmlAttributes = new { @class = "hidden", id = "PageNum1" } })
+                                            @Html.EditorFor(model => model.DependancySearch.PageSize, new { htmlAttributes = new { @class = "hidden", id = "PageSize1" } })
+                                            <table id="dependantExtendedFamilyDataTable" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>pkiDependentID</th>
+                                                        <th>Name</th>
+                                                        <th>IDNumber</th>
+                                                        <th>Start Date</th>
+                                                        <th>InceptionDate</th>
+                                                        <th>CoverDate</th>
+                                                        <th>Premium</th>
+                                                        <th>Cover</th>
+                                                        <th>DependencyType</th>
+                                                        <th>Gender</th>
+                                                        <th>Status</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
 
+                                    </div>
                                 </div>
                                 <!-- #endregion Tab5 -->
                                 <!-- #region Tab6 -->
@@ -1158,6 +1169,7 @@
     </div>
 </div>
 
+
 <div class="modal fade" id="TaskCopyPopupModel" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -1303,12 +1315,7 @@
             var dependancyDatatable;
             var memberPolicyDatatable;
 
-            $("#txtBirthDay").datepicker({
-                onSelect: function (dateText)
-                {
-                    $(this).change();
-                }
-            }).on("change", function ()
+            $("#txtBirthDay").datepicker({ format: 'dd MM yyyy',autoclose: true,setDate: new Date() , onSelect: function (dateText) { $(this).change(); } }).on("change", function ()
             {
                 Validate();
             });
@@ -1620,62 +1627,78 @@
             // #region ddlPolicyChange
 
             $("#tab-3 #ddlPolicy").change(function () {
-                var GetPremiumForPolicyURl = $("#GetPolicyDetails").val();
-                var id = $("#tab-3 #ddlPolicy").val();
-                var date = $("#tab-3 #txtPolicyStartDate").val();
-                var date = new Date(parseInt($("#tab-3 #txtPolicyStartDate").val().replace('/Date(', '')));
-                var policyStartDate = dateFormat($("#tab-3 #txtPolicyStartDate").val(), 'mm/dd/yyyy', false);
+                var GetPremiumForPolicyURl = $("#GetPolicyDetailsBetweenAge").val();
+                var getAge = $("#txtAge").val();
+                if (getAge != "" && getAge != null) {
+                    var id = $("#tab-3 #ddlPolicy").val();
+                    var date = $("#tab-3 #txtPolicyStartDate").val();
+                    var date = new Date(parseInt($("#tab-3 #txtPolicyStartDate").val().replace('/Date(', '')));
+                    var policyStartDate = dateFormat($("#tab-3 #txtPolicyStartDate").val(), 'mm/dd/yyyy', false);
 
-                if ($("#tab-3 #ddlPolicy :selected").val() != "") {
-                    $.ajax({
-                        url: GetPremiumForPolicyURl + "?id=" + id + "&date=" + policyStartDate+"&UserType=1",
-                        type: "get",
-                        cache: false,
-                        success: function (result) {
-                            $('#tab-3 #txtPolicyPremium').val(result[0]);
-                            $('#tab-3 #txtUnderwriter').val(result[1]);
-                            $('#hdCoverDate').val(result[2]);
-                            $('#txtDependencyCovertDate').val(result[2]);
-                            $('#tab-3 #txtCoverDate').val(result[2]);
-                            $('#tab-3 #txtTotalPremium').val(result[0]);
+                    if ($("#tab-3 #ddlPolicy :selected").val() != "") {
+                        $.ajax({
+                            url: GetPremiumForPolicyURl + "?id=" + id + "&date=" + policyStartDate + "&UserType=1&Age=" + getAge,
+                            type: "get",
+                            cache: false,
+                            success: function (result) {
+                                $('#tab-3 #txtPolicyPremium').val(result[0]);
+                                $('#tab-3 #txtPolicyCoverAmount').val(result[4]);
+                                $('#tab-3 #txtUnderwriter').val(result[1]);
+                                $('#hdCoverDate').val(result[2]);
+                                $('#txtDependencyCovertDate').val(result[2]);
+                                $('#tab-3 #txtCoverDate').val(result[2]);
+                                $('#tab-3 #txtTotalPremium').val(result[0]);
 
-                        },
-                        error: function (xhr, ajaxOptions, thrownError) {
-                            alert(thrownError);
-                        }
-                    })
-                }else{
-                    alert("Please select policy..!");
+                            },
+                            error: function (xhr, ajaxOptions, thrownError) {
+                                alert(thrownError);
+                            }
+                        })
+                    } else {
+                        alert("Please select policy..!");
+                    }
+                }
+                else {
+                     alert("Age not found in first tab");
                 }
             });
             $("#ddlDependentDependencyType").change(function () {
-                var GetPremiumForPolicyURl = $("#GetPolicyDetails").val();
+                var GetPremiumForPolicyURl = $("#GetPolicyDetailsBetweenAge").val();
                 var UserTypeId = $(this).val();
                 var Control = $(this);
-                Control.after('<img id="ddlDependentDependencyType_loader" src="../../Content/images/ajax-loader.gif"/>');
-                var policyStartDate = dateFormat($("#tab-3 #txtPolicyStartDate").val(), 'mm/dd/yyyy', false);
-                var id = $("#tab-3 #ddlPolicy").val();
-                $('#tab-5 #txtDependentPremium').val(0);
-                if ($("#tab-3 #ddlPolicy :selected").val() != "") {
-                    $.ajax({
-                        url: GetPremiumForPolicyURl + "?id=" + id +"&date=" + policyStartDate+ "&UserType=" + UserTypeId,
-                        type: "get",
-                        cache: false,
-                        success: function (result) {
-                            var DependentPremium = result[0] == null || result[0] == "" ? "0" : result[0];
-                            $('#tab-5 #txtDependentPremium').val(DependentPremium);
-                            var GetTotalPremium = parseFloat($('#tab-3 #txtTotalPremium').val())+parseFloat(DependentPremium);
-                            $('#tab-3 #txtTotalPremium').val(currencySymbol+" "+GetTotalPremium);
-                            $("#ddlDependentDependencyType_loader").remove();
-                        },
-                        error: function (xhr, ajaxOptions, thrownError) {
-                            alert(thrownError);
-                            $("#ddlDependentDependencyType_loader").remove();
-                        }
-                    })
-                }else{
-                    alert("Please select policy..!");
-                    $("#ddlDependentDependencyType_loader").remove();
+                var DependentAge = $("#txtDependentAge").val();
+                if (DependentAge != "" && DependentAge != null) {
+                    Control.after('<img id="ddlDependentDependencyType_loader" src="../../Content/images/ajax-loader.gif"/>');
+                    var policyStartDate = dateFormat($("#tab-3 #txtPolicyStartDate").val(), 'mm/dd/yyyy', false);
+                    var id = $("#tab-3 #ddlPolicy").val();
+                    $('#tab-5 #txtDependentPremium').val(0);
+                    $('#tab-5 #txtDependentCoverAmount').val(0);
+                    if ($("#tab-3 #ddlPolicy :selected").val() != "") {
+                        $.ajax({
+                            url: GetPremiumForPolicyURl + "?id=" + id + "&date=" + policyStartDate + "&UserType=" + UserTypeId + "&Age=" + DependentAge,
+                            type: "get",
+                            cache: false,
+                            success: function (result) {
+                                var DependentPremium = result[0] == null || result[0] == "" ? "0" : result[0];
+                                var DependentCoverAmount = result[4] == null || result[4] == "" ? "0" : result[4];
+                                $('#tab-5 #txtDependentPremium').val(DependentPremium);
+                                $('#tab-5 #txtDependentCoverAmount').val(DependentCoverAmount);
+                                var GetTotalPremium = parseFloat($('#tab-3 #txtTotalPremium').val()) + parseFloat(DependentPremium);
+                                $('#tab-3 #txtTotalPremium').val(currencySymbol + " " + GetTotalPremium);
+                                $("#ddlDependentDependencyType_loader").remove();
+                            },
+                            error: function (xhr, ajaxOptions, thrownError) {
+                                alert(thrownError);
+                                $("#ddlDependentDependencyType_loader").remove();
+                            }
+                        })
+                    } else {
+                        alert("Please select policy..!");
+                        $("#ddlDependentDependencyType_loader").remove();
+                    }
+                }
+                else {
+                     alert("Please select dependent Age");
                 }
             });
 
@@ -1692,6 +1715,9 @@
                 OnStartChangeFillPolicyModal(policyId, policyStartDate);
             });
             $("#tab-3 #txtPolicyStartDate").datepicker({
+                format: "dd MM yyyy",
+                autoclose: true,
+                setDate: new Date(),
                 onSelect: function (dateText) {
                     $(this).change();
                 }
@@ -1736,6 +1762,9 @@
             }
 
             $("#tab-5 #txtDependentStartDate").datepicker({
+                format: "dd MM yyyy",
+                autoclose: true,
+                setDate: new Date(),
                 onSelect: function (dateText) {
                     $(this).change();
                 }
@@ -1800,18 +1829,18 @@
 
             // #region datepickerFormat
 
-            $('.date1').datepicker({format: 'dd MM yyyy', autoclose: true,});
+            $('.date1').datepicker({format: 'dd MM yyyy', autoclose: true,setDate: new Date()});
 
-            $('.policyPopupDate').datepicker({format: 'dd MM yyyy', autoclose: true});
+            $('.policyPopupDate').datepicker({format: 'dd MM yyyy', autoclose: true,setDate: new Date()});
 
-            $('.date2').datepicker({format: 'dd MM yyyy', autoclose: true});
+            $('.date2').datepicker({format: 'dd MM yyyy', autoclose: true,setDate: new Date()});
 
-            $('.birthDate').datepicker({format: 'dd MM yyyy', autoclose: true});
+            $('.birthDate').datepicker({format: 'dd MM yyyy', autoclose: true,setDate: new Date()});
 
-            $('.date4').datepicker({format: 'dd MM yyyy', autoclose: true});
+            $('.date4').datepicker({format: 'dd MM yyyy', autoclose: true,setDate: new Date()});
 
 
-            $('.dependantStartDate').datepicker({format: 'dd MM yyyy'});
+            $('.dependantStartDate').datepicker({format: 'dd MM yyyy',autoclose: true,setDate: new Date()});
             $('.dependantStartDate').datepicker('setDate', new Date())
 
             $('.dependantDOB').datepicker({format: 'dd MM yyyy', autoclose: true});
@@ -1847,7 +1876,7 @@
         });
 
         $("#txtBirthDay").blur(function () {
-            var mdate = dateFormat($('#txtBirthDay').val(), 'mm-dd-yyyy', false)
+            var mdate = dateFormat($('#txtBirthDay').val(), 'dd-mm-yyyy', false)
             var yearThen = parseInt(mdate.substring(6, 10), 10);
             var monthThen = parseInt(mdate.substring(0, 2), 10);
             var dayThen = parseInt(mdate.substring(3, 5), 10);
@@ -1958,6 +1987,7 @@
                 DebitDate: dateFormat($("#txtDebitDate").val(), 'dd-mm-yyyy', false),
                 FK_MemberId: fkiMemberid,
                 PolicyPremium: $("#tab-3 #txtPolicyPremium").val(),
+                PolicyPremium: $("#tab-3 #txtPolicyCoverAmount").val(),
                 MemberBranch:$("#tab-4 #txtBankBranch").val(), //$("#ddlBankBranch :selected").text()
 
             };
@@ -2000,81 +2030,6 @@
 
         })
 
-        function ReloadPage(result){
-
-        }
-
-        $("#UpdateManageMembers").click(function () {
-
-            var SaveManageMembersURl = $("#SaveManageMembers").val();
-            var data = {
-                pkiMemberID :$("#pkiMemberID").val(),
-                MemberType:$("#MemberType").val(),
-                Title:$("#MemberType").val(),
-                FullNames: $("#tab-1 #txtFirstname").val(),
-                Surname: $("#tab-1 #txtLastName").val(),
-                Gender: $("#tab-1 input[name='name']:checked").val(),
-                IDNumber: $("#tab-1 #txtIdNumber").val(),
-                DateOfBirth: dateFormat($("#tab-1 #txtBirthDay").val(), 'dd-mm-yyyy', false),
-                Telephone:$("#txtCellphone").val(),
-                Cellphone:("#txtTelePhone$").val(),
-                Address1:("#txtTelePhone$").val(),
-                Address2:("#txtTelePhone$").val(),
-                Address3:("#txtTelePhone$").val(),
-                Address4:("#txtTelePhone$").val(),
-                Code:("#txtTelePhone$").val(),
-                MemeberNumber:("#txtTelePhone$").val(),
-                MemberSociety: ("#tab-3 #txtTelePhone$").val(),
-                fkiPlanID:("#txtTelePhone$").val(),
-                Active:("#txtTelePhone$").val(),
-                InceptionDate: dateFormat(("#tab-3 #txtTelePhone$").val(), 'dd-mm-yyyy', false),
-                Claimnumber:("#txtTelePhone$").val(),
-                PolicyStatus:("#txtTelePhone$").val(),
-                parlourid:("#txtTelePhone$").val(),
-                Agent: ("#tab-3 #txtTelePhone$").val(),
-                AccountHolder:("#txtTelePhone$").val(),
-                Bank:("#txtTelePhone$").val(),
-                BranchCode:("#txtTelePhone$").val(),
-                Branch:("#txtTelePhone$").val(),
-                AccountNumber:("#txtTelePhone$").val(),
-                AccountType:("#txtTelePhone$").val(),
-                DebitDate: dateFormat(("#txtTelePhone$").val(), 'dd-mm-yyyy', false),
-                MemberBranch:("#txtTelePhone$").val(),
-                CoverDate: dateFormat(("#txtTelePhone$").val(), 'dd-mm-yyyy', false),
-                Email:$("#txtEmail").val(),
-                Citizenship:$("#ddlCitizenship").val(),
-                Passport:$("#ddlCitizenship").val(),
-                StartDate: dateFormat(("#tab-3 #txtTelePhone$").val(), 'dd-mm-yyyy', false),
-                IsDeleted:("#txtTelePhone$").val(),
-                DeletedBy:("#txtTelePhone$").val(),
-                DeletedDate:("#txtTelePhone$").val(),
-                CustomId1: ("#tab-3 #txtTelePhone$").val(),
-                CustomId2: ("#tab-3 #txtTelePhone$").val(),
-                CustomId3: ("#tab-3 #txtTelePhone$").val(),
-                FK_MemberId: ("#txtTelePhone$").val(),
-                PolicyPremium: $("#tab-3 #txtPolicyPremium").val()
-            };
-
-            $.ajax({
-                url: GetPremiumForPolicyURl,
-                data: data,
-                type: "get",
-                cache: false,
-                success: function (result) {
-                    if(result[0].pkiPlanID != "")
-                    {
-                        $("#tab-3 #txtPolicyPremium").val(result[0].PlanSubscription);
-                        //$("#tab-3 #txtTotalPremium").val(result[0].PlanSubscription);
-                    }else{
-                        alert("error");
-                    }
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    alert(thrownError);
-                }
-            })
-        })
-
         //#endregion
 
         $("#txtCode").keypress(function (e) {
@@ -2114,7 +2069,8 @@
         })
 	   $("#btnResetTab3").click(function(){
             $("#tab-3 #ddlPolicy").val('');
-            $("#tab-3 #txtPolicyPremium").val('');
+           $("#tab-3 #txtPolicyPremium").val('');
+           $("#tab-3 #txtPolicyCoverAmount").val('');
             $("#tab-3 #txtPolicyNo").val('');
             $("#tab-3 #txtEasyToPay").val('');
             $("#tab-3 #ddlBankBranch").val('');
@@ -2675,7 +2631,6 @@
                         type: "post",
                         cache: false,
                         success: function (result) {
-                            debugger;
                             if (result == "Addon product add successfully.") {
                                 productDatatable.fnDraw();
                                 $("#drpProductName option").each(function () {
@@ -2767,6 +2722,7 @@
 
         //#region EditMember
         function EditValues(member) {
+            console.log(member);
             $("#pkiMemberID").val(member.fkiMemberID);
             $("#tab-1 #txtFirstname").val(member.FullNames);
             $("#tab-1 #txtLastName").val(member.Surname);
@@ -2782,7 +2738,6 @@
             $("#ddlCitizenship option").filter(function () {
                 return this.text == member.Citizenship;
             }).attr('selected', true);
-
             $("#tab-3 #ddlPolicy option").each(function () {
                 if ($(this).val() == member.fkiPlanID) {
                     $(this).attr('selected', 'selected');
@@ -2790,8 +2745,10 @@
             });
 
             $("#tab-3 #txtPolicyPremium").val(member.PolicyPremium);
+            $("#tab-3 #txtPolicyCoverAmount").val(member.CoverAmount);
             $("#txtPassport").val(member.Passport);
             $("#txtStreetPostalAddress").val(member.Address1);
+            $("#txtAge").val(member.Age);
             $("#txtStreetAddress").val(member.Address2);
             $("#txtTownOrCity").val(member.Address3);
             $("#txtProvince").val(member.Address4);
@@ -2800,11 +2757,6 @@
 
             $("#tab-3 #txtPolicyNo").val(member.MemeberNumber);
             $("#tab-3 #txtEasyToPay").val(member.EasyPayNo);
-            //$("#tab-3 #ddlBankBranch option").each(function () {
-            //    if ($(this).val() == member.Branch) {
-            //        $(this).attr('selected', 'selected');
-            //    }
-            //});
             $("#tab-3 #ddlBankBranch option:selected").text(member.Branch)
             $("#tab-3 #ddlCustom1").val(member.CustomId1);
             $("#tab-3 #ddlCustom2").val(member.CustomId2);
@@ -2817,7 +2769,6 @@
             });
             $.noConflict();
             jQuery(document).ready(function () {
-                //$('#txtBirthDay').datepicker("setDate", dateFormat(new Date(parseInt(member.DateOfBirth.replace('/Date(', ''))), "mm/dd/yyyy", true));
                 $('#tab-1 #txtBirthDay').datepicker({ format: 'dd MM yyyy',autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(member.DateOfBirth)), "dd/mm/yyyy", false));
                 $('#tab-3 #txtPolicyStartDate').datepicker({ format: 'dd MM yyyy',autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(member.StartDate)), "dd/mm/yyyy", false));
                 $('#tab-3 #txtInception').datepicker({ format: 'dd MM yyyy',autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(member.InceptionDate)), "dd/mm/yyyy", false));
@@ -2825,11 +2776,6 @@
                 $('#txtDebitDate').datepicker({ format: 'dd MM yyyy',autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(member.DebitDate)), "dd/mm/yyyy", false));
             });
 
-            //$("#tab-3 #ddlAgent option").each(function () {
-            //    if ($(this).text() == member.Agent) {
-            //        $(this).attr('selected', 'selected');
-            //    }
-            //});
             $("#tab-3 #ddlAgent option:selected").text(member.Agent)
             $("#txtTelePhone").val(member.Telephone);
             $("#txtAccountholder").val(member.AccountHolder);
@@ -3193,6 +3139,14 @@
                                     return premium;
                                 }
                             },
+                            {
+                                "data": "Cover", "name": "Cover", "autoWidth": true,
+								"render": function (data) {
+									var currencyPremium = currencySymbol + data
+									var premium = "<div class='pull-right'>" + currencyPremium + ".00" + "</div>";
+                                    return premium;
+                                }
+                            },
                             { "data": "DependencyType", "name": "Dependency", "autoWidth": true },
 
                             { "data": "Gender", "name": "Gender", "autoWidth": true },
@@ -3271,9 +3225,11 @@
         }
 
         $("#tab-5 #txtDependentPremium").val(dependant.Premium);
+        $('#tab-5 #txtDependentCoverAmount').val(dependant.Cover);
         $('html, body').animate({
             scrollTop: $("#tab5Dependent").offset().top
         }, 100);
+        $("#txtDependentInceptionDate").attr("readonly", "true");
     }
     //#endregion
 
@@ -3287,6 +3243,7 @@
         var birthDate = $("#tab-5 #txtDependentDateOfBirth").val();
         var startDate = $("#tab-5 #txtDependentStartDate").val();
         var premium = $("#tab-5 #txtDependentPremium").val();
+        var CoverAmount = $("#tab-5 #txtDependentCoverAmount").val();
         var inceptionDate = $("#tab-5 #txtDependentInceptionDate").val();
         var allFlag = true;
         var lastNameFlag = true;
@@ -3457,7 +3414,7 @@
                 pkiDependentID: 0,
                 MemberId: pkiMemberId,
                 Relationship: $("#tab-5 #ddlDependentDependencyType :selected").val(),
-                Cover:0
+                Cover:$("#tab-5 #txtDependentCoverAmount").val()
             };
 
             jQuery.ajax({
@@ -3469,31 +3426,37 @@
                 success: function (result) {
 
                     var isSuccessful = (result['success']);
+                    var maxLenghDependancy = (result['maxLenghDependancy']);
                     if (isSuccessful != false) {
-                        dependancyDatatable.fnDraw();
-                        $("#tab-5 #txtDependentLastname").val('');
-                        $("#tab-5 #txtDependentFirstname").val('');
-                        $("#tab-5 #txtDependentIdNumber").val('');
-                        $("#tab-5 #txtDependentAge").val('');
-                        $("input[name='dependentGender']:checked").val('');
+                        if (maxLenghDependancy == true) {
+                            dependancyDatatable.fnDraw();
+                            $("#tab-5 #txtDependentLastname").val('');
+                            $("#tab-5 #txtDependentFirstname").val('');
+                            $("#tab-5 #txtDependentIdNumber").val('');
+                            $("#tab-5 #txtDependentAge").val('');
+                            $("input[name='dependentGender']:checked").val('');
 
-                        $('.dependantInceptionDate').datepicker({ format: 'dd MM yyyy' ,autoclose: true}).datepicker("setDate", Date());
-                        //$('.dependantInceptionDate').datepicker('setDate', null);
-                        $('.dependantStartDate').datepicker({ format: 'dd MM yyyy',autoclose: true }).datepicker("setDate", Date());
-                        //$('.dependantCoverDate').datepicker({ format: 'dd MM yyyy' }).datepicker("setDate", Date());
-                        $('.dependantDOB').datepicker({ format: 'dd MM yyyy',autoclose: true }).datepicker("setDate", Date());
+                            $('.dependantInceptionDate').datepicker({ format: 'dd MM yyyy', autoclose: true }).datepicker("setDate", Date());
+                            //$('.dependantInceptionDate').datepicker('setDate', null);
+                            $('.dependantStartDate').datepicker({ format: 'dd MM yyyy', autoclose: true }).datepicker("setDate", Date());
+                            //$('.dependantCoverDate').datepicker({ format: 'dd MM yyyy' }).datepicker("setDate", Date());
+                            $('.dependantDOB').datepicker({ format: 'dd MM yyyy', autoclose: true }).datepicker("setDate", Date());
 
-                        $("#tab-5 #ddlDependentDependencyType").val('');
-                        $("#tab-5 #txtDependentPremium").val('');
+                            $("#tab-5 #ddlDependentDependencyType").val('');
+                            $("#tab-5 #txtDependentPremium").val('');
 
-                        $("#btnSaveDependent").show();
-                        $("#btnUpdateDependent").hide();
-                        //$("#btnSaveDependent").prop('disabled', false);
-                        //$("#btnUpdateDependent").prop('disabled', true);
+                            $("#btnSaveDependent").show();
+                            $("#btnUpdateDependent").hide();
+                            //$("#btnSaveDependent").prop('disabled', false);
+                            //$("#btnUpdateDependent").prop('disabled', true);
 
-                        //$("#tab-5 #txtDepnduncyType").text('');
-                        //$("#tab-5 #txtPremium").val('');
-                        location.reload();
+                            //$("#tab-5 #txtDepnduncyType").text('');
+                            //$("#tab-5 #txtPremium").val('');
+                        }
+                        else {
+                             var errors = "this member has already added 100 dependencies ";
+                        displayUpdateDependantValidationErrors_directMsg(errors);
+                        }
                     }
                     else {
                         var errors = result['errors'];
@@ -3518,10 +3481,14 @@
             });
         }
     }
+     function displayUpdateDependantValidationErrors_directMsg(errors) {
+        var $ul = $('#AddUpdateDependantValidationSummary > ul');
+        $ul.empty();
+        $ul.append('<li>' + errors + '</li>');
+    }
 
     function UpdateDependants() {
         var UpdateDependantURl = $("#UpdateDependancy").val();
-
         var data = {
             pkiDependentID: $("#hdnDependantId").val(),
             DependentStatus: $("#tab-5 #ddl_DependentStatus").val(),
@@ -3535,7 +3502,8 @@
             InceptionDate: dateFormat($("#tab-5 #txtDependentInceptionDate").val(), 'dd-mm-yyyy', false),
             CoverDate: dateFormat($("#tab-5 #txtDependentCoverDate").val(), 'dd-mm-yyyy', false),
             DependencyType: $("#tab-5 #ddlDependentDependencyType :selected").text(),
-            Premium: $("#tab-5 #txtDependentPremium").val()
+            Premium: $("#tab-5 #txtDependentPremium").val(),
+            Cover:$("#tab-5 #txtDependentCoverAmount").val()
         };
 
         $.ajax({
@@ -3572,7 +3540,8 @@
 
                     //$("#btnSaveDependent").prop('disabled', false);
                     //$("#btnUpdateDependent").prop('disabled', true);
-                    location.reload();
+                    //location.reload();
+                    $("#txtDependentInceptionDate").attr("readonly", false);
                 }
                 else {
                     var errors = result['errors'];
@@ -3714,7 +3683,6 @@
     }*@
 
     function UpdateAddOnProduct() {
-        debugger;
         $("#hdnPremium").val($("#txtPremium").val().split(" ")[$("#txtPremium").val().split(" ").length - 1]);
         var premiumLength = $("#txtPremium").val().split(" ").length;
         var premiumVal = $("#txtPremium").val().split(" ")[premiumLength-1];
@@ -3960,7 +3928,6 @@
 
     //#region Jeenal Changes
 	function OnStartChangeFillPolicyModal(policyId, policyStartDate) {
-		debugger
         var bindPolicyCoverDateUrl = $("#BindPolicyCoverDateUrl").val();
 
         if (policyId != '' && policyStartDate != undefined) {

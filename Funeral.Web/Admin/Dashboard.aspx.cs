@@ -1,6 +1,7 @@
 ﻿using Funeral.BAL;
 using Funeral.Model;
 using Funeral.Web.App_Start;
+using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,6 @@ namespace Funeral.Web.Admin
 {
     public partial class Dashboard : AdminBasePage
     {
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
         #region Page Property
 
         public int PageSize
@@ -77,6 +77,8 @@ namespace Funeral.Web.Admin
             this.dbPageId = 0;
         }
         #endregion
+
+        private readonly ISiteSettings _siteConfig = new SiteSettings();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -99,7 +101,7 @@ namespace Funeral.Web.Admin
                     bindPolicyPremiumList();
                     HideData.Visible = true;
                     bindCompanyType();
-                    
+
                 }
             }
         }
@@ -128,10 +130,10 @@ namespace Funeral.Web.Admin
         {
             try
             {
-                ApplicationSettingsModel ComName = client.GetAllApplicationList2(ParlourId, 0, 0);
+                ApplicationSettingsModel ComName = ToolsSetingBAL.GetAllApplicationList2(ParlourId, 0, 0);
                 if (ComName != null)
                 {
-                    ApplicationSettingsModel[] model = client.GetAllApplicationList(ParlourId, 1, 0);
+                    List<ApplicationSettingsModel> model = ToolsSetingBAL.GetAllApplicationList(ParlourId, 1, 0);
                     if (model != null)
                     {
                         ddlCompanyList.Visible = true;
@@ -156,7 +158,7 @@ namespace Funeral.Web.Admin
             if (!IsPostBack)
             {
                 gvPolicyPremium.PageSize = PageSize;
-                List<PolicyPremiumDashboardModel> objModel = client.SelectPolicyPremiumByParlourId(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType, ContactUC.IsAdministrator, ContactUC.IsSuperUser, this.UserName).ToList();
+                List<PolicyPremiumDashboardModel> objModel = MembersBAL.SelectPolicyPremiumByParlourId(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType, ContactUC.IsAdministrator, ContactUC.IsSuperUser, this.UserName);
                 gvPolicyPremium.DataSource = objModel;
                 gvPolicyPremium.DataBind();
             }
@@ -166,7 +168,7 @@ namespace Funeral.Web.Admin
                 if (ddlCompanyList.SelectedValue == "" || ddlCompanyList.SelectedValue == null)
                 {
                     gvPolicyPremium.PageSize = PageSize;
-                    List<PolicyPremiumDashboardModel> objModel = client.SelectPolicyPremiumByParlourId(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType, ContactUC.IsAdministrator, ContactUC.IsSuperUser, this.UserName).ToList();
+                    List<PolicyPremiumDashboardModel> objModel = MembersBAL.SelectPolicyPremiumByParlourId(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType, ContactUC.IsAdministrator, ContactUC.IsSuperUser, this.UserName);
                     gvPolicyPremium.DataSource = objModel;
                     gvPolicyPremium.DataBind();
 
@@ -174,7 +176,7 @@ namespace Funeral.Web.Admin
                 else
                 {
                     int AppId = Convert.ToInt32(ddlCompanyList.SelectedValue);
-                    ApplicationSettingsModel ComName = client.GetAllApplicationList2(ParlourId, 2, AppId);
+                    ApplicationSettingsModel ComName = ToolsSetingBAL.GetAllApplicationList2(ParlourId, 2, AppId);
                     Guid selectedCompany;
                     if (Convert.ToInt32(ddlCompanyList.SelectedValue) > 0)
                     {
@@ -188,7 +190,7 @@ namespace Funeral.Web.Admin
                     gvPolicyPremium.PageSize = PageSize;
                     ContactUC.ParlourId = selectedCompany;
                     ContactUC.UserName = this.UserName;
-                    List<PolicyPremiumDashboardModel> objModel = client.SelectPolicyPremiumByParlourId(selectedCompany, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType, false, ContactUC.IsSuperUser, this.UserName).ToList(); // Id Administrator pass true else it should be false to select selected company data those not admin
+                    List<PolicyPremiumDashboardModel> objModel = MembersBAL.SelectPolicyPremiumByParlourId(selectedCompany, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType, false, ContactUC.IsSuperUser, this.UserName).ToList(); // Id Administrator pass true else it should be false to select selected company data those not admin
                     ContactUC.LoadChart();
                     gvPolicyPremium.DataSource = objModel;
                     gvPolicyPremium.DataBind();
@@ -199,13 +201,13 @@ namespace Funeral.Web.Admin
         public void BindDashboardLabel()
         {
             //DivpaymentCollection.Visible = true;
-            var datasetTable = CommonBAL.GetDashboardLableDetails(this.ParlourId,this.IsAdministrator,this.IsSuperUser,this.UserName);
+            var datasetTable = CommonBAL.GetDashboardLableDetails(this.ParlourId, this.IsAdministrator, this.IsSuperUser, this.UserName);
             if (datasetTable.Tables.Count > 0)
             {
                 lblTodayTotalPayment.InnerText = this.Currency + " " + datasetTable.Tables[0].Rows[0]["TodayPayment"].ToString();
                 lblOutstandingPaymentsCount.InnerText = this.Currency + " " + datasetTable.Tables[0].Rows[0]["OutstandingCollection"].ToString();
                 lblTotalSMSCreditsCount.InnerText = datasetTable.Tables[0].Rows[0]["SMSBalalnce"].ToString();
-                
+
                 var getLable = datasetTable.Tables[0].Rows[0]["PaymentLabel"].ToString();
                 //lblPaymentUpDownIcon.Attributes.Add("class", "fa fa-arrow-" + getLable);
                 //lblPaymentUpDownIcon.Attributes.Add("style", "color:" + (getLable == "up" ? "green" : "red"));
@@ -213,7 +215,7 @@ namespace Funeral.Web.Admin
         }
         public int SelectName()
         {
-            ApplicationSettingsModel ComName = client.GetAllApplicationList2(ParlourId, 0, 0);
+            ApplicationSettingsModel ComName = ToolsSetingBAL.GetAllApplicationList2(ParlourId, 0, 0);
 
             int pkiID = ComName.pkiApplicationID;
             return pkiID;
@@ -318,7 +320,7 @@ namespace Funeral.Web.Admin
                     model1.LastModified = DateTime.Now;
                     model1.ModifiedUser = this.UserName;
                     CommonBAL.SMSTopup_save(model1);
-                    ScriptManager.RegisterClientScriptBlock(this.Page,GetType(), "alert", "alert('SMS Qty. Inserted successfully');", true);
+                    ScriptManager.RegisterClientScriptBlock(this.Page, GetType(), "alert", "alert('SMS Qty. Inserted successfully');", true);
                 }
                 else
                 {
@@ -336,6 +338,76 @@ namespace Funeral.Web.Admin
         {
             CommonBAL.SendOutstandingMessagesToAll(this.ParlourId);
             ScriptManager.RegisterClientScriptBlock(this.Page, GetType(), "alert", "alert('Outstanding SMS Sent successfully');", true);
+        }
+
+        protected void btnGenerateCashupReport_Click(object sender, EventArgs e)
+        {
+            GenerateCashupReport();
+
+        }
+        public void GenerateCashupReport()
+        {
+            Warning[] warnings;
+            string[] streamids;
+            string mimeType;
+            string encoding;
+            string filename;
+            string result;
+
+            try
+            {
+                ReportViewer rpw = new ReportViewer();
+                rpw.ProcessingMode = ProcessingMode.Remote;
+                IReportServerCredentials irsc = new MyReportServerCredentials();
+                rpw.ServerReport.ReportServerCredentials = irsc;
+
+                rpw.ProcessingMode = ProcessingMode.Remote;
+                rpw.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
+                rpw.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/UIS_Daily Cash Up Summary Dashboard";
+                ReportParameterCollection reportParameters = new ReportParameterCollection();
+
+                DateTime d1 = DateTime.Now;
+
+                var IsSuperUserStatus = IsSuperUser == true ? "1" : "0";
+
+                reportParameters.Add(new ReportParameter("DateFrom", d1.AddDays(-1).ToShortDateString()));
+                reportParameters.Add(new ReportParameter("DateTo", d1.ToShortDateString()));
+                reportParameters.Add(new ReportParameter("Parlourid", ParlourId.ToString()));
+                reportParameters.Add(new ReportParameter("UserID", this.UserID.ToString()));
+                reportParameters.Add(new ReportParameter("IsSuperUser", IsSuperUserStatus));
+
+                //reportParameters.Add(new ReportParameter("Branch", ""));
+                //reportParameters.Add(new ReportParameter("CustomId1", ""));
+                //reportParameters.Add(new ReportParameter("CustomId2", ""));
+                //reportParameters.Add(new ReportParameter("CustomId3", ""));
+                //reportParameters.Add(new ReportParameter("Society", ""));
+                //reportParameters.Add(new ReportParameter("Agent", ""));
+                //reportParameters.Add(new ReportParameter("Underwriter", ""));
+                //reportParameters.Add(new ReportParameter("PaymentType", ""));
+                //reportParameters.Add(new ReportParameter("PolicyStatus", ""));
+
+                rpw.ServerReport.SetParameters(reportParameters);
+                string ExportTypeExtensions = "pdf";
+                byte[] bytes = rpw.ServerReport.Render(ExportTypeExtensions, null, out mimeType, out encoding, out ExportTypeExtensions, out streamids, out warnings);
+                filename = string.Format("{0}.{1}", "Daily Cash Up Summary", ExportTypeExtensions);
+
+                Response.ClearHeaders();
+                Response.Clear();
+                Response.AddHeader("Content-Disposition", "attachment;filename=" + filename);
+                Response.ContentType = mimeType;
+                Response.BinaryWrite(bytes);
+                Response.Flush();
+                Response.End();
+                result = "true";
+
+            }
+            catch (Exception ex)
+            {
+                result = ex.Message;
+                //result = "The attempt to connect to the report server failed.  Check your connection information and that the report server is a compatible version.    ";
+                //ShowMessage(ref lblMessage, MessageType.Danger, exc.Message);
+            }
+            //return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

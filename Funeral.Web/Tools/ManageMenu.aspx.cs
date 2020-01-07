@@ -7,13 +7,13 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Funeral.Model;
+using Funeral.BAL;
 
 namespace Funeral.Web.Tools
 {
     public partial class ManageMenu : AdminBasePage
     {
         #region Fields
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
         #endregion
 
         #region Page PreInit
@@ -33,7 +33,7 @@ namespace Funeral.Web.Tools
         public void LoadMenuTable()
         {
             StringBuilder strtab = new StringBuilder();
-            List<RightsModel> data = client.tblRightGetAll().ToList();
+            List<RightsModel> data = RightsBAL.tblRightGetAll();
             int sno = 1;
             foreach (var item in data)
             {

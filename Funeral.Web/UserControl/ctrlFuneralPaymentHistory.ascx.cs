@@ -1,4 +1,5 @@
-﻿using Funeral.Model;
+﻿using Funeral.BAL;
+using Funeral.Model;
 using Funeral.Web.App_Start;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace Funeral.Web.UserControl
 {
     public partial class ctrlFuneralPaymentHistory : BaseUserControl
     {
-        private readonly FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
+
         public Guid ParlourId { get; set; }
         public int FuneralId { get; set; }
         protected void Page_Load(object sender, EventArgs e)
@@ -22,7 +23,7 @@ namespace Funeral.Web.UserControl
 
         public void bindInvoices(Guid ParlourId)
         {
-            List<FuneralPaymentsModel> modelList = client.ReturnFuneralPayments(ParlourId, FuneralId.ToString()).ToList();
+            List<FuneralPaymentsModel> modelList = MemberPaymentBAL.ReturnFuneralPayments(ParlourId, FuneralId.ToString()).ToList();
             gvInvoices.DataSource = modelList;
             gvInvoices.DataBind();
         }

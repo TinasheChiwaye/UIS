@@ -119,7 +119,17 @@ namespace Funeral.BAL
             return FuneralHelper.DataTableMapToList<FuneralDocumentModel>(FuneralDAL.SelectFuneralDocumentsByPKIddt(DocumentId)).FirstOrDefault();
         }
 
-       
+
         #endregion
+        public static FuneralModel SelectFuneralByClaimId(int ID)
+        {
+            DataTable dr = FuneralDAL.SelectFuneralByClaimIdddt(ID);
+            return FuneralHelper.DataTableMapToList<FuneralModel>(dr).FirstOrDefault();
+        }
+        public static FuneralModel GetFuneralByClaimId(int ClaimId)
+        {
+            DataTable dr = FuneralDAL.GetFuneralByClaimId(ClaimId);
+            return FuneralHelper.DataTableMapToList<FuneralModel>(dr).FirstOrDefault();
+        }
     }
 }

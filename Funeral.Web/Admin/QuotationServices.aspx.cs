@@ -1,21 +1,20 @@
-﻿using Funeral.Model;
+﻿using Funeral.BAL;
+using Funeral.Model;
 using Funeral.Web.App_Start;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data.SqlClient;
 
 namespace Funeral.Web.Admin
 {
     public partial class QuotationServices : AdminBasePage
     {
         #region Fields
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
+
         public int QuotationID
         {
             get
@@ -164,19 +163,19 @@ namespace Funeral.Web.Admin
                 ShowMessage(ref lblMessage, MessageType.Danger, ex.Message);
             }
         }
-        
+
         public void bindServicesType()
         {
             try
             {
-                QuotationServicesModel[] objQuoSer = client.GetAllQuotationServices(ParlourId);
+                List<QuotationServicesModel> objQuoSer = QuotationBAL.GetAllQuotationServices(ParlourId);
                 ddlServices.DataTextField = "ServiceName";
                 ddlServices.DataValueField = "pkiServiceID";
                 ddlServices.DataSource = objQuoSer;
                 ddlServices.DataBind();
                 ddlServices.Items.Insert(0, new ListItem("Select", "0"));
 
-                QuotationDiscountModel objid = client.GetAllQuotationDiscounts(QuotationID);
+                QuotationDiscountModel objid = QuotationBAL.GetAllQuotationDiscounts(QuotationID);
                 if (objid == null)
                 {
                     ViewState["DiscountID"] = "0";
@@ -194,10 +193,10 @@ namespace Funeral.Web.Admin
 
         public void GetCompDetails()
         {
-            ApplicationSettingsModel objApp = client.GetApplictionByParlourID(ParlourId);
-            txtcompanyRules.Text = objApp.ApplicationName + Environment.NewLine + objApp.BusinessAddressLine1 + "," + Environment.NewLine + objApp.BusinessAddressLine2 + "," + Environment.NewLine + objApp.BusinessAddressLine3 + "," + Environment.NewLine + objApp.BusinessAddressLine4  + Environment.NewLine + objApp.BusinessPostalCode;
+            ApplicationSettingsModel objApp = ToolsSetingBAL.GetApplictionByParlourID(ParlourId);
+            txtcompanyRules.Text = objApp.ApplicationName + Environment.NewLine + objApp.BusinessAddressLine1 + "," + Environment.NewLine + objApp.BusinessAddressLine2 + "," + Environment.NewLine + objApp.BusinessAddressLine3 + "," + Environment.NewLine + objApp.BusinessAddressLine4 + Environment.NewLine + objApp.BusinessPostalCode;
             ApplicationTnCModel ModelTnc;
-            ModelTnc = client.SelectApplicationTermsAndCondition(ParlourId);
+            ModelTnc = ToolsSetingBAL.SelectApplicationTermsAndCondition(ParlourId);
             if (ModelTnc != null)
             {
                 txtTnc.Text = ModelTnc.TermsAndCondition;
@@ -207,9 +206,9 @@ namespace Funeral.Web.Admin
 
         public void GetQuotationData()
         {
-            QuotationModel objQuotation = client.SelectQuotationByQuotationId(QuotationID, ParlourId);
+            QuotationModel objQuotation = QuotationBAL.SelectQuotationByQuotationId(QuotationID, ParlourId);
             txtStatus.Text = objQuotation.QuotationStatus;
-            txtTo.Text = objQuotation.ContactTitle + " " + objQuotation.ContactLastName + " " + objQuotation.ContactFirstName + Environment.NewLine + objQuotation.AddressLine1 + "," + Environment.NewLine + objQuotation.AddressLine2 + "," + Environment.NewLine + objQuotation.AddressLine3 + "," + Environment.NewLine + objQuotation.AddressLine4  + Environment.NewLine + objQuotation.Code;
+            txtTo.Text = objQuotation.ContactTitle + " " + objQuotation.ContactLastName + " " + objQuotation.ContactFirstName + Environment.NewLine + objQuotation.AddressLine1 + "," + Environment.NewLine + objQuotation.AddressLine2 + "," + Environment.NewLine + objQuotation.AddressLine3 + "," + Environment.NewLine + objQuotation.AddressLine4 + Environment.NewLine + objQuotation.Code;
             txtQuotationNumber.Text = objQuotation.QuotationNumber;
             txtDate.Text = objQuotation.DateOfQuotation.ToString("dd'/'MM'/'yyyy");
             txtNotes.Text = objQuotation.Notes;
@@ -219,11 +218,11 @@ namespace Funeral.Web.Admin
             {
                 Accept.Visible = false;
             }
-            
+
         }
         public void BindRejectMsg()
         {
-            QuotationMessageModel objmsg = client.SelectQuotationMessageByID(QuotationID);
+            QuotationMessageModel objmsg = QuotationBAL.SelectQuotationMessageByID(QuotationID);
             if (objmsg != null)
             {
                 txtReject.Text = objmsg.Message.ToString();
@@ -234,7 +233,7 @@ namespace Funeral.Web.Admin
         public void SubTotalcal()
         {
             decimal rate = Convert.ToDecimal(txtRate.Text);
-            if (txtNumber.Text==string.Empty)
+            if (txtNumber.Text == string.Empty)
             {
                 //txtNumber.Text = Convert.ToInt64(1);
                 int qty = Convert.ToInt32(1);
@@ -246,25 +245,25 @@ namespace Funeral.Web.Admin
                 int qty = Convert.ToInt32(txtNumber.Text);
                 txtTotal.Text = (rate * qty).ToString();
             }
-            
+
         }
         public void BindServiceToUpdate()
         {
-            int serviceID=Convert.ToInt32(ViewState["ID"]);
-            QuotationServicesModel model = client.SelectServiceByQouAndID(QuotationID, serviceID);
+            int serviceID = Convert.ToInt32(ViewState["ID"]);
+            QuotationServicesModel model = QuotationBAL.SelectServiceByQouAndID(QuotationID, serviceID);
             if ((model == null) || (model.QuotationID != QuotationID))
             {
                 Response.Write("<script>alert('Sorry!you are not authorized to perform edit on this Quotation.');</script>");
             }
-            else 
+            else
             {
-                
-                ddlServices.SelectedValue=model.pkiServiceID.ToString();
+
+                ddlServices.SelectedValue = model.pkiServiceID.ToString();
                 txtSerDes.Text = model.ServiceDesc;
-                txtNumber.Text=model.Quantity.ToString();                
-                txtRate.Text=model.ServiceRate.ToString();              
-                
-               
+                txtNumber.Text = model.Quantity.ToString();
+                txtRate.Text = model.ServiceRate.ToString();
+
+
                 AddServ.Text = "Update";
             }
 
@@ -272,8 +271,8 @@ namespace Funeral.Web.Admin
 
         public void bindServiceListList()
         {
-            QuotationServicesModel[] objServ = client.SelectServiceByQoutationID(QuotationID);
-            decimal Amt=0;
+            List<QuotationServicesModel> objServ = QuotationBAL.SelectServiceByQoutationID(QuotationID);
+            decimal Amt = 0;
             foreach (var item in objServ)
             {
                 Amt = Amt + item.Amount;
@@ -282,7 +281,7 @@ namespace Funeral.Web.Admin
 
             gvServiceList.DataSource = objServ;
             gvServiceList.DataBind();
-            
+
         }
         public void ClearService()
         {
@@ -299,38 +298,38 @@ namespace Funeral.Web.Admin
         {
             Response.Redirect("~/Admin/Qoutation.aspx");
         }
-        
+
         protected void btn_Print(object sender, EventArgs e)
-        { 
+        {
             int QutID = QuotationID;
             QuotationPrint(QutID);
         }
-       
+
         protected void ChangeData(object sender, EventArgs e)
         {
-            
+
             int Description = Convert.ToInt32(ddlServices.SelectedValue);
-            QuotationServicesModel objQuotation = client.GetServiceByID(Description);
+            QuotationServicesModel objQuotation = QuotationBAL.GetServiceByID(Description);
 
             txtSerDes.Text = objQuotation.ServiceDesc;
             decimal money = objQuotation.ServiceCost;
             string rate = String.Format("{0:#.00}", money);
             txtRate.Text = rate;
-            SubTotalcal();     
+            SubTotalcal();
         }
         protected void SaveAllDetails(object sender, EventArgs e)
-        { 
-            string Notes =txtNotes.Text;
+        {
+            string Notes = txtNotes.Text;
             string QuotaNum = txtQuotationNumber.Text;
-            int a = client.UpdateAllData(QuotationID, Notes, QuotaNum);
+            int a = QuotationBAL.UpdateAllData(QuotationID, Notes, QuotaNum);
             //Discount Insert
             QuotationDiscountModel objQDM = new QuotationDiscountModel();
-            objQDM.DiscountID =Convert.ToInt32(ViewState["DiscountID"]);
+            objQDM.DiscountID = Convert.ToInt32(ViewState["DiscountID"]);
             objQDM.QuotationID = QuotationID;
             //objQDM.Amount = Convert.ToInt32((lblDisAmt2.Text).ToString());
             objQDM.LastModified = DateTime.Now;
             objQDM.ModifiedUser = UserName;
-            int b = client.SaveDiscountAndAmount(objQDM);
+            int b = QuotationBAL.SaveDiscountAndAmount(objQDM);
             Decimal Tax = Convert.ToDecimal(ddlTax.SelectedValue);
             Decimal dis = 0;
             if (txtDiscount.Text == null || txtDiscount.Text == "")
@@ -341,50 +340,50 @@ namespace Funeral.Web.Admin
             {
                 dis = Convert.ToDecimal(txtDiscount.Text);
             }
-           
-            int save = client.SaveQuotationTaxAndDiscount(QuotationID, Tax, dis);
+
+            int save = QuotationBAL.SaveQuotationTaxAndDiscount(QuotationID, Tax, dis);
 
             ShowMessage(ref lblMessage, MessageType.Success, " Successfully Saved.");
-            
+
         }
         protected void eveDiscountChange(object sender, EventArgs e)
         {
             DiscountCal();
         }
-        
+
         protected void calculation(object sender, EventArgs e)
         {
-            SubTotalcal();        
+            SubTotalcal();
         }
-       
+
         protected void btncrtService_Click(object sender, EventArgs e)
         {
             if (Page.IsValid)
             {
                 try
                 {
-                   // QuotationServicesModel objSer = client.SelectQuotationByQuotationId(ID, ParlourId);
+                    // QuotationServicesModel objSer = client.SelectQuotationByQuotationId(ID, ParlourId);
                     QuotationServicesModel objSer = null;
-                    if (objSer != null )
+                    if (objSer != null)
                     {
                         //ShowMessage(ref lblMessage, MessageType.Danger, "Member Dependenc  Already Exists.");
                     }
                     else
                     {
                         objSer = new QuotationServicesModel();
-                        if (ViewState["ID"] != null )
+                        if (ViewState["ID"] != null)
                         {
-                             objSer.pkiQuotationSelectionID =Convert.ToInt32(ViewState["ID"]);
-                             ViewState["ID"] = null;
+                            objSer.pkiQuotationSelectionID = Convert.ToInt32(ViewState["ID"]);
+                            ViewState["ID"] = null;
                         }
                         objSer.QuotationID = QuotationID;
-                        objSer.fkiServiceID =Convert.ToInt32(ddlServices.SelectedValue);
+                        objSer.fkiServiceID = Convert.ToInt32(ddlServices.SelectedValue);
                         objSer.Quantity = Convert.ToInt32(txtNumber.Text);
                         objSer.lastModified = System.DateTime.Now;
                         objSer.modifiedUser = UserName;
                         objSer.ServiceRate = Convert.ToDecimal(txtRate.Text);
-                      
-                        int a = client.SaveService(objSer);
+
+                        int a = QuotationBAL.SaveService(objSer);
                         ViewState["QuotationID"] = a;
                         ShowMessage(ref lblMessage, MessageType.Success, "Quotation Successfully Saved.");
 
@@ -406,8 +405,8 @@ namespace Funeral.Web.Admin
             try
             {
                 string status = "Accept";
-                int accept = client.QuotationStatus(QuotationID, ParlourId, status);
-                Response.Redirect("~/Admin/Funeral.aspx",false);
+                int accept = QuotationBAL.QuotationStatus(QuotationID, ParlourId, status);
+                Response.Redirect("~/Admin/Funeral.aspx", false);
             }
             catch (Exception ex)
             {
@@ -419,7 +418,7 @@ namespace Funeral.Web.Admin
         {
             try
             {
-                
+
                 QuotationMessageModel objmsg = null;
                 if (objmsg != null)
                 {
@@ -427,22 +426,22 @@ namespace Funeral.Web.Admin
                 }
                 else
                 {
-                    
+
                     objmsg = new QuotationMessageModel();
                     if (ViewState["pkidQuotationMsg"] != null)
                     {
                         objmsg.pkidQuotationMsg = Convert.ToInt32(ViewState["pkidQuotationMsg"]);
                     }
-                    objmsg.QuotationID=QuotationID;
+                    objmsg.QuotationID = QuotationID;
                     objmsg.Message = txtReject.Text;
-                    objmsg.CreatedDate=System.DateTime.Now;
-                    objmsg.LastModified=System.DateTime.Now;
+                    objmsg.CreatedDate = System.DateTime.Now;
+                    objmsg.LastModified = System.DateTime.Now;
                     objmsg.ModifiedUser = UserName;
-                    int a = client.SaveQuotationMessage(objmsg);
+                    int a = QuotationBAL.SaveQuotationMessage(objmsg);
 
                     string status = "Reject";
-                    int accept = client.QuotationStatus(QuotationID, ParlourId, status);
-                    Response.Redirect("~/Admin/Funeral.aspx",false);
+                    int accept = QuotationBAL.QuotationStatus(QuotationID, ParlourId, status);
+                    Response.Redirect("~/Admin/Funeral.aspx", false);
                 }
             }
             catch (Exception ex)
@@ -472,7 +471,7 @@ namespace Funeral.Web.Admin
             }
             if (e.CommandName == "DeleteService")
             {
-                client.DeleteServiceByID(Convert.ToInt32(e.CommandArgument));
+                QuotationBAL.DeleteServiceByID(Convert.ToInt32(e.CommandArgument));
                 bindServiceListList();
             }
 
@@ -497,7 +496,7 @@ namespace Funeral.Web.Admin
         #region Package related work
         private void BindAllPackage()
         {
-            ddlPackage.DataSource = client.GetAllPackage(this.ParlourId);
+            ddlPackage.DataSource = FuneralPackageBAL.GetAllPackage(this.ParlourId);
             ddlPackage.DataTextField = "PackageName";
             ddlPackage.DataValueField = "PackageName";
             ddlPackage.DataBind();
@@ -510,11 +509,11 @@ namespace Funeral.Web.Admin
             {
                 try
                 {
-                    List<PackageServicesSelectionModel> modelList = client.GetPackageService(this.ParlourId, ddlPackage.SelectedValue).ToList();
+                    List<PackageServicesSelectionModel> modelList = FuneralPackageBAL.GetPackageService(this.ParlourId, ddlPackage.SelectedValue).ToList();
                     //FuneralServiceSelectModel objSer = null;
 
                     QuotationServicesModel objSer = null;
-                   
+
                     foreach (var item in modelList)
                     {
                         objSer = new QuotationServicesModel();
@@ -529,7 +528,7 @@ namespace Funeral.Web.Admin
                         objSer.lastModified = System.DateTime.Now;
                         objSer.modifiedUser = UserName;
                         objSer.ServiceRate = item.ServiceCost;
-                        client.SaveService(objSer);                       
+                        QuotationBAL.SaveService(objSer);
                     }
                     ShowMessage(ref lblMessage, MessageType.Success, "Package Successfully Added.");
 
@@ -547,7 +546,7 @@ namespace Funeral.Web.Admin
 
         public void BindTax()
         {
-            List<TaxSetting> taxSettings = client.GetTaxSetting().ToList();
+            List<TaxSetting> taxSettings = TaxSettingBAL.GetAllTaxSettings().ToList();
             ddlTax.DataSource = taxSettings;
             ddlTax.DataTextField = "TaxText";
             ddlTax.DataValueField = "TaxValue";

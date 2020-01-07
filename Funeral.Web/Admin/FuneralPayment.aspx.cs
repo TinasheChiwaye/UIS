@@ -1,4 +1,5 @@
-﻿using Funeral.Model;
+﻿using Funeral.BAL;
+using Funeral.Model;
 using Funeral.Web.App_Start;
 using Funeral.Web.UserControl;
 using Microsoft.VisualBasic;
@@ -60,8 +61,6 @@ namespace Funeral.Web.Admin
         }
 
         bool blnFuneralPayment = false;
-
-        private readonly FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
         #endregion
 
         #region Page PreInit
@@ -134,14 +133,14 @@ namespace Funeral.Web.Admin
             {
                 //Member New Registration Welcome SMS Send 
                 int SmsGrupId = Convert.ToInt32(SmsGroupType.Payment);
-                smsSendingGroupModel modelSSG = client.GetsmsGroupbyID(SmsGrupId, ParlourId);
+                smsSendingGroupModel modelSSG = ToolsSetingBAL.GetsmsGroupbyID(SmsGrupId, ParlourId);
                 if (modelSSG != null)
                 {
                     StringBuilder strsb = new StringBuilder();
-                    smsTempletModel _EmailTemplate = client.GetEmailTemplateByID(SmsGrupId, ParlourId);
+                    smsTempletModel _EmailTemplate = ToolsSetingBAL.GetEmailTemplateByID(SmsGrupId, ParlourId);
                     if (_EmailTemplate != null)
                     {
-                        MembersModel objMemberModel = client.GetMemberByID(model.pkiMemberID, ParlourId);
+                        MembersModel objMemberModel = MembersBAL.GetMemberByID(model.pkiMemberID, ParlourId);
 
                         strsb = new StringBuilder(_EmailTemplate.smsText);
                         strsb = strsb.Replace("@Name", "<p>" + objMemberModel.FullNames + " " + objMemberModel.Surname + "</p>");
@@ -158,7 +157,7 @@ namespace Funeral.Web.Admin
                         smsModel.MemeberToNumber = Convert.ToInt64(CellNo.Replace(" ", ""));
                         smsModel.parlourid = ParlourId;
 
-                        int SendOpration = client.InsertSendReminder(smsModel);
+                        int SendOpration = MemberPaymentBAL.InsertSendReminder(smsModel);
                     }
                 }
             }
@@ -230,7 +229,7 @@ namespace Funeral.Web.Admin
                     funeralPayment.Notes = txtMohthPaid.Text.ToString();
                     funeralPayment.ParlourId = ParlourId;
                     funeralPayment.UserName = HttpContext.Current.User.Identity.Name;
-                    int FuneralID = client.AddFuneralPayments(funeralPayment);
+                    int FuneralID = MemberPaymentBAL.AddFuneralPayments(funeralPayment);
                     if (FuneralID != 0)
                     {
                         Common.WebMsgBox.Show("Payment added successfully.");
@@ -257,7 +256,7 @@ namespace Funeral.Web.Admin
                         objFunerals.Notes = txtMohthPaid.Text.ToString();
                         objFunerals.ParlourId = ParlourId;
                         objFunerals.UserName = HttpContext.Current.User.Identity.Name;
-                        int FuneralID = client.AddFuneralPayments(objFunerals);
+                        int FuneralID = MemberPaymentBAL.AddFuneralPayments(objFunerals);
                     }
                     else
                     {
@@ -291,7 +290,7 @@ namespace Funeral.Web.Admin
 
         public void bindServiceListList()
         {
-            List<FuneralServiceSelectModel> objServ = client.SelectServiceByFuneralID(FuneralId).ToList();
+            List<FuneralServiceSelectModel> objServ = FuneralBAL.SelectServiceByFuneralID(FuneralId).ToList();
             decimal Amt = 0;
             decimal tax = 0;
             foreach (var item in objServ)
@@ -299,9 +298,9 @@ namespace Funeral.Web.Admin
                 Amt = Amt + item.Amount;
             }
 
-            FuneralModel objQuotation = client.SelectFuneralBypkid(FuneralId, ParlourId);
+            FuneralModel objQuotation = FuneralBAL.SelectFuneralBypkid(FuneralId, ParlourId);
 
-            decimal TotalPayment = client.ReturnFuneralPayments(this.ParlourId, FuneralId.ToString()).ToList().Sum(x => x.AmountPaid);
+            decimal TotalPayment = MemberPaymentBAL.ReturnFuneralPayments(this.ParlourId, FuneralId.ToString()).ToList().Sum(x => x.AmountPaid);
 
             if (objQuotation != null && objQuotation.Tax != null)
             {
@@ -311,7 +310,7 @@ namespace Funeral.Web.Admin
 
             txtAmount.Text = CalculateFinal(Amt, tax, objQuotation.Discount, TotalPayment);
 
-            objServ = client.SelectServiceByFuneralID(FuneralId).ToList();
+            objServ = FuneralBAL.SelectServiceByFuneralID(FuneralId).ToList();
             //SubTotal.Text = Amt.ToString();
             gvServiceList.DataSource = objServ;
             gvServiceList.DataBind();

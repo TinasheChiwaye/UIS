@@ -1,18 +1,17 @@
-﻿using Funeral.Web.App_Start;
+﻿using Funeral.BAL;
+using Funeral.Model;
+using Funeral.Web.App_Start;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Funeral.Model;
 
 namespace Funeral.Web.Tools
 {
     public partial class FuneralServices : AdminBasePage
     {
         #region Fields
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
         #endregion
 
         #region Page Property
@@ -139,10 +138,10 @@ namespace Funeral.Web.Tools
         {
             try
             {
-                ApplicationSettingsModel ComName = client.GetAllApplicationList2(ParlourId, 0, 0);
+                ApplicationSettingsModel ComName = ToolsSetingBAL.GetAllApplicationList2(ParlourId, 0, 0);
                 if (ComName != null)
                 {
-                    ApplicationSettingsModel[] model = client.GetAllApplicationList(ParlourId, 1, 0);
+                    List<ApplicationSettingsModel> model = ToolsSetingBAL.GetAllApplicationList(ParlourId, 1, 0);
                     if (model != null)
                     {
                         ddlCompanyList.Visible = true;
@@ -164,7 +163,7 @@ namespace Funeral.Web.Tools
         }
         public int SelectName()
         {
-            ApplicationSettingsModel ComName = client.GetAllApplicationList2(ParlourId, 0, 0);
+            ApplicationSettingsModel ComName = ToolsSetingBAL.GetAllApplicationList2(ParlourId, 0, 0);
 
             int pkiID = ComName.pkiApplicationID;
             return pkiID;
@@ -175,7 +174,7 @@ namespace Funeral.Web.Tools
             if (!IsPostBack)
             {
                 gvFuneralServiceList.PageSize = PageSize;
-                FuneralServiceManageModel[] objModel = client.SelectFuneralManageServiceByParlID(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
+                List<FuneralServiceManageModel> objModel = ToolsSetingBAL.SelectFuneralManageServiceByParlID(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
                 gvFuneralServiceList.DataSource = objModel;
                 gvFuneralServiceList.DataBind();
                 ViewState["NewParlourID"] = ParlourId;
@@ -186,7 +185,7 @@ namespace Funeral.Web.Tools
                 if (ddlCompanyList.SelectedValue == "" || ddlCompanyList.SelectedValue == null || ddlCompanyList.SelectedValue == "0")
                 {
                     gvFuneralServiceList.PageSize = PageSize;
-                    FuneralServiceManageModel[] objModel = client.SelectFuneralManageServiceByParlID(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
+                    List<FuneralServiceManageModel> objModel = ToolsSetingBAL.SelectFuneralManageServiceByParlID(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
                     gvFuneralServiceList.DataSource = objModel;
                     gvFuneralServiceList.DataBind();
 
@@ -194,11 +193,11 @@ namespace Funeral.Web.Tools
                 else
                 {
                     int AppId = Convert.ToInt32(ddlCompanyList.SelectedValue);
-                    ApplicationSettingsModel ComName = client.GetAllApplicationList2(ParlourId, 2, AppId);
+                    ApplicationSettingsModel ComName = ToolsSetingBAL.GetAllApplicationList2(ParlourId, 2, AppId);
                     Guid New = ComName.parlourid;
                     ViewState["NewParlourID"] = New;
                     gvFuneralServiceList.PageSize = PageSize;
-                    FuneralServiceManageModel[] objModel = client.SelectFuneralManageServiceByParlID(New, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
+                    List<FuneralServiceManageModel> objModel = ToolsSetingBAL.SelectFuneralManageServiceByParlID(New, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
                     gvFuneralServiceList.DataSource = objModel;
                     gvFuneralServiceList.DataBind();
                 }
@@ -207,8 +206,8 @@ namespace Funeral.Web.Tools
         public void BindFuneralServiceToUpdate()
         {
             btnReset.Enabled = true;
-            SecureUserGroupsModel Access = client.GetSuperUserAccessByID(UserID, ParlourId).Where(x => x.fkiSecureGroupID == 12).FirstOrDefault();
-            FuneralServiceManageModel model = client.SelectFuneralManageServiceByParlANdID(ServiceID, ParlourId);
+            SecureUserGroupsModel Access = ToolsSetingBAL.GetSuperUserAccessByID(UserID, ParlourId).Where(x => x.fkiSecureGroupID == 12).FirstOrDefault();
+            FuneralServiceManageModel model = ToolsSetingBAL.SelectFuneralManageServiceByParlANdID(ServiceID, ParlourId);
             if ((Access == null) && (model == null))
             {
                 Response.Write("<script>alert('Sorry!you are not authorized to perform edit on this Service.');</script>");
@@ -226,7 +225,7 @@ namespace Funeral.Web.Tools
 
         public void BindVenderName()
         {
-            VendorModel[] obVendorNameModel = client.GetVendorNameByParlourId(ParlourId);
+            List<VendorModel> obVendorNameModel = ToolsSetingBAL.GetVendorNameByParlourId(ParlourId);
             foreach (VendorModel FuneralService in obVendorNameModel)
             {
                 ListItem li = new ListItem();
@@ -268,7 +267,7 @@ namespace Funeral.Web.Tools
                     objModel.pkiServiceID = ServiceID;
                     objModel.VendorId = Convert.ToInt32(ddlVendor.SelectedValue);
                     objModel.CostOfSale = Convert.ToInt32(txtCostOfSale.Text);
-                        
+
                     objModel.ServiceName = (txtServicename.Text).ToString();
                     objModel.ServiceDesc = (txtServiceDesc.Text).ToString();
                     if (txtServiceCost.Text == string.Empty || txtServiceCost.Text == "")
@@ -291,7 +290,7 @@ namespace Funeral.Web.Tools
                     objModel.ModifiedUser = UserName;
 
 
-                    int a = client.SaveFuneralManageService(objModel);
+                    int a = ToolsSetingBAL.SaveFuneralManageService(objModel);
 
                     ShowMessage(ref lblMessage, MessageType.Success, "Service Successfully Saved.");
                     ClearControl();

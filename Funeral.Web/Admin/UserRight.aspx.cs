@@ -1,4 +1,5 @@
-﻿using Funeral.Model;
+﻿using Funeral.BAL;
+using Funeral.Model;
 using Funeral.Web.App_Start;
 using System;
 using System.Collections.Generic;
@@ -26,12 +27,11 @@ namespace Funeral.Web.Admin
             }
         }
 
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                ProgressStatus model = client.CheckProgressStatus(ID,this.ParlourId);
+                ProgressStatus model = ToolsSetingBAL.CheckProgressStatus(ID,this.ParlourId);
                
 
                 if (model != null)

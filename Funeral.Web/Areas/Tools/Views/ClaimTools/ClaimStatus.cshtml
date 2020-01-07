@@ -1,0 +1,54 @@
+﻿@model dynamic
+@{
+    ViewBag.Title = "Claim Status";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="dataTables_wrapper" id="tblPlanSetupSearch_wrapper">
+    <div class="col-lg-12">
+        <div class="ibox ">
+            <div class="ibox-title">
+                <h5>Claim Workflow Rights</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-lg-12" id="dvAdministrator">
+                        <div class="form-group">
+                            <label>Select Roles</label>
+                            @Html.DropDownList("test", new SelectList(Model.UserRoleList, "pkiSecureGroupID", "sSecureGroupName"), new { @class = "form-control",@id="drp_RoleSelectionClaimRights", @onchange = "LoadClaimRight_partialView(this)" })
+                        </div>
+                    </div>
+                    <div class="col-lg-12" id="LoadClaimRightsTable"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function LoadClaimRight_partialView(Control) {
+        if (Control.value > 0) {
+            $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("ClaimRightsPartial","ClaimTools")",
+                    data: '{RoleId: "' + Control.value + '" }',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "html",
+                    success: function (response) {
+                        $('#LoadClaimRightsTable').empty().html(response);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+        }
+        else {
+            alert("Please select Role to Load Righs");
+            $('#LoadClaimRightsTable').empty();
+        }
+    }
+</script>
+
+

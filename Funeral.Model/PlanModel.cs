@@ -83,8 +83,8 @@ namespace Funeral.Model
         public decimal Cover66to75year { get; set; }
         public int? UnderwriterId { get; set; }
         public decimal CashPayout { get; set; }
-
         public List<UserType> GetUserTypes { get; set; }
+        public List<ApplicationSettingsModel> CompanyList { get; set; }
         public List<PlanCreator> planCreators { get; set; }
         public List<UnderwriterModel> UnderwriterList { get; set; }
     }
@@ -97,21 +97,21 @@ namespace Funeral.Model
     {
         public long PlanCreatorId { get; set; }
         public int PlanID { get; set; }
-        [Required(ErrorMessage = "Please select user type")]
+
         public int UserTypeId { get; set; }
-        [Required(ErrorMessage = "Please select From age")]
+
         public int FromAge { get; set; }
-        [Required(ErrorMessage = "Please select to age")]
+
         public int ToAge { get; set; }
 
-        [Required(ErrorMessage = "Please enter premium")]
+
         public decimal Premium { get; set; }
-        [Required(ErrorMessage = "Please enter cover")]
+
         public decimal Cover { get; set; }
 
-        [Required(ErrorMessage = "Please enter Underwriter premium")]
+
         public decimal UnderwriterPremium { get; set; }
-        [Required(ErrorMessage = "Please enter Underwriter cover")]
+
         public decimal UnderwriterCover { get; set; }
 
         public bool TableRawStatus { get; set; }

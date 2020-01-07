@@ -5,9 +5,7 @@ using Funeral.Web.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -17,7 +15,6 @@ namespace Funeral.Web.Admin
     public partial class Funeral : AdminBasePage
     {
         #region Fields
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
         #endregion
 
         #region Page Property
@@ -150,7 +147,7 @@ namespace Funeral.Web.Admin
         public void bindFuneralList()
         {
             gvFuneralList.PageSize = PageSize;
-            FuneralModel[] objFuneralModel = client.SelectAllFuneralByParlourId(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
+            List<FuneralModel> objFuneralModel = FuneralBAL.SelectAllFuneralByParlourId(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
             gvFuneralList.DataSource = objFuneralModel;
             gvFuneralList.DataBind();
         }
@@ -191,7 +188,7 @@ namespace Funeral.Web.Admin
         {
             bindSupportedDocuments();
             btnClear.Enabled = true;
-            FuneralModel model = client.SelectFuneralBypkid(FID, ParlourId);
+            FuneralModel model = FuneralBAL.SelectFuneralBypkid(FID, ParlourId);
             if ((model == null) || (model.parlourid != ParlourId))
             {
                 Response.Write("<script>alert('Sorry!you are not authorized to perform edit on this Funeral.');</script>");
@@ -268,7 +265,7 @@ namespace Funeral.Web.Admin
             {
                 try
                 {
-                    FuneralModel objfunModel = client.SelectFuneralBypkid(FID, ParlourId);
+                    FuneralModel objfunModel = FuneralBAL.SelectFuneralBypkid(FID, ParlourId);
                     if (objfunModel != null && FID == 0)
                     {
                         ShowMessage(ref lblMessage, MessageType.Danger, "Funeral Details  Already Exists.");
@@ -316,7 +313,7 @@ namespace Funeral.Web.Admin
                         objfunModel.ContactPerson = txtContactPerson.Text;
                         objfunModel.ContactPersonNumber = txtContactNumber.Text;
 
-                        FID = client.SaveFuneral(objfunModel);
+                        FID = FuneralBAL.SaveFuneral(objfunModel);
 
                         ShowMessage(ref lblMessage, MessageType.Success, "Funeral Successfully Saved.");
                         //ClearControl();
@@ -342,8 +339,7 @@ namespace Funeral.Web.Admin
         #region Method
         public void bindSupportedDocuments()
         {
-            FuneralDocumentModel[] objSupportedDocumentModel = client.SelectFuneralDocumentsByMemberId(FID);
-
+            List<FuneralDocumentModel> objSupportedDocumentModel = FuneralBAL.SelectFuneralDocumentsByMemberId(FID);
             gvSupportedDocument.DataSource = objSupportedDocumentModel;
             gvSupportedDocument.DataBind();
         }
@@ -402,7 +398,7 @@ namespace Funeral.Web.Admin
         {
             if (e.CommandName == "DeleteDocument")
             {
-                client.DeleteFuneraldocumentById(Convert.ToInt32(e.CommandArgument));
+                FuneralBAL.DeleteFuneraldocumentById(Convert.ToInt32(e.CommandArgument));
                 bindSupportedDocuments();
             }
 
@@ -453,7 +449,7 @@ namespace Funeral.Web.Admin
             }
             if (e.CommandName == "DeleteFuneral")
             {
-                client.FuneralDelete(Convert.ToInt32(e.CommandArgument), UserName);
+                FuneralBAL.FuneralDelete(Convert.ToInt32(e.CommandArgument), UserName);
                 bindFuneralList();
             }
             if (e.CommandName == "PrintFuneral")

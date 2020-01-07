@@ -1,4 +1,5 @@
-﻿using Funeral.Model;
+﻿using Funeral.BAL;
+using Funeral.Model;
 using Funeral.Web.App_Start;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,6 @@ namespace Funeral.Web.Tools
     public partial class Underwriter : AdminBasePage
     {
         #region Page Property
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
         public int UnderwriterId
         {
             get
@@ -105,13 +105,13 @@ namespace Funeral.Web.Tools
         public void BindUndewriterList()
         {
             gvUnderwriter.PageSize = PageSize;
-            UnderwriterModel[] model = client.SelectAllUnderwriterByParlourId(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
+            List<UnderwriterModel> model = UnderwriterBAL.SelectAllUnderwriterByParlourId(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
             gvUnderwriter.DataSource = model;
             gvUnderwriter.DataBind();
         }
         public void BindUnderWriterToUpdate()
         {
-            UnderwriterModel model = client.SelectUnderwriterBypkid(UnderwriterId, ParlourId);
+            UnderwriterModel model = UnderwriterBAL.SelectUnderwriterBypkid(UnderwriterId, ParlourId);
             if ((model == null) || (model.Parlourid != ParlourId))
             {
                 Response.Write("<script>alert('Sorry!you are not authorized to perform edit on this Plan.');</script>");
@@ -190,7 +190,7 @@ namespace Funeral.Web.Tools
             {
 
                 UnderwriterModel model;
-                model = client.SelectUnderwriterByName(txtUnderwriterName.Text, ParlourId);
+                model = UnderwriterBAL.SelectUnderwriterByName(txtUnderwriterName.Text, ParlourId);
                 if (model != null && UnderwriterId == 0)
                 {
                     ShowMessage(ref lblMessage, MessageType.Danger, "Underwriter Already Exists.");
@@ -230,7 +230,7 @@ namespace Funeral.Web.Tools
                     model.CreatedUser = UserName;
 
                     //================================================================ 
-                    int retID = client.SaveUnderwriter(model);
+                    int retID = UnderwriterBAL.SaveUnderwriter(model);
                     UnderwriterId = retID;
 
                     ShowMessage(ref lblMessage, MessageType.Success, "Plan Details successfully saved");
@@ -315,7 +315,7 @@ namespace Funeral.Web.Tools
                 int SPlanId = Convert.ToInt32(e.CommandArgument);
                 try
                 {
-                    int retID = client.DeleteUnderwriterByID(SPlanId,UserName);
+                    int retID = UnderwriterBAL.DeleteUnderwriterByID(SPlanId,UserName);
                     ShowMessage(ref lblMessage, MessageType.Success, "Record deleted successfully.");
                     lblMessage.Visible = true;
                     BindUndewriterList();

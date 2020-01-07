@@ -1,11 +1,5 @@
-﻿using Funeral.Model.Attributes;
-using Newtonsoft.Json.Serialization;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Funeral.Model
 {
@@ -67,7 +61,7 @@ namespace Funeral.Model
         [Required(ErrorMessage = "Please enter first name")]
         [RegularExpression(@"[a-zA-Z ]*$", ErrorMessage = "First Name Enter Only characters")]
         public string FullNames { get; set; }
-        
+
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Please enter Last name")]
@@ -86,7 +80,7 @@ namespace Funeral.Model
 
         [Required(ErrorMessage = "Please enter premium amount")]
         public string PolicyPremium { get; set; }
-
+        public string CoverAmount { get; set; }
         public string PolicyNumber { get; set; }
 
         [Required(ErrorMessage = "Please select product name")]
@@ -106,9 +100,9 @@ namespace Funeral.Model
         public string Address3 { get; set; }
         public string Address4 { get; set; }
         public string Code { get; set; }
-        
+
         public string MemeberNumber { get; set; }
-        
+
         public string MemberSociety { get; set; }
         public int fkiPlanID { get; set; }
         public bool Active { get; set; }

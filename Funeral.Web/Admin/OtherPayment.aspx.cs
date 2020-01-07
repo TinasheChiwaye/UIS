@@ -49,7 +49,6 @@ namespace Funeral.Web.Admin
                 ViewState["_InvoiceID"] = value;
             }
         }
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
         #endregion
 
         #region Page PreInit
@@ -82,7 +81,7 @@ namespace Funeral.Web.Admin
         #region Method
         public void bindMemberPlanDetailsWithBalance()
         {
-            MembersModel model = client.GetMemberByID(Convert.ToInt32(Request.QueryString["ID"].ToString()), new Guid(Request.QueryString["ParlourId"]));
+            MembersModel model = MembersBAL.GetMemberByID(Convert.ToInt32(Request.QueryString["ID"].ToString()), new Guid(Request.QueryString["ParlourId"]));
             if ((model == null))
                 return;
 
@@ -96,7 +95,7 @@ namespace Funeral.Web.Admin
 
         public void bindOtherPayment(int MemberId, Guid ParlourId)
         {
-            gvOtherPayment.DataSource = client.OtherPaymentSelectByMemberId(MemberId, ParlourId).ToList();
+            gvOtherPayment.DataSource = OtherPaymentBAL.OtherPaymentSelectByMemberId(MemberId, ParlourId).ToList();
             gvOtherPayment.DataBind();
 
         }
@@ -130,7 +129,7 @@ namespace Funeral.Web.Admin
             model.Notes = txtnotes.Text;       
             model.Parlourid = new Guid(Request.QueryString["ParlourId"]);
             model.ModifiedUser = this.UserName;
-            int InvoiceID = client.OtherPaymentsSave(model);
+            int InvoiceID = OtherPaymentBAL.OtherPaymentDetailsSave(model);
 
             if (InvoiceID > 0)
             {
@@ -197,7 +196,7 @@ namespace Funeral.Web.Admin
 
         private void BindCustomDetails()
         {
-            var custom1 = client.GetAllCustomDetailsByParlourId(this.ParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.PaymentType));
+            var custom1 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(this.ParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.PaymentType));
             ddlPaymentType.DataSource = custom1;
             ddlPaymentType.DataTextField = "Name";
             ddlPaymentType.DataValueField = "Id";
@@ -209,7 +208,7 @@ namespace Funeral.Web.Admin
         {
             if (InvoiceID > 0)
             {
-                OtherPaymentModel model = client.GetOtherPayment(InvoiceID, ParlourId);
+                OtherPaymentModel model = OtherPaymentBAL.OtherPaymentSelect(InvoiceID, ParlourId);
                 InvoiceID = model.pkiInvoiceID;
                 txtNextPaymentDate.Text = Convert.ToString(model.DatePaid);
                 txtAmount.Text = Convert.ToString(model.AmountPaid);

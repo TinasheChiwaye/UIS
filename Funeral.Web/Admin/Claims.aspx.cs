@@ -1,26 +1,25 @@
-﻿using Funeral.Model;
+﻿using Funeral.BAL;
+using Funeral.Model;
 using Funeral.Web.App_Start;
 using Funeral.Web.Common;
+using Microsoft.Reporting.WebForms;
 using System;
-using System.Linq;
-using System.Text;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
-using Microsoft.Reporting.WebForms;
-using System.Web.Services;
-using System.Collections.Generic;
+using System.Linq;
 using System.Net.Mail;
+using System.Text;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace Funeral.Web.Admin
 {
     public partial class Claims : AdminBasePage
     {
         #region Fields
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
         #endregion
 
         #region Page Property
@@ -235,7 +234,7 @@ namespace Funeral.Web.Admin
         #region Method        
         public void LoadStatus()
         {
-            List<StatusModel> statusList = client.GetStatus(FuneralEnum.StatusAssociatedTable.Claims.ToString()).ToList();
+            List<StatusModel> statusList = CommonBAL.GetStatus(FuneralEnum.StatusAssociatedTable.Claims.ToString()).ToList();
             ddlStatus.DataSource = statusList;
             ddlStatus.DataBind();
             ddlStatus.Items.Insert(0, new ListItem("Select Claims Status", "0"));
@@ -253,7 +252,7 @@ namespace Funeral.Web.Admin
             gvMembersPaymentHistory.DataBind();
             gvMembersPaymentHistory.PageSize = PageSize;
             StringBuilder sb = new StringBuilder();
-            MemberInvoiceModel[] objMemberInvoiceModel = client.GetInvoices(ParlourId, MemberId);
+            List<MemberInvoiceModel> objMemberInvoiceModel = MembersBAL.GetInvoicesByMemberID(ParlourId, MemberId);
             gvMembersPaymentHistory.DataSource = objMemberInvoiceModel;
             gvMembersPaymentHistory.DataBind();
 
@@ -328,8 +327,7 @@ namespace Funeral.Web.Admin
 
         public void bindSupportedDocuments()
         {
-            ClaimDocumentModel[] objSupportedDocumentModel = client.SelectClaimDocumentsByClaimId(pkiClaimID);
-
+            List<ClaimDocumentModel> objSupportedDocumentModel = ClaimsBAL.SelectClaimDocumentsByClaimId(pkiClaimID);
             gvSupportedDocument.DataSource = objSupportedDocumentModel;
             gvSupportedDocument.DataBind();
         }
@@ -360,7 +358,7 @@ namespace Funeral.Web.Admin
                 LocalReport Rpt = ReportViewerdata.LocalReport;
                 Rpt.DataSources.Clear();
 
-                MembersModel objmodel = client.selectMemberByPkidAndParlor(ParlourId, MemberId);
+                MembersModel objmodel = ClaimsBAL.selectMemberByPkidAndParlor(ParlourId, MemberId);
                 //PlanModel pm = client.GetPlanDetailsByPlanId(objmodel.fkiPlanID);
                 SqlCommand com = new SqlCommand();
                 com.CommandType = CommandType.StoredProcedure;
@@ -470,9 +468,9 @@ namespace Funeral.Web.Admin
         {
             try
             {
-                ClaimsModel[] Claimmodel = client.GetClaimsbyMemeberNumber(pkiClaimID); // MembersFromClaimsTable
+                List<ClaimsModel> Claimmodel = ClaimsBAL.GetClaimsbyMemeberNumber(pkiClaimID);
                 string claimid = pkiClaimID.ToString();
-                FuneralModel funeralmodel = client.SelectFuneralByMemberNo(claimid);// Member No
+                FuneralModel funeralmodel = FuneralBAL.SelectFuneralByMemberNo(claimid);
 
                 //Claims Details
                 if (Claimmodel != null)
@@ -617,7 +615,7 @@ namespace Funeral.Web.Admin
                                 ClaimDocumentModel ObjSupportedDocumentModel = new ClaimDocumentModel();
                                 ObjSupportedDocumentModel.DocContentType = contentType;
                                 ObjSupportedDocumentModel.ImageName = filename;
-                                ObjSupportedDocumentModel.ImageFile = bytes; 
+                                ObjSupportedDocumentModel.ImageFile = bytes;
                                 ObjSupportedDocumentModel.fkiClaimID = pkiClaimID;
                                 ObjSupportedDocumentModel.CreateDate = System.DateTime.Now;
                                 ObjSupportedDocumentModel.Parlourid = this.ParlourId;
@@ -627,7 +625,7 @@ namespace Funeral.Web.Admin
                                 if (pkiClaimID == 0)
                                 { Session["SupportedDocument"] = ObjSupportedDocumentModel; }
                                 else
-                                    documentId = client.SaveClaimSupportedDocument(ObjSupportedDocumentModel);
+                                    documentId = ClaimsBAL.SaveClaimSupportedDocument(ObjSupportedDocumentModel);
                                 if (documentId > 0)
                                 {
 
@@ -700,7 +698,7 @@ namespace Funeral.Web.Admin
         {
             if (e.CommandName == "DeleteClaimsdocumentById")
             {
-                client.DeleteClaimsdocumentById(Convert.ToInt32(e.CommandArgument));
+                ClaimsBAL.DeleteClaimsdocumentById(Convert.ToInt32(e.CommandArgument));
                 bindSupportedDocuments();
             }
 
@@ -778,7 +776,7 @@ namespace Funeral.Web.Admin
         {
             try
             {
-                SocietyModel[] model = client.GetAllSocietyes(ParlourId);
+                List<SocietyModel> model = ToolsSetingBAL.GetAllSocietyes(ParlourId);
                 ddlSearchSociety.DataTextField = "SocietyName";
                 ddlSearchSociety.DataValueField = "pkiSocietyID";
                 ddlSearchSociety.DataSource = model;
@@ -792,11 +790,11 @@ namespace Funeral.Web.Admin
         }
         private void BindBank()
         {
-            ddlBank.DataSource = client.GetAllBank();
+            ddlBank.DataSource = BanksBAL.SelectAll();
             ddlBank.DataBind();
             ddlBank.Items.Insert(0, new ListItem("Select Bank", "0"));
 
-            ddlAccountType.DataSource = client.AccountTypeSelectAll();
+            ddlAccountType.DataSource = BanksBAL.AccountTypeSelectAll();
             ddlAccountType.DataBind();
             ddlAccountType.Items.Insert(0, new ListItem("Select account type", "0"));
         }
@@ -807,7 +805,7 @@ namespace Funeral.Web.Admin
             {
                 try
                 {
-                    ClaimsModel objClaimsModel = client.SelectClaimsBypkid(pkiClaimID, ParlourId);
+                    ClaimsModel objClaimsModel = ClaimsBAL.SelectClaimsBypkid(pkiClaimID, ParlourId);
                     // ClaimsModel objClaimsModel = new ClaimsModel();
                     //if (objClaimsModel != null)
                     //{
@@ -860,14 +858,14 @@ namespace Funeral.Web.Admin
                     else
                         objClaimsModel.PayoutValue = 0;
 
-                    pkiClaimID = client.SaveClaims(objClaimsModel);
+                    pkiClaimID = ClaimsBAL.SaveClaims(objClaimsModel);
 
                     //save Supported document
                     if (Session["SupportedDocument"] != null)
                     {
                         ClaimDocumentModel objsavedata = (ClaimDocumentModel)Session["SupportedDocument"];
                         objsavedata.fkiClaimID = pkiClaimID;
-                        client.SaveClaimSupportedDocument(objsavedata);
+                        ClaimsBAL.SaveClaimSupportedDocument(objsavedata);
                         Session["SupportedDocument"] = null;
                     }
                     ShowMessage(ref lblMessage, MessageType.Success, "Claimant Details Successfully Saved.");
@@ -890,7 +888,7 @@ namespace Funeral.Web.Admin
             {
                 try
                 {
-                    FuneralModel objfunModel = client.SelectFuneralBypkid(FID, ParlourId);
+                    FuneralModel objfunModel = FuneralBAL.SelectFuneralBypkid(FID, ParlourId);
                     if (objfunModel != null && FID == 0)
                     {
                         ShowMessage(ref lblMessage, MessageType.Danger, "Deceased Details  Already Exists.");
@@ -944,10 +942,10 @@ namespace Funeral.Web.Admin
                         objfunModel.LastModified = System.DateTime.Now;
                         objfunModel.ModifiedUser = UserName;
 
-                        int a = client.SaveFuneral(objfunModel);
+                        int a = FuneralBAL.SaveFuneral(objfunModel);
 
                         string Claimnumber = pkiClaimID.ToString();
-                        client.UpdateMemberNumber(a, hdnMemberNo.Value, Claimnumber);
+                        ClaimsBAL.UpdateMemberNumber(a, hdnMemberNo.Value, Claimnumber);
                         ShowMessage(ref lblMessage, MessageType.Success, "Details Successfully Saved.");
 
                         flagDeceased = true;
@@ -963,8 +961,8 @@ namespace Funeral.Web.Admin
         }
         public void BindDependentUpdate()
         {
-            FamilyDependencyModel objmodel = client.SelectFamilyDependencyById(DependentId);
-            MembersModel obj = client.selectMemberByPkidAndParlor(ParlourId, objmodel.MemberId);
+            FamilyDependencyModel objmodel = MembersBAL.SelectFamilyDependencyById(DependentId);
+            MembersModel obj = ClaimsBAL.selectMemberByPkidAndParlor(ParlourId, objmodel.MemberId);
             MemberId = objmodel.MemberId;
             hdnMemberNo.Value = obj.MemeberNumber.ToString();
             txtClaimDate.Text = System.DateTime.Now.ToString("dd MMM yyyy");
@@ -1023,8 +1021,8 @@ namespace Funeral.Web.Admin
         }
         public void BindMainMemUpdate()
         {
-            MembersModel objmodel = client.selectMemberByPkidAndParlor(ParlourId, MemberId);
-            PlanModel objpan = client.GetPlanDetailsByPlanId(objmodel.fkiPlanID);
+            MembersModel objmodel = ClaimsBAL.selectMemberByPkidAndParlor(ParlourId, MemberId);
+            PlanModel objpan = ClaimsBAL.GetPlanDetailsByPlanId(objmodel.fkiPlanID);
             hdnMemberNo.Value = objmodel.MemeberNumber.ToString();
             txtClaimDate.Text = System.DateTime.Now.ToString("dd MMM yyyy");
             txtClaimNo.Text = objmodel.Claimnumber.ToString();
@@ -1092,7 +1090,7 @@ namespace Funeral.Web.Admin
                     gvDependent.DataBind();
                     if (chkMember.Checked)
                     {
-                        MembersModel[] Mmodel = client.SelectMembersAndDependencies1(ParlourId, true, txtKeyword.Text);
+                        List<MembersModel> Mmodel = ClaimsBAL.SelectMembersAndDependencies1(ParlourId, true, txtKeyword.Text);
                         foreach (var search in Mmodel)
                         {
                             ViewState["MemberId"] = search.pkiMemberID;
@@ -1102,7 +1100,7 @@ namespace Funeral.Web.Admin
                     }
                     else
                     {
-                        FamilyDependencyModel[] Dmodel = client.SelectMembersAndDependencies2(ParlourId, false, txtKeyword.Text);
+                        List<FamilyDependencyModel> Dmodel = ClaimsBAL.SelectMembersAndDependencies2(ParlourId, false, txtKeyword.Text);
                         gvDependent.DataSource = Dmodel;
                         gvDependent.DataBind();
                     }
@@ -1129,7 +1127,7 @@ namespace Funeral.Web.Admin
                 }
 
                 gvClaims.PageSize = PageSize;
-                ClaimsModel[] model = client.SelectAllClaimsByParlourId(new Guid(ddlCompanyList.SelectedValue), PageSize, PageNum, txtClaimKeyword.Text, sortBYExpression, SortOrder, Datefrom, DateTo, ddlStatusSearch.SelectedValue);
+                List<ClaimsModel> model = ClaimsBAL.SelectAllClaimsByParlourId(new Guid(ddlCompanyList.SelectedValue), PageSize, PageNum, txtClaimKeyword.Text, sortBYExpression, SortOrder, Datefrom, DateTo, ddlStatusSearch.SelectedValue);
 
                 gvClaims.DataSource = model;
                 gvClaims.DataBind();
@@ -1192,20 +1190,20 @@ namespace Funeral.Web.Admin
                 }
                 if (e.CommandName == "ChangeStatus")
                 {
-                    ClaimsModel objClaimsModel = client.SelectClaimsBypkid(TempId, ParlourId);
+                    ClaimsModel objClaimsModel = ClaimsBAL.SelectClaimsBypkid(TempId, ParlourId);
 
                     string status = objClaimsModel.Status.ToString();
                     if (status == "New" || status == string.Empty || status == "")
                     {
-                        client.UpdateClaimStatus(TempId, "Payment Done");
+                        ClaimsBAL.UpdateClaimStatus(TempId, "Payment Done");
                     }
                     else if (status == "Payment Done")
                     {
-                        client.UpdateClaimStatus(TempId, "Funeral Done");
+                        ClaimsBAL.UpdateClaimStatus(TempId, "Funeral Done");
                     }
                     else if (status == "Funeral Done")
                     {
-                        client.UpdateClaimStatus(TempId, "New");
+                        ClaimsBAL.UpdateClaimStatus(TempId, "New");
                     }
                     BindClaims();
                 }
@@ -1225,8 +1223,8 @@ namespace Funeral.Web.Admin
             model.ChangedBy = this.UserID;
             model.ParlourID = this.ParlourId;
             model.ChangeReason = txtChangeReason.Text;
-            client.ClaimStatusChangeReason(model);
-            client.UpdateClaimStatus(Convert.ToInt32(hdnClaimID.Value), ddlStatus.Text);
+            ClaimsBAL.ClaimStatusChangeReason(model);
+            ClaimsBAL.UpdateClaimStatus(Convert.ToInt32(hdnClaimID.Value), ddlStatus.Text);
             BindClaims();
             txtChangeReason.Text = string.Empty;
             hdnClaimID.Value = string.Empty;
@@ -1302,7 +1300,7 @@ namespace Funeral.Web.Admin
                 LocalReport Rpt = ReportViewerdata.LocalReport;
                 Rpt.DataSources.Clear();
 
-                MembersModel objmodel = client.selectMemberByPkidAndParlor(ParlourId, MemberId);
+                MembersModel objmodel = ClaimsBAL.selectMemberByPkidAndParlor(ParlourId, MemberId);
                 if (objmodel != null)
                 {
                     //PlanModel pm = client.GetPlanDetailsByPlanId(objmodel.fkiPlanID);
@@ -1374,7 +1372,7 @@ namespace Funeral.Web.Admin
                     using (SmtpClient smtpClient = new SmtpClient())
                     {
                         MailMessage message = new MailMessage(ConfigurationManager.AppSettings["ClaimDocumentSender"].ToString().Trim(), txtEmailAddress.Text.Trim(), "Claim document", "Please find all attached document");
-                        List<ClaimDocumentModel> documentModel = client.SelectClaimDocumentsByClaimId(Convert.ToInt32(hdnClaimID.Value)).ToList();
+                        List<ClaimDocumentModel> documentModel = ClaimsBAL.SelectClaimDocumentsByClaimId(Convert.ToInt32(hdnClaimID.Value)).ToList();
                         if (documentModel != null)
                         {
                             foreach (var document in documentModel)

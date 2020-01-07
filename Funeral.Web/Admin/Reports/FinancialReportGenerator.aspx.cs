@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using Funeral.BAL;
+using Funeral.Web.App_Start;
+using Microsoft.Reporting.WebForms;
+using System;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Configuration;
-using Microsoft.Reporting.WebForms;
-using Microsoft.VisualBasic;
-using System.Web.UI.HtmlControls;
-using Funeral.Web.App_Start;
 using System.IO;
 using System.Net.Mail;
-
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 
 namespace Funeral.Web.Admin.Reports
 {
@@ -89,14 +85,12 @@ namespace Funeral.Web.Admin.Reports
         }
         public void BindDdlBranch()
         {
-            FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
-            ddlBranch.DataSource = client.GetAllBranch(ParlourId);
+            ddlBranch.DataSource = ToolsSetingBAL.GetAllBranches(ParlourId);
             ddlBranch.DataBind();
         }
         public void BindDdlSociety()
         {
-            FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
-            ddlSociety.DataSource = client.GetAllSociety(ParlourId);
+            ddlSociety.DataSource = ToolsSetingBAL.GetAllSocietye(ParlourId);
             ddlSociety.DataBind();
         }
 
@@ -201,20 +195,20 @@ namespace Funeral.Web.Admin.Reports
             SqlDataAdapter adp = new SqlDataAdapter(com);
             DataTable dt = new DataTable();
             adp.Fill(dt);
-           
-                rvMembersByDateRange.Visible = true;
-                rvMembersByDateRange.LocalReport.ReportPath = "admin/Reports/ReportLayouts/rdlcDetailedPayment.rdlc";
-                rvMembersByDateRange.LocalReport.DataSources.Clear();
-                rvMembersByDateRange.LocalReport.DataSources.Add(new ReportDataSource("dsDetailedPayment", dt));
-                rvMembersByDateRange.DataBind();
 
-                ReportParameterCollection reportParameters = new ReportParameterCollection();
-                ReportName = "Detailed Payment Between " + txtDatailedPaymentDatefrom.Text.Trim() + " and " + txtDatailedPaymentDateTo.Text.Trim();
-                reportParameters.Add(new ReportParameter("txtReportName", ReportName));
-                rvMembersByDateRange.LocalReport.SetParameters(reportParameters);
-                rvMembersByDateRange.LocalReport.Refresh();
+            rvMembersByDateRange.Visible = true;
+            rvMembersByDateRange.LocalReport.ReportPath = "admin/Reports/ReportLayouts/rdlcDetailedPayment.rdlc";
+            rvMembersByDateRange.LocalReport.DataSources.Clear();
+            rvMembersByDateRange.LocalReport.DataSources.Add(new ReportDataSource("dsDetailedPayment", dt));
+            rvMembersByDateRange.DataBind();
 
-           
+            ReportParameterCollection reportParameters = new ReportParameterCollection();
+            ReportName = "Detailed Payment Between " + txtDatailedPaymentDatefrom.Text.Trim() + " and " + txtDatailedPaymentDateTo.Text.Trim();
+            reportParameters.Add(new ReportParameter("txtReportName", ReportName));
+            rvMembersByDateRange.LocalReport.SetParameters(reportParameters);
+            rvMembersByDateRange.LocalReport.Refresh();
+
+
         }
         public void BindExpense()
         {
@@ -315,7 +309,7 @@ namespace Funeral.Web.Admin.Reports
 
             ReportParameterCollection reportParameters = new ReportParameterCollection();
             ReportName = "Payments By " + ddlBranch.SelectedItem.Text + "  between " + txtBranchDateFrom.Text + " And " + txtBranchDateTo.Text;
-            reportParameters.Add(new ReportParameter("txtReportName", ReportName));            
+            reportParameters.Add(new ReportParameter("txtReportName", ReportName));
             rvMembersByDateRange.LocalReport.SetParameters(reportParameters);
             rvMembersByDateRange.LocalReport.Refresh();
 
@@ -427,7 +421,7 @@ namespace Funeral.Web.Admin.Reports
             rvMembersByDateRange.DataBind();
 
             ReportParameterCollection reportParameters = new ReportParameterCollection();
-            ReportName="Underwriter Payments for " + txtUnderwiter.Text + "  between " + txtUnderwriterDateFrom.Text + " And " + txtUnderwriterDateTo.Text;
+            ReportName = "Underwriter Payments for " + txtUnderwiter.Text + "  between " + txtUnderwriterDateFrom.Text + " And " + txtUnderwriterDateTo.Text;
             reportParameters.Add(new ReportParameter("txtHederRendor", ReportName));
             rvMembersByDateRange.LocalReport.SetParameters(reportParameters);
             rvMembersByDateRange.LocalReport.Refresh();

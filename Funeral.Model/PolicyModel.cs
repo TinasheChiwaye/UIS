@@ -35,6 +35,11 @@ namespace Funeral.Model
             get;
             set;
         }
+        public string CoverAmount
+        {
+            get;
+            set;
+        }
         public int? WaitingPeriod { get; set; }
        
     }

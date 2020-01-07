@@ -53,7 +53,7 @@
                                         <span>Premium Collected</span>
                                         <h2 class="font-bold">
                                             <%--<label id="lblPaymentUpDownIcon" runat="server"></label>--%>
-                                            <label id="lblTodayTotalPayment" runat="server"></label>
+                                             <label id="lblTodayTotalPayment" runat="server" data-toggle="modal" data-target="#divGenerateCashUpReport_FromDashboard"></label>
                                         </h2>
                                     </div>
                                 </div>
@@ -174,6 +174,21 @@
                 </div>
                 <div class="modal-footer">
                     <asp:Button runat="server" ID="btnSendMessagesoutstaning" class="btn btn-default" Text="Yes"  OnClick="btnSendMessagesoutstaning_Click" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+     <div class="modal fade" id="divGenerateCashUpReport_FromDashboard" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Would you like to generate daily Cashup report ?</h4>
+                </div>
+                <div class="modal-footer">
+                    <asp:Button runat="server" ID="btnGenerateCashupReport" class="btn btn-default" Text="Yes"  OnClick="btnGenerateCashupReport_Click" />
                     <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
                 </div>
             </div>

@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Funeral.BAL
 {
     public class FuneralHelper
     {
-        public static List<T> DataReaderMapToList<T>(IDataReader dr, bool isNextResult=false)
+        public static List<T> DataReaderMapToList<T>(IDataReader dr, bool isNextResult = false)
         {
             List<T> list = new List<T>();
             T obj = default(T);
@@ -30,7 +26,7 @@ namespace Funeral.BAL
                 }
                 list.Add(obj);
             }
-            if (!dr.IsClosed && isNextResult==false)
+            if (!dr.IsClosed && isNextResult == false)
             {
                 dr.Close();
                 dr.Dispose();
@@ -56,7 +52,7 @@ namespace Funeral.BAL
                             prop.SetValue(obj, dr[prop.Name], null);
                         }
                     }
-                   
+
                 }
                 list.Add(obj);
             }
@@ -84,5 +80,7 @@ namespace Funeral.BAL
             } //Still here? Column not found. 
             return false;
         }
+
+       
     }
 }

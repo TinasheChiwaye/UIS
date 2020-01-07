@@ -13,6 +13,7 @@ using System.Web.UI.HtmlControls;
 using Funeral.Web.App_Start;
 using System.IO;
 using System.Net.Mail;
+using Funeral.BAL;
 
 namespace Funeral.Web.Admin.Reports
 {
@@ -45,7 +46,6 @@ namespace Funeral.Web.Admin.Reports
             }
         }
         #endregion
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -115,20 +115,18 @@ namespace Funeral.Web.Admin.Reports
         }
         public void BindDdlBranch()
         {
-            FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
-            ddlBranch.DataSource = client.GetAllBranch(ParlourId);
+            ddlBranch.DataSource = ToolsSetingBAL.GetAllBranches(ParlourId);
             ddlBranch.DataBind();
 
-            ddlMemberBranch.DataSource = client.GetAllBranch(ParlourId);
+            ddlMemberBranch.DataSource = ToolsSetingBAL.GetAllBranches(ParlourId);
             ddlMemberBranch.DataBind();
         }
         public void BindDdlPlanName()
         {
-            FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
-            ddlPlanname.DataSource = client.GetAllPlanName(ParlourId);
+            ddlPlanname.DataSource = CommonBAL.GetAllPlanName(ParlourId);
             ddlPlanname.DataBind();
 
-            ddlMemberPlan.DataSource = client.GetAllPlanName(ParlourId);
+            ddlMemberPlan.DataSource = CommonBAL.GetAllPlanName(ParlourId);
             ddlMemberPlan.DataBind();
 
             //ddlOutstandPlanName.DataSource = client.GetAllPkanName();

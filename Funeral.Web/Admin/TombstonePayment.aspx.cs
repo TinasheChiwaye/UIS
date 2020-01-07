@@ -1,4 +1,5 @@
-﻿using Funeral.Model;
+﻿using Funeral.BAL;
+using Funeral.Model;
 using Funeral.Web.App_Start;
 using Microsoft.VisualBasic;
 using System;
@@ -59,7 +60,6 @@ namespace Funeral.Web.Admin
 
         bool blnFuneralPayment = false;
 
-        private readonly FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
         #endregion
 
         #region Page PreInit
@@ -198,7 +198,7 @@ namespace Funeral.Web.Admin
                     tombstonePayment.Notes = txtMohthPaid.Text.ToString();
                     tombstonePayment.parlourid = ParlourId;
                     tombstonePayment.ModifiedUser = HttpContext.Current.User.Identity.Name;
-                    int FuneralID = client.TombStonesPaymentSave(tombstonePayment);
+                    int FuneralID = TombStonesPaymentBAL.AddInvoice(tombstonePayment);
                     if (FuneralID != 0)
                     {
                         Common.WebMsgBox.Show("Payment added successfully.");
@@ -225,7 +225,7 @@ namespace Funeral.Web.Admin
                         objTomstonePayemnt.MemberBranch = string.Empty;
                         objTomstonePayemnt.parlourid = ParlourId;
                         objTomstonePayemnt.ModifiedUser = HttpContext.Current.User.Identity.Name;
-                        int FuneralID = client.TombStonesPaymentSave(objTomstonePayemnt);
+                        int FuneralID = TombStonesPaymentBAL.AddInvoice(objTomstonePayemnt);
                     }
                     else
                     {
@@ -259,16 +259,16 @@ namespace Funeral.Web.Admin
 
         public void bindServiceListList()
         {
-            List<TombStoneServiceSelectModel> objServ = client.SelectServiceByTombStoneID(TombstoneId).ToList();
+            List<TombStoneServiceSelectModel> objServ = TombStoneBAL.SelectServiceByTombStoneID(TombstoneId).ToList();
             decimal Amt = 0;
             foreach (var item in objServ)
             {
                 Amt = Amt + item.Amount;
             }
 
-            TombStoneModel tombstoneModel = client.SelectTombStoneByParlAndPki(TombstoneId, ParlourId);
+            TombStoneModel tombstoneModel = TombStoneBAL.SelectTombStoneByParlAndPki(TombstoneId, ParlourId);
 
-            decimal TotalPayment = client.TombStonesPaymentSelectByTombstoneId(this.ParlourId, TombstoneId).ToList().Sum(x => x.AmountPaid);
+            decimal TotalPayment = TombStonesPaymentBAL.TombStonesPaymentSelectByTombstoneID(this.ParlourId, TombstoneId).ToList().Sum(x => x.AmountPaid);
 
 
             txtAmount.Text = CalculateFinal(Amt, tombstoneModel.Tax, tombstoneModel.DisCount, TotalPayment);

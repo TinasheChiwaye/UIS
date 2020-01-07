@@ -1,16 +1,16 @@
-﻿using Funeral.Model;
+﻿using Funeral.BAL;
+using Funeral.Model;
+using Funeral.Web.App_Start;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
-using Funeral.Web.App_Start;
-using System.Web.UI.WebControls;
-using System.Text;
 using System.Data;
+using System.Linq;
+using System.Security.Principal;
+using System.Text;
+using System.Web.Mvc;
 using System.Web.Security;
 using System.Web.UI.HtmlControls;
-using System.Web.Routing;
-using System.Security.Principal;
+using System.Web.UI.WebControls;
 
 namespace Funeral.Web.Areas.Admin.Controllers
 {
@@ -111,6 +111,35 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 }
             }
 
+        }
+        public Guid CurrentParlourId
+        {
+            get
+            {
+                if (System.Web.HttpContext.Current.User != null && System.Web.HttpContext.Current.User.Identity != null && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                {
+                    if (Session["CurrentParlourId"] == null)
+                    {
+                        FormsIdentity id = (FormsIdentity)System.Web.HttpContext.Current.User.Identity;
+                        FormsAuthenticationTicket ticket = id.Ticket;
+                        string[] strData = ticket.UserData.Split('|');
+                        if (strData.Count() > 0)
+                            return new Guid(string.IsNullOrEmpty(strData[0]) ? "00000000-0000-0000-0000-000000000000" : strData[0]);
+                        else
+                            return new Guid("00000000-0000-0000-0000-000000000000");
+                    }
+                    else
+                        return new Guid(Session["CurrentParlourId"].ToString());
+                }
+                else
+                {
+                    return new Guid("00000000-0000-0000-0000-000000000000");
+                }
+            }
+            set
+            {
+                Session["CurrentParlourId"] = value;
+            }
         }
 
         public Guid ParlourId
@@ -253,8 +282,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             {
                 if (System.Web.HttpContext.Current.Session["SideMenuModelList"] == null)
                 {
-                    FuneralServiceReference.FuneralServicesClient privateClient = new FuneralServiceReference.FuneralServicesClient();
-                    Funeral.Model.tblPageModel[] obj = privateClient.LoadSideMenu(ParlourId, UserID);
+                    List<tblPageModel> obj = RightsBAL.LoadSideMenu(ParlourId, UserID);
                     System.Web.HttpContext.Current.Session["SideMenuModelList"] = obj.ToList();
                     return obj.ToList();
                 }
@@ -274,8 +302,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
             {
                 if (System.Web.HttpContext.Current.Session["SecurUserGroupModel"] == null)
                 {
-                    FuneralServiceReference.FuneralServicesClient privateClient = new FuneralServiceReference.FuneralServicesClient();
-                    Funeral.Model.SecureUserGroupsModel[] obj = privateClient.EditSecurUserbyID(UserID);
+
+                    List<SecureUserGroupsModel> obj = ToolsSetingBAL.EditSecurUserbyID(UserID);
                     System.Web.HttpContext.Current.Session["SecurUserGroupModel"] = obj.ToList();
                     return obj.ToList();
                 }
@@ -303,6 +331,14 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 return true;
             }
         }
+        public string IPAddress
+        {
+            get
+            {
+
+                return Request.UserHostAddress.ToString();
+            }
+        }
         public bool IsSuperUser
         {
             get
@@ -323,8 +359,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
             {
                 if (System.Web.HttpContext.Current.Session["GetUserGroupRole"] == null)
                 {
-                    FuneralServiceReference.FuneralServicesClient privateClient = new FuneralServiceReference.FuneralServicesClient();
-                    Funeral.Model.SecureUserGroupsModel[] secureModelList = privateClient.GetSuperUserAccessByID(UserID, ParlourId);
+
+                    List<SecureUserGroupsModel> secureModelList = ToolsSetingBAL.GetSuperUserAccessByID(UserID, ParlourId);
                     System.Web.HttpContext.Current.Session["GetUserGroupRole"] = secureModelList.ToList();
                     return secureModelList.ToList();
                 }
@@ -369,6 +405,11 @@ namespace Funeral.Web.Areas.Admin.Controllers
             strMessage = "<div class=\"alert alert-" + objMessageType.ToString().ToLower() + "\">" + Message + "</div>";
             lblMessage.Text = strMessage;
         }
+        protected string ShowMessage(MessageType objMessageType, string Message)
+        {
+            string strMessage = string.Empty;
+            return "<div class=\"alert alert-" + objMessageType.ToString().ToLower() + "\">" + Message + "</div>";
+        }
         public static string EncodeQueryString(string Id)
         {
             var plaintextBytes = Encoding.UTF8.GetBytes(Id);
@@ -386,11 +427,10 @@ namespace Funeral.Web.Areas.Admin.Controllers
         public PageRights CheckPageRights { get; set; }
         public void BindCompanyList(DropDownList ddlCompanyList, HtmlControl dvAdministrator)
         {
-            FuneralServiceReference.FuneralServicesClient privateClient = new FuneralServiceReference.FuneralServicesClient();
             dvAdministrator.Visible = IsAdministrator;
             if (this.IsAdministrator)
             {
-                List<ApplicationSettingsModel> model = privateClient.GetAllApplicationList(ParlourId, 1, 0).ToList();
+                List<ApplicationSettingsModel> model = ToolsSetingBAL.GetAllApplicationList(ParlourId, 1, 0);
                 if (model != null)
                 {
                     ddlCompanyList.Visible = true;
@@ -414,7 +454,6 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 ddlCompanyList.SelectedValue = ParlourId.ToString();
             }
         }
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
         #endregion
 
         protected void RedirectToErrorPage()

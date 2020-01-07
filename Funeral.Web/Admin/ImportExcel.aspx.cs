@@ -1,4 +1,5 @@
-﻿using Funeral.BAL;
+﻿using ExcelDataReader;
+using Funeral.BAL;
 using Funeral.DAL;
 using Funeral.Model;
 using Funeral.Web.App_Start;
@@ -18,7 +19,6 @@ namespace Funeral.Web.Admin
 {
     public partial class ImportExcel : AdminBasePage
     {
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
         private static readonly List<string> memberTableColumns = new List<string>() {
                                                                             "CreateDate",
                                                                             "MemberType",
@@ -36,7 +36,7 @@ namespace Funeral.Web.Admin
                                                                             "Address3",
                                                                             "Address4",
                                                                             "Code",
-                                                                            "MemeberNumber",
+                                                                            "PolicyNumber",
                                                                             "MemberSociety",
                                                                             "InceptionDate",
                                                                             "Claimnumber",
@@ -63,32 +63,6 @@ namespace Funeral.Web.Admin
                                                                             "Premium"
                                                                         };
 
-        //private static readonly List<string> dependentTableColumns = new List<string>() {
-        //                                                                    "DependencyType",
-        //                                                                    "FullName",
-        //                                                                    "Surname",
-        //                                                                    "Gender",
-        //                                                                    "ID Number" ,
-        //                                                                    "Age",
-        //                                                                    "Telephone",
-        //                                                                    "Cellphone",
-        //                                                                    "Address1",
-        //                                                                    "Address2",
-        //                                                                    "Address3",
-        //                                                                    "Address4",
-        //                                                                    "Code",
-        //                                                                    "Claimnumber",
-        //                                                                    "parlourid",
-        //                                                                    "PlanName",
-        //                                                                    "Premium",
-        //                                                                    "Date of Birth",
-        //                                                                    "Inception Date",
-        //                                                                    "Cover Date",
-        //                                                                    "Cover Amount",
-        //                                                                    "Start Date"
-        //                                                                };
-
-
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -106,6 +80,7 @@ namespace Funeral.Web.Admin
 
                 string filePath = Path.Combine(saveFolder, FileUpload1.FileName);
                 Session["filePath"] = filePath;
+                Session["ImportedFileName"] = FileUpload1.FileName;
                 string fileExt = Path.GetExtension(filePath);
                 FileUpload1.SaveAs(filePath);
                 btnSubmit.Visible = true;
@@ -117,32 +92,28 @@ namespace Funeral.Web.Admin
 
         public void ValidateExcelColumns(string filePath)
         {
-            var connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + filePath + ";Extended Properties=\"Excel 12.0;IMEX=1;HDR=Yes;TypeGuessRows=0;ImportMixedTypes=Text\""; ;
-            using (var conn = new OleDbConnection(connectionString))
+            using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
             {
-                conn.Open();
-
-                DataTable dt = new DataTable();
-                var sheets = conn.GetOleDbSchemaTable(System.Data.OleDb.OleDbSchemaGuid.Tables, new object[] { null, null, null, "TABLE" });
-                using (var cmd = conn.CreateCommand())
+                using (var reader = ExcelReaderFactory.CreateReader(stream))
                 {
-                    cmd.CommandText = "SELECT TOP 1 * FROM [" + sheets.Rows[0]["TABLE_NAME"].ToString() + "] ";
-                    var adapter = new OleDbDataAdapter(cmd);
-                    adapter.Fill(dt);
+                    var result = reader.AsDataSet(new ExcelDataSetConfiguration()
+                    {
+                        ConfigureDataTable = (tableReader) => new ExcelDataTableConfiguration()
+                        {
+                            UseHeaderRow = true,
+                        }
+                    });
+                    List<string> ColumnNameList = new List<string>();
+                    var column = result.Tables[0].Columns;
+                    hdnColumCount.Value = result.Tables[0].Columns.Count.ToString();
+                    int cnt = column.Count;
+                    for (int i = 0; i < cnt; i++)
+                    {
+                        ColumnNameList.Add(column[i].ColumnName);
+                    }
+                    gvMapping.DataSource = ColumnNameList;
+                    gvMapping.DataBind();
                 }
-                List<string> ColumnNameList = new List<string>();
-                var column = dt.Columns;
-                hdnColumCount.Value = dt.Columns.Count.ToString();
-                int cnt = column.Count;
-                for (int i = 0; i < cnt; i++)
-                {
-                    ColumnNameList.Add(column[i].ColumnName);
-                }
-                gvMapping.DataSource = ColumnNameList;
-                gvMapping.DataBind();
-                //gvDependentMapping.DataSource = ColumnNameList;
-                //gvDependentMapping.DataBind();
-
             }
         }
 
@@ -151,42 +122,54 @@ namespace Funeral.Web.Admin
             if (Session["filePath"] != null)
                 fileExt = Path.GetExtension(Session["filePath"].ToString());
 
-            string conn = string.Empty;
-            DataTable dtexcel = new DataTable();
-            if (fileExt.ToLower().Equals(".xls"))
-                conn = @"provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + fileName + ";Extended Properties='Excel 8.0;HRD=Yes;IMEX=1';"; //for below excel 2007  
-            else
-                conn = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + fileName + ";Extended Properties=\"Excel 12.0;IMEX=1;HDR=Yes;TypeGuessRows=0;ImportMixedTypes=Text\"";          
-
-            OleDbConnection schemaConnection = new OleDbConnection(conn);
-            schemaConnection.Open();
-            DataTable dtSchema = schemaConnection.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-            if (dtSchema == null)
+            using (var stream = File.Open(fileName, FileMode.Open, FileAccess.Read))
             {
-                lblMessage.Text = "Please upload proper file.";
-                return null;
-            }
-
-            using (OleDbConnection con = new OleDbConnection(conn))
-            {   
-                try
+                using (var reader = ExcelReaderFactory.CreateReader(stream))
                 {
-                    using (var cmd = con.CreateCommand())
+                    var result = reader.AsDataSet(new ExcelDataSetConfiguration()
                     {
-                        cmd.CommandText = "SELECT * FROM [" + dtSchema.Rows[0]["TABLE_NAME"].ToString() + "] ";
-                        var adapter = new OleDbDataAdapter(cmd);
-                        adapter.Fill(dtexcel);
-                    }
-
-                    //OleDbDataAdapter oleAdpt = new OleDbDataAdapter("select * from ["+ dtSchema.Rows[0]["TABLE_NAME"].ToString() + "]", con); //here we read data from sheet1  
-                    //oleAdpt.Fill(dtexcel); //fill excel data into dataTable  
-                }
-                catch (Exception ex)
-                {
-                    lblMessage.Text = ex.Message;
+                        ConfigureDataTable = (tableReader) => new ExcelDataTableConfiguration()
+                        {
+                            UseHeaderRow = true,
+                        }
+                    });
+                    return result.Tables[0];
                 }
             }
-            return dtexcel;
+
+            //string conn = string.Empty;
+            //DataTable dtexcel = new DataTable();
+            //if (fileExt.ToLower().Equals(".xls"))
+            //    conn = @"provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + fileName + ";Extended Properties='Excel 8.0;HRD=Yes;IMEX=1';"; //for below excel 2007  
+            //else
+            //    conn = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + fileName + ";Extended Properties=\"Excel 12.0;IMEX=1;HDR=Yes;TypeGuessRows=0;ImportMixedTypes=Text\"";
+
+            //OleDbConnection schemaConnection = new OleDbConnection(conn);
+            //schemaConnection.Open();
+            //DataTable dtSchema = schemaConnection.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
+            //if (dtSchema == null)
+            //{
+            //    lblMessage.Text = "Please upload proper file.";
+            //    return null;
+            //}
+
+            //using (OleDbConnection con = new OleDbConnection(conn))
+            //{
+            //    try
+            //    {
+            //        using (var cmd = con.CreateCommand())
+            //        {
+            //            cmd.CommandText = "SELECT * FROM [" + dtSchema.Rows[0]["TABLE_NAME"].ToString() + "] ";
+            //            var adapter = new OleDbDataAdapter(cmd);
+            //            adapter.Fill(dtexcel);
+            //        }
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        lblMessage.Text = ex.Message;
+            //    }
+            //}
+            //return dtexcel;
         }
 
         protected void gvMapping_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -211,6 +194,11 @@ namespace Funeral.Web.Admin
                 dataTable.Columns.Add(new DataColumn(item, typeof(string)));
             }
 
+            dataTable.Columns.Add(new DataColumn("ImportedId", typeof(Guid)));
+            dataTable.Columns.Add(new DataColumn("ImportedBy", typeof(int)));
+            dataTable.Columns.Add(new DataColumn("ImportedDate", typeof(DateTime)));
+            dataTable.Columns.Add(new DataColumn("ImportedFileName", typeof(string)));
+
             MembersModel model = new MembersModel();
             // List<string> MappedColumns = new List<string>();
             int ColumnCount = Convert.ToInt32(hdnColumCount.Value);
@@ -226,9 +214,8 @@ namespace Funeral.Web.Admin
                         mappedColumn.Add(row.Cells[1].Text, ddl.SelectedItem.Value);
                 }
             }
-
-
-
+            Guid newImportedId = Guid.NewGuid();
+            DateTime importedDate = DateTime.Now;
             if (Session["filePath"] != null)
             {
                 DataTable dt = ReadExcel(Session["filePath"].ToString(), ".xls");
@@ -239,17 +226,22 @@ namespace Funeral.Web.Admin
                     {
                         newRow[keyValuePair.Value] = item[keyValuePair.Key];
                     }
+                    newRow["ImportedId"] = newImportedId;
+                    newRow["ImportedBy"] = UserID;
+                    newRow["ImportedDate"] = importedDate;
+                    newRow["ImportedFileName"] = Session["ImportedFileName"].ToString();
+                    newRow["parlourId"] = ParlourId;
                     dataTable.Rows.Add(newRow);
 
                 }
                 if (dt != null && dt.Rows.Count > 0)
-                    WriteToDatabase(dataTable);
+                    WriteToDatabase(dataTable, newImportedId);
                 else
                     lblMessage.Text = "No record found to import please correct the sheet.";
             }
 
         }
-        private void WriteToDatabase(DataTable dt)
+        private void WriteToDatabase(DataTable dt, Guid newImportedId)
         {
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["FuneralConnection"].ConnectionString))
             {
@@ -272,7 +264,7 @@ namespace Funeral.Web.Admin
                     bulkCopy.ColumnMappings.Add("Address3", "Address3");
                     bulkCopy.ColumnMappings.Add("Address4", "Address4");
                     bulkCopy.ColumnMappings.Add("Code", "Code");
-                    bulkCopy.ColumnMappings.Add("MemeberNumber", "MemeberNumber");
+                    bulkCopy.ColumnMappings.Add("MemeberNumber", "PolicyNumber");
                     bulkCopy.ColumnMappings.Add("MemberSociety", "MemberSociety");
                     bulkCopy.ColumnMappings.Add("Active", "Active");
                     bulkCopy.ColumnMappings.Add("InceptionDate", "InceptionDate");
@@ -298,14 +290,21 @@ namespace Funeral.Web.Admin
                     bulkCopy.ColumnMappings.Add("CustomId3", "CustomId3");
                     bulkCopy.ColumnMappings.Add("PlanName", "PlanName");
                     bulkCopy.ColumnMappings.Add("Premium", "Premium");
+
+                    bulkCopy.ColumnMappings.Add("ImportedId", "ImportedId");
+                    bulkCopy.ColumnMappings.Add("ImportedBy", "ImportedBy");
+                    bulkCopy.ColumnMappings.Add("ImportedDate", "ImportedDate");
+                    bulkCopy.ColumnMappings.Add("ImportedFileName", "ImportedFileName");
+
                     bulkCopy.WriteToServer(dt);
                     con.Close();
                 }
             }
             try
             {
-                client.MemberRowImportToMember(hdnMemberName.Value);
-                ShowMessage(ref lblMessage, MessageType.Success, "Record Inserted successfully");
+                MembersBAL.MemberRowImportToMember(hdnMemberName.Value, newImportedId);
+                //client.MemberRowImportToMember(hdnMemberName.Value, ImportedId);
+                ShowMessage(ref lblMessage, MessageType.Success, "Record imported successfully");
                 GridviewData.Visible = false;
 
 

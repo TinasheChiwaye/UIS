@@ -1,0 +1,223 @@
+﻿@model Funeral.Model.ClaimStatusHistoryModal
+@{
+    ViewBag.Title = "Claim Status History";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/Content/datatablecss")
+<script src="~/Scripts/plugins/dateformat/DateFormat.js"></script>
+<div class="dataTables_wrapper">
+    <div class="col-sm-12">
+        <div class="ibox ">
+            <div class="ibox-title">
+                <h5>Claim Status History</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        @{
+                            var tupledata = new Tuple<Funeral.Model.ClaimsModel, Funeral.Model.FuneralModel>(Model.claimsModel, Model.funeralModel);
+                            Html.RenderPartial("_ClaimStatusHistoryDetails", tupledata);
+                        }
+
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="col-sm-7">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="m-b-md">
+                                        <h2>Supporting Documents</h2>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="panel blank-panel">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <table class="fixed_header fixed_header-bordered" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Document</th>
+                                                    <th>Document Type</th>
+                                                    <th>Created Date</th>
+                                                    <th>Status</th>
+                                                    <th>Comment</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    if (Model.claimDocuments != null)
+                                                    {
+                                                        foreach (var item in Model.claimDocuments)
+                                                        {
+                                                            <tr>
+                                                                <td>@item.ImageName</td>
+                                                                <td>@item.DocumentName</td>
+                                                                <td>@item.CreateDate.ToString("dd MMM yyyy")</td>
+                                                                <td>
+                                                                    <span class="label label-primary" style="cursor:pointer;" title="Click to Change Status" onclick="OpenDocumentStatusPopUp(@item.pkiClaimPictureID,'@Model.claimsModel.parlourid')">@item.Status</span>
+                                                                </td>
+                                                                <td>
+                                                                    <a style="cursor:pointer;font-size:smaller;white-space: pre-line" title="Click to Show History" onclick="openDocumentHistoryPopUp(@item.pkiClaimPictureID,'@Model.claimsModel.parlourid')">
+                                                                        @Html.Raw(item.Comment)
+                                                                    </a>
+                                                                </td>
+                                                                <td>
+                                                                    <a title="Download this claim document" href="~/Handler/DocumentHandler.ashx?DocClaimID=@item.pkiClaimPictureID"><i class="glyphicon glyphicon-download"></i></a>
+                                                                    @*<a title="Delete this claim document" href="@Url.Action("DeleteClaimDocument", "Claims", new { pkiClaimPictureID = item.pkiClaimPictureID, PkiClaimID = Model.claimsModel.pkiClaimID })"><i class="glyphicon glyphicon-trash"></i></a>*@
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="m-b-md">
+                                        <h2>Payment History</h2>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="panel blank-panel">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <table id="memberDataTable" class="fixed_header fixed_header-bordered" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Date paid</th>
+                                                    <th>Amount</th>
+                                                    <th>Recieved by</th>
+                                                    <th>Notes</th>
+                                                    <th>Actions</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    if (Model.memberInvoices != null && Model.memberInvoices.Count > 0)
+                                                    {
+                                                        foreach (var item in Model.memberInvoices)
+                                                        {
+                                                            <tr>
+                                                                <td>@item.DatePaid</td>
+                                                                <td>@item.AmountPaid</td>
+                                                                <td>@item.RecievedBy</td>
+                                                                <td>@item.Notes</td>
+                                                                <td>
+                                                                    <a href="@Url.Action("PrintPaymentReceipt", "Payments", new { id = item.InvoiceID, Type = 1, PolicyNumber = Model.claimsModel.MemberNumber, DatePaid = item.DatePaid, AmountPaid = item.AmountPaid, PaidBy = item.PaidBy, ReceivedBy = item.RecievedBy, MonthPaid = item.Notes ,memberId=Model.claimsModel.fkiMemberID, parlourId=Model.claimsModel.parlourid})">
+                                                                        <i class="glyphicon glyphicon-print"></i>
+                                                                    </a>&nbsp;&nbsp;<a href="@Url.Action("PrintPaymentReceipt", "Payments", new { id = item.InvoiceID, Type = 2, PolicyNumber = Model.claimsModel.MemberNumber, DatePaid = item.DatePaid, AmountPaid = item.AmountPaid, PaidBy = item.PaidBy, ReceivedBy = item.RecievedBy, MonthPaid = item.Notes,MemberId=Model.claimsModel.fkiMemberID, parlourId=Model.claimsModel.parlourid })">
+                                                                        <i class="glyphicon glyphicon-export"></i>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="m-b-md">
+                                        <h2>Status History</h2>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="panel blank-panel">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <table id="memberDataTable" class="fixed_header fixed_header-bordered" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Status</th>
+                                                    <th>Changed To Status</th>
+                                                    <th>Reason</th>
+                                                    <th>Changed By</th>
+                                                    <th>Changed Date</th>
+                                                    <th>Comment</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    foreach (var item in Model.claimStatusHistory)
+                                                    {
+                                                        <tr>
+                                                            <td>@item.CurrentStatus</td>
+                                                            <td>@item.NewStatus</td>
+                                                            <td>@item.ChangeReason</td>
+
+                                                            <td>@item.ChangedByName</td>
+                                                            <td>@item.CreatedDate.ToString("dd MMM yyyy")</td>
+                                                            <td>@item.Comment</td>
+                                                        </tr>
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="LoadPartialView_ManageClaims"></div>
+<script type="text/javascript">
+    function OpenClaimStatusPopUp(GetClaimId,control) {
+        var ClaimStatusPartial = "@Url.Action("ClaimStatusPartial","Claims",new {ClaimId="GetClaimId",ParlourId="GetParlourId"})".replace("GetClaimId", GetClaimId).replace("GetParlourId", control.accessKey).replace("amp;", "");
+        $.ajax({
+            url: ClaimStatusPartial,
+            type: 'GET',
+            cache: false,
+        }).done(function (result) {
+            $('#LoadPartialView_ManageClaims').empty().html(result);
+            $("#dvChangeStatusModel").modal("show");
+            $('.modal-backdrop').removeClass("modal-backdrop");
+        });
+    }
+    function OpenDocumentStatusPopUp(GetpkiClaimPictureID, parlourId) {
+        var ClaimStatusPartial = "@Url.Action("ClaimDocumentStatusPartial","Claims",new {pkiClaimPictureID="GetpkiClaimPictureID",ParlourId="GetParlourId"})".replace("GetpkiClaimPictureID", GetpkiClaimPictureID).replace("GetParlourId", parlourId).replace("amp;", "");
+        $.ajax({
+            url: ClaimStatusPartial,
+            type: 'GET',
+            cache: false,
+        }).done(function (result) {
+            $('#LoadPartialView_ManageClaims').empty().html(result);
+            $("#dvChangeStatusModel").modal("show");
+            $('.modal-backdrop').removeClass("modal-backdrop");
+        });
+    }
+      function openDocumentHistoryPopUp(GetpkiClaimPictureID, parlourId) {
+        var ClaimStatusPartial = "@Url.Action("ClaimDocumentHistoryPartial","Claims",new {pkiClaimPictureID="GetpkiClaimPictureID",ParlourId="GetParlourId"})".replace("GetpkiClaimPictureID", GetpkiClaimPictureID).replace("GetParlourId", parlourId).replace("amp;", "");
+        $.ajax({
+            url: ClaimStatusPartial,
+            type: 'GET',
+            cache: false,
+        }).done(function (result) {
+            $('#LoadPartialView_ManageClaims').empty().html(result);
+            $("#dvChangeStatusModel").modal("show");
+            $('.modal-backdrop').removeClass("modal-backdrop");
+        });
+    }
+</script>
+

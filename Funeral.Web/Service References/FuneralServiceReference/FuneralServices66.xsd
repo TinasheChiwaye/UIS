@@ -119,7 +119,8 @@
   <xs:element name="MemberRowImportToMember">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="MemberType" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="memberType" nillable="true" type="xs:string" />
+        <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="importId" type="q8:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -138,7 +139,7 @@
   <xs:element name="GetPlanSubscriptionByPlanIdNewMemberResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetPlanSubscriptionByPlanIdNewMemberResult" nillable="true" type="q8:ArrayOfPolicyModel" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetPlanSubscriptionByPlanIdNewMemberResult" nillable="true" type="q9:ArrayOfPolicyModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -157,7 +158,7 @@
   <xs:element name="SelectMembersAndDependencies2">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q9:guid" />
+        <xs:element xmlns:q10="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q10:guid" />
         <xs:element minOccurs="0" name="MainMem" type="xs:boolean" />
         <xs:element minOccurs="0" name="Keyword" nillable="true" type="xs:string" />
       </xs:sequence>
@@ -166,14 +167,14 @@
   <xs:element name="SelectMembersAndDependencies2Response">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectMembersAndDependencies2Result" nillable="true" type="q10:ArrayOfFamilyDependencyModel" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectMembersAndDependencies2Result" nillable="true" type="q11:ArrayOfFamilyDependencyModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllApplicationList2">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourid" type="q11:guid" />
+        <xs:element xmlns:q12="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourid" type="q12:guid" />
         <xs:element minOccurs="0" name="param" type="xs:int" />
         <xs:element minOccurs="0" name="AppID" type="xs:int" />
       </xs:sequence>
@@ -182,7 +183,7 @@
   <xs:element name="GetAllApplicationList2Response">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllApplicationList2Result" nillable="true" type="q12:ApplicationSettingsModel" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllApplicationList2Result" nillable="true" type="q13:ApplicationSettingsModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -190,21 +191,21 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="ID" type="xs:int" />
-        <xs:element xmlns:q13="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q13:guid" />
+        <xs:element xmlns:q14="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q14:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetSuperUserAccessByIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetSuperUserAccessByIDResult" nillable="true" type="q14:ArrayOfSecureUserGroupsModel" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetSuperUserAccessByIDResult" nillable="true" type="q15:ArrayOfSecureUserGroupsModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveClaims">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q15:ClaimsModel" />
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q16:ClaimsModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -218,7 +219,7 @@
   <xs:element name="SelectAllClaimsByParlourId">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q16="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q16:guid" />
+        <xs:element xmlns:q17="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q17:guid" />
         <xs:element minOccurs="0" name="PageSize" type="xs:int" />
         <xs:element minOccurs="0" name="PageNum" type="xs:int" />
         <xs:element minOccurs="0" name="Keyword" nillable="true" type="xs:string" />
@@ -233,7 +234,7 @@
   <xs:element name="SelectAllClaimsByParlourIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectAllClaimsByParlourIdResult" nillable="true" type="q17:ArrayOfClaimsModel" />
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectAllClaimsByParlourIdResult" nillable="true" type="q18:ArrayOfClaimsModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -255,7 +256,7 @@
   <xs:element name="SelectAllClaimsBySearch">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q18="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q18:guid" />
+        <xs:element xmlns:q19="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q19:guid" />
         <xs:element minOccurs="0" name="PageSize" type="xs:int" />
         <xs:element minOccurs="0" name="PageNum" type="xs:int" />
         <xs:element minOccurs="0" name="Keyword" nillable="true" type="xs:string" />
@@ -269,7 +270,7 @@
   <xs:element name="SelectAllClaimsBySearchResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectAllClaimsBySearchResult" nillable="true" type="q19:ClaimsViewModel" />
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectAllClaimsBySearchResult" nillable="true" type="q20:ClaimsViewModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -283,7 +284,7 @@
   <xs:element name="GetClaimsbyMemeberNumberResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetClaimsbyMemeberNumberResult" nillable="true" type="q20:ArrayOfClaimsModel" />
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetClaimsbyMemeberNumberResult" nillable="true" type="q21:ArrayOfClaimsModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -291,21 +292,21 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="ID" type="xs:int" />
-        <xs:element xmlns:q21="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q21:guid" />
+        <xs:element xmlns:q22="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q22:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SelectClaimsBypkidResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectClaimsBypkidResult" nillable="true" type="q22:ClaimsModel" />
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectClaimsBypkidResult" nillable="true" type="q23:ClaimsModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SelectMembersAndDependencies1">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q23="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q23:guid" />
+        <xs:element xmlns:q24="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q24:guid" />
         <xs:element minOccurs="0" name="MainMem" type="xs:boolean" />
         <xs:element minOccurs="0" name="Keyword" nillable="true" type="xs:string" />
       </xs:sequence>
@@ -314,14 +315,14 @@
   <xs:element name="SelectMembersAndDependencies1Response">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectMembersAndDependencies1Result" nillable="true" type="q24:ArrayOfMembersModel" />
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectMembersAndDependencies1Result" nillable="true" type="q25:ArrayOfMembersModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="selectMemberByPkidAndParlor">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q25="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q25:guid" />
+        <xs:element xmlns:q26="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q26:guid" />
         <xs:element minOccurs="0" name="MemId" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
@@ -329,7 +330,7 @@
   <xs:element name="selectMemberByPkidAndParlorResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="selectMemberByPkidAndParlorResult" nillable="true" type="q26:MembersModel" />
+        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="selectMemberByPkidAndParlorResult" nillable="true" type="q27:MembersModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -343,7 +344,7 @@
   <xs:element name="GetPlanDetailsByPlanIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetPlanDetailsByPlanIdResult" nillable="true" type="q27:PlanModel" />
+        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetPlanDetailsByPlanIdResult" nillable="true" type="q28:PlanModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -381,7 +382,7 @@
   <xs:element name="ClaimStatusChangeReason">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q28:ChangeStatusReason" />
+        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q29:ChangeStatusReason" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -393,7 +394,7 @@
   <xs:element name="SaveClaimSupportedDocument">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q29:ClaimDocumentModel" />
+        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q30:ClaimDocumentModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -414,7 +415,7 @@
   <xs:element name="SelectClaimDocumentsByClaimIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectClaimDocumentsByClaimIdResult" nillable="true" type="q30:ArrayOfClaimDocumentModel" />
+        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectClaimDocumentsByClaimIdResult" nillable="true" type="q31:ArrayOfClaimDocumentModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -442,7 +443,7 @@
   <xs:element name="SelectClaimsDocumentsByPKIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectClaimsDocumentsByPKIdResult" nillable="true" type="q31:ClaimDocumentModel" />
+        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectClaimsDocumentsByPKIdResult" nillable="true" type="q32:ClaimDocumentModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -456,14 +457,14 @@
   <xs:element name="GetInvoiceByidResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetInvoiceByidResult" nillable="true" type="q32:NewMemberInvoiceModel" />
+        <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetInvoiceByidResult" nillable="true" type="q33:NewMemberInvoiceModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="PolicyStatusPieChart">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q33="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourid" type="q33:guid" />
+        <xs:element xmlns:q34="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourid" type="q34:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -489,7 +490,7 @@
   <xs:element name="SelectPolicyPremiumByParlourId">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q34="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q34:guid" />
+        <xs:element xmlns:q35="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q35:guid" />
         <xs:element minOccurs="0" name="PageSize" type="xs:int" />
         <xs:element minOccurs="0" name="PageNum" type="xs:int" />
         <xs:element minOccurs="0" name="Keyword" nillable="true" type="xs:string" />
@@ -504,14 +505,14 @@
   <xs:element name="SelectPolicyPremiumByParlourIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q35="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectPolicyPremiumByParlourIdResult" nillable="true" type="q35:ArrayOfPolicyPremiumDashboardModel" />
+        <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectPolicyPremiumByParlourIdResult" nillable="true" type="q36:ArrayOfPolicyPremiumDashboardModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="TombStonesPaymentSave">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q36:TombStonesPaymentModel" />
+        <xs:element xmlns:q37="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q37:TombStonesPaymentModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -525,7 +526,7 @@
   <xs:element name="TombStonesPaymentSelect">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q37="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q37:guid" />
+        <xs:element xmlns:q38="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q38:guid" />
         <xs:element minOccurs="0" name="InvoiceId" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
@@ -533,14 +534,14 @@
   <xs:element name="TombStonesPaymentSelectResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q38="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="TombStonesPaymentSelectResult" nillable="true" type="q38:TombStonesPaymentModel" />
+        <xs:element xmlns:q39="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="TombStonesPaymentSelectResult" nillable="true" type="q39:TombStonesPaymentModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="TombStonesPaymentSelectByTombstoneId">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q39="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q39:guid" />
+        <xs:element xmlns:q40="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q40:guid" />
         <xs:element minOccurs="0" name="TombstoneId" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
@@ -548,7 +549,7 @@
   <xs:element name="TombStonesPaymentSelectByTombstoneIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q40="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="TombStonesPaymentSelectByTombstoneIdResult" nillable="true" type="q40:ArrayOfTombStonesPaymentModel" />
+        <xs:element xmlns:q41="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="TombStonesPaymentSelectByTombstoneIdResult" nillable="true" type="q41:ArrayOfTombStonesPaymentModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -556,7 +557,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="invoiceId" type="xs:int" />
-        <xs:element xmlns:q41="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourId" type="q41:guid" />
+        <xs:element xmlns:q42="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourId" type="q42:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -570,21 +571,21 @@
   <xs:element name="GetAllPackage">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q42="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourId" type="q42:guid" />
+        <xs:element xmlns:q43="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourId" type="q43:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllPackageResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q43="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllPackageResult" nillable="true" type="q43:ArrayOfPackageServiceModel" />
+        <xs:element xmlns:q44="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllPackageResult" nillable="true" type="q44:ArrayOfPackageServiceModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetPackageService">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q44="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourId" type="q44:guid" />
+        <xs:element xmlns:q45="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourId" type="q45:guid" />
         <xs:element minOccurs="0" name="PackageName" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
@@ -592,14 +593,14 @@
   <xs:element name="GetPackageServiceResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q45="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetPackageServiceResult" nillable="true" type="q45:ArrayOfPackageServicesSelectionModel" />
+        <xs:element xmlns:q46="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetPackageServiceResult" nillable="true" type="q46:ArrayOfPackageServicesSelectionModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SavePackage">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q46="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q46:PackageServiceModel" />
+        <xs:element xmlns:q47="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q47:PackageServiceModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -613,7 +614,7 @@
   <xs:element name="SavePackageService">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q47="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q47:PackageServiceModel" />
+        <xs:element xmlns:q48="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q48:PackageServiceModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -639,7 +640,7 @@
   <xs:element name="GetPackageServiceByPackgeId">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q48="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q48:guid" />
+        <xs:element xmlns:q49="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q49:guid" />
         <xs:element minOccurs="0" name="PackgeId" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
@@ -647,28 +648,28 @@
   <xs:element name="GetPackageServiceByPackgeIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q49="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetPackageServiceByPackgeIdResult" nillable="true" type="q49:ArrayOfPackageServicesSelectionModel" />
+        <xs:element xmlns:q50="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetPackageServiceByPackgeIdResult" nillable="true" type="q50:ArrayOfPackageServicesSelectionModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetTombstoneAllPackage">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q50="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q50:guid" />
+        <xs:element xmlns:q51="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q51:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetTombstoneAllPackageResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q51="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetTombstoneAllPackageResult" nillable="true" type="q51:ArrayOfTombstonePackageModel" />
+        <xs:element xmlns:q52="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetTombstoneAllPackageResult" nillable="true" type="q52:ArrayOfTombstonePackageModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveTombstonePackage">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q52="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q52:TombstonePackageModel" />
+        <xs:element xmlns:q53="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q53:TombstonePackageModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -682,7 +683,7 @@
   <xs:element name="SaveTombstonePackageService">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q53="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q53:TombstonePackageModel" />
+        <xs:element xmlns:q54="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q54:TombstonePackageModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -708,7 +709,7 @@
   <xs:element name="GetTombstonePackageServiceByPackgeId">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q54="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q54:guid" />
+        <xs:element xmlns:q55="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q55:guid" />
         <xs:element minOccurs="0" name="PackgeId" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
@@ -716,7 +717,7 @@
   <xs:element name="GetTombstonePackageServiceByPackgeIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q55="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetTombstonePackageServiceByPackgeIdResult" nillable="true" type="q55:ArrayOfTombstonePackageModel" />
+        <xs:element xmlns:q56="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetTombstonePackageServiceByPackgeIdResult" nillable="true" type="q56:ArrayOfTombstonePackageModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -724,7 +725,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="Id" type="xs:int" />
-        <xs:element xmlns:q56="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourId" type="q56:guid" />
+        <xs:element xmlns:q57="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourId" type="q57:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -737,21 +738,21 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="memberId" type="xs:int" />
-        <xs:element xmlns:q57="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourId" type="q57:guid" />
+        <xs:element xmlns:q58="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourId" type="q58:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="JoiningFeesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q58="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="JoiningFeesResult" nillable="true" type="q58:JoiningFeeModel" />
+        <xs:element xmlns:q59="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="JoiningFeesResult" nillable="true" type="q59:JoiningFeeModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveCustomDetails">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q59="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q59:CustomDetails" />
+        <xs:element xmlns:q60="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q60:CustomDetails" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -765,7 +766,7 @@
   <xs:element name="UpdateCustomDetails">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q60="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q60:CustomDetails" />
+        <xs:element xmlns:q61="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q61:CustomDetails" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -777,7 +778,7 @@
   <xs:element name="GetCustomDetails">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q61="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q61:guid" />
+        <xs:element xmlns:q62="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q62:guid" />
         <xs:element minOccurs="0" name="Id" type="xs:int" />
         <xs:element minOccurs="0" name="CustomType" type="xs:int" />
       </xs:sequence>
@@ -786,14 +787,14 @@
   <xs:element name="GetCustomDetailsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q62="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetCustomDetailsResult" nillable="true" type="q62:CustomDetails" />
+        <xs:element xmlns:q63="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetCustomDetailsResult" nillable="true" type="q63:CustomDetails" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllCustomDetailsByParlourId">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q63="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q63:guid" />
+        <xs:element xmlns:q64="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q64:guid" />
         <xs:element minOccurs="0" name="CustomType" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
@@ -801,14 +802,14 @@
   <xs:element name="GetAllCustomDetailsByParlourIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q64="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllCustomDetailsByParlourIdResult" nillable="true" type="q64:ArrayOfCustomDetails" />
+        <xs:element xmlns:q65="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllCustomDetailsByParlourIdResult" nillable="true" type="q65:ArrayOfCustomDetails" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="DeleteCustomDetails">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q65="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q65:CustomDetails" />
+        <xs:element xmlns:q66="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q66:CustomDetails" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -825,14 +826,14 @@
   <xs:element name="tblRightGetAllResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q66="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="tblRightGetAllResult" nillable="true" type="q66:ArrayOfRightsModel" />
+        <xs:element xmlns:q67="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="tblRightGetAllResult" nillable="true" type="q67:ArrayOfRightsModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SavetblRight">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q67="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q67:RightsModel" />
+        <xs:element xmlns:q68="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q68:RightsModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -853,14 +854,14 @@
   <xs:element name="SelecttblRightByIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q68="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelecttblRightByIdResult" nillable="true" type="q68:RightsModel" />
+        <xs:element xmlns:q69="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelecttblRightByIdResult" nillable="true" type="q69:RightsModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetRightsByGroupId">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q69="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q69:guid" />
+        <xs:element xmlns:q70="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q70:guid" />
         <xs:element minOccurs="0" name="GroupId" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
@@ -868,7 +869,7 @@
   <xs:element name="GetRightsByGroupIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q70="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetRightsByGroupIdResult" nillable="true" type="q70:ArrayOfNewRightsModel" />
+        <xs:element xmlns:q71="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetRightsByGroupIdResult" nillable="true" type="q71:ArrayOfNewRightsModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -880,14 +881,14 @@
   <xs:element name="GetAllActiveTblPagesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q71="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllActiveTblPagesResult" nillable="true" type="q71:ArrayOftblPageModel" />
+        <xs:element xmlns:q72="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllActiveTblPagesResult" nillable="true" type="q72:ArrayOftblPageModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveTblRights">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q72="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q72:NewRightsModel" />
+        <xs:element xmlns:q73="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q73:NewRightsModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -901,7 +902,7 @@
   <xs:element name="LoadSideMenu">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q73="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q73:guid" />
+        <xs:element xmlns:q74="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q74:guid" />
         <xs:element minOccurs="0" name="UserId" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
@@ -909,14 +910,14 @@
   <xs:element name="LoadSideMenuResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q74="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="LoadSideMenuResult" nillable="true" type="q74:ArrayOftblPageModel" />
+        <xs:element xmlns:q75="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="LoadSideMenuResult" nillable="true" type="q75:ArrayOftblPageModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="OtherPaymentsSave">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q75="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q75:OtherPaymentModel" />
+        <xs:element xmlns:q76="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q76:OtherPaymentModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -931,14 +932,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="MemberId" type="xs:int" />
-        <xs:element xmlns:q76="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="Parlourid" type="q76:guid" />
+        <xs:element xmlns:q77="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="Parlourid" type="q77:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="OtherPaymentSelectByMemberIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q77="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="OtherPaymentSelectByMemberIdResult" nillable="true" type="q77:ArrayOfOtherPaymentModel" />
+        <xs:element xmlns:q78="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="OtherPaymentSelectByMemberIdResult" nillable="true" type="q78:ArrayOfOtherPaymentModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -946,21 +947,21 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="InvoiceId" type="xs:int" />
-        <xs:element xmlns:q78="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="Parlourid" type="q78:guid" />
+        <xs:element xmlns:q79="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="Parlourid" type="q79:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetOtherPaymentResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q79="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetOtherPaymentResult" nillable="true" type="q79:OtherPaymentModel" />
+        <xs:element xmlns:q80="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetOtherPaymentResult" nillable="true" type="q80:OtherPaymentModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SelectAllUnderwriterByParlourId">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q80="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q80:guid" />
+        <xs:element xmlns:q81="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q81:guid" />
         <xs:element minOccurs="0" name="PageSize" type="xs:int" />
         <xs:element minOccurs="0" name="PageNum" type="xs:int" />
         <xs:element minOccurs="0" name="Keyword" nillable="true" type="xs:string" />
@@ -972,14 +973,14 @@
   <xs:element name="SelectAllUnderwriterByParlourIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q81="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectAllUnderwriterByParlourIdResult" nillable="true" type="q81:ArrayOfUnderwriterModel" />
+        <xs:element xmlns:q82="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectAllUnderwriterByParlourIdResult" nillable="true" type="q82:ArrayOfUnderwriterModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveUnderwriter">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q82="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q82:UnderwriterModel" />
+        <xs:element xmlns:q83="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q83:UnderwriterModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -994,14 +995,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="ID" type="xs:int" />
-        <xs:element xmlns:q83="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q83:guid" />
+        <xs:element xmlns:q84="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q84:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SelectUnderwriterBypkidResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q84="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectUnderwriterBypkidResult" nillable="true" type="q84:UnderwriterModel" />
+        <xs:element xmlns:q85="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectUnderwriterBypkidResult" nillable="true" type="q85:UnderwriterModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1024,14 +1025,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="UnderwriterName" nillable="true" type="xs:string" />
-        <xs:element xmlns:q85="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q85:guid" />
+        <xs:element xmlns:q86="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q86:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SelectUnderwriterByNameResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q86="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectUnderwriterByNameResult" nillable="true" type="q86:UnderwriterModel" />
+        <xs:element xmlns:q87="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectUnderwriterByNameResult" nillable="true" type="q87:UnderwriterModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1043,14 +1044,14 @@
   <xs:element name="SelectUnderwriterNotDeletedResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q87="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectUnderwriterNotDeletedResult" nillable="true" type="q87:ArrayOfUnderwriterModel" />
+        <xs:element xmlns:q88="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectUnderwriterNotDeletedResult" nillable="true" type="q88:ArrayOfUnderwriterModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllUnderwriterPlansByParlourID">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q88="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourID" type="q88:guid" />
+        <xs:element xmlns:q89="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourID" type="q89:guid" />
         <xs:element minOccurs="0" name="CustomType" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
@@ -1058,7 +1059,7 @@
   <xs:element name="GetAllUnderwriterPlansByParlourIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q89="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllUnderwriterPlansByParlourIDResult" nillable="true" type="q89:ArrayOfUnderwriterPremiumModel" />
+        <xs:element xmlns:q90="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllUnderwriterPlansByParlourIDResult" nillable="true" type="q90:ArrayOfUnderwriterPremiumModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1072,14 +1073,14 @@
   <xs:element name="GetStatusResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q90="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetStatusResult" nillable="true" type="q90:ArrayOfStatusModel" />
+        <xs:element xmlns:q91="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetStatusResult" nillable="true" type="q91:ArrayOfStatusModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateMemberStatus">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q91="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourId" type="q91:guid" />
+        <xs:element xmlns:q92="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourId" type="q92:guid" />
         <xs:element minOccurs="0" name="id" type="xs:int" />
         <xs:element minOccurs="0" name="status" nillable="true" type="xs:string" />
       </xs:sequence>
@@ -1093,7 +1094,7 @@
   <xs:element name="MemberStatusChangeReason">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q92="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q92:ChangeStatusReason" />
+        <xs:element xmlns:q93="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q93:ChangeStatusReason" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1106,21 +1107,21 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="UnderwriterName" nillable="true" type="xs:string" />
-        <xs:element xmlns:q93="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q93:guid" />
+        <xs:element xmlns:q94="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q94:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SelectUnderwriterSetupByNameResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q94="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectUnderwriterSetupByNameResult" nillable="true" type="q94:UnderwriterSetupModel" />
+        <xs:element xmlns:q95="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectUnderwriterSetupByNameResult" nillable="true" type="q95:UnderwriterSetupModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveUnderwriterSetup">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q95="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q95:UnderwriterSetupModel" />
+        <xs:element xmlns:q96="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q96:UnderwriterSetupModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1134,7 +1135,7 @@
   <xs:element name="SelectAllUnderwriterSetupByParlourId">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q96="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q96:guid" />
+        <xs:element xmlns:q97="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q97:guid" />
         <xs:element minOccurs="0" name="PageSize" type="xs:int" />
         <xs:element minOccurs="0" name="PageNum" type="xs:int" />
         <xs:element minOccurs="0" name="Keyword" nillable="true" type="xs:string" />
@@ -1146,7 +1147,7 @@
   <xs:element name="SelectAllUnderwriterSetupByParlourIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q97="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectAllUnderwriterSetupByParlourIdResult" nillable="true" type="q97:ArrayOfUnderwriterSetupModel" />
+        <xs:element xmlns:q98="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectAllUnderwriterSetupByParlourIdResult" nillable="true" type="q98:ArrayOfUnderwriterSetupModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1154,14 +1155,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="ID" type="xs:int" />
-        <xs:element xmlns:q98="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q98:guid" />
+        <xs:element xmlns:q99="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q99:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="EditUnderwriterSetupbyIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q99="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="EditUnderwriterSetupbyIDResult" nillable="true" type="q99:UnderwriterSetupModel" />
+        <xs:element xmlns:q100="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="EditUnderwriterSetupbyIDResult" nillable="true" type="q100:UnderwriterSetupModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1183,7 +1184,7 @@
   <xs:element name="SelectAllUnderwriterPremiumByParlourId">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q100="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q100:guid" />
+        <xs:element xmlns:q101="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q101:guid" />
         <xs:element minOccurs="0" name="PageSize" type="xs:int" />
         <xs:element minOccurs="0" name="PageNum" type="xs:int" />
         <xs:element minOccurs="0" name="Keyword" nillable="true" type="xs:string" />
@@ -1195,7 +1196,7 @@
   <xs:element name="SelectAllUnderwriterPremiumByParlourIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q101="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectAllUnderwriterPremiumByParlourIdResult" nillable="true" type="q101:ArrayOfUnderwriterPremiumModel" />
+        <xs:element xmlns:q102="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectAllUnderwriterPremiumByParlourIdResult" nillable="true" type="q102:ArrayOfUnderwriterPremiumModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1203,28 +1204,28 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="ID" type="xs:int" />
-        <xs:element xmlns:q102="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q102:guid" />
+        <xs:element xmlns:q103="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q103:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="EditUnderwriterPremiumbyIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q103="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="EditUnderwriterPremiumbyIDResult" nillable="true" type="q103:UnderwriterPremiumModel" />
+        <xs:element xmlns:q104="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="EditUnderwriterPremiumbyIDResult" nillable="true" type="q104:UnderwriterPremiumModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetUnderwriterSetupNameByParlourId">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q104="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourid" type="q104:guid" />
+        <xs:element xmlns:q105="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourid" type="q105:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetUnderwriterSetupNameByParlourIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q105="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetUnderwriterSetupNameByParlourIdResult" nillable="true" type="q105:ArrayOfUnderwriterSetupModel" />
+        <xs:element xmlns:q106="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetUnderwriterSetupNameByParlourIdResult" nillable="true" type="q106:ArrayOfUnderwriterSetupModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1232,21 +1233,21 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="FkiUnderwriterId" type="xs:int" />
-        <xs:element xmlns:q106="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q106:guid" />
+        <xs:element xmlns:q107="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q107:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SelectUnderwriterPremiumByNameResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q107="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectUnderwriterPremiumByNameResult" nillable="true" type="q107:UnderwriterPremiumModel" />
+        <xs:element xmlns:q108="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectUnderwriterPremiumByNameResult" nillable="true" type="q108:UnderwriterPremiumModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveUnderwriterPremium">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q108="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q108:UnderwriterPremiumModel" />
+        <xs:element xmlns:q109="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q109:UnderwriterPremiumModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1275,28 +1276,28 @@
   <xs:element name="GetAllPlansList">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q109="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q109:guid" />
+        <xs:element xmlns:q110="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q110:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllPlansListResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q110="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllPlansListResult" nillable="true" type="q110:ArrayOfPlanModel" />
+        <xs:element xmlns:q111="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllPlansListResult" nillable="true" type="q111:ArrayOfPlanModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllRolePlayer">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q111="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q111:guid" />
+        <xs:element xmlns:q112="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q112:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllRolePlayerResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q112="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllRolePlayerResult" nillable="true" type="q112:ArrayOfRolePlayerModel" />
+        <xs:element xmlns:q113="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllRolePlayerResult" nillable="true" type="q113:ArrayOfRolePlayerModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1308,14 +1309,14 @@
   <xs:element name="GetTaxSettingResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q113="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetTaxSettingResult" nillable="true" type="q113:ArrayOfTaxSetting" />
+        <xs:element xmlns:q114="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetTaxSettingResult" nillable="true" type="q114:ArrayOfTaxSetting" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="InsertRecordForTax">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q114="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q114:TaxSetting" />
+        <xs:element xmlns:q115="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q115:TaxSetting" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1336,7 +1337,7 @@
   <xs:element name="GetTaxSettingByIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q115="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetTaxSettingByIdResult" nillable="true" type="q115:TaxSetting" />
+        <xs:element xmlns:q116="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetTaxSettingByIdResult" nillable="true" type="q116:TaxSetting" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1357,7 +1358,7 @@
   <xs:element name="UpdateRecordForTax">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q116="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q116:TaxSetting" />
+        <xs:element xmlns:q117="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q117:TaxSetting" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1372,21 +1373,21 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="ID" nillable="true" type="xs:string" />
-        <xs:element xmlns:q117="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q117:guid" />
+        <xs:element xmlns:q118="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q118:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetPolicyByMemberIDNumberResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q118="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetPolicyByMemberIDNumberResult" nillable="true" type="q118:ArrayOfMembersModel" />
+        <xs:element xmlns:q119="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetPolicyByMemberIDNumberResult" nillable="true" type="q119:ArrayOfMembersModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveScheduleEmailReport">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q119="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q119:ScheduleEmailReportModel" />
+        <xs:element xmlns:q120="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q120:ScheduleEmailReportModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1400,14 +1401,14 @@
   <xs:element name="GetScheduleEmailReportByParlourId">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q120="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q120:guid" />
+        <xs:element xmlns:q121="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q121:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetScheduleEmailReportByParlourIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q121="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetScheduleEmailReportByParlourIdResult" nillable="true" type="q121:ArrayOfScheduleEmailReportModel" />
+        <xs:element xmlns:q122="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetScheduleEmailReportByParlourIdResult" nillable="true" type="q122:ArrayOfScheduleEmailReportModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1415,14 +1416,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="ID" type="xs:int" />
-        <xs:element xmlns:q122="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q122:guid" />
+        <xs:element xmlns:q123="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q123:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetScheduleByIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q123="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetScheduleByIdResult" nillable="true" type="q123:ScheduleEmailReportModel" />
+        <xs:element xmlns:q124="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetScheduleByIdResult" nillable="true" type="q124:ScheduleEmailReportModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1436,14 +1437,14 @@
   <xs:element name="SelectMemberAddonProductsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q124="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectMemberAddonProductsResult" nillable="true" type="q124:ArrayOfMemberAddonProductsModel" />
+        <xs:element xmlns:q125="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectMemberAddonProductsResult" nillable="true" type="q125:ArrayOfMemberAddonProductsModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="MemberAddonProductsRemove">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q125="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="MemberID" type="q125:guid" />
+        <xs:element xmlns:q126="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="MemberID" type="q126:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1455,35 +1456,35 @@
   <xs:element name="MemberListBindAddonProduct">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q126="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="pkiProductID" type="q126:guid" />
+        <xs:element xmlns:q127="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="pkiProductID" type="q127:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="MemberListBindAddonProductResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q127="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="MemberListBindAddonProductResult" nillable="true" type="q127:ArrayOfAddonProductsModal" />
+        <xs:element xmlns:q128="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="MemberListBindAddonProductResult" nillable="true" type="q128:ArrayOfAddonProductsModal" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SelectMembarAddonProductBypkiMemberProductID">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q128="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="MemberID" type="q128:guid" />
+        <xs:element xmlns:q129="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="MemberID" type="q129:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SelectMembarAddonProductBypkiMemberProductIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q129="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectMembarAddonProductBypkiMemberProductIDResult" nillable="true" type="q129:ArrayOfMemberAddonProductsModel" />
+        <xs:element xmlns:q130="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectMembarAddonProductBypkiMemberProductIDResult" nillable="true" type="q130:ArrayOfMemberAddonProductsModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AddonProductUpdateMember">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q130="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q130:MemberAddonProductsModel" />
+        <xs:element xmlns:q131="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q131:MemberAddonProductsModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1497,7 +1498,7 @@
   <xs:element name="SaveSupportDocument">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q131="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q131:SupportedDocumentModel" />
+        <xs:element xmlns:q132="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q132:SupportedDocumentModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1518,7 +1519,7 @@
   <xs:element name="SelectSupportDocumentsByMemberIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q132="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectSupportDocumentsByMemberIdResult" nillable="true" type="q132:ArrayOfSupportedDocumentModel" />
+        <xs:element xmlns:q133="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectSupportDocumentsByMemberIdResult" nillable="true" type="q133:ArrayOfSupportedDocumentModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1530,14 +1531,14 @@
   <xs:element name="GetAllFamilyDependencyTypesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q133="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllFamilyDependencyTypesResult" nillable="true" type="q133:ArrayOfFamilyDependencyTypeModel" />
+        <xs:element xmlns:q134="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllFamilyDependencyTypesResult" nillable="true" type="q134:ArrayOfFamilyDependencyTypeModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveFamilyDependency">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q134="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q134:FamilyDependencyModel" />
+        <xs:element xmlns:q135="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q135:FamilyDependencyModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1551,7 +1552,7 @@
   <xs:element name="UpdateFamilyDependency">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q135="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q135:FamilyDependencyModel" />
+        <xs:element xmlns:q136="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q136:FamilyDependencyModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1572,7 +1573,7 @@
   <xs:element name="SelectFamilyDependencyByIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q136="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectFamilyDependencyByIdResult" nillable="true" type="q136:FamilyDependencyModel" />
+        <xs:element xmlns:q137="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectFamilyDependencyByIdResult" nillable="true" type="q137:FamilyDependencyModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1584,7 +1585,7 @@
   <xs:element name="SelectRelationshipResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q137="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectRelationshipResult" nillable="true" type="q137:ArrayOfRelationShipModel" />
+        <xs:element xmlns:q138="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectRelationshipResult" nillable="true" type="q138:ArrayOfRelationShipModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1624,14 +1625,14 @@
   <xs:element name="GetAllBankResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q138="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllBankResult" nillable="true" type="q138:ArrayOfBankModel" />
+        <xs:element xmlns:q139="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllBankResult" nillable="true" type="q139:ArrayOfBankModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetMemberNumber">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q139="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q139:guid" />
+        <xs:element xmlns:q140="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q140:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1650,7 +1651,7 @@
   <xs:element name="AccountTypeSelectAllResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q140="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="AccountTypeSelectAllResult" nillable="true" type="q140:ArrayOfAccountTypeModel" />
+        <xs:element xmlns:q141="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="AccountTypeSelectAllResult" nillable="true" type="q141:ArrayOfAccountTypeModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1662,7 +1663,7 @@
   <xs:element name="GetCountryResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q141="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetCountryResult" nillable="true" type="q141:ArrayOfCountryModel" />
+        <xs:element xmlns:q142="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetCountryResult" nillable="true" type="q142:ArrayOfCountryModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1670,7 +1671,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="fkiMemberid" type="xs:int" />
-        <xs:element xmlns:q142="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q142:guid" />
+        <xs:element xmlns:q143="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q143:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1684,7 +1685,7 @@
   <xs:element name="GetAllPayentMembers">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q143="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q143:guid" />
+        <xs:element xmlns:q144="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q144:guid" />
         <xs:element minOccurs="0" name="PolicyNo" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="IDNumber" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="PageSize" type="xs:int" />
@@ -1698,7 +1699,7 @@
   <xs:element name="GetAllPayentMembersResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q144="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllPayentMembersResult" nillable="true" type="q144:MembersPaymentViewModel" />
+        <xs:element xmlns:q145="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllPayentMembersResult" nillable="true" type="q145:MembersPaymentViewModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1712,7 +1713,7 @@
   <xs:element name="GetMemberPaymnetDetailsByIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q145="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetMemberPaymnetDetailsByIDResult" nillable="true" type="q145:MembersPaymentDetailsModel" />
+        <xs:element xmlns:q146="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetMemberPaymnetDetailsByIDResult" nillable="true" type="q146:MembersPaymentDetailsModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1720,14 +1721,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="MemberNo" nillable="true" type="xs:string" />
-        <xs:element xmlns:q146="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q146:guid" />
+        <xs:element xmlns:q147="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q147:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetMemberPlanDetailsWithBalanceResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q147="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetMemberPlanDetailsWithBalanceResult" nillable="true" type="q147:MembersPaymentDetailsModel" />
+        <xs:element xmlns:q148="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetMemberPlanDetailsWithBalanceResult" nillable="true" type="q148:MembersPaymentDetailsModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1741,14 +1742,14 @@
   <xs:element name="GetMemberPlanDetailsWithByMemberNoResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q148="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetMemberPlanDetailsWithByMemberNoResult" nillable="true" type="q148:MembersPaymentDetailsModel" />
+        <xs:element xmlns:q149="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetMemberPlanDetailsWithByMemberNoResult" nillable="true" type="q149:MembersPaymentDetailsModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AddPayments">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q149="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q149:MembersPaymentDetailsModel" />
+        <xs:element xmlns:q150="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q150:MembersPaymentDetailsModel" />
         <xs:element minOccurs="0" name="IsJoiningFee" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
@@ -1765,7 +1766,7 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="InvoiceId" type="xs:int" />
         <xs:element minOccurs="0" name="UserId" nillable="true" type="xs:string" />
-        <xs:element xmlns:q150="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="Parlourid" type="q150:guid" />
+        <xs:element xmlns:q151="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="Parlourid" type="q151:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1779,7 +1780,7 @@
   <xs:element name="AddFuneralPayments">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q151="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q151:FuneralPaymentsModel" />
+        <xs:element xmlns:q152="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q152:FuneralPaymentsModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1793,7 +1794,7 @@
   <xs:element name="ReturnFuneralPayments">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q152="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourid" type="q152:guid" />
+        <xs:element xmlns:q153="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourid" type="q153:guid" />
         <xs:element minOccurs="0" name="pIntFnrlID" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
@@ -1801,7 +1802,7 @@
   <xs:element name="ReturnFuneralPaymentsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q153="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="ReturnFuneralPaymentsResult" nillable="true" type="q153:ArrayOfFuneralPaymentsModel" />
+        <xs:element xmlns:q154="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="ReturnFuneralPaymentsResult" nillable="true" type="q154:ArrayOfFuneralPaymentsModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1815,7 +1816,7 @@
   <xs:element name="ReturnMemberPaymentResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q154="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="ReturnMemberPaymentResult" nillable="true" type="q154:ArrayOfFuneralPaymentsModel" />
+        <xs:element xmlns:q155="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="ReturnMemberPaymentResult" nillable="true" type="q155:ArrayOfFuneralPaymentsModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1827,28 +1828,28 @@
   <xs:element name="GetDistinctPolicyStatusListResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q155="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetDistinctPolicyStatusListResult" nillable="true" type="q155:ArrayOfstring" />
+        <xs:element xmlns:q156="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetDistinctPolicyStatusListResult" nillable="true" type="q156:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllAgent">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q156="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q156:guid" />
+        <xs:element xmlns:q157="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q157:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllAgentResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q157="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllAgentResult" nillable="true" type="q157:ArrayOfAgentModel" />
+        <xs:element xmlns:q158="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllAgentResult" nillable="true" type="q158:ArrayOfAgentModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="InsertSendReminder">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q158="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q158:SendReminderModel" />
+        <xs:element xmlns:q159="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q159:SendReminderModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1862,7 +1863,7 @@
   <xs:element name="SaveQuotation">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q159="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q159:QuotationModel" />
+        <xs:element xmlns:q160="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q160:QuotationModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1876,7 +1877,7 @@
   <xs:element name="UpdateQuotation">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q160="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q160:QuotationModel" />
+        <xs:element xmlns:q161="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q161:QuotationModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1906,21 +1907,21 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="ID" type="xs:int" />
-        <xs:element xmlns:q161="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q161:guid" />
+        <xs:element xmlns:q162="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q162:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SelectQuotationByQuotationIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q162="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectQuotationByQuotationIdResult" nillable="true" type="q162:QuotationModel" />
+        <xs:element xmlns:q163="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectQuotationByQuotationIdResult" nillable="true" type="q163:QuotationModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllQuotationByParlourId">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q163="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q163:guid" />
+        <xs:element xmlns:q164="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q164:guid" />
         <xs:element minOccurs="0" name="PageSize" type="xs:int" />
         <xs:element minOccurs="0" name="PageNum" type="xs:int" />
         <xs:element minOccurs="0" name="Keyword" nillable="true" type="xs:string" />
@@ -1932,35 +1933,35 @@
   <xs:element name="GetAllQuotationByParlourIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q164="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllQuotationByParlourIdResult" nillable="true" type="q164:ArrayOfQuotationModel" />
+        <xs:element xmlns:q165="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllQuotationByParlourIdResult" nillable="true" type="q165:ArrayOfQuotationModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetQuotationNumberByID">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q165="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q165:guid" />
+        <xs:element xmlns:q166="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q166:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetQuotationNumberByIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q166="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetQuotationNumberByIDResult" nillable="true" type="q166:ArrayOfQuotationModel" />
+        <xs:element xmlns:q167="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetQuotationNumberByIDResult" nillable="true" type="q167:ArrayOfQuotationModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllQuotationServices">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q167="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q167:guid" />
+        <xs:element xmlns:q168="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q168:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllQuotationServicesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q168="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllQuotationServicesResult" nillable="true" type="q168:ArrayOfQuotationServicesModel" />
+        <xs:element xmlns:q169="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllQuotationServicesResult" nillable="true" type="q169:ArrayOfQuotationServicesModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1974,14 +1975,14 @@
   <xs:element name="GetServiceByIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q169="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetServiceByIDResult" nillable="true" type="q169:QuotationServicesModel" />
+        <xs:element xmlns:q170="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetServiceByIDResult" nillable="true" type="q170:QuotationServicesModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveService">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q170="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q170:QuotationServicesModel" />
+        <xs:element xmlns:q171="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q171:QuotationServicesModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2002,7 +2003,7 @@
   <xs:element name="SelectServiceByQoutationIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q171="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectServiceByQoutationIDResult" nillable="true" type="q171:ArrayOfQuotationServicesModel" />
+        <xs:element xmlns:q172="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectServiceByQoutationIDResult" nillable="true" type="q172:ArrayOfQuotationServicesModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2023,14 +2024,14 @@
   <xs:element name="GetQuotationNumberByID2">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q172="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q172:guid" />
+        <xs:element xmlns:q173="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q173:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetQuotationNumberByID2Response">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q173="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetQuotationNumberByID2Result" nillable="true" type="q173:QuotationModel" />
+        <xs:element xmlns:q174="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetQuotationNumberByID2Result" nillable="true" type="q174:QuotationModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2053,7 +2054,7 @@
   <xs:element name="SaveDiscountAndAmount">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q174="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q174:QuotationDiscountModel" />
+        <xs:element xmlns:q175="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q175:QuotationDiscountModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2074,7 +2075,7 @@
   <xs:element name="GetAllQuotationDiscountsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q175="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllQuotationDiscountsResult" nillable="true" type="q175:QuotationDiscountModel" />
+        <xs:element xmlns:q176="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllQuotationDiscountsResult" nillable="true" type="q176:QuotationDiscountModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2089,14 +2090,14 @@
   <xs:element name="SelectServiceByQouAndIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q176="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectServiceByQouAndIDResult" nillable="true" type="q176:QuotationServicesModel" />
+        <xs:element xmlns:q177="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectServiceByQouAndIDResult" nillable="true" type="q177:QuotationServicesModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveQuotationMessage">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q177="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q177:QuotationMessageModel" />
+        <xs:element xmlns:q178="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q178:QuotationMessageModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2117,7 +2118,7 @@
   <xs:element name="SelectQuotationMessageByIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q178="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectQuotationMessageByIDResult" nillable="true" type="q178:QuotationMessageModel" />
+        <xs:element xmlns:q179="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectQuotationMessageByIDResult" nillable="true" type="q179:QuotationMessageModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2141,7 +2142,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="QuotationID" type="xs:int" />
-        <xs:element xmlns:q179="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourid" type="q179:guid" />
+        <xs:element xmlns:q180="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourid" type="q180:guid" />
         <xs:element minOccurs="0" name="status" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
@@ -2156,7 +2157,7 @@
   <xs:element name="SelectAllFuneralByParlourId">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q180="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q180:guid" />
+        <xs:element xmlns:q181="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q181:guid" />
         <xs:element minOccurs="0" name="PageSize" type="xs:int" />
         <xs:element minOccurs="0" name="PageNum" type="xs:int" />
         <xs:element minOccurs="0" name="Keyword" nillable="true" type="xs:string" />
@@ -2168,7 +2169,7 @@
   <xs:element name="SelectAllFuneralByParlourIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q181="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectAllFuneralByParlourIdResult" nillable="true" type="q181:ArrayOfFuneralModel" />
+        <xs:element xmlns:q182="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectAllFuneralByParlourIdResult" nillable="true" type="q182:ArrayOfFuneralModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2190,7 +2191,7 @@
   <xs:element name="SaveFuneral">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q182="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q182:FuneralModel" />
+        <xs:element xmlns:q183="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q183:FuneralModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2205,14 +2206,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="ID" type="xs:int" />
-        <xs:element xmlns:q183="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q183:guid" />
+        <xs:element xmlns:q184="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q184:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SelectFuneralBypkidResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q184="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectFuneralBypkidResult" nillable="true" type="q184:FuneralModel" />
+        <xs:element xmlns:q185="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectFuneralBypkidResult" nillable="true" type="q185:FuneralModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2226,14 +2227,14 @@
   <xs:element name="SelectFuneralByMemberNoResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q185="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectFuneralByMemberNoResult" nillable="true" type="q185:FuneralModel" />
+        <xs:element xmlns:q186="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectFuneralByMemberNoResult" nillable="true" type="q186:FuneralModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveFuneralService">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q186="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q186:FuneralServiceSelectModel" />
+        <xs:element xmlns:q187="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q187:FuneralServiceSelectModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2254,7 +2255,7 @@
   <xs:element name="SelectServiceByFuneralIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q187="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectServiceByFuneralIDResult" nillable="true" type="q187:ArrayOfFuneralServiceSelectModel" />
+        <xs:element xmlns:q188="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectServiceByFuneralIDResult" nillable="true" type="q188:ArrayOfFuneralServiceSelectModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2269,7 +2270,7 @@
   <xs:element name="SelectServiceByFunAndIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q188="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectServiceByFunAndIDResult" nillable="true" type="q188:FuneralServiceSelectModel" />
+        <xs:element xmlns:q189="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectServiceByFunAndIDResult" nillable="true" type="q189:FuneralServiceSelectModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2290,14 +2291,14 @@
   <xs:element name="GetInvoiceNumberByID">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q189="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q189:guid" />
+        <xs:element xmlns:q190="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q190:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetInvoiceNumberByIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q190="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetInvoiceNumberByIDResult" nillable="true" type="q190:FuneralModel" />
+        <xs:element xmlns:q191="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetInvoiceNumberByIDResult" nillable="true" type="q191:FuneralModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2321,7 +2322,7 @@
   <xs:element name="SaveFuneralSupportedDocument">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q191="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q191:FuneralDocumentModel" />
+        <xs:element xmlns:q192="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q192:FuneralDocumentModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2342,7 +2343,7 @@
   <xs:element name="SelectFuneralDocumentsByMemberIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q192="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectFuneralDocumentsByMemberIdResult" nillable="true" type="q192:ArrayOfFuneralDocumentModel" />
+        <xs:element xmlns:q193="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectFuneralDocumentsByMemberIdResult" nillable="true" type="q193:ArrayOfFuneralDocumentModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2370,14 +2371,14 @@
   <xs:element name="SelectFuneralDocumentsByPKIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q193="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectFuneralDocumentsByPKIdResult" nillable="true" type="q193:FuneralDocumentModel" />
+        <xs:element xmlns:q194="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectFuneralDocumentsByPKIdResult" nillable="true" type="q194:FuneralDocumentModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveTermsAndCondition">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q194="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="Model1" nillable="true" type="q194:ApplicationTnCModel" />
+        <xs:element xmlns:q195="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="Model1" nillable="true" type="q195:ApplicationTnCModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2391,21 +2392,21 @@
   <xs:element name="SelectApplicationTermsAndCondition">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q195="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourid" type="q195:guid" />
+        <xs:element xmlns:q196="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourid" type="q196:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SelectApplicationTermsAndConditionResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q196="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectApplicationTermsAndConditionResult" nillable="true" type="q196:ApplicationTnCModel" />
+        <xs:element xmlns:q197="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectApplicationTermsAndConditionResult" nillable="true" type="q197:ApplicationTnCModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SelectAllTombStoneByParlourId">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q197="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q197:guid" />
+        <xs:element xmlns:q198="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q198:guid" />
         <xs:element minOccurs="0" name="PageSize" type="xs:int" />
         <xs:element minOccurs="0" name="PageNum" type="xs:int" />
         <xs:element minOccurs="0" name="Keyword" nillable="true" type="xs:string" />
@@ -2417,7 +2418,7 @@
   <xs:element name="SelectAllTombStoneByParlourIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q198="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectAllTombStoneByParlourIdResult" nillable="true" type="q198:ArrayOfTombStoneModel" />
+        <xs:element xmlns:q199="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectAllTombStoneByParlourIdResult" nillable="true" type="q199:ArrayOfTombStoneModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2439,7 +2440,7 @@
   <xs:element name="SaveTombStone">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q199="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q199:TombStoneModel" />
+        <xs:element xmlns:q200="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q200:TombStoneModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2454,14 +2455,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="pkiTombstoneID" type="xs:int" />
-        <xs:element xmlns:q200="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q200:guid" />
+        <xs:element xmlns:q201="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q201:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SelectTombStoneByParlAndPkiResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q201="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectTombStoneByParlAndPkiResult" nillable="true" type="q201:TombStoneModel" />
+        <xs:element xmlns:q202="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectTombStoneByParlAndPkiResult" nillable="true" type="q202:TombStoneModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2471,7 +2472,7 @@
         <xs:element minOccurs="0" name="ImageName" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="ImagePath" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="pkiTombstoneID" type="xs:int" />
-        <xs:element xmlns:q202="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourid" type="q202:guid" />
+        <xs:element xmlns:q203="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourid" type="q203:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2485,14 +2486,14 @@
   <xs:element name="GetInvoiceNumOfTombByParlID">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q203="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q203:guid" />
+        <xs:element xmlns:q204="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q204:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetInvoiceNumOfTombByParlIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q204="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetInvoiceNumOfTombByParlIDResult" nillable="true" type="q204:TombStoneModel" />
+        <xs:element xmlns:q205="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetInvoiceNumOfTombByParlIDResult" nillable="true" type="q205:TombStoneModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2506,7 +2507,7 @@
   <xs:element name="SelectServiceByTombStoneIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q205="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectServiceByTombStoneIDResult" nillable="true" type="q205:ArrayOfTombStoneServiceSelectModel" />
+        <xs:element xmlns:q206="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectServiceByTombStoneIDResult" nillable="true" type="q206:ArrayOfTombStoneServiceSelectModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2535,14 +2536,14 @@
   <xs:element name="SelectServiceByTombAndIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q206="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectServiceByTombAndIDResult" nillable="true" type="q206:TombStoneServiceSelectModel" />
+        <xs:element xmlns:q207="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectServiceByTombAndIDResult" nillable="true" type="q207:TombStoneServiceSelectModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveTombStoneService">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q207="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q207:TombStoneServiceSelectModel" />
+        <xs:element xmlns:q208="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q208:TombStoneServiceSelectModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2573,7 +2574,7 @@
   <xs:element name="UpdateAutoPolicyNo">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q208="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="Model1" nillable="true" type="q208:ApplicationSettingsModel" />
+        <xs:element xmlns:q209="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="Model1" nillable="true" type="q209:ApplicationSettingsModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2587,7 +2588,7 @@
   <xs:element name="SelectFuneralManageServiceByParlID">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q209="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q209:guid" />
+        <xs:element xmlns:q210="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q210:guid" />
         <xs:element minOccurs="0" name="PageSize" type="xs:int" />
         <xs:element minOccurs="0" name="PageNum" type="xs:int" />
         <xs:element minOccurs="0" name="Keyword" nillable="true" type="xs:string" />
@@ -2599,14 +2600,14 @@
   <xs:element name="SelectFuneralManageServiceByParlIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q210="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectFuneralManageServiceByParlIDResult" nillable="true" type="q210:ArrayOfFuneralServiceManageModel" />
+        <xs:element xmlns:q211="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectFuneralManageServiceByParlIDResult" nillable="true" type="q211:ArrayOfFuneralServiceManageModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveFuneralManageService">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q211="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="Model1" nillable="true" type="q211:FuneralServiceManageModel" />
+        <xs:element xmlns:q212="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="Model1" nillable="true" type="q212:FuneralServiceManageModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2621,14 +2622,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="pkiServiceID" type="xs:int" />
-        <xs:element xmlns:q212="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q212:guid" />
+        <xs:element xmlns:q213="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q213:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SelectFuneralManageServiceByParlANdIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q213="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectFuneralManageServiceByParlANdIDResult" nillable="true" type="q213:FuneralServiceManageModel" />
+        <xs:element xmlns:q214="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectFuneralManageServiceByParlANdIDResult" nillable="true" type="q214:FuneralServiceManageModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2649,7 +2650,7 @@
   <xs:element name="GetAllApplicationList">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q214="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourid" type="q214:guid" />
+        <xs:element xmlns:q215="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourid" type="q215:guid" />
         <xs:element minOccurs="0" name="param" type="xs:int" />
         <xs:element minOccurs="0" name="AppID" type="xs:int" />
       </xs:sequence>
@@ -2658,7 +2659,7 @@
   <xs:element name="GetAllApplicationListResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q215="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllApplicationListResult" nillable="true" type="q215:ArrayOfApplicationSettingsModel" />
+        <xs:element xmlns:q216="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllApplicationListResult" nillable="true" type="q216:ArrayOfApplicationSettingsModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2673,14 +2674,14 @@
   <xs:element name="DoLoginResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q216="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="DoLoginResult" nillable="true" type="q216:AdminModel" />
+        <xs:element xmlns:q217="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="DoLoginResult" nillable="true" type="q217:AdminModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveMember">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q217="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q217:MembersModel" />
+        <xs:element xmlns:q218="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q218:MembersModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2694,63 +2695,63 @@
   <xs:element name="SaveApplication">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q218="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q218:ApplicationSettingsModel" />
+        <xs:element xmlns:q219="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q219:ApplicationSettingsModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveApplicationResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q219="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SaveApplicationResult" nillable="true" type="q219:ApplicationSettingsModel" />
+        <xs:element xmlns:q220="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SaveApplicationResult" nillable="true" type="q220:ApplicationSettingsModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveAgentInfo">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q220="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q220:AgentInfoSetupModel" />
+        <xs:element xmlns:q221="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q221:AgentInfoSetupModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveAgentInfoResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q221="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SaveAgentInfoResult" nillable="true" type="q221:AgentInfoSetupModel" />
+        <xs:element xmlns:q222="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SaveAgentInfoResult" nillable="true" type="q222:AgentInfoSetupModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveAdditionalApplication">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q222="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q222:AdditionalApplicationSettingsModel" />
+        <xs:element xmlns:q223="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q223:AdditionalApplicationSettingsModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveAdditionalApplicationResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q223="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SaveAdditionalApplicationResult" nillable="true" type="q223:AdditionalApplicationSettingsModel" />
+        <xs:element xmlns:q224="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SaveAdditionalApplicationResult" nillable="true" type="q224:AdditionalApplicationSettingsModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveBankingDetail">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q224="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="Model" nillable="true" type="q224:BankingDetailSending" />
+        <xs:element xmlns:q225="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="Model" nillable="true" type="q225:BankingDetailSending" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveBankingDetailResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q225="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SaveBankingDetailResult" nillable="true" type="q225:BankingDetailSending" />
+        <xs:element xmlns:q226="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SaveBankingDetailResult" nillable="true" type="q226:BankingDetailSending" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveUserDetails">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q226="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q226:SecureUsersModel" />
+        <xs:element xmlns:q227="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q227:SecureUsersModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2764,7 +2765,7 @@
   <xs:element name="SavePlanDetails">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q227="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q227:PlanModel" />
+        <xs:element xmlns:q228="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q228:PlanModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2778,21 +2779,21 @@
   <xs:element name="SaveBranchDetails">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q228="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q228:BranchModel" />
+        <xs:element xmlns:q229="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q229:BranchModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveBranchDetailsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q229="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="SaveBranchDetailsResult" type="q229:guid" />
+        <xs:element xmlns:q230="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="SaveBranchDetailsResult" type="q230:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveSocietyDetails">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q230="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q230:SocietyModel" />
+        <xs:element xmlns:q231="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q231:SocietyModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2806,7 +2807,7 @@
   <xs:element name="SaveVendorDetails">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q231="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q231:VendorModel" />
+        <xs:element xmlns:q232="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q232:VendorModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2820,7 +2821,7 @@
   <xs:element name="UpdatesmsTemplate">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q232="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q232:smsTempletModel" />
+        <xs:element xmlns:q233="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q233:smsTempletModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2834,7 +2835,7 @@
   <xs:element name="SaveExpensesDetails">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q233="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q233:ExpensesModel" />
+        <xs:element xmlns:q234="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q234:ExpensesModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2848,7 +2849,7 @@
   <xs:element name="SaveUserGroupDetails">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q234="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q234:SecureUserGroupsModel" />
+        <xs:element xmlns:q235="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q235:SecureUserGroupsModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2862,7 +2863,7 @@
   <xs:element name="SaveSmsGroupDetails">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q235="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q235:smsSendingGroupModel" />
+        <xs:element xmlns:q236="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q236:smsSendingGroupModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2876,14 +2877,14 @@
   <xs:element name="SaveAddonProductDetails">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q236="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q236:AddonProductsModal" />
+        <xs:element xmlns:q237="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q237:AddonProductsModal" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveAddonProductDetailsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q237="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="SaveAddonProductDetailsResult" type="q237:guid" />
+        <xs:element xmlns:q238="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="SaveAddonProductDetailsResult" type="q238:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2975,7 +2976,7 @@
   <xs:element name="DeleteBranch">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q238="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ID" type="q238:guid" />
+        <xs:element xmlns:q239="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ID" type="q239:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3031,7 +3032,7 @@
   <xs:element name="DeleteAddonProduct">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q239="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ID" type="q239:guid" />
+        <xs:element xmlns:q240="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ID" type="q240:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3046,14 +3047,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="ID" type="xs:int" />
-        <xs:element xmlns:q240="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q240:guid" />
+        <xs:element xmlns:q241="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q241:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="EditUserbyIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q241="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="EditUserbyIDResult" nillable="true" type="q241:SecureUsersModel" />
+        <xs:element xmlns:q242="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="EditUserbyIDResult" nillable="true" type="q242:SecureUsersModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3061,29 +3062,29 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="ID" type="xs:int" />
-        <xs:element xmlns:q242="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q242:guid" />
+        <xs:element xmlns:q243="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q243:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="EditPlanbyIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q243="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="EditPlanbyIDResult" nillable="true" type="q243:PlanModel" />
+        <xs:element xmlns:q244="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="EditPlanbyIDResult" nillable="true" type="q244:PlanModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="EditBranchbyID">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q244="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ID" type="q244:guid" />
-        <xs:element xmlns:q245="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q245:guid" />
+        <xs:element xmlns:q245="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ID" type="q245:guid" />
+        <xs:element xmlns:q246="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q246:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="EditBranchbyIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q246="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="EditBranchbyIDResult" nillable="true" type="q246:BranchModel" />
+        <xs:element xmlns:q247="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="EditBranchbyIDResult" nillable="true" type="q247:BranchModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3091,14 +3092,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="ID" type="xs:int" />
-        <xs:element xmlns:q247="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q247:guid" />
+        <xs:element xmlns:q248="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q248:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="EditSocietybyIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q248="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="EditSocietybyIDResult" nillable="true" type="q248:SocietyModel" />
+        <xs:element xmlns:q249="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="EditSocietybyIDResult" nillable="true" type="q249:SocietyModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3106,14 +3107,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="ID" type="xs:int" />
-        <xs:element xmlns:q249="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q249:guid" />
+        <xs:element xmlns:q250="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q250:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="EditVendorbyIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q250="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="EditVendorbyIDResult" nillable="true" type="q250:VendorModel" />
+        <xs:element xmlns:q251="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="EditVendorbyIDResult" nillable="true" type="q251:VendorModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3121,14 +3122,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="ID" type="xs:int" />
-        <xs:element xmlns:q251="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q251:guid" />
+        <xs:element xmlns:q252="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q252:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetEmailTemplateByIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q252="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetEmailTemplateByIDResult" nillable="true" type="q252:smsTempletModel" />
+        <xs:element xmlns:q253="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetEmailTemplateByIDResult" nillable="true" type="q253:smsTempletModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3136,14 +3137,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="ID" type="xs:int" />
-        <xs:element xmlns:q253="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q253:guid" />
+        <xs:element xmlns:q254="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q254:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="EditExpensesbyIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q254="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="EditExpensesbyIDResult" nillable="true" type="q254:ExpensesModel" />
+        <xs:element xmlns:q255="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="EditExpensesbyIDResult" nillable="true" type="q255:ExpensesModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3157,7 +3158,7 @@
   <xs:element name="EditSecurUserbyIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q255="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="EditSecurUserbyIDResult" nillable="true" type="q255:ArrayOfSecureUserGroupsModel" />
+        <xs:element xmlns:q256="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="EditSecurUserbyIDResult" nillable="true" type="q256:ArrayOfSecureUserGroupsModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3171,7 +3172,7 @@
   <xs:element name="EditsmsGroupbyIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q256="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="EditsmsGroupbyIDResult" nillable="true" type="q256:ArrayOfsmsSendingGroupModel" />
+        <xs:element xmlns:q257="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="EditsmsGroupbyIDResult" nillable="true" type="q257:ArrayOfsmsSendingGroupModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3179,29 +3180,29 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="ID" type="xs:int" />
-        <xs:element xmlns:q257="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q257:guid" />
+        <xs:element xmlns:q258="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q258:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetsmsGroupbyIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q258="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetsmsGroupbyIDResult" nillable="true" type="q258:smsSendingGroupModel" />
+        <xs:element xmlns:q259="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetsmsGroupbyIDResult" nillable="true" type="q259:smsSendingGroupModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="EditAddonProductbyID">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q259="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ID" type="q259:guid" />
-        <xs:element xmlns:q260="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q260:guid" />
+        <xs:element xmlns:q260="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ID" type="q260:guid" />
+        <xs:element xmlns:q261="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q261:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="EditAddonProductbyIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q261="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="EditAddonProductbyIDResult" nillable="true" type="q261:AddonProductsModal" />
+        <xs:element xmlns:q262="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="EditAddonProductbyIDResult" nillable="true" type="q262:AddonProductsModal" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3209,14 +3210,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="ID" type="xs:int" />
-        <xs:element xmlns:q262="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q262:guid" />
+        <xs:element xmlns:q263="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q263:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetMemberByIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q263="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetMemberByIDResult" nillable="true" type="q263:MembersModel" />
+        <xs:element xmlns:q264="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetMemberByIDResult" nillable="true" type="q264:MembersModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3224,14 +3225,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="ID" nillable="true" type="xs:string" />
-        <xs:element xmlns:q264="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q264:guid" />
+        <xs:element xmlns:q265="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q265:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetMemberByIDNumResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q265="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetMemberByIDNumResult" nillable="true" type="q265:MembersModel" />
+        <xs:element xmlns:q266="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetMemberByIDNumResult" nillable="true" type="q266:MembersModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3239,7 +3240,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="ID" nillable="true" type="xs:string" />
-        <xs:element xmlns:q266="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q266:guid" />
+        <xs:element xmlns:q267="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q267:guid" />
         <xs:element minOccurs="0" name="MemberID" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
@@ -3247,7 +3248,7 @@
   <xs:element name="GetDependencByIDNumResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q267="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetDependencByIDNumResult" nillable="true" type="q267:FamilyDependencyModel" />
+        <xs:element xmlns:q268="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetDependencByIDNumResult" nillable="true" type="q268:FamilyDependencyModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3255,14 +3256,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="UserID" nillable="true" type="xs:string" />
-        <xs:element xmlns:q268="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q268:guid" />
+        <xs:element xmlns:q269="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q269:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetUserByIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q269="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetUserByIDResult" nillable="true" type="q269:SecureUsersModel" />
+        <xs:element xmlns:q270="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetUserByIDResult" nillable="true" type="q270:SecureUsersModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3276,7 +3277,7 @@
   <xs:element name="GetUserByEmailIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q270="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetUserByEmailIDResult" nillable="true" type="q270:SecureUsersModel" />
+        <xs:element xmlns:q271="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetUserByEmailIDResult" nillable="true" type="q271:SecureUsersModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3284,14 +3285,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="UserID" nillable="true" type="xs:string" />
-        <xs:element xmlns:q271="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q271:guid" />
+        <xs:element xmlns:q272="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q272:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetPlanByIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q272="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetPlanByIDResult" nillable="true" type="q272:PlanModel" />
+        <xs:element xmlns:q273="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetPlanByIDResult" nillable="true" type="q273:PlanModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3299,14 +3300,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="UserID" type="xs:int" />
-        <xs:element xmlns:q273="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q273:guid" />
+        <xs:element xmlns:q274="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q274:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetUserAccessByIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q274="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetUserAccessByIDResult" nillable="true" type="q274:SecureUserGroupsModel" />
+        <xs:element xmlns:q275="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetUserAccessByIDResult" nillable="true" type="q275:SecureUserGroupsModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3314,14 +3315,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="UserID" nillable="true" type="xs:string" />
-        <xs:element xmlns:q275="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q275:guid" />
+        <xs:element xmlns:q276="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q276:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetBranchByIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q276="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetBranchByIDResult" nillable="true" type="q276:BranchModel" />
+        <xs:element xmlns:q277="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetBranchByIDResult" nillable="true" type="q277:BranchModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3329,14 +3330,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="UserID" nillable="true" type="xs:string" />
-        <xs:element xmlns:q277="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q277:guid" />
+        <xs:element xmlns:q278="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q278:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAddonProductByIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q278="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAddonProductByIDResult" nillable="true" type="q278:AddonProductsModal" />
+        <xs:element xmlns:q279="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAddonProductByIDResult" nillable="true" type="q279:AddonProductsModal" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3344,14 +3345,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="UserID" nillable="true" type="xs:string" />
-        <xs:element xmlns:q279="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q279:guid" />
+        <xs:element xmlns:q280="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q280:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetSocietyByIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q280="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetSocietyByIDResult" nillable="true" type="q280:SocietyModel" />
+        <xs:element xmlns:q281="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetSocietyByIDResult" nillable="true" type="q281:SocietyModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3359,14 +3360,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="UserID" nillable="true" type="xs:string" />
-        <xs:element xmlns:q281="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q281:guid" />
+        <xs:element xmlns:q282="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q282:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetVendorByIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q282="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetVendorByIDResult" nillable="true" type="q282:VendorModel" />
+        <xs:element xmlns:q283="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetVendorByIDResult" nillable="true" type="q283:VendorModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3374,28 +3375,28 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="UserID" nillable="true" type="xs:string" />
-        <xs:element xmlns:q283="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q283:guid" />
+        <xs:element xmlns:q284="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q284:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetExpensesByIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q284="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetExpensesByIDResult" nillable="true" type="q284:ExpensesModel" />
+        <xs:element xmlns:q285="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetExpensesByIDResult" nillable="true" type="q285:ExpensesModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetApplictionByParlourID">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q285="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q285:guid" />
+        <xs:element xmlns:q286="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q286:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetApplictionByParlourIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q286="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetApplictionByParlourIDResult" nillable="true" type="q286:ApplicationSettingsModel" />
+        <xs:element xmlns:q287="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetApplictionByParlourIDResult" nillable="true" type="q287:ApplicationSettingsModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3409,21 +3410,21 @@
   <xs:element name="GetApplictionByIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q287="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetApplictionByIDResult" nillable="true" type="q287:ApplicationSettingsModel" />
+        <xs:element xmlns:q288="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetApplictionByIDResult" nillable="true" type="q288:ApplicationSettingsModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetBankingByID">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q288="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ID" type="q288:guid" />
+        <xs:element xmlns:q289="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ID" type="q289:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetBankingByIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q289="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetBankingByIDResult" nillable="true" type="q289:BankingDetailSending" />
+        <xs:element xmlns:q290="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetBankingByIDResult" nillable="true" type="q290:BankingDetailSending" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3437,7 +3438,7 @@
   <xs:element name="GetAgentByIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q290="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAgentByIDResult" nillable="true" type="q290:AgentInfoSetupModel" />
+        <xs:element xmlns:q291="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAgentByIDResult" nillable="true" type="q291:AgentInfoSetupModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3449,14 +3450,14 @@
   <xs:element name="GetSecureGrouListResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q291="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetSecureGrouListResult" nillable="true" type="q291:ArrayOfSecureGroupModel" />
+        <xs:element xmlns:q292="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetSecureGrouListResult" nillable="true" type="q292:ArrayOfSecureGroupModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllMembers">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q292="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q292:guid" />
+        <xs:element xmlns:q293="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q293:guid" />
         <xs:element minOccurs="0" name="PageSize" type="xs:int" />
         <xs:element minOccurs="0" name="PageNum" type="xs:int" />
         <xs:element minOccurs="0" name="Keyword" nillable="true" type="xs:string" />
@@ -3469,14 +3470,14 @@
   <xs:element name="GetAllMembersResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q293="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllMembersResult" nillable="true" type="q293:MembersViewModel" />
+        <xs:element xmlns:q294="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllMembersResult" nillable="true" type="q294:MembersViewModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllUsers">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q294="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q294:guid" />
+        <xs:element xmlns:q295="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q295:guid" />
         <xs:element minOccurs="0" name="PageSize" type="xs:int" />
         <xs:element minOccurs="0" name="PageNum" type="xs:int" />
         <xs:element minOccurs="0" name="Keyword" nillable="true" type="xs:string" />
@@ -3488,14 +3489,14 @@
   <xs:element name="GetAllUsersResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q295="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllUsersResult" nillable="true" type="q295:ArrayOfSecureUsersModel" />
+        <xs:element xmlns:q296="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllUsersResult" nillable="true" type="q296:ArrayOfSecureUsersModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllPlans">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q296="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q296:guid" />
+        <xs:element xmlns:q297="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q297:guid" />
         <xs:element minOccurs="0" name="PageSize" type="xs:int" />
         <xs:element minOccurs="0" name="PageNum" type="xs:int" />
         <xs:element minOccurs="0" name="Keyword" nillable="true" type="xs:string" />
@@ -3507,14 +3508,14 @@
   <xs:element name="GetAllPlansResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q297="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllPlansResult" nillable="true" type="q297:ArrayOfPlanModel" />
+        <xs:element xmlns:q298="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllPlansResult" nillable="true" type="q298:ArrayOfPlanModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllCompanys">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q298="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q298:guid" />
+        <xs:element xmlns:q299="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q299:guid" />
         <xs:element minOccurs="0" name="PageSize" type="xs:int" />
         <xs:element minOccurs="0" name="PageNum" type="xs:int" />
         <xs:element minOccurs="0" name="Keyword" nillable="true" type="xs:string" />
@@ -3526,14 +3527,14 @@
   <xs:element name="GetAllCompanysResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q299="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllCompanysResult" nillable="true" type="q299:ArrayOfApplicationSettingsModel" />
+        <xs:element xmlns:q300="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllCompanysResult" nillable="true" type="q300:ArrayOfApplicationSettingsModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllAgentInfo">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q300="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q300:guid" />
+        <xs:element xmlns:q301="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q301:guid" />
         <xs:element minOccurs="0" name="PageSize" type="xs:int" />
         <xs:element minOccurs="0" name="PageNum" type="xs:int" />
         <xs:element minOccurs="0" name="Keyword" nillable="true" type="xs:string" />
@@ -3545,56 +3546,56 @@
   <xs:element name="GetAllAgentInfoResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q301="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllAgentInfoResult" nillable="true" type="q301:ArrayOfAgentInfoSetupModel" />
+        <xs:element xmlns:q302="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllAgentInfoResult" nillable="true" type="q302:ArrayOfAgentInfoSetupModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllBranches">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q302="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q302:guid" />
+        <xs:element xmlns:q303="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q303:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllBranchesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q303="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllBranchesResult" nillable="true" type="q303:ArrayOfBranchModel" />
+        <xs:element xmlns:q304="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllBranchesResult" nillable="true" type="q304:ArrayOfBranchModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllSocietyes">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q304="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q304:guid" />
+        <xs:element xmlns:q305="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q305:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllSocietyesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q305="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllSocietyesResult" nillable="true" type="q305:ArrayOfSocietyModel" />
+        <xs:element xmlns:q306="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllSocietyesResult" nillable="true" type="q306:ArrayOfSocietyModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllSocietye">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q306="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q306:guid" />
+        <xs:element xmlns:q307="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q307:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllSocietyeResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q307="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllSocietyeResult" nillable="true" type="q307:ArrayOfSocietyModel" />
+        <xs:element xmlns:q308="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllSocietyeResult" nillable="true" type="q308:ArrayOfSocietyModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllVendores">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q308="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q308:guid" />
+        <xs:element xmlns:q309="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q309:guid" />
         <xs:element minOccurs="0" name="PageSize" type="xs:int" />
         <xs:element minOccurs="0" name="PageNum" type="xs:int" />
         <xs:element minOccurs="0" name="Keyword" nillable="true" type="xs:string" />
@@ -3606,84 +3607,84 @@
   <xs:element name="GetAllVendoresResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q309="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllVendoresResult" nillable="true" type="q309:ArrayOfVendorModel" />
+        <xs:element xmlns:q310="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllVendoresResult" nillable="true" type="q310:ArrayOfVendorModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetTemplateList">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q310="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q310:guid" />
+        <xs:element xmlns:q311="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q311:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetTemplateListResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q311="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetTemplateListResult" nillable="true" type="q311:ArrayOfsmsTempletModel" />
+        <xs:element xmlns:q312="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetTemplateListResult" nillable="true" type="q312:ArrayOfsmsTempletModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllExpenseses">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q312="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q312:guid" />
+        <xs:element xmlns:q313="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q313:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllExpensesesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q313="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllExpensesesResult" nillable="true" type="q313:ArrayOfExpensesModel" />
+        <xs:element xmlns:q314="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllExpensesesResult" nillable="true" type="q314:ArrayOfExpensesModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllAddonProductes">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q314="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q314:guid" />
+        <xs:element xmlns:q315="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q315:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllAddonProductesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q315="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllAddonProductesResult" nillable="true" type="q315:ArrayOfAddonProductsModal" />
+        <xs:element xmlns:q316="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllAddonProductesResult" nillable="true" type="q316:ArrayOfAddonProductsModal" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllMemberCellphon">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q316="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q316:guid" />
+        <xs:element xmlns:q317="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q317:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllMemberCellphonResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q317="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllMemberCellphonResult" nillable="true" type="q317:ArrayOfMembersModel" />
+        <xs:element xmlns:q318="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllMemberCellphonResult" nillable="true" type="q318:ArrayOfMembersModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetPolicyByParlourId">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q318="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourid" type="q318:guid" />
+        <xs:element xmlns:q319="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourid" type="q319:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetPolicyByParlourIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q319="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetPolicyByParlourIdResult" nillable="true" type="q319:ArrayOfPolicyModel" />
+        <xs:element xmlns:q320="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetPolicyByParlourIdResult" nillable="true" type="q320:ArrayOfPolicyModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="FamilyDependency">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q320="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourid" type="q320:guid" />
+        <xs:element xmlns:q321="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourid" type="q321:guid" />
         <xs:element minOccurs="0" name="MemberId" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
@@ -3691,14 +3692,14 @@
   <xs:element name="FamilyDependencyResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q321="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="FamilyDependencyResult" nillable="true" type="q321:ArrayOfFamilyDependencyModel" />
+        <xs:element xmlns:q322="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="FamilyDependencyResult" nillable="true" type="q322:ArrayOfFamilyDependencyModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetInvoices">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q322="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourid" type="q322:guid" />
+        <xs:element xmlns:q323="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourid" type="q323:guid" />
         <xs:element minOccurs="0" name="MemberId" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
@@ -3706,77 +3707,77 @@
   <xs:element name="GetInvoicesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q323="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetInvoicesResult" nillable="true" type="q323:ArrayOfMemberInvoiceModel" />
+        <xs:element xmlns:q324="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetInvoicesResult" nillable="true" type="q324:ArrayOfMemberInvoiceModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SocietyByparlourId">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q324="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourid" type="q324:guid" />
+        <xs:element xmlns:q325="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourid" type="q325:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SocietyByparlourIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q325="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SocietyByparlourIdResult" nillable="true" type="q325:ArrayOfSocietyModel" />
+        <xs:element xmlns:q326="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SocietyByparlourIdResult" nillable="true" type="q326:ArrayOfSocietyModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllSociety">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q326="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourid" type="q326:guid" />
+        <xs:element xmlns:q327="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourid" type="q327:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllSocietyResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q327="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllSocietyResult" nillable="true" type="q327:ArrayOfSocietyModel" />
+        <xs:element xmlns:q328="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllSocietyResult" nillable="true" type="q328:ArrayOfSocietyModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="BranchByparlourId">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q328="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourid" type="q328:guid" />
+        <xs:element xmlns:q329="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlourid" type="q329:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="BranchByparlourIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q329="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="BranchByparlourIdResult" nillable="true" type="q329:ArrayOfBranchModel" />
+        <xs:element xmlns:q330="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="BranchByparlourIdResult" nillable="true" type="q330:ArrayOfBranchModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllBranch">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q330="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="Parlourid" type="q330:guid" />
+        <xs:element xmlns:q331="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="Parlourid" type="q331:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllBranchResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q331="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllBranchResult" nillable="true" type="q331:ArrayOfBranchModel" />
+        <xs:element xmlns:q332="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllBranchResult" nillable="true" type="q332:ArrayOfBranchModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllPlanName">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q332="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="Parlourid" type="q332:guid" />
+        <xs:element xmlns:q333="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="Parlourid" type="q333:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllPlanNameResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q333="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllPlanNameResult" nillable="true" type="q333:ArrayOfPlanModel" />
+        <xs:element xmlns:q334="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetAllPlanNameResult" nillable="true" type="q334:ArrayOfPlanModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3784,14 +3785,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="pkiPlanID" type="xs:int" />
-        <xs:element xmlns:q334="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlorId" type="q334:guid" />
+        <xs:element xmlns:q335="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="parlorId" type="q335:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetPlanSubscriptionByPlanIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q335="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetPlanSubscriptionByPlanIdResult" nillable="true" type="q335:ArrayOfPolicyModel" />
+        <xs:element xmlns:q336="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetPlanSubscriptionByPlanIdResult" nillable="true" type="q336:ArrayOfPolicyModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3826,7 +3827,7 @@
   <xs:element name="SaveMemberNote">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q336="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q336:MemberNotesModel" />
+        <xs:element xmlns:q337="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q337:MemberNotesModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3847,14 +3848,14 @@
   <xs:element name="GetMemberNoteByMemberIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q337="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetMemberNoteByMemberIDResult" nillable="true" type="q337:ArrayOfMemberNotesModel" />
+        <xs:element xmlns:q338="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="GetMemberNoteByMemberIDResult" nillable="true" type="q338:ArrayOfMemberNotesModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateNotesMember">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q338="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q338:MemberNotesModel" />
+        <xs:element xmlns:q339="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q339:MemberNotesModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3875,28 +3876,28 @@
   <xs:element name="SelectSupportDocumentsByIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q339="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectSupportDocumentsByIdResult" nillable="true" type="q339:SupportedDocumentModel" />
+        <xs:element xmlns:q340="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectSupportDocumentsByIdResult" nillable="true" type="q340:SupportedDocumentModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SelectProductAddonProducts">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q340="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q340:guid" />
+        <xs:element xmlns:q341="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="ParlourId" type="q341:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SelectProductAddonProductsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q341="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectProductAddonProductsResult" nillable="true" type="q341:ArrayOfAddonProductsModal" />
+        <xs:element xmlns:q342="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="SelectProductAddonProductsResult" nillable="true" type="q342:ArrayOfAddonProductsModal" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveAddonProducts">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q342="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q342:MemberAddonProductsModel" />
+        <xs:element xmlns:q343="http://schemas.datacontract.org/2004/07/Funeral.Model" minOccurs="0" name="model" nillable="true" type="q343:MemberAddonProductsModel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

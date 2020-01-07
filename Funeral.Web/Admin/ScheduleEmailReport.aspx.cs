@@ -1,4 +1,5 @@
-﻿using Funeral.Model;
+﻿using Funeral.BAL;
+using Funeral.Model;
 using Funeral.Web.App_Start;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace Funeral.Web.Admin
     public partial class ScheduleEmailReport : AdminBasePage
     {
         #region Fields
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
+
         #endregion
         public int ID
         {
@@ -49,7 +50,7 @@ namespace Funeral.Web.Admin
 
         public void BindScheduleDetail()
         {
-            List<ScheduleEmailReportModel> model = client.GetScheduleEmailReportByParlourId(this.ParlourId).ToList();
+            List<ScheduleEmailReportModel> model = ScheduleEmailReportBAL.GetScheduleEmailReportByParlourId(this.ParlourId).ToList();
             gvSchedule.DataSource = model;
             gvSchedule.DataBind();
         }
@@ -121,7 +122,7 @@ namespace Funeral.Web.Admin
                 modal.Time = Convert.ToDateTime(txtTime.Text);
                 modal.ParlourId = ParlourId;
 
-                int a = client.SaveScheduleEmailReport(modal);
+                int a = ScheduleEmailReportBAL.SaveScheduleEmailReport(modal);
                 ViewState["QuotationID"] = a;
                 BindScheduleDetail();
                 ClearControl();
@@ -131,7 +132,7 @@ namespace Funeral.Web.Admin
             else
             {
                 string Scheduleid = hdnScheduleId.Value;
-                ScheduleEmailReportModel model = client.GetScheduleById(Convert.ToInt32(Scheduleid), ParlourId);
+                ScheduleEmailReportModel model = ScheduleEmailReportBAL.GetScheduleById(Convert.ToInt32(Scheduleid), ParlourId);
                 model.pkiScheduleId = Convert.ToInt32(Scheduleid);
                 model.ReportType = ddlReportType.SelectedValue;
                 model.Report = ddlReort.SelectedValue;
@@ -149,7 +150,7 @@ namespace Funeral.Web.Admin
                 model.Email = txtEmail.Text;
                 model.Time = Convert.ToDateTime(txtTime.Text);
                 model.ParlourId = ParlourId;
-                int a = client.UpdateScheduleByScheduleId(model);
+                int a = ScheduleEmailReportBAL.UpdateScheduleByScheduleId(model);
                 ViewState["QuotationID"] = a;
                 BindScheduleDetail();
                 ClearControl();
@@ -165,7 +166,7 @@ namespace Funeral.Web.Admin
             {
                 try
                 {
-                    client.DeleteScheduleEmailReport(Convert.ToInt32(e.CommandArgument));           
+                    ScheduleEmailReportBAL.DeleteScheduleEmailReport(Convert.ToInt32(e.CommandArgument));
                     BindScheduleDetail();
                     ShowMessage(ref lblMessage, MessageType.Success, "Record deleted successfully.");
                     lblMessage.Visible = true;
@@ -181,7 +182,7 @@ namespace Funeral.Web.Admin
             {
                 int selectedScheduleId = Convert.ToInt32(e.CommandArgument);
                 hdnScheduleId.Value = selectedScheduleId.ToString();
-                ScheduleEmailReportModel model = client.GetScheduleById(selectedScheduleId, ParlourId);
+                ScheduleEmailReportModel model = ScheduleEmailReportBAL.GetScheduleById(selectedScheduleId, ParlourId);
                 ddlfrequency.SelectedValue = model.Frequency;
                 if (model.Frequency == "Custome")
                 {

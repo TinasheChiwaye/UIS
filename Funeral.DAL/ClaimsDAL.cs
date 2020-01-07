@@ -1,11 +1,11 @@
 ﻿using Funeral.Model;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using System.Net.Mail;
 
 namespace Funeral.DAL
 {
@@ -58,7 +58,7 @@ namespace Funeral.DAL
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
         }
 
-        public static SqlDataReader SelectAllClaimsByParlourId(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder, DateTime DateFrom, DateTime DateTo,string status)
+        public static SqlDataReader SelectAllClaimsByParlourId(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder, DateTime DateFrom, DateTime DateTo, string status)
         {
             string SP = "SelectAllClaimsByParlourId";
             DbParameter[] ObjParam = new DbParameter[9];
@@ -72,6 +72,14 @@ namespace Funeral.DAL
             ObjParam[7] = new DbParameter("@dateTo", DbParameter.DbType.DateTime, 0, DateTo);
             ObjParam[8] = new DbParameter("@status", DbParameter.DbType.VarChar, 0, status);
             return (DbConnection.GetDataReader(CommandType.StoredProcedure, SP, ObjParam));
+        }
+
+        public static DataTable SelectAllClaims(Guid ParlourId)
+        {
+            string SP = "SelectAllClaims";
+            DbParameter[] ObjParam = new DbParameter[1];
+            ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+            return (DbConnection.GetDataTable(CommandType.StoredProcedure, SP, ObjParam));
         }
 
         public static DataTable SelectAllClaimsByParlourIddt(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder, DateTime DateFrom, DateTime DateTo, string status)
@@ -100,6 +108,15 @@ namespace Funeral.DAL
             ObjParam[1] = new DbParameter("@UserName", DbParameter.DbType.NVarChar, 0, UserName);
 
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.Text, query, ObjParam));
+        }
+        public static int DeleteClaimByID(int ID)
+        {
+            //pkiClaimID
+            string sp = "DeleteClaimsByID";
+            DbParameter[] ObjParam = new DbParameter[1];
+            ObjParam[0] = new DbParameter("@pkiClaimID", DbParameter.DbType.Int, 0, ID);
+
+            return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, sp, ObjParam));
         }
         public static SqlDataReader SelectAllClaimsBySearch(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder, bool ClaimingForMember, bool ApplyWaitingPeriod)
         {
@@ -131,7 +148,7 @@ namespace Funeral.DAL
 
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "SelectAllClaimsBySearch", ObjParam);
         }
-        public static DataSet  SelectAllClaimsBySearchds(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder, bool ClaimingForMember, bool ApplyWaitingPeriod)
+        public static DataSet SelectAllClaimsBySearchds(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder, bool ClaimingForMember, bool ApplyWaitingPeriod)
         {
             DbParameter[] ObjParam = new DbParameter[8];
 
@@ -193,7 +210,7 @@ namespace Funeral.DAL
             return DbConnection.GetDataReader(CommandType.StoredProcedure, "SelectClaimsBypkid", ObjParam);
         }
 
-        public static DataTable  SelectClaimsBypkiddt(int ID, Guid ParlourId)
+        public static DataTable SelectClaimsBypkiddt(int ID, Guid ParlourId)
         {
             DbParameter[] ObjParam = new DbParameter[2];
             ObjParam[0] = new DbParameter("@pkiClaimID", DbParameter.DbType.Int, 0, ID);
@@ -203,7 +220,7 @@ namespace Funeral.DAL
         public static int SaveClaimSupportedDocument(ClaimDocumentModel model)
         {
             string query = "SaveClaimSupportedDocument";
-            DbParameter[] ObjParam = new DbParameter[9];
+            DbParameter[] ObjParam = new DbParameter[10];
 
             ObjParam[0] = new DbParameter("@ImageName", DbParameter.DbType.NVarChar, 0, model.ImageName);
             ObjParam[1] = new DbParameter("@ImageFile", DbParameter.DbType.Image, 0, model.ImageFile);
@@ -213,10 +230,12 @@ namespace Funeral.DAL
             ObjParam[5] = new DbParameter("@LastModified", DbParameter.DbType.DateTime, 0, model.LastModified);
             ObjParam[6] = new DbParameter("@ModifiedUser", DbParameter.DbType.NVarChar, 0, model.ModifiedUser);
             ObjParam[7] = new DbParameter("@DocContentType", DbParameter.DbType.VarChar, 0, model.DocContentType);
-            ObjParam[8] = new DbParameter("@DocType", DbParameter.DbType.Int, 0, model.DocType);
+            ObjParam[8] = new DbParameter("@DocumentStatus", DbParameter.DbType.VarChar, 0, model.Status);
+            ObjParam[9] = new DbParameter("@DocType", DbParameter.DbType.Int, 0, model.DocType);
 
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
         }
+
         public static SqlDataReader SelectMembersAndDependencies(Guid ParlourId, bool MainMem, string Keyword)
         {
             DbParameter[] ObjParam = new DbParameter[3];
@@ -228,7 +247,7 @@ namespace Funeral.DAL
             return (DbConnection.GetDataReader(CommandType.StoredProcedure, "SelectMembersAndDependencies", ObjParam));
         }
 
-        public static DataTable  SelectMembersAndDependenciesdt(Guid ParlourId, bool MainMem, string Keyword)
+        public static DataTable SelectMembersAndDependenciesdt(Guid ParlourId, bool MainMem, string Keyword)
         {
             DbParameter[] ObjParam = new DbParameter[3];
             ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
@@ -247,7 +266,7 @@ namespace Funeral.DAL
 
             return (DbConnection.GetDataReader(CommandType.StoredProcedure, "selectMemberByPkidAndParlor", ObjParam));
         }
-        public static DataTable  selectMemberByPkidAndParlordt(Guid ParlourId, int MemId)
+        public static DataTable selectMemberByPkidAndParlordt(Guid ParlourId, int MemId)
         {
             DbParameter[] ObjParam = new DbParameter[2];
             ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
@@ -262,7 +281,7 @@ namespace Funeral.DAL
 
             return (DbConnection.GetDataReader(CommandType.StoredProcedure, "GetPlanDetailsByPlanId", ObjParam));
         }
-        public static DataTable  GetPlanDetailsByPlanIddt(int planid)
+        public static DataTable GetPlanDetailsByPlanIddt(int planid)
         {
             DbParameter[] ObjParam = new DbParameter[1];
             ObjParam[0] = new DbParameter("@ID", DbParameter.DbType.Int, 0, planid);
@@ -288,7 +307,7 @@ namespace Funeral.DAL
             return DbConnection.GetDataReader(CommandType.StoredProcedure, query, ObjParam);
         }
 
-        public static DataTable  SelectClaimDocumentsByClaimIddt(int fkiClaimID)
+        public static DataTable SelectClaimDocumentsByClaimIddt(int fkiClaimID)
         {
             string query = "SelectClaimDocumentsByClaimId";
             DbParameter[] ObjParam = new DbParameter[1];
@@ -296,11 +315,23 @@ namespace Funeral.DAL
 
             return DbConnection.GetDataTable(CommandType.StoredProcedure, query, ObjParam);
         }
+
         public static int DeleteClaimsdocumentById(int pkiClaimPictureID)
         {
             string query = "Delete from ClaimDocuments Where pkiClaimPictureID=@pkiClaimPictureID";
             DbParameter[] ObjParam = new DbParameter[1];
             ObjParam[0] = new DbParameter("@pkiClaimPictureID", DbParameter.DbType.Int, 0, pkiClaimPictureID);
+
+            return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.Text, query, ObjParam));
+        }
+        public static int ClaimDocumentStatusUpdated(int DocumentId, string ApprovedBy, int ClaimId)
+        {
+            string query = "UpdateClaimDocumentStatus";
+            DbParameter[] ObjParam = new DbParameter[3];
+            ObjParam[0] = new DbParameter("@DocumentId", DbParameter.DbType.Int, 0, DocumentId);
+            ObjParam[1] = new DbParameter("@ClaimId", DbParameter.DbType.Int, 0, ClaimId);
+            ObjParam[2] = new DbParameter("@ApprovedBy", DbParameter.DbType.NVarChar, 0, ApprovedBy);
+            return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
 
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.Text, query, ObjParam));
         }
@@ -322,22 +353,197 @@ namespace Funeral.DAL
             DbParameter[] ObjParam = new DbParameter[2];
             ObjParam[0] = new DbParameter("@Status", DbParameter.DbType.NVarChar, 0, status);
             ObjParam[1] = new DbParameter("@pkiClaimID", DbParameter.DbType.Int, 0, ID);
-
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.Text, query, ObjParam));
         }
 
         public static void ClaimStatusChangeReason(ChangeStatusReason model)
         {
-            string query = "INSERT INTO [dbo].[ClaimStatusChangeReason]([ChangeReason],[ClaimID],[ParlourID],[CreatedDate],[ChangedBy],[CurrentStatus],[NewStatus])VALUES(@ChangeReason,@ClaimID,@ParlourID,GetDate(),@ChangedBy,@CurrentStatus,@NewStatus)";
-            DbParameter[] ObjParam = new DbParameter[6];
+            string query = "ClaimStatusChangeLog_new";
+            DbParameter[] ObjParam = new DbParameter[7];
             ObjParam[0] = new DbParameter("@ChangeReason", DbParameter.DbType.NVarChar, 0, model.ChangeReason);
             ObjParam[1] = new DbParameter("@ClaimID", DbParameter.DbType.Int, 0, model.ClaimID);
             ObjParam[2] = new DbParameter("@ParlourID", DbParameter.DbType.UniqueIdentifier, 0, model.ParlourID);
             ObjParam[3] = new DbParameter("@ChangedBy", DbParameter.DbType.Int, 0, model.ChangedBy);
             ObjParam[4] = new DbParameter("@CurrentStatus", DbParameter.DbType.NVarChar, 0, model.CurrentStatus);
             ObjParam[5] = new DbParameter("@NewStatus", DbParameter.DbType.NVarChar, 0, model.NewStatus);
-
-            DbConnection.ExecuteNonQuery(CommandType.Text, query, ObjParam);
+            ObjParam[6] = new DbParameter("@Comment", DbParameter.DbType.NVarChar, 0, model.Comment);
+            DbConnection.ExecuteNonQuery(CommandType.StoredProcedure, query, ObjParam);
+        }
+        public static Tuple<DataTable, DataTable, DataTable, DataTable, DataTable> GetClaimMailReport(MembersModel objmodel, int MemberID, Guid ParlourId, int pkiClaimID)
+        {
+            #region planadp datatble
+            SqlCommand com = new SqlCommand();
+            com.CommandType = CommandType.StoredProcedure;
+            com.Connection = new SqlConnection(ConfigurationManager.ConnectionStrings["FuneralConnection"].ConnectionString);
+            com.CommandText = "GetPlanDetailsByPlanId";
+            com.Parameters.Add(new SqlParameter("@ID", objmodel.fkiPlanID));
+            SqlDataAdapter planadp = new SqlDataAdapter(com);
+            DataTable PlanDt = new DataTable();
+            planadp.Fill(PlanDt);
+            #endregion
+            #region MemberAdp datatble
+            SqlCommand com2 = new SqlCommand();
+            com2.CommandType = CommandType.StoredProcedure;
+            com2.Connection = new SqlConnection(ConfigurationManager.ConnectionStrings["FuneralConnection"].ConnectionString);
+            com2.CommandText = "MemberSelectList";
+            com2.Parameters.Add(new SqlParameter("@ID", MemberID));
+            com2.Parameters.Add(new SqlParameter("@ParlourId", ParlourId));
+            SqlDataAdapter MemberAdp = new SqlDataAdapter(com2);
+            DataTable Memberdt = new DataTable();
+            MemberAdp.Fill(Memberdt);
+            #endregion
+            #region ClaimAdp datatble
+            SqlCommand com3 = new SqlCommand();
+            com3.CommandType = CommandType.StoredProcedure;
+            com3.Connection = new SqlConnection(ConfigurationManager.ConnectionStrings["FuneralConnection"].ConnectionString);
+            com3.CommandText = "GetClaimsbyMemeberNumber";
+            com3.Parameters.Add(new SqlParameter("@MemberNumber", pkiClaimID));
+            SqlDataAdapter ClaimAdp = new SqlDataAdapter(com3);
+            DataTable claimDT = new DataTable();
+            ClaimAdp.Fill(claimDT);
+            #endregion
+            #region DeceAdp4 datatble
+            SqlCommand com4 = new SqlCommand();
+            com4.CommandType = CommandType.StoredProcedure;
+            com4.Connection = new SqlConnection(ConfigurationManager.ConnectionStrings["FuneralConnection"].ConnectionString);
+            com4.CommandText = "SelectFuneralByMemberNo";
+            com4.Parameters.Add(new SqlParameter("@MemberNumber", pkiClaimID.ToString()));
+            SqlDataAdapter DeceAdp4 = new SqlDataAdapter(com4);
+            DataTable decedt = new DataTable();
+            DeceAdp4.Fill(decedt);
+            #endregion
+            #region TnCadp datatble
+            SqlCommand com5 = new SqlCommand();
+            com5.CommandType = CommandType.StoredProcedure;
+            com5.Connection = new SqlConnection(ConfigurationManager.ConnectionStrings["FuneralConnection"].ConnectionString);
+            com5.CommandText = "SelectApplicationTnCByParlourId";
+            com5.Parameters.Add(new SqlParameter("@ParlourId", ParlourId));
+            SqlDataAdapter TnCadp = new SqlDataAdapter(com5);
+            DataTable dtTnC = new DataTable();
+            TnCadp.Fill(dtTnC);
+            #endregion
+            return Tuple.Create(PlanDt, Memberdt, claimDT, decedt, dtTnC);
+        }
+        public static bool SendClaimEmail(int ClaimId, string Email, List<ClaimDocumentModel> documentModel, Attachment claimdoc)
+        {
+            try
+            {
+                using (SmtpClient smtpClient = new SmtpClient())
+                {
+                    MailMessage message = new MailMessage(ConfigurationManager.AppSettings["ClaimDocumentSender"].ToString().Trim(), Email.Trim(), "Claim document", "Please find all attached document");
+                    if (documentModel != null)
+                    {
+                        foreach (var document in documentModel)
+                        {
+                            message.Attachments.Add(new Attachment(new MemoryStream(document.ImageFile), document.ImageName));
+                        }
+                    }
+                    message.Attachments.Add(claimdoc);
+                    smtpClient.Send(message);
+                }
+                return true;
+            }
+            catch (Exception e)
+            { return false; }
+        }
+        public static DataTable GetClaimStatus()
+        {
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetClaimStatuses");
+        }
+        //public static DataTable GetClaimStatus(int RoleId)
+        //{
+        //    DbParameter[] ObjParam = new DbParameter[1];
+        //    ObjParam[0] = new DbParameter("@RoleId", DbParameter.DbType.Int, 0, RoleId);
+        //    return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetClaimStatuses", ObjParam);
+        //}
+        public static DataTable GetClaimStatus(int UserId)
+        {
+            DbParameter[] ObjParam = new DbParameter[1];
+            ObjParam[0] = new DbParameter("@UserId", DbParameter.DbType.Int, 0, UserId);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetClaimStatuses_ByUserId", ObjParam);
+        }
+        public static DataTable GetClaimStatusHistories(int ClaimId)
+        {
+            string SP = "getClaimStatusHistory";
+            DbParameter[] ObjParam = new DbParameter[1];
+            ObjParam[0] = new DbParameter("@ClaimId", DbParameter.DbType.Int, 0, ClaimId);
+            return (DbConnection.GetDataTable(CommandType.StoredProcedure, SP, ObjParam));
+        }
+        public static DataTable GetStatusCountList_Dashboard(Guid ParlourId)
+        {
+            string SP = "GetClaimStatusCount_dashboard";
+            DbParameter[] ObjParam = new DbParameter[1];
+            ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+            return (DbConnection.GetDataTable(CommandType.StoredProcedure, SP, ObjParam));
+        }
+        public static DataTable GetClaimDocumentsByClaimId(int fkiClaimID, Guid Parlourid)
+        {
+            string query = "GetClaimDocumentsByClaimId";
+            DbParameter[] ObjParam = new DbParameter[2];
+            ObjParam[0] = new DbParameter("@fkiClaimID", DbParameter.DbType.Int, 0, fkiClaimID);
+            ObjParam[1] = new DbParameter("@Parlourid", DbParameter.DbType.UniqueIdentifier, 0, @Parlourid);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, query, ObjParam);
+        }
+        public static DataTable GetClaimDocumentsByDocumentId(int pkiClaimPictureID, Guid Parlourid)
+        {
+            string query = "GetClaimDocumentsByClaimPictureID";
+            DbParameter[] ObjParam = new DbParameter[2];
+            ObjParam[0] = new DbParameter("@pkiClaimPictureID", DbParameter.DbType.Int, 0, pkiClaimPictureID);
+            ObjParam[1] = new DbParameter("@Parlourid", DbParameter.DbType.UniqueIdentifier, 0, @Parlourid);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, query, ObjParam);
+        }
+        public static DataTable GetUploadedDocumentList(int pkiClaimID, Guid Parlourid)
+        {
+            DbParameter[] ObjParam = new DbParameter[2];
+            ObjParam[0] = new DbParameter("@Parlourid", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
+            ObjParam[1] = new DbParameter("@pkiClaimID", DbParameter.DbType.Int, 0, pkiClaimID);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetUploadedDocumentList", ObjParam);
+        }
+      
+        public static int AddClaimFollowUp(ClaimFollowUp claimFollow)
+        {
+            string query = "AddClaimFollowUp";
+            DbParameter[] ObjParam = new DbParameter[6];
+            ObjParam[0] = new DbParameter("@ClaimId", DbParameter.DbType.Int, 0, claimFollow.ClaimId);
+            ObjParam[1] = new DbParameter("@Comment", DbParameter.DbType.NVarChar, 0, claimFollow.Comment);
+            ObjParam[2] = new DbParameter("@FollowUpType", DbParameter.DbType.NVarChar, 0, claimFollow.FollowUpType);
+            ObjParam[3] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, claimFollow.ParlourId);
+            ObjParam[4] = new DbParameter("@CreatedBy", DbParameter.DbType.NVarChar, 0, claimFollow.CreatedBy);
+            ObjParam[5] = new DbParameter("@pkiClaimPictureID", DbParameter.DbType.Int, 0, claimFollow.pkiClaimPictureID);
+            return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
+        }
+        public static void UpdateClaimDocument(ChangeStatusReason model)
+        {
+            string query = "UpdateDocumentStatus";
+            DbParameter[] ObjParam = new DbParameter[3];
+            ObjParam[0] = new DbParameter("@pkiClaimPictureID", DbParameter.DbType.Int, 0, model.ID);
+            ObjParam[1] = new DbParameter("@ChangedBy", DbParameter.DbType.NVarChar, 0, model.ChangedBy);
+            ObjParam[2] = new DbParameter("@NewStatus", DbParameter.DbType.NVarChar, 0, model.NewStatus);
+            DbConnection.ExecuteNonQuery(CommandType.StoredProcedure, query, ObjParam);
+        }
+        public static void SaveClaimHistory(ClaimHistory model)
+        {
+            string query = "SaveClaimHistory";
+            DbParameter[] ObjParam = new DbParameter[5];
+            ObjParam[0] = new DbParameter("@FkiClaimId", DbParameter.DbType.Int, 0, model.FkiClaimId);
+            ObjParam[1] = new DbParameter("@IPAddress", DbParameter.DbType.NVarChar, 0, model.IPAddress);
+            ObjParam[2] = new DbParameter("@Note", DbParameter.DbType.NVarChar, 0, model.Note);
+            ObjParam[3] = new DbParameter("@CreatedBy", DbParameter.DbType.NVarChar, 0, model.CreatedBy);
+            ObjParam[4] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, model.ParlourId);
+            DbConnection.ExecuteNonQuery(CommandType.StoredProcedure, query, ObjParam);
+        }
+        public static DataTable GetClaimReasonList(Guid Parlourid)
+        {
+            DbParameter[] ObjParam = new DbParameter[1];
+            ObjParam[0] = new DbParameter("@Parlourid", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetClaimReasonList", ObjParam);
+        }
+        public static DataTable GetDocumentFollowUpHistory(int pkiClaimPictureID, Guid Parlourid)
+        {
+            DbParameter[] ObjParam = new DbParameter[2];
+            ObjParam[0] = new DbParameter("@Parlourid", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
+            ObjParam[1] = new DbParameter("@pkiClaimPictureID", DbParameter.DbType.Int, 0, pkiClaimPictureID);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetDcoumentFollowUpHistory", ObjParam);
         }
     }
 }

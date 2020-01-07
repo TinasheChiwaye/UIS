@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Funeral.BAL;
 using Funeral.Model;
 using Funeral.Web.App_Start;
 
@@ -12,7 +13,6 @@ namespace Funeral.Web.Tools
     public partial class AddEditMenu : AdminBasePage
     {
         #region Fields
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
         #endregion
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -30,7 +30,7 @@ namespace Funeral.Web.Tools
         {
             try
             {
-                List<RightsModel> Model = client.tblRightGetAll().ToList();
+                List<RightsModel> Model = RightsBAL.tblRightGetAll();
                 ddlParentRole.DataSource = Model;
                 ddlParentRole.DataTextField = "MenuName";
                 ddlParentRole.DataValueField = "ID";
@@ -83,12 +83,12 @@ namespace Funeral.Web.Tools
 
                 if (RightsModels.ID == 0)
                 {
-                    int a = client.SavetblRight(RightsModels);
+                    int a = RightsBAL.SavetblRight(RightsModels);
                     ShowMessage(ref lblMessage, MessageType.Success, "Menu Successfully Saved.");
                 }
                 else
                 {
-                    int a = client.SavetblRight(RightsModels);
+                    int a = RightsBAL.SavetblRight(RightsModels);
                     ShowMessage(ref lblMessage, MessageType.Success, "Menu Successfully Updated.");
                 }
                 BindParentRoleForm();
@@ -124,7 +124,7 @@ namespace Funeral.Web.Tools
         }
         public void BindDataForUpdate(int id)
         {
-            RightsModel RightsModels = client.SelecttblRightById(id);
+            RightsModel RightsModels = RightsBAL.SelecttblRightById(id);
             ddlapplication.SelectedValue = RightsModels.ApplicationID.ToString();
             chkInmenu.Checked = RightsModels.InMenu;
             txtMenuName.Text = RightsModels.MenuName;

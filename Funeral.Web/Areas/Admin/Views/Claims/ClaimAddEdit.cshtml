@@ -1,0 +1,888 @@
+﻿@model Funeral.Model.ClaimandFuneralModel
+@{
+    ViewBag.Title = "ClaimAddEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery-2.1.1.min.js"></script>
+<script src="~/Scripts/plugins/datapicker/bootstrap-timepicker.min.js"></script>
+<script src="~/Scripts/plugins/dateformat/DateFormat.js"></script>
+<script src="~/Scripts/plugins/jquery-ui/jquery-ui.min.js"></script>
+<link href="~/Content/plugins/datapicker/datepicker3.css" rel="stylesheet" />
+<script src="~/Scripts/plugins/datapicker/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<div class="dataTables_wrapper">
+    <div class="col-lg-12">
+        <div class="ibox ">
+            <div class="ibox-title">
+                <div class="ibox-title">
+                    <h5> <a href="@Url.Action("Index","Claims")" class="btn btn-default"><i class="fa fa-arrow-left"></i></a> Claim Details</h5>
+                </div>
+            </div>
+            @using (Html.BeginForm("ClaimAddEdit", "Claims", FormMethod.Post, new { @id = "frm_ClaimAddEditForm" }))
+            {
+                @Html.HiddenFor(x => x.claimsModel.pkiClaimID, new { @id = "pkiClaimID" })
+                @Html.HiddenFor(x => x.claimsModel.fkiMemberID, new { @id = "fkiMemberID" })
+                @Html.HiddenFor(x => x.claimsModel.MemberNumber, new { @id = "hdn_MemberNumber" })
+                @Html.HiddenFor(x => x.funeralModel.Claimnumber, new { @id = "Claimnumber" })
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="panel blank-panel">
+                            <div class="panel-heading">
+                                <div class="panel-options" id="Tabs">
+
+                                    <ul class="nav nav-tabs" id="myTab">
+                                        <li class="active" id="tab1"><a data-toggle="tab" href="#tab-1" id="atab1" aria-expanded="true">Claim Details</a></li>
+                                        <li class="" id="tab2"><a data-toggle="tab" href="#tab-2" id="atab2" aria-expanded="false">Claimant Details</a></li>
+                                        <li class="" id="tab3"><a data-toggle="tab" href="#tab-3" id="atab3" aria-expanded="false">Deceased Details</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="tab-content">
+                                    <div id="tab-1" class="tab-pane fade in active">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <div class="ibox-title">
+                                                        <h5>Members</h5>
+                                                    </div>
+                                                    <div class="ibox-content">
+                                                        <div class="row">
+                                                            <div class="col-sm-5">
+                                                                <div class="form-group">
+                                                                    @Html.DropDownListFor(m => m.claimsModel.parlourid, new SelectList(ViewBag.Companies, "parlourid", "ApplicationName"), new { @id = "dr_CompanyIdSelection", @class = "form-control" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-2">
+                                                                <div class="divMargin">
+                                                                    @Html.CheckBox("chkClaimForMember", false, new { @id = "chkClaimForMember", @name = "chkClaimForMember", @value = "Claiming For Member" })Claiming For Member
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-2">
+                                                                <div class="divMargin">
+                                                                    @Html.CheckBox("chkWaitingPeriod", false, new { @id = "chkWaitingPeriod", @value = "Claiming For Member" })Apply Waiting Period
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3 pull-right">
+                                                                <div class="form-group">
+                                                                    <div class="input-group">
+                                                                        @Html.TextBox("txtSearchKeyword", "", new { @id = "txtSearchKeyword", @name = "txtSearchKeyword", @placeholder = "Search By Keyword", @class = "form-control" })
+                                                                        <span class="input-group-btn">
+                                                                            <input type="button" value="search" class="btn btn-sm btn-primary" id="btnSearchKeyword" name="btnSearchKeyword" />
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <div class="ibox-title">
+                                                        <h5>Claim Details</h5>
+                                                    </div>
+                                                    <div class="ibox-content">
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Claim Date <em>*</em></label>
+                                                                    @Html.TextBoxFor(x => x.claimsModel.ClaimDate, "{0:dd MMM yyyy}", new { @id = "txtClaimDate", @class = "form-control DatepickerSelection", @placeholder = "DD/MM/YYYY", @autocomplete = "off" })
+                                                                    @Html.ValidationMessageFor(x => x.claimsModel.ClaimDate, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Claim No</label>
+                                                                    @Html.TextBoxFor(x => x.claimsModel.pkiClaimID, new { @id = "txtClaimNo", @class = "form-control", @placeholder = "Claim Number", @readonly = true })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Cause of Death</label>
+                                                                    @Html.TextBoxFor(x => x.claimsModel.CourseOfDearth, new { @id = "txtCauseOfDeath", @class = "form-control", @placeholder = "Cause Of Death" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Cover Amount</label>
+                                                                    @Html.TextBoxFor(x => x.claimsModel.Cover, new { @id = "txtCoverAmount", @class = "form-control", @placeholder = "Cover Amount", })
+                                                                    <div class="divMarginChk">
+                                                                        @Html.CheckBoxFor(x => x.claimsModel.HostingFuneral, new { @style = "margin-right:5px;", @id = "chkHosting", @value = "Hosting Funeral" })Hosting Funeral
+                                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                        @Html.CheckBoxFor(x => x.claimsModel.Payout, new { @style = "margin-right:5px;", @id = "chkPayout", @onclick = "ShowHideDiv(this)", @value = "Add Payout" })Add Payout
+                                                                    </div>
+                                                                    <div id="dvPayout" style="display:none;">
+                                                                        <label>Add Payout</label>
+                                                                        @Html.TextBoxFor(x => x.claimsModel.PayoutValue, new { @id = "txtAddPayout", @class = "form-control", @placeholder = "Cover Amount", })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label>Claim Notes</label>
+                                                                    @Html.TextAreaFor(x => x.claimsModel.ClaimNotes, 4, 3, new { @id = "txtClaimNotes", @class = "form-control", @placeholder = "Claim Note", })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                @*<input type="button" name="tab2btnPrintClaim" id="tab2btnPrintClaim" class="btn btn-sm btn-primary" value="Print Claim" disabled />*@
+                                                                @*<input type="button" name="tab2btnPaymentHistory" id="tab2btnPaymentHistory" class="btn btn-sm btn-primary" value="Payment History" disabled />*@
+                                                                @*<input type="button" name="tab2btnClaimPayment" id="tab2btnClaimPayment" class="btn btn-sm btn-primary" value="Claim Payment" disabled />*@
+
+                                                                @if (Model.claimsModel.pkiClaimID > 0)
+                                                                {
+                                                                    <input type="button" accesskey="@Model.claimsModel.parlourid" onclick="OpenClaimDocumentPopUp(@Model.claimsModel.pkiClaimID,this)" id="tab2btnAddDocs" class="btn btn-sm btn-primary" value="Add Docs" />
+                                                                }
+                                                                <input type="button" name="tab2btnClear" id="tab2btnClear" class="btn btn-sm btn-primary" value="Clear" />
+                                                                <input type="button" onclick="BackNextButtonProcess(1,2)" class="btn btn-sm btn-primary" value="Next" />
+                                                            </div>
+                                                            <div class="col-sm-12">
+                                                                @if (Model.claimsModel.pkiClaimID > 0)
+                                                                {
+                                                                    <div class="form-group">
+                                                                        <label style="margin-top:20px;">Supporting Document</label>
+                                                                        <label id="lblDataMsg" hidden>There is no document uploaded.</label>
+                                                                        <div class="table-responsive">
+                                                                            <table id="documentDataTable" class="fixed_header fixed_header-bordered" width="100%" cellspacing="0">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Document</th>
+                                                                                        <th>Document Type</th>
+                                                                                        <th>Created Date</th>
+                                                                                        <th>Action</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    @{
+                                                                                        if (Model.ClaimDocumentList != null)
+                                                                                        {
+                                                                                            foreach (var item in Model.ClaimDocumentList)
+                                                                                            {
+                                                                                                <tr>
+                                                                                                    <td>@item.ImageName</td>
+                                                                                                    <td>@item.DocumentName</td>
+                                                                                                    <td>@item.CreateDate.ToString("dd MMM yyyy")</td>
+                                                                                                    <td>
+                                                                                                        <label class="label label-default">@item.Status</label>
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <a title="Download this claim document" href="~/Handler/DocumentHandler.ashx?DocClaimID=@item.pkiClaimPictureID"><i class="glyphicon glyphicon-download"></i></a>
+                                                                                                        <a title="Delete this claim document" href="@Url.Action("DeleteClaimDocument", "Claims", new { pkiClaimPictureID = item.pkiClaimPictureID, PkiClaimID = Model.claimsModel.pkiClaimID })"><i class="glyphicon glyphicon-trash"></i></a>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @*Member DataTable*@
+                                                    <div class="form-group">
+                                                        <div class="table-responsive">
+                                                            <table id="memberDataTable" class="fixed_header fixed_header-bordered" width="100%" cellspacing="0" hidden>
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Member Name</th>
+                                                                        <th>Gender</th>
+                                                                        <th>ID Number</th>
+                                                                        <th>Contact No</th>
+                                                                        <th>Action</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody></tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    @*Dependent Datatable*@
+                                                    <div class="form-group">
+                                                        <div class="table-responsive">
+                                                            <table id="dependentDataTable" class="fixed_header fixed_header-bordered" width="100%" cellspacing="0" hidden>
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Dependent Name</th>
+                                                                        <th>Gender</th>
+                                                                        <th>ID Number</th>
+                                                                        <th>Contact No</th>
+                                                                        <th>Action</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody></tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div id="tab-2" class="tab-pane">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <div class="ibox-content">
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Title  </label>
+                                                                    @Html.DropDownListFor(x=>x.claimsModel.ClaimantTitle, new List<SelectListItem>
+                                                                       {
+                                                                           new SelectListItem{ Text="Select", Value = "Select" },
+                                                                           new SelectListItem{ Text="Mr", Value = "Mr" },
+                                                                           new SelectListItem{ Text="Dr", Value = "Dr" },
+                                                                           new SelectListItem{ Text="Miss", Value = "Miss" },
+                                                                           new SelectListItem{ Text="Mrs", Value = "Mrs" },
+                                                                           new SelectListItem{ Text="Prof", Value = "Prof" },
+                                                                       },new {@class="form-control"})
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Street Address  <em>*</em> </label>
+                                                                    @Html.TextBoxFor(x => x.claimsModel.ClaimantAddressLine1, new { @id = "txtClaimantStreet", @maxlength = "50", @class = "form-control", @required = true })
+                                                                    @Html.ValidationMessageFor(x => x.claimsModel.ClaimantAddressLine1, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Last Name  <em>*</em> </label>
+                                                                    @Html.TextBoxFor(x => x.claimsModel.ClaimantSurname, new { @id = "txtClaimantLastName", @maxlength = "50", @class = "form-control", @required = true })
+                                                                    @Html.ValidationMessageFor(x => x.claimsModel.ClaimantSurname, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Town or City  </label>
+                                                                    @Html.TextBoxFor(x => x.claimsModel.ClaimantAddressLine2, new { @id = "txtClaimantTownOrCity", @maxlength = "50", @class = "form-control" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>First Name  <em>*</em> </label>
+                                                                    @Html.TextBoxFor(x => x.claimsModel.ClaimantFullname, new { @id = "txtClaimFirstName", @maxlength = "50", @class = "form-control", @required = true })
+                                                                    @Html.ValidationMessageFor(x => x.claimsModel.ClaimantFullname, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Province </label>
+                                                                    @Html.DropDownListFor(x => x.claimsModel.ClaimantAddressLine3, new SelectList(ViewBag.Provinces, "ProvinceName", "ProvinceName"), "Select", new { @class = "form-control", @id = "txtClaimantProvince" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>ID Number  <em>*</em> </label>
+                                                                    @Html.TextBoxFor(x => x.claimsModel.ClaimantIDNumber, new { @id = "txtClaimantIDNumber", @maxlength = "50", @class = "form-control", @required = true })
+                                                                    @Html.ValidationMessageFor(x => x.claimsModel.ClaimantIDNumber, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Code  </label>
+                                                                    @Html.TextBoxFor(x => x.claimsModel.ClaimantCode, new { @id = "txtClaimantCode", @maxlength = "50", @class = "form-control" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Date of Birth  </label>
+                                                                    @Html.TextBoxFor(x => x.claimsModel.ClaimantDateOfBirth, "{0:dd MMM yyyy}", new { @id = "txtClaimantDateOfBirth", @maxlength = "50", @class = "form-control DatepickerSelection", @placeholder = "DD/MM/YYYY", @autocomplete = "off" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Contact Number  </label>
+                                                                    @Html.TextBoxFor(x => x.claimsModel.ClaimantContactNumber, new { @type = "number", @id = "txtClaimantContact", @maxlength = "50", @class = "form-control" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Gender  </label>
+                                                                    <br />
+                                                                    <div class="col-sm-6">
+                                                                        @Html.RadioButtonFor(m => m.claimsModel.ClaimantGender, "0", new { @id = "ClaimentMale", @checked = true }) Male
+                                                                        @Html.RadioButtonFor(m => m.claimsModel.ClaimantGender, "1", new { @id = "ClaimentFemale" }) Female
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="=row">
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <div class="ibox-content">
+                                                            <div class="ibox-title">
+                                                                <h5>Beneficiery Banking Details</h5>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="form-group">
+                                                                        <label>Bank Name  </label>
+                                                                        @Html.DropDownListFor(x => x.claimsModel.BeneficiaryBank, new SelectList(ViewBag.Banks, "BankID", "BankName"), "Select", new { @class = "form-control", @id = "ddlBankList", @name = "ddlBankList" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="form-group">
+                                                                        <label>Account Holder  </label>
+                                                                        @Html.TextBoxFor(x => x.claimsModel.BeneficiaryAccountHolder, new { @id = "txtClaimantAccHolder", @maxlength = "50", @class = "form-control" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="form-group">
+                                                                        <label>Bank Branch</label>
+                                                                        @Html.TextBoxFor(x => x.claimsModel.BeneficiaryBankBranch, new { @id = "txtClaimantBnkBranch", @maxlength = "50", @class = "form-control" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="form-group">
+                                                                        <label>Account Number</label>
+                                                                        @Html.TextBoxFor(x => x.claimsModel.BeneficiaryAccountNumber, new { @id = "txtClaimantAcntNumber", @maxlength = "50", @class = "form-control" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="form-group">
+                                                                        <label>Branch Code</label>
+                                                                        @Html.TextBoxFor(x => x.claimsModel.BeneficiaryBranchCode, new { @id = "txtClaimantBranchCode", @maxlength = "50", @class = "form-control" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="form-group">
+                                                                        <label>Account Type</label>
+                                                                        @Html.DropDownListFor(x => x.claimsModel.BeneficiaryAccountType, new SelectList(ViewBag.Accounts, "AccountTypeID", "AccountType"), "Select", new { @class = "form-control", @id = "ddlAccountTypeList", @name = "ddlAccountTypeList" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-sm btn-primary pull-right m-t-n-xs" onclick="BackNextButtonProcess(2,3)">Next</button>
+                                                        <button class="btn btn-sm btn-primary pull-right m-t-n-xs" style="margin-right:10px;" onclick="BackNextButtonProcess(2,1)">Back</button>
+                                                        <button class="btn btn-sm btn-primary pull-right m-t-n-xs" style="margin-right:10px;" name="tab3btnReset" id="tab3btnReset">Reset</button>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="tab-3" class="tab-pane">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <div class="ibox-content">
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Title  </label>
+                                                                    @Html.DropDownListFor(x=>x.funeralModel.Title, new List<SelectListItem>
+                                                                     {
+                                                                         new SelectListItem{ Text="Select", Value = "Select" },
+                                                                         new SelectListItem{ Text="Mr", Value = "Mr" },
+                                                                         new SelectListItem{ Text="Dr", Value = "Dr" },
+                                                                         new SelectListItem{ Text="Miss", Value = "Miss" },
+                                                                         new SelectListItem{ Text="Mrs", Value = "Mrs" },
+                                                                         new SelectListItem{ Text="Prof", Value = "Prof" },
+                                                                     },new {@class="form-control"})
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Street Address  <em>*</em> </label>
+                                                                    @Html.TextBoxFor(x => x.funeralModel.Address1, new { @id = "txtDeceaseStreet", @maxlength = "50", @class = "form-control", @required = true })
+                                                                    @Html.ValidationMessageFor(x => x.funeralModel.Address1, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Last Name  <em>*</em> </label>
+                                                                    @Html.TextBoxFor(x => x.funeralModel.Surname, new { @id = "txtDeceaseLastName", @maxlength = "50", @class = "form-control", @required = true })
+                                                                    @Html.ValidationMessageFor(x => x.funeralModel.Surname, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Town or City  </label>
+                                                                    @Html.TextBoxFor(x => x.funeralModel.Address2, new { @id = "txtDeceaseTownOrCity", @maxlength = "50", @class = "form-control" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>First Name  <em>*</em> </label>
+                                                                    @Html.TextBoxFor(x => x.funeralModel.FullNames, new {@id = "txtDeceaseName", @maxlength = "50", @class = "form-control", @required = true })
+                                                                    @Html.ValidationMessageFor(x => x.funeralModel.FullNames, "", new {@class = "text-danger" })
+
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Province </label>
+                                                                    @Html.DropDownListFor(x => x.funeralModel.Address3, new SelectList(ViewBag.Provinces, "ProvinceName", "ProvinceName"), "Select", new { @class = "form-control", @id = "txtDeceaseProvince" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>ID Number  <em>*</em> </label>
+                                                                    @Html.TextBoxFor(x => x.funeralModel.IDNumber, new { @id = "txtDeceaseIDNumber", @maxlength = "50", @class = "form-control", @required = true })
+                                                                    @Html.ValidationMessageFor(x => x.funeralModel.IDNumber, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Code  </label>
+                                                                    @Html.TextBoxFor(x => x.funeralModel.Code, new { @id = "txtDeceaseCode", @maxlength = "50", @class = "form-control" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Date of Birth  </label>
+                                                                    @Html.TextBoxFor(x => x.funeralModel.DateOfBirth, "{0:dd MMM yyyy}", new { @id = "txtDeceaseDateOfBirth", @maxlength = "50", @class = "form-control DatepickerSelection", @placeholder = "DD/MM/YYYY", @autocomplete = "off" })
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Date of Funeral  </label>
+                                                                    @Html.TextBoxFor(x => x.funeralModel.DateOfFuneral, "{0:dd MMM yyyy}", new { @id = "txtDeceaseDateOfFuneral", @maxlength = "50", @class = "form-control DatepickerSelection", @placeholder = "DD/MM/YYYY", @autocomplete = "off" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Gender  </label>
+                                                                    <br />
+                                                                    <div class="col-sm-6">
+                                                                        @Html.RadioButtonFor(m => m.funeralModel.Gender, "0", new { id = "Male", @checked = true }) Male
+                                                                        @Html.RadioButtonFor(m => m.funeralModel.Gender, "1", new { id = "Female" }) Female
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group bootstrap-timepicker timepicker">
+                                                                    <label>Time of Funeral  </label>
+                                                                    @Html.TextBoxFor(x => x.funeralModel.TimeOfFuneral, new { @id = "txtDeceaseTimeOfFuneral", @maxlength = "50", @class = "form-control  form-field timepicker1" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Cause of Death  </label>
+                                                                    @Html.TextBoxFor(x => x.funeralModel.CourseOfDearth, new { @id = "txtDeceaseCauseOfDeath", @class = "form-control" })
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Driver and Car  </label>
+                                                                    @Html.TextBoxFor(x => x.funeralModel.DriverAndCars, new { @id = "txtDeceaseDriverAndCar", @maxlength = "50", @class = "form-control" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Date of Death  </label>
+                                                                    @Html.TextBoxFor(x => x.funeralModel.DateOfDeath, "{0:dd MMM yyyy}", new { @id = "txtDeceaseDateOfDeath", @maxlength = "50", @class = "form-control DatepickerSelection", @placeholder = "DD/MM/YYYY", @autocomplete = "off" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Collected From  </label>
+                                                                    @Html.TextBoxFor(x => x.funeralModel.BodyCollectedFrom, new { @id = "txtDeceaseCollectedFrom", @maxlength = "50", @class = "form-control" })
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Cemetery/Crematorium  </label>
+                                                                    @Html.TextBoxFor(x => x.funeralModel.FuneralCemetery, new { @id = "txtDeceaseCremetery", @maxlength = "50", @class = "form-control" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Contact Person </label>
+                                                                    @Html.TextBoxFor(x => x.funeralModel.ContactPerson, new { @type = "number", @id = "txtDeceaseContactPerson", @maxlength = "50", @class = "form-control" })
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Contact Person Number  </label>
+                                                                    @Html.TextBoxFor(x => x.funeralModel.ContactPersonNumber, new { @type = "number", @id = "txtDeceaseCntPerNo", @maxlength = "50", @class = "form-control" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>BI663 Serial No  </label>
+                                                                    @Html.TextBoxFor(x => x.funeralModel.BI1663, new { @id = "txtDeceaseSerialNo", @maxlength = "50", @class = "form-control" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Grave No  </label>
+                                                                    @Html.TextBoxFor(x => x.funeralModel.GraveNo, new { @id = "txtDeceaseGraveNo", @maxlength = "50", @class = "form-control" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <div class="btn-group">
+                                                        <button type="submit" id="yourSubmitButtonID" class="btn btn-sm btn-primary pull-right m-t-n-xs" style="margin-right:10px;">Save</button>
+                                                        <button class="btn btn-sm btn-primary pull-right m-t-n-xs" onclick="BackNextButtonProcess(3,2)" style="margin-right:10px;">Back</button>
+                                                        <button class="btn btn-sm btn-primary pull-right m-t-n-xs" style="margin-right:10px;" name="tab4btnReset" id="tab4btnReset">Reset</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div id="LoadPartialView_ManageClaims"></div>
+<script type="text/javascript">
+    var GetMemberOrDependent = "@Url.Action("GetMemberOrDependent","Claims")";
+    var SaveClaimsDocumentURl = "@Url.Action("SaveClaimsDocument","Claims")";
+    var BindDependentUpdateURl = "@Url.Action("BindDependentUpdate","Claims")";
+    var currentDate = "@System.DateTime.Now.ToString("dd MMM yyyy")";
+
+    $.validator.setDefaults({
+        ignore: ""
+    });
+
+    jQuery(window).load(function () {
+        jQuery("#tab1").addClass("active");
+    });
+    $.noConflict();
+    jQuery(document).ready(function ($) {
+        $(".DatepickerSelection").datepicker({
+            format: 'dd M yyyy',
+            setDate: new Date(),
+            autoclose: true,
+            onSelect: function (dateText) { $(this).change(); }
+        }).on("change", function () { });
+        $('#txtDeceaseTimeOfFuneral').timepicker();
+         $('#dr_CompanyIdSelection').change(function () {
+                jQuery.ajax({
+                    url: '@Url.Action("ChangeParlour", "Parlour", null, Request.Url.Scheme)',
+                    data: { parlourId: $('#CompanyId').val() },
+                    type: "post",
+                    cache: false,
+                    success: function (result) {
+
+                    }
+                })
+            })
+
+        $("#btnSearchKeyword").click(function () {
+            var chkMember = $("input[name='chkClaimForMember']").is(':checked');
+            var txtKeyword = $("#txtSearchKeyword").val();
+            var ParlourId = $("#dr_CompanyIdSelection").val();
+            var row = "";
+            var gender = "";
+            $.ajax({
+                url: GetMemberOrDependent,
+                data: { chkMember: chkMember, Keyword: txtKeyword,CompanyId:ParlourId },
+                type: "post",
+                cache: false,
+                success: function (result) {
+                    if (chkMember == true) {
+                        $("#memberDataTable").show();
+                        $("#dependentDataTable").hide();
+                        showMemberData(result);
+                    }
+                    else {
+                        $("#dependentDataTable").show();
+                        $("#memberDataTable").hide();
+                        showDependentData(result);
+                    }
+                    if (result.success == false) {
+                        alert(result.errors);
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(thrownError);
+                }
+            })
+        });
+        $("#tab2btnClear").click(function () {
+            $("#txtClaimDate").val('');
+            $("#txtClaimNo").val('');
+            $("#txtCauseOfDeath").val('');
+            $("#txtCoverAmount").val('');
+        })
+        $("#tab2btnAddDocs").click(function () {
+            $("#AddDocModal").modal("show");
+            $('.modal-backdrop').removeClass("modal-backdrop");
+        });
+        $('#btnDocumentSubmit').click(function () {
+			var docType = $("#tab-2 input[name='rdbdocument']:checked").val();
+			if (window.FormData !== undefined) {
+				var fileUpload = $("#fuSupportDocument").get(0);
+				var files = fileUpload.files;
+				var fileData = new FormData();
+				for (var i = 0; i < files.length; i++) {
+					fileData.append(files[i].name, files[i]);
+				}
+				fileData.append('username', 'Manas');
+				fileData.append('documentType', docType);
+				$.ajax({
+					url: SaveClaimsDocumentURl,
+					type: "POST",
+					contentType: false, // Not to set any content header
+					processData: false, // Not to process data
+					data: fileData,
+					success: function (result) {
+						alert(result);
+					},
+					error: function (err) {
+						alert(err.statusText);
+					}
+				});
+			} else {
+				alert("FormData is not supported.");
+			}
+		});
+    });
+    function showMemberData(data) {
+        var row = "";
+        jQuery.each(data.MemberData, function (index, obj) {
+            row += ' <tr> <td> ' + obj.FullNames + " " + obj.Surname + ' </td> <td> ' + obj.Gender + ' </td> <td>' + obj.IDNumber + '</td> <td>' + obj.Cellphone + '</td><td><a onclick="BindMainMemberUpdate(' + obj.pkiMemberID + ')" class="btn btn-primary">Select</a></td></tr>';
+            jQuery("#memberDataTable tbody").html(row);
+        });
+    }
+    function showDependentData(data) {
+        var row = "";
+        jQuery.each(data.DependentData, function (index, obj) {
+            row += ' <tr> <td> ' + obj.FullNames + " " + obj.Surname + ' </td> <td> ' + obj.Gender + ' </td> <td>' + obj.IDNumber + '</td> <td>' + obj.Cellphone + '</td><td><a onclick="BindDependentUpdate(' + obj.pkiDependentID + ')" class="btn btn-primary">Select</a></td></tr>';
+            jQuery("#dependentDataTable tbody").html(row);
+        });
+    }
+    function ShowHideDiv(chkPayout) {
+        var dvPayout = document.getElementById("dvPayout");
+        dvPayout.style.display = chkPayout.checked ? "block" : "none";
+    }
+    function BindDependentUpdate(dependentID) {
+        var ParlourId = $("#dr_CompanyIdSelection").val();
+
+        jQuery.ajax({
+            url: BindDependentUpdateURl,
+            data: { dependentId: dependentID, CompanyId: ParlourId },
+            type: "post",
+            success: function (result) {
+                jQuery("#txtClaimDate").val(currentDate);
+                jQuery("#txtDeceaseDateOfFuneral").val(currentDate);
+                jQuery("#dr_CompanyIdSelection").val(result.MembersModel.parlourid)
+                jQuery("#txtCoverAmount").val(result.FamilyDependencyModel.Cover);
+                jQuery("#txtDeceaseLastName").val(result.FamilyDependencyModel.Surname);
+                jQuery("#txtDeceaseName").val(result.FamilyDependencyModel.FullName);
+                jQuery("#txtDeceaseIDNumber").val(result.FamilyDependencyModel.IDNumber);
+                jQuery("#txtDeceaseStreet").val(result.MembersModel.Address1);
+                jQuery("#txtDeceaseTownOrCity").val(result.MembersModel.Address2);
+                jQuery("#txtDeceaseProvince").val(result.MembersModel.Address3);
+                jQuery("#txtDeceaseCode").val(result.MembersModel.Code);
+
+                jQuery("#fkiMemberID").val(result.MembersModel.pkiMemberID);
+                jQuery("#hdn_MemberNumber").val(result.MembersModel.MemberNumber);
+
+
+                jQuery("#claimsModel_ClaimantTitle").val(result.MembersModel.Title == "" ? "Mr" : result.MembersModel.Title);
+                jQuery("#txtClaimFirstName").val(result.MembersModel.FullNames);
+                jQuery("#txtClaimantLastName").val(result.MembersModel.Surname);
+                jQuery("#txtClaimantIDNumber").val(result.MembersModel.IDNumber);
+                if (result.MembersModel.Gender == "0") {
+                    jQuery('#ClaimentMale').prop('checked', true);
+                }
+                else {
+                    jQuery('#ClaimentFemale').prop('checked', true);
+                }
+                jQuery("#txtClaimantStreet").val(result.MembersModel.Address1);
+                jQuery("#txtClaimantTownOrCity").val(result.MembersModel.Address2);
+                jQuery("#txtClaimantProvince").val(result.MembersModel.Address3);
+                jQuery("#txtClaimantCode").val(result.MembersModel.Code);
+                jQuery("#txtClaimantContact").val(result.MembersModel.Cellphone);
+
+                jQuery("#ddlBankList").val(result.MembersModel.Bank);
+                jQuery("#txtClaimantAccHolder").val(result.MembersModel.AccountHolder);
+                jQuery("#txtClaimantBnkBranch").val(result.MembersModel.Branch);
+                jQuery("#txtClaimantAcntNumber").val(result.MembersModel.AccountNumber);
+                jQuery("#txtClaimantBranchCode").val(result.MembersModel.BranchCode);
+                jQuery("#ddlAccountTypeList").val(result.MembersModel.AccountType);
+                jQuery('#txtDeceaseDateOfBirth').datepicker({ format: 'dd/MM/yyyy', autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(result.FamilyDependencyModel.DateOfBirth)), "dd/mm/yyyy", false));
+                jQuery('#txtClaimantDateOfBirth').datepicker({ format: 'dd/MM/yyyy', autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(result.MembersModel.DateOfBirth)), "dd/mm/yyyy", false));
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(thrownError);
+            }
+        });
+    }
+    function BindMainMemberUpdate(MemberId) {
+         var ParlourId = $("#dr_CompanyIdSelection").val();
+         jQuery.ajax({
+             url: '@Url.Action("BindMainMemberUpdate","Claims")',
+             data: { memberId: MemberId,CompanyId:ParlourId },
+             type: "post",
+             success: function (result) {
+                 jQuery("#txtClaimDate").val(currentDate);
+                 jQuery("#txtDeceaseDateOfFuneral").val(currentDate);
+                 jQuery("#txtCoverAmount").val(result.PlanModel.Cover);
+                 jQuery("#dr_CompanyIdSelection").val(result.PlanModel.parlourid)
+                 jQuery("#txtClaimNo").val(result.MembersModel.Claimnumber);
+                 jQuery("#hdn_MemberNumber").val(result.MembersModel.MemeberNumber);
+                 jQuery("#fkiMemberID").val(result.MembersModel.pkiMemberID);
+                 jQuery("#claimsModel_ClaimantTitle").val(result.MembersModel.Title == "" ? "Mr" : result.MembersModel.Title);
+                 jQuery("#txtClaimFirstName").val(result.MembersModel.FullNames);
+                 jQuery("#txtClaimantLastName").val(result.MembersModel.Surname);
+                 jQuery("#txtClaimantIDNumber").val(result.MembersModel.IDNumber);
+                 if (result.MembersModel.Gender == "0") {
+                     jQuery('#ClaimentMale').prop('checked', true);
+                 }
+                 else {
+                     jQuery('#ClaimentFemale').prop('checked', true);
+                 }
+                 jQuery("#txtClaimantStreet").val(result.MembersModel.Address1);
+                 jQuery("#txtClaimantTownOrCity").val(result.MembersModel.Address2);
+                 jQuery("#txtClaimantProvince").val(result.MembersModel.Address3);
+                 jQuery("#txtClaimantCode").val(result.MembersModel.Code);
+                 jQuery("#txtClaimantContact").val(result.MembersModel.Cellphone);
+                 jQuery("#ddlBankList").val(result.MembersModel.Bank);
+                 jQuery("#txtClaimantAccHolder").val(result.MembersModel.AccountHolder);
+                 jQuery("#txtClaimantBnkBranch").val(result.MembersModel.Branch);
+                 jQuery("#txtClaimantAcntNumber").val(result.MembersModel.AccountNumber);
+                 jQuery("#txtClaimantBranchCode").val(result.MembersModel.BranchCode);
+                 jQuery("#ddlAccountTypeList").val(result.MembersModel.AccountType);
+
+                 //Decease
+                 jQuery("#funeralModel_Title").val(result.MembersModel.Title == "" ? "Mr" : result.MembersModel.Title);
+                 jQuery("#txtDeceaseLastName").val(result.MembersModel.Surname);
+                 jQuery("#txtDeceaseName").val(result.MembersModel.FullNames);
+                 jQuery("#txtDeceaseIDNumber").val(result.MembersModel.IDNumber);
+                 if (result.MembersModel.Gender == "0") {
+                     jQuery('#Male').prop('checked', true);
+                 }
+                 else {
+                     jQuery('#Female').prop('checked', true);
+                 }
+                 jQuery("#txtDeceaseStreet").val(result.MembersModel.Address1);
+                 jQuery("#txtDeceaseTownOrCity").val(result.MembersModel.Address2);
+                 jQuery("#txtDeceaseProvince").val(result.MembersModel.Address3);
+                 jQuery("#txtDeceaseCode").val(result.MembersModel.Code);
+                 jQuery('#txtClaimantDateOfBirth').datepicker({ format: 'dd M yyyy', autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(result.MembersModel.DateOfBirth)), "dd/mm/yyyy", false));
+                 jQuery('#txtDeceaseDateOfBirth').datepicker({ format: 'dd M yyyy', autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(result.MembersModel.DateOfBirth)), "dd/mm/yyyy", false));
+             },
+             error: function (xhr, ajaxOptions, thrownError) {
+                 alert(thrownError);
+             }
+         });
+    }
+    function BackNextButtonProcess(CurrenttabId, BackNextTabId) {
+        jQuery("#tab-" + CurrenttabId).removeClass('active')
+        jQuery("#tab" + CurrenttabId).removeClass('active')
+        jQuery("#tab-" + BackNextTabId).addClass("active");
+        jQuery("#tab" + BackNextTabId).addClass("active");
+    }
+    function ConvertDate(date) {
+        if (date != undefined && date != '' && date != null) {
+            return dateFormat(new Date(parseInt(date.replace('/Date(', ''))), "yyyy/mm/dd", false)
+            //return dateFormat(new Date(parseInt(date.replace('/Date(', ''))), "mm/dd/yyyy", true)
+        }
+        else {
+            return dateFormat(new Date(0001, 00, 01), "yyyy/mm/dd", false);
+        }
+    }
+    function OpenClaimDocumentPopUp(GetClaimId, control) {
+        var ParlourId = $("#dr_CompanyIdSelection").val();
+        var CurrentParlourId = control.accessKey;
+
+        if (ParlourId != CurrentParlourId) {
+            if (confirm('you have changed your parlour would you like to continue ?')) {
+
+            } else {
+                $("#dr_CompanyIdSelection").val(CurrentParlourId);
+                return false;
+            }
+        }
+        var GenerateSendMailURL = "@Url.Action("ClaimDocumentPartial","Claims",new {ClaimId="GetClaimId",parlourId="GetParlourId"})".replace("GetClaimId", GetClaimId).replace("GetParlourId", ParlourId).replace("amp;", "");
+        $.ajax({
+            url: GenerateSendMailURL,
+            type: 'GET',
+            cache: false,
+        }).done(function (result) {
+            $('#LoadPartialView_ManageClaims').empty().html(result);
+            $("#AddDocModal").modal("show");
+            $('.modal-backdrop').removeClass("modal-backdrop");
+        });
+    }
+    function DeleteClaimDocument(DocumentId,GetClaimId) {
+        var GenerateSendMailURL = "@Url.Action("ClaimDocumentPartial","Claims",new {pkiClaimPictureID="GetpkiClaimPictureID",PkiClaimId="GetPkiClaimId"})".replace("GetpkiClaimPictureID", DocumentId).replace("GetPkiClaimId", GetClaimId).replace("amp;", "");
+        $.ajax({
+            url: GenerateSendMailURL,
+            type: 'GET',
+            cache: false,
+        }).done(function (result) {
+            $('#LoadPartialView_ManageClaims').empty().html(result);
+            $("#AddDocModal").modal("show");
+            $('.modal-backdrop').removeClass("modal-backdrop");
+        });
+    }
+</script>
+

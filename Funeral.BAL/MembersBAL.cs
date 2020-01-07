@@ -139,7 +139,7 @@ namespace Funeral.BAL
         {
             return MembersDAL.NewSaveAddonProducts(Model);
         }
-        
+
         public static List<MemberAddonProductsModel> SelectMemberAddonProducts(int fkiMemberid)
         {
             DataTable dr = MembersDAL.GetAddonProductsdt(fkiMemberid);
@@ -224,7 +224,14 @@ namespace Funeral.BAL
         {
             return MembersDAL.SaveFamilyDependency(model);
         }
-
+        public static int CheckDependencyCount(FamilyDependencyModel model)
+        {
+            var dataset = MembersDAL.CheckFamilyDependency(model);
+            if (dataset.Tables[0].Rows.Count > 0)
+                return Convert.ToInt32(dataset.Tables[0].Rows[0]["GetCount"].ToString());
+            else
+                return 0;
+        }
         //public static int SaveVehicle(VehiclesModel model)
         //{
         //    return MembersDAL.SaveVehicle(model);
@@ -319,17 +326,16 @@ namespace Funeral.BAL
             return MembersDAL.DeleteMemberNote(ID);
         }
         //public static List<MembersModel> MemberRowImportToMember(string MemberType)
-        public static void MemberRowImportToMember(string MemberType)
+        public static void MemberRowImportToMember(string memberType,Guid importId)
         {
             try
             {
-                MembersDAL.MemberRowImportToMember(MemberType);
+                MembersDAL.MemberRowImportToMember(memberType, importId);
                 //DataTable dr = MembersDAL.MemberRowImportToMember(MemberType);
                 //return FuneralHelper.DataTableMapToList<MembersModel>(dr);
             }
             catch (Exception exc)
             {
-
                 throw exc;
             }
 
@@ -349,6 +355,11 @@ namespace Funeral.BAL
         {
             return MembersDAL.SaveBeneficiary(Model);
         }
+        public static double SumOfBeneficiaryPercentage(int fkiMemberid)
+        {
+            DataTable dr = MembersDAL.SearchBeneficiaryData(fkiMemberid);
+            return Convert.ToDouble(FuneralHelper.DataTableMapToList<Beneficiary_model>(dr).Sum(x => x.Percentages));
+        }
         public static List<Beneficiary_model> SearchBeneficiaryData(int fkiMemberid)
         {
             DataTable dr = MembersDAL.SearchBeneficiaryData(fkiMemberid);
@@ -363,5 +374,6 @@ namespace Funeral.BAL
             DataTable dr = MembersDAL.GetExtendedFamilyList(parlourid, MemberId);
             return FuneralHelper.DataTableMapToList<FamilyDependencyModel>(dr);
         }
+
     }
 }

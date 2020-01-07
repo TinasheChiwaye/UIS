@@ -17,10 +17,10 @@ namespace Funeral.Model
             this.Surname = string.Empty;
             this.Gender = string.Empty;
             this.IDNumber = string.Empty;
-            // this.DateOfBirth=DateTime.MinValue;
-            //this.DateOfDeath = DateTime.MinValue;
-            //this.DateOfFuneral = DateTime.MinValue;
-            //this.TimeOfFuneral = DateTime.MinValue;
+             this.DateOfBirth=DateTime.Now;
+            this.DateOfDeath = DateTime.Now;
+            this.DateOfFuneral = DateTime.Now;
+            this.TimeOfFuneral = DateTime.Now;
             this.FuneralCemetery = string.Empty;
             this.Address1 = string.Empty;
             this.Address2 = string.Empty;
@@ -37,22 +37,26 @@ namespace Funeral.Model
             this.DriverAndCars = string.Empty;
             this.GraveNo = string.Empty;
             this.parlourid = new Guid("00000000-0000-0000-0000-000000000000");
-            this.LastModified = DateTime.MinValue;
+            this.LastModified = DateTime.Now;
             this.ModifiedUser = string.Empty;
-
             this.Notes = string.Empty;
-            this.CreatedDate = DateTime.MinValue;
+            this.CreatedDate = DateTime.Now;
             this.InvoiceNumber = string.Empty;
             this.InvoiceNumber2 = string.Empty;
             this.Discount = 0;
             this.Tax = 0;
+            this.FkiClaimID = 0;
 
         }
         public int pkiFuneralID { get; set; }
+        public int FkiClaimID { get; set; }
         public string Title { get; set; }
+        [Required(ErrorMessage = "The First name is required")]
         public string FullNames { get; set; }
+        [Required(ErrorMessage = "The Surname is required")]
         public string Surname { get; set; }
         public string Gender { get; set; }
+        [Required(ErrorMessage ="The Id Number is required")]
         public string IDNumber { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public DateTime? DateOfDeath { get; set; }
@@ -61,6 +65,7 @@ namespace Funeral.Model
         [DataType(DataType.Time)]
         public DateTime TimeOfFuneral { get; set; }
         public string FuneralCemetery { get; set; }
+        [Required(ErrorMessage = "The Street Address is required")]
         public string Address1 { get; set; }
         public string Address2 { get; set; }
         public string Address3 { get; set; }

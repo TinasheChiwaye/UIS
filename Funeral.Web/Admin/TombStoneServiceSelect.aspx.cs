@@ -1,4 +1,5 @@
-﻿using Funeral.Model;
+﻿using Funeral.BAL;
+using Funeral.Model;
 using Funeral.Web.App_Start;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,6 @@ namespace Funeral.Web.Admin
     public partial class TombStoneServiceSelect : AdminBasePage
     {
         #region Fields
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
         #endregion
 
         #region PageProperty
@@ -102,7 +102,7 @@ namespace Funeral.Web.Admin
             {
                 Discount = Convert.ToDecimal(txtDiscount.Text);
             }
-            int a = client.UpdateAllTombStoneData(TBID, Discount, Tax, invoice);
+            int a = TombStoneBAL.UpdateAllTombStoneData(TBID, Discount, Tax, invoice);
             ShowMessage(ref lblMessage, MessageType.Success, " Successfully Saved.");
         }
         protected void btncrtService_Click(object sender, EventArgs e)
@@ -132,7 +132,7 @@ namespace Funeral.Web.Admin
                         objSer.modifiedUser = UserName;
                         objSer.ServiceRate = Convert.ToDecimal(txtRate.Text);
 
-                        int a = client.SaveTombStoneService(objSer);
+                        int a = TombStoneBAL.SaveTombStoneService(objSer);
                         ViewState["FuneralID"] = a;
                         ShowMessage(ref lblMessage, MessageType.Success, "Service Successfully Saved.");
 
@@ -190,7 +190,7 @@ namespace Funeral.Web.Admin
         public void BindServiceToUpdate()
         {
             int serviceID = Convert.ToInt32(ViewState["ID"]);
-            TombStoneServiceSelectModel model = client.SelectServiceByTombAndID(TBID, serviceID);
+            TombStoneServiceSelectModel model = TombStoneBAL.SelectServiceByTombAndID(TBID, serviceID);
             if ((model == null) || (model.fkiTombstoneID != TBID))
             {
                 Response.Write("<script>alert('Sorry!you are not authorized to perform edit on this Service.');</script>");
@@ -208,7 +208,7 @@ namespace Funeral.Web.Admin
         }
         public void bindServiceListList()
         {
-            TombStoneServiceSelectModel[] objServ = client.SelectServiceByTombStoneID(TBID);
+            List<TombStoneServiceSelectModel> objServ = TombStoneBAL.SelectServiceByTombStoneID(TBID);
             decimal Amt = 0;
             foreach (var item in objServ)
             {
@@ -222,7 +222,7 @@ namespace Funeral.Web.Admin
         {
             try
             {
-                QuotationServicesModel[] objQuoSer = client.GetAllQuotationServices(ParlourId);
+                List<QuotationServicesModel> objQuoSer = QuotationBAL.GetAllQuotationServices(ParlourId);
                 ddlServices.DataTextField = "ServiceName";
                 ddlServices.DataValueField = "pkiServiceID";
                 ddlServices.DataSource = objQuoSer;
@@ -239,10 +239,10 @@ namespace Funeral.Web.Admin
         public void GetCompDetails()
         {
             ApplicationSettingsModel objApp = new ApplicationSettingsModel();
-            objApp = client.GetApplictionByParlourID(ParlourId);
+            objApp = ToolsSetingBAL.GetApplictionByParlourID(ParlourId);
             txtcompanyRules.Text = objApp.ApplicationName + Environment.NewLine + objApp.BusinessAddressLine1 + "," + Environment.NewLine + objApp.BusinessAddressLine2 + "," + Environment.NewLine + objApp.BusinessAddressLine3 + "," + Environment.NewLine + objApp.BusinessAddressLine4 + Environment.NewLine + objApp.BusinessPostalCode;
             ApplicationTnCModel ModelTnc;
-            ModelTnc = client.SelectApplicationTermsAndCondition(ParlourId);
+            ModelTnc = ToolsSetingBAL.SelectApplicationTermsAndCondition(ParlourId);
             if (ModelTnc != null)
             {
                 txtTnc.Text = ModelTnc.TermsAndCondition;
@@ -252,7 +252,7 @@ namespace Funeral.Web.Admin
         {
             TombStoneModel objQuotation = new TombStoneModel();
             objQuotation = null;
-            objQuotation = client.SelectTombStoneByParlAndPki(TBID, ParlourId);
+            objQuotation = TombStoneBAL.SelectTombStoneByParlAndPki(TBID, ParlourId);
             if (objQuotation != null)
             {
                 txtTo.Text = objQuotation.LastName + " " + objQuotation.FirstName + Environment.NewLine + objQuotation.Address1 + "," + Environment.NewLine + objQuotation.Address2 + "," + Environment.NewLine + objQuotation.Address3 + "," + Environment.NewLine + objQuotation.Address4 + Environment.NewLine + objQuotation.Code;
@@ -386,8 +386,7 @@ namespace Funeral.Web.Admin
         protected void ChangeData(object sender, EventArgs e)
         {
             int Description = Convert.ToInt32(ddlServices.SelectedValue);
-            QuotationServicesModel objQuotation = client.GetServiceByID(Description);
-
+            QuotationServicesModel objQuotation = QuotationBAL.GetServiceByID(Description);
             txtSerDes.Text = objQuotation.ServiceDesc;
             decimal money = objQuotation.ServiceCost;
             string rate = String.Format("{0:#.00}", money);
@@ -419,7 +418,7 @@ namespace Funeral.Web.Admin
             }
             if (e.CommandName == "DeleteService")
             {
-                client.DeleteTombstoneServiceByID(Convert.ToInt32(e.CommandArgument));
+                TombStoneBAL.DeleteTombstoneServiceByID(Convert.ToInt32(e.CommandArgument));
                 bindServiceListList();
             }
 
@@ -444,7 +443,7 @@ namespace Funeral.Web.Admin
         #region Service related work
         private void BindAllPackage()
         {
-            ddlPackage.DataSource = client.GetTombstoneAllPackage(this.ParlourId);
+            ddlPackage.DataSource = TombstonePackageBAL.SelectAllPackage(this.ParlourId);
             ddlPackage.DataTextField = "PackageName";
             ddlPackage.DataValueField = "pkiPackageID";
             ddlPackage.DataBind();
@@ -457,7 +456,7 @@ namespace Funeral.Web.Admin
             {
                 try
                 {
-                    List<TombstonePackageModel> modelList = client.GetTombstonePackageServiceByPackgeId(this.ParlourId, Convert.ToInt32(ddlPackage.SelectedValue)).ToList();
+                    List<TombstonePackageModel> modelList = TombstonePackageBAL.SelectPackageServiceByPackgeId(this.ParlourId, Convert.ToInt32(ddlPackage.SelectedValue));
                     TombStoneServiceSelectModel objSer = null;
                     foreach (var item in modelList)
                     {
@@ -468,7 +467,7 @@ namespace Funeral.Web.Admin
                         objSer.lastModified = System.DateTime.Now;
                         objSer.modifiedUser = UserName;
                         objSer.ServiceRate = item.ServiceCost;
-                        int a = client.SaveTombStoneService(objSer);
+                        int a = TombStoneBAL.SaveTombStoneService(objSer);
                     }
 
                     ShowMessage(ref lblMessage, MessageType.Success, "Package successfully applied.");
@@ -485,7 +484,7 @@ namespace Funeral.Web.Admin
         }
         public void BindTax()
         {
-            List<TaxSetting> taxSettings = client.GetTaxSetting().ToList();
+            List<TaxSetting> taxSettings = TaxSettingBAL.GetAllTaxSettings();
             ddlTax.DataSource = taxSettings;
             ddlTax.DataTextField = "TaxText";
             ddlTax.DataValueField = "TaxValue";

@@ -1,22 +1,15 @@
-﻿using System;
+﻿using Funeral.BAL;
+using Funeral.Model;
+using Funeral.Web.App_Start;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Configuration;
-using Microsoft.Reporting.WebForms;
-using Microsoft.VisualBasic;
+using System.Linq;
+using System.Web.UI;
 using System.Web.UI.HtmlControls;
-using Funeral.Web.App_Start;
-using System.IO;
-using System.Net.Mail;
-using System.Text;
-using ClosedXML.Excel;
-using Funeral.Model;
-
+using System.Web.UI.WebControls;
 
 namespace Funeral.Web.Admin.Reports
 {
@@ -37,13 +30,12 @@ namespace Funeral.Web.Admin.Reports
                 ViewState["_FinanceRole"] = value;
             }
         }
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
 
         #region PageInit
         protected void Page_Init(object sender, EventArgs e)
-        {           
-            SecureUserGroupsModel[] obj = client.EditSecurUserbyID(UserID);
-            List<int> list = new List<int>();           
+        {
+            List<SecureUserGroupsModel> obj = ToolsSetingBAL.EditSecurUserbyID(UserID);
+            List<int> list = new List<int>();
             list.Add(2);
             list.Add(4);
             list.Add(12);
@@ -52,13 +44,13 @@ namespace Funeral.Web.Admin.Reports
             {
                 FinanceRole = false;
             }
-           
+
         }
         #endregion
         protected void Page_Load(object sender, EventArgs e)
         {
 
-           if (!Page.IsPostBack)
+            if (!Page.IsPostBack)
             {
                 ReportList();
                 RenderReportType();
@@ -87,9 +79,9 @@ namespace Funeral.Web.Admin.Reports
             com.CommandText = "SelectReportList";
             com.Parameters.Add(new SqlParameter("@FinanceRole", FinanceRole));
             SqlDataAdapter adp = new SqlDataAdapter(com);
-            DataTable dt = new DataTable();           
+            DataTable dt = new DataTable();
             adp.Fill(dt);
-             //DataRow[] results = dt.Select("category = 'Finance Report'");
+            //DataRow[] results = dt.Select("category = 'Finance Report'");
             if (dt.Rows.Count > 0)
             {
                 ddlReportType.DataSource = dt;
@@ -189,39 +181,37 @@ namespace Funeral.Web.Admin.Reports
         //}
         public void BindDdlBranch()
         {
-            FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
-            ddlBranch.DataSource = client.GetAllBranch(ParlourId);
+            
+            ddlBranch.DataSource = ToolsSetingBAL.GetAllBranches(ParlourId);
             ddlBranch.DataBind();
             ddlBranch.Items.Insert(0, new ListItem("ALL", "ALL"));
             ddlBranch.Items.FindByText("ALL").Selected = true;
 
-            ddlMemberBranch.DataSource = client.GetAllBranch(ParlourId);
+            ddlMemberBranch.DataSource = ToolsSetingBAL.GetAllBranches(ParlourId);
             ddlMemberBranch.DataBind();
             ddlMemberBranch.Items.Insert(0, new ListItem("ALL", "ALL"));
             ddlMemberBranch.Items.FindByText("ALL").Selected = true;
 
-            ddlMemberPerBranch.DataSource = client.GetAllBranch(ParlourId);
+            ddlMemberPerBranch.DataSource = ToolsSetingBAL.GetAllBranches(ParlourId);
             ddlMemberPerBranch.DataBind();
             ddlMemberPerBranch.Items.Insert(0, new ListItem("ALL", "ALL"));
             ddlMemberPerBranch.Items.FindByText("ALL").Selected = true;
         }
         public void BindDdlSociety()
         {
-            FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
-            ddlSociety.DataSource = client.GetAllSociety(ParlourId);
+            ddlSociety.DataSource = ToolsSetingBAL.GetAllSocietye(ParlourId);
             ddlSociety.DataBind();
             ddlSociety.Items.Insert(0, new ListItem("ALL", "ALL"));
             ddlSociety.Items.FindByText("ALL").Selected = true;
         }
         public void BindDdlPlanName()
         {
-            FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
-            ddlPlanname.DataSource = client.GetAllPlanName(ParlourId);
+            ddlPlanname.DataSource = CommonBAL.GetAllPlanName(ParlourId);
             ddlPlanname.DataBind();
             ddlPlanname.Items.Insert(0, new ListItem("ALL", "ALL"));
             ddlPlanname.Items.FindByText("ALL").Selected = true;
 
-            ddlMemberPlan.DataSource = client.GetAllPlanName(ParlourId);
+            ddlMemberPlan.DataSource = CommonBAL.GetAllPlanName(ParlourId);
             ddlMemberPlan.DataBind();
             ddlMemberPlan.Items.Insert(0, new ListItem("ALL", "ALL"));
             ddlMemberPlan.Items.FindByText("ALL").Selected = true;
@@ -366,7 +356,7 @@ namespace Funeral.Web.Admin.Reports
                         //    break;
                         case "btnClaims":
                             //btnSendMail.CommandName = "btnClaims";
-                            iframe1.Src = ResolveUrl("~/Admin/Reports/reportrdlc.aspx?Type=" + ReportName + "&BindClaims=" + txtClaimDateFrom.Text + "," + txtClaimDateTo.Text +  "," + ddlClaims.SelectedItem.Text);
+                            iframe1.Src = ResolveUrl("~/Admin/Reports/reportrdlc.aspx?Type=" + ReportName + "&BindClaims=" + txtClaimDateFrom.Text + "," + txtClaimDateTo.Text + "," + ddlClaims.SelectedItem.Text);
                             break;
                         case "btnDetailedPayment":
                             //btnSendMail.CommandName = "btnDetailedPayment";
@@ -411,7 +401,7 @@ namespace Funeral.Web.Admin.Reports
                         default:
                             break;
                     }
-                   
+
 
                 }
                 catch (Exception ex)
@@ -425,18 +415,18 @@ namespace Funeral.Web.Admin.Reports
         public List<ApplicationSettingsModel> GetImage()
         {
             List<ApplicationSettingsModel> plist = new List<ApplicationSettingsModel>();
-            
+
             ApplicationSettingsModel modelCompany;
-            modelCompany = client.GetApplictionByParlourID(ParlourId);
+            modelCompany = ToolsSetingBAL.GetApplictionByParlourID(ParlourId);
             string base64String = Convert.ToBase64String(modelCompany.ApplicationLogo, 0, modelCompany.ApplicationLogo.Length);
-            var  Imgs = "data:image/png;base64," + base64String;
+            var Imgs = "data:image/png;base64," + base64String;
             foreach (var Img in Imgs)
             {
-                plist.Add(new ApplicationSettingsModel { parlourid=modelCompany.parlourid,ApplicationLogo=modelCompany.ApplicationLogo});
+                plist.Add(new ApplicationSettingsModel { parlourid = modelCompany.parlourid, ApplicationLogo = modelCompany.ApplicationLogo });
             }
             return plist;
         }
-        
+
         protected void ddlAdminReort_SelectedIndexChanged(object sender, EventArgs e)
         {
             //this.rvMembersByDateRange.Reset();
@@ -450,7 +440,7 @@ namespace Funeral.Web.Admin.Reports
         #endregion
 
 
-       
+
         //public void ClearAllPanels()
         //{
         //    foreach (Control c in pnlAdminReport.Controls)
@@ -473,6 +463,6 @@ namespace Funeral.Web.Admin.Reports
         //    divgvDependendance.Visible = false;
         //}
 
-       
+
     }
 }

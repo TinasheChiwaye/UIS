@@ -1,0 +1,88 @@
+﻿@{
+    ViewBag.Title = "Quotation Engine";
+}
+<style type="text/css">
+    .custom-file-upload {
+        border: 1px solid #ccc;
+        display: inline-block;
+        padding: 6px 12px;
+        cursor: pointer;
+    }
+</style>
+<script type="text/javascript">
+
+    $(window).load(function () {
+        $("#tab1").addClass("active");
+    })
+      function UploadExcelFile(currntControl) {
+        var Postedurl="@Url.Action("UploadExcelFile", "QuotationEngine")";
+
+        var formData = new FormData();
+        var totalFiles = document.getElementById("txtSelectExcelFile").files.length;
+
+        var file = document.getElementById("txtSelectExcelFile").files[0];
+        formData.append("FileUpload", file);
+
+        if (totalFiles > 0) {
+            $.ajax({
+                url: Postedurl,
+                type: 'POST',
+                data: formData,
+                dataType: 'json',
+                cache: false,
+                contentType: false,
+                processData: false,
+                enctype: 'multipart/form-data',
+                success: function (data) {$("#divExcelColumnListDisply").html(data.PartialView);}
+            });
+        }
+        else {
+            alert("Please select Excel File");
+        }
+    }
+</script>
+<div class="col-lg-12">
+    <div class="ibox ">
+        <div class="ibox-title">
+            <h5>Quotation Engine</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="panel blank-panel">
+                    <div class="panel-heading">
+                        <div class="panel-options" id="Tabs">
+                            <ul class="nav nav-tabs" id="myTab">
+                                <li class="active" id="tab1"><a data-toggle="tab" href="#tab-1" id="atab1" aria-expanded="true">Upload Excel</a></li>
+                                <li class="" id="tab2"><a data-toggle="tab" href="#tab-2" id="atab2" aria-expanded="false">Physical Address</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="tab-content">
+                            <div id="tab-1" class="tab-pane fade in active">
+
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <input type="file" class="custom-file-upload" name="txtSelectExcelFile" id="txtSelectExcelFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input type="button" onclick="UploadExcelFile(this)" class="btn btn-success" value="Upload" />
+                                </div>
+
+                                <div class="col-sm-12" id="divExcelColumnListDisply">
+                                </div>
+                            </div>
+                            <div id="tab-2" class="tab-pane">
+                                <div class="row col-sm-12">
+                                    TEST 2
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

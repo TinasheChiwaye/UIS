@@ -21,7 +21,7 @@
         </div>
         <div class="form-group">
             <label>Date Of Birth<em>*</em></label>
-            @Html.TextBox("DateOfBirth_Beneficiary", "", new { @type = "text", @id = "txtDateOfBirth_Beneficiary", @class = "form-control", @placeholder = "Date Of Birth", @readonly = "true" })
+            @Html.TextBox("DateOfBirth_Beneficiary", "", new { @type = "text", @id = "txtDateOfBirth_Beneficiary", @class = "form-control", @placeholder = "Date Of Birth" })
         </div>
     </div>
     <div class="col-lg-6">
@@ -94,7 +94,7 @@
     }
     return true;
     }
-    $('#txtDateOfBirth_Beneficiary').datepicker({autoclose: true,});
+      $('#txtDateOfBirth_Beneficiary').datepicker({format: 'dd MM yyyy', autoclose: true,setDate: new Date()});
     function AddEditBeneficiary() {
         var DependencyType = $("#ddlDependentDependencyType_Beneficiary").val();
         var FullName = $("#txtFullName_Beneficiary").val();
@@ -136,6 +136,10 @@
                     $("#lblMessage").html('');
                     $("#lblMessage").append('<div class="alert alert-success">Beneficiary ' + result + ' Successfully</div>');
                     $("#txtPremium").val('');
+                }
+                else if (result == "PercentageLimit"){
+                    $("#lblMessage").html('');
+                    $("#lblMessage").append('<div class="alert alert-danger">Total percentage limit of 100%  bas been completed</div>');
                 }
                 else {
                     $("#ValidationSummary_Beneficiary").show();
@@ -239,7 +243,7 @@
         $("#ddlDependentDependencyType_Beneficiary").val(Beneficiary.DependencyType_Beneficiary);
         $("#txtFullName_Beneficiary").val(Beneficiary.FullName_Beneficiary);
         $("#txtSurname_Beneficiary").val(Beneficiary.Surname_Beneficiary);
-        $("#txtDateOfBirth_Beneficiary").val(Beneficiary.DateOfBirth_string).datepicker('update');
+        $('#txtDateOfBirth_Beneficiary').datepicker({ format: 'dd MM yyyy',autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(Beneficiary.DateOfBirth_string)), "dd/mm/yyyy", false));
         $("#ddlRelationshipType_Beneficiary").val(Beneficiary.RelationshipType_Beneficiary);
         $("#txtPercentages_Beneficiary").val(Beneficiary.Percentages);
         $("#txtIDNumber_Beneficiary").val(Beneficiary.IDNumber_Beneficiary);

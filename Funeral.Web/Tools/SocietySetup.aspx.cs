@@ -17,7 +17,7 @@ namespace Funeral.Web.Tools
     public partial class SocietySetup : AdminBasePage
     {
         #region Page Property
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
+
         public int SocietyID
         {
             get
@@ -74,13 +74,13 @@ namespace Funeral.Web.Tools
 
         public void BindSocietyList()
         {
-            SocietyModel[] model = client.GetAllSocietyes(ParlourId);
+            List<SocietyModel> model = ToolsSetingBAL.GetAllSocietyes(ParlourId);
             gvSocietyes.DataSource = model;
             gvSocietyes.DataBind();
         }
         public void BindSocietyToUpdate()
         {
-            SocietyModel model = client.EditSocietybyID(SocietyID, ParlourId);
+            SocietyModel model = ToolsSetingBAL.EditSocietybyID(SocietyID, ParlourId);
             if (model == null)
             {
                 Response.Write("<script>alert('Sorry!you are not authorized to perform edit on this Branch.');</script>");
@@ -114,7 +114,7 @@ namespace Funeral.Web.Tools
             {
 
                 SocietyModel model;
-                model = client.GetSocietyByID(txtSocietyName.Text, ParlourId);
+                model = ToolsSetingBAL.GetSocietyByID(txtSocietyName.Text, ParlourId);
                 if (model != null && SocietyID == 0)
                 {
                     ShowMessage(ref lblMessage, MessageType.Danger, "Society Already Exists.");
@@ -130,7 +130,7 @@ namespace Funeral.Web.Tools
 
 
                     //================================================================ 
-                    int retID = client.SaveSocietyDetails(model);
+                    int retID = ToolsSetingBAL.SaveSocietyDetails(model);
                     SocietyID = retID;
 
                     ShowMessage(ref lblMessage, MessageType.Success, "Society Details successfully saved");
@@ -165,7 +165,7 @@ namespace Funeral.Web.Tools
                 int SBranchId = Convert.ToInt32(e.CommandArgument);
                 try
                 {
-                    int retID = client.DeleteSociety(SBranchId);
+                    int retID = ToolsSetingBAL.DeleteSociety(SBranchId);
                     ShowMessage(ref lblMessage, MessageType.Success, "Record deleted successfully.");
                     lblMessage.Visible = true;
                     BindSocietyList();

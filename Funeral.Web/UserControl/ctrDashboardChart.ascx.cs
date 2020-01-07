@@ -14,14 +14,14 @@ using Funeral.Model;
 using Funeral.Web.App_Start;
 using System.Web.Services;
 using System.Web.Security;
-
+using Funeral.BAL;
 
 namespace Funeral.Web.UserControl
 {
 
     public partial class ctrDashboardChart : System.Web.UI.UserControl
     {
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();      
+ 
 
         public string ChartLabels = null;
         public string ChartData1 = null;
@@ -223,14 +223,14 @@ namespace Funeral.Web.UserControl
     }
     public partial class ctrDashboardChart1 : AdminBasePage
     {
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();      
+
         public bool GetUserAccessByID()
         {
             bool IsAdmin=false;
             try
             {
                 SecureUserGroupsModel model;
-                model = client.GetUserAccessByID(UserID, ParlourId);
+                model = ToolsSetingBAL.GetUserAccessByID(UserID, ParlourId);
                 if (model != null)
                 {
                     IsAdmin = true;

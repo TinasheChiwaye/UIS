@@ -8,13 +8,13 @@ using Funeral.Model;
 using System.Web.Services;
 using System.Data;
 using Funeral.Web.App_Start;
+using Funeral.BAL;
 
 namespace Funeral.Web.Admin
 {
     public partial class AddTax : AdminBasePage
     {
         int TaxId;
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -30,7 +30,7 @@ namespace Funeral.Web.Admin
             objtax.TaxValue = Convert.ToDecimal(txtTaxValue.Text);
             if (btnSave.Text == "Save")
             {
-                var id = client.InsertRecordForTax(objtax);
+                var id = TaxSettingBAL.InsertRecordForTax(objtax);
                 if (id > 0)
                 {
                     lblMessage.Text = "Record Saved SuccessFully";
@@ -48,14 +48,14 @@ namespace Funeral.Web.Admin
                 model.Id = Convert.ToInt32(id);
                 model.TaxText = txtTax.Text;
                 model.TaxValue = Convert.ToDecimal(txtTaxValue.Text);
-                var result = client.UpdateRecordForTax(model);
+                var result = TaxSettingBAL.UpdateRecordForTax(model);
                 BindTaxSetting();
                 btnSave.Text = "Save";
             }
         }
         public void BindTaxSetting()
         {
-            List<TaxSetting> taxSettings = client.GetTaxSetting().ToList();
+            List<TaxSetting> taxSettings = TaxSettingBAL.GetAllTaxSettings();
             gvTaxSetting.DataSource = taxSettings;
             gvTaxSetting.DataBind();
         }
@@ -69,9 +69,9 @@ namespace Funeral.Web.Admin
         {
             if (e.CommandName == "updateTxt")
             {
-                client.GetTaxSettingById(Convert.ToInt32(e.CommandArgument));
+                TaxSettingBAL.GetTaxSettingById(Convert.ToInt32(e.CommandArgument));
                 var id = Convert.ToInt32(e.CommandArgument);
-                var taxSetting = client.GetTaxSettingById(id);
+                var taxSetting = TaxSettingBAL.GetTaxSettingById(id);
                 ViewState["Id"] = taxSetting.Id;
                 txtTax.Text = taxSetting.TaxText;
                 txtTaxValue.Text = taxSetting.TaxValue.ToString();
@@ -80,7 +80,7 @@ namespace Funeral.Web.Admin
             else if (e.CommandName == "deleteTxt")
             {
                 var id = Convert.ToInt32(e.CommandArgument);
-                var Result = client.DeleteTaxSettingById(id);
+                var Result = TaxSettingBAL.DeleteTaxSettingById(id);
 
                 if (Result == 0)
                 {

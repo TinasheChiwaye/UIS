@@ -11,13 +11,13 @@ using System.Web.Services;
 using Funeral.BAL;
 using System.Data.SqlClient;
 using System.IO;
+using Funeral.DAL;
 
 namespace Funeral.Web.Tools
 {
     public partial class smsSendingSetup : AdminBasePage
     {
         #region Page Property
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
 
         #endregion
 
@@ -62,8 +62,7 @@ namespace Funeral.Web.Tools
             smsModel.MemberData = txtMessage.Text;
             smsModel.MemeberToNumber = Convert.ToInt64(ToNumber.Replace(" ", ""));
             smsModel.parlourid = ParlourId;
-
-            int SendOpration = client.InsertSendReminder(smsModel);
+            int SendOpration = MemberPaymetsDAL.InsertSendReminder(smsModel);
         }
         public void ClearControl()
         {
@@ -86,8 +85,7 @@ namespace Funeral.Web.Tools
             RegularExpressionValidator4.Enabled = false;
                 if (chkAllMember.Checked)
                 {
-                    MembersModel[] model;
-                    model = client.GetAllMemberCellphon(ParlourId);
+                    List<MembersModel> model= ToolsSetingBAL.GetAllMemberCellphon(ParlourId);
                     if (model != null)
                     {
                         foreach (MembersModel modelnew in model)

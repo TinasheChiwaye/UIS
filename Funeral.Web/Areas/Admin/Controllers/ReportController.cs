@@ -13,7 +13,5 @@ namespace Funeral.Web.Areas.Admin.Controllers
         {
             return View();
         }
-
-
     }
 }

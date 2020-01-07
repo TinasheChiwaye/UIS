@@ -1,11 +1,9 @@
-﻿using Funeral.Model;
+﻿using Funeral.BAL;
+using Funeral.Model;
 using Funeral.Web.App_Start;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading;
-using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -14,10 +12,8 @@ namespace Funeral.Web.Admin
 {
     public partial class Qoutation : AdminBasePage
     {
-        #region Fields
-        FuneralServiceReference.FuneralServicesClient client = new FuneralServiceReference.FuneralServicesClient();
 
-        #endregion
+
 
         #region Page Property
         public int ID
@@ -46,7 +42,7 @@ namespace Funeral.Web.Admin
             set { ViewState["_PageSize"] = value; }
 
         }
-       
+
         public int PageNum
         {
             get
@@ -116,11 +112,11 @@ namespace Funeral.Web.Admin
         #region PageLoad
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!IsPostBack)
+            if (!IsPostBack)
             {
-                ddlPageSize.SelectedIndex = ddlPageSize.Items.IndexOf(ddlPageSize.Items.FindByValue(PageSize.ToString()));   
+                ddlPageSize.SelectedIndex = ddlPageSize.Items.IndexOf(ddlPageSize.Items.FindByValue(PageSize.ToString()));
                 bindQoutationList();
-               // GetQuotationNumber();
+                // GetQuotationNumber();
                 SelectServices.Enabled = false;
                 btnService.Enabled = HasCreateRight;
             }
@@ -162,22 +158,22 @@ namespace Funeral.Web.Admin
         public void bindQoutationList()
         {
             gvQuotationList.PageSize = PageSize;
-            QuotationModel[] objQuotationModel = client.GetAllQuotationByParlourId(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
+            List<QuotationModel> objQuotationModel = QuotationBAL.SelectQuotationByQuotationId(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
             gvQuotationList.DataSource = objQuotationModel;
-            gvQuotationList.DataBind();                    
+            gvQuotationList.DataBind();
         }
         public void BindQuotationToUpdate()
         {
-           
-            QuotationModel model = client.SelectQuotationByQuotationId(ID,ParlourId);
-            if ((model == null)|| (model.parlourid != ParlourId))
+
+            QuotationModel model = QuotationBAL.SelectQuotationByQuotationId(ID, ParlourId);
+            if ((model == null) || (model.parlourid != ParlourId))
             {
                 Response.Write("<script>alert('Sorry!you are not authorized to perform edit on this Quotation.');</script>");
             }
             else //(model != null)
             {
                 ID = model.QuotationID;
-                ddlMethod.SelectedValue=model.ContactTitle.ToString();
+                ddlMethod.SelectedValue = model.ContactTitle.ToString();
                 txtLastName.Text = model.ContactLastName.ToString();
                 txtFirstname.Text = model.ContactFirstName.ToString();
                 txtCellphone.Text = model.CellNumber.ToString();
@@ -224,7 +220,7 @@ namespace Funeral.Web.Admin
         protected void btncrtQoutationServices_Click(object sender, EventArgs e)
         {
             int QutID = Convert.ToInt32(ViewState["QuotationID"]);
-            QuotationServicePage(QutID);  
+            QuotationServicePage(QutID);
         }
         protected void btnClear_Click(object sender, EventArgs e)
         {
@@ -237,8 +233,8 @@ namespace Funeral.Web.Admin
             {
                 try
                 {
-                    QuotationModel objQuotationModel = client.SelectQuotationByQuotationId(ID, ParlourId);
-                    if (objQuotationModel != null && ID ==0)
+                    QuotationModel objQuotationModel = QuotationBAL.SelectQuotationByQuotationId(ID, ParlourId);
+                    if (objQuotationModel != null && ID == 0)
                     {
                         ShowMessage(ref lblMessage, MessageType.Danger, "Quotation is  Already Exists.");
                     }
@@ -260,7 +256,7 @@ namespace Funeral.Web.Admin
                         objQuotationModel.TelNumber = txtTelePhone.Text;
                         objQuotationModel.AddressLine1 = txtPhysicalAddress.Text;
                         objQuotationModel.AddressLine2 = txtStreetAddress.Text;
-                        objQuotationModel.AddressLine3 =txtTown.Text;
+                        objQuotationModel.AddressLine3 = txtTown.Text;
                         objQuotationModel.AddressLine4 = txtProvince.Text;
                         objQuotationModel.Code = txtCode.Text;
                         objQuotationModel.DateOfQuotation = System.DateTime.Now;
@@ -269,14 +265,14 @@ namespace Funeral.Web.Admin
                         objQuotationModel.LastModified = System.DateTime.Now;
                         objQuotationModel.QuotationNumber = "";
 
-                        int a = client.SaveQuotation(objQuotationModel);
+                        int a = QuotationBAL.SaveQuotation(objQuotationModel);
                         ViewState["QuotationID"] = a;
                         ShowMessage(ref lblMessage, MessageType.Success, "Quotation Successfully Saved.");
                         ClearControl();
                         bindQoutationList();
                         SelectServices.Enabled = true;
                     }
-                    
+
 
                 }
                 catch (Exception ex)
@@ -288,7 +284,7 @@ namespace Funeral.Web.Admin
         }
         protected void btnSearch_Click(object sender, EventArgs e)
         {
-            
+
             bindQoutationList();
         }
         #endregion
@@ -311,7 +307,7 @@ namespace Funeral.Web.Admin
         }
         protected void gvQuotation_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-           
+
             if (e.CommandName == "EditQuotation")
             {
                 ID = Convert.ToInt32(e.CommandArgument);
@@ -328,7 +324,7 @@ namespace Funeral.Web.Admin
             }
             if (e.CommandName == "DeleteQuotation")
             {
-                client.DeleteQuotation(Convert.ToInt32(e.CommandArgument),UserName);
+                QuotationBAL.QuotationDelete(Convert.ToInt32(e.CommandArgument), UserName);
                 bindQoutationList();
             }
             if (e.CommandName == "PrintQuotation")
@@ -344,7 +340,7 @@ namespace Funeral.Web.Admin
                     lblMessage.Visible = true;
                 }
             }
-           
+
         }
         #endregion
 
@@ -355,10 +351,10 @@ namespace Funeral.Web.Admin
             bindQoutationList();
         }
         #endregion
-                                                                                                                              
+
         #region "Sorting Event"
 
-      
+
 
         private const string ASCENDING = "ASC";
         private const string DESCENDING = "DESC";
@@ -398,6 +394,6 @@ namespace Funeral.Web.Admin
             bindQoutationList();
         }
         #endregion
-       
+
     }
 }

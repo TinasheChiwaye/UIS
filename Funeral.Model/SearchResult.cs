@@ -20,7 +20,6 @@ namespace Funeral.Model
             {
                 dataResult = dataResult.Where(resultData => filterPredicate(resultData)).ToList();
             }
-
             this.TotalCount = dataResult.Count();
             this.Result = (dataResult as List<ResultType>);
 
@@ -35,7 +34,7 @@ namespace Funeral.Model
 
             this.Result = (this.Result as List<ResultType>).Skip(startIndex).Take(searchData.PageSize).ToList();
             this.FilteredCount = ((List<ResultType>)Result).Count();
-            this.Message = "Request Successfully Execuated.";
+            this.Message = "Request successfully executed.";
             this.Error = null;
             this.StatusCode = (int)Enum.Parse(typeof(System.Net.HttpStatusCode), System.Net.HttpStatusCode.OK.ToString());
         }

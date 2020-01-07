@@ -104,3 +104,194 @@ ALTER TABLE [Funerals] ADD BurialOrderNo nvarchar(100) NULL
 Alter Store pROCEDURE
 -------------
 1.[GetDashboardTodayPayment]
+
+
+=================================04-11-2019
+Add New Store Procedure
+-------------
+1.[GetDependenciesCount_ByMemberId]
+
+
+
+
+
+
+
+
+===========================================16-11-2019
+
+==>NEW STORE pROCEDURE
+1.[SaveFamilyDependency_NEW]
+2.[UpdateFamilyDependency_NEW]
+3.[GetPolicyDetailsBetweenAge_NEW]
+
+
+
+
+===================================16-12-2019
+Add New Table
+---------------------
+1.ClaimRightsWorkFlow
+2.ClaimStatus
+
+
+NEW SP
+----------------
+1.[GetClaimRightsByRoleId]
+2.[SaveClaimRightsWorkflow]
+3.[DeleteClaimRightsWorkflow]
+
+
+
+=====================================21-12-2019
+New SP
+--------
+1.GetClaimStatuses
+2.ClaimStatusChangeLog
+3.[getClaimStatusHistory]
+
+Alter Table
+=================
+1.ClaimStatus
+	Add SequencePriority int
+
+
+=====================================25-12-2019
+NEW SP
+--------------
+1.[GetSuperUserAccessByUserId]
+2.GetClaimStatuses_ByUserId
+
+Add NewMenu
+----------------
+INSERT INTO tblPages (PageName,PageTitle,URL,MVCURL,IsActive,IsExcludedRight,ParentRoleId,IconClass,MenuOrder,MenuLevel,IsMenu)
+VALUES('Claim Workflow','Claim Workflow','/Tools/ClaimTools/ClaimStatus','/Tools/ClaimTools/ClaimStatus',1,0,13,null,0,1,1)
+
+UPDATE tblPages SET MVCURL='/Admin/Claims/Index' WHERE ID=12
+
+
+=====================================30-12-2019
+new sp
+----------------
+1.[GetClaimStatusCount_dashboard]
+2.[GetFuneralByClaimId]
+
+Alter table 
+----------------
+ALTER TABLE [GroupInvoices] ADD SocietyId int NULL DEFAULT (0) WITH VALUES 
+
+ALTER TABLE ApplicationSettings ADD EmailForClaimNotification NVARCHAR(500) NULL
+
+
+
+1-1-2020
+================================
+New table 
+--------------
+1.DocumentDefination
+	INSERT INTO DocumentDefination(DocumentName,DocumentType,CreatedBy,CreatedDate,IsActive,ParlourId)
+	VALUES('BI663 Document','ClaimDocument','606',GETDATE(),1,'C4164621-6A6E-4AF6-AF7B-7F7B00F0B3B3')
+	
+	INSERT INTO DocumentDefination(DocumentName,DocumentType,CreatedBy,CreatedDate,IsActive,ParlourId)
+	VALUES('Death Ceartificate','ClaimDocument','606',GETDATE(),1,'C4164621-6A6E-4AF6-AF7B-7F7B00F0B3B3')
+
+	INSERT INTO DocumentDefination(DocumentName,DocumentType,CreatedBy,CreatedDate,IsActive,ParlourId)
+	VALUES('Other Document','ClaimDocument','606',GETDATE(),1,'C4164621-6A6E-4AF6-AF7B-7F7B00F0B3B3')
+
+
+NEW SP
+------------
+1.[GetClaimDocumentsByClaimId]
+2.[GetDocumentList_ByParlourId]
+
+2-1-2020
+================================
+Aleter Table
+--------------------
+ALTER TABLE ClaimStatusChangeReason ADD Comment NVARCHAR(max) NULL
+ALTER TABLE ClaimDocuments ADD IsApproved bit NULL DEFAULT (0) WITH VALUES 
+ALTER TABLE ClaimDocuments ADD ApprovedBy nvarchar(100) NULL 
+ALTER TABLE ClaimDocuments ADD ApprovedDate datetime NULL 
+
+NEW SP
+------------
+1.ClaimStatusChangeLog_new
+2.[GetUploadedDocumentList]
+3.[UpdateClaimDocumentStatus]
+
+Alter SP
+---------------
+1.[getClaimStatusHistory]
+2.[SaveClaimSupportedDocument]
+3.[GetClaimDocumentsByClaimId]
+
+
+3-1-2020
+================================
+New Table 
+------------------
+1.ClaimFollowUp
+2.Provinces
+	INSERT INTO Provinces (ProvinceName)values('Northern Cape') 
+	INSERT INTO Provinces (ProvinceName)values('Eastern Cape') 
+	INSERT INTO Provinces (ProvinceName)values('Free State') 
+	INSERT INTO Provinces (ProvinceName)values('Western Cape') 
+	INSERT INTO Provinces (ProvinceName)values('Limpopo') 
+	INSERT INTO Provinces (ProvinceName)values('North West') 
+	INSERT INTO Provinces (ProvinceName)values('KwaZulu-Natal') 
+	INSERT INTO Provinces (ProvinceName)values('Mpumalanga') 
+	INSERT INTO Provinces (ProvinceName)values('Gauteng') 
+
+
+
+Alter Table
+----------------------
+1.ClaimDocument
+	->Change IsApproved column to  Status nvarchar(50)
+
+
+New SP
+-------------------
+1.[GetProvincesList]
+2.[AddClaimFollowUp]
+3.[GetClaimDocumentsByClaimPictureID]
+4.[UpdateDocumentStatus]
+5.[SaveClaimHistory]
+
+Alter SP
+---------------
+1.[SaveClaimSupportedDocument]
+2.[GetUploadedDocumentList]
+3.[GetClaimDocumentsByClaimId]
+
+
+
+
+06-1-01-2020
+==========================================
+Alter SP
+-----------------
+1.[GetClaimDocumentsByClaimId]
+
+
+New SP
+-----------------
+1.[GetClaimReasonList]
+2.[MemberParlourIDAndMemberNoByID_New]
+3.[GetDcoumentFollowUpHistory]
+
+
+
+New table 
+-----------------
+1.ClaimReasons
+
+
+
+
+
+07-07-2020
+=====================================================================
+Alter SP
+------------------
+1.[SaveFuneral_New]
