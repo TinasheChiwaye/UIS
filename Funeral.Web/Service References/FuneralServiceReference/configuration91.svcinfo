@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="GEHY0ii4KeHZRhR5/0YWx/JtQAU=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="Z6xk/4AGquhhQCB0ZNvH4rKZJxA=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="http">
       <properties>
@@ -112,10 +112,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="http" contract="FuneralServiceReference.IFuneralServices" bindingType="basicHttpBinding" address="http://localhost:3213/FuneralServices.svc" bindingConfiguration="http">
+    <endpoint name="http" contract="FuneralServiceReference.IFuneralServices" bindingType="basicHttpBinding" address="http://localhost:62479/FuneralServices.svc" bindingConfiguration="http">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://localhost:3213/FuneralServices.svc</serializedValue>
+          <serializedValue>http://localhost:62479/FuneralServices.svc</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

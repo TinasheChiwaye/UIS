@@ -1386,27 +1386,8 @@
     <Content Include="Scripts\plugins\diff_match_patch\COPYING" />
     <Content Include="Scripts\plugins\justified-gallery\README.md" />
     <Content Include="packages.config" />
-    <None Include="Service References\FuneralServiceReference\FuneralServices.wsdl">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\FuneralServiceReference\FuneralServices.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\FuneralServiceReference\FuneralServices1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\FuneralServiceReference\FuneralServices2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\FuneralServiceReference\FuneralServices3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\FuneralServiceReference\FuneralServices4.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\FuneralServiceReference\FuneralServices5.xsd">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="Service References\FuneralServiceReference\FuneralServices1.disco" />
+    <None Include="Service References\FuneralServiceReference\FuneralServices11.disco" />
     <Content Include="Upload\CompanyImage\CreditProtection_1.png" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -1414,6 +1395,44 @@
     <Content Include="Views\web.config" />
     <Content Include="Views\Member\Index.cshtml" />
     <Content Include="Views\Shared\MessageBox.cshtml" />
+    <None Include="Service References\FuneralServiceReference\FuneralServices1.wsdl" />
+    <None Include="Service References\FuneralServiceReference\FuneralServices11.wsdl" />
+    <None Include="Service References\FuneralServiceReference\FuneralServices6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\FuneralServiceReference\FuneralServices61.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\FuneralServiceReference\FuneralServices610.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\FuneralServiceReference\FuneralServices611.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\FuneralServiceReference\FuneralServices62.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\FuneralServiceReference\FuneralServices63.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\FuneralServiceReference\FuneralServices64.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\FuneralServiceReference\FuneralServices65.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\FuneralServiceReference\FuneralServices66.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\FuneralServiceReference\FuneralServices67.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\FuneralServiceReference\FuneralServices68.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\FuneralServiceReference\FuneralServices69.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1427,7 +1446,6 @@
     <None Include="Reference Thing\UISBL.vb.exclude" />
     <Content Include="Properties\DataSources\Funeral.Model.AdminModel.datasource" />
     <Content Include="Admin\Admin.Master" />
-    <None Include="Service References\FuneralServiceReference\FuneralServices.disco" />
     <None Include="Service References\FuneralServiceReference\configuration91.svcinfo" />
     <None Include="Service References\FuneralServiceReference\configuration.svcinfo" />
     <None Include="Service References\FuneralServiceReference\Reference.svcmap">

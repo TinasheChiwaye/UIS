@@ -833,10 +833,10 @@ namespace Funeral.Services
         {
             return ClaimsBAL.SelectMembersAndDependencies1(ParlourId, MainMem, Keyword);
         }
-        //public List<FamilyDependencyModel> SelectMembersAndDependencies2(Guid ParlourId, bool MainMem, string Keyword)
-        //{
-        //    return ClaimsBAL.SelectMembersAndDependencies2(ParlourId, MainMem, Keyword);
-        //}
+        public List<FamilyDependencyModel> SelectMembersAndDependencies2(Guid ParlourId, bool MainMem, string Keyword)
+        {
+            return ClaimsBAL.SelectMembersAndDependencies2(ParlourId, MainMem, Keyword);
+        }
         public MembersModel selectMemberByPkidAndParlor(Guid ParlourId, int MemId)
         {
             return ClaimsBAL.selectMemberByPkidAndParlor(ParlourId, MemId);

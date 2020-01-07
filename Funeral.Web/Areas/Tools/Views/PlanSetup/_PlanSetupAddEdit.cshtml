@@ -27,12 +27,12 @@
                         <div class="form-group">
                             @Html.Label("Plan Name", new { @class = "control-label" })
                             <strong><span class="text-danger"><em>*</em></span></strong>
-                            @Html.TextBoxFor(m => m.PlanName, null, new { @class = "form-control", @maxlength = "30", placeholder = "Plan Name" })
+                            @Html.TextBoxFor(m => m.PlanName, null, new { @class = "form-control", @maxlength = "155", placeholder = "Plan Name" })
                             @Html.ValidationMessageFor(m => m.PlanName, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                         </div>
                         <div class="form-group">
                             @Html.Label("Description of plan/Package", new { @class = "control-label" })
-                            @Html.TextBoxFor(m => m.PlanDesc, null, new { @class = "form-control", @maxlength = "25", placeholder = "Description of plan/Package" })
+                            @Html.TextBoxFor(m => m.PlanDesc, null, new { @class = "form-control", @maxlength = "155", placeholder = "Description of plan/Package" })
                         </div>
                         <div class="form-group">
                             @Html.Label("Premium ", new { @class = "control-label" })

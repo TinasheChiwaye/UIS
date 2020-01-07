@@ -768,31 +768,31 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/08/2019 13:05:18</publishTime>
     </File>
     <File Include="bin/Funeral.BAL.dll">
-      <publishTime>10/24/2019 10:59:01</publishTime>
+      <publishTime>10/25/2019 16:26:39</publishTime>
     </File>
     <File Include="bin/Funeral.BAL.dll.config">
       <publishTime>06/27/2019 15:14:31</publishTime>
     </File>
     <File Include="bin/Funeral.BAL.pdb">
-      <publishTime>10/24/2019 10:59:01</publishTime>
+      <publishTime>10/25/2019 16:26:39</publishTime>
     </File>
     <File Include="bin/Funeral.DAL.dll">
-      <publishTime>10/24/2019 10:59:00</publishTime>
+      <publishTime>10/25/2019 16:26:38</publishTime>
     </File>
     <File Include="bin/Funeral.DAL.dll.config">
       <publishTime>06/27/2019 15:14:32</publishTime>
     </File>
     <File Include="bin/Funeral.DAL.pdb">
-      <publishTime>10/24/2019 10:59:00</publishTime>
+      <publishTime>10/25/2019 16:26:38</publishTime>
     </File>
     <File Include="bin/Funeral.Model.dll">
-      <publishTime>10/24/2019 10:59:00</publishTime>
+      <publishTime>10/25/2019 16:26:37</publishTime>
     </File>
     <File Include="bin/Funeral.Model.dll.config">
       <publishTime>06/27/2019 15:14:32</publishTime>
     </File>
     <File Include="bin/Funeral.Model.pdb">
-      <publishTime>10/24/2019 10:59:00</publishTime>
+      <publishTime>10/25/2019 16:26:37</publishTime>
     </File>
     <File Include="bin/Funeral.Validation.dll">
       <publishTime>10/23/2019 14:47:10</publishTime>
@@ -801,10 +801,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/23/2019 14:47:10</publishTime>
     </File>
     <File Include="bin/Funeral.Web.dll">
-      <publishTime>10/24/2019 19:01:51</publishTime>
+      <publishTime>10/25/2019 16:47:47</publishTime>
     </File>
     <File Include="bin/Funeral.Web.pdb">
-      <publishTime>10/24/2019 19:01:51</publishTime>
+      <publishTime>10/25/2019 16:47:47</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.Identity.Core.dll">
       <publishTime>04/03/2015 17:07:22</publishTime>
@@ -3369,7 +3369,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/25/2019 12:05:38</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>10/23/2019 16:49:27</publishTime>
+      <publishTime>10/25/2019 16:47:55</publishTime>
     </File>
   </ItemGroup>
 </Project>

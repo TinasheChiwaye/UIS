@@ -1250,5 +1250,9 @@ namespace Funeral.Services
         [OperationContract]
         [WebInvoke(ResponseFormat = WebMessageFormat.Json)]
         int GetLastCopiedMemberForDependency();
+
+        [OperationContract]
+        [WebInvoke(ResponseFormat = WebMessageFormat.Json)]
+        List<FamilyDependencyModel> SelectMembersAndDependencies2(Guid ParlourId, bool MainMem, string Keyword);
     }
 }

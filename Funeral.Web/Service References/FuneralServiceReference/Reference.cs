@@ -62,12 +62,6 @@ namespace Funeral.Web.FuneralServiceReference {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="FuneralServiceReference.IFuneralServices")]
     public interface IFuneralServices {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFuneralServices/GetScheduleById", ReplyAction="http://tempuri.org/IFuneralServices/GetScheduleByIdResponse")]
-        Funeral.Model.ScheduleEmailReportModel GetScheduleById(int ID, System.Guid ParlourId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFuneralServices/GetScheduleById", ReplyAction="http://tempuri.org/IFuneralServices/GetScheduleByIdResponse")]
-        System.Threading.Tasks.Task<Funeral.Model.ScheduleEmailReportModel> GetScheduleByIdAsync(int ID, System.Guid ParlourId);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFuneralServices/UpdateScheduleByScheduleId", ReplyAction="http://tempuri.org/IFuneralServices/UpdateScheduleByScheduleIdResponse")]
         int UpdateScheduleByScheduleId(Funeral.Model.ScheduleEmailReportModel model);
         
@@ -136,6 +130,12 @@ namespace Funeral.Web.FuneralServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFuneralServices/GetLastCopiedMemberForDependency", ReplyAction="http://tempuri.org/IFuneralServices/GetLastCopiedMemberForDependencyResponse")]
         System.Threading.Tasks.Task<int> GetLastCopiedMemberForDependencyAsync();
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFuneralServices/SelectMembersAndDependencies2", ReplyAction="http://tempuri.org/IFuneralServices/SelectMembersAndDependencies2Response")]
+        Funeral.Model.FamilyDependencyModel[] SelectMembersAndDependencies2(System.Guid ParlourId, bool MainMem, string Keyword);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFuneralServices/SelectMembersAndDependencies2", ReplyAction="http://tempuri.org/IFuneralServices/SelectMembersAndDependencies2Response")]
+        System.Threading.Tasks.Task<Funeral.Model.FamilyDependencyModel[]> SelectMembersAndDependencies2Async(System.Guid ParlourId, bool MainMem, string Keyword);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFuneralServices/GetAllApplicationList2", ReplyAction="http://tempuri.org/IFuneralServices/GetAllApplicationList2Response")]
         Funeral.Model.ApplicationSettingsModel GetAllApplicationList2(System.Guid parlourid, int param, int AppID);
         
@@ -189,12 +189,6 @@ namespace Funeral.Web.FuneralServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFuneralServices/SelectMembersAndDependencies1", ReplyAction="http://tempuri.org/IFuneralServices/SelectMembersAndDependencies1Response")]
         System.Threading.Tasks.Task<Funeral.Model.MembersModel[]> SelectMembersAndDependencies1Async(System.Guid ParlourId, bool MainMem, string Keyword);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFuneralServices/SelectMembersAndDependencies2", ReplyAction="http://tempuri.org/IFuneralServices/SelectMembersAndDependencies2Response")]
-        Funeral.Model.FamilyDependencyModel[] SelectMembersAndDependencies2(System.Guid ParlourId, bool MainMem, string Keyword);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFuneralServices/SelectMembersAndDependencies2", ReplyAction="http://tempuri.org/IFuneralServices/SelectMembersAndDependencies2Response")]
-        System.Threading.Tasks.Task<Funeral.Model.FamilyDependencyModel[]> SelectMembersAndDependencies2Async(System.Guid ParlourId, bool MainMem, string Keyword);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFuneralServices/selectMemberByPkidAndParlor", ReplyAction="http://tempuri.org/IFuneralServices/selectMemberByPkidAndParlorResponse")]
         Funeral.Model.MembersModel selectMemberByPkidAndParlor(System.Guid ParlourId, int MemId);
@@ -713,6 +707,12 @@ namespace Funeral.Web.FuneralServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFuneralServices/GetScheduleEmailReportByParlourId", ReplyAction="http://tempuri.org/IFuneralServices/GetScheduleEmailReportByParlourIdResponse")]
         System.Threading.Tasks.Task<Funeral.Model.ScheduleEmailReportModel[]> GetScheduleEmailReportByParlourIdAsync(System.Guid ParlourId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFuneralServices/GetScheduleById", ReplyAction="http://tempuri.org/IFuneralServices/GetScheduleByIdResponse")]
+        Funeral.Model.ScheduleEmailReportModel GetScheduleById(int ID, System.Guid ParlourId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFuneralServices/GetScheduleById", ReplyAction="http://tempuri.org/IFuneralServices/GetScheduleByIdResponse")]
+        System.Threading.Tasks.Task<Funeral.Model.ScheduleEmailReportModel> GetScheduleByIdAsync(int ID, System.Guid ParlourId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFuneralServices/SelectMemberAddonProducts", ReplyAction="http://tempuri.org/IFuneralServices/SelectMemberAddonProductsResponse")]
         Funeral.Model.MemberAddonProductsModel[] SelectMemberAddonProducts(int MemberID);
@@ -1775,14 +1775,6 @@ namespace Funeral.Web.FuneralServiceReference {
                 base(binding, remoteAddress) {
         }
         
-        public Funeral.Model.ScheduleEmailReportModel GetScheduleById(int ID, System.Guid ParlourId) {
-            return base.Channel.GetScheduleById(ID, ParlourId);
-        }
-        
-        public System.Threading.Tasks.Task<Funeral.Model.ScheduleEmailReportModel> GetScheduleByIdAsync(int ID, System.Guid ParlourId) {
-            return base.Channel.GetScheduleByIdAsync(ID, ParlourId);
-        }
-        
         public int UpdateScheduleByScheduleId(Funeral.Model.ScheduleEmailReportModel model) {
             return base.Channel.UpdateScheduleByScheduleId(model);
         }
@@ -1871,6 +1863,14 @@ namespace Funeral.Web.FuneralServiceReference {
             return base.Channel.GetLastCopiedMemberForDependencyAsync();
         }
         
+        public Funeral.Model.FamilyDependencyModel[] SelectMembersAndDependencies2(System.Guid ParlourId, bool MainMem, string Keyword) {
+            return base.Channel.SelectMembersAndDependencies2(ParlourId, MainMem, Keyword);
+        }
+        
+        public System.Threading.Tasks.Task<Funeral.Model.FamilyDependencyModel[]> SelectMembersAndDependencies2Async(System.Guid ParlourId, bool MainMem, string Keyword) {
+            return base.Channel.SelectMembersAndDependencies2Async(ParlourId, MainMem, Keyword);
+        }
+        
         public Funeral.Model.ApplicationSettingsModel GetAllApplicationList2(System.Guid parlourid, int param, int AppID) {
             return base.Channel.GetAllApplicationList2(parlourid, param, AppID);
         }
@@ -1941,14 +1941,6 @@ namespace Funeral.Web.FuneralServiceReference {
         
         public System.Threading.Tasks.Task<Funeral.Model.MembersModel[]> SelectMembersAndDependencies1Async(System.Guid ParlourId, bool MainMem, string Keyword) {
             return base.Channel.SelectMembersAndDependencies1Async(ParlourId, MainMem, Keyword);
-        }
-        
-        public Funeral.Model.FamilyDependencyModel[] SelectMembersAndDependencies2(System.Guid ParlourId, bool MainMem, string Keyword) {
-            return base.Channel.SelectMembersAndDependencies2(ParlourId, MainMem, Keyword);
-        }
-        
-        public System.Threading.Tasks.Task<Funeral.Model.FamilyDependencyModel[]> SelectMembersAndDependencies2Async(System.Guid ParlourId, bool MainMem, string Keyword) {
-            return base.Channel.SelectMembersAndDependencies2Async(ParlourId, MainMem, Keyword);
         }
         
         public Funeral.Model.MembersModel selectMemberByPkidAndParlor(System.Guid ParlourId, int MemId) {
@@ -2551,6 +2543,14 @@ namespace Funeral.Web.FuneralServiceReference {
             return base.Channel.GetScheduleEmailReportByParlourIdAsync(ParlourId);
         }
         
+        public Funeral.Model.ScheduleEmailReportModel GetScheduleById(int ID, System.Guid ParlourId) {
+            return base.Channel.GetScheduleById(ID, ParlourId);
+        }
+        
+        public System.Threading.Tasks.Task<Funeral.Model.ScheduleEmailReportModel> GetScheduleByIdAsync(int ID, System.Guid ParlourId) {
+            return base.Channel.GetScheduleByIdAsync(ID, ParlourId);
+        }
+        
         public Funeral.Model.MemberAddonProductsModel[] SelectMemberAddonProducts(int MemberID) {
             return base.Channel.SelectMemberAddonProducts(MemberID);
         }
@@ -2586,10 +2586,7 @@ namespace Funeral.Web.FuneralServiceReference {
         public int AddonProductUpdateMember(Funeral.Model.MemberAddonProductsModel model) {
             return base.Channel.AddonProductUpdateMember(model);
         }
-        public int NewAddonProductUpdateMember(Funeral.Model.MemberAddonProductsModel model)
-        {
-            return base.Channel.AddonProductUpdateMember(model);
-        }
+        
         public System.Threading.Tasks.Task<int> AddonProductUpdateMemberAsync(Funeral.Model.MemberAddonProductsModel model) {
             return base.Channel.AddonProductUpdateMemberAsync(model);
         }
@@ -3912,11 +3909,6 @@ namespace Funeral.Web.FuneralServiceReference {
         
         public System.Threading.Tasks.Task<int> SaveAddonProductsAsync(Funeral.Model.MemberAddonProductsModel model) {
             return base.Channel.SaveAddonProductsAsync(model);
-        }
-
-        internal object GetTombstonePackageServiceByPackgeId(Guid parlourId, object pkiPackageID)
-        {
-            throw new NotImplementedException();
         }
     }
 }

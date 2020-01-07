@@ -5,7 +5,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 -->
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <_PublishTargetUrl>C:\Users\Hemant\Desktop\WebSite</_PublishTargetUrl>
+    <_PublishTargetUrl>C:\Users\Hemant\Desktop\FuneralService</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/Antlr3.Runtime.dll">
@@ -15,43 +15,43 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/22/2013 08:43:40</publishTime>
     </File>
     <File Include="bin/Funeral.BAL.dll">
-      <publishTime>09/06/2019 16:43:57</publishTime>
+      <publishTime>10/25/2019 16:26:39</publishTime>
     </File>
     <File Include="bin/Funeral.BAL.dll.config">
       <publishTime>06/27/2019 15:14:31</publishTime>
     </File>
     <File Include="bin/Funeral.BAL.pdb">
-      <publishTime>09/06/2019 16:43:57</publishTime>
+      <publishTime>10/25/2019 16:26:39</publishTime>
     </File>
     <File Include="bin/Funeral.DAL.dll">
-      <publishTime>09/06/2019 16:43:57</publishTime>
+      <publishTime>10/25/2019 16:26:38</publishTime>
     </File>
     <File Include="bin/Funeral.DAL.dll.config">
       <publishTime>06/27/2019 15:14:32</publishTime>
     </File>
     <File Include="bin/Funeral.DAL.pdb">
-      <publishTime>09/06/2019 16:43:57</publishTime>
+      <publishTime>10/25/2019 16:26:38</publishTime>
     </File>
     <File Include="bin/Funeral.Model.dll">
-      <publishTime>09/06/2019 16:43:55</publishTime>
+      <publishTime>10/25/2019 16:26:37</publishTime>
     </File>
     <File Include="bin/Funeral.Model.dll.config">
       <publishTime>06/27/2019 15:14:32</publishTime>
     </File>
     <File Include="bin/Funeral.Model.pdb">
-      <publishTime>09/06/2019 16:43:55</publishTime>
+      <publishTime>10/25/2019 16:26:37</publishTime>
     </File>
     <File Include="bin/Funeral.Services.dll">
-      <publishTime>09/06/2019 16:47:17</publishTime>
+      <publishTime>10/25/2019 16:26:41</publishTime>
     </File>
     <File Include="bin/Funeral.Services.pdb">
-      <publishTime>09/06/2019 16:47:17</publishTime>
+      <publishTime>10/25/2019 16:26:41</publishTime>
     </File>
     <File Include="bin/Funeral.Validation.dll">
-      <publishTime>09/06/2019 16:43:49</publishTime>
+      <publishTime>10/23/2019 14:47:10</publishTime>
     </File>
     <File Include="bin/Funeral.Validation.pdb">
-      <publishTime>09/06/2019 16:43:49</publishTime>
+      <publishTime>10/23/2019 14:47:10</publishTime>
     </File>
     <File Include="bin/Microsoft.Web.Infrastructure.dll">
       <publishTime>07/25/2012 11:48:56</publishTime>
@@ -72,7 +72,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/25/2019 12:06:09</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/06/2019 16:47:18</publishTime>
+      <publishTime>10/25/2019 16:26:43</publishTime>
     </File>
   </ItemGroup>
 </Project>

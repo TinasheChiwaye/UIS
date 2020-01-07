@@ -99,5 +99,10 @@ namespace Funeral.BAL
         {
             ClaimsDAL.ClaimStatusChangeReason(model);
         }
+        public static List<FamilyDependencyModel> SelectMembersAndDependencies2(Guid ParlourId, bool MainMem, string Keyword)
+        {
+            SqlDataReader dr = ClaimsDAL.SelectMembersAndDependencies(ParlourId, MainMem, Keyword);
+            return FuneralHelper.DataReaderMapToList<FamilyDependencyModel>(dr);
+        }
     }
 }
