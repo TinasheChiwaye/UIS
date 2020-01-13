@@ -162,6 +162,13 @@
                                 <asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtownLastName" ID="RequiredFieldValidator6" ForeColor="red" runat="server" ErrorMessage="Please enter Owner Last Name"></asp:RequiredFieldValidator>
                                 <%--<asp:RegularExpressionValidator Display="None" ID="RegExp1" ValidationGroup="CompanySetup" runat="server" ErrorMessage="Company Name Enter Only characters" ControlToValidate="txtCompanyName" ValidationExpression="[a-zA-Z ]*$" />--%>
                             </div>
+                            <div class="form-group">
+                                <label>Claim Email Address<em>*</em> </label>
+                                <asp:TextBox MaxLength="30" runat="server" ID="txtClaimEmailAddress" name="ClaimEmailAddress" type="text" class="form-control"></asp:TextBox>
+                                <asp:RegularExpressionValidator Display="None" runat="server" ID="RegularExpressionValidator3" ValidationGroup="CompanySetup" ControlToValidate="txtClaimEmailAddress" ErrorMessage="Please enter valid Claim Email Address" ForeColor="Red" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"></asp:RegularExpressionValidator>
+                                <asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtClaimEmailAddress" ID="RequiredFieldValidator2" ForeColor="red" runat="server" ErrorMessage="Please Enter Claim Email Address"></asp:RequiredFieldValidator>
+                            </div>
+
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
