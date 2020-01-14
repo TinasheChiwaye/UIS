@@ -837,7 +837,7 @@ namespace Funeral.DAL
         {
             AdditionalMemberInfoModel model1 = new AdditionalMemberInfoModel();
             string query = "SaveAddonProductDetails";
-            DbParameter[] ObjParam = new DbParameter[12];
+            DbParameter[] ObjParam = new DbParameter[14];
             ObjParam[0] = new DbParameter("@pkiProductID", DbParameter.DbType.UniqueIdentifier, 0, model.pkiProductID);
             ObjParam[1] = new DbParameter("@ProductName", DbParameter.DbType.NVarChar, 0, model.ProductName);
             ObjParam[2] = new DbParameter("@Parlourid", DbParameter.DbType.UniqueIdentifier, 0, model.Parlourid);
@@ -850,6 +850,8 @@ namespace Funeral.DAL
             ObjParam[9] = new DbParameter("@IsProductOngoing", DbParameter.DbType.Int, 0, model.IsProductOngoing);
             ObjParam[10] = new DbParameter("@IsProductLaybye", DbParameter.DbType.Int, 0, model.IsProductLaybye);
             ObjParam[11] = new DbParameter("@UserId", DbParameter.DbType.NVarChar, 0, model.UserID);
+            ObjParam[12] = new DbParameter("@UnderwriterPremium", DbParameter.DbType.Decimal, 0, model.UnderWriterPremium);
+            ObjParam[13] = new DbParameter("@UnderWriterCover", DbParameter.DbType.Decimal, 0, model.UnderWriterCover);
 
             return new Guid(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam).ToString());
 
