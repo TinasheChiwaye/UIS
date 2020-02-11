@@ -59,5 +59,11 @@ namespace Funeral.DAL
             ObjParam[0] = new DbParameter("@Parlourid", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetDocumentList_ByParlourId", ObjParam);
         }
+        public static DataTable GetAllUser(Guid parlourid)
+        {
+            DbParameter[] ObjParam = new DbParameter[1];
+            ObjParam[0] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, parlourid);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "getAllSecureUser", ObjParam);
+        }
     }
 }

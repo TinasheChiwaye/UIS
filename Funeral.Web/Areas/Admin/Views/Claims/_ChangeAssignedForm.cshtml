@@ -1,0 +1,39 @@
+﻿@model Funeral.Model.ClaimAssigned
+
+<div class="modal fade" id="dvChangeStatusModel" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
+                <h4 class="modal-title">Change Claim Assigned</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    @{
+                        using (Html.BeginForm("ChangeClaimAssigned", "Claims", FormMethod.Post))
+                        {
+                            @Html.HiddenFor(x => x.ClaimId)
+                            @Html.HiddenFor(x => x.CurrentAssigned)
+                            @Html.HiddenFor(x => x.ParlourId)
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <label>Select User * </label>
+                                        @Html.DropDownListFor(x => x.NewAssigned, new SelectList(ViewBag.AllUserList, "PkiUserID", "EmployeeFullname"), "Select User", new { @class = "form-control", @required = true })
+                                        @Html.ValidationMessageFor(x => x.NewAssigned, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <br />
+                                        <input type="submit" value="Submit" class="btn btn-sm btn-primary pull-right" />
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

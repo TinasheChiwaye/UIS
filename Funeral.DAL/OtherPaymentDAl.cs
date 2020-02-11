@@ -97,7 +97,7 @@ namespace Funeral.DAL
         {
             AdditionalMemberInfoModel model1 = new AdditionalMemberInfoModel();
             string query = "AddEditGroupPayment";
-            DbParameter[] ObjParam = new DbParameter[10];
+            DbParameter[] ObjParam = new DbParameter[11];
             ObjParam[0] = new DbParameter("@GroupInvoiceID", DbParameter.DbType.Int, 0, model.GroupInvoiceID);
             ObjParam[1] = new DbParameter("@PaymentMethod", DbParameter.DbType.NVarChar, 0, model.PaymentMethod);
             ObjParam[2] = new DbParameter("@SocietyId", DbParameter.DbType.Int, 0, model.SocietyId);
@@ -108,10 +108,11 @@ namespace Funeral.DAL
             ObjParam[7] = new DbParameter("@LastModified", DbParameter.DbType.DateTime, 0, model.LastModified);
             ObjParam[8] = new DbParameter("@AmountPaid", DbParameter.DbType.Money, 0, model.AmountPaid);
             ObjParam[9] = new DbParameter("@DatePaid", DbParameter.DbType.DateTime, 0, model.DatePaid);
+            ObjParam[10] = new DbParameter("@ReferenceNumber", DbParameter.DbType.NVarChar, 0, model.ReferenceNumber);
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
 
         }
-        public static DataTable GetAllGroupPaymentList(Guid ParlourId,int GroupId)
+        public static DataTable GetAllGroupPaymentList(Guid ParlourId, int GroupId)
         {
             DbParameter[] ObjParam = new DbParameter[2];
             ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);

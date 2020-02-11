@@ -317,6 +317,22 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 System.Web.HttpContext.Current.Session["SecurUserGroupModel"] = value;
             }
         }
+        public List<KeyValue> ClaimStatusTypes
+        {
+            get
+            {
+                List<KeyValue> keyValues = new List<KeyValue>();
+                keyValues.Add(new KeyValue { Key = "Unindexed", Value = "All" });
+                keyValues.Add(new KeyValue { Key = "QualityChecking", Value = "1,2" });
+                keyValues.Add(new KeyValue { Key = "UnClaimed", Value = "3" });
+                keyValues.Add(new KeyValue { Key = "ReqsPending", Value = "4,9,10,11" });
+                keyValues.Add(new KeyValue { Key = "Closed", Value = "5,6" });
+                keyValues.Add(new KeyValue { Key = "TLReview", Value = "7,8" });
+                keyValues.Add(new KeyValue { Key = "Finance", Value = "12" });
+                keyValues.Add(new KeyValue { Key = "ManagerReview", Value = "13,14" });
+                return keyValues;
+            }
+        }
         public bool IsAdministrator
         {
             get

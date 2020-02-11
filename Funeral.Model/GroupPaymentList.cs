@@ -8,6 +8,7 @@ namespace Funeral.Model
 {
     public class GroupPaymentList
     {
+        public int GroupId { get; set; }
         public string GroupName { get; set; }
         public int IDNumbersIssues { get; set; }
         public int MissingIDNumbers { get; set; }

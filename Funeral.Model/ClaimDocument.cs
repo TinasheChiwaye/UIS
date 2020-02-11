@@ -14,5 +14,7 @@ namespace Funeral.Model
         public string Status { get; set; }
         public string ApprovedBy { get; set; }
         public DateTime ApprovedDate { get; set; }
+
+        public Guid ExternalToken { get; set; }
     }
 }

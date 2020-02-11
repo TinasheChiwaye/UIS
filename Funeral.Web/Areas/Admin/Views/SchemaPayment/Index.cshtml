@@ -1,0 +1,39 @@
+﻿@model Funeral.Model.MembersPaymentViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Scripts.Render("~/bundles/jquery")
+
+<script src="~/Scripts/app/searchdatatable.js"></script>
+<div class="row" id="MembersPaymentList"></div>
+<script>
+    var PkiMemberIDId = '@ViewBag.MemberID';
+     var hasRight = '@ViewBag.HasAccess';
+    jQuery(function ($) {
+        jQuery(document).ready(function () {
+            $.noConflict();
+            LoadSocietyList();
+                DOMIDs.List = "MembersPaymentList";
+        });
+    })
+
+    function LoadSocietyList() {
+
+        jQuery.ajax({
+            url: '@Url.Action("SchemaList", "SchemaPayment", new {},Request.Url.Scheme)',
+            type: "Get",
+            contentType: "application/html; charset=utf-8",
+            dataType: 'html'
+        })
+			.success(function (result) {
+            jQuery("#" + DOMIDs.List).html(result);
+        })
+        .error(function (xhr, status) {
+            alert(status);
+        });
+    }
+</script>
+
+
+
+

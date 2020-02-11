@@ -155,7 +155,7 @@
                                                         <label class="">Report Export Type:</label>
                                                         <asp:DropDownList ID="rptExportType" runat="server" class="form-control">
                                                             <asp:ListItem>PDF</asp:ListItem>
-                                                            <asp:ListItem>Excel</asp:ListItem>
+                                                            <asp:ListItem Selected="True">Excel</asp:ListItem>
                                                             <asp:ListItem>Word</asp:ListItem>
                                                         </asp:DropDownList>
                                                     </div>

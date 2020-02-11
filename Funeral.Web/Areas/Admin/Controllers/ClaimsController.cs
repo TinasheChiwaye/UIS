@@ -14,27 +14,14 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using static Funeral.Model.FuneralEnum;
-
 namespace Funeral.Web.Areas.Admin.Controllers
 {
     public class ClaimsController : BaseAdminController
     {
-
         // GET: Admin/Claims
+        #region Claim Main View
         public ActionResult Index(string Status)
         {
-            var statusList = Status == null ? ClaimsBAL.GetClaimsStatus() : ClaimsBAL.GetClaimsStatus().Where(x => x.Status == Status).ToList();
-            ViewBag.Statuses = statusList;
-            LoadEntriesCount();
-            BindCompanyList();
-            var bankList = CommonBAL.GetBankList();
-            ViewBag.Banks = bankList;
-            ViewBag.Provinces = CommonBAL.GetProvinces();
-            var AccountList = CommonBAL.GetAccountTypeList();
-            ViewBag.Accounts = AccountList;
-
-
-            //Claim search Functionality
             ClaimSearch search = new ClaimSearch();
             search.CompanyId = new Guid(CurrentParlourId.ToString());
             search.PageNum = 1;
@@ -47,6 +34,33 @@ namespace Funeral.Web.Areas.Admin.Controllers
             search.DateFrom = Convert.ToDateTime("01/01/1753");
             search.DateTo = DateTime.Now;
 
+            List<StatusModel> statusList = new List<StatusModel>();
+            var StatusId = Request.Params["StatusId"];
+            if (StatusId == null)
+            {
+                statusList = Status == null ? ClaimsBAL.GetClaimsStatus() : ClaimsBAL.GetClaimsStatus().Where(x => x.Status == Status).ToList();
+                search.SearchType = "Normal";
+            }
+            else
+            {
+                search.SearchType = StatusId;
+                if (!ClaimStatusTypes.Where(x => x.Key.Equals(StatusId)).FirstOrDefault().Value.ToString().Equals("All"))
+                {
+                    var GetStatusId = ClaimStatusTypes.Where(x => x.Key.Equals(StatusId)).FirstOrDefault().Value.ToString().Split(',').ToList();
+                    HashSet<int> StatusIdCollection = new HashSet<int>(GetStatusId.Select(s => Convert.ToInt32(s)));
+                    statusList = ClaimsBAL.GetClaimsStatus().Where(m => StatusIdCollection.Contains(m.ID)).ToList();
+                }
+                else
+                    statusList = ClaimsBAL.GetClaimsStatus();
+            }
+            ViewBag.Statuses = statusList;
+            LoadEntriesCount();
+            BindCompanyList();
+            var bankList = CommonBAL.GetBankList();
+            ViewBag.Banks = bankList;
+            ViewBag.Provinces = CommonBAL.GetProvinces();
+            var AccountList = CommonBAL.GetAccountTypeList();
+            ViewBag.Accounts = AccountList;
             var searchResult = new Funeral.Model.SearchResult<Model.Search.ClaimSearch, ClaimsModel>(search, new List<ClaimsModel>(),
                 o => o.ClaimNotes.Contains(search.SarchText)
                 || o.MemberNumber.Contains(search.SarchText)
@@ -63,6 +77,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 || o.ClaimantContactNumber.Contains(search.SarchText));
             return View(search);
         }
+        #endregion
         #region LoadEntriesCount
         public void LoadEntriesCount()
         {
@@ -132,23 +147,40 @@ namespace Funeral.Web.Areas.Admin.Controllers
                || o.ClaimantContactNumber.Contains(search.SarchText)) && (o.CreatedDate >= Datefrom && o.CreatedDate <= dateAndTime));
             try
             {
-                var members = ClaimsBAL.SelectAllClaims(search.CompanyId).Where(x => x.Status.Contains(search.StatusId == "0" ? "" : search.StatusId)).ToList();
+                List<ClaimsModel> members = new List<ClaimsModel>();
+                members = ClaimsBAL.SelectAllClaims(search.CompanyId).Where(x => x.Status.Contains(search.StatusId == "0" ? "" : search.StatusId)).ToList();
                 members = IsAdministrator == true || IsSuperUser == true ? members : members = members.Where(m => (expectedStatus.Contains(m.Status))).ToList();
-                var searchDatatable = new Funeral.Model.SearchResult<Model.Search.ClaimSearch, ClaimsModel>(search, members, o => (o.ClaimNotes.Contains(search.SarchText.ToLower())
-                  || o.ClaimNotes.ToLower().Contains(search.SarchText.ToLower())
-                  || o.CourseOfDearth.ToLower().Contains(search.SarchText.ToLower())
-                  || o.ClaimantTitle.ToLower().Contains(search.SarchText.ToLower())
-                  || o.ClaimantFullname.ToLower().Contains(search.SarchText.ToLower())
-                  || o.ClaimantSurname.ToLower().Contains(search.SarchText.ToLower())
-                  || o.ClaimantIDNumber.ToLower().Contains(search.SarchText.ToLower())
-                  || o.ClaimantAddressLine1.ToLower().Contains(search.SarchText.ToLower())
-                  || o.ClaimantAddressLine2.ToLower().Contains(search.SarchText.ToLower())
-                  || o.ClaimantAddressLine3.ToLower().Contains(search.SarchText.ToLower())
-                  || o.ClaimantAddressLine4.ToLower().Contains(search.SarchText.ToLower())
-                  || o.ClaimantCode.ToLower().Contains(search.SarchText.ToLower())
-                  || o.ClaimantContactNumber.ToLower().Contains(search.SarchText.ToLower())) && (o.CreatedDate >= Datefrom && o.CreatedDate <= dateAndTime));
 
+                if (search.SearchType != null && search.SearchType != "Normal")
+                {
+                    if (!ClaimStatusTypes.Where(x => x.Key.Equals(search.SearchType)).FirstOrDefault().Value.ToString().Equals("All"))
+                    {
+                        var GetStatusId = ClaimStatusTypes.Where(x => x.Key.Equals(search.SearchType)).FirstOrDefault().Value.ToString().Split(',').ToList();
+                        HashSet<int> StatusIdCollection = new HashSet<int>(GetStatusId.Select(s => Convert.ToInt32(s)));
+                        var statusList = ClaimsBAL.GetClaimsStatus().Where(m => StatusIdCollection.Contains(m.ID)).Select(x => x.Status).ToList();
+                        members = members.Where(m => statusList.Contains(m.Status)).ToList();
+                    }
+                    else
+                    {
+                        members = members.Where(m => m.AssignedTo == 0).ToList();
+                    }
+                }
+
+                var searchDatatable = new Funeral.Model.SearchResult<Model.Search.ClaimSearch, ClaimsModel>(search, members, o => (o.ClaimNotes.Contains(search.SarchText.ToLower())
+                    || o.ClaimNotes.ToLower().Contains(search.SarchText.ToLower())
+                    || o.CourseOfDearth.ToLower().Contains(search.SarchText.ToLower())
+                    || o.ClaimantTitle.ToLower().Contains(search.SarchText.ToLower())
+                    || o.ClaimantFullname.ToLower().Contains(search.SarchText.ToLower())
+                    || o.ClaimantSurname.ToLower().Contains(search.SarchText.ToLower())
+                    || o.ClaimantIDNumber.ToLower().Contains(search.SarchText.ToLower())
+                    || o.ClaimantAddressLine1.ToLower().Contains(search.SarchText.ToLower())
+                    || o.ClaimantAddressLine2.ToLower().Contains(search.SarchText.ToLower())
+                    || o.ClaimantAddressLine3.ToLower().Contains(search.SarchText.ToLower())
+                    || o.ClaimantAddressLine4.ToLower().Contains(search.SarchText.ToLower())
+                    || o.ClaimantCode.ToLower().Contains(search.SarchText.ToLower())
+                    || o.ClaimantContactNumber.ToLower().Contains(search.SarchText.ToLower())) && (o.CreatedDate >= Datefrom && o.CreatedDate <= dateAndTime));
                 return Json(searchDatatable, JsonRequestBehavior.AllowGet);
+
             }
             catch (Exception ex)
             {
@@ -184,12 +216,13 @@ namespace Funeral.Web.Areas.Admin.Controllers
         }
         #endregion
         #region GetMemberOrDependent
-        [HttpPost]
-        public ActionResult GetMemberOrDependent(bool chkMember, string keyword, string CompanyId)
+        [HttpGet]
+        public ActionResult GetMemberOrDependentPartial(bool chkMember, string keyword, string CompanyId)
         {
             List<MembersModel> Mmodel = null;
             List<FamilyDependencyModel> Dmodel = null;
-            Guid Company = new Guid(CompanyId);
+            Guid Company = new Guid();
+            Company = CompanyId == null ? ParlourId : new Guid(CompanyId);
             try
             {
                 if (keyword != "" || keyword != string.Empty || Company != Guid.Empty)
@@ -201,40 +234,20 @@ namespace Funeral.Web.Areas.Admin.Controllers
                         {
                             ViewBag.MemberId = search.pkiMemberID;
                         }
-
                     }
                     else
                     {
                         Dmodel = ClaimsBAL.SelectMembersAndDependencies2(Company, false, keyword);
                     }
+
                 }
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                return Json("Error occurred. Error details: " + ex.Message);
+
             }
-            return Json(new { success = true, MemberData = Mmodel, DependentData = Dmodel }, JsonRequestBehavior.AllowGet);
-        }
-        #endregion
-        #region BindDependentUpdate
-        [HttpPost]
-        public JsonResult BindDependentUpdate(int dependentId, string CompanyId)
-        {
-            Guid Company = new Guid(CompanyId);
-            FamilyDependencyModel objmodel = MembersBAL.SelectFamilyDependencyById(dependentId);
-            MembersModel obj = ClaimsBAL.selectMemberByPkidAndParlor(Company, objmodel.MemberId);
-            MemberId = objmodel.MemberId;
-            return Json(new { FamilyDependencyModel = objmodel, MembersModel = obj }, JsonRequestBehavior.AllowGet);
-        }
-        #endregion
-        #region BindMainMemberUpdate
-        [HttpPost]
-        public JsonResult BindMainMemberUpdate(int memberId, string CompanyId)
-        {
-            Guid Company = new Guid(CompanyId);
-            MembersModel objmodel = ClaimsBAL.selectMemberByPkidAndParlor(Company, memberId);
-            PlanModel objpan = ClaimsBAL.GetPlanDetailsByPlanId(objmodel.fkiPlanID);
-            return Json(new { PlanModel = objpan, MembersModel = objmodel }, JsonRequestBehavior.AllowGet);
+            Tuple<List<MembersModel>, List<FamilyDependencyModel>> memberAndDependent = new Tuple<List<MembersModel>, List<FamilyDependencyModel>>(Mmodel, Dmodel);
+            return PartialView("_MemberDependentSearchResult", memberAndDependent);
         }
         #endregion
         #region SendClaimMail
@@ -298,7 +311,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             var AllStatus = ClaimsBAL.GetClaimsStatus();
             var RightsWiseStatus = ClaimsBAL.GetClaimsStatus(UserID);
             var SequencePriority = (AllStatus.Where(m => m.Status == data.Status).Select(mm => mm.SequencePriority).FirstOrDefault() + 1);
-            SequencePriority = SequencePriority > 6 ? 6 : SequencePriority;
+            SequencePriority = SequencePriority > AllStatus.Max(x => x.SequencePriority) ? AllStatus.Max(x => x.SequencePriority) : SequencePriority;
             var NewStatus = IsAdministrator == true || IsSuperUser == true ? RightsWiseStatus.Where(x => x.SequencePriority == SequencePriority).Select(x => x.Status).FirstOrDefault() : AllStatus.Where(x => x.SequencePriority == SequencePriority).Select(x => x.Status).FirstOrDefault();
 
             int BackSequencePriority = (SequencePriority - 1) < 0 ? 1 : (SequencePriority - 1);
@@ -360,7 +373,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             claimStatusHistoryModal.claimsModel = ClaimsBAL.SelectClaimsBypkid(pkiClaimID, parlourId);
             claimStatusHistoryModal.funeralModel = FuneralBAL.GetFuneralByClaimId(pkiClaimID);
             claimStatusHistoryModal.memberInvoices = MembersBAL.GetInvoicesByMemberID(parlourId, MemberId);
-            claimStatusHistoryModal.claimDocuments = ClaimsBAL.GetClaimDocumentsByClaimId(pkiClaimID, parlourId);
+            claimStatusHistoryModal.claimDocuments = ClaimsBAL.GetClaimDocumentsByClaimId(pkiClaimID, parlourId, claimStatusHistoryModal.funeralModel.MemberType);
             return View(claimStatusHistoryModal);
         }
         #endregion
@@ -389,7 +402,10 @@ namespace Funeral.Web.Areas.Admin.Controllers
             {
                 claimandFuneral.claimsModel = ClaimsBAL.SelectClaimsBypkid(pkiClaimID, CurrentParlourId);
                 claimandFuneral.funeralModel = FuneralBAL.GetFuneralByClaimId(pkiClaimID);
-                claimandFuneral.ClaimDocumentList = ClaimsBAL.GetClaimDocumentsByClaimId(pkiClaimID, CurrentParlourId);
+                if (claimandFuneral.funeralModel != null)
+                    claimandFuneral.ClaimDocumentList = ClaimsBAL.GetClaimDocumentsByClaimId(pkiClaimID, CurrentParlourId, claimandFuneral.funeralModel.MemberType);
+                else
+                    claimandFuneral.ClaimDocumentList = ClaimsBAL.GetClaimDocumentsByClaimId(pkiClaimID, CurrentParlourId, "Main Member");
             }
             ViewBag.Statuses = ClaimsBAL.GetClaimsStatus();
             ViewBag.Banks = CommonBAL.GetBankList();
@@ -414,13 +430,15 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
                 if (claimandFuneral.claimsModel.ClaimDate == null || claimandFuneral.claimsModel.ClaimDate == DateTime.MinValue)
                     claimandFuneral.claimsModel.ClaimDate = DateTime.MaxValue;
+
+                claimandFuneral.claimsModel.CreatedBy = UserID;
                 int ClaimID = ClaimsBAL.SaveClaims(claimandFuneral.claimsModel);
                 Session["pkClaimId"] = ClaimID.ToString();
 
                 //Decease
-                claimandFuneral.funeralModel.MemeberNumber = "";
                 claimandFuneral.funeralModel.LastModified = System.DateTime.Now;
                 claimandFuneral.funeralModel.ModifiedUser = UserName;
+                claimandFuneral.funeralModel.MemeberNumber = claimandFuneral.claimsModel.MemberNumber;
                 claimandFuneral.funeralModel.FkiClaimID = ClaimID;
                 int desId = FuneralBAL.SaveFuneral(claimandFuneral.funeralModel);
                 errorMsg += "Record Inserted Successfully";
@@ -456,7 +474,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
         #endregion
         #region Upload Claim Document
         [HttpGet]
-        public ActionResult ClaimDocumentPartial(int ClaimId, Guid parlourId)
+        public ActionResult ClaimDocumentPartial(int ClaimId, Guid parlourId, int pkiClaimPictureID)
         {
             ClaimsModel data = ClaimsBAL.SelectClaimsBypkid(ClaimId, parlourId);
             ClaimDocument claimDocument = new ClaimDocument();
@@ -464,8 +482,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             claimDocument.fkiMemberId = data.fkiMemberID;
             claimDocument.PkiClaimId = data.pkiClaimID;
             claimDocument.Status = ClaimDocumentStatusEnum.Pending.ToString();
-            claimDocument.DocumentId = 0;
-            claimDocument.DocumentList = CommonBAL.GetDocumentList(parlourId);
+            claimDocument.DocumentId = pkiClaimPictureID;
             return PartialView("_UploadClaimDocumentForm", claimDocument);
         }
         [HttpPost]
@@ -583,6 +600,87 @@ namespace Funeral.Web.Areas.Admin.Controllers
         {
             var data = ClaimsBAL.GetDocumentFollowUpHistory(pkiClaimPictureID, ParlourId);
             return PartialView("_DocumentFollowUpHistory", data);
+        }
+        #endregion
+        #region ClaimAssignedToPartial
+        [HttpGet]
+        public ActionResult ClaimAssignedToPartial(int ClaimId, Guid ParlourId)
+        {
+            ClaimsModel data = ClaimsBAL.SelectClaimsBypkid(ClaimId, ParlourId);
+            ClaimAssigned claimAssigned = new ClaimAssigned();
+            claimAssigned.ClaimId = data.pkiClaimID;
+            claimAssigned.CurrentAssigned = data.AssignedTo;
+            claimAssigned.NewAssigned = data.AssignedTo;
+            claimAssigned.ParlourId = ParlourId;
+            ViewBag.AllUserList = CommonBAL.GetAllUser(ParlourId);
+            return PartialView("_ChangeAssignedForm", claimAssigned);
+        }
+        [HttpPost]
+        public ActionResult ChangeClaimAssigned(ClaimAssigned claimAssigned)
+        {
+            ClaimsBAL.ChangeClaimAssigned(claimAssigned);
+            TempData["message"] = ShowMessage(MessageType.Success, "Claim Assigned successfully");
+            string UserName = CommonBAL.GetAllUser(claimAssigned.ParlourId).FirstOrDefault(x => x.PkiUserID == claimAssigned.NewAssigned).EmployeeFullname;
+            String message = String.Format(StaticMessages.ClaimAssigned, claimAssigned.ClaimId, UserName);
+            ClaimsBAL.SaveClaimHistory(IPAddress, claimAssigned.ClaimId, message, UserName, claimAssigned.ParlourId);
+            return Redirect(Request.UrlReferrer.ToString());
+        }
+        #endregion
+        #region External Link Send
+        public ActionResult SendExternalLink(int pkiClaimID, Guid parlourId)
+        {
+            var applicationSettings = ToolsSetingBAL.GetApplictionByParlourID(parlourId);
+            ClaimsModel data = ClaimsBAL.SelectClaimsBypkid(pkiClaimID, ParlourId);
+            if (applicationSettings != null && data.Email != null)
+            {
+                Guid NewTokenId = Guid.NewGuid();
+                ExternalUserLink externalUserLink = new ExternalUserLink();
+                externalUserLink.ClaimId = data.pkiClaimID;
+                externalUserLink.Email = data.Email;
+                externalUserLink.ExternalToken = NewTokenId;
+                externalUserLink.parlourId = data.parlourid;
+                externalUserLink.SentBy = UserName;
+                ClaimsBAL.SaveExternalLink(externalUserLink);
+                #region Send Email
+                var ExternalLink = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery.ToString(), "/") + "ExternalUser/Index?ExternalToken=" + NewTokenId;
+                var fromMail = ConfigurationManager.AppSettings["ReportEmailSenderId"].ToString().Trim();
+                string msg = "";
+                msg += "Please be aware of below your one time access claims external link generate<br/><br/>";
+                msg += "<b>here External link  :</b>";
+                msg += "<br/><a href=" + ExternalLink + " tital='External User link' class='btn btn-primary'>Click here external link</a><br /><br/>";
+                msg += "<br /><br />Regards,<br />ARL Claims Team <br/> claims @africanrainbowlife.co.za <br /> Service call centre: 010 880 5055";
+                string subject = "ARL Claim No " + data.pkiClaimID + "  - Claims External Link";
+                #endregion
+                ClaimsBAL.SendMail_StatusChanged(data.Email, fromMail, applicationSettings.ApplicationName, subject, msg);
+                ClaimsBAL.SaveClaimHistory(IPAddress, pkiClaimID, String.Format(StaticMessages.ClaimExternalLink, pkiClaimID, data.Email), UserName, parlourId);
+                TempData["message"] = ShowMessage(MessageType.Success, "External link has been generated and sent");
+            }
+            else
+            {
+                TempData["message"] = ShowMessage(MessageType.Danger, "External link has not been generated beacause claim email Could not be find");
+            }
+            return Redirect(Request.UrlReferrer.ToString());
+        }
+        #endregion
+        #region BindDependentUpdate
+        [HttpPost]
+        public JsonResult BindDependentUpdate(int dependentId, string CompanyId)
+        {
+            Guid Company = new Guid(CompanyId);
+            FamilyDependencyModel objmodel = MembersBAL.SelectFamilyDependencyById(dependentId);
+            MembersModel obj = ClaimsBAL.selectMemberByPkidAndParlor(Company, objmodel.MemberId);
+            MemberId = objmodel.MemberId;
+            return Json(new { FamilyDependencyModel = objmodel, MembersModel = obj }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+        #region BindMainMemberUpdate
+        [HttpPost]
+        public JsonResult BindMainMemberUpdate(int memberId, string CompanyId)
+        {
+            Guid Company = new Guid(CompanyId);
+            MembersModel objmodel = ClaimsBAL.selectMemberByPkidAndParlor(Company, memberId);
+            PlanModel objpan = ClaimsBAL.GetPlanDetailsByPlanId(objmodel.fkiPlanID);
+            return Json(new { PlanModel = objpan, MembersModel = objmodel }, JsonRequestBehavior.AllowGet);
         }
         #endregion
     }

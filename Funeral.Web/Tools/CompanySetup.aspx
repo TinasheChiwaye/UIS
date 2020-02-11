@@ -9,9 +9,10 @@
         em {
             color: red;
         }
+
         .formfield * {
-    vertical-align: middle;
-}
+            vertical-align: middle;
+        }
     </style>
 
 </asp:Content>
@@ -33,15 +34,15 @@
         <div class="col-lg-12">
             <div class="ibox ">
                 <div class="ibox-title">
-                    <h5>Company Setup</h5>
+                    <h5>Scheme Setup</h5>
                 </div>
                 <div class="ibox-content">
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label>Company Name <em>*</em> </label>
+                                <label>Scheme Name <em>*</em> </label>
                                 <asp:TextBox MaxLength="100" runat="server" ID="txtCompanyName" name="CompanyName" type="text" class="form-control"></asp:TextBox>
-                                <asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtCompanyName" ID="RequiredFieldValidator1" ForeColor="red" runat="server" ErrorMessage="Please enter Company Name"></asp:RequiredFieldValidator>
+                                <asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtCompanyName" ID="RequiredFieldValidator1" ForeColor="red" runat="server" ErrorMessage="Please enter Scheme Name"></asp:RequiredFieldValidator>
                                 <%--<asp:RegularExpressionValidator Display="None" ID="RegExp1" ValidationGroup="CompanySetup" runat="server" ErrorMessage="Company Name Enter Only characters" ControlToValidate="txtCompanyName" ValidationExpression="[a-zA-Z ]*$" />--%>
                             </div>
                             <div class="form-group">
@@ -56,14 +57,14 @@
                                 <%--<asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtFsbNumber" ID="RequiredFieldValidator3" ForeColor="red" runat="server" ErrorMessage="Please enter Fsb Number"></asp:RequiredFieldValidator>--%>
                             </div>
                             <div class="form-group">
-                                <label>Company Slogan<%-- <em>*</em>--%> </label>
+                                <label>Scheme Slogan<%-- <em>*</em>--%> </label>
                                 <asp:TextBox MaxLength="100" runat="server" ID="txtCompanySlogan" name="CompanySlogan" type="text" class="form-control"></asp:TextBox>
                                 <%--<asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtCompanySlogan" ID="RequiredFieldValidator8" ForeColor="red" runat="server" ErrorMessage="Please enter Company Slogan"></asp:RequiredFieldValidator>--%>
                             </div>
                             <div class="row">
                                 <div class="col-sm-11">
                                     <div class="form-group">
-                                        <label>Company Rules </label>
+                                        <label>Scheme Rules </label>
                                         <asp:TextBox runat="server" ID="txtcompanyRules" name="CompanyRules" type="text" class="form-control" TextMode="MultiLine" Rows="4"></asp:TextBox>
                                         <%--<asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtcompanyRules" ID="RequiredFieldValidator20" ForeColor="red" runat="server" ErrorMessage="Please enter Company Rules"></asp:RequiredFieldValidator>--%>
                                     </div>
@@ -72,23 +73,23 @@
                             <div class="row">
                                 <div class="col-sm-9">
                                     <div class="form-group">
-                                        <label>Select Company Logo</label>
+                                        <label>Select Scheme Logo</label>
                                         <asp:FileUpload ID="fucompanyLogo" runat="server" class="form-control" />
                                         <%--<asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtcompanyRules" ID="RequiredFieldValidator20" ForeColor="red" runat="server" ErrorMessage="Please enter Company Rules"></asp:RequiredFieldValidator>--%>
                                     </div>
                                     <div class="form-group">
                                         <label>Terms And Condition</label>
                                         <asp:TextBox runat="server" ID="txtTnC" name="CompanyRules" type="text" class="form-control" TextMode="MultiLine" Rows="4"></asp:TextBox>
-                                       
+
                                     </div>
-                                   <div class="form-group">
+                                    <div class="form-group">
                                         <label>Allow Auto Generate Policy Number </label>
-                                       <asp:CheckBox ID="cbAutoGeneratePolicy" runat="server" />
-                                     </div>
+                                        <asp:CheckBox ID="cbAutoGeneratePolicy" runat="server" />
+                                    </div>
                                     <div class="form-group">
                                         <label>VAT Number: </label>
-                                     <asp:TextBox MaxLength="25" runat="server" ID="txtVatNo" name="txtVatNo" type="text" class="form-control"></asp:TextBox>
-                                        </div>
+                                        <asp:TextBox MaxLength="25" runat="server" ID="txtVatNo" name="txtVatNo" type="text" class="form-control"></asp:TextBox>
+                                    </div>
                                 </div>
                                 <asp:Button runat="server" ID="btnUpload" CssClass="btn btn-sm btn-primary pull-right" OnClick="btnUpload_Click" Text="Upload" Enabled="false" />
                             </div>
@@ -116,12 +117,12 @@
                             <div class="form-group">
                                 <label>Fax Number <%--<em>*</em>--%>  </label>
                                 <asp:TextBox MaxLength="15" runat="server" ID="txtFaxNumber" name="FaxNumber" type="text" class="form-control"></asp:TextBox>
-                               <%-- <asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtFaxNumber" ID="RequiredFieldValidator7" ForeColor="red" runat="server" ErrorMessage="Please enter Fax Number"></asp:RequiredFieldValidator>
+                                <%-- <asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtFaxNumber" ID="RequiredFieldValidator7" ForeColor="red" runat="server" ErrorMessage="Please enter Fax Number"></asp:RequiredFieldValidator>
                                 <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator7" ValidationGroup="CompanySetup" runat="server" ControlToValidate="txtFaxNumber" ErrorMessage="Fax Number Enter Only Number" ValidationExpression="^([0-9\(\)\/\+ \-]*)$" />--%>
                             </div>
                             <p class="formfield">
                                 <label for="textarea">Logo</label>
-                                <asp:Image runat="server" ID="ImagePreview" Height="164px" Width="375px" />
+                                <asp:Image runat="server" ID="ImagePreview" Height="150px" Width="100%" />
                             </p>
                             <div class="form-group">
                                 <label>Terms And Condition For Funeral</label>
@@ -162,6 +163,12 @@
                                 <asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtownLastName" ID="RequiredFieldValidator6" ForeColor="red" runat="server" ErrorMessage="Please enter Owner Last Name"></asp:RequiredFieldValidator>
                                 <%--<asp:RegularExpressionValidator Display="None" ID="RegExp1" ValidationGroup="CompanySetup" runat="server" ErrorMessage="Company Name Enter Only characters" ControlToValidate="txtCompanyName" ValidationExpression="[a-zA-Z ]*$" />--%>
                             </div>
+                            <div class="form-group">
+                                <label>Email Address  <em>*</em> </label>
+                                <asp:TextBox MaxLength="30" runat="server" ID="txtOwnersEmail" name="OwnersEmail" type="text" class="form-control"></asp:TextBox>
+                                <asp:RegularExpressionValidator Display="None" runat="server" ID="RegularExpressionValidator10" ValidationGroup="CompanySetup" ControlToValidate="txtOwnersEmail" ErrorMessage="Please enter valid Owners email address" ForeColor="Red" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"></asp:RegularExpressionValidator>
+                                <asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtOwnersEmail" ID="RequiredFieldValidator100" ForeColor="red" runat="server" ErrorMessage="Please enter Owners Email Address"></asp:RequiredFieldValidator>
+                            </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
@@ -177,10 +184,10 @@
                                 <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator5" ValidationGroup="CompanySetup" runat="server" ControlToValidate="txtOwnersCellphone" ErrorMessage="Owners Cellphone Number Enter Only Number" ValidationExpression="^([0-9\(\)\/\+ \-]*)$" />
                             </div>
                             <div class="form-group">
-                                <label>Email Address  <em>*</em> </label>
-                                <asp:TextBox MaxLength="30" runat="server" ID="txtOwnersEmail" name="OwnersEmail" type="text" class="form-control"></asp:TextBox>
-                                <asp:RegularExpressionValidator Display="None" runat="server" ID="RegularExpressionValidator1" ValidationGroup="CompanySetup" ControlToValidate="txtOwnersEmail" ErrorMessage="Please enter valid Owners email address" ForeColor="Red" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"></asp:RegularExpressionValidator>
-                                <asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtOwnersEmail" ID="RequiredFieldValidator9" ForeColor="red" runat="server" ErrorMessage="Please enter Owners Email Address"></asp:RequiredFieldValidator>
+                                <label>Claim Notification Email  <em>*</em> </label>
+                                <asp:TextBox MaxLength="30" runat="server" ID="txtEmailForClaimNotification" name="OwnersNotificationEmail" type="email" class="form-control"></asp:TextBox>
+                                <asp:RegularExpressionValidator Display="None" runat="server" ID="RegularExpressionValidator1" ValidationGroup="CompanySetup" ControlToValidate="txtEmailForClaimNotification" ErrorMessage="Please enter valid Notification email address" ForeColor="Red" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"></asp:RegularExpressionValidator>
+                                <asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtEmailForClaimNotification" ID="RequiredFieldValidator9" ForeColor="red" runat="server" ErrorMessage="Please enter Notification Email Address"></asp:RequiredFieldValidator>
                             </div>
                         </div>
                     </div>
@@ -318,7 +325,7 @@
                         <div class="col-lg-12">
                             <div class="ibox ">
                                 <div class="ibox-title">
-                                    <h5>Company List</h5>
+                                    <h5>Scheme List</h5>
                                 </div>
                                 <div class="ibox-content">
                                     <div class="row">
@@ -342,7 +349,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Search Company :</label>
+                                                <label>Search Scheme :</label>
                                                 <asp:Panel ID="pnlSearch" CssClass="input-group" DefaultButton="btnSearch" runat="server">
                                                     <asp:TextBox runat="server" ID="txtKeyword" MaxLength="50" CssClass="form-control" placeholder="Search by keyword"></asp:TextBox>
                                                     <span class="input-group-btn">&nbsp;<asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="btn btn-w-m btn-primary" OnClick="btnSearch_Click" />
@@ -365,7 +372,7 @@
                                                     OnRowCommand="gvCompany_RowCommand">
                                                     <PagerStyle CssClass="pagination-ys" />
                                                     <Columns>
-                                                        <asp:BoundField DataField="ApplicationName" HeaderText="Company Name" ReadOnly="True" SortExpression="ApplicationName" />
+                                                        <asp:BoundField DataField="ApplicationName" HeaderText="Scheme Name" ReadOnly="True" SortExpression="ApplicationName" />
                                                         <asp:BoundField DataField="OwnerFirstName" HeaderText="Owner First Name" ReadOnly="True" SortExpression="OwnerFirstName" />
                                                         <asp:BoundField DataField="RegistrationNumber" HeaderText="Registration Number" ReadOnly="True" SortExpression="RegistrationNumber" />
                                                         <asp:BoundField DataField="FSBNumber" HeaderText="Fsb Number" ReadOnly="True" SortExpression="FSBNumber" />

@@ -40,7 +40,7 @@ namespace Funeral.Model
             this.Cover = 0;
             this.BodyCollectedFrom = string.Empty;
             this.ClaimingFor = string.Empty;
-            this.CreatedDate=DateTime.Now;
+            this.CreatedDate = DateTime.Now;
             this.IsDeleted = false;
             this.DeletedBy = string.Empty;
             this.Status = string.Empty;
@@ -61,7 +61,9 @@ namespace Funeral.Model
         public string ClaimantFullname { get; set; }
         [Required(ErrorMessage = "The Claimant Surname is required")]
         public string ClaimantSurname { get; set; }
-        [Required(ErrorMessage = "The Claimant Id number is required")]
+
+
+        [Required(ErrorMessage = "A valid RSA ID Number is required.")]
         public string ClaimantIDNumber { get; set; }
         public DateTime ClaimantDateOfBirth { get; set; }
         public string ClaimantGender { get; set; }
@@ -92,5 +94,10 @@ namespace Funeral.Model
         public string Status { get; set; }
         public bool Payout { get; set; }
         public decimal PayoutValue { get; set; }
+
+        public int CreatedBy { get; set; }
+        public int AssignedTo { get; set; }
+        public string AssignedToName { get; set; }
+        public string Email { get; set; }
     }
 }

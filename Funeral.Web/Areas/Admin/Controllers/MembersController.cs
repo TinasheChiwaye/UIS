@@ -148,6 +148,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
         [PageRightsAttribute(CurrentPageId = 4)]
         public ActionResult ManageMembers(int pkiMemberID = 0)
         {
+            BindCompanyList();
             if (pkiMemberID == 0)
             {
                 if (!HasCreateRight)
@@ -716,7 +717,6 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
             Member.ModifiedUser = UserName;
             Member.Active = false;
-
             int retId = MembersBAL.SaveMembers(Member);
             Member.pkiMemberID = retId;
 

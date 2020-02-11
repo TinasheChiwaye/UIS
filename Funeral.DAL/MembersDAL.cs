@@ -74,7 +74,6 @@ namespace Funeral.DAL
                 ObjParam[48] = new DbParameter("@CustomId1", DbParameter.DbType.Int, 0, model.CustomId1);
                 ObjParam[49] = new DbParameter("@CustomId2", DbParameter.DbType.Int, 0, model.CustomId2);
                 ObjParam[50] = new DbParameter("@CustomId3", DbParameter.DbType.Int, 0, model.CustomId3);
-
                 return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
             }
             catch (Exception ex)
@@ -952,6 +951,14 @@ namespace Funeral.DAL
                 sqlCommand.ExecuteNonQuery();
             }
         }
+        public static void SaveMemberStaging(string MemberType, Guid ImportId)
+        {
+            string query = "SaveMemberStaging";
+            DbParameter[] ObjParam = new DbParameter[2];
+            ObjParam[0] = new DbParameter("@MemberType", DbParameter.DbType.NVarChar, 0, MemberType);
+            ObjParam[1] = new DbParameter("@ImportId", DbParameter.DbType.UniqueIdentifier, 0, ImportId);
+            DbConnection.ExecuteNonQuery(CommandType.StoredProcedure, query, ObjParam);
+        }
 
         public static int GetLastCopiedMemberForDependency()
         {
@@ -1007,6 +1014,6 @@ namespace Funeral.DAL
             ObjParam[0] = new DbParameter("@Parlourid", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetUnderWriterList", ObjParam);
         }
-       
+
     }
 }

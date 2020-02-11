@@ -9,7 +9,7 @@
     <div class="col-sm-12">
         <div class="ibox ">
             <div class="ibox-title">
-                <h5>Claim Status History</h5>
+                <h5>Claims Status History</h5>
             </div>
             <div class="ibox-content">
                 <div class="row">
@@ -37,11 +37,12 @@
                                         <table class="fixed_header fixed_header-bordered" cellspacing="0">
                                             <thead>
                                                 <tr>
-                                                    <th>Document</th>
+
                                                     <th>Document Type</th>
-                                                    <th>Created Date</th>
+                                                    <th>Document Name</th>
                                                     <th>Status</th>
                                                     <th>Comment</th>
+                                                    <th>Created Date</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -52,20 +53,51 @@
                                                         foreach (var item in Model.claimDocuments)
                                                         {
                                                             <tr>
-                                                                <td>@item.ImageName</td>
                                                                 <td>@item.DocumentName</td>
-                                                                <td>@item.CreateDate.ToString("dd MMM yyyy")</td>
+                                                                <td>@item.ImageName</td>
                                                                 <td>
-                                                                    <span class="label label-primary" style="cursor:pointer;" title="Click to Change Status" onclick="OpenDocumentStatusPopUp(@item.pkiClaimPictureID,'@Model.claimsModel.parlourid')">@item.Status</span>
+                                                                    @if (item.pkiClaimPictureID > 0)
+                                                                    {
+                                                                        <span class="label label-primary" style="cursor:pointer;" title="Click to Change Status" onclick="OpenDocumentStatusPopUp(@item.pkiClaimPictureID,'@Model.claimsModel.parlourid')">@item.Status</span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span>@item.Status</span>
+                                                                    }
                                                                 </td>
                                                                 <td>
-                                                                    <a style="cursor:pointer;font-size:smaller;white-space: pre-line" title="Click to Show History" onclick="openDocumentHistoryPopUp(@item.pkiClaimPictureID,'@Model.claimsModel.parlourid')">
-                                                                        @Html.Raw(item.Comment)
-                                                                    </a>
+                                                                    @if (item.pkiClaimPictureID > 0)
+                                                                    {
+                                                                        <a style="cursor:pointer;font-size:smaller;white-space: pre-line" title="Click to Show History" onclick="openDocumentHistoryPopUp(@item.pkiClaimPictureID,'@Model.claimsModel.parlourid')">
+                                                                            @Html.Raw(item.Comment)
+                                                                        </a>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span>@Html.Raw(item.Comment)</span>
+                                                                    }
                                                                 </td>
                                                                 <td>
-                                                                    <a title="Download this claim document" href="~/Handler/DocumentHandler.ashx?DocClaimID=@item.pkiClaimPictureID"><i class="glyphicon glyphicon-download"></i></a>
-                                                                    @*<a title="Delete this claim document" href="@Url.Action("DeleteClaimDocument", "Claims", new { pkiClaimPictureID = item.pkiClaimPictureID, PkiClaimID = Model.claimsModel.pkiClaimID })"><i class="glyphicon glyphicon-trash"></i></a>*@
+                                                                    @if (item.pkiClaimPictureID > 0)
+                                                                    {
+                                                                        @item.CreateDate.ToString("dd MMM yyyy hh:mm tt")
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span>-----</span>
+                                                                    }
+                                                                </td>
+                                                                <td>
+                                                                    @{
+                                                                        if (item.pkiClaimPictureID > 0)
+                                                                        {
+                                                                            <a title="Download this claim document" href="~/Handler/DocumentHandler.ashx?DocClaimID=@item.pkiClaimPictureID"><i class="glyphicon glyphicon-download"></i></a>
+                                                                        }
+                                                                        if (!item.IsUploaded)
+                                                                        {
+                                                                            <span class="label label-danger" accesskey="@Model.claimsModel.parlourid" style="cursor:pointer;" title="Click to Upload Document" onclick="OpenClaimDocumentPopUp(@Model.claimsModel.pkiClaimID,this,@item.DocumentId)">Add Document</span>
+                                                                        }
+                                                                    }
                                                                 </td>
                                                             </tr>
                                                         }
@@ -164,7 +196,7 @@
                                                             <td>@item.ChangeReason</td>
 
                                                             <td>@item.ChangedByName</td>
-                                                            <td>@item.CreatedDate.ToString("dd MMM yyyy")</td>
+                                                            <td>@item.CreatedDate.ToString("dd MMM yyyy hh:mm tt")</td>
                                                             <td>@item.Comment</td>
                                                         </tr>
                                                     }
@@ -181,7 +213,7 @@
         </div>
     </div>
 </div>
-<div id="LoadPartialView_ManageClaims"></div>
+@*<div id="LoadPartialView_ManageClaims"></div>*@
 <script type="text/javascript">
     function OpenClaimStatusPopUp(GetClaimId,control) {
         var ClaimStatusPartial = "@Url.Action("ClaimStatusPartial","Claims",new {ClaimId="GetClaimId",ParlourId="GetParlourId"})".replace("GetClaimId", GetClaimId).replace("GetParlourId", control.accessKey).replace("amp;", "");
@@ -216,6 +248,19 @@
         }).done(function (result) {
             $('#LoadPartialView_ManageClaims').empty().html(result);
             $("#dvChangeStatusModel").modal("show");
+            $('.modal-backdrop').removeClass("modal-backdrop");
+        });
+    }
+     function OpenClaimDocumentPopUp(GetClaimId, control,pkiClaimPictureID) {
+        var CurrentParlourId = control.accessKey;
+        var GenerateSendMailURL = "@Url.Action("ClaimDocumentPartial","Claims",new {ClaimId="GetClaimId",parlourId="GetParlourId",pkiClaimPictureID="GetpkiClaimPictureID"})".replace("GetClaimId", GetClaimId).replace("amp;", "").replace("GetParlourId", CurrentParlourId).replace("GetpkiClaimPictureID", pkiClaimPictureID).replace("amp;", "");
+        $.ajax({
+            url: GenerateSendMailURL,
+            type: 'GET',
+            cache: false,
+        }).done(function (result) {
+            $('#LoadPartialView_ManageClaims').empty().html(result);
+            $("#AddDocModal").modal("show");
             $('.modal-backdrop').removeClass("modal-backdrop");
         });
     }

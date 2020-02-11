@@ -375,7 +375,22 @@ namespace Funeral.DAL
             ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, parlourId);
             return DbConnection.GetScalarValue(CommandType.StoredProcedure, "GetCurrencyByParlourId", ObjParam).ToString();
         }
-
+        public static int RecreateBillingMemberPayments(RegenerateBillingModal ModelPayment)
+        {
+            try
+            {
+                DbParameter[] ObjParam = new DbParameter[3];
+                ObjParam[0] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, ModelPayment.parlourId);
+                ObjParam[1] = new DbParameter("@Date", DbParameter.DbType.DateTime, 0, ModelPayment.PremiumDueDate);
+                ObjParam[2] = new DbParameter("@RefNote", DbParameter.DbType.NVarChar, 0, ModelPayment.ReferenceNumber);
+                DbConnection.GetScalarValue(CommandType.StoredProcedure, "sp_RecreateBillingMemberPayments", ObjParam);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
     }
 }
 

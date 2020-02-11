@@ -184,9 +184,9 @@ namespace Funeral.BAL
                 return false;
             }
         }
-        public static List<ClaimDocumentModel> GetClaimDocumentsByClaimId(int fkiClaimID, Guid Parlourid)
+        public static List<ClaimDocumentModel> GetClaimDocumentsByClaimId(int fkiClaimID, Guid Parlourid, string MemberType)
         {
-            DataTable dr = ClaimsDAL.GetClaimDocumentsByClaimId(fkiClaimID, Parlourid);
+            DataTable dr = ClaimsDAL.GetClaimDocumentsByClaimId(fkiClaimID, Parlourid, MemberType);
             return FuneralHelper.DataTableMapToList<ClaimDocumentModel>(dr);
         }
         public static List<FuneralDocument> GetUploadedDocumentList(int pkiClaimID, Guid Parlourid)
@@ -234,7 +234,23 @@ namespace Funeral.BAL
             DataTable dr = ClaimsDAL.GetDocumentFollowUpHistory(pkiClaimPictureID, Parlourid);
             return FuneralHelper.DataTableMapToList<ClaimFollowUp>(dr);
         }
-
+        public static int ChangeClaimAssigned(ClaimAssigned claimAssigned)
+        {
+            return ClaimsDAL.ChangeClaimAssigned(claimAssigned);
+        }
+        public static int SaveExternalLink(ExternalUserLink externalUser)
+        {
+            return ClaimsDAL.SaveExternalLink(externalUser);
+        }
+        public static int UpdateExternalLink(Guid ExternalToken,bool TokenAccess)
+        {
+            return ClaimsDAL.UpdateExternalLink(ExternalToken, TokenAccess);
+        }
+        public static ExternalUserLink GetExternalLink(Guid ExternalToken)
+        {
+            DataTable dr = ClaimsDAL.GetExternalLink(ExternalToken);
+            return FuneralHelper.DataTableMapToList<ExternalUserLink>(dr).FirstOrDefault();
+        }
 
     }
 }

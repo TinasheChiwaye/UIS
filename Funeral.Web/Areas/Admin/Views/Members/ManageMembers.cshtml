@@ -338,6 +338,10 @@
                                                 <input type="radio" name="gender" value="0" checked> Male
                                                 <input type="radio" name="gender" value="1"> Female
                                             </div>
+                                            <div class="form-group">
+                                                <label>Scheme </label>
+                                                @Html.DropDownList("ddlSelectCompany", new SelectList(ViewBag.Companies, "parlourid", "ApplicationName"), new { @id = "ddlSelectCompany", @class = "form-control" })
+                                            </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
@@ -1364,6 +1368,7 @@
             //Tab1 validation
             $("#tab1NextButton").click(function(){
                 var lastName = $("#txtLastName").val();
+                var SelectedCompanyId = $("#ddlSelectCompany").val();
                 var FirstName = $("#txtFirstname").val();
                 var IdNumber = $("#txtIdNumber").val();
                 var CellNumber = $("#txtCellphone").val();
@@ -1376,7 +1381,7 @@
                 var teleNumberFlag = true;
                 var Agent = $("#ddlAgent").text();
                 //all fields are blank
-                if(lastName == "" && FirstName == "" && IdNumber == "" && CellNumber == "" && TellNumber == "")
+                if (lastName == "" && FirstName == "" && IdNumber == "" && CellNumber == "" && TellNumber == "" && (SelectedCompanyId == "" || SelectedCompanyId == null))
                 {
                     $("#validationMessage").show();
                     $("#validationMessage").append('<li id="EnterLastNameid">Please enter Last Name.</li>');
@@ -1384,6 +1389,7 @@
                     $("#validationMessage").append('<li id="enterIdNumber">Please enter Id Number.</li>');
                     $("#validationMessage").append('<li id="txtCellphonevalId">Please enter Cell Number.</li>');
                     $("#validationMessage").append('<li id="txtTelePhoneid">Please enter Telephone Number.</li>');
+                    $("#validationMessage").append('<li id="ddlCompanySelection">Please select Scheme.</li>');
                     flag = false;
                 }
 
@@ -1955,7 +1961,8 @@
                 Email:$("#txtEmail").val(),
                 Citizenship:$("#ddlCitizenship :selected").text(),
                 Passport:$("#txtPassport").val(),
-                Address1:$("#txtStreetPostalAddress").val(),
+                Address1: $("#txtStreetPostalAddress").val(),
+                parlourid: $("#ddlSelectCompany").val(),
                 Address2:$("#txtStreetAddress").val(),
                 Address3:$("#tab-2 #txtTownOrCity").val(),
                 Address4:$("#txtProvince").val(),
@@ -2743,7 +2750,7 @@
                     $(this).attr('selected', 'selected');
                 }
             });
-
+            $("#ddlSelectCompany").val(member.parlourid);
             $("#tab-3 #txtPolicyPremium").val(member.PolicyPremium);
             $("#tab-3 #txtPolicyCoverAmount").val(member.CoverAmount);
             $("#txtPassport").val(member.Passport);
@@ -2754,7 +2761,6 @@
             $("#txtProvince").val(member.Address4);
             $("#txtCode").val(member.Code);
             $("#ddlPolicyStatus").val(member.PolicyStatus)
-
             $("#tab-3 #txtPolicyNo").val(member.MemeberNumber);
             $("#tab-3 #txtEasyToPay").val(member.EasyPayNo);
             $("#tab-3 #ddlBankBranch option:selected").text(member.Branch)
@@ -2762,6 +2768,7 @@
             $("#tab-3 #ddlCustom2").val(member.CustomId2);
             $("#tab-3 #ddlCustom3").val(member.CustomId3);
             $("#tab-3 #ddlMemberSociety").val(member.MemberSociety);
+
             $("#tab-1 #ddlAgent option").each(function () {
                 if ($(this).val() == member.Agent) {
                     $(this).attr('selected', 'selected');
@@ -4072,6 +4079,7 @@
     };
 
     function Validate() {
+        debugger;
         var idNumber = $("#txtIdNumber").val();
         // assume everything is correct and if it later turns out not to be, just set this to false
         var correct = true;
@@ -4089,9 +4097,12 @@
         var id_month = tempDate.getMonth();
         var dMonth = id_month + 1;
         var dMonthName = tempDate.getMonthName();
-        var id_year = tempDate.getFullYear();
+        //var id_year = tempDate.getFullYear();
+        var id_year = idNumber.substring(0, 2);
 
-        var fullDate = id_date + " " + dMonthName + " " + id_year;
+        var cutoff = (new Date()).getFullYear() - 2000;
+        var fullDate = id_date + " " + dMonthName + " " + (id_year > cutoff ? '19' : '20') + id_year;
+        //var fullDate = id_date + " " + dMonthName + " " + id_year;
         if (!((tempDate.getYear() == idNumber.substring(0, 2)) && (id_month == idNumber.substring(2, 4) - 1) && (id_date == idNumber.substring(4, 6)))) {
             correct = false;
         }
@@ -4155,9 +4166,10 @@
         var id_month = tempDate.getMonth();
         var dMonth = id_month + 1;
         var dMonthName = tempDate.getMonthName();
-        var id_year = tempDate.getFullYear();
+        var id_year = idNumber.substring(0, 2);
+        var cutoff = (new Date()).getFullYear() - 2000;
 
-        var fullDate = id_date + " " + dMonthName + " " + id_year;
+        var fullDate = id_date + " " + dMonthName + " " + (id_year > cutoff ? '19' : '20') + id_year;
         if (!((tempDate.getYear() == idNumber.substring(0, 2)) && (id_month == idNumber.substring(2, 4) - 1) && (id_date == idNumber.substring(4, 6)))) {
             correct = false;
         }
@@ -4581,7 +4593,17 @@
         }
 
     })
+    $('#ddlSelectCompany').change(function () {
+        jQuery.ajax({
+            url: '@Url.Action("ChangeParlour", "Parlour", null, Request.Url.Scheme)',
+            data: { parlourId: $('#CompanyId').val() },
+            type: "post",
+            cache: false,
+            success: function (result) {
 
+            }
+        })
+    });
     $("#txtStartDatePopup").change(function(){
         var DependencyStartdateChangeUrl = $("#DependencyStartdateChangeUrl").val();
         if ($("#txtStartDatePopup").val() != "") {

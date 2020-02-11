@@ -91,6 +91,7 @@ namespace Funeral.Model
         public Decimal Discount { get; set; }
         public Decimal Tax { get; set; }
 
+        public string MemberType { get; set; }
 
     }
 }

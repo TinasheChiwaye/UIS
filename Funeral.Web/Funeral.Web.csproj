@@ -228,6 +228,7 @@
     <Content Include="Admin\Images\False.png" />
     <Content Include="Admin\Images\True.png" />
     <Content Include="Admin\Images\unpluggit.png" />
+    <Content Include="Admin\ImportExcelBackup.aspx" />
     <Content Include="Admin\ImportExcel.aspx" />
     <Content Include="Admin\NewRegistration.aspx" />
     <Content Include="Admin\OtherPayment.aspx" />
@@ -429,6 +430,7 @@
     <Content Include="fonts\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Admin\Members.aspx" />
+    <Content Include="Scripts\app\IdNumberValidationJS.js" />
     <Content Include="Scripts\app\inspinia.js" />
     <Content Include="Scripts\app\messagebox.js" />
     <Content Include="Scripts\app\multisearchdatatable.js" />
@@ -737,6 +739,14 @@
     <Content Include="Areas\Admin\Views\Claims\_UploadClaimDocumentForm.cshtml" />
     <Content Include="Areas\Admin\Views\Claims\_DocumentStatusForm.cshtml" />
     <Content Include="Areas\Admin\Views\Claims\_DocumentFollowUpHistory.cshtml" />
+    <Content Include="Areas\Admin\Views\Claims\_MemberDependentSearchResult.cshtml" />
+    <Content Include="Areas\Admin\Views\Claims\_ChangeAssignedForm.cshtml" />
+    <Content Include="Areas\Admin\Views\ImportData\ImportedHistory.cshtml" />
+    <Content Include="Areas\Admin\Views\ImportData\MappedColumnList.cshtml" />
+    <Content Include="Areas\Admin\Views\SchemaPayment\_RegenerateBillingModal.cshtml" />
+    <Content Include="Areas\Admin\Views\SchemaPayment\_SchemaList.cshtml" />
+    <Content Include="Areas\Admin\Views\SchemaPayment\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\SchemaPayment\_ReportParametersModal.cshtml" />
     <None Include="DevDataDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DevDataDataSet.Designer.cs</LastGenOutput>
@@ -897,6 +907,8 @@
     <None Include="Properties\PublishProfiles\uispolicy - ReadOnly - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\uispolicy - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\GridScroll\x.js" />
+    <Content Include="Scripts\GridScroll\xtableheaderfixed.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-1.4.3.min.js" />
@@ -1469,6 +1481,10 @@
     <None Include="Service References\FuneralServiceReference\FuneralServices69.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\ExternalUser\Index.cshtml" />
+    <Content Include="Views\ExternalUser\_ClaimStatusHistoryDetails.cshtml" />
+    <Content Include="Views\ExternalUser\ExternalLinkError.cshtml" />
+    <Content Include="Views\ExternalUser\_UploadClaimDocumentForm.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1597,6 +1613,13 @@
     </Compile>
     <Compile Include="Admin\FuneralServicesSelect.aspx.designer.cs">
       <DependentUpon>FuneralServicesSelect.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\ImportExcelBackup.aspx.cs">
+      <DependentUpon>ImportExcelBackup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\ImportExcelBackup.aspx.designer.cs">
+      <DependentUpon>ImportExcelBackup.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\ImportExcel.aspx.cs">
       <DependentUpon>ImportExcel.aspx</DependentUpon>
@@ -1933,6 +1956,7 @@
     <Compile Include="Areas\Admin\Controllers\ErrorController.cs" />
     <Compile Include="Areas\Admin\Controllers\FuneralController.cs" />
     <Compile Include="Areas\Admin\Controllers\GroupPaymentController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ImportDataController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\MembersController.cs" />
     <Compile Include="Areas\Admin\Controllers\OtherPaymentController.cs" />
@@ -1940,6 +1964,7 @@
     <Compile Include="Areas\Admin\Controllers\PaymentsController.cs" />
     <Compile Include="Areas\Admin\Controllers\QuotationController.cs" />
     <Compile Include="Areas\Admin\Controllers\ReportController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SchemaPaymentController.cs" />
     <Compile Include="Areas\Admin\Controllers\TombstoneController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserRightController.cs" />
     <Compile Include="Areas\Admin\Models\StaticMessages.cs" />
@@ -1980,6 +2005,7 @@
     </Compile>
     <Compile Include="Common\WebMsgBox.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ExternalUserController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="DevDataDataSet.Designer.cs">
       <AutoGen>True</AutoGen>

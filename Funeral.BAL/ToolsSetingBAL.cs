@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Xml;
 
 namespace Funeral.BAL
 {
@@ -175,6 +176,11 @@ namespace Funeral.BAL
         {
             DataTable dr = ToolsSetingDAL.GetAllSocietye_PaymentList(ParlourId);
             return FuneralHelper.DataTableMapToList<GroupPaymentList>(dr);
+        }
+        public static GroupPaymentList GetGroupPayment_ByParlourId(Guid ParlourId)
+        {
+            DataTable dr = ToolsSetingDAL.GetGroupPayment_ByParlourId(ParlourId);
+            return FuneralHelper.DataTableMapToList<GroupPaymentList>(dr).FirstOrDefault();
         }
         public static List<SocietyModel> GetAllSocietye(Guid ParlourId)
         {
@@ -410,6 +416,13 @@ namespace Funeral.BAL
             //return model;
             return null;
         }
+        public static List<UnderwriterSetupModel> GetAllUnderwriterList(Guid parlourid)
+        {
+            DataTable dr = ToolsSetingDAL.GetAllUnderwriterList(parlourid);
+            return FuneralHelper.DataTableMapToList<UnderwriterSetupModel>(dr);
+        }
+
+
 
         public static ProgressStatus CheckProgressStatus(int ID, Guid ParlourId)
         {
@@ -479,6 +492,118 @@ namespace Funeral.BAL
         {
             return ToolsSetingDAL.DeleteClaimRights(RoleId, CreatedBy);
         }
+        public static List<PlanStagingList> AddPlansAndGetPlanList_Staging(Guid newImportedId)
+        {
+            DataTable dr = ToolsSetingDAL.AddPlansAndGetPlanList_Staging(newImportedId);
+            return FuneralHelper.DataTableMapToList<PlanStagingList>(dr);
+        }
+        public static int SavePlanCreatorStagingDetails(PlanStagingList model)
+        {
+            return ToolsSetingDAL.SavePlanCreatorStagingDetails(model);
+        }
+        public static DataSet GetImportedMemberList(Guid newImportedId, string columnName)
+        {
+            return ToolsSetingDAL.GetImportedMemberList(newImportedId, columnName);
+        }
+        public static int SaveImportedHistory(string filename, string MappingColumn, Guid parlourId, bool IsImported, string CreatedBy, Guid newImportedId, string MemberType)
+        {
+            ImportedHistory importedHistory = new ImportedHistory();
+            importedHistory.ImportedFilename = filename;
+            importedHistory.MappingColumn = MappingColumn;
+            importedHistory.parlourId = parlourId;
+            importedHistory.IsImported = IsImported;
+            importedHistory.ImportedBy = CreatedBy;
+            importedHistory.NewImportedId = newImportedId;
+            importedHistory.MemberType = MemberType;
+            return ToolsSetingDAL.SaveImportedHistory(importedHistory);
+        }
+        public static List<ImportedHistory> GetImportedHistory(Guid ParlourId)
+        {
+            DataTable dr = ToolsSetingDAL.GetImportedHistory(ParlourId);
+            return FuneralHelper.DataTableMapToList<ImportedHistory>(dr);
+        }
+        public static ImportedHistory GetImportedHistory_ByImportedId(int ImportedId)
+        {
+            DataTable dr = ToolsSetingDAL.GetImportedHistory_ByImportedId(ImportedId);
+            return FuneralHelper.DataTableMapToList<ImportedHistory>(dr).FirstOrDefault();
+        }
+        public static ImportedHistory GetImportedHistory_ByNewImportedId(Guid ImportedId)
+        {
+            DataTable dr = ToolsSetingDAL.GetImportedHistory_ByNewImportedId(ImportedId);
+            return FuneralHelper.DataTableMapToList<ImportedHistory>(dr).FirstOrDefault();
+        }
+        public static Tuple<List<string>, List<string>> GetXMLColumn(string MappingColumn)
+        {
+            List<string> DatabaseColumns = new List<string>();
+            List<string> ExcelColumns = new List<string>();
+            if (MappingColumn != null)
+            {
+                XmlDocument xml = new XmlDocument();
+                xml.LoadXml(MappingColumn);
+                XmlNode node = xml.FirstChild;
+                for (int i = 0; i < node.ChildNodes.Count; i++)
+                {
+                    if (node.ChildNodes[i].Attributes != null)
+                    {
+                        foreach (XmlAttribute at in node.ChildNodes[i].Attributes)
+                        {
+                            if (at.LocalName.Contains("DatabaseColumn"))
+                            {
+                                DatabaseColumns.Add(at.Value);
+                            }
+                            if (at.LocalName.Contains("ExcelColumn"))
+                            {
+                                ExcelColumns.Add(at.Value);
+                            }
+                        }
+                    }
+                }
+            }
+            return Tuple.Create(DatabaseColumns, ExcelColumns);
+        }
+        public static int SaveMappedDependents(string SystemType, string ExcelType, Guid parlourId, Guid newImportedId, string CreatedBy)
+        {
+            return ToolsSetingDAL.SaveMappedDependents(SystemType, ExcelType, parlourId, newImportedId, CreatedBy);
+        }
+        public static List<MappedDependents> GetMappedDependent(Guid ImportedId)
+        {
+            DataTable dr = ToolsSetingDAL.GetMappedDependent(ImportedId);
+            return FuneralHelper.DataTableMapToList<MappedDependents>(dr);
+        }
+        public static void UpdateMemberStagingTable(DataTable dt)
+        {
+            if (dt != null)
+            {
+                if (dt.Rows.Count > 0)
+                {
+                    String[] columnList = new String[] { "ID", "Date Of Birth", "InceptionDate", "CoverDate", "DebitDate", "EffectiveDate", "StartDate" }; //list of my specific columns 
+                    IsAllColumnExist(dt, columnList);
+                    DataTable _dbTable = new DataView(dt).ToTable(false, columnList);
+                    ToolsSetingDAL.UpdateMemberStagingTable(_dbTable);
+                }
+            }
+        }
+        private static void IsAllColumnExist(DataTable tableNameToCheck, String[] columnsNames)
+        {
+            try
+            {
+                if (null != tableNameToCheck && tableNameToCheck.Columns != null)
+                {
+                    foreach (string columnName in columnsNames)
+                    {
+                        if (!tableNameToCheck.Columns.Contains(columnName))
+                        {
+                            System.Data.DataColumn newColumn = new System.Data.DataColumn(columnName, typeof(System.String));
+                            newColumn.DefaultValue = null;
+                            tableNameToCheck.Columns.Add(newColumn);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
 
+            }
+        }
     }
 }

@@ -5,8 +5,9 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Net.Mail;
 using System.Reflection;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace Funeral.BAL
 {
@@ -27,6 +28,7 @@ namespace Funeral.BAL
             DataTable dr = MembersDAL.GetAllSocietydt(parlourid);
             return FuneralHelper.DataTableMapToList<SocietyModel>(dr);
         }
+
         public static List<BranchModel> GetBranchByParlourId(Guid parlourid)
         {
             DataTable dr = MembersDAL.GetBranchByParlourIddt(parlourid);
@@ -389,5 +391,38 @@ namespace Funeral.BAL
             }
             return obj;
         }
+        public static List<SecureUsersModel> GetAllUser(Guid parlourid)
+        {
+            DataTable dr = CommonDAL.GetAllUser(parlourid);
+            return FuneralHelper.DataTableMapToList<SecureUsersModel>(dr);
+        }
+        //public static DataTable GetDataTable_FromGridView(GridView dtg)
+        //{
+        //    DataTable dt = new DataTable();
+        //    if (dtg.HeaderRow != null)
+        //    {
+        //        for (int i = 0; i < dtg.HeaderRow.Cells.Count; i++)
+        //        {
+        //            dt.Columns.Add(dtg.HeaderRow.Cells[i].Text);
+        //        }
+        //    }
+
+        //    foreach (GridViewRow row in dtg.Rows)
+        //    {
+        //        DataRow dr;
+        //        dr = dt.NewRow();
+        //        for (int i = 0; i < row.Cells.Count; i++)
+        //        {
+        //            string value = "";
+        //            foreach (Control cc in row.Cells[i].Controls)
+        //            {
+        //                value = ((TextBox)cc).Text;
+        //            }
+        //            dr[i] = value.Replace(" ", "").Replace("&nbsp;", "");
+        //        }
+        //        dt.Rows.Add(dr);
+        //    }
+        //    return dt;
+        //}
     }
 }

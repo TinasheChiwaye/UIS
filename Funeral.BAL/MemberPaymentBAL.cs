@@ -87,5 +87,10 @@ namespace Funeral.BAL
         {
            return MemberPaymetsDAL.GetCurrencyByParlourId(parlourId);           
         }
+
+        public static int RecreateBillingMemberPayments(RegenerateBillingModal ModelPayment)
+        {
+            return MemberPaymetsDAL.RecreateBillingMemberPayments(ModelPayment);
+        }
     }
 }

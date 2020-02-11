@@ -25,8 +25,11 @@
             {
                 @Html.HiddenFor(x => x.claimsModel.pkiClaimID, new { @id = "pkiClaimID" })
                 @Html.HiddenFor(x => x.claimsModel.fkiMemberID, new { @id = "fkiMemberID" })
-                @Html.HiddenFor(x => x.claimsModel.MemberNumber, new { @id = "hdn_MemberNumber" })
+                @Html.HiddenFor(x => x.claimsModel.MemberNumber, new { @id = "hdn_ClaimantMemberNumber" })
+                @Html.HiddenFor(x => x.funeralModel.MemeberNumber, new { @id = "hdn_FuneralMemberNumber" })
                 @Html.HiddenFor(x => x.funeralModel.Claimnumber, new { @id = "Claimnumber" })
+                @Html.HiddenFor(x => x.funeralModel.pkiFuneralID, new { @id = "pkiFuneralID" })
+                @Html.HiddenFor(x => x.funeralModel.MemberType, new { @id = "ddlDependentDependencyType" })
                 <div class="ibox-content">
                     <div class="row">
                         <div class="panel blank-panel">
@@ -58,7 +61,7 @@
                                                             </div>
                                                             <div class="col-sm-2">
                                                                 <div class="divMargin">
-                                                                    @Html.CheckBox("chkClaimForMember", false, new { @id = "chkClaimForMember", @name = "chkClaimForMember", @value = "Claiming For Member" })Claiming For Member
+                                                                    @Html.CheckBox("chkClaimForMember", new { @id = "chkClaimForMember", @value = "Claiming For Member" })Claiming For Member
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-2">
@@ -71,7 +74,7 @@
                                                                     <div class="input-group">
                                                                         @Html.TextBox("txtSearchKeyword", "", new { @id = "txtSearchKeyword", @name = "txtSearchKeyword", @placeholder = "Search By Keyword", @class = "form-control" })
                                                                         <span class="input-group-btn">
-                                                                            <input type="button" value="search" class="btn btn-sm btn-primary" id="btnSearchKeyword" name="btnSearchKeyword" />
+                                                                            <input type="button" value="search" class="btn btn-sm btn-primary" onclick="searchMemberDependentData()" id="btnSearchKeyword" name="btnSearchKeyword" />
                                                                         </span>
                                                                     </div>
                                                                 </div>
@@ -139,25 +142,25 @@
                                                                 @*<input type="button" name="tab2btnPaymentHistory" id="tab2btnPaymentHistory" class="btn btn-sm btn-primary" value="Payment History" disabled />*@
                                                                 @*<input type="button" name="tab2btnClaimPayment" id="tab2btnClaimPayment" class="btn btn-sm btn-primary" value="Claim Payment" disabled />*@
 
-                                                                @if (Model.claimsModel.pkiClaimID > 0)
+                                                                @if (Model.claimsModel.pkiClaimID < 0)
                                                                 {
-                                                                    <input type="button" accesskey="@Model.claimsModel.parlourid" onclick="OpenClaimDocumentPopUp(@Model.claimsModel.pkiClaimID,this)" id="tab2btnAddDocs" class="btn btn-sm btn-primary" value="Add Docs" />
+                                                                    <input type="button" name="tab2btnClear" id="tab2btnClear" class="btn btn-sm btn-primary" value="Clear" />
                                                                 }
-                                                                <input type="button" name="tab2btnClear" id="tab2btnClear" class="btn btn-sm btn-primary" value="Clear" />
                                                                 <input type="button" onclick="BackNextButtonProcess(1,2)" class="btn btn-sm btn-primary" value="Next" />
                                                             </div>
                                                             <div class="col-sm-12">
                                                                 @if (Model.claimsModel.pkiClaimID > 0)
                                                                 {
                                                                     <div class="form-group">
-                                                                        <label style="margin-top:20px;">Supporting Document</label>
+                                                                        <label style="margin-top:20px;">Supporting Documents</label>
                                                                         <label id="lblDataMsg" hidden>There is no document uploaded.</label>
                                                                         <div class="table-responsive">
-                                                                            <table id="documentDataTable" class="fixed_header fixed_header-bordered" width="100%" cellspacing="0">
+                                                                            <table id="documentDataTable" class="table table-bordered table-hover table-striped" cellspacing="0">
                                                                                 <thead>
                                                                                     <tr>
-                                                                                        <th>Document</th>
                                                                                         <th>Document Type</th>
+                                                                                        <th>Document Name</th>
+                                                                                        <th>Status</th>
                                                                                         <th>Created Date</th>
                                                                                         <th>Action</th>
                                                                                     </tr>
@@ -169,15 +172,42 @@
                                                                                             foreach (var item in Model.ClaimDocumentList)
                                                                                             {
                                                                                                 <tr>
-                                                                                                    <td>@item.ImageName</td>
                                                                                                     <td>@item.DocumentName</td>
-                                                                                                    <td>@item.CreateDate.ToString("dd MMM yyyy")</td>
+                                                                                                    <td>@item.ImageName</td>
+
                                                                                                     <td>
-                                                                                                        <label class="label label-default">@item.Status</label>
+                                                                                                        @if (item.pkiClaimPictureID > 0)
+                                                                                                        {
+                                                                                                            <span class="label label-primary" style="cursor:pointer;" title="Click to Change Status" onclick="OpenDocumentStatusPopUp(@item.pkiClaimPictureID)">@item.Status</span>
+                                                                                                        }
+                                                                                                        else
+                                                                                                        {
+                                                                                                            <span>@item.Status</span>
+                                                                                                        }
                                                                                                     </td>
                                                                                                     <td>
-                                                                                                        <a title="Download this claim document" href="~/Handler/DocumentHandler.ashx?DocClaimID=@item.pkiClaimPictureID"><i class="glyphicon glyphicon-download"></i></a>
-                                                                                                        <a title="Delete this claim document" href="@Url.Action("DeleteClaimDocument", "Claims", new { pkiClaimPictureID = item.pkiClaimPictureID, PkiClaimID = Model.claimsModel.pkiClaimID })"><i class="glyphicon glyphicon-trash"></i></a>
+                                                                                                        @if (item.pkiClaimPictureID > 0)
+                                                                                                        {
+                                                                                                            @item.CreateDate.ToString("dd MMM yyyy hh:mm tt")
+                                                                                                        }
+                                                                                                        else
+                                                                                                        {
+                                                                                                            <span>-----</span>
+                                                                                                        }
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        @{
+                                                                                                            if (item.pkiClaimPictureID > 0)
+                                                                                                            {
+                                                                                                                <a title="Download this claim document" href="~/Handler/DocumentHandler.ashx?DocClaimID=@item.pkiClaimPictureID"><i class="glyphicon glyphicon-download"></i></a>
+                                                                                                                <a title="Delete this claim document" href="@Url.Action("DeleteClaimDocument", "Claims", new { pkiClaimPictureID = item.pkiClaimPictureID, PkiClaimID = Model.claimsModel.pkiClaimID })"><i class="glyphicon glyphicon-trash"></i></a>
+                                                                                                            }
+                                                                                                            if (!item.IsUploaded)
+                                                                                                            {
+                                                                                                                <span class="label label-danger" accesskey="@Model.claimsModel.parlourid" style="cursor:pointer;" title="Click to Upload Document" onclick="OpenClaimDocumentPopUp(@Model.claimsModel.pkiClaimID,this,@item.DocumentId)">Add Document</span>
+                                                                                                            }
+                                                                                                        }
+
                                                                                                     </td>
                                                                                                 </tr>
                                                                                             }
@@ -191,43 +221,8 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    @*Member DataTable*@
-                                                    <div class="form-group">
-                                                        <div class="table-responsive">
-                                                            <table id="memberDataTable" class="fixed_header fixed_header-bordered" width="100%" cellspacing="0" hidden>
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>Member Name</th>
-                                                                        <th>Gender</th>
-                                                                        <th>ID Number</th>
-                                                                        <th>Contact No</th>
-                                                                        <th>Action</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody></tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                    @*Dependent Datatable*@
-                                                    <div class="form-group">
-                                                        <div class="table-responsive">
-                                                            <table id="dependentDataTable" class="fixed_header fixed_header-bordered" width="100%" cellspacing="0" hidden>
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>Dependent Name</th>
-                                                                        <th>Gender</th>
-                                                                        <th>ID Number</th>
-                                                                        <th>Contact No</th>
-                                                                        <th>Action</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody></tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
                                     <div id="tab-2" class="tab-pane">
@@ -292,7 +287,7 @@
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
                                                                     <label>ID Number  <em>*</em> </label>
-                                                                    @Html.TextBoxFor(x => x.claimsModel.ClaimantIDNumber, new { @id = "txtClaimantIDNumber", @maxlength = "50", @class = "form-control", @required = true })
+                                                                    @Html.TextBoxFor(x => x.claimsModel.ClaimantIDNumber, new { @id = "txtClaimantIDNumber", @onchange = "return validateIDNumber(this);", @maxlength = "50", @class = "form-control", @required = true })
                                                                     @Html.ValidationMessageFor(x => x.claimsModel.ClaimantIDNumber, "", new { @class = "text-danger" })
                                                                 </div>
                                                             </div>
@@ -326,6 +321,13 @@
                                                                         @Html.RadioButtonFor(m => m.claimsModel.ClaimantGender, "0", new { @id = "ClaimentMale", @checked = true }) Male
                                                                         @Html.RadioButtonFor(m => m.claimsModel.ClaimantGender, "1", new { @id = "ClaimentFemale" }) Female
                                                                     </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Email * </label>
+                                                                    @Html.TextBoxFor(x => x.claimsModel.Email, new { @type = "email", @id = "txtEmailAddress", @class = "form-control", @required = true })
+                                                                    @Html.ValidationMessageFor(x => x.claimsModel.Email, "", new { @class = "text-danger" })
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -391,7 +393,11 @@
                                                     <div class="btn-group">
                                                         <button class="btn btn-sm btn-primary pull-right m-t-n-xs" onclick="BackNextButtonProcess(2,3)">Next</button>
                                                         <button class="btn btn-sm btn-primary pull-right m-t-n-xs" style="margin-right:10px;" onclick="BackNextButtonProcess(2,1)">Back</button>
-                                                        <button class="btn btn-sm btn-primary pull-right m-t-n-xs" style="margin-right:10px;" name="tab3btnReset" id="tab3btnReset">Reset</button>
+                                                        @if (Model.claimsModel.pkiClaimID < 0)
+                                                        {
+                                                            <button class="btn btn-sm btn-primary pull-right m-t-n-xs" style="margin-right:10px;" name="tab3btnReset" id="tab3btnReset">Reset</button>
+                                                        }
+
 
                                                     </div>
                                                 </div>
@@ -447,8 +453,8 @@
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
                                                                     <label>First Name  <em>*</em> </label>
-                                                                    @Html.TextBoxFor(x => x.funeralModel.FullNames, new {@id = "txtDeceaseName", @maxlength = "50", @class = "form-control", @required = true })
-                                                                    @Html.ValidationMessageFor(x => x.funeralModel.FullNames, "", new {@class = "text-danger" })
+                                                                    @Html.TextBoxFor(x => x.funeralModel.FullNames, new { @id = "txtDeceaseName", @maxlength = "50", @class = "form-control", @required = true })
+                                                                    @Html.ValidationMessageFor(x => x.funeralModel.FullNames, "", new { @class = "text-danger" })
 
                                                                 </div>
                                                             </div>
@@ -464,7 +470,7 @@
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
                                                                     <label>ID Number  <em>*</em> </label>
-                                                                    @Html.TextBoxFor(x => x.funeralModel.IDNumber, new { @id = "txtDeceaseIDNumber", @maxlength = "50", @class = "form-control", @required = true })
+                                                                    @Html.TextBoxFor(x => x.funeralModel.IDNumber, new { @id = "txtDeceaseIDNumber", @onchange = "return validateIDNumber(this);", @maxlength = "50", @class = "form-control", @required = true })
                                                                     @Html.ValidationMessageFor(x => x.funeralModel.IDNumber, "", new { @class = "text-danger" })
                                                                 </div>
                                                             </div>
@@ -550,7 +556,7 @@
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
                                                                     <label>Contact Person </label>
-                                                                    @Html.TextBoxFor(x => x.funeralModel.ContactPerson, new { @type = "number", @id = "txtDeceaseContactPerson", @maxlength = "50", @class = "form-control" })
+                                                                    @Html.TextBoxFor(x => x.funeralModel.ContactPerson, new { @id = "txtDeceaseContactPerson", @maxlength = "50", @class = "form-control" })
                                                                 </div>
                                                             </div>
 
@@ -568,11 +574,15 @@
                                                                     @Html.TextBoxFor(x => x.funeralModel.BI1663, new { @id = "txtDeceaseSerialNo", @maxlength = "50", @class = "form-control" })
                                                                 </div>
                                                             </div>
+                                                        </div>
+                                                        <div class="row">
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
                                                                     <label>Grave No  </label>
                                                                     @Html.TextBoxFor(x => x.funeralModel.GraveNo, new { @id = "txtDeceaseGraveNo", @maxlength = "50", @class = "form-control" })
                                                                 </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -583,7 +593,10 @@
                                                     <div class="btn-group">
                                                         <button type="submit" id="yourSubmitButtonID" class="btn btn-sm btn-primary pull-right m-t-n-xs" style="margin-right:10px;">Save</button>
                                                         <button class="btn btn-sm btn-primary pull-right m-t-n-xs" onclick="BackNextButtonProcess(3,2)" style="margin-right:10px;">Back</button>
-                                                        <button class="btn btn-sm btn-primary pull-right m-t-n-xs" style="margin-right:10px;" name="tab4btnReset" id="tab4btnReset">Reset</button>
+                                                        @if (Model.claimsModel.pkiClaimID < 0)
+                                                        {
+                                                            <button class="btn btn-sm btn-primary pull-right m-t-n-xs" style="margin-right:10px;" name="tab4btnReset" id="tab4btnReset">Reset</button>
+                                                        }
                                                     </div>
                                                 </div>
                                             </div>
@@ -598,11 +611,9 @@
         </div>
     </div>
 </div>
-<div id="LoadPartialView_ManageClaims"></div>
 <script type="text/javascript">
-    var GetMemberOrDependent = "@Url.Action("GetMemberOrDependent","Claims")";
+    var GetMemberOrDependent = "@Url.Action("GetMemberOrDependentPartial","Claims")";
     var SaveClaimsDocumentURl = "@Url.Action("SaveClaimsDocument","Claims")";
-    var BindDependentUpdateURl = "@Url.Action("BindDependentUpdate","Claims")";
     var currentDate = "@System.DateTime.Now.ToString("dd MMM yyyy")";
 
     $.validator.setDefaults({
@@ -621,47 +632,13 @@
             onSelect: function (dateText) { $(this).change(); }
         }).on("change", function () { });
         $('#txtDeceaseTimeOfFuneral').timepicker();
-         $('#dr_CompanyIdSelection').change(function () {
-                jQuery.ajax({
-                    url: '@Url.Action("ChangeParlour", "Parlour", null, Request.Url.Scheme)',
-                    data: { parlourId: $('#CompanyId').val() },
-                    type: "post",
-                    cache: false,
-                    success: function (result) {
-
-                    }
-                })
-            })
-
-        $("#btnSearchKeyword").click(function () {
-            var chkMember = $("input[name='chkClaimForMember']").is(':checked');
-            var txtKeyword = $("#txtSearchKeyword").val();
-            var ParlourId = $("#dr_CompanyIdSelection").val();
-            var row = "";
-            var gender = "";
-            $.ajax({
-                url: GetMemberOrDependent,
-                data: { chkMember: chkMember, Keyword: txtKeyword,CompanyId:ParlourId },
+        $('#dr_CompanyIdSelection').change(function () {
+            jQuery.ajax({
+                url: '@Url.Action("ChangeParlour", "Parlour", null, Request.Url.Scheme)',
+                data: { parlourId: $('#CompanyId').val() },
                 type: "post",
                 cache: false,
-                success: function (result) {
-                    if (chkMember == true) {
-                        $("#memberDataTable").show();
-                        $("#dependentDataTable").hide();
-                        showMemberData(result);
-                    }
-                    else {
-                        $("#dependentDataTable").show();
-                        $("#memberDataTable").hide();
-                        showDependentData(result);
-                    }
-                    if (result.success == false) {
-                        alert(result.errors);
-                    }
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    alert(thrownError);
-                }
+                success: function (result) {}
             })
         });
         $("#tab2btnClear").click(function () {
@@ -674,54 +651,114 @@
             $("#AddDocModal").modal("show");
             $('.modal-backdrop').removeClass("modal-backdrop");
         });
-        $('#btnDocumentSubmit').click(function () {
-			var docType = $("#tab-2 input[name='rdbdocument']:checked").val();
-			if (window.FormData !== undefined) {
-				var fileUpload = $("#fuSupportDocument").get(0);
-				var files = fileUpload.files;
-				var fileData = new FormData();
-				for (var i = 0; i < files.length; i++) {
-					fileData.append(files[i].name, files[i]);
-				}
-				fileData.append('username', 'Manas');
-				fileData.append('documentType', docType);
-				$.ajax({
-					url: SaveClaimsDocumentURl,
-					type: "POST",
-					contentType: false, // Not to set any content header
-					processData: false, // Not to process data
-					data: fileData,
-					success: function (result) {
-						alert(result);
-					},
-					error: function (err) {
-						alert(err.statusText);
-					}
-				});
-			} else {
-				alert("FormData is not supported.");
-			}
-		});
+        $('#txtSearchKeyword').keypress(function (event) {
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if (keycode == '13') {
+                searchMemberDependentData();
+            }
+        });
     });
-    function showMemberData(data) {
-        var row = "";
-        jQuery.each(data.MemberData, function (index, obj) {
-            row += ' <tr> <td> ' + obj.FullNames + " " + obj.Surname + ' </td> <td> ' + obj.Gender + ' </td> <td>' + obj.IDNumber + '</td> <td>' + obj.Cellphone + '</td><td><a onclick="BindMainMemberUpdate(' + obj.pkiMemberID + ')" class="btn btn-primary">Select</a></td></tr>';
-            jQuery("#memberDataTable tbody").html(row);
-        });
-    }
-    function showDependentData(data) {
-        var row = "";
-        jQuery.each(data.DependentData, function (index, obj) {
-            row += ' <tr> <td> ' + obj.FullNames + " " + obj.Surname + ' </td> <td> ' + obj.Gender + ' </td> <td>' + obj.IDNumber + '</td> <td>' + obj.Cellphone + '</td><td><a onclick="BindDependentUpdate(' + obj.pkiDependentID + ')" class="btn btn-primary">Select</a></td></tr>';
-            jQuery("#dependentDataTable tbody").html(row);
-        });
+    function searchMemberDependentData() {
+        debugger;
+        var chkMember = $("input[id='chkClaimForMember']").is(':checked');
+        var txtKeyword = $("#txtSearchKeyword").val();
+        var ParlourId = $("#dr_CompanyIdSelection").val();
+        if (ParlourId != "") {
+            $.ajax({
+                url: GetMemberOrDependent,
+                data: { chkMember: chkMember, Keyword: txtKeyword, CompanyId: ParlourId },
+                type: "GET",
+                cache: false,
+                success: function (result) {
+                    $('#LoadPartialView_ManageClaims').empty().html(result);
+                    $("#dvMemberDependentPartialPopUp").modal("show");
+                    $('.modal-backdrop').removeClass("modal-backdrop");
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(thrownError);
+                }
+            });
+        }
+        else {
+            alert("please select Company");
+        }
     }
     function ShowHideDiv(chkPayout) {
         var dvPayout = document.getElementById("dvPayout");
         dvPayout.style.display = chkPayout.checked ? "block" : "none";
+    } 
+    function BackNextButtonProcess(CurrenttabId, BackNextTabId) {
+        jQuery("#tab-" + CurrenttabId).removeClass('active')
+        jQuery("#tab" + CurrenttabId).removeClass('active')
+        jQuery("#tab-" + BackNextTabId).addClass("active");
+        jQuery("#tab" + BackNextTabId).addClass("active");
     }
-    function BindDependentUpdate(dependentID) {
+    function ConvertDate(date) {
+        if (date != undefined && date != '' && date != null) {
+            return dateFormat(new Date(parseInt(date.replace('/Date(', ''))), "yyyy/mm/dd", false)
+        }
+        else {
+            return dateFormat(new Date(0001, 00, 01), "yyyy/mm/dd", false);
+        }
+    }
+    function OpenClaimDocumentPopUp(GetClaimId, control,pkiClaimPictureID) {
+        var ParlourId = $("#dr_CompanyIdSelection").val();
+        var CurrentParlourId = control.accessKey;
+        var GenerateSendMailURL = "@Url.Action("ClaimDocumentPartial","Claims",new {ClaimId="GetClaimId",parlourId="GetParlourId",pkiClaimPictureID="GetpkiClaimPictureID"})".replace("GetClaimId", GetClaimId).replace("GetParlourId", CurrentParlourId).replace("GetpkiClaimPictureID", pkiClaimPictureID).replace("amp;", "");
+        $.ajax({
+            url: GenerateSendMailURL,
+            type: 'GET',
+            cache: false,
+        }).done(function (result) {
+            $('#LoadPartialView_ManageClaims').empty().html(result);
+            $("#AddDocModal").modal("show");
+            $('.modal-backdrop').removeClass("modal-backdrop");
+        });
+    }
+    function DeleteClaimDocument(DocumentId,GetClaimId) {
+        var GenerateSendMailURL = "@Url.Action("ClaimDocumentPartial","Claims",new {pkiClaimPictureID="GetpkiClaimPictureID",PkiClaimId="GetPkiClaimId"})".replace("GetpkiClaimPictureID", DocumentId).replace("GetPkiClaimId", GetClaimId).replace("amp;", "");
+        $.ajax({
+            url: GenerateSendMailURL,
+            type: 'GET',
+            cache: false,
+        }).done(function (result) {
+            $('#LoadPartialView_ManageClaims').empty().html(result);
+            $("#AddDocModal").modal("show");
+            $('.modal-backdrop').removeClass("modal-backdrop");
+        });
+    }
+    function validateIDNumber(IdNumberControls) {
+        var ex = /^(((\d{2}((0[13578]|1[02])(0[1-9]|[12]\d|3[01])|(0[13456789]|1[012])(0[1-9]|[12]\d|30)|02(0[1-9]|1\d|2[0-8])))|([02468][048]|[13579][26])0229))(( |-)(\d{4})( |-)(\d{3})|(\d{7}))/;
+        var theIDnumber = IdNumberControls.value;
+        if (ex.test(theIDnumber) == false) {
+            alert('Please supply a valid ID number');
+            $("#" + IdNumberControls.id).focus().val(null);
+            return false;
+        }
+        alert(theIDnumber + ' a valid ID number');
+        return false;
+    }
+    function OpenDocumentStatusPopUp(GetpkiClaimPictureID) {
+          var ParlourId = $("#dr_CompanyIdSelection").val();
+        var ClaimStatusPartial = "@Url.Action("ClaimDocumentStatusPartial","Claims",new {pkiClaimPictureID="GetpkiClaimPictureID",ParlourId="GetParlourId"})".replace("GetpkiClaimPictureID", GetpkiClaimPictureID).replace("GetParlourId", ParlourId).replace("amp;", "");
+        $.ajax({
+            url: ClaimStatusPartial,
+            type: 'GET',
+            cache: false,
+        }).done(function (result) {
+            $('#LoadPartialView_ManageClaims').empty().html(result);
+            $("#dvChangeStatusModel").modal("show");
+            $('.modal-backdrop').removeClass("modal-backdrop");
+        });
+    }
+    //document.getElementById("txtSearchKeyword").addEventListener("keydown", function (e) {
+    //    if (!e)
+    //    { var e = window.event; }
+    //    e.preventDefault();
+    //    if (e.keyCode == 13)
+    //    { searchMemberDependentData(); }
+    //}, false);
+     function BindDependentUpdate(dependentID) {
         var ParlourId = $("#dr_CompanyIdSelection").val();
 
         jQuery.ajax({
@@ -833,56 +870,6 @@
                  alert(thrownError);
              }
          });
-    }
-    function BackNextButtonProcess(CurrenttabId, BackNextTabId) {
-        jQuery("#tab-" + CurrenttabId).removeClass('active')
-        jQuery("#tab" + CurrenttabId).removeClass('active')
-        jQuery("#tab-" + BackNextTabId).addClass("active");
-        jQuery("#tab" + BackNextTabId).addClass("active");
-    }
-    function ConvertDate(date) {
-        if (date != undefined && date != '' && date != null) {
-            return dateFormat(new Date(parseInt(date.replace('/Date(', ''))), "yyyy/mm/dd", false)
-            //return dateFormat(new Date(parseInt(date.replace('/Date(', ''))), "mm/dd/yyyy", true)
-        }
-        else {
-            return dateFormat(new Date(0001, 00, 01), "yyyy/mm/dd", false);
-        }
-    }
-    function OpenClaimDocumentPopUp(GetClaimId, control) {
-        var ParlourId = $("#dr_CompanyIdSelection").val();
-        var CurrentParlourId = control.accessKey;
-
-        if (ParlourId != CurrentParlourId) {
-            if (confirm('you have changed your parlour would you like to continue ?')) {
-
-            } else {
-                $("#dr_CompanyIdSelection").val(CurrentParlourId);
-                return false;
-            }
-        }
-        var GenerateSendMailURL = "@Url.Action("ClaimDocumentPartial","Claims",new {ClaimId="GetClaimId",parlourId="GetParlourId"})".replace("GetClaimId", GetClaimId).replace("GetParlourId", ParlourId).replace("amp;", "");
-        $.ajax({
-            url: GenerateSendMailURL,
-            type: 'GET',
-            cache: false,
-        }).done(function (result) {
-            $('#LoadPartialView_ManageClaims').empty().html(result);
-            $("#AddDocModal").modal("show");
-            $('.modal-backdrop').removeClass("modal-backdrop");
-        });
-    }
-    function DeleteClaimDocument(DocumentId,GetClaimId) {
-        var GenerateSendMailURL = "@Url.Action("ClaimDocumentPartial","Claims",new {pkiClaimPictureID="GetpkiClaimPictureID",PkiClaimId="GetPkiClaimId"})".replace("GetpkiClaimPictureID", DocumentId).replace("GetPkiClaimId", GetClaimId).replace("amp;", "");
-        $.ajax({
-            url: GenerateSendMailURL,
-            type: 'GET',
-            cache: false,
-        }).done(function (result) {
-            $('#LoadPartialView_ManageClaims').empty().html(result);
-            $("#AddDocModal").modal("show");
-            $('.modal-backdrop').removeClass("modal-backdrop");
-        });
     }
 </script>
 

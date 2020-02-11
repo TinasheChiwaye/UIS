@@ -202,6 +202,7 @@ namespace Funeral.Web.Tools
 				txtEmail.Text = modelCompany.ManageEmail;
 				txtFaxNumber.Text = modelCompany.ManageFaxNumber;
 				txtOwnersEmail.Text = modelCompany.OwnerEmail;
+                txtEmailForClaimNotification.Text = modelCompany.EmailForClaimNotification;
 				txtcompanyRules.Text = modelCompany.ApplicationRules;
 				txtVatNo.Text = modelCompany.VatNo;
 			   
@@ -290,6 +291,7 @@ namespace Funeral.Web.Tools
 				txtEmail.Text = model.ManageEmail;
 				txtFaxNumber.Text = model.ManageFaxNumber;
 				txtOwnersEmail.Text = model.OwnerEmail;
+                txtEmailForClaimNotification.Text = model.EmailForClaimNotification;
 				txtcompanyRules.Text = model.ApplicationRules;
 				txtVatNo.Text = model.VatNo;
 				
@@ -376,6 +378,7 @@ namespace Funeral.Web.Tools
 			txtEmail.Text = string.Empty;
 			txtFaxNumber.Text = string.Empty;
 			txtOwnersEmail.Text = string.Empty;
+            txtEmailForClaimNotification.Text = string.Empty;
 			lblMessage.Visible = false;
 			ImagePreview.ImageUrl = string.Empty;
 			txtcompanyRules.Text = string.Empty;
@@ -507,6 +510,7 @@ namespace Funeral.Web.Tools
 				model.ManageEmail = txtEmail.Text;
 				model.ManageFaxNumber = txtFaxNumber.Text;
 				model.OwnerEmail = txtOwnersEmail.Text;
+                model.EmailForClaimNotification = txtEmailForClaimNotification.Text;
 				model.ApplicationRules = txtcompanyRules.Text;
 				model.VatNo = txtVatNo.Text;
 				//===============================Allow Auto generate Policy Number===============

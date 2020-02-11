@@ -47,7 +47,7 @@
             filter: alpha(opacity=40); /* For IE8 and earlier */
         }
 
-       
+
 
         .fixed_header {
             table-layout: fixed;
@@ -58,7 +58,7 @@
                 display: block;
                 width: 100%;
                 overflow: auto;
-                height: 200px;
+                height: 350px;
             }
 
             .fixed_header thead tr {
@@ -137,12 +137,34 @@
                             if (item.MVCURL == "#")
                             {
                                 <li>
-                                    <a href="~/Default.aspx"><i class="@item.IconClass"></i><span class="nav-label ">@item.PageName</span></a>
-                                    <ul class="nav nav-second-level">
+                                    <a href="~/Default.aspx"><i class="@item.IconClass"></i> <span class="nav-label">@item.PageName</span><span class="fa arrow"></span></a>
+                                    <ul class="nav nav-second-level collapse">
                                         @foreach (var chielditem in RightsModels.Where(x => x.ParentRoleId == item.ID).ToList())
                                         {
-                                            @*<li><a id="childmenu@item.ID" href="@Url.Content("~"+chielditem.MVCURL)">@chielditem.PageName</a></li>*@
-                                            <li><a id="childmenu_@item.ID" href="@string.Format("{0}://{1}{2}{3}",Request.Url.Scheme, Request.Url.Authority, Url.Content("~").Remove(Url.Content("~").Length-1), chielditem.MVCURL)">@chielditem.PageName</a></li>
+                                            if (chielditem.MenuLevel == 1)
+                                            {
+                                                <li>
+                                                    <a id="childmenu_@item.ID" href="@string.Format("{0}://{1}{2}{3}", Request.Url.Scheme, Request.Url.Authority, Url.Content("~").Remove(Url.Content("~").Length - 1), chielditem.MVCURL)">@chielditem.PageName</a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li>
+                                                    <a href="#"><span class="nav-label">@chielditem.PageName</span><span class="fa arrow"></span></a>
+                                                    <ul class="nav nav-third-level">
+                                                        @foreach (var thirdLevelitem in RightsModels.Where(x => x.ParentRoleId == chielditem.ID).ToList())
+                                                        {
+                                                            <li>
+                                                                <a id="childmenu_@chielditem.ID" href="@string.Format(" {0}://{1}{2}{3}", Request.Url.Scheme, Request.Url.Authority, Url.Content("~").Remove(Url.Content("~").Length - 1), thirdLevelitem.MVCURL)">@thirdLevelitem.PageName</a>
+                                                            </li>
+                                                        }
+                                                    </ul>
+
+
+                                                </li>
+
+                                            }
+
                                         }
                                     </ul>
                                 </li>
@@ -156,6 +178,26 @@
                             }
                         }
                     }
+                    <li class="nav-footer">
+                        <div class="dropdown profile-element">
+                            @{
+                                if (Session["Loginparlourid"] != null)
+                                {
+                                    Funeral.Model.ApplicationSettingsModel modelCompany = Funeral.BAL.ToolsSetingBAL.GetApplictionByParlourID(Guid.Parse(Session["Loginparlourid"].ToString()));
+                                    if (modelCompany != null)
+                                    {
+                                        if (modelCompany.ApplicationLogo != null)
+                                        {
+                                            string base64String = Convert.ToBase64String(modelCompany.ApplicationLogo, 0, modelCompany.ApplicationLogo.Length);
+                                            var CompanylogoUrl = "data:image/png;base64," + base64String;
+
+                                            <img id="imgCompanyLogo" src="@CompanylogoUrl" height="200px" width="200px" alt="CompanyLogo" />
+                                        }
+                                    }
+                                }
+                            }
+                        </div>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -169,11 +211,11 @@
                         <li class="treeclick">
                             @if (HttpContext.Current.Session["ApplicationName"] != null && HttpContext.Current.Session["ApplicationName"].ToString() != null)
                             {
-                                <strong>Company name:</strong> @HttpContext.Current.Session["ApplicationName"].ToString()
+                                <strong>Scheme name:</strong> @HttpContext.Current.Session["ApplicationName"].ToString()
                             }
                             else
                             {
-                                <strong>Company name:</strong>
+                                <strong>Scheme name:</strong>
                             }
 
                         </li>
@@ -258,6 +300,10 @@
     <script src="~/Scripts/app/messagebox.js"></script>
 
     @Html.Partial("~/Views/Shared/MessageBox.cshtml")
-    @{ Html.RenderPartial("~/Areas/Admin/Views/Dashboard/_DashboardModal.cshtml"); }
+    @{
+        Html.RenderPartial("~/Areas/Admin/Views/Dashboard/_DashboardModal.cshtml");
+
+    }
+    <div id="LoadPartialView_ManageClaims"></div>
 </body>
 </html>

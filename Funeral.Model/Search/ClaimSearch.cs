@@ -10,5 +10,6 @@ namespace Funeral.Model.Search
         public Guid CompanyId { get; set; }
         public string StatusId { get; set; }
         public string keyword { get; set; }
+        public string SearchType { get; set; }
     }
 }

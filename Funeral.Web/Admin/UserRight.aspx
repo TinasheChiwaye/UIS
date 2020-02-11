@@ -17,7 +17,7 @@
                     
                     <br />
                     <br />
-                    <asp:Label ID="lblCompany" runat="server" class="col-lg-2">Company Setup</asp:Label>
+                    <asp:Label ID="lblCompany" runat="server" class="col-lg-2">Scheme Setup</asp:Label>
                     <asp:Image ID="imgCompany1" runat="server" Width="4%" class="col-lg-2" ImageUrl="~/Admin/Images/True.png" Visible="false" />
                     <asp:Image ID="imgCompany2" runat="server" Width="4%" class="col-lg-2" ImageUrl="~/Admin/Images/False.png" Visible="false" />
                     <br />
