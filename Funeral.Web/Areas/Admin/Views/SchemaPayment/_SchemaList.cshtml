@@ -58,8 +58,10 @@
                                             <th>Balance</th>
                                             <th>Amount At Risk</th>
                                             <th>Total Risk Covered</th>
-                                            <th>Inception Date</th>
+                                            <th>Billing Month</th>
+                                            <th>Reference Number</th>
                                             <th>Regenerate</th>
+                                            <th>Recon</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -119,19 +121,20 @@
                 { "data": "AmountAtRisk", "name": "Amount At Risk", "autoWidth": true },
                 { "data": "TotalRiskCovered", "name": "Total Risk Covered", "autoWidth": true },
                 {
-                    "data": "InceptionDate", "name": "Inception Date", "autoWidth": true,
+                    "data": "BillingMonth", "name": "Inception Date", "autoWidth": true,
                     "render": function (data) {
                         var date = new Date(parseInt(data.replace('/Date(', '')));
                         return dateFormat(date, dateFormat.masks.PerfectDate, true);
                     }
                 },
+                { "data": "ReferenceNumber", "name": "Reference Number", "autoWidth": true },
                 {
                     "render": function (data, type, full, meta) {
                         var hasEditRights = '@ViewBag.HasEditRight' == "True" ? true : false;
                         var hasDeleteRights = '@ViewBag.HasDeleteRight' == "True" ? true : false;
 
                         var dom = "<div class='row'>";
-                        var RegenerateBill = '<div class="col-sm-12"><a class="btn btn-primary btn-sm" placeholder="Regenerate Billing Schedule" onclick="OpenRegenerateBillingPopUp(\'' + full.parlourid + '\')"><i class="fa fa-file-code-o"></i> Regenerate Billing</a></div>';
+                        var RegenerateBill = '<div class="col-sm-12"><a class="btn btn-primary btn-sm" placeholder="Regenerate Billing Schedule" onclick="OpenRegenerateBillingPopUp(\'' + full.parlourid + '\',\'' + full.ReferenceNumber + '\')"><i class="fa fa-file-code-o"></i> Regenerate Billing</a></div>';
                         dom = dom + RegenerateBill;
 
                         dom = dom + "</div>";
@@ -144,11 +147,27 @@
                         var hasDeleteRights = '@ViewBag.HasDeleteRight' == "True" ? true : false;
 
                         var dom = "<div class='row'>";
-                         var SendMail = '<div class="col-sm-3"><a class="btn btn-primary btn-sm" placeholder="Send Email"><i class="fa fa-envelope"></i></a></div>';
+                        var RegenerateBill = '<div class="col-sm-12"><a class="btn btn-primary btn-sm" placeholder="Regenerate Billing Schedule" onclick="DownloadReconReportPopUp(\'' + full.parlourid + '\',\'' + full.ReferenceNumber + '\')"><i class="fa fa-envelope"></i> Recon Billing</a></div>';
+                        dom = dom + RegenerateBill;
+
+                        dom = dom + "</div>";
+                        return dom;
+                    }
+                },
+
+                {
+                    "render": function (data, type, full, meta) {
+                        var hasEditRights = '@ViewBag.HasEditRight' == "True" ? true : false;
+                        var hasDeleteRights = '@ViewBag.HasDeleteRight' == "True" ? true : false;
+
+                        var dom = "<div class='row'>";
+                        var SendMail = '<div class="col-sm-3"><a class="btn btn-primary btn-sm" placeholder="Send Email" onclick="SendReportEmail(\'' + full.parlourid + '\',\'' + full.ReferenceNumber + '\')"><i class="fa fa-envelope"></i></a></div>';
                         dom = dom + SendMail;
 
-                        var Download = '<div class="col-sm-3"><a class="btn btn-primary btn-sm" placeholder="Download" onclick="DownloadReport(\'' + full.parlourid + '\')"><i class="fa fa-download"></i></a></div>';
+                        var Download = '<div class="col-sm-3"><a class="btn btn-primary btn-sm" placeholder="Download" onclick="DownloadReport(\'' + full.parlourid + '\',\'' + full.ReferenceNumber + '\')"><i class="fa fa-download"></i></a></div>';
                         dom = dom + Download;
+
+
 
                         dom = dom + "</div>";
                         return dom;
@@ -161,8 +180,9 @@
             model1.SarchText = jQuery("#SarchText").val();
             jQuery("#PageNum1").val(model1.PageNum);
         }
-        function OpenRegenerateBillingPopUp(GetParlourId) {
-            var GetUrl = "@Url.Action("RegenerateBillingPartial","SchemaPayment",new {ParlourId="GetParlourId"})".replace("GetParlourId", GetParlourId);
+        function OpenRegenerateBillingPopUp(GetParlourId, referenceNumber) {
+            debugger;
+            var GetUrl = "@Url.Action("RegenerateBillingPartial","SchemaPayment",new {ParlourId="GetParlourId",ReferenceNumber="getreferenceNumber"})".replace("GetParlourId", GetParlourId).replace("getreferenceNumber", referenceNumber).replace("amp;","");
             jQuery.ajax({
                 url: GetUrl,
                 type: 'GET',
@@ -181,8 +201,8 @@
                 }).on("change", function () { });
             });
         }
-         function DownloadReport(GetParlourId) {
-            var GetUrl = "@Url.Action("DownloadReportPartial","SchemaPayment",new {ParlourId="GetParlourId"})".replace("GetParlourId", GetParlourId);
+        function DownloadReport(GetParlourId, referenceNumber) {
+            var GetUrl = "@Url.Action("DownloadReportPartial","SchemaPayment",new {ParlourId="GetParlourId",ReferenceNumber="getreferenceNumber"})".replace("GetParlourId", GetParlourId).replace("getreferenceNumber", referenceNumber).replace("amp;","");;
             jQuery.ajax({
                 url: GetUrl,
                 type: 'GET',
@@ -191,7 +211,43 @@
                 jQuery('#LoadPartialView_ManageClaims').empty().html(result);
                 jQuery("#RegenerateBillingModalPopUp").modal("show");
                 jQuery('.modal-backdrop').removeClass("modal-backdrop");
-                 $(".DatepickerSelection").datepicker({
+                $(".DatepickerSelection").datepicker({
+                    format: 'dd M yyyy',
+                    setDate: new Date(),
+                    autoclose: true,
+                    onSelect: function (dateText) { $(this).change(); }
+                }).on("change", function () { });
+            });
+        }
+        function SendReportEmail(GetParlourId, referenceNumber) {
+            var GetUrl = "@Url.Action("SendEmailReportPartial","SchemaPayment",new {ParlourId="GetParlourId",ReferenceNumber="getreferenceNumber"})".replace("GetParlourId", GetParlourId).replace("getreferenceNumber", referenceNumber).replace("amp;","");;
+            jQuery.ajax({
+                url: GetUrl,
+                type: 'GET',
+                cache: false,
+            }).done(function (result) {
+                jQuery('#LoadPartialView_ManageClaims').empty().html(result);
+                jQuery("#RegenerateBillingModalPopUp").modal("show");
+                jQuery('.modal-backdrop').removeClass("modal-backdrop");
+                $(".DatepickerSelection").datepicker({
+                    format: 'dd M yyyy',
+                    setDate: new Date(),
+                    autoclose: true,
+                    onSelect: function (dateText) { $(this).change(); }
+                }).on("change", function () { });
+            });
+        }
+         function DownloadReconReportPopUp(GetParlourId, referenceNumber) {
+            var GetUrl = "@Url.Action("DownloadReconBillingReportPartial","SchemaPayment",new {ParlourId="GetParlourId",ReferenceNumber="getreferenceNumber"})".replace("GetParlourId", GetParlourId).replace("getreferenceNumber", referenceNumber).replace("amp;","");;
+            jQuery.ajax({
+                url: GetUrl,
+                type: 'GET',
+                cache: false,
+            }).done(function (result) {
+                jQuery('#LoadPartialView_ManageClaims').empty().html(result);
+                jQuery("#RegenerateBillingModalPopUp").modal("show");
+                jQuery('.modal-backdrop').removeClass("modal-backdrop");
+                $(".DatepickerSelection").datepicker({
                     format: 'dd M yyyy',
                     setDate: new Date(),
                     autoclose: true,

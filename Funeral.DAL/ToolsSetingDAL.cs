@@ -609,10 +609,11 @@ namespace Funeral.DAL
             ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "SchemeSummary", ObjParam);
         }
-        public static DataTable GetGroupPayment_ByParlourId(Guid ParlourId)
+        public static DataTable GetGroupPayment_ByParlourId(Guid ParlourId,string ReferenceNumber)
         {
-            DbParameter[] ObjParam = new DbParameter[1];
+            DbParameter[] ObjParam = new DbParameter[2];
             ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+            ObjParam[1] = new DbParameter("@ReferenceNumber", DbParameter.DbType.NVarChar, 0, ReferenceNumber);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "SchemeSummaryByParlourId", ObjParam);
         }
         public static DataTable GetAllSocietyesdt(Guid ParlourId)

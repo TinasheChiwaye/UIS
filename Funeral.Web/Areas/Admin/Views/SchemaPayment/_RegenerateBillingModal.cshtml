@@ -16,11 +16,11 @@
                                 <div class="form-group">
                                     <div class="col-sm-6">
                                         <label>Premium due date</label>
-                                        @Html.TextBoxFor(x => x.PremiumDueDate, "{0:dd MMM yyyy}", new { @id = "txtPremiumDueDate", @class = "form-control DatepickerSelection", @autocomplete = false })
+                                        @Html.TextBoxFor(x => x.PremiumDueDate, "{0:dd MMM yyyy}", new { @id = "txtPremiumDueDate", @class = "form-control DatepickerSelection", @autocomplete = false ,@required=true})
                                     </div>
                                     <div class="col-sm-6">
                                         <label>Reference Number</label>
-                                        @Html.TextBoxFor(x => x.ReferenceNumber, new { @type = "text", @id = "txtRefNumber", @class = "form-control" })
+                                        @Html.TextBoxFor(x => x.ReferenceNumber, new { @type = "text", @id = "txtRefNumber", @class = "form-control",@readonly=true,@required=true })
                                     </div>
                                 </div>
                             </div>

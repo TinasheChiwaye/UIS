@@ -1,5 +1,6 @@
 ﻿using Funeral.Model;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -108,9 +109,36 @@ namespace Funeral.DAL
             ObjParam[7] = new DbParameter("@LastModified", DbParameter.DbType.DateTime, 0, model.LastModified);
             ObjParam[8] = new DbParameter("@AmountPaid", DbParameter.DbType.Money, 0, model.AmountPaid);
             ObjParam[9] = new DbParameter("@DatePaid", DbParameter.DbType.DateTime, 0, model.DatePaid);
-            ObjParam[10] = new DbParameter("@ReferenceNumber", DbParameter.DbType.NVarChar, 0, model.ReferenceNumber);
+            ObjParam[10] = new DbParameter("@RefNo", DbParameter.DbType.NVarChar, 0, model.ReferenceNumber);
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
-
+        }
+        public static int AutoallocateMemberPayments(string UserName, Guid ParlourId, string referenceNumber)
+        {
+            AdditionalMemberInfoModel model1 = new AdditionalMemberInfoModel();
+            string query = "AutoallocateMemberPaymentsNew";
+            DbParameter[] ObjParam = new DbParameter[3];
+            ObjParam[0] = new DbParameter("@userID", DbParameter.DbType.NVarChar, 0, UserName);
+            ObjParam[1] = new DbParameter("@Parlourid", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+            ObjParam[2] = new DbParameter("@RefNo", DbParameter.DbType.NVarChar, 0, referenceNumber);
+            return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
+        }
+        public static int AddExcelSheetData(List<GroupPayment> payments)
+        {
+            foreach (var item in payments)
+            {
+                string query = "AddGroupPaymentExcelData";
+                DbParameter[] ObjParam = new DbParameter[8];
+                ObjParam[0] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, item.parlourid);
+                ObjParam[1] = new DbParameter("@LastModified", DbParameter.DbType.DateTime, 0, item.LastModified);
+                ObjParam[2] = new DbParameter("@AmountPaid", DbParameter.DbType.Money, 0, item.AmountPaid);
+                ObjParam[3] = new DbParameter("@DatePaid", DbParameter.DbType.DateTime, 0, item.DatePaid);
+                ObjParam[4] = new DbParameter("@ReferenceNumber", DbParameter.DbType.NVarChar, 0, item.ReferenceNumber);
+                ObjParam[5] = new DbParameter("@PolicyNo", DbParameter.DbType.NVarChar, 0, item.Notes);
+                ObjParam[6] = new DbParameter("@ReceivedBy", DbParameter.DbType.NVarChar, 0, item.RecievedBy);
+                ObjParam[7] = new DbParameter("@PaidBy", DbParameter.DbType.NVarChar, 0, item.PaidBy);
+                Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
+            }
+            return 1;
         }
         public static DataTable GetAllGroupPaymentList(Guid ParlourId, int GroupId)
         {

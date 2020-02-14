@@ -20,7 +20,9 @@ namespace Funeral.Model
         public decimal Balance { get; set; }
         public Guid parlourid { get; set; }
         public DateTime InceptionDate { get; set; }
+        public DateTime BillingMonth { get; set; }
         public decimal AmountAtRisk { get; set; }
         public decimal TotalRiskCovered { get; set; }
+        public string ReferenceNumber { get; set; }
     }
 }

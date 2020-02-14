@@ -382,11 +382,11 @@ namespace Funeral.DAL
                 DbParameter[] ObjParam = new DbParameter[3];
                 ObjParam[0] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, ModelPayment.parlourId);
                 ObjParam[1] = new DbParameter("@Date", DbParameter.DbType.DateTime, 0, ModelPayment.PremiumDueDate);
-                ObjParam[2] = new DbParameter("@RefNote", DbParameter.DbType.NVarChar, 0, ModelPayment.ReferenceNumber);
+                ObjParam[2] = new DbParameter("@ReferenceNumber", DbParameter.DbType.NVarChar, 0, ModelPayment.ReferenceNumber);
                 DbConnection.GetScalarValue(CommandType.StoredProcedure, "sp_RecreateBillingMemberPayments", ObjParam);
                 return 1;
             }
-            catch
+            catch (Exception ex)
             {
                 return 0;
             }

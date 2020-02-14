@@ -5,7 +5,10 @@ using Funeral.Web.Common;
 using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Web.Mvc;
 
 namespace Funeral.Web.Areas.Admin.Controllers
@@ -88,11 +91,13 @@ namespace Funeral.Web.Areas.Admin.Controllers
         }
         #region Open Regenrated Billing PopUp
         [HttpGet]
-        public ActionResult RegenerateBillingPartial(Guid ParlourId)
+        public ActionResult RegenerateBillingPartial(Guid ParlourId, string ReferenceNumber)
         {
+
             RegenerateBillingModal modal = new RegenerateBillingModal();
             modal.parlourId = ParlourId;
             modal.PremiumDueDate = DateTime.Now;
+            modal.ReferenceNumber = ReferenceNumber;
             return PartialView("_RegenerateBillingModal", modal);
         }
         [HttpPost]
@@ -114,12 +119,13 @@ namespace Funeral.Web.Areas.Admin.Controllers
         }
         #endregion
         [HttpGet]
-        public ActionResult DownloadReportPartial(Guid ParlourId)
+        public ActionResult DownloadReportPartial(Guid ParlourId, string ReferenceNumber)
         {
             ReportParameters modal = new ReportParameters();
             modal.parlourId = ParlourId;
-            modal.toDate = DateTime.Now;
+            modal.toDate = DateTime.Now.AddYears(-1);
             modal.fromDate = DateTime.Now;
+            modal.ReferenceNumber = ReferenceNumber;
             return PartialView("_ReportParametersModal", modal);
         }
         [HttpPost]
@@ -128,7 +134,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 string ExportTypeExtensions = "xls";
-                modal.ReportName = "UIS All Members Per Group Report";
+                modal.ReportName = "ARL_Scheme_Billing Report";
                 Warning[] warnings;
                 string[] streamids;
                 string mimeType;
@@ -149,6 +155,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 reportParameters.Add(new ReportParameter("DateFrom", modal.fromDate.ToString()));
                 reportParameters.Add(new ReportParameter("DateTo", modal.toDate.ToString()));
                 reportParameters.Add(new ReportParameter("Parlourid", modal.parlourId.ToString()));
+                //reportParameters.Add(new ReportParameter("RefNo", modal.ReferenceNumber.ToString()));
                 rpw.ServerReport.SetParameters(reportParameters);
                 byte[] bytes = rpw.ServerReport.Render("Excel", null, out mimeType, out encoding, out extension, out streamids, out warnings);
                 filename = string.Format("{0}.{1}", modal.ReportName, ExportTypeExtensions);
@@ -161,6 +168,121 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 Response.Flush();
                 Response.End();
 
+            }
+            TempData["message"] = ShowMessage(MessageType.Success, "Report Download");
+            return Redirect(Request.UrlReferrer.ToString());
+        }
+        [HttpGet]
+        public ActionResult SendEmailReportPartial(Guid ParlourId, string ReferenceNumber)
+        {
+            ReportParameters modal = new ReportParameters();
+            modal.parlourId = ParlourId;
+            modal.toDate = DateTime.Now.AddYears(-1);
+            modal.fromDate = DateTime.Now;
+            modal.ReferenceNumber = ReferenceNumber;
+            return PartialView("_ReportEmailSendModal", modal);
+        }
+        [HttpPost]
+        public ActionResult SendEmailReport(ReportParameters modal)
+        {
+            if (ModelState.IsValid)
+            {
+                string ExportTypeExtensions = "xls";
+                modal.ReportName = "ARL_Scheme_Billing Report";
+                Warning[] warnings;
+                string[] streamids;
+                string mimeType;
+                string encoding;
+                string extension;
+                string filename;
+
+                ReportViewer rpw = new ReportViewer();
+                rpw.ProcessingMode = ProcessingMode.Remote;
+                IReportServerCredentials irsc = new MyReportServerCredentials();
+                rpw.ServerReport.ReportServerCredentials = irsc;
+
+
+                rpw.ProcessingMode = ProcessingMode.Remote;
+                rpw.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
+                rpw.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/" + modal.ReportName;
+                ReportParameterCollection reportParameters = new ReportParameterCollection();
+                reportParameters.Add(new ReportParameter("DateFrom", modal.fromDate.ToString()));
+                reportParameters.Add(new ReportParameter("DateTo", modal.toDate.ToString()));
+                reportParameters.Add(new ReportParameter("Parlourid", modal.parlourId.ToString()));
+                //reportParameters.Add(new ReportParameter("RefNo", modal.ReferenceNumber.ToString()));
+                rpw.ServerReport.SetParameters(reportParameters);
+                byte[] bytes = rpw.ServerReport.Render("Excel", null, out mimeType, out encoding, out extension, out streamids, out warnings);
+                filename = string.Format("{0}.{1}", modal.ReportName, ExportTypeExtensions);
+
+                if (!string.IsNullOrEmpty(modal.Email))
+                {
+                    MemoryStream s = new MemoryStream(bytes);
+                    s.Seek(0, SeekOrigin.Begin);
+                    Attachment a = new Attachment(s, filename);
+                    MailMessage message = new MailMessage(ConfigurationManager.AppSettings["ReportEmailSenderId"].ToString().Trim(), modal.Email.Trim(), modal.ReportName, "");
+                    message.Attachments.Add(a);
+                    SmtpClient client = new SmtpClient();
+                    client.Send(message);
+                    TempData["message"] = ShowMessage(MessageType.Success, "Email Sent Successfully");
+                }
+                else
+                {
+                    TempData["message"] = ShowMessage(MessageType.Success, "Please Enter Email");
+                }
+            }
+
+            return Redirect(Request.UrlReferrer.ToString());
+        }
+
+        [HttpGet]
+        public ActionResult DownloadReconBillingReportPartial(Guid ParlourId, string ReferenceNumber)
+        {
+            ReportParameters modal = new ReportParameters();
+            modal.parlourId = ParlourId;
+            modal.toDate = DateTime.Now.AddYears(-1);
+            modal.fromDate = DateTime.Now;
+            modal.ReferenceNumber = ReferenceNumber;
+            return PartialView("_ReconReportModal", modal);
+        }
+        [HttpPost]
+        public ActionResult ReconReportDownload(ReportParameters modal)
+        {
+            if (ModelState.IsValid)
+            {
+                string ExportTypeExtensions = "xls";
+                modal.ReportName = "ARL_Scheme_Billing Recon Report";
+                Warning[] warnings;
+                string[] streamids;
+                string mimeType;
+                string encoding;
+                string extension;
+                string filename;
+
+                ReportViewer rpw = new ReportViewer();
+                rpw.ProcessingMode = ProcessingMode.Remote;
+                IReportServerCredentials irsc = new MyReportServerCredentials();
+                rpw.ServerReport.ReportServerCredentials = irsc;
+
+
+                rpw.ProcessingMode = ProcessingMode.Remote;
+                rpw.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
+                rpw.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/" + modal.ReportName;
+                ReportParameterCollection reportParameters = new ReportParameterCollection();
+                reportParameters.Add(new ReportParameter("DateFrom", modal.fromDate.ToString()));
+                reportParameters.Add(new ReportParameter("DateTo", modal.toDate.ToString()));
+                reportParameters.Add(new ReportParameter("Parlourid", modal.parlourId.ToString()));
+                reportParameters.Add(new ReportParameter("RefNo", modal.ReferenceNumber.ToString()));
+                rpw.ServerReport.SetParameters(reportParameters);
+                byte[] bytes = rpw.ServerReport.Render("Excel", null, out mimeType, out encoding, out extension, out streamids, out warnings);
+                filename = string.Format("{0}.{1}", modal.ReportName, ExportTypeExtensions);
+
+                Response.ClearHeaders();
+                Response.Clear();
+                Response.AddHeader("Content-Disposition", "attachment;filename=" + filename);
+                Response.ContentType = mimeType;
+                Response.BinaryWrite(bytes);
+                Response.Flush();
+                Response.End();
             }
             TempData["message"] = ShowMessage(MessageType.Success, "Report Download");
             return Redirect(Request.UrlReferrer.ToString());

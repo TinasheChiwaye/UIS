@@ -30,6 +30,7 @@
                 @Html.HiddenFor(x => x.funeralModel.Claimnumber, new { @id = "Claimnumber" })
                 @Html.HiddenFor(x => x.funeralModel.pkiFuneralID, new { @id = "pkiFuneralID" })
                 @Html.HiddenFor(x => x.funeralModel.MemberType, new { @id = "ddlDependentDependencyType" })
+                @Html.HiddenFor(x => x.claimsModel.HostingFuneral)
                 <div class="ibox-content">
                     <div class="row">
                         <div class="panel blank-panel">
@@ -116,8 +117,6 @@
                                                                     <label>Cover Amount</label>
                                                                     @Html.TextBoxFor(x => x.claimsModel.Cover, new { @id = "txtCoverAmount", @class = "form-control", @placeholder = "Cover Amount", })
                                                                     <div class="divMarginChk">
-                                                                        @Html.CheckBoxFor(x => x.claimsModel.HostingFuneral, new { @style = "margin-right:5px;", @id = "chkHosting", @value = "Hosting Funeral" })Hosting Funeral
-                                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                                         @Html.CheckBoxFor(x => x.claimsModel.Payout, new { @style = "margin-right:5px;", @id = "chkPayout", @onclick = "ShowHideDiv(this)", @value = "Add Payout" })Add Payout
                                                                     </div>
                                                                     <div id="dvPayout" style="display:none;">
@@ -129,10 +128,16 @@
 
                                                         </div>
                                                         <div class="row">
-                                                            <div class="col-sm-12">
+                                                            <div class="col-sm-6">
                                                                 <div class="form-group">
                                                                     <label>Claim Notes</label>
                                                                     @Html.TextAreaFor(x => x.claimsModel.ClaimNotes, 4, 3, new { @id = "txtClaimNotes", @class = "form-control", @placeholder = "Claim Note", })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Select Group</label>
+                                                                    @Html.DropDownListFor(m => m.claimsModel.SocietyID, new SelectList(ViewBag.SocietyLists, "pkiSocietyID", "SocietyName"), new { @id = "ddlClaimSociety", @class = "form-control" })
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -152,7 +157,7 @@
                                                                 @if (Model.claimsModel.pkiClaimID > 0)
                                                                 {
                                                                     <div class="form-group">
-                                                                        <label style="margin-top:20px;">Supporting Documents</label>
+                                                                        <h3>Supporting Documents</h3>
                                                                         <label id="lblDataMsg" hidden>There is no document uploaded.</label>
                                                                         <div class="table-responsive">
                                                                             <table id="documentDataTable" class="table table-bordered table-hover table-striped" cellspacing="0">
@@ -211,6 +216,77 @@
                                                                                                     </td>
                                                                                                 </tr>
                                                                                             }
+                                                                                        }
+                                                                                    }
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <div class="col-sm-6">
+                                                                            <h3>Payment History</h3>
+                                                                            <table id="memberDataTable" class="fixed_header fixed_header-bordered" cellspacing="0">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Date paid</th>
+                                                                                        <th>Amount</th>
+                                                                                        <th>Recieved by</th>
+                                                                                        <th>Notes</th>
+                                                                                        <th>Actions</th>
+
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    @{
+                                                                                        if (Model.PaymentHistoryList != null && Model.PaymentHistoryList.Count > 0)
+                                                                                        {
+                                                                                            foreach (var item in Model.PaymentHistoryList)
+                                                                                            {
+                                                                                                <tr>
+                                                                                                    <td>@item.DatePaid</td>
+                                                                                                    <td>@item.AmountPaid</td>
+                                                                                                    <td>@item.RecievedBy</td>
+                                                                                                    <td>@item.Notes</td>
+                                                                                                    <td>
+                                                                                                        <a href="@Url.Action("PrintPaymentReceipt", "Payments", new { id = item.InvoiceID, Type = 1, PolicyNumber = Model.claimsModel.MemberNumber, DatePaid = item.DatePaid, AmountPaid = item.AmountPaid, PaidBy = item.PaidBy, ReceivedBy = item.RecievedBy, MonthPaid = item.Notes ,memberId=Model.claimsModel.fkiMemberID, parlourId=Model.claimsModel.parlourid})">
+                                                                                                            <i class="glyphicon glyphicon-print"></i>
+                                                                                                        </a>&nbsp;&nbsp;<a href="@Url.Action("PrintPaymentReceipt", "Payments", new { id = item.InvoiceID, Type = 2, PolicyNumber = Model.claimsModel.MemberNumber, DatePaid = item.DatePaid, AmountPaid = item.AmountPaid, PaidBy = item.PaidBy, ReceivedBy = item.RecievedBy, MonthPaid = item.Notes,MemberId=Model.claimsModel.fkiMemberID, parlourId=Model.claimsModel.parlourid })">
+                                                                                                            <i class="glyphicon glyphicon-export"></i>
+                                                                                                        </a>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <h3>Claim History</h3>
+                                                                            <table id="memberDataTable" class="fixed_header fixed_header-bordered" cellspacing="0">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Status</th>
+                                                                                        <th>Changed To Status</th>
+                                                                                        <th>Reason</th>
+                                                                                        <th>Changed By</th>
+                                                                                        <th>Changed Date</th>
+                                                                                        <th>Comment</th>
+
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    @{
+                                                                                        foreach (var item in Model.claimStatusHistory)
+                                                                                        {
+                                                                                            <tr>
+                                                                                                <td>@item.CurrentStatus</td>
+                                                                                                <td>@item.NewStatus</td>
+                                                                                                <td>@item.ChangeReason</td>
+                                                                                                <td>@item.ChangedByName</td>
+                                                                                                <td>@item.CreatedDate.ToString("dd MMM yyyy hh:mm tt")</td>
+                                                                                                <td>@item.Comment</td>
+                                                                                            </tr>
                                                                                         }
                                                                                     }
                                                                                 </tbody>
@@ -339,7 +415,7 @@
                                                     <div class="form-group">
                                                         <div class="ibox-content">
                                                             <div class="ibox-title">
-                                                                <h5>Beneficiery Banking Details</h5>
+                                                                <h5>Beneficiary Banking Details</h5>
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-sm-6">
@@ -421,14 +497,14 @@
                                                                          new SelectListItem{ Text="Miss", Value = "Miss" },
                                                                          new SelectListItem{ Text="Mrs", Value = "Mrs" },
                                                                          new SelectListItem{ Text="Prof", Value = "Prof" },
-                                                                     },new {@class="form-control"})
+                                                                     },new {@class="form-control",@readonly=true})
                                                                 </div>
                                                             </div>
 
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
                                                                     <label>Street Address  <em>*</em> </label>
-                                                                    @Html.TextBoxFor(x => x.funeralModel.Address1, new { @id = "txtDeceaseStreet", @maxlength = "50", @class = "form-control", @required = true })
+                                                                    @Html.TextBoxFor(x => x.funeralModel.Address1, new { @id = "txtDeceaseStreet", @maxlength = "50", @class = "form-control", @required = true})
                                                                     @Html.ValidationMessageFor(x => x.funeralModel.Address1, "", new { @class = "text-danger" })
                                                                 </div>
                                                             </div>
@@ -437,7 +513,7 @@
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
                                                                     <label>Last Name  <em>*</em> </label>
-                                                                    @Html.TextBoxFor(x => x.funeralModel.Surname, new { @id = "txtDeceaseLastName", @maxlength = "50", @class = "form-control", @required = true })
+                                                                    @Html.TextBoxFor(x => x.funeralModel.Surname, new { @id = "txtDeceaseLastName", @maxlength = "50", @class = "form-control", @required = true,@readonly=true })
                                                                     @Html.ValidationMessageFor(x => x.funeralModel.Surname, "", new { @class = "text-danger" })
                                                                 </div>
                                                             </div>
@@ -453,7 +529,7 @@
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
                                                                     <label>First Name  <em>*</em> </label>
-                                                                    @Html.TextBoxFor(x => x.funeralModel.FullNames, new { @id = "txtDeceaseName", @maxlength = "50", @class = "form-control", @required = true })
+                                                                    @Html.TextBoxFor(x => x.funeralModel.FullNames, new { @id = "txtDeceaseName", @maxlength = "50", @class = "form-control", @required = true,@readonly=true })
                                                                     @Html.ValidationMessageFor(x => x.funeralModel.FullNames, "", new { @class = "text-danger" })
 
                                                                 </div>
@@ -470,7 +546,7 @@
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
                                                                     <label>ID Number  <em>*</em> </label>
-                                                                    @Html.TextBoxFor(x => x.funeralModel.IDNumber, new { @id = "txtDeceaseIDNumber", @onchange = "return validateIDNumber(this);", @maxlength = "50", @class = "form-control", @required = true })
+                                                                    @Html.TextBoxFor(x => x.funeralModel.IDNumber, new { @id = "txtDeceaseIDNumber", @onchange = "return validateIDNumber(this);", @maxlength = "50", @class = "form-control", @required = true,@readonly=true })
                                                                     @Html.ValidationMessageFor(x => x.funeralModel.IDNumber, "", new { @class = "text-danger" })
                                                                 </div>
                                                             </div>
@@ -486,7 +562,7 @@
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
                                                                     <label>Date of Birth  </label>
-                                                                    @Html.TextBoxFor(x => x.funeralModel.DateOfBirth, "{0:dd MMM yyyy}", new { @id = "txtDeceaseDateOfBirth", @maxlength = "50", @class = "form-control DatepickerSelection", @placeholder = "DD/MM/YYYY", @autocomplete = "off" })
+                                                                    @Html.TextBoxFor(x => x.funeralModel.DateOfBirth, "{0:dd MMM yyyy}", new { @id = "txtDeceaseDateOfBirth", @maxlength = "50", @class = "form-control DatepickerSelection", @placeholder = "DD/MM/YYYY", @autocomplete = "off",@readonly=true })
                                                                 </div>
                                                             </div>
 
@@ -520,7 +596,7 @@
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
                                                                     <label>Cause of Death  </label>
-                                                                    @Html.TextBoxFor(x => x.funeralModel.CourseOfDearth, new { @id = "txtDeceaseCauseOfDeath", @class = "form-control" })
+                                                                    @Html.TextBoxFor(x => x.funeralModel.CourseOfDearth, new { @id = "txtDeceaseCauseOfDeath", @class = "form-control",@readonly=true })
                                                                 </div>
                                                             </div>
 
@@ -640,6 +716,7 @@
                 cache: false,
                 success: function (result) {}
             })
+            BindGroupDropdown($(this).val());
         });
         $("#tab2btnClear").click(function () {
             $("#txtClaimDate").val('');
@@ -657,9 +734,11 @@
                 searchMemberDependentData();
             }
         });
+        $("#txtCauseOfDeath").on('keyup', function () {
+            $("#txtDeceaseCauseOfDeath").val($(this).val())
+        });
     });
     function searchMemberDependentData() {
-        debugger;
         var chkMember = $("input[id='chkClaimForMember']").is(':checked');
         var txtKeyword = $("#txtSearchKeyword").val();
         var ParlourId = $("#dr_CompanyIdSelection").val();
@@ -686,7 +765,7 @@
     function ShowHideDiv(chkPayout) {
         var dvPayout = document.getElementById("dvPayout");
         dvPayout.style.display = chkPayout.checked ? "block" : "none";
-    } 
+    }
     function BackNextButtonProcess(CurrenttabId, BackNextTabId) {
         jQuery("#tab-" + CurrenttabId).removeClass('active')
         jQuery("#tab" + CurrenttabId).removeClass('active')
@@ -735,7 +814,7 @@
             $("#" + IdNumberControls.id).focus().val(null);
             return false;
         }
-        alert(theIDnumber + ' a valid ID number');
+        //alert(theIDnumber + ' a valid ID number');
         return false;
     }
     function OpenDocumentStatusPopUp(GetpkiClaimPictureID) {
@@ -762,7 +841,7 @@
         var ParlourId = $("#dr_CompanyIdSelection").val();
 
         jQuery.ajax({
-            url: BindDependentUpdateURl,
+            url: '@Url.Action("BindDependentUpdate","Claims")',
             data: { dependentId: dependentID, CompanyId: ParlourId },
             type: "post",
             success: function (result) {
@@ -777,10 +856,11 @@
                 jQuery("#txtDeceaseTownOrCity").val(result.MembersModel.Address2);
                 jQuery("#txtDeceaseProvince").val(result.MembersModel.Address3);
                 jQuery("#txtDeceaseCode").val(result.MembersModel.Code);
-
+                jQuery("#ddlClaimSociety").val(result.MembersModel.SocietyId);
                 jQuery("#fkiMemberID").val(result.MembersModel.pkiMemberID);
                 jQuery("#hdn_MemberNumber").val(result.MembersModel.MemberNumber);
-
+                jQuery("#hdn_ClaimantMemberNumber").val(result.MembersModel.MemeberNumber);
+                jQuery("#hdn_FuneralMemberNumber").val(result.MembersModel.MemeberNumber);
 
                 jQuery("#claimsModel_ClaimantTitle").val(result.MembersModel.Title == "" ? "Mr" : result.MembersModel.Title);
                 jQuery("#txtClaimFirstName").val(result.MembersModel.FullNames);
@@ -825,11 +905,16 @@
                  jQuery("#dr_CompanyIdSelection").val(result.PlanModel.parlourid)
                  jQuery("#txtClaimNo").val(result.MembersModel.Claimnumber);
                  jQuery("#hdn_MemberNumber").val(result.MembersModel.MemeberNumber);
+                 jQuery("#hdn_ClaimantMemberNumber").val(result.MembersModel.MemeberNumber);
+                 jQuery("#hdn_FuneralMemberNumber").val(result.MembersModel.MemeberNumber);
                  jQuery("#fkiMemberID").val(result.MembersModel.pkiMemberID);
                  jQuery("#claimsModel_ClaimantTitle").val(result.MembersModel.Title == "" ? "Mr" : result.MembersModel.Title);
                  jQuery("#txtClaimFirstName").val(result.MembersModel.FullNames);
                  jQuery("#txtClaimantLastName").val(result.MembersModel.Surname);
                  jQuery("#txtClaimantIDNumber").val(result.MembersModel.IDNumber);
+                 jQuery("#ddlClaimSociety").val(result.MembersModel.SocietyId);
+
+
                  if (result.MembersModel.Gender == "0") {
                      jQuery('#ClaimentMale').prop('checked', true);
                  }
@@ -870,6 +955,27 @@
                  alert(thrownError);
              }
          });
+    }
+    function BindGroupDropdown(ParlourId) {
+        var ddlCustomers = $("#ddlClaimSociety");
+        ddlCustomers.empty().append('<option selected="selected" value="0" disabled = "disabled">Select Group.....</option>');
+        jQuery.ajax({
+            url: '@Url.Action("BindGroupByCompanyId","Claims")',
+            data: { CompanyId: ParlourId },
+            type: "post",
+            success: function (response) {
+                ddlCustomers.empty().append('<option selected="selected" value="0">Please select</option>');
+                jQuery.each(response, function () {
+                    ddlCustomers.append($("<option></option>").val(this['Value']).html(this['Text']));
+                });
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
     }
 </script>
 

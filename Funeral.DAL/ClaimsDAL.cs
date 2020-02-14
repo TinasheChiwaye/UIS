@@ -18,7 +18,7 @@ namespace Funeral.DAL
         {
             string query = "SaveClaims";
 
-            DbParameter[] ObjParam = new DbParameter[35];
+            DbParameter[] ObjParam = new DbParameter[36];
 
             ObjParam[0] = new DbParameter("@pkiClaimID", DbParameter.DbType.Int, 0, model.pkiClaimID);
             ObjParam[1] = new DbParameter("@fkiMemberID", DbParameter.DbType.Int, 0, model.fkiMemberID);
@@ -55,6 +55,7 @@ namespace Funeral.DAL
             ObjParam[32] = new DbParameter("@PayoutValue", DbParameter.DbType.Money, 0, model.PayoutValue);
             ObjParam[33] = new DbParameter("@CreatedBy", DbParameter.DbType.Int, 0, model.CreatedBy);
             ObjParam[34] = new DbParameter("@Email", DbParameter.DbType.NVarChar, 0, model.Email);
+            ObjParam[35] = new DbParameter("@SocietyID", DbParameter.DbType.Int, 0, model.SocietyID);
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
         }
 

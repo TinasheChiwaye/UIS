@@ -45,16 +45,22 @@
                                 @Html.DropDownListFor(m => m.CompanyId, new SelectList(ViewBag.Companies, "parlourid", "ApplicationName"), new { @class = "form-control" })
                             </div>
                         </div>
-                        <div class="col-sm-2">
+                          <div class="col-lg-2" id="dvAdministrator">
                             <div class="form-group">
-                                <label>Date From:</label>
-                                @Html.TextBoxFor(x => x.DateFrom, "{0:dd/MM/yyyy}", new { @placeholder = "DD/MM/YYYY", @id = "txtDateFrom", @autocomplete = "off", @class = "form-control DatepickerSelection" })
+                                <label>Group </label>
+                                 @Html.DropDownListFor(m => m.SocietyID, new SelectList(ViewBag.SocietyLists, "pkiSocietyID", "SocietyName"),"Select Group", new { @id = "ddlClaimSociety", @class = "form-control" })
                             </div>
                         </div>
-                        <div class="col-sm-2">
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <label>Date From:</label>
+                                @Html.TextBoxFor(x => x.DateFrom, "{0:dd MMM yyyy}", new { @placeholder = "DD MM YYYY", @id = "txtDateFrom", @autocomplete = "off", @class = "form-control DatepickerSelection" })
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
                             <div class="form-group">
                                 <label>Date To:</label>
-                                @Html.TextBoxFor(x => x.DateTo, "{0:dd/MM/yyyy}", new { @placeholder = "DD/MM/YYYY", @id = "txtDateTo", @autocomplete = "off", @class = "form-control DatepickerSelection" })
+                                @Html.TextBoxFor(x => x.DateTo, "{0:dd MMM yyyy}", new { @placeholder = "DD MM YYYY", @id = "txtDateTo", @autocomplete = "off", @class = "form-control DatepickerSelection" })
                             </div>
                         </div>
                         <div class="col-sm-2">
@@ -65,7 +71,7 @@
                         </div>
                         <div class="col-sm-3">
                             <div class="form-group">
-                                <label>Keyword: </label>
+                                <label>wildcard search : </label>
                                 <div class="input-group">
                                     @Html.TextBoxFor(x => x.SarchText, new { @placeholder = "Search By Keyword", @class = "form-control" })
                                     <span class="input-group-btn">
@@ -169,6 +175,7 @@
             var pageSize =@Html.Raw(Json.Encode(@Model.PageSize));
             var searchText =@Html.Raw(Json.Encode(@Model.SarchText));
             var searchType =@Html.Raw(Json.Encode(@Model.SearchType));
+            var societyid =@Html.Raw(Json.Encode(@Model.SocietyID));
 
             var model1 = {
                 StatusId: statusId,
@@ -179,7 +186,8 @@
                 PageNum: pageNum,
                 PageSize: pageSize,
                 SarchText: searchText,
-                SearchType: searchType
+                SearchType: searchType,
+                SocietyID: societyid
             };
             var datatable = $('#claimDataTable')
                 .on('page.dt', function () {
@@ -334,6 +342,7 @@
             function InitModel() {
                 model1.PageNum = 1;
                 model1.CompanyId = $('#CompanyId').val();
+                model1.SocietyID = $('#ddlClaimSociety').val();
                 model1.PageSize = $('#PageSize').val();
                 model1.SarchText = $("#SarchText").val();
                 model1.StatusId = ($('#StatusId').val() == '' ? '0' : $('#StatusId').val());
@@ -348,7 +357,8 @@
                     success: function (result) {
 
                     }
-                })
+                });
+                BindGroupDropdown($('#CompanyId').val());
             })
         }
     });
@@ -418,5 +428,26 @@
 				alert(thrownError);
 			}
 		})
+    }
+     function BindGroupDropdown(ParlourId) {
+        var ddlCustomers = $("#ddlClaimSociety");
+        ddlCustomers.empty().append('<option selected="selected" value="">Select Group.....</option>');
+        jQuery.ajax({
+            url: '@Url.Action("BindGroupByCompanyId","Claims")',
+            data: { CompanyId: ParlourId },
+            type: "post",
+            success: function (response) {
+                ddlCustomers.empty().append('<option selected="selected" value="0">Please select</option>');
+                jQuery.each(response, function () {
+                    ddlCustomers.append($("<option></option>").val(this['Value']).html(this['Text']));
+                });
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
     }
 </script>

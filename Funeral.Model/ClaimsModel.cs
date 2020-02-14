@@ -54,6 +54,7 @@ namespace Funeral.Model
         [Required(ErrorMessage = "The Claim Date is required")]
         public DateTime ClaimDate { get; set; }
         public string ClaimNotes { get; set; }
+        public int SocietyID { get; set; }
         public string CourseOfDearth { get; set; }
         public Boolean HostingFuneral { get; set; }
         public string ClaimantTitle { get; set; }

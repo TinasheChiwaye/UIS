@@ -606,3 +606,65 @@ Change Datepicker plugging in content/plugin
 NEW SP
 ------------------------------
 1.[sp_RecreateBillingMemberPayments]
+
+
+
+
+12-02-2020
+==========================
+
+UPDATE POLICY NUMBER IN CLAIM AND FUNERAL
+-------------------------------------------------------
+update Claims set MemberNumber=m.MemeberNumber  from Claims s inner join Members m on m.pkiMemberID=s.fkiMemberID 
+update Funerals set MemeberNumber=m.MemberNumber  from Funerals s inner join Claims m on m.pkiClaimID=s.FkiClaimID
+
+
+
+Alter SP
+--------------------------
+1.[selectMemberByPkidAndParlor]
+2.[SaveClaims]
+3.[SelectClaimsBypkid]
+4.[GetFuneralByClaimId]
+5.[AddGroupPaymentExcelData]
+6.[AddEditGroupPayment]
+7.[sp_RecreateBillingMemberPayments]
+8.[SaveMemberStaging]
+
+New SP
+-----------------------
+1.AddGroupPaymentExcelData
+2.autoallocateMemberPayments
+3.AutoallocateMemberPaymentsNew
+
+
+SQL Function
+--------------------------
+1.GetAutoGenrateReferenceNumber
+
+Alter Table 
+--------------------------
+1.Claims
+	ALTER TABLE [Claims] ADD SocietyID int NULL
+2.Invoices
+	ALTER TABLE Invoices ADD ReferenceNumber NVARCHAR(100) NULL
+
+3.MemberPaymentReminders
+	ALTER TABLE MemberPaymentReminders ADD ReferenceNumber NVARCHAR(50) NULL
+
+
+
+14-02-2020
+=============================================================
+
+Alter SP
+----------------------------------
+RPT_UIS_SchemeBillingReconReportSummary
+SchemeSummary
+ReturnMemberPlanDetailsWithBalanceBuild
+RPT_UIS_SchemeBillingReconReport
+AddEditGroupPayment
+SchemeSummaryByParlourId
+sp_RecreateBillingMemberPayments
+sp_UpdateMemberPayments
+AutoallocateMemberPaymentsNew

@@ -1,6 +1,6 @@
 ﻿@model Funeral.Model.ReportParameters
 @{
-    using (Html.BeginForm("DownloadReport", "SchemaPayment", FormMethod.Post))
+    using (Html.BeginForm("ReconReportDownload", "SchemaPayment", FormMethod.Post))
     {
         @Html.HiddenFor(x => x.parlourId)
         @Html.HiddenFor(x => x.ReferenceNumber)

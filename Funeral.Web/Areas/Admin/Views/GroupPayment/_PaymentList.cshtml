@@ -57,7 +57,8 @@
                                             <th>Balance</th>
                                             <th>Amount At Risk</th>
                                             <th>Total Risk Covered</th>
-                                            <th>Inception Date</th>
+                                            <th>Billing Month</th>
+                                            <th>Reference Number</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -115,20 +116,26 @@
                 { "data": "AmountAtRisk", "name": "Amount At Risk", "autoWidth": true },
                 { "data": "TotalRiskCovered", "name": "Total Risk Covered", "autoWidth": true },
                 {
-                    "data": "InceptionDate", "name": "Inception Date", "autoWidth": true,
+                    "data": "BillingMonth", "name": "Billing Month", "autoWidth": true,
                     "render": function (data) {
                         var date = new Date(parseInt(data.replace('/Date(', '')));
                         return dateFormat(date, dateFormat.masks.PerfectDate, true);
                     }
                 },
+                { "data": "ReferenceNumber", "name": "Reference Number", "autoWidth": true },
                 {
                     "render": function (data, type, full, meta) {
                         var hasEditRights = '@ViewBag.HasEditRight' == "True" ? true : false;
                         var hasDeleteRights = '@ViewBag.HasDeleteRight' == "True" ? true : false;
 
                         var dom = "<div class='row'>";
-                        var MakePayment = '<div class="col-sm-2" placeholder="Make payment"><a class="btn btn-primary btn-sm" href="@Url.Action("GroupPaymentView", "GroupPayment", null, Request.Url.Scheme)?id=' + full.parlourid + '"><i class="fa fa-credit-card"></i> Make Payment</a></div>';
+                        var MakePayment = '<div class="col-sm-4" placeholder="Make payment"><a class="btn btn-primary btn-sm" href="@Url.Action("GroupPaymentView", "GroupPayment", null, Request.Url.Scheme)?id=' + full.parlourid + '&RefNo=' + full.ReferenceNumber + '"><i class="fa fa-credit-card"></i> Make Payment</a></div>';
                         dom = dom + MakePayment;
+
+
+                        var ReconBilling = '<div class="col-sm-4"><a class="btn btn-primary btn-sm" placeholder="Regenerate Billing Schedule" onclick="DownloadReconReportPopUp(\'' + full.parlourid + '\',\'' + full.ReferenceNumber + '\')"><i class="fa fa-envelope"></i> Recon Billing</a></div>';
+                        dom = dom + ReconBilling;
+
                         dom = dom + "</div>";
                         return dom;
                     }
@@ -147,11 +154,29 @@
                 type: 'GET',
                 cache: false,
             }).done(function (result) {
-                
+
                 jQuery('#LoadPartialView_ManageClaims').empty().html(result);
                 jQuery("#RegenerateBillingModalPopUp").modal("show");
                 jQuery('#txtPremiumDueDate').datepicker({ format: 'dd MM yyyy', autoclose: true, setDate: new Date(),  container: '#RegenerateBillingModalPopUp modal-body' });
                 jQuery('.modal-backdrop').removeClass("modal-backdrop");
+            });
+        }
+        function DownloadReconReportPopUp(GetParlourId, referenceNumber) {
+            var GetUrl = "@Url.Action("DownloadReconBillingReportPartial","SchemaPayment",new {ParlourId="GetParlourId",ReferenceNumber="getreferenceNumber"})".replace("GetParlourId", GetParlourId).replace("getreferenceNumber", referenceNumber).replace("amp;","");;
+            jQuery.ajax({
+                url: GetUrl,
+                type: 'GET',
+                cache: false,
+            }).done(function (result) {
+                jQuery('#LoadPartialView_ManageClaims').empty().html(result);
+                jQuery("#RegenerateBillingModalPopUp").modal("show");
+                jQuery('.modal-backdrop').removeClass("modal-backdrop");
+                $(".DatepickerSelection").datepicker({
+                    format: 'dd M yyyy',
+                    setDate: new Date(),
+                    autoclose: true,
+                    onSelect: function (dateText) { $(this).change(); }
+                }).on("change", function () { });
             });
         }
     </script>

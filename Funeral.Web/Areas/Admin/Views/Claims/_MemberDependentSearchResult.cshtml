@@ -18,6 +18,7 @@
                                     <table class="table table-bordered table-responsive table-hover table-striped" cellspacing="0">
                                         <thead>
                                             <tr>
+                                                <th>Policy Number</th>
                                                 <th>Member Name</th>
                                                 <th>Gender</th>
                                                 <th>MemberType</th>
@@ -30,12 +31,25 @@
                                             @foreach (var item in Model.Item1)
                                             {
                                                 <tr>
+                                                    <td>@item.MemeberNumber</td>
                                                     <td style="white-space: pre-line">@item.FullNames @item.Surname</td>
                                                     <td>@(item.Gender == "0" || item.Gender == null || item.Gender == string.Empty ? "Male" : "Female")</td>
                                                     <td>Main Member</td>
                                                     <td>@item.IDNumber</td>
                                                     <td>@item.Cellphone</td>
-                                                    <td><a onclick="BindMainMemberUpdate(@item.pkiMemberID)"  data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-primary">Select</a></td>
+                                                    <td>
+                                                        @{
+                                                            if (item.ClaimExistCount == 0)
+                                                            {
+                                                                <a onclick="BindMainMemberUpdate(@item.pkiMemberID)" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-primary">Select</a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <label class="text text-danger">Claim Already Logged</label>
+                                                            }
+                                                        }
+
+                                                    </td>
                                                 </tr>
                                             }
 
@@ -44,6 +58,7 @@
                                 }
                                 else
                                 {
+
                                     <h3 style="text-align:center">No data available</h3>
                                 }
                             }
@@ -54,6 +69,7 @@
                                     <table class="table table-bordered table-responsive table-hover table-striped" cellspacing="0">
                                         <thead>
                                             <tr>
+                                                <th>Policy Number</th>
                                                 <th>Dependent Name</th>
                                                 <th>Gender</th>
                                                 <th>MemberType</th>
@@ -66,12 +82,24 @@
                                             @foreach (var item in Model.Item2)
                                             {
                                                 <tr>
+                                                    <td>@item.MemeberNumber</td>
                                                     <td style="white-space: pre-line">@item.FullName @item.Surname</td>
                                                     <td>@(item.Gender == "0" || item.Gender == null || item.Gender == string.Empty ? "Male" : "Female")</td>
                                                     <td>@item.DependencyType</td>
                                                     <td>@item.IDNumber</td>
                                                     <td>@item.Cellphone</td>
-                                                    <td><a onclick="BindDependentUpdate(@item.pkiDependentID)" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-primary">Select</a></td>
+                                                    <td>
+                                                        @{
+                                                            if (item.ClaimExistCount == 0)
+                                                            {
+                                                                <a onclick="BindDependentUpdate(@item.pkiDependentID)" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-primary">Select</a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <label class="text text-danger">Claim Already Logged</label>
+                                                            }
+                                                        }
+                                                    </td>
                                                 </tr>
                                             }
                                         </tbody>

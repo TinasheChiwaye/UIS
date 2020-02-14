@@ -28,10 +28,11 @@ namespace Funeral.Web.Areas.Admin.Controllers
             search.PageSize = 10;
             search.SarchText = "";
             search.SortBy = "";
+            search.SocietyID = "";
             search.SortOrder = "Asc";
             search.StatusId = Status == null ? "0" : Status;
             search.TotalRecord = 0;
-            search.DateFrom = Convert.ToDateTime("01/01/1753");
+            search.DateFrom = DateTime.Now.AddYears(-1);
             search.DateTo = DateTime.Now;
 
             List<StatusModel> statusList = new List<StatusModel>();
@@ -53,6 +54,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 else
                     statusList = ClaimsBAL.GetClaimsStatus();
             }
+            ViewBag.SocietyLists = CommonBAL.GetSocietyByParlourId(CurrentParlourId);
             ViewBag.Statuses = statusList;
             LoadEntriesCount();
             BindCompanyList();
@@ -149,6 +151,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
             {
                 List<ClaimsModel> members = new List<ClaimsModel>();
                 members = ClaimsBAL.SelectAllClaims(search.CompanyId).Where(x => x.Status.Contains(search.StatusId == "0" ? "" : search.StatusId)).ToList();
+                if (!string.IsNullOrEmpty(search.SocietyID) && search.SocietyID != "0")
+                    members = members.Where(x => x.SocietyID.ToString() == search.SocietyID).ToList();
                 members = IsAdministrator == true || IsSuperUser == true ? members : members = members.Where(m => (expectedStatus.Contains(m.Status))).ToList();
 
                 if (search.SearchType != null && search.SearchType != "Normal")
@@ -400,6 +404,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
             }
             else
             {
+                claimandFuneral.PaymentHistoryList = MembersBAL.GetInvoicesByMemberID(CurrentParlourId, MemberId);
+                claimandFuneral.claimStatusHistory = ClaimsBAL.GetClaimStatusHistories(pkiClaimID);
                 claimandFuneral.claimsModel = ClaimsBAL.SelectClaimsBypkid(pkiClaimID, CurrentParlourId);
                 claimandFuneral.funeralModel = FuneralBAL.GetFuneralByClaimId(pkiClaimID);
                 if (claimandFuneral.funeralModel != null)
@@ -407,6 +413,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 else
                     claimandFuneral.ClaimDocumentList = ClaimsBAL.GetClaimDocumentsByClaimId(pkiClaimID, CurrentParlourId, "Main Member");
             }
+            ViewBag.SocietyLists = CommonBAL.GetSocietyByParlourId(CurrentParlourId);
             ViewBag.Statuses = ClaimsBAL.GetClaimsStatus();
             ViewBag.Banks = CommonBAL.GetBankList();
             ViewBag.Provinces = CommonBAL.GetProvinces();
@@ -683,5 +690,11 @@ namespace Funeral.Web.Areas.Admin.Controllers
             return Json(new { PlanModel = objpan, MembersModel = objmodel }, JsonRequestBehavior.AllowGet);
         }
         #endregion
+        [HttpPost]
+        public JsonResult BindGroupByCompanyId(Guid CompanyId)
+        {
+            var Company = CommonBAL.GetSocietyByParlourId(CompanyId).Select(x => new SelectListItem() { Text = x.SocietyName, Value = x.pkiSocietyID.ToString() });
+            return Json(Company, JsonRequestBehavior.AllowGet);
+        }
     }
 }

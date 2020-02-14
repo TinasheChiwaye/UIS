@@ -108,6 +108,7 @@
     <Compile Include="FuneralServiceManageModel.cs" />
     <Compile Include="FuneralServiceSelectModel.cs" />
     <Compile Include="GroupPayment.cs" />
+    <Compile Include="GroupPaymentInsertResultModel.cs" />
     <Compile Include="GroupPaymentList.cs" />
     <Compile Include="ImportedHistory.cs" />
     <Compile Include="ISiteSettings.cs" />

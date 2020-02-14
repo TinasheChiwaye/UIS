@@ -35,6 +35,7 @@ new SelectListItem() {Text = "Other", Value="Other"}
                     <div class="col-lg-6">
                         <div class="form-group">
                             @Html.HiddenFor(x => x.SocietyId, new { })
+                            @Html.HiddenFor(x => x.parlourid, new { })
                             <label>Payment Method</label>
                             @Html.DropDownListFor(x => x.PaymentMethod, paymentMethodList, new { @id = "ddl_PaymentMethodSelection", @class = "form-control" })
                             @Html.ValidationMessageFor(x => x.PaymentMethod, "", new { @class = "text-danger" })
@@ -56,13 +57,13 @@ new SelectListItem() {Text = "Other", Value="Other"}
                         </div>
                         <div class="form-group" id="dvExcelFileSelection">
                             <label>Select Excel File</label>
-                            <input type="file" id="fnSelectedFile" />
+                            <input type="file" id="fnSelectedFile" name="fnSelectedFile" />
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label>Ref. Number</label>
-                            @Html.TextBoxFor(x => x.ReferenceNumber, new { @type = "text", @id = "txtRefNumber", @class = "form-control" })
+                            @Html.TextBoxFor(x => x.ReferenceNumber, new { @type = "text", @id = "txtRefNumber", @class = "form-control", @readonly = true })
                             @Html.ValidationMessageFor(x => x.ReferenceNumber, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group">
@@ -102,7 +103,7 @@ new SelectListItem() {Text = "Other", Value="Other"}
         function RefreshAddEditData(e) {
             LoadSocietyAddEdit();
         }
-        
+
     </script>
 }
 

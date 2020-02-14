@@ -177,9 +177,9 @@ namespace Funeral.BAL
             DataTable dr = ToolsSetingDAL.GetAllSocietye_PaymentList(ParlourId);
             return FuneralHelper.DataTableMapToList<GroupPaymentList>(dr);
         }
-        public static GroupPaymentList GetGroupPayment_ByParlourId(Guid ParlourId)
+        public static GroupPaymentList GetGroupPayment_ByParlourId(Guid ParlourId,string ReferenceNumber)
         {
-            DataTable dr = ToolsSetingDAL.GetGroupPayment_ByParlourId(ParlourId);
+            DataTable dr = ToolsSetingDAL.GetGroupPayment_ByParlourId(ParlourId, ReferenceNumber);
             return FuneralHelper.DataTableMapToList<GroupPaymentList>(dr).FirstOrDefault();
         }
         public static List<SocietyModel> GetAllSocietye(Guid ParlourId)
