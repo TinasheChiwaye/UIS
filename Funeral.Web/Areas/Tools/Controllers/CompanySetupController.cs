@@ -15,7 +15,7 @@ using static Funeral.Web.Areas.Admin.Controllers.MembersController;
 
 namespace Funeral.Web.Areas.Tools.Controllers
 {
-    public class CompanySetupController : BaseAdminController
+    public class CompanySetupController : BaseToolController
     {
         public CompanySetupController() : base(16)
         {

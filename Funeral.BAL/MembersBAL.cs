@@ -373,5 +373,10 @@ namespace Funeral.BAL
             DataTable dr = MembersDAL.GetExtendedFamilyList(parlourid, MemberId);
             return FuneralHelper.DataTableMapToList<FamilyDependencyModel>(dr);
         }
+
+        public static void MakeReadyForImportMember(Guid importId)
+        {
+            MembersDAL.ReadyToImportMember(importId);
+        }
     }
 }

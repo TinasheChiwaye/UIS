@@ -105,17 +105,30 @@
                 <ul class="nav" id="side-menu">
                     <li class="nav-header">
                         <div class="dropdown profile-element">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <span class="clear">
+                                    <span class="block m-t-xs">
+                                        <strong class="font-bold">
+                                            @if (HttpContext.Current.Session["UserName"] != null && HttpContext.Current.Session["UserName"].ToString() != null)
+                                            {
+                                                <span>@HttpContext.Current.Session["UserName"].ToString()</span>
+                                            }
+                                        </strong>
+                                    </span>
+                                </span>
+                            </a>
                             <span class="clear" style="color: white; font-size: 10px">
                                 <span class="block m-t-xs">
                                     <strong>Support Contacts</strong><br />
-                                    <text>Tel:&nbsp;&nbsp;011 321 0194</text><br />
-                                    <text>Email:&nbsp;&nbsp;support@unpluggit.co.za</text><br />
-                                    <text>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;log a Call For Help Desk</text><br />
+                                    <asp:Label runat="server" ID="Label2" Text="">Tel:&nbsp 011 321 0194</asp:Label><br />
+                                    <asp:Label runat="server" ID="Label3" Text="">Email:&nbsp support@unpluggit.co.za</asp:Label><br />
+                                    <asp:Label runat="server" ID="Label4" Text="">&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp   log a Call For Help Desk</asp:Label><br />
                                 </span>
                             </span>
+
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
                                 <li>
-                                    <asp:LoginStatus LoginText="Login" LogoutText="Log out" runat="server" ID="loginStatusControl" LogoutAction="RedirectToLoginPage" />
+                                    <a href="@Url.Action("LogOut", "Account",new {area = ""})"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                                 </li>
                             </ul>
                         </div>

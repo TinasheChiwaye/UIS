@@ -91,7 +91,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             }
             GroupPayment.DatePaid = DateTime.Now;
             GroupPayment.parlourid = getParlourId;
-            GroupPayment.SocietyDropdown = CommonBAL.GetAllSocietyesList(ParlourId);
+            GroupPayment.SocietyDropdown = CommonBAL.GetAllSocietyesList(getParlourId);
             ModelState.Clear();
             return PartialView("~/Areas/Admin/Views/GroupPayment/_AddGroupPayment.cshtml", GroupPayment);
         }
@@ -265,7 +265,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
             try
             {
-                var SocietyList = ToolsSetingBAL.GetAllSocietyes_PaymentList(ParlourId);
+                var SocietyList = ToolsSetingBAL.GetAllSocietyes_PaymentList(CurrentParlourId);
                 return Json(new SearchResult<Model.Search.BaseSearch, GroupPaymentList>(search, SocietyList, o => o.GroupName.Contains(search.SarchText)));
             }
             catch (Exception ex)

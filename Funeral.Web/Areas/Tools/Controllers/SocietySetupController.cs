@@ -12,7 +12,7 @@ using System.Web.Security;
 
 namespace Funeral.Web.Areas.Tools.Controllers
 {
-    public class SocietySetupController : BaseAdminController
+    public class SocietySetupController : BaseToolController
     {
         public SocietySetupController() : base(15)
         {

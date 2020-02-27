@@ -262,8 +262,8 @@
                 <h5>Members Details</h5>
                 <div class="pull-right">
                     <div class="btn-group">
-                        <input type="submit" id="btnCopy" style="margin-right: 12px; margin-top: -5px" class="btn btn-sm btn-primary" value="CopyPolicy" disabled>
-                        <input type="submit" id="PolicyDoc" class="btn btn-sm btn-primary pull-right m-t-n-xs" value="Policy Doc" onclick="location.href='@Url.Action("btnPolicyDoc", "Members")'" disabled>
+                        <input type="submit" id="btnCopy" style="margin-right: 12px; margin-top: -5px;display:none" class="btn btn-sm btn-primary" value="CopyPolicy" disabled>
+                        <input type="submit" style="display:none" id="PolicyDoc" class="btn btn-sm btn-primary pull-right m-t-n-xs" value="Policy Doc" onclick="location.href='@Url.Action("btnPolicyDoc", "Members")'" disabled>
                     </div>
                 </div>
             </div>
@@ -276,7 +276,7 @@
                                     <li class="active" id="tab1"><a data-toggle="tab" href="#tab-1" id="atab1" aria-expanded="true">Personal Details</a></li>
                                     <li class="" id="tab2"><a data-toggle="tab" href="#tab-2" id="atab2" aria-expanded="false">Physical Address</a></li>
                                     <li class="" id="tab3"><a data-toggle="tab" href="#tab-3" id="atab3" aria-expanded="false">Policy Details</a></li>
-                                    <li class="" id="tab9"><a data-toggle="tab" href="#tab-9" id="atab9" aria-expanded="false">Product</a></li>
+                                    <li class="" id="tab9"><a data-toggle="tab" href="#tab-9" id="atab9" aria-expanded="false" style="display:none">Product</a></li>
                                     <li class="" id="tab4"><a data-toggle="tab" href="#tab-4" id="atab4" aria-expanded="false">Banking Details</a></li>
                                     <li class="" id="tab5"><a data-toggle="tab" href="#tab-5" id="atab5" aria-expanded="false">Dependent & Extended Family </a></li>
                                     <li class="" id="tab6"><a data-toggle="tab" href="#tab-6" id="atab6" aria-expanded="false">Payment History</a></li>
@@ -302,6 +302,10 @@
                                         <div class="col-lg-6">
                                             @Html.Hidden("pkiMemberID", new { Id = "pkiMemberID" })
                                             <div class="form-group">
+                                                <label>Scheme </label>
+                                                @Html.DropDownList("ddlSelectCompany", new SelectList(ViewBag.Companies, "parlourid", "ApplicationName"), new { @id = "ddlSelectCompany", @class = "form-control" })
+                                            </div>
+                                            <div class="form-group">
                                                 <label>Last Name  <em>*</em> </label>
                                                 <input type="text" maxlength="25" id="txtLastName" name="txtLastName" class="form-control">
                                             </div>
@@ -314,14 +318,14 @@
                                                 @{
                                                     if (Model.IsAdministrator == true || Model.IsSuperUser == true)
                                                     {
-                                                        <input type="text" pattern="/d*" maxlength="20" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="DateComparisionJavascriptFun();">
+                                                        <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="DateComparisionJavascriptFun();">
                                                     }
                                                     else if (Model.Member.pkiMemberID > 0)
-                                                    { <input type="text" pattern="/d*" maxlength="20" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="DateComparisionJavascriptFun();" readonly="readonly">
+                                                    { <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="DateComparisionJavascriptFun();" readonly="readonly">
                                                     }
                                                     else
                                                     {
-                                                        <input type="text" pattern="/d*" maxlength="20" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="DateComparisionJavascriptFun();">
+                                                        <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="DateComparisionJavascriptFun();">
                                                     }
                                                 }
                                             </div>
@@ -338,23 +342,19 @@
                                                 <input type="radio" name="gender" value="0" checked> Male
                                                 <input type="radio" name="gender" value="1"> Female
                                             </div>
-                                            <div class="form-group">
-                                                <label>Scheme </label>
-                                                @Html.DropDownList("ddlSelectCompany", new SelectList(ViewBag.Companies, "parlourid", "ApplicationName"), new { @id = "ddlSelectCompany", @class = "form-control" })
-                                            </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>Cellphone Number <em>*</em>  </label>
-                                                <input type="number" maxlength="25" id="txtCellphone" name="txtCellphone" class="form-control">
+                                                <input type="number" maxlength="10" id="txtCellphone" name="txtCellphone" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label>Telephone Number</label>
-                                                <input type="number" maxlength="25" id="txtTelePhone" name="txtTelePhone" class="form-control">
+                                                <input type="number" maxlength="10" id="txtTelePhone" name="txtTelePhone" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label>Email Address</label>
-                                                <input type="text" maxlength="200" id="txtEmail" name="name" class="form-control">
+                                                <input type="email" maxlength="200" id="txtEmail" name="name" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label>Citizenship</label>
@@ -370,7 +370,7 @@
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <div class="btn-group">
+                                                <div class="btn-group" style="display:none">
                                                     <input type="button" value="Reset" class="btn btn-sm btn-primary" id="btnResetTab1" />  @*onclick="window.location.reload()"*@
                                                 </div>
                                                 <div class="btn-group">
@@ -538,7 +538,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Province</label>
-                                                <input type="text" maxlength="50" id="txtProvince" name="name" class="form-control">
+                                                @Html.DropDownList("Province", new SelectList(ViewBag.Provinces, "ProvinceName", "ProvinceName"), "Select", new { @class = "form-control", @id = "txtProvince" })
                                             </div>
                                             <div class="form-group">
                                                 <label>Code</label>
@@ -548,7 +548,7 @@
                                                 <div class="btn-group">
                                                     <a data-toggle="tab" href="#tab-1" id="tab2BackButton" class="btn btn-sm btn-primary pull-right m-t-n-xs" aria-expanded="true">Back</a>
                                                 </div>
-                                                <div class="btn-group">
+                                                <div class="btn-group" style="display:none">
                                                     <button class="btn btn-sm btn-primary pull-right m-t-n-xs" id="btnPhysicalAddressReset">Reset</button>
                                                 </div>
                                                 <div class="btn-group">
@@ -601,24 +601,29 @@
                                                 <label>Easy Pay</label>
                                                 <input type="text" maxlength="50" id="txtEasyToPay" name="name" class="form-control">
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group" style="display:none">
                                                 <label>Select Branch</label>
-                                                <label>
-                                                    <em>*</em>
-                                                </label>
                                                 @Html.DropDownList("BranchList", Model.BranchList, "Select", new { Name = "BranchList", @id = "ddlBankBranch", @style = "width:100%", @class = "form-control" })
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group" style="display:none">
                                                 <label>Custom Payment Method</label>
                                                 @Html.DropDownList("CustomPaymentMethod", Model.CustomPaymentMethod, "Select", new { Name = "CustomPayment", @id = "ddlCustom1", @style = "width:100%", @class = "form-control" })
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group" style="display:none">
                                                 <label>Custom Grouping 2</label>
                                                 @Html.DropDownList("CustomGrouping2", Model.CustomGrouping2, "Select", new { Name = "CustomGrouping2", @id = "ddlCustom2", @style = "width:100%", @class = "form-control" })
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group" style="display:none">
                                                 <label>Custom Grouping 3</label>
                                                 @Html.DropDownList("CustomGrouping3", Model.CustomGrouping3, "Select", new { Name = "CustomGrouping3", @id = "ddlCustom3", @style = "width:100%", @class = "form-control" })
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Total Premium</label>
+                                                <input type="text" maxlength="20" id="txtTotalPremium" value="@Model.Currency @Model.TotalPremium" name="name" class="form-control" disabled>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Policy Status</label>
+                                                @Html.DropDownList("StatusList", new SelectList(ViewBag.Statuses, "Status", "Status"), new { @class = "form-control", @id = "ddlPolicyStatus", @name = "ddlPolicyStatus" })
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -647,22 +652,7 @@
                                                 <label>Policy Agent or Broker</label>
                                                 @Html.DropDownList("AgentList", Model.AgentList, "Select", new { Name = "Agent", @id = "ddlAgent", @style = "width:100%", @class = "form-control" })
                                             </div>
-                                            <div class="form-group">
-                                                <label>Total Premium</label>
-                                                <input type="text" maxlength="20" id="txtTotalPremium" value="@Model.Currency @Model.TotalPremium" name="name" class="form-control" disabled>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Policy Status</label>
 
-                                                @Html.DropDownList("StatusList", new SelectList(ViewBag.Statuses, "Status", "Status"), new { @class = "form-control", @id = "ddlPolicyStatus", @name = "ddlPolicyStatus" })
-
-                                                @*<select id="ddlPolicyStatus" class="form-control">
-                                                        <option value="0">Select an Option</option>
-                                                        <option value="Active">Active</option>
-                                                        <option value="Waiting">Waiting</option>
-                                                        <option value="OnTrial">OnTrial</option>
-                                                    </select>*@
-                                            </div>
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="form-group">
@@ -671,11 +661,11 @@
                                                     <a data-toggle="tab" href="#tab-2" id="tab3BackButton" class="btn btn-sm btn-primary pull-right m-t-n-xs" aria-expanded="true">Back</a>
                                                     @*<button class="btn btn-sm btn-primary pull-right m-t-n-xs" onclick="return goToTab(3,2);">Back</button>*@
                                                 </div>
-                                                <div class="btn-group">
+                                                <div class="btn-group" style="display:none">
                                                     <button class="btn btn-sm btn-primary pull-right m-t-n-xs" id="btnResetTab3">Reset</button>
                                                 </div>
                                                 <div class="btn-group">
-                                                    <a data-toggle="tab" href="#tab-9" id="tab3NextButton" class="btn btn-sm btn-primary pull-right m-t-n-xs" aria-expanded="true">Next</a>
+                                                    <a data-toggle="tab" href="#tab-4" id="tab3NextButton" class="btn btn-sm btn-primary pull-right m-t-n-xs" aria-expanded="true">Next</a>
                                                     @*<button class="btn btn-sm btn-primary pull-right m-t-n-xs" id="policyNextButton" onclick="return goToTab(3,9);">Next</button>*@
                                                 </div>
                                             </div>
@@ -685,7 +675,7 @@
                                 </div>
                                 <!-- #endregion Tab3 -->
                                 <!-- #region Tab9 -->
-                                <div id="tab-9" class="tab-pane">
+                                <div id="tab-9" class="tab-pane" style="display:none">
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="form-group">
@@ -729,7 +719,7 @@
                                                 <div class="btn-group">
                                                     <a data-toggle="tab" href="#tab-3" id="tab9BackButton" class="btn btn-sm btn-primary pull-right m-t-n-xs" aria-expanded="true">Back</a>
                                                 </div>
-                                                <div class="btn-group">
+                                                <div class="btn-group" style="display:none">
                                                     <button class="btn btn-sm btn-primary pull-right m-t-n-xs" id="btnResetTab9">Reset</button>
                                                 </div>
                                                 <div class="btn-group">
@@ -813,10 +803,10 @@
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <div class="btn-group">
-                                                    <a data-toggle="tab" href="#tab-9" id="tab4BackButton" class="btn btn-sm btn-primary pull-right m-t-n-xs" aria-expanded="true">Back</a>
+                                                    <a data-toggle="tab" href="#tab-3" id="tab4BackButton" class="btn btn-sm btn-primary pull-right m-t-n-xs" aria-expanded="true">Back</a>
                                                     @*<button class="btn btn-sm btn-primary pull-right m-t-n-xs" onclick="return goToTab(4,9);">Back</button>*@
                                                 </div>
-                                                <div class="btn-group">
+                                                <div class="btn-group" style="display:none">
                                                     <button class="btn btn-sm btn-primary pull-right m-t-n-xs" id="btnResetTab4">Reset</button>
                                                 </div>
                                                 <div class="btn-group">
@@ -872,7 +862,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label>ID Number <em>*</em></label>
-                                                                <input type="text" pattern="/d*" maxlength="20" id="txtDependentIdNumber" name="name" class="form-control" onkeyup="DependentExtendedIDNumberChanges();">
+                                                                <input type="text" pattern="/d*" maxlength="13" id="txtDependentIdNumber" name="name" class="form-control" onkeyup="DependentExtendedIDNumberChanges();">
                                                             </div>
                                                             <div class="form-group">
                                                                 <label>Date Of Birth <em>*</em></label>
@@ -940,7 +930,7 @@
                                                     </div>
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
-                                                            <div class="btn-group">
+                                                            <div class="btn-group" style="display:none">
                                                                 <button class="btn btn-sm btn-primary pull-right m-t-n-xs">Reset</button>
                                                             </div>
                                                             <div class="btn-group">
@@ -1236,7 +1226,7 @@
                         </div>
                         <div class="form-group">
                             <label>ID Number <em></em></label>
-                            <input type="text" pattern="/d*" maxlength="20" id="txtIdNumberPopup" name="name" class="form-control" onkeyup="DateComparisionJavascriptPopup();">
+                            <input type="text" pattern="/d*" maxlength="13" id="txtIdNumberPopup" name="name" class="form-control" onkeyup="DateComparisionJavascriptPopup();">
                         </div>
                         <div class="form-group">
                             <label>Date Of Birth <em>*</em></label>
@@ -1340,7 +1330,8 @@
             })
             $("#tab3NextButton").click(function(){
                 $("#tab3").removeClass('active')
-                $("#tab9").addClass("active");
+                //$("#tab9").addClass("active");
+                $("#tab4").addClass("active");
             })
             $("#tab9NextButton").click(function(){
                 $("#tab9").removeClass('active')
@@ -1362,7 +1353,7 @@
             })
             $("#tab4BackButton").click(function(){
                 $("#tab4").removeClass("active");
-                $("#tab9").addClass('active');
+                $("#tab3").addClass('active');
             })
 
             //Tab1 validation
@@ -1513,13 +1504,11 @@
             $("#tab3NextButton").click(function () {
                 var policyName = $("#tab-3 #ddlPolicy").val();
                 var PolicyNo = $("#tab-3 #txtPolicyNo").val();
-                var Branch = $("#tab-3 #ddlBankBranch").val();
                 var flag = true;
                 var policyNameFlag = true;
                 var PolicyNoFlag = true;
-                var branchFlag = true;
                 //var startDate = $("#tab-3 #txtPolicyStartDate").val();
-                if (policyName == "" && PolicyNo == "" && Branch == "") {
+                if (policyName == "" && PolicyNo == "") {
                     if ($("#tab-3 #txtPolicyNo").attr('disabled') || $("#tab-3 #txtPolicyNo").prop('disabled')) {
                         $("li#SelectPolicyId").html('');
                     $("li#SelectPolicyId").hide();
@@ -1570,19 +1559,7 @@
 
 
                     }
-                    if(Branch != ""){
-                        $("li#SelectBranch").html('');
-                        $("li#SelectBranch").hide();
-                        branchFlag = true;
-                    }else{
-                        $("li#SelectBranch").hide();
-                        $("li#SelectBranch").html('');
-                        $("#validationTabMessage").show();
-                        $("#validationTabMessage").append('<li id="SelectBranch">Select a Branch.</li>');
-                        branchFlag = false;
-                    }
-
-                    if(flag == false || policyNameFlag == false || PolicyNoFlag == false || branchFlag == false)
+                    if(flag == false || policyNameFlag == false || PolicyNoFlag == false)
                         return false;
                     else{
                         $("#tab3").removeClass('active')
@@ -2232,14 +2209,20 @@
                             },
                             {
                                 "render": function (data, type, full, meta) {
+                                    var hasEditRights = '@ViewBag.HasEditRight' == "True" ? true : false;
+                                    var hasDeleteRights = '@ViewBag.HasDeleteRight' == "True" ? true : false;
+
                                     var dom = "<div class='row'>";
                                     var data1 = JSON.stringify(full);
                                     data1 = data1.replace(/"/g, "\'")
-                                    var editNoteUrl = '<div class="col-sm-4 text-center"><a  onclick="UpdateMemberPolicy(' + data1 + ')"><i class="fa fa-edit"></i></a></div>';
-                                    dom = dom + editNoteUrl;
-
-                                    var deleteNoteUrl = '<div class="col-sm-4 text-center"> <a onclick="DeleteMemberPolicy(' + data1 + ')"; ><i class="fa fa-trash-o"></i></a></div>';
-                                    dom = dom + deleteNoteUrl;
+                                    if (hasEditRights) {
+                                        var editNoteUrl = '<div class="col-sm-4 text-center"><a  onclick="UpdateMemberPolicy(' + data1 + ')"><i class="fa fa-edit"></i></a></div>';
+                                        dom = dom + editNoteUrl;
+                                    }
+                                    if (hasDeleteRights) {
+                                        var deleteNoteUrl = '<div class="col-sm-4 text-center"> <a onclick="DeleteMemberPolicy(' + data1 + ')"; ><i class="fa fa-trash-o"></i></a></div>';
+                                        dom = dom + deleteNoteUrl;
+                                    }
 
                                     dom = dom + "</div>";
                                     return dom;
@@ -2405,15 +2388,19 @@
                         { "data": "ModifiedUser", "name": "ModifiedUser", "autoWidth": true },
                         {
                             "render": function (data, type, full, meta) {
-
+                                var hasEditRights = '@ViewBag.HasEditRight' == "True" ? true : false;
+                                var hasDeleteRights = '@ViewBag.HasDeleteRight' == "True" ? true : false;
                                 var dom = "<div class='row'>";
                                 var data1 = JSON.stringify(full);
                                 data1 = data1.replace(/"/g, "\'")
-                                var editNoteUrl = '<div class="col-sm-4 text-center"><a  onclick="EditNote(' + data1 + ')"><i class="fa fa-edit"></i></a></div>';
-                                dom = dom + editNoteUrl;
-
-                                var deleteNoteUrl = '<div class="col-sm-4 text-center"> <a onclick="DeleteNote(' + data1 + ')"; ><i class="fa fa-trash-o"></i></a></div>';
-                                dom = dom + deleteNoteUrl;
+                                if (hasEditRights) {
+                                    var editNoteUrl = '<div class="col-sm-4 text-center"><a  onclick="EditNote(' + data1 + ')"><i class="fa fa-edit"></i></a></div>';
+                                    dom = dom + editNoteUrl;
+                                }
+                                if (hasDeleteRights) {
+                                    var deleteNoteUrl = '<div class="col-sm-4 text-center"> <a onclick="DeleteNote(' + data1 + ')"; ><i class="fa fa-trash-o"></i></a></div>';
+                                    dom = dom + deleteNoteUrl;
+                                }
 
                                 var viewNoteUrl = '<div class="col-sm-4 text-center"> <a onclick="ViewNote(' + data1 + ')"; ><i class="fa fa-search"></i></a></div>';
                                 dom = dom + viewNoteUrl;
@@ -2586,15 +2573,19 @@
                             },
                             {
                                 "render": function (data, type, full, meta) {
-
+                                    var hasEditRights = '@ViewBag.HasEditRight' == "True" ? true : false;
+                                    var hasDeleteRights = '@ViewBag.HasDeleteRight' == "True" ? true : false;
                                     var dom = "<div class='row'>";
                                     var data1 = JSON.stringify(full);
                                     data1 = data1.replace(/"/g, "\'")
-                                    var editProductUrl = '<div class="col-sm-4 text-center"><a  onclick="EditProduct(' + data1 + ')"><i class="fa fa-edit"></i></a></div>';
-                                    dom = dom + editProductUrl;
-
-                                    var deleteProductUrl = '<div class="col-sm-4 text-center"> <a onclick="DeleteProduct(' + data1 + ')"; ><i class="fa fa-trash-o"></i></a></div>';
-                                    dom = dom + deleteProductUrl;
+                                    if (hasEditRights) {
+                                        var editProductUrl = '<div class="col-sm-4 text-center"><a  onclick="EditProduct(' + data1 + ')"><i class="fa fa-edit"></i></a></div>';
+                                        dom = dom + editProductUrl;
+                                    }
+                                    if (hasDeleteRights) {
+                                        var deleteProductUrl = '<div class="col-sm-4 text-center"> <a onclick="DeleteProduct(' + data1 + ')"; ><i class="fa fa-trash-o"></i></a></div>';
+                                        dom = dom + deleteProductUrl;
+                                    }
 
                                     dom = dom + "</div>";
                                     return dom;
@@ -2897,7 +2888,8 @@
                             },
                             {
                                 "render": function (data, type, full, meta) {
-
+                                    var hasEditRights = '@ViewBag.HasEditRight' == "True" ? true : false;
+                                    var hasDeleteRights = '@ViewBag.HasDeleteRight' == "True" ? true : false;
                                     var dom = "<div class='row'>";
                                     var data1 = JSON.stringify(full);
                                     data1 = data1.replace(/"/g, "\'");
@@ -2915,9 +2907,10 @@
 
                                     //var viewDocumentUrl = '<div class="col-sm-4 text-center"><a  onclick="ViewDocument(' + data1 + ')"><i class="fa fa-search"></i></a></div>';
                                     //dom = dom + viewDocumentUrl;
-
-                                    var deleteDocumentUrl = '<div class="col-sm-4 text-center"><a  onclick="DeleteDocument(' + data1 + ')"><i class="fa fa-trash"></i></a></div>';
-                                    dom = dom + deleteDocumentUrl;
+                                    if (hasDeleteRights) {
+                                        var deleteDocumentUrl = '<div class="col-sm-4 text-center"><a  onclick="DeleteDocument(' + data1 + ')"><i class="fa fa-trash"></i></a></div>';
+                                        dom = dom + deleteDocumentUrl;
+                                    }
 
                                     dom = dom + "</div>";
                                     return dom;
@@ -3160,15 +3153,19 @@
                             { "data": "DependentStatus", "name": "DependentStatus", "autoWidth": true },
                             {
                                 "render": function (data, type, full, meta) {
-
+                                    var hasEditRights = '@ViewBag.HasEditRight' == "True" ? true : false;
+                                    var hasDeleteRights = '@ViewBag.HasDeleteRight' == "True" ? true : false;
                                     var dom = "<div class='row'>";
                                     var data1 = JSON.stringify(full);
                                     data1 = data1.replace(/"/g, "\'")
-                                    var editProductUrl = '<div class="col-sm-4 text-center"><a  onclick="EditDependency(' + data1 + ')"><i class="fa fa-edit"></i></a></div>';
-                                    dom = dom + editProductUrl;
-
-                                    var deleteProductUrl = '<div class="col-sm-4 text-center"> <a onclick="DeleteDependency(' + data1 + ')"; ><i class="fa fa-trash-o"></i></a></div>';
-                                    dom = dom + deleteProductUrl;
+                                    if (hasEditRights) {
+                                        var editProductUrl = '<div class="col-sm-4 text-center"><a  onclick="EditDependency(' + data1 + ')"><i class="fa fa-edit"></i></a></div>';
+                                        dom = dom + editProductUrl;
+                                    }
+                                    if (hasDeleteRights) {
+                                        var deleteProductUrl = '<div class="col-sm-4 text-center"> <a onclick="DeleteDependency(' + data1 + ')"; ><i class="fa fa-trash-o"></i></a></div>';
+                                        dom = dom + deleteProductUrl;
+                                    }
 
                                     dom = dom + "</div>";
                                     return dom;
@@ -4079,7 +4076,6 @@
     };
 
     function Validate() {
-        debugger;
         var idNumber = $("#txtIdNumber").val();
         // assume everything is correct and if it later turns out not to be, just set this to false
         var correct = true;
@@ -4136,13 +4132,19 @@
             var genderCode = idNumber.substring(6, 10);
             var gender = parseInt(genderCode) < 5000 ? "Female" : "Male";
 
-            if(gender == "Female")
-            {
-                $("#tab-1 input[name=gender][value=1]").prop('checked',true);
-            }else{
-                $("#tab-1 input[name=gender][value=0]").prop('checked',true);
+            if (gender == "Female") {
+                $("#tab-1 input[name=gender][value=1]").prop('checked', true);
+            } else {
+                $("#tab-1 input[name=gender][value=0]").prop('checked', true);
             }
             CalculateAge(fullDate);
+        }
+        else {
+            if (idNumber != "") {
+                alert("Id Number invalid");
+                $("#txtBirthDay").val("");
+                $("#tab-1 #txtAge").val("");
+            }
         }
         return false;
     }
@@ -4203,13 +4205,19 @@
             var genderCode = idNumber.substring(6, 10);
             var gender = parseInt(genderCode) < 5000 ? "female" : "male";
 
-            if(gender == "female")
-            {
-                $("#female").prop('checked',true);
-            }else{
-                $("#male").prop('checked',true);
+            if (gender == "female") {
+                $("#female").prop('checked', true);
+            } else {
+                $("#male").prop('checked', true);
             }
             CalculateDependentExtendedAge(fullDate);
+        }
+        else {
+              if (idNumber != "") {
+                alert("Id Number invalid");
+                $("#tab-5 #txtDependentDateOfBirth").val("");
+                $("#tab-5 #txtDependentAge").val("");
+            }
         }
         return false;
     }
@@ -4277,6 +4285,13 @@
                 $("input[name=genderPopup][value=male]").prop('checked',true)
             }
             CalculateAgePopup(fullDate);
+        }
+         else {
+              if (idNumber != "") {
+                alert("Id Number invalid");
+                $("#txtDateOfBirthPopup").val("");
+                $("#txtAgePopup").val("");
+            }
         }
         return false;
     }
@@ -4594,26 +4609,29 @@
 
     })
     $('#ddlSelectCompany').change(function () {
+        var memberId = $("#pkiMemberID").val();
+        memberId = memberId == null && memberId == "" ? 0 : memberId;
         jQuery.ajax({
-            url: '@Url.Action("ChangeParlour", "Parlour", null, Request.Url.Scheme)',
-            data: { parlourId: $('#CompanyId').val() },
+            url: '@Url.Action("ManageMembers", "Members", null, Request.Url.Scheme)',
+            data: { pkiMemberID: memberId, parlourId: $(this).val() },
             type: "post",
             cache: false,
             success: function (result) {
 
             }
-        })
+        });
+        location.reload();
     });
-    $("#txtStartDatePopup").change(function(){
+    $("#txtStartDatePopup").change(function () {
         var DependencyStartdateChangeUrl = $("#DependencyStartdateChangeUrl").val();
         if ($("#txtStartDatePopup").val() != "") {
             var data =
             {
-                id : $("#tab-3 #ddlPolicy").val(),
-                date :$("#txtStartDatePopup").val()
+                id: $("#tab-3 #ddlPolicy").val(),
+                date: $("#txtStartDatePopup").val()
             }
 
-            if($("#tab-3 #ddlPolicy").val() != ""){
+            if ($("#tab-3 #ddlPolicy").val() != "") {
                 $.ajax({
                     url: DependencyStartdateChangeUrl,
                     data: data,
@@ -4631,8 +4649,28 @@
         }
 
 
-    })
-
+    });
+    function BindGroupDropdown(ParlourId) {
+        var ddlCustomers = jQuery("#tab-3 #ddlMemberSociety");
+        ddlCustomers.empty().append('<option selected="selected" value="0" disabled = "disabled">Select Group.....</option>');
+        jQuery.ajax({
+            url: '@Url.Action("BindGroupByCompanyId","Members")',
+            data: { CompanyId: ParlourId },
+            type: "post",
+            success: function (response) {
+                ddlCustomers.empty().append('<option selected="selected" value="0">Please select</option>');
+                jQuery.each(response, function () {
+                    ddlCustomers.append($("<option></option>").val(this['Value']).html(this['Text']));
+                });
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+    }
     //#region Jeenal Changes
     function CalculateDependentExtendedAge(fullDate) {
         var mdate = dateFormat(fullDate, 'mm-dd-yyyy', false)

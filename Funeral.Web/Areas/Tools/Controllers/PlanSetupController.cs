@@ -11,7 +11,7 @@ using System.Web.Security;
 
 namespace Funeral.Web.Areas.Tools.Controllers
 {
-    public class PlanSetupController : BaseAdminController
+    public class PlanSetupController : BaseToolController
     {
         public PlanSetupController() : base(15)
         {

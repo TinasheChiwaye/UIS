@@ -2,6 +2,7 @@
 using Funeral.BAL;
 using Funeral.Model;
 using Funeral.Web.App_Start;
+using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -9,6 +10,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web.UI.WebControls;
 using System.Xml;
 
@@ -16,6 +18,7 @@ namespace Funeral.Web.Admin
 {
     public partial class ImportExcel : AdminBasePage
     {
+        private readonly ISiteSettings _siteConfig = new SiteSettings();
         private static readonly List<string> memberTableColumns = new List<string>() {
                                                                             "CreateDate",
                                                                             "MemberType",
@@ -77,6 +80,27 @@ namespace Funeral.Web.Admin
                                                                              ,"OfficePremium"
                                                                              ,"EffectiveDate"
                                                                         };
+
+        private static readonly List<MappedDependents> FixExcelColumn = new List<MappedDependents> {
+            new MappedDependents() { SystemTypeName = "MemeberNumber", ExcelTypeName = "Arl Policy Number"},
+            new MappedDependents() { SystemTypeName = "MemberSociety", ExcelTypeName = "Scheme Name"},
+            new MappedDependents() { SystemTypeName = "PlanName", ExcelTypeName = "Book Name"},
+            new MappedDependents() { SystemTypeName = "ID Number", ExcelTypeName = "ID Number" },
+            new MappedDependents() { SystemTypeName = "Full Names", ExcelTypeName = "Name"},
+            new MappedDependents() { SystemTypeName = "Surname", ExcelTypeName = "Surname"},
+            new MappedDependents() { SystemTypeName = "Date Of Birth", ExcelTypeName = "Date  Of Birth"},
+            new MappedDependents() { SystemTypeName = "Gender", ExcelTypeName = "Gender"},
+            new MappedDependents() { SystemTypeName = "Age", ExcelTypeName = "Age"},
+            new MappedDependents() { SystemTypeName = "AgeBand", ExcelTypeName = "Age Band"},
+            new MappedDependents() { SystemTypeName = "Cover", ExcelTypeName = "Cover Amount"},
+            new MappedDependents() { SystemTypeName = "EffectiveDate", ExcelTypeName = "Effective Date"},
+            new MappedDependents() { SystemTypeName = "MemberType", ExcelTypeName = "Relationship  Type"},
+            new MappedDependents() { SystemTypeName = "PlanDesc", ExcelTypeName = "Rate Type"},
+            new MappedDependents() { SystemTypeName = "InceptionDate", ExcelTypeName = "Inception Date"},
+            new MappedDependents() { SystemTypeName = "PolicyStatus", ExcelTypeName = "Policy Status"},
+            new MappedDependents() { SystemTypeName = "Premium", ExcelTypeName = "Premium"},
+            new MappedDependents() { SystemTypeName = "ReinsurancePremium", ExcelTypeName = "Risk Premium"},
+        };
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -119,6 +143,7 @@ namespace Funeral.Web.Admin
                 btnSubmit.Visible = false;
                 DivImportedDataList.Visible = false;
                 btnConfirmAndSubmit.Visible = false;
+                btnExceptionReport.Visible = false;
             }
         }
         public void ValidateExcelColumns(string filePath)
@@ -171,11 +196,16 @@ namespace Funeral.Web.Admin
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
+                string SelectedValue = string.Empty;
+                var SelectedValueList = FixExcelColumn.FirstOrDefault(p => p.ExcelTypeName.ToLower().Equals(e.Row.Cells[1].Text.ToLower()));
                 MembersModel model = new MembersModel();
+                var List = memberTableColumns.OrderBy(q => q).ToList();
                 DropDownList DropDownList1 = (e.Row.FindControl("ddMemberColumn") as DropDownList);
-                DropDownList1.DataSource = memberTableColumns.OrderBy(q => q).ToList();
+                DropDownList1.DataSource = List;
                 DropDownList1.DataBind();
                 DropDownList1.Items.Insert(0, new ListItem("--Select Column--", "0"));
+                if (SelectedValueList != null)
+                    DropDownList1.SelectedValue = SelectedValueList.SystemTypeName;
             }
         }
         protected void btnSubmit_Click(object sender, EventArgs e)
@@ -219,6 +249,14 @@ namespace Funeral.Web.Admin
                             //mappedColumn Column add into XML
                             XmlElement child = MappingColumnxml.CreateElement("MappedColumns");
                             child.SetAttribute("DatabaseColumn", ddl.SelectedItem.Value.ToString());
+                            child.SetAttribute("ExcelColumn", row.Cells[1].Text);
+                            root.AppendChild(child);
+                        }
+                        else
+                        {
+                            //mappedColumn Column add into XML
+                            XmlElement child = MappingColumnxml.CreateElement("MappedColumns");
+                            child.SetAttribute("DatabaseColumn", "");
                             child.SetAttribute("ExcelColumn", row.Cells[1].Text);
                             root.AppendChild(child);
                         }
@@ -269,6 +307,7 @@ namespace Funeral.Web.Admin
                 btnSubmit.Visible = true;
                 DivImportedDataList.Visible = false;
                 btnConfirmAndSubmit.Visible = false;
+                btnExceptionReport.Visible = false;
             }
         }
         private void CopyMemberTableData(DataTable dt, Guid newImportedId)
@@ -359,7 +398,8 @@ namespace Funeral.Web.Admin
             btnSubmit.Visible = false;
             DivImportedDataList.Visible = true;
             btnConfirmAndSubmit.Visible = IsImported == null ? true : (IsImported.IsImported == true ? false : true);
-            btnConfirmAndSubmit.Visible = true;//Remove Afeter Testing
+            btnConfirmAndSubmit.Visible = true;
+            btnExceptionReport.Visible = true;
         }
         protected void btnConfirmAndSubmit_Click(object sender, EventArgs e)
         {
@@ -367,24 +407,27 @@ namespace Funeral.Web.Admin
             {
                 if (!string.IsNullOrEmpty(hdnnewImportedId.Value))
                 {
-                    DataTable dt = GetDataTable_FromGridView(ImportedDataGriview);
-                    if (dt != null)
-                    {
-                        if (dt.Rows.Count > 0)
-                        {
-                            ToolsSetingBAL.UpdateMemberStagingTable(dt);
-                            SavePlanCreatorStaging(Guid.Parse(hdnnewImportedId.Value));
-                            MembersBAL.SaveMemberStaging(hdnMemberName.Value, Guid.Parse(hdnnewImportedId.Value));
-                            ShowMessage(ref lblMessage, MessageType.Success, "Record imported successfully");
-                            btnConfirmAndSubmit.Visible = false;
-                            DivImportedDataList.Visible = false;
-                            ToolsSetingBAL.SaveImportedHistory(null, null, Guid.Parse(ddlSchemeList.SelectedValue), true, UserName, Guid.Parse(hdnnewImportedId.Value), null);
-                        }
-                    }
-                    else
-                    {
-                        ShowMessage(ref lblMessage, MessageType.Danger, "Record could not imported");
-                    }
+                    MembersBAL.MakeReadyForImportMember(Guid.Parse(hdnnewImportedId.Value));
+
+                    //SavePlanCreatorStaging(Guid.Parse(hdnnewImportedId.Value));
+                    //DataTable dt = GetDataTable_FromGridView(ImportedDataGriview);
+                    //if (dt != null)
+                    //{
+                    //    if (dt.Rows.Count > 0)
+                    //    {
+                    //        ToolsSetingBAL.UpdateMemberStagingTable(dt);
+                    //        //SavePlanCreatorStaging(Guid.Parse(hdnnewImportedId.Value));
+                    //        MembersBAL.SaveMemberStaging(hdnMemberName.Value, Guid.Parse(hdnnewImportedId.Value));
+                    //        ShowMessage(ref lblMessage, MessageType.Success, "Record imported successfully");
+                    //        btnConfirmAndSubmit.Visible = false;
+                    //        DivImportedDataList.Visible = false;
+                    //        ToolsSetingBAL.SaveImportedHistory(null, null, Guid.Parse(ddlSchemeList.SelectedValue), true, UserName, Guid.Parse(hdnnewImportedId.Value), null);
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    ShowMessage(ref lblMessage, MessageType.Danger, "Record could not imported");
+                    //}
                 }
                 else
                 {
@@ -399,6 +442,7 @@ namespace Funeral.Web.Admin
                 GridviewData.Visible = false;
                 DivImportedDataList.Visible = true;
                 btnConfirmAndSubmit.Visible = true;
+                btnExceptionReport.Visible = true;
             }
         }
         public void SavePlanCreatorStaging(Guid hdnnewImportedId)
@@ -420,7 +464,7 @@ namespace Funeral.Web.Admin
                             {
                                 SystemMemberType = UserTypeList.FirstOrDefault(x => x.UserTypeName.ToString().ToLower().Trim() == getMemberType.SystemTypeName.ToString().ToLower().Trim());
                             }
-                            var splitAge = item.AgeBand.Split('-').Select(x => Convert.ToInt32(x.ToString().Replace("+", ""))).ToList();
+                            var splitAge = item.AgeBand.Split('-').Select(x => Convert.ToInt32(Regex.Replace(x.ToString().Replace("+", ""), "[^0-9]", ""))).ToList();
                             if (splitAge.Count > 0)
                             {
                                 item.RelationTypeId = SystemMemberType == null ? 1 : (SystemMemberType.UserTypeId == 0 ? 1 : SystemMemberType.UserTypeId);
@@ -560,7 +604,7 @@ namespace Funeral.Web.Admin
                     var GetAttributesColumn = ToolsSetingBAL.GetXMLColumn(getHistory.MappingColumn);
                     if (GetAttributesColumn.Item1 != null)
                     {
-                        dbColumnName = "[" + String.Join("],[", GetAttributesColumn.Item1).ToString() + "]";
+                        dbColumnName = "[" + String.Join("],[", GetAttributesColumn.Item1.Where(s => !string.IsNullOrEmpty(s))).ToString() + "]";
                     }
                     hdnSelectedGridColumn.Value = dbColumnName;
                     hdnnewImportedId.Value = getHistory.NewImportedId.ToString();
@@ -613,6 +657,45 @@ namespace Funeral.Web.Admin
             DataRow[] dataRows = dt.Select("IsExecuted = " + false);
             DataTable dt1 = dataRows.CopyToDataTable();
             return dt1;
+        }
+
+        protected void btnExceptionReport_Click(object sender, EventArgs e)
+        {
+            string ExportTypeExtensions = "xls";
+            string ReportName = "ARL Import Data Exception Report";
+            Warning[] warnings;
+            string[] streamids;
+            string mimeType;
+            string encoding;
+            string extension;
+            string filename;
+
+            ReportViewer rpw = new ReportViewer();
+            rpw.ProcessingMode = ProcessingMode.Remote;
+            IReportServerCredentials irsc = new MyReportServerCredentials();
+            rpw.ServerReport.ReportServerCredentials = irsc;
+
+
+            rpw.ProcessingMode = ProcessingMode.Remote;
+            rpw.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
+            rpw.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/" + ReportName;
+            ReportParameterCollection reportParameters = new ReportParameterCollection();
+            reportParameters.Add(new ReportParameter("DateFrom", DateTime.Now.ToString("yyyy/MM/dd")));
+            reportParameters.Add(new ReportParameter("DateTo", DateTime.Now.ToString("yyyy/MM/dd")));
+            reportParameters.Add(new ReportParameter("Parlourid", ddlSchemeList.SelectedValue));
+            reportParameters.Add(new ReportParameter("Importid", hdnnewImportedId.Value));
+            rpw.ServerReport.SetParameters(reportParameters);
+            byte[] bytes = rpw.ServerReport.Render("Excel", null, out mimeType, out encoding, out extension, out streamids, out warnings);
+            filename = string.Format("{0}.{1}", ReportName, ExportTypeExtensions);
+
+            Response.ClearHeaders();
+            Response.Clear();
+            Response.AddHeader("Content-Disposition", "attachment;filename=" + filename);
+            Response.ContentType = mimeType;
+            Response.BinaryWrite(bytes);
+            Response.Flush();
+            Response.End();
+
         }
     }
 }

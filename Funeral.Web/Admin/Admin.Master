@@ -128,7 +128,8 @@
                                     <asp:Label runat="server" ID="Label2" Text="">Tel:&nbsp 011 321 0194</asp:Label><br />
                                     <asp:Label runat="server" ID="Label3" Text="">Email:&nbsp support@unpluggit.co.za</asp:Label><br />
                                     <asp:Label runat="server" ID="Label4" Text="">&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp   log a Call For Help Desk</asp:Label><br />
-                                </span></span>
+                                </span>
+                                </span>
 
                                 <ul class="dropdown-menu animated fadeInRight m-t-xs">
                                     <li>
@@ -159,25 +160,25 @@
                             <ul class="nav nav-second-level">
                                 <%foreach (var chielditem in RightsModels.Where(x => x.ParentRoleId == item.ID).ToList())
                                     {%>
-                                            <%if (chielditem.MenuLevel == 1)
-                                                { %>
-                                                 <li><a id="childmenu<%=item.ID %>" href="<%=ResolveUrl("~" + chielditem.MVCURL)%>"><%=chielditem.PageName %></a></li>
-                                            <%}
-                                            else
-                                            {%>
-                                                  <li>
-                                                    <a href="#"><span class="nav-label"><%=chielditem.PageName %></span><span class="fa arrow"></span></a> 
-                                                       <ul class="nav nav-third-level">
+                                <%if (chielditem.MenuLevel == 1)
+                                    { %>
+                                <li><a id="childmenu<%=item.ID %>" href="<%=ResolveUrl("~" + chielditem.MVCURL)%>"><%=chielditem.PageName %></a></li>
+                                <%}
+                                    else
+                                    {%>
+                                <li>
+                                    <a href="#"><span class="nav-label"><%=chielditem.PageName %></span><span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level">
 
-                                                           <%foreach (var thirdLevelitem in RightsModels.Where(x => x.ParentRoleId == chielditem.ID).ToList())
-                                                               { %>
+                                        <%foreach (var thirdLevelitem in RightsModels.Where(x => x.ParentRoleId == chielditem.ID).ToList())
+                                            { %>
 
-                                                                   <li><a id="childmenu<%=chielditem.ID %>" href="<%=ResolveUrl("~" + thirdLevelitem.MVCURL)%>"><%=thirdLevelitem.PageName %></a></li>
-                                                           <%} %>
-                                                        </ul>
-                                                      </li>
-                                            <%} %>
-                                
+                                        <li><a id="childmenu<%=chielditem.ID %>" href="<%=ResolveUrl("~" + thirdLevelitem.MVCURL)%>"><%=thirdLevelitem.PageName %></a></li>
+                                        <%} %>
+                                    </ul>
+                                </li>
+                                <%} %>
+
                                 <%} %>
                             </ul>
                         </li>
@@ -254,7 +255,7 @@
         <link href='<%=ResolveUrl ("~/Content/plugins/datapicker/datepicker3.css") %>' rel="stylesheet" />
         <script src="<%=ResolveUrl("~/Scripts/plugins/blueimp/jquery.blueimp-gallery.min.js")%>"></script>
 
-        
+
         <asp:ContentPlaceHolder runat="server" ID="ScriptControl">
         </asp:ContentPlaceHolder>
     </form>

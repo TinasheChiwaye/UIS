@@ -65,7 +65,6 @@ namespace Funeral.Model
         [DataType(DataType.Time)]
         public DateTime TimeOfFuneral { get; set; }
         public string FuneralCemetery { get; set; }
-        [Required(ErrorMessage = "The Street Address is required")]
         public string Address1 { get; set; }
         public string Address2 { get; set; }
         public string Address3 { get; set; }

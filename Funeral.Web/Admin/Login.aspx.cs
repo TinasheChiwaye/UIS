@@ -33,6 +33,7 @@ namespace Funeral.Web.Admin
                     {
 
                         string UserName = username.Text;
+                        Session["UserName"] = UserName;
                         string cookiestr;
                         FormsAuthenticationTicket tkt = new FormsAuthenticationTicket(1, UserName, DateTime.Now,
                             DateTime.Now.AddMinutes(30), false, model.parlourid.ToString() + "|" + model.ApplicationName + "|" + model.Name + "|" + model.PkiUserID + "|" + model.Currency);

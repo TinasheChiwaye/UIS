@@ -953,7 +953,7 @@ namespace Funeral.DAL
         }
         public static void SaveMemberStaging(string MemberType, Guid ImportId)
         {
-            string query = "SaveMemberStaging";
+            string query = "SaveMemberStagingNew";//"SaveMemberStaging";
             DbParameter[] ObjParam = new DbParameter[2];
             ObjParam[0] = new DbParameter("@MemberType", DbParameter.DbType.NVarChar, 0, MemberType);
             ObjParam[1] = new DbParameter("@ImportId", DbParameter.DbType.UniqueIdentifier, 0, ImportId);
@@ -1014,6 +1014,12 @@ namespace Funeral.DAL
             ObjParam[0] = new DbParameter("@Parlourid", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetUnderWriterList", ObjParam);
         }
-
+        public static void ReadyToImportMember( Guid ImportId)
+        {
+            string query = "ImportMemberReadyForJob";//"SaveMemberStaging";
+            DbParameter[] ObjParam = new DbParameter[1];
+            ObjParam[0] = new DbParameter("@ImportId", DbParameter.DbType.UniqueIdentifier, 0, ImportId);
+            DbConnection.ExecuteNonQuery(CommandType.StoredProcedure, query, ObjParam);
+        }
     }
 }

@@ -14,7 +14,7 @@ using static Funeral.Web.Areas.Admin.Controllers.MembersController;
 
 namespace Funeral.Web.Areas.Admin.Controllers
 {
-    public class AgentInfoSetupController : BaseAdminController
+    public class AgentInfoSetupController : BaseToolController
     {
         public AgentInfoSetupController() : base(17)
         {

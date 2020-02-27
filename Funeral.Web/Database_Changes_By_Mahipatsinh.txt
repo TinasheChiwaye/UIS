@@ -668,3 +668,103 @@ SchemeSummaryByParlourId
 sp_RecreateBillingMemberPayments
 sp_UpdateMemberPayments
 AutoallocateMemberPaymentsNew
+
+
+
+15-02-2020
+===================================================
+
+Alter SP
+---------------------
+1.[SelectMemberBeneficiaries]
+2.[SelectMembersAndDependencies]
+
+
+
+17-02-2020
+============================================================
+New SP
+-------------------------------
+1.[GetBanksByParlourId]
+2.[CheckDuplicateClaims]
+
+
+18-02-2020
+===================================================
+Alter Table
+--------------------
+1.Claim 
+	ALTER TABLE Claims ADD ClaimNumber NVARCHAR(50) NULL
+
+
+SQL FUnction
+--------------------
+1.GetAutoGenrateClaimNumber
+
+
+Alter SP
+-------------------------
+1.[SelectClaimsBypkid]
+2.[SaveClaims]
+
+
+19-02-2020
+====================================
+New SP
+-----------------------------------------
+1.[UpdatePolicyStatus]
+
+
+
+20-02-2020
+===============================
+Alter Table 
+-----------------
+1.ClaimReasons
+	ALTER TABLE ClaimReasons ADD ClaimStatusId int NULL
+
+New SP
+-------------------------
+1.[GetClaimReasonByClaimStatus]
+
+
+21-02-2020
+===========================
+
+SQL FUNCTION
+----------------------------
+1.RemoveChars
+
+
+Alert Table
+-------------------------
+1.ImportedHistory
+	ALTER TABLE ImportedHistory ADD Status nvarchar(max) NULL
+	ALTER TABLE ImportedHistory ADD StartTime Datetime NULL
+	ALTER TABLE ImportedHistory ADD EndTime Datetime NULL
+	ALTER TABLE ImportedHistory ADD ReadyToImport bit NULL
+
+
+New SP
+--------------------------
+1.[SaveMemberStagingNew]
+3.ImportMemberReadyForJob
+
+Alter SP
+-------------------------
+1.[SaveImportedHistory]
+
+
+
+24-02-2020
+======================================================
+Alter Store Procedure
+------------------------------
+1.[GetClaimReasonByClaimStatus]
+
+Table Data
+------------------
+Truncate table ClaimStatus
+Truncate table ClaimReasons
+
+And Add New Record from Local Database

@@ -121,64 +121,49 @@ namespace Funeral.Web.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult DownloadReportPartial(Guid ParlourId, string ReferenceNumber)
         {
-            ReportParameters modal = new ReportParameters();
-            modal.parlourId = ParlourId;
-            modal.toDate = DateTime.Now.AddYears(-1);
-            modal.fromDate = DateTime.Now;
-            modal.ReferenceNumber = ReferenceNumber;
-            return PartialView("_ReportParametersModal", modal);
-        }
-        [HttpPost]
-        public ActionResult DownloadReport(ReportParameters modal)
-        {
-            if (ModelState.IsValid)
-            {
-                string ExportTypeExtensions = "xls";
-                modal.ReportName = "ARL_Scheme_Billing Report";
-                Warning[] warnings;
-                string[] streamids;
-                string mimeType;
-                string encoding;
-                string extension;
-                string filename;
+            string ExportTypeExtensions = "xls";
+            string ReportName = "ARL_Scheme_Billing Report";
+            Warning[] warnings;
+            string[] streamids;
+            string mimeType;
+            string encoding;
+            string extension;
+            string filename;
 
-                ReportViewer rpw = new ReportViewer();
-                rpw.ProcessingMode = ProcessingMode.Remote;
-                IReportServerCredentials irsc = new MyReportServerCredentials();
-                rpw.ServerReport.ReportServerCredentials = irsc;
+            ReportViewer rpw = new ReportViewer();
+            rpw.ProcessingMode = ProcessingMode.Remote;
+            IReportServerCredentials irsc = new MyReportServerCredentials();
+            rpw.ServerReport.ReportServerCredentials = irsc;
 
 
-                rpw.ProcessingMode = ProcessingMode.Remote;
-                rpw.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
-                rpw.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/" + modal.ReportName;
-                ReportParameterCollection reportParameters = new ReportParameterCollection();
-                reportParameters.Add(new ReportParameter("DateFrom", modal.fromDate.ToString()));
-                reportParameters.Add(new ReportParameter("DateTo", modal.toDate.ToString()));
-                reportParameters.Add(new ReportParameter("Parlourid", modal.parlourId.ToString()));
-                //reportParameters.Add(new ReportParameter("RefNo", modal.ReferenceNumber.ToString()));
-                rpw.ServerReport.SetParameters(reportParameters);
-                byte[] bytes = rpw.ServerReport.Render("Excel", null, out mimeType, out encoding, out extension, out streamids, out warnings);
-                filename = string.Format("{0}.{1}", modal.ReportName, ExportTypeExtensions);
+            rpw.ProcessingMode = ProcessingMode.Remote;
+            rpw.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
+            rpw.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/" + ReportName;
+            ReportParameterCollection reportParameters = new ReportParameterCollection();
+            reportParameters.Add(new ReportParameter("DateFrom", DateTime.Now.ToString("yyyy/MM/dd")));
+            reportParameters.Add(new ReportParameter("DateTo", DateTime.Now.ToString("yyyy/MM/dd")));
+            reportParameters.Add(new ReportParameter("Parlourid", ParlourId.ToString()));
+            reportParameters.Add(new ReportParameter("RefNo", ReferenceNumber));
+            rpw.ServerReport.SetParameters(reportParameters);
+            byte[] bytes = rpw.ServerReport.Render("Excel", null, out mimeType, out encoding, out extension, out streamids, out warnings);
+            filename = string.Format("{0}.{1}", ReportName, ExportTypeExtensions);
 
-                Response.ClearHeaders();
-                Response.Clear();
-                Response.AddHeader("Content-Disposition", "attachment;filename=" + filename);
-                Response.ContentType = mimeType;
-                Response.BinaryWrite(bytes);
-                Response.Flush();
-                Response.End();
-
-            }
-            TempData["message"] = ShowMessage(MessageType.Success, "Report Download");
-            return Redirect(Request.UrlReferrer.ToString());
+            Response.ClearHeaders();
+            Response.Clear();
+            Response.AddHeader("Content-Disposition", "attachment;filename=" + filename);
+            Response.ContentType = mimeType;
+            Response.BinaryWrite(bytes);
+            Response.Flush();
+            Response.End();
+            return File(bytes, System.Net.Mime.MediaTypeNames.Application.Octet, filename);
         }
         [HttpGet]
         public ActionResult SendEmailReportPartial(Guid ParlourId, string ReferenceNumber)
         {
             ReportParameters modal = new ReportParameters();
             modal.parlourId = ParlourId;
-            modal.toDate = DateTime.Now.AddYears(-1);
             modal.fromDate = DateTime.Now;
+            modal.toDate = DateTime.Now;
             modal.ReferenceNumber = ReferenceNumber;
             return PartialView("_ReportEmailSendModal", modal);
         }
@@ -206,8 +191,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 rpw.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
                 rpw.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/" + modal.ReportName;
                 ReportParameterCollection reportParameters = new ReportParameterCollection();
-                reportParameters.Add(new ReportParameter("DateFrom", modal.fromDate.ToString()));
-                reportParameters.Add(new ReportParameter("DateTo", modal.toDate.ToString()));
+                reportParameters.Add(new ReportParameter("DateFrom", modal.fromDate.ToString("yyyy/MM/dd")));
+                reportParameters.Add(new ReportParameter("DateTo", modal.toDate.ToString("yyyy/MM/dd")));
                 reportParameters.Add(new ReportParameter("Parlourid", modal.parlourId.ToString()));
                 //reportParameters.Add(new ReportParameter("RefNo", modal.ReferenceNumber.ToString()));
                 rpw.ServerReport.SetParameters(reportParameters);
@@ -237,55 +222,41 @@ namespace Funeral.Web.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult DownloadReconBillingReportPartial(Guid ParlourId, string ReferenceNumber)
         {
-            ReportParameters modal = new ReportParameters();
-            modal.parlourId = ParlourId;
-            modal.toDate = DateTime.Now.AddYears(-1);
-            modal.fromDate = DateTime.Now;
-            modal.ReferenceNumber = ReferenceNumber;
-            return PartialView("_ReconReportModal", modal);
-        }
-        [HttpPost]
-        public ActionResult ReconReportDownload(ReportParameters modal)
-        {
-            if (ModelState.IsValid)
-            {
-                string ExportTypeExtensions = "xls";
-                modal.ReportName = "ARL_Scheme_Billing Recon Report";
-                Warning[] warnings;
-                string[] streamids;
-                string mimeType;
-                string encoding;
-                string extension;
-                string filename;
+            string ExportTypeExtensions = "xls";
+            string ReportName = "ARL_Scheme_Billing Recon Report";
+            Warning[] warnings;
+            string[] streamids;
+            string mimeType;
+            string encoding;
+            string extension;
+            string filename;
 
-                ReportViewer rpw = new ReportViewer();
-                rpw.ProcessingMode = ProcessingMode.Remote;
-                IReportServerCredentials irsc = new MyReportServerCredentials();
-                rpw.ServerReport.ReportServerCredentials = irsc;
+            ReportViewer rpw = new ReportViewer();
+            rpw.ProcessingMode = ProcessingMode.Remote;
+            IReportServerCredentials irsc = new MyReportServerCredentials();
+            rpw.ServerReport.ReportServerCredentials = irsc;
 
 
-                rpw.ProcessingMode = ProcessingMode.Remote;
-                rpw.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
-                rpw.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/" + modal.ReportName;
-                ReportParameterCollection reportParameters = new ReportParameterCollection();
-                reportParameters.Add(new ReportParameter("DateFrom", modal.fromDate.ToString()));
-                reportParameters.Add(new ReportParameter("DateTo", modal.toDate.ToString()));
-                reportParameters.Add(new ReportParameter("Parlourid", modal.parlourId.ToString()));
-                reportParameters.Add(new ReportParameter("RefNo", modal.ReferenceNumber.ToString()));
-                rpw.ServerReport.SetParameters(reportParameters);
-                byte[] bytes = rpw.ServerReport.Render("Excel", null, out mimeType, out encoding, out extension, out streamids, out warnings);
-                filename = string.Format("{0}.{1}", modal.ReportName, ExportTypeExtensions);
+            rpw.ProcessingMode = ProcessingMode.Remote;
+            rpw.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
+            rpw.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/" + ReportName;
+            ReportParameterCollection reportParameters = new ReportParameterCollection();
+            reportParameters.Add(new ReportParameter("DateFrom", DateTime.Now.ToString("yyyy/MM/dd")));
+            reportParameters.Add(new ReportParameter("DateTo", DateTime.Now.ToString("yyyy/MM/dd")));
+            reportParameters.Add(new ReportParameter("Parlourid", ParlourId.ToString()));
+            reportParameters.Add(new ReportParameter("RefNo", ReferenceNumber.ToString()));
+            rpw.ServerReport.SetParameters(reportParameters);
+            byte[] bytes = rpw.ServerReport.Render("Excel", null, out mimeType, out encoding, out extension, out streamids, out warnings);
+            filename = string.Format("{0}.{1}", ReportName, ExportTypeExtensions);
 
-                Response.ClearHeaders();
-                Response.Clear();
-                Response.AddHeader("Content-Disposition", "attachment;filename=" + filename);
-                Response.ContentType = mimeType;
-                Response.BinaryWrite(bytes);
-                Response.Flush();
-                Response.End();
-            }
-            TempData["message"] = ShowMessage(MessageType.Success, "Report Download");
-            return Redirect(Request.UrlReferrer.ToString());
+            Response.ClearHeaders();
+            Response.Clear();
+            Response.AddHeader("Content-Disposition", "attachment;filename=" + filename);
+            Response.ContentType = mimeType;
+            Response.BinaryWrite(bytes);
+            Response.Flush();
+            Response.End();
+            return File(bytes, System.Net.Mime.MediaTypeNames.Application.Octet, filename);
         }
     }
 }

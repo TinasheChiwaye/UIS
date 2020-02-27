@@ -40,10 +40,6 @@
                                 <div class="col-sm-6 text-sm-left"> @Model.Item1.ClaimantDateOfBirth.ToString("dd MMM yyyy hh:mm tt")</div>
                             </dl>
                             <dl class="row mb-0">
-                                <div class="col-sm-6 text-sm-right"><dt>Claiming For:</dt> </div>
-                                <div class="col-sm-6 text-sm-left"> @Model.Item1.ClaimingFor </div>
-                            </dl>
-                            <dl class="row mb-0">
                                 <div class="col-sm-6 text-sm-right"><dt>Gender :</dt></div>
                                 @{ var Gender = Model.Item1.ClaimantGender == "" ? "Not Declared" : (Model.Item1.ClaimantGender == "0" ? "Male" : "Female");
                                     <div class="col-sm-6 text-sm-left">@Gender</div>

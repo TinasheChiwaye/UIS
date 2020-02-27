@@ -163,7 +163,7 @@
                     <div runat="server" class="row" id="DivImportedDataList">
                         <div class="col-lg-12">
                             <div id="GridViewtablecontainer">
-                                <asp:GridView ID="ImportedDataGriview" runat="server" Width="100%" DataKeyNames="ID" CssClass="table table-striped table-bordered table-hover ImportedDataGriview gvTheGrid"
+                                <asp:GridView ID="ImportedDataGriview" runat="server" Width="100%" DataKeyNames="ID" CssClass="table table-striped table-bordered table-hover ImportedDataGriview gvTheGrid" AllowPaging="true" PageSize="50" OnPageIndexChanging="ImportedDataGriview_OnPageIndexChanging"
                                     AutoGenerateColumns="True" OnRowDataBound="ImportedDataGriview_OnRowDataBound" EmptyDataText="There are no data to display.">
                                     <PagerStyle CssClass="pagination-ys" />
                                     <Columns>
@@ -173,9 +173,16 @@
                         </div>
                         <div class="col-sm-12">
                             <br />
-                            <asp:HiddenField ID="hdnnewImportedId" runat="server" />
-                            <asp:HiddenField ID="hdnSelectedGridColumn" runat="server" />
-                            <asp:Button runat="server" ID="btnConfirmAndSubmit" Width="100%" CssClass="btn btn-md btn-primary" Visible="false" OnClick="btnConfirmAndSubmit_Click" Text="Confirm and Save" />
+                            <div class="col-sm-6">
+                                <asp:HiddenField ID="hdnnewImportedId" runat="server" />
+                                <asp:HiddenField ID="hdnSelectedGridColumn" runat="server" />
+                            </div>
+                            <div class="col-sm-3">
+                                <asp:Button runat="server" ID="btnConfirmAndSubmit" Width="100%" CssClass="btn btn-md btn-primary" Visible="false" OnClick="btnConfirmAndSubmit_Click" Text="Confirm and Import to Member" />
+                            </div>
+                            <div class="col-sm-3">
+                                <asp:Button runat="server" ID="btnExceptionReport" Width="100%" CssClass="btn btn-md btn-primary" Visible="false" OnClick="btnExceptionReport_Click" Text="Exception Report" />
+                            </div>
                         </div>
                     </div>
                 </div>

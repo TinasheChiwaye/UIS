@@ -14,7 +14,7 @@ using System.Web.UI.WebControls;
 
 namespace Funeral.Web.Areas.Admin.Controllers
 {
-    public class BaseAdminController : Controller
+    public class BaseToolController : Controller
     {
         public IPrincipal UserData { get; }
 
@@ -27,7 +27,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
         {
             return Redirect("~/Admin/Login.aspx");
         }
-        public BaseAdminController(int pageId = 0)
+        public BaseToolController(int pageId = 0)
         {
             if (pageId != 0)
                 this.dbPageId = pageId;
@@ -44,7 +44,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 HasAccess = obj.Where(x => x.ID == dbPageId).Select(x => x.HasAccess).FirstOrDefault();
                 HasCreateRight = obj.Where(x => x.ID == dbPageId).Select(x => x.IsWrite).FirstOrDefault();
                 HasReadRight = obj.Where(x => x.ID == dbPageId).Select(x => x.IsRead).FirstOrDefault();
-                HasDeleteRight = false;//obj.Where(x => x.ID == dbPageId).Select(x => x.IsDelete).FirstOrDefault();
+                HasDeleteRight = obj.Where(x => x.ID == dbPageId).Select(x => x.IsDelete).FirstOrDefault();
                 HasEditRight = obj.Where(x => x.ID == dbPageId).Select(x => x.IsUpdate).FirstOrDefault();
                 HasReversalPayment = obj.Where(x => x.ID == dbPageId).Select(x => x.IsReversalPayment).FirstOrDefault();
 
@@ -57,7 +57,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                     HasAccess = true;
                     HasCreateRight = true;
                     HasReadRight = true;
-                    HasDeleteRight = false;//true;
+                    HasDeleteRight = true;
                     HasEditRight = true;
                     HasReversalPayment = true;
                 }
@@ -322,16 +322,14 @@ namespace Funeral.Web.Areas.Admin.Controllers
             get
             {
                 List<KeyValue> keyValues = new List<KeyValue>();
-                keyValues.Add(new KeyValue { Key = "New", NameText = "New", Value = "1" });
-                keyValues.Add(new KeyValue { Key = "Assessment", NameText = "Assessment", Value = "2" });
-                keyValues.Add(new KeyValue { Key = "ReqsPending", NameText = "ReqsPending", Value = "3" });
-                keyValues.Add(new KeyValue { Key = "AllDocsReceived", NameText = "AllDocsReceived", Value = "4" });
-                keyValues.Add(new KeyValue { Key = "PreAuth", NameText = "PreAuth", Value = "5" });
-                keyValues.Add(new KeyValue { Key = "FinalAuth", NameText = "FinalAuth", Value = "6" });
-                keyValues.Add(new KeyValue { Key = "Finance", NameText = "Finance", Value = "7" });
-                keyValues.Add(new KeyValue { Key = "Declined", NameText = "Declined", Value = "8" });
-                keyValues.Add(new KeyValue { Key = "UnClaimed", NameText = "UnClaimed", Value = "9" });
-                keyValues.Add(new KeyValue { Key = "Closed", NameText = "Closed", Value = "10" });
+                keyValues.Add(new KeyValue { Key = "Unindexed", NameText = "New", Value = "All" });
+                keyValues.Add(new KeyValue { Key = "QualityChecking", NameText = "Assessment", Value = "1,2" });
+                keyValues.Add(new KeyValue { Key = "UnClaimed", NameText = "UnClaimed", Value = "3" });
+                keyValues.Add(new KeyValue { Key = "ReqsPending", NameText = "Pending Claim Requirements", Value = "4,9,10,11" });
+                keyValues.Add(new KeyValue { Key = "Closed", NameText = "Closed", Value = "5,6" });
+                keyValues.Add(new KeyValue { Key = "TLReview", NameText = "Pre-Auth", Value = "7,8" });
+                keyValues.Add(new KeyValue { Key = "Finance", NameText = "Finance", Value = "12" });
+                keyValues.Add(new KeyValue { Key = "ManagerReview", NameText = "Manager Review", Value = "13,14" });
                 return keyValues;
             }
         }

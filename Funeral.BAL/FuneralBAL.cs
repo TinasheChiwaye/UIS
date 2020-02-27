@@ -3,10 +3,7 @@ using Funeral.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Funeral.BAL
 {
@@ -18,7 +15,7 @@ namespace Funeral.BAL
 
         public static List<FuneralModel> SelectAllFuneralByParlourId(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder)
         {
-           DataTable  dr = FuneralDAL.SelectAllFuneralByParlourIddt(ParlourId, PageSize, PageNum, Keyword, SortBy, SortOrder);
+            DataTable dr = FuneralDAL.SelectAllFuneralByParlourIddt(ParlourId, PageSize, PageNum, Keyword, SortBy, SortOrder);
             return FuneralHelper.DataTableMapToList<FuneralModel>(dr);
         }
         public static int FuneralDelete(int ID, string UserName)
@@ -37,12 +34,12 @@ namespace Funeral.BAL
         }
         public static FuneralModel SelectFuneralBypkid(int ID, Guid ParlourId)
         {
-            DataTable  dr = FuneralDAL.SelectFuneralBypkiddt(ID, ParlourId);
+            DataTable dr = FuneralDAL.SelectFuneralBypkiddt(ID, ParlourId);
             return FuneralHelper.DataTableMapToList<FuneralModel>(dr).FirstOrDefault();
         }
         public static FuneralModel SelectFuneralByMemberNo(string MemberNo)
         {
-            DataTable  dr = FuneralDAL.SelectFuneralByMemberNodt(MemberNo);
+            DataTable dr = FuneralDAL.SelectFuneralByMemberNodt(MemberNo);
             return FuneralHelper.DataTableMapToList<FuneralModel>(dr).FirstOrDefault();
         }
 
@@ -67,12 +64,12 @@ namespace Funeral.BAL
         }
         public static List<FuneralServiceSelectModel> SelectServiceByFuneralID(int fkiFuneralID)
         {
-            DataTable  dr = FuneralDAL.SelectServiceByFuneralIDdt(fkiFuneralID);
+            DataTable dr = FuneralDAL.SelectServiceByFuneralIDdt(fkiFuneralID);
             return FuneralHelper.DataTableMapToList<FuneralServiceSelectModel>(dr);
         }
         public static FuneralServiceSelectModel SelectServiceByFunAndID(int fkiFuneralID, int pkiFuneralServiceSelectionID)
         {
-            DataTable  dr = FuneralDAL.SelectServiceByFunAndIDdt(fkiFuneralID, pkiFuneralServiceSelectionID);
+            DataTable dr = FuneralDAL.SelectServiceByFunAndIDdt(fkiFuneralID, pkiFuneralServiceSelectionID);
             return FuneralHelper.DataTableMapToList<FuneralServiceSelectModel>(dr).FirstOrDefault();
         }
 
@@ -89,12 +86,12 @@ namespace Funeral.BAL
 
         public static FuneralModel GetInvoiceNumberByID(Guid ParlourId)
         {
-            DataTable  dr = FuneralDAL.GetInvoiceNumberByIDdt(ParlourId);
+            DataTable dr = FuneralDAL.GetInvoiceNumberByIDdt(ParlourId);
             return FuneralHelper.DataTableMapToList<FuneralModel>(dr).FirstOrDefault();
         }
         public static int UpdateAllFuneralData(int pkiFuneralID, string Notes, Decimal DisCount, Decimal Tax)
         {
-            return FuneralDAL.UpdateAllFuneralData(pkiFuneralID, Notes, DisCount,Tax);
+            return FuneralDAL.UpdateAllFuneralData(pkiFuneralID, Notes, DisCount, Tax);
         }
 
         public static int UpdateAllFuneralServiceData(int pkiFuneralID, string InvoiceNumber, Decimal DisCount, Decimal Tax)
@@ -130,6 +127,10 @@ namespace Funeral.BAL
         {
             DataTable dr = FuneralDAL.GetFuneralByClaimId(ClaimId);
             return FuneralHelper.DataTableMapToList<FuneralModel>(dr).FirstOrDefault();
+        }
+        public static int UpdatePolicyStatus(int ClaimId, string IDNumber, Guid parlourid)
+        {
+            return FuneralDAL.UpdatePolicyStatus_MemberOfDependent(ClaimId, IDNumber, parlourid);
         }
     }
 }

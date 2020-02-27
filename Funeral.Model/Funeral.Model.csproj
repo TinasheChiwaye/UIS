@@ -73,6 +73,7 @@
     <Compile Include="ApplicationTnCModel.cs" />
     <Compile Include="Attributes\ValidateDateAttribute.cs" />
     <Compile Include="Attributes\ValidateIdAttribute.cs" />
+    <Compile Include="BankDetails.cs" />
     <Compile Include="BankingDetailSending.cs" />
     <Compile Include="BankModel.cs" />
     <Compile Include="BaseViewModel.cs" />

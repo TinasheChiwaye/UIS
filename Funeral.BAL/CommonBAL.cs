@@ -5,9 +5,8 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Reflection;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace Funeral.BAL
 {
@@ -424,5 +423,15 @@ namespace Funeral.BAL
         //    }
         //    return dt;
         //}
+        public static BankDetails GetBankDetails_ByParlourId(Guid ParlourId)
+        {
+            DataTable dr = CommonDAL.GetBankDetails_ByParlourId(ParlourId);
+            return FuneralHelper.DataTableMapToList<BankDetails>(dr).FirstOrDefault();
+        }
+        public static List<ClaimReasonModel> GetClaimReasonByClaimStatus(string ClaimStatus, Guid Parlourid)
+        {
+            DataTable dr = CommonDAL.GetClaimReasonByClaimStatus(ClaimStatus, Parlourid);
+            return FuneralHelper.DataTableMapToList<ClaimReasonModel>(dr);
+        }
     }
 }

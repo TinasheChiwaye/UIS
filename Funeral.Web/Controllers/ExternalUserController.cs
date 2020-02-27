@@ -83,7 +83,8 @@ namespace Funeral.Web.Controllers
                     int docID = ClaimsBAL.SaveClaimSupportedDocument(claimDoc);
                     #region ClaimHistory
                     ClaimsBAL.UpdateExternalLink(document.ExternalToken, false);
-                    ClaimsBAL.SaveClaimHistory(Request.UserHostAddress.ToString(), document.PkiClaimId, StaticMessages.ClaimDocumentUploaded, "External User", document.ParlourId);
+                    var applicationSettings = ToolsSetingBAL.GetApplictionByParlourID(document.ParlourId);
+                    ClaimsBAL.SaveClaimHistory(Request.UserHostAddress.ToString(), document.PkiClaimId, StaticMessages.ClaimDocumentUploaded, "External User", document.ParlourId, applicationSettings);
                     #endregion
                 }
             }

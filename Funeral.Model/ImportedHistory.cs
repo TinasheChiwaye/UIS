@@ -23,6 +23,9 @@ namespace Funeral.Model
         public DateTime UpdatedDate { get; set; }
         public Guid NewImportedId { get; set; }
         public string MemberType { get; set; }
+        public string Status { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
 
     }
 }

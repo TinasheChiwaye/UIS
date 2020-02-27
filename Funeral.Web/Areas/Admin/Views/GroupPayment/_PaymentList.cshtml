@@ -147,36 +147,16 @@
             model1.SarchText = jQuery("#SarchText").val();
             jQuery("#PageNum1").val(model1.PageNum);
         }
-        function OpenRegenerateBillingPopUp(GetParlourId) {
-            var GetUrl = "@Url.Action("RegenerateBillingPartial","GroupPayment",new {ParlourId="GetParlourId"})".replace("GetParlourId", GetParlourId);
-            jQuery.ajax({
-                url: GetUrl,
-                type: 'GET',
-                cache: false,
-            }).done(function (result) {
-
-                jQuery('#LoadPartialView_ManageClaims').empty().html(result);
-                jQuery("#RegenerateBillingModalPopUp").modal("show");
-                jQuery('#txtPremiumDueDate').datepicker({ format: 'dd MM yyyy', autoclose: true, setDate: new Date(),  container: '#RegenerateBillingModalPopUp modal-body' });
-                jQuery('.modal-backdrop').removeClass("modal-backdrop");
-            });
-        }
+    
         function DownloadReconReportPopUp(GetParlourId, referenceNumber) {
             var GetUrl = "@Url.Action("DownloadReconBillingReportPartial","SchemaPayment",new {ParlourId="GetParlourId",ReferenceNumber="getreferenceNumber"})".replace("GetParlourId", GetParlourId).replace("getreferenceNumber", referenceNumber).replace("amp;","");;
             jQuery.ajax({
                 url: GetUrl,
+                contentType: 'application/json; charset=utf-8',
+                datatype: 'json',
                 type: 'GET',
-                cache: false,
             }).done(function (result) {
-                jQuery('#LoadPartialView_ManageClaims').empty().html(result);
-                jQuery("#RegenerateBillingModalPopUp").modal("show");
-                jQuery('.modal-backdrop').removeClass("modal-backdrop");
-                $(".DatepickerSelection").datepicker({
-                    format: 'dd M yyyy',
-                    setDate: new Date(),
-                    autoclose: true,
-                    onSelect: function (dateText) { $(this).change(); }
-                }).on("change", function () { });
+                window.location = GetUrl;
             });
         }
     </script>

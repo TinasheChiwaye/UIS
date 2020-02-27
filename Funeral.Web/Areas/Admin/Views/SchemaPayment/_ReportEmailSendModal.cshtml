@@ -17,16 +17,17 @@
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <label>Email</label>
-                                        @Html.TextBoxFor(x => x.Email, new { @id = "txtFromDate", @type = "email", @class = "form-control",@required=true })
+                                        @Html.TextBoxFor(x => x.Email, new { @id = "txtFromDate", @type = "email", @class = "form-control",placeholder="Enter email",@required=true })
                                     </div>
-                                    <div class="col-sm-6">
-                                        <label>To Date</label>
-                                        @Html.TextBoxFor(x => x.toDate, "{0:dd MMM yyyy}", new { @id = "txtFromDate", @class = "form-control DatepickerSelection", @autocomplete = false,@required=true })
-                                    </div>
-                                    <div class="col-sm-6">
+                                     <div class="col-sm-6" style="display:none">
                                         <label>From Date</label>
                                         @Html.TextBoxFor(x => x.fromDate, "{0:dd MMM yyyy}", new { @id = "txtToDate", @class = "form-control DatepickerSelection", @autocomplete = false,@required=true })
                                     </div>
+                                    <div class="col-sm-6" style="display:none">
+                                        <label>To Date</label >
+                                        @Html.TextBoxFor(x => x.toDate, "{0:dd MMM yyyy}", new { @id = "txtFromDate", @class = "form-control DatepickerSelection", @autocomplete = false,@required=true })
+                                    </div>
+                                   
                                 </div>
                             </div>
                         </div>

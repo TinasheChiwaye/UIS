@@ -53,6 +53,9 @@
                                             <th>File Name</th>
                                             <th>Imported By</th>
                                             <th>Imported Date</th>
+                                             <th>Status</th>
+                                            <th>Start time</th>
+                                            <th>End time</th>
                                             <th>Mapped Column</th>
                                             <th>Actions</th>
                                         </tr>
@@ -99,69 +102,85 @@
                 PageSize: pageSize,
                 SarchText: searchText
             };
-            var datatable = $('#tblImportedHistory')
-                .on('page.dt', function () {
-                    var table = $('#tblImportedHistory').DataTable();
-                    var page = table.page.info();
-                    model1.PageNum = page.page + 1;
-                })
-                .dataTable({
-                    'bProcessing': true,
-                    'bServerSide': true,
-                    "bLengthChange": false,
-                    'bFilter': false,
-                    'scrollX': false,
-                    "ordering": false,
-                    "bSortable": false,
-                    'ajax': {
-                        "url": '@Url.Action("SearchData", "ImportData", null, Request.Url.Scheme)',
-                        "type": "POST",
-                        "contentType": "application/json",
-                        "data": function (d) {
-                            d['order'].forEach(function (item, index) {
-                                if (model1.SortBy != d['columns'][item.column]['data']) {
-                                    model1.PageNum = 1;
-                                    model1.SortOrder = "asc";
-                                }
-                                if (model1.SortBy == d['columns'][item.column]['data'] && model1.SortOrder != d['order'][index]['dir']) {
-                                    model1.PageNum = 1;
+                var datatable = $('#tblImportedHistory')
+                    .on('page.dt', function () {
+                        var table = $('#tblImportedHistory').DataTable();
+                        var page = table.page.info();
+                        model1.PageNum = page.page + 1;
+                    })
+                    .dataTable({
+                        'bProcessing': true,
+                        'bServerSide': true,
+                        "bLengthChange": false,
+                        'bFilter': false,
+                        'scrollX': false,
+                        "ordering": false,
+                        "bSortable": false,
+                        'ajax': {
+                            "url": '@Url.Action("SearchData", "ImportData", null, Request.Url.Scheme)',
+                            "type": "POST",
+                            "contentType": "application/json",
+                            "data": function (d) {
+                                d['order'].forEach(function (item, index) {
+                                    if (model1.SortBy != d['columns'][item.column]['data']) {
+                                        model1.PageNum = 1;
+                                        model1.SortOrder = "asc";
+                                    }
+                                    if (model1.SortBy == d['columns'][item.column]['data'] && model1.SortOrder != d['order'][index]['dir']) {
+                                        model1.PageNum = 1;
+                                        model1.SortOrder = d['order'][index]['dir'];
+                                    }
+                                    model1.SortBy = d['columns'][item.column]['data'];
                                     model1.SortOrder = d['order'][index]['dir'];
-                                }
-                                model1.SortBy = d['columns'][item.column]['data'];
-                                model1.SortOrder = d['order'][index]['dir'];
-                            });
-                            return JSON.stringify(model1);
-                        },
-                        "dataSrc": function (json) {
+                                });
+                                return JSON.stringify(model1);
+                            },
+                            "dataSrc": function (json) {
 
-                            json.recordsTotal = json.TotalCount;
-                            json.recordsFiltered = json.TotalCount;
-                            json.data = json.Result;
-                            var return_data = json;
-                            return return_data.data;
-                        }
-                    },
-                    "columns": [
-                        { "data": "ImportedFilename", "name": "File name", "autoWidth": true },
-                        {"data": "ImportedBy", "name": "Imported By", "autoWidth": true},
-                        {
-                            "data": "ImportedDate", "name": "Imported Date", "autoWidth": true,
-                            "render": function (data) {
-                                var date = new Date(parseInt(data.replace('/Date(', '')));
-                                return dateFormat(date, dateFormat.masks.isoDate, true);
+                                json.recordsTotal = json.TotalCount;
+                                json.recordsFiltered = json.TotalCount;
+                                json.data = json.Result;
+                                var return_data = json;
+                                return return_data.data;
                             }
                         },
-                         {
-                            "render": function (data, type, full, meta) {
-                                var dom = "<div class='row'>";
-                                var editMemberUrl = '<div class="col-sm-4 text-center"><a placeholder="Show Mapped Column" onclick="ShowMappedColumnList(\''+full.NewImportedId + '\')"><i class="fa fa-server"></i> Mapped Column</a></div>';
-                                dom = dom + editMemberUrl;
-                                dom = dom + "</div>";
-                                return dom;
-                            }
-                        },
-                        {
-                            "render": function (data, type, full, meta) {
+                        "columns": [
+                            { "data": "ImportedFilename", "name": "File name", "autoWidth": true },
+                            { "data": "ImportedBy", "name": "Imported By", "autoWidth": true },
+                            {
+                                "data": "ImportedDate", "name": "Imported Date", "autoWidth": true,
+                                "render": function (data) {
+                                    var date = new Date(parseInt(data.replace('/Date(', '')));
+                                    return dateFormat(date, dateFormat.masks.PerfectDate, true);
+                                }
+                            },
+                            { "data": "Status", "name": "Status", "autoWidth": true },
+                            {
+                                "data": "StartTime", "name": "StartTime", "autoWidth": true,
+                                "render": function (data) {
+                                    var date = new Date(parseInt(data.replace('/Date(', '')));
+                                    return dateFormat(date, dateFormat.masks.PerfectDate, true);
+                                }
+                            },
+                             {
+                                "data": "EndTime", "name": "EndTime", "autoWidth": true,
+                                "render": function (data) {
+                                    var date = new Date(parseInt(data.replace('/Date(', '')));
+                                    return dateFormat(date, dateFormat.masks.PerfectDate, true);
+                                }
+                            },
+
+                            {
+                                "render": function (data, type, full, meta) {
+                                    var dom = "<div class='row'>";
+                                    var editMemberUrl = '<div class="col-sm-4 text-center"><a placeholder="Show Mapped Column" onclick="ShowMappedColumnList(\'' + full.NewImportedId + '\')"><i class="fa fa-server"></i> Mapped Column</a></div>';
+                                    dom = dom + editMemberUrl;
+                                    dom = dom + "</div>";
+                                    return dom;
+                                }
+                            },
+                            {
+                                "render": function (data, type, full, meta) {
 
                                     var RedirectUrl = '@Url.Content("~/Admin/ImportExcel.aspx?ImportedId=GetImportedId")'.replace("GetImportedId", full.ImportedId);
                                     var dom = "<div class='row'>";
@@ -170,10 +189,10 @@
                                     dom = dom + "</div>";
                                     return dom;
 
+                                }
                             }
-                        }
-                    ]
-                });
+                        ]
+                    });
 
 
                 var table = $('#tblImportedHistory');

@@ -16,12 +16,12 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <div class="col-sm-6">
-                                        <label>To Date</label>
-                                        @Html.TextBoxFor(x => x.toDate, "{0:dd MMM yyyy}", new { @id = "txtFromDate", @class = "form-control DatepickerSelection", @autocomplete = false,@required=true })
+                                        <label>From Date</label>
+                                        @Html.TextBoxFor(x => x.fromDate, "{0:dd MMM yyyy}", new { @id = "txtToDate", @class = "form-control DatepickerSelection", @autocomplete = false, @required = true })
                                     </div>
                                     <div class="col-sm-6">
-                                        <label>From Date</label>
-                                        @Html.TextBoxFor(x => x.fromDate, "{0:dd MMM yyyy}", new { @id = "txtToDate", @class = "form-control DatepickerSelection", @autocomplete = false,@required=true })
+                                        <label>To Date</label>
+                                        @Html.TextBoxFor(x => x.toDate, "{0:dd MMM yyyy}", new { @id = "txtFromDate", @class = "form-control DatepickerSelection", @autocomplete = false, @required = true })
                                     </div>
                                 </div>
                             </div>

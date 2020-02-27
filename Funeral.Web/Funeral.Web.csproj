@@ -1984,6 +1984,7 @@
     <Compile Include="Areas\Admin\Models\ViewModel\PrintViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ViewModel\TombStoneServiceVM.cs" />
     <Compile Include="Areas\Tools\Controllers\AddOnProductSetupController.cs" />
+    <Compile Include="Areas\Tools\Controllers\BaseAdminController.cs" />
     <Compile Include="Areas\Tools\Controllers\ClaimToolsController.cs" />
     <Compile Include="Areas\Tools\Controllers\FuneralServicesController.cs" />
     <Compile Include="Areas\Tools\Controllers\PlanSetupController.cs" />

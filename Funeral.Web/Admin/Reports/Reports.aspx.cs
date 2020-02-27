@@ -62,7 +62,7 @@ namespace Funeral.Web.Admin.Reports
 
             rpw.ProcessingMode = ProcessingMode.Remote;
             rpw.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
-            rpw.ServerReport.ReportPath = "/"+ _siteConfig.SSRSFolderName+ "/Unplugg IT Active Parlours";
+            rpw.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/Unplugg IT Active Parlours";
 
             //ArrayList reportParam = new ArrayList();
             //reportParam = ReportDefaultPatam();
@@ -262,10 +262,20 @@ namespace Funeral.Web.Admin.Reports
                 rpw.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
                 rpw.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/" + hfAdminReport.Value;
                 ReportParameterCollection reportParameters = new ReportParameterCollection();
-                if (!string.IsNullOrEmpty(txtDateFrom.Text))
-                    reportParameters.Add(new ReportParameter("DateFrom", txtDateFrom.Text));
-                if (!string.IsNullOrEmpty(txtDateTo.Text))
-                    reportParameters.Add(new ReportParameter("DateTo", txtDateTo.Text));
+
+                if (chk_dateDisabled.Checked)
+                {
+                    reportParameters.Add(new ReportParameter("DateFrom", DateTime.Now.AddYears(-100).ToString()));
+                    reportParameters.Add(new ReportParameter("DateTo", DateTime.Now.ToString()));
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(txtDateFrom.Text))
+                        reportParameters.Add(new ReportParameter("DateFrom", txtDateFrom.Text));
+                    if (!string.IsNullOrEmpty(txtDateTo.Text))
+                        reportParameters.Add(new ReportParameter("DateTo", txtDateTo.Text));
+                }
+
                 if (IsAdministrator != true)
                 {
                     if (!string.IsNullOrEmpty(ddlBranch.SelectedItem.Text))

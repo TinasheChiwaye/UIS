@@ -38,6 +38,7 @@ namespace Funeral.Model
             this.BeneficiaryAccountType = string.Empty;
             this.LoggedBy = string.Empty;
             this.Cover = 0;
+            this.SocietyID = 0;
             this.BodyCollectedFrom = string.Empty;
             this.ClaimingFor = string.Empty;
             this.CreatedDate = DateTime.Now;
@@ -49,12 +50,13 @@ namespace Funeral.Model
             this.PayoutValue = 0;
         }
         public int pkiClaimID { get; set; }
+        public string ClaimNumber { get; set; }
         public int fkiMemberID { get; set; }
         public string MemberNumber { get; set; }
         [Required(ErrorMessage = "The Claim Date is required")]
         public DateTime ClaimDate { get; set; }
         public string ClaimNotes { get; set; }
-        public int SocietyID { get; set; }
+        public int? SocietyID { get; set; }
         public string CourseOfDearth { get; set; }
         public Boolean HostingFuneral { get; set; }
         public string ClaimantTitle { get; set; }
@@ -68,7 +70,6 @@ namespace Funeral.Model
         public string ClaimantIDNumber { get; set; }
         public DateTime ClaimantDateOfBirth { get; set; }
         public string ClaimantGender { get; set; }
-        [Required(ErrorMessage = "The Street Address is required")]
         public string ClaimantAddressLine1 { get; set; }
         public string ClaimantAddressLine2 { get; set; }
         public string ClaimantAddressLine3 { get; set; }

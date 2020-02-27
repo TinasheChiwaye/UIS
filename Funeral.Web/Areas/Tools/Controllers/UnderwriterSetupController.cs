@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace Funeral.Web.Areas.Tools.Controllers
 {
-    public class UnderwriterSetupController : BaseAdminController
+    public class UnderwriterSetupController : BaseToolController
     {
         public UnderwriterSetupController() : base(43)
         {

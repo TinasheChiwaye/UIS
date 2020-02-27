@@ -11,7 +11,7 @@ using System.Web.Security;
 
 namespace Funeral.Web.Areas.Tools.Controllers
 {
-    public class AddOnProductSetupController : BaseAdminController
+    public class AddOnProductSetupController : BaseToolController
     {
         public AddOnProductSetupController():base(14) {
             this.dbPageId = 14;

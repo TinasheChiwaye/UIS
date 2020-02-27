@@ -11,6 +11,7 @@ using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using static Funeral.Model.FuneralEnum;
@@ -32,7 +33,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             search.SortOrder = "Asc";
             search.StatusId = Status == null ? "0" : Status;
             search.TotalRecord = 0;
-            search.DateFrom = DateTime.Now.AddYears(-1);
+            search.DateFrom = new DateTime(2019, 01, 01);
             search.DateTo = DateTime.Now;
 
             List<StatusModel> statusList = new List<StatusModel>();
@@ -206,7 +207,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
         {
             int memberId = ClaimsBAL.DeleteClaimByID(pkiClaimID);
             #region ClaimHistory
-            ClaimsBAL.SaveClaimHistory(IPAddress, pkiClaimID, StaticMessages.ClaimDeleted, UserName, CurrentParlourId);
+            var applicationSettings = ToolsSetingBAL.GetApplictionByParlourID(CurrentParlourId);
+            ClaimsBAL.SaveClaimHistory(IPAddress, pkiClaimID, StaticMessages.ClaimDeleted, UserName, CurrentParlourId, applicationSettings);
             #endregion
             return RedirectToAction("Index", "Claims");
         }
@@ -270,10 +272,10 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
                 LocalReport localReport = new LocalReport();
 
-                MembersModel objmodel = ClaimsBAL.selectMemberByPkidAndParlor(ParlourId, MemberID);
+                MembersModel objmodel = ClaimsBAL.selectMemberByPkidAndParlor(CurrentParlourId, MemberID);
                 if (objmodel != null)
                 {
-                    var GetClaimMailReport = ClaimsBAL.GetClaimMailReport(objmodel, MemberID, ParlourId, ClaimId);
+                    var GetClaimMailReport = ClaimsBAL.GetClaimMailReport(objmodel, MemberID, CurrentParlourId, ClaimId);
                     ReportViewerdata.Visible = true;
                     localReport.EnableExternalImages = true;
                     localReport.ReportPath = Server.MapPath("~/Admin/Reports/ReportLayouts/ReservationClaim.rdlc");//Server.MapPath("~/Admin/Reports/ReportLayouts/ReservationClaim.rdlc");
@@ -310,6 +312,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult ClaimStatusPartial(int ClaimId, Guid ParlourId)
         {
+            CurrentParlourId = ParlourId;
             ClaimsModel data = ClaimsBAL.SelectClaimsBypkid(ClaimId, ParlourId);
             #region New Status Process
             var AllStatus = ClaimsBAL.GetClaimsStatus();
@@ -318,9 +321,9 @@ namespace Funeral.Web.Areas.Admin.Controllers
             SequencePriority = SequencePriority > AllStatus.Max(x => x.SequencePriority) ? AllStatus.Max(x => x.SequencePriority) : SequencePriority;
             var NewStatus = IsAdministrator == true || IsSuperUser == true ? RightsWiseStatus.Where(x => x.SequencePriority == SequencePriority).Select(x => x.Status).FirstOrDefault() : AllStatus.Where(x => x.SequencePriority == SequencePriority).Select(x => x.Status).FirstOrDefault();
 
-            int BackSequencePriority = (SequencePriority - 1) < 0 ? 1 : (SequencePriority - 1);
-            var AllStatuses = AllStatus.Where(d => d.SequencePriority >= BackSequencePriority && d.SequencePriority <= SequencePriority).ToList();
-            var RightsStatuses = RightsWiseStatus.Where(d => d.SequencePriority >= BackSequencePriority && d.SequencePriority <= SequencePriority).ToList();
+            int BackSequencePriority = (SequencePriority - 2) < 0 ? 1 : (SequencePriority - 2);
+            var AllStatuses = AllStatus.Where(d => d.SequencePriority >= BackSequencePriority && d.SequencePriority <= SequencePriority).OrderBy(x => x.SequencePriority).ToList();
+            var RightsStatuses = RightsWiseStatus.Where(d => d.SequencePriority >= BackSequencePriority && d.SequencePriority <= SequencePriority).OrderBy(x => x.SequencePriority).ToList();
             #endregion
 
             ChangeStatusReason changeStatus = new ChangeStatusReason();
@@ -333,13 +336,13 @@ namespace Funeral.Web.Areas.Admin.Controllers
             changeStatus.ClaimNotes = data.ClaimNotes;
             //ViewBag.Statuses = IsSuperUser == true || IsAdministrator == true ? AllStatus.Where(x => x.SequencePriority == SequencePriority).ToList() : RightsWiseStatus.Where(x => x.SequencePriority == SequencePriority).ToList();
             ViewBag.Statuses = IsSuperUser == true || IsAdministrator == true ? AllStatuses : RightsStatuses;
-            ViewBag.ClaimReasonList = ClaimsBAL.GetClaimReasonList(ParlourId);
+            ViewBag.ClaimReasonList = CommonBAL.GetClaimReasonByClaimStatus(data.Status, CurrentParlourId);
             return PartialView("_ClaimStatusForm", changeStatus);
         }
         #endregion
         #region ChangeClaimStatus
         [HttpPost]
-        public ActionResult ChangeClaimStatus(ChangeStatusReason changeStatus)
+        public async Task<ActionResult> ChangeClaimStatus(ChangeStatusReason changeStatus)
         {
             if (ModelState.IsValid)
             {
@@ -349,7 +352,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 var applicationSettings = ToolsSetingBAL.GetApplictionByParlourID(changeStatus.ParlourID);
                 var fromMail = ConfigurationManager.AppSettings["ReportEmailSenderId"].ToString().Trim();
                 #region ClaimHistory
-                ClaimsBAL.SaveClaimHistory(IPAddress, changeStatus.ClaimID, StaticMessages.ClaimStatusUpdated, UserName, changeStatus.ParlourID);
+                ClaimsBAL.SaveClaimHistory(IPAddress, changeStatus.ClaimID, StaticMessages.ClaimStatusUpdated, UserName, changeStatus.ParlourID, applicationSettings);
                 #endregion
                 if (applicationSettings != null && fromMail != null)
                 {
@@ -363,7 +366,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                     msg += "<b>Claim Notes : </b>" + changeStatus.ClaimNotes + "<br />";
                     msg += "<br /><br />Regards,<br />ARL Claims Team <br/> claims @africanrainbowlife.co.za <br /> Service call centre: 010 880 5055";
                     string subject = "ARL Claim No " + changeStatus.ClaimID + "  - Claims Status Changed";
-                    ClaimsBAL.SendMail_StatusChanged(applicationSettings.EmailForClaimNotification, fromMail, applicationSettings.ApplicationName, subject, msg);
+                    await ClaimsBAL.SendMail_StatusChanged_Async(applicationSettings.EmailForClaimNotification, fromMail, applicationSettings.ApplicationName, subject, msg);
                 }
             }
             return RedirectToAction("Index", "Claims");
@@ -377,7 +380,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
             claimStatusHistoryModal.claimsModel = ClaimsBAL.SelectClaimsBypkid(pkiClaimID, parlourId);
             claimStatusHistoryModal.funeralModel = FuneralBAL.GetFuneralByClaimId(pkiClaimID);
             claimStatusHistoryModal.memberInvoices = MembersBAL.GetInvoicesByMemberID(parlourId, MemberId);
-            claimStatusHistoryModal.claimDocuments = ClaimsBAL.GetClaimDocumentsByClaimId(pkiClaimID, parlourId, claimStatusHistoryModal.funeralModel.MemberType);
+            if (claimStatusHistoryModal.funeralModel != null)
+                claimStatusHistoryModal.claimDocuments = ClaimsBAL.GetClaimDocumentsByClaimId(pkiClaimID, parlourId, claimStatusHistoryModal.funeralModel.MemberType);
             return View(claimStatusHistoryModal);
         }
         #endregion
@@ -413,6 +417,18 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 else
                     claimandFuneral.ClaimDocumentList = ClaimsBAL.GetClaimDocumentsByClaimId(pkiClaimID, CurrentParlourId, "Main Member");
             }
+
+            var BankDetails = CommonBAL.GetBankDetails_ByParlourId(CurrentParlourId);
+            if (BankDetails != null)
+            {
+                claimandFuneral.claimsModel.BeneficiaryAccountHolder = BankDetails.AccountHolder;
+                claimandFuneral.claimsModel.BeneficiaryBank = BankDetails.Bank;
+                claimandFuneral.claimsModel.BeneficiaryBankBranch = BankDetails.Branch;
+                claimandFuneral.claimsModel.BeneficiaryBranchCode = BankDetails.BranchCode;
+                claimandFuneral.claimsModel.BeneficiaryAccountNumber = BankDetails.AccountNumber;
+                claimandFuneral.claimsModel.BeneficiaryAccountType = BankDetails.AccountType;
+            }
+
             ViewBag.SocietyLists = CommonBAL.GetSocietyByParlourId(CurrentParlourId);
             ViewBag.Statuses = ClaimsBAL.GetClaimsStatus();
             ViewBag.Banks = CommonBAL.GetBankList();
@@ -448,12 +464,19 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 claimandFuneral.funeralModel.MemeberNumber = claimandFuneral.claimsModel.MemberNumber;
                 claimandFuneral.funeralModel.FkiClaimID = ClaimID;
                 int desId = FuneralBAL.SaveFuneral(claimandFuneral.funeralModel);
+
+                #region Update Policy Status
+                FuneralBAL.UpdatePolicyStatus(ClaimID, claimandFuneral.funeralModel.IDNumber, claimandFuneral.funeralModel.parlourid);
+                #endregion
                 errorMsg += "Record Inserted Successfully";
+                #region send Email
+                var applicationSettings = ToolsSetingBAL.GetApplictionByParlourID(claimandFuneral.claimsModel.parlourid);
                 #region ClaimHistory
                 if (claimandFuneral.claimsModel.pkiClaimID > 0)
-                    ClaimsBAL.SaveClaimHistory(IPAddress, claimandFuneral.claimsModel.pkiClaimID, StaticMessages.ClaimUpdated, UserName, claimandFuneral.claimsModel.parlourid);
+                    ClaimsBAL.SaveClaimHistory(IPAddress, claimandFuneral.claimsModel.pkiClaimID, StaticMessages.ClaimUpdated, UserName, claimandFuneral.claimsModel.parlourid, applicationSettings);
                 else
-                    ClaimsBAL.SaveClaimHistory(IPAddress, ClaimID, StaticMessages.ClaimCreated, UserName, claimandFuneral.claimsModel.parlourid);
+                    ClaimsBAL.SaveClaimHistory(IPAddress, ClaimID, StaticMessages.ClaimCreated, UserName, claimandFuneral.claimsModel.parlourid, applicationSettings);
+                #endregion
                 #endregion
                 return RedirectToAction("Index", "Claims");
             }
@@ -475,7 +498,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
         public ActionResult ClaimDashboard()
         {
             dynamic model = new ExpandoObject();
-            model.getStatusCount = ClaimsBAL.GetStatusCountList_Dashboard(ParlourId);
+            model.getStatusCount = ClaimsBAL.GetStatusCountList_Dashboard(CurrentParlourId);
             return View(model);
         }
         #endregion
@@ -503,12 +526,12 @@ namespace Funeral.Web.Areas.Admin.Controllers
                     var path = (dynamic)null;
                     string Str = System.DateTime.Now.Ticks.ToString();
                     path = 1012 + "_" + Str + "_" + fileName;
-                    string fname = Server.MapPath("~/Upload/FuneralDocument/" + ParlourId + "/");
+                    string fname = Server.MapPath("~/Upload/FuneralDocument/" + document.ParlourId + "/");
                     if (!Directory.Exists(fname))
                         Directory.CreateDirectory(fname);
                     fname = fname + path;
                     fuSupportDocument.SaveAs(fname);
-                    string dbPath = "~/Upload/FuneralDocument/" + ParlourId + "/" + path;
+                    string dbPath = "~/Upload/FuneralDocument/" + document.ParlourId + "/" + path;
                     ClaimDocumentModel claimDoc = new ClaimDocumentModel();
                     claimDoc.ImageName = fileName;
                     Byte[] docPath = Encoding.ASCII.GetBytes(dbPath);
@@ -522,8 +545,9 @@ namespace Funeral.Web.Areas.Admin.Controllers
                     claimDoc.ModifiedUser = UserName;
                     claimDoc.LastModified = System.DateTime.Now;
                     int docID = ClaimsBAL.SaveClaimSupportedDocument(claimDoc);
+                    var applicationSettings = ToolsSetingBAL.GetApplictionByParlourID(document.ParlourId);
                     #region ClaimHistory
-                    ClaimsBAL.SaveClaimHistory(IPAddress, document.PkiClaimId, StaticMessages.ClaimDocumentUploaded, UserName, document.ParlourId);
+                    ClaimsBAL.SaveClaimHistory(IPAddress, document.PkiClaimId, StaticMessages.ClaimDocumentUploaded, UserName, document.ParlourId, applicationSettings);
                     #endregion
                 }
                 TempData["message"] = ShowMessage(MessageType.Success, "Claim Document file uploaded successfully");
@@ -540,7 +564,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
             {
                 ClaimsBAL.DeleteClaimsdocumentById(pkiClaimPictureID);
                 #region ClaimHistory
-                ClaimsBAL.SaveClaimHistory(IPAddress, PkiClaimId, StaticMessages.ClaimDocumentDeleted, UserName, CurrentParlourId);
+                var applicationSettings = ToolsSetingBAL.GetApplictionByParlourID(CurrentParlourId);
+                ClaimsBAL.SaveClaimHistory(IPAddress, PkiClaimId, StaticMessages.ClaimDocumentDeleted, UserName, CurrentParlourId, applicationSettings);
                 #endregion
                 TempData["message"] = ShowMessage(MessageType.Success, "Claim Document deleted successfully");
             }
@@ -596,7 +621,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
             #endregion
 
             #region ClaimHistory
-            ClaimsBAL.SaveClaimHistory(IPAddress, model.ClaimID, StaticMessages.ClaimDocumentStatusChanged, UserName, model.ParlourID);
+            var applicationSettings = ToolsSetingBAL.GetApplictionByParlourID(model.ParlourID);
+            ClaimsBAL.SaveClaimHistory(IPAddress, model.ClaimID, StaticMessages.ClaimDocumentStatusChanged, UserName, model.ParlourID, applicationSettings);
             #endregion
             return Redirect(Request.UrlReferrer.ToString());
         }
@@ -629,12 +655,13 @@ namespace Funeral.Web.Areas.Admin.Controllers
             TempData["message"] = ShowMessage(MessageType.Success, "Claim Assigned successfully");
             string UserName = CommonBAL.GetAllUser(claimAssigned.ParlourId).FirstOrDefault(x => x.PkiUserID == claimAssigned.NewAssigned).EmployeeFullname;
             String message = String.Format(StaticMessages.ClaimAssigned, claimAssigned.ClaimId, UserName);
-            ClaimsBAL.SaveClaimHistory(IPAddress, claimAssigned.ClaimId, message, UserName, claimAssigned.ParlourId);
+            var applicationSettings = ToolsSetingBAL.GetApplictionByParlourID(claimAssigned.ParlourId);
+            ClaimsBAL.SaveClaimHistory(IPAddress, claimAssigned.ClaimId, message, UserName, claimAssigned.ParlourId, applicationSettings);
             return Redirect(Request.UrlReferrer.ToString());
         }
         #endregion
         #region External Link Send
-        public ActionResult SendExternalLink(int pkiClaimID, Guid parlourId)
+        public async Task<ActionResult> SendExternalLink(int pkiClaimID, Guid parlourId)
         {
             var applicationSettings = ToolsSetingBAL.GetApplictionByParlourID(parlourId);
             ClaimsModel data = ClaimsBAL.SelectClaimsBypkid(pkiClaimID, ParlourId);
@@ -658,8 +685,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 msg += "<br /><br />Regards,<br />ARL Claims Team <br/> claims @africanrainbowlife.co.za <br /> Service call centre: 010 880 5055";
                 string subject = "ARL Claim No " + data.pkiClaimID + "  - Claims External Link";
                 #endregion
-                ClaimsBAL.SendMail_StatusChanged(data.Email, fromMail, applicationSettings.ApplicationName, subject, msg);
-                ClaimsBAL.SaveClaimHistory(IPAddress, pkiClaimID, String.Format(StaticMessages.ClaimExternalLink, pkiClaimID, data.Email), UserName, parlourId);
+                await ClaimsBAL.SendMail_StatusChanged_Async(data.Email, fromMail, applicationSettings.ApplicationName, subject, msg);
+                ClaimsBAL.SaveClaimHistory(IPAddress, pkiClaimID, String.Format(StaticMessages.ClaimExternalLink, pkiClaimID, data.Email), UserName, parlourId, applicationSettings);
                 TempData["message"] = ShowMessage(MessageType.Success, "External link has been generated and sent");
             }
             else
@@ -673,21 +700,30 @@ namespace Funeral.Web.Areas.Admin.Controllers
         [HttpPost]
         public JsonResult BindDependentUpdate(int dependentId, string CompanyId)
         {
+            bool flag = false;
             Guid Company = new Guid(CompanyId);
             FamilyDependencyModel objmodel = MembersBAL.SelectFamilyDependencyById(dependentId);
             MembersModel obj = ClaimsBAL.selectMemberByPkidAndParlor(Company, objmodel.MemberId);
             MemberId = objmodel.MemberId;
-            return Json(new { FamilyDependencyModel = objmodel, MembersModel = obj }, JsonRequestBehavior.AllowGet);
+            var dunplicatClaim = ClaimsBAL.CheckDuplicateClaims(Company, objmodel.IDNumber, objmodel.MemeberNumber);
+            if (dunplicatClaim != null)
+                flag = true;
+            return Json(new { FamilyDependencyModel = objmodel, MembersModel = obj, flag = flag }, JsonRequestBehavior.AllowGet);
         }
         #endregion
         #region BindMainMemberUpdate
         [HttpPost]
         public JsonResult BindMainMemberUpdate(int memberId, string CompanyId)
         {
+            bool flag = false;
             Guid Company = new Guid(CompanyId);
             MembersModel objmodel = ClaimsBAL.selectMemberByPkidAndParlor(Company, memberId);
             PlanModel objpan = ClaimsBAL.GetPlanDetailsByPlanId(objmodel.fkiPlanID);
-            return Json(new { PlanModel = objpan, MembersModel = objmodel }, JsonRequestBehavior.AllowGet);
+
+            var dunplicatClaim = ClaimsBAL.CheckDuplicateClaims(Company, objmodel.IDNumber, objmodel.MemeberNumber);
+            if (dunplicatClaim != null)
+                flag = true;
+            return Json(new { PlanModel = objpan, MembersModel = objmodel, flag = flag }, JsonRequestBehavior.AllowGet);
         }
         #endregion
         [HttpPost]
@@ -696,5 +732,14 @@ namespace Funeral.Web.Areas.Admin.Controllers
             var Company = CommonBAL.GetSocietyByParlourId(CompanyId).Select(x => new SelectListItem() { Text = x.SocietyName, Value = x.pkiSocietyID.ToString() });
             return Json(Company, JsonRequestBehavior.AllowGet);
         }
+
+        #region Claim reason By CLaim Status
+        [HttpPost]
+        public JsonResult BindClaimReason(string ClaimStatus)
+        {
+            var Company = CommonBAL.GetClaimReasonByClaimStatus(ClaimStatus, CurrentParlourId).Select(x => new SelectListItem() { Text = x.ClaimReason, Value = x.ClaimReason });
+            return Json(Company, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
     }
 }

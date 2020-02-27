@@ -13,7 +13,7 @@ using System.Web.UI.WebControls;
 namespace Funeral.Web.Areas.Tools.Controllers
 {
 
-    public class TombstonePackageController : BaseAdminController
+    public class TombstonePackageController : BaseToolController
     {
         //public int pkiPackageID
         //{

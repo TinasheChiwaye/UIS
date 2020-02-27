@@ -181,7 +181,6 @@
             jQuery("#PageNum1").val(model1.PageNum);
         }
         function OpenRegenerateBillingPopUp(GetParlourId, referenceNumber) {
-            debugger;
             var GetUrl = "@Url.Action("RegenerateBillingPartial","SchemaPayment",new {ParlourId="GetParlourId",ReferenceNumber="getreferenceNumber"})".replace("GetParlourId", GetParlourId).replace("getreferenceNumber", referenceNumber).replace("amp;","");
             jQuery.ajax({
                 url: GetUrl,
@@ -205,18 +204,12 @@
             var GetUrl = "@Url.Action("DownloadReportPartial","SchemaPayment",new {ParlourId="GetParlourId",ReferenceNumber="getreferenceNumber"})".replace("GetParlourId", GetParlourId).replace("getreferenceNumber", referenceNumber).replace("amp;","");;
             jQuery.ajax({
                 url: GetUrl,
+                contentType: 'application/json; charset=utf-8',
+                datatype: 'json',
                 type: 'GET',
                 cache: false,
             }).done(function (result) {
-                jQuery('#LoadPartialView_ManageClaims').empty().html(result);
-                jQuery("#RegenerateBillingModalPopUp").modal("show");
-                jQuery('.modal-backdrop').removeClass("modal-backdrop");
-                $(".DatepickerSelection").datepicker({
-                    format: 'dd M yyyy',
-                    setDate: new Date(),
-                    autoclose: true,
-                    onSelect: function (dateText) { $(this).change(); }
-                }).on("change", function () { });
+                window.location = GetUrl;
             });
         }
         function SendReportEmail(GetParlourId, referenceNumber) {
@@ -241,18 +234,11 @@
             var GetUrl = "@Url.Action("DownloadReconBillingReportPartial","SchemaPayment",new {ParlourId="GetParlourId",ReferenceNumber="getreferenceNumber"})".replace("GetParlourId", GetParlourId).replace("getreferenceNumber", referenceNumber).replace("amp;","");;
             jQuery.ajax({
                 url: GetUrl,
+                contentType: 'application/json; charset=utf-8',
+                datatype: 'json',
                 type: 'GET',
-                cache: false,
             }).done(function (result) {
-                jQuery('#LoadPartialView_ManageClaims').empty().html(result);
-                jQuery("#RegenerateBillingModalPopUp").modal("show");
-                jQuery('.modal-backdrop').removeClass("modal-backdrop");
-                $(".DatepickerSelection").datepicker({
-                    format: 'dd M yyyy',
-                    setDate: new Date(),
-                    autoclose: true,
-                    onSelect: function (dateText) { $(this).change(); }
-                }).on("change", function () { });
+               window.location = GetUrl;
             });
         }
     </script>

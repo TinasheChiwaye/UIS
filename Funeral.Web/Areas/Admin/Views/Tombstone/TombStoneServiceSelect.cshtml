@@ -163,7 +163,8 @@
                             {
                                 foreach (var item in Model.ServiceList)
                                 {
-                                    @*<input type="hidden" id="totalServiceAmountHidden" value="" />*@
+                                    var hasEditRights = ViewBag.HasEditRight == "True" ? true : false;
+                                    var hasDeleteRights = ViewBag.HasDeleteRight == "True" ? true : false;
                                     totalServiceAmount = totalServiceAmount + Convert.ToInt32(item.Amount);
                                     <tr>
                                         <td class="service" width="auto">@item.ServiceName</td>
@@ -172,9 +173,15 @@
                                         <td class="qty" width="auto">@item.Quantity</td>
                                         <td class="total" width="auto" style="text-align: right;">@Model.Currency @(item.ServiceRate * item.Quantity)</td>
                                         <td width="auto">
-                                            <a id="lbtnEditService" title="Click here To Edit Service" onclick="GetDataEditService(@item.pkiTombStoneSelectionID,@item.fkiTombstoneID)"><i class="fa fa-edit"></i></a>
+                                            @if (hasEditRights)
+                                            {
+                                                <a id="lbtnEditService" title="Click here To Edit Service" onclick="GetDataEditService(@item.pkiTombStoneSelectionID,@item.fkiTombstoneID)"><i class="fa fa-edit"></i></a>
+                                            }
                                             &nbsp;
-                                            <a onclick="DeleteServiceById(@item.pkiTombStoneSelectionID)" id="lbtnDelete" title="Click here To Delete Service"><i class="fa fa-trash"></i></a>
+                                            @if (hasDeleteRights)
+                                            {
+                                                <a onclick="DeleteServiceById(@item.pkiTombStoneSelectionID)" id="lbtnDelete" title="Click here To Delete Service"><i class="fa fa-trash"></i></a>
+                                            }
                                         </td>
                                     </tr>
                                 }
