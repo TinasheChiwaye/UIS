@@ -31,6 +31,12 @@
 
         ga('create', 'UA-90748185-1', 'auto');
         ga('send', 'pageview');
+        function onlyNumberKey(evt) {
+            var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+            if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+                return false;
+        }
+
     </script>
     <style>
         #AjaxLoader {
@@ -92,6 +98,16 @@
         input.largerCheckbox {
             width: 20PX;
             height: 20PX;
+            margin: 0;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
             margin: 0;
         }
     </style>
@@ -292,20 +308,27 @@
                 var pageTitle = window.location.pathname.replace(/^.*\/([^/]*)/, "$1");
                 ///// Apply active class to selected page link
                 $('.nav a').each(function () {
-                    var arr = $(this).attr('href').toLowerCase().split('.');
-                    $(this).removeClass('active');// // if you want to style a specific a
-                    $(this).closest('li').removeClass('active');// if you want to style the li
-                    $(this).closest('li').closest('ul').removeClass('active in');
-                    $("li").removeClass('active');
-                    $("li a").removeClass('active');
-                    $("ul").removeClass('active in');
-                    if (arr[0] == window.location.pathname.toLocaleLowerCase()) {
+                    var oldMenu = $(this).attr('href').toLowerCase();
+                    var GetActualPath = "@Request.Url.PathAndQuery.ToString().ToLower()"
+                    var RemoveDomain = oldMenu.replace(GetActualPath, "");
+                    oldMenu = oldMenu.replace(RemoveDomain, "")
+                    var selectedMenu = window.location.pathname.toLocaleLowerCase() + window.location.search.toLowerCase();
+                    if (oldMenu == selectedMenu) {
+                        $(this).removeClass('active');// // if you want to style a specific a
+                        $(this).closest('li').removeClass('active');// if you want to style the li
+                        $(this).closest('li').closest('ul').removeClass('active in');
+                        $("li").removeClass('active');
+                        $("li a").removeClass('active');
+                        $("ul").removeClass('active in');
+
                         $(this).addClass('active');// // if you want to style a specific a
                         $(this).closest('li').addClass('active');// if you want to style the li
                         $(this).closest('li').closest('ul').addClass('active in');
+                        $(this).closest('li').closest('ul').parents("ul").addClass('active in');
                     }
                 });
             });
+
 
         });
     </script>

@@ -36,6 +36,7 @@ new SelectListItem() {Text = "Other", Value="Other"}
                         <div class="form-group">
                             @Html.HiddenFor(x => x.SocietyId, new { })
                             @Html.HiddenFor(x => x.parlourid, new { })
+                            @Html.Hidden("txtFixPaymentAmount", Model.AmountPaid, new { @id = "txtFixPaymentAmount" })
                             <label>Payment Method</label>
                             @Html.DropDownListFor(x => x.PaymentMethod, paymentMethodList, new { @id = "ddl_PaymentMethodSelection", @class = "form-control" })
                             @Html.ValidationMessageFor(x => x.PaymentMethod, "", new { @class = "text-danger" })
@@ -43,7 +44,7 @@ new SelectListItem() {Text = "Other", Value="Other"}
                         </div>
                         <div class="form-group">
                             <label>Amount</label>
-                            @Html.TextBoxFor(x => x.AmountPaid, new { @type = "number", @id = "txtPaymentAmount", @class = "form-control" })
+                            @Html.TextBoxFor(x => x.AmountPaid, "{0:0.00}", new { @type = "number", @id = "txtPaymentAmount", @class = "form-control", onchange = "ChangePaymentAmount(this)" })
                             @Html.ValidationMessageFor(x => x.AmountPaid, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group">
@@ -103,7 +104,21 @@ new SelectListItem() {Text = "Other", Value="Other"}
         function RefreshAddEditData(e) {
             LoadSocietyAddEdit();
         }
-
+        function ChangePaymentAmount(Control) {
+            var isChecked = $("#chk_AutoAllocatePremiumToMember").is(":checked");
+            var FixPayment = parseFloat($("#txtFixPaymentAmount").val());
+            var CurrentPayment = parseFloat(Control.value);
+            if (CurrentPayment != FixPayment) {
+                if (!isChecked) {
+                    $('#chk_AutoAllocatePremiumToMember').trigger('click');
+                }
+            }
+            else {
+                if (isChecked) {
+                     $('#chk_AutoAllocatePremiumToMember').trigger('click');
+                }
+            }
+        }
     </script>
 }
 
@@ -120,18 +135,18 @@ new SelectListItem() {Text = "Other", Value="Other"}
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label>AmountAtRisk</label>
-                        @Html.TextBoxFor(x => x.AmountAtRisk, new { @type = "number", @class = "form-control", @readonly = true })
+                        @Html.TextBoxFor(x => x.AmountAtRisk, "{0:0.00}", new { @type = "number", @class = "form-control", @readonly = true })
                     </div>
                     <div class="form-group">
                         <label>Total Risk Covered</label>
-                        @Html.TextBoxFor(x => x.TotalRiskCovered, new { @type = "number", @class = "form-control", @readonly = true })
+                        @Html.TextBoxFor(x => x.TotalRiskCovered, "{0:0.00}", new { @type = "number", @class = "form-control", @readonly = true })
                     </div>
 
                 </div>
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label>Balance</label>
-                        @Html.TextBoxFor(x => x.Balance, new { @type = "number", @class = "form-control", @readonly = true })
+                        @Html.TextBoxFor(x => x.Balance, "{0:0.00}", new { @type = "number", @class = "form-control", @readonly = true })
                     </div>
                     <div class="form-group">
                         <label>Inception Date</label>

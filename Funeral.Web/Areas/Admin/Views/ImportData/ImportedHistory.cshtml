@@ -20,14 +20,14 @@
                     <div class="row">
                         <div class="col-sm-3">
                             <div class="form-group">
-                                <label>Show entries</label>
+                                <label>Show entries:</label>
                                 @Html.DropDownListFor(m => m.PageSize, new SelectList(ViewBag.EntriesCount, "Value", "Key"), new { @class = "form-control" })
                             </div>
                         </div>
                         <div class="col-lg-4" id="dvAdministrator">
                             <div class="form-group">
-                                <label>Scheme </label>
-                                @Html.DropDownListFor(m => m.CompanyId, new SelectList(ViewBag.Companies, "parlourid", "ApplicationName"), new { @class = "form-control" })
+                                <label>Scheme:</label>
+                                @Html.DropDownListFor(m => m.CompanyId, new SelectList(ViewBag.Companies, "parlourid", "ApplicationName"), new {@id="ddlCompanySelection", @class = "form-control" })
                             </div>
                         </div>
                         <div class="col-sm-5">
@@ -208,12 +208,12 @@
             });
             function InitModel() {
                 model1.PageNum = 1;
-                model1.CompanyId = $('#CompanyId').val();
+                model1.CompanyId = $('#ddlCompanySelection').val();
                 model1.PageSize = $('#PageSize').val();
                 model1.SarchText = $("#SarchText").val();
                 $("#PageNum1").val(model1.PageNum);
                 }
-                $('#CompanyId').change(function () {
+                $('#ddlCompanySelection').change(function () {
                     jQuery.ajax({
                         url: '@Url.Action("ChangeParlour", "Parlour", null, Request.Url.Scheme)',
                         data: { parlourId: $('#CompanyId').val() },

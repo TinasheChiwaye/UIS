@@ -47,7 +47,10 @@ namespace Funeral.DAL
             ObjParam[5] = new DbParameter("@IDNumber", DbParameter.DbType.NVarChar, 0, IDNumber);
             ObjParam[6] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
             ObjParam[7] = new DbParameter("@PolicyStatus", DbParameter.DbType.NVarChar, 0, PolicyStatus);
-            return DbConnection.GetDataSet(CommandType.StoredProcedure, "MemberPaymentSelectAllByPage", ObjParam);
+            if (ParlourId == Guid.Empty)
+                return DbConnection.GetDataSet(CommandType.StoredProcedure, "MemberPaymentSelectAll_WithouthParlour", ObjParam);
+            else
+                return DbConnection.GetDataSet(CommandType.StoredProcedure, "MemberPaymentSelectAllByPage", ObjParam);
         }
 
 

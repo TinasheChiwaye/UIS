@@ -38,28 +38,6 @@ namespace Funeral.Web.Areas.Admin.Controllers
         {
             return View("Index");
         }
-        public void BindCompanyList()
-        {
-            List<SelectListItem> companyListItems = new List<SelectListItem>();
-            List<ApplicationSettingsModel> model = new List<ApplicationSettingsModel>();
-
-            if (this.IsAdministrator)
-            {
-                model = ToolsSetingBAL.GetAllApplicationList(ParlourId, 1, 0).ToList();
-
-                if (model == null)
-                {
-                    model.Add(new ApplicationSettingsModel() { ApplicationName = ApplicationName, parlourid = ParlourId });
-                }
-            }
-            else
-            {
-                model.Add(new ApplicationSettingsModel() { ApplicationName = ApplicationName, parlourid = ParlourId });
-            }
-
-            ViewBag.Companies = model;
-        }
-
         [PageRightsAttribute(CurrentPageId = 7, Right = new isPageRight[] { isPageRight.HasAccess })]
         public ActionResult GroupPaymentView(Guid id, string RefNo)
         {
@@ -240,11 +218,11 @@ namespace Funeral.Web.Areas.Admin.Controllers
         [PageRightsAttribute(CurrentPageId = 7)]
         public PartialViewResult GroupList()
         {
-            BindCompanyList();
+            BindCompanyList("Search");
             ViewBag.HasEditRight = HasEditRight;
             ViewBag.HasDeleteRight = HasDeleteRight;
 
-            Model.Search.BaseSearch search = new Model.Search.BaseSearch();
+            Model.Search.PaymentSearchNew search = new Model.Search.PaymentSearchNew();
             search.PageNum = 1;
             search.PageSize = 10;
             search.SarchText = string.Empty;
@@ -259,13 +237,14 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
             return PartialView("~/Areas/Admin/Views/GroupPayment/_PaymentList.cshtml", search);
         }
-        public ActionResult GroupSearchData(Model.Search.BaseSearch search)
+        public ActionResult GroupSearchData(Model.Search.PaymentSearchNew search)
         {
             var searchResult = new SearchResult<Model.Search.BaseSearch, SocietyModel>(search, new List<SocietyModel>(), o => o.SocietyName.Contains(search.SarchText));
 
             try
             {
-                var SocietyList = ToolsSetingBAL.GetAllSocietyes_PaymentList(CurrentParlourId);
+                var SocietyList = ToolsSetingBAL.GetAllSocietyes_PaymentList(Guid.Empty);
+                SocietyList = search.StatusId != Guid.Empty ? SocietyList.Where(x => x.parlourid.Equals(search.StatusId)).ToList() : SocietyList;
                 return Json(new SearchResult<Model.Search.BaseSearch, GroupPaymentList>(search, SocietyList, o => o.GroupName.Contains(search.SarchText)));
             }
             catch (Exception ex)

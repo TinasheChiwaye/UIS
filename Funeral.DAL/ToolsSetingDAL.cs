@@ -609,7 +609,7 @@ namespace Funeral.DAL
             ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "SchemeSummary", ObjParam);
         }
-        public static DataTable GetGroupPayment_ByParlourId(Guid ParlourId,string ReferenceNumber)
+        public static DataTable GetGroupPayment_ByParlourId(Guid ParlourId, string ReferenceNumber)
         {
             DbParameter[] ObjParam = new DbParameter[2];
             ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
@@ -1408,10 +1408,14 @@ namespace Funeral.DAL
         }
         public static DataTable GetImportedHistory(Guid ParlourId)
         {
-            string SP = "GetImportedHistory";
-            DbParameter[] ObjParam = new DbParameter[1];
-            ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
-            return (DbConnection.GetDataTable(CommandType.StoredProcedure, SP, ObjParam));
+            if (ParlourId == Guid.Empty)
+                return (DbConnection.GetDataTable(CommandType.StoredProcedure, "GetImportedHistory_WithoutParlour"));
+            else
+            {
+                DbParameter[] ObjParam = new DbParameter[1];
+                ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+                return (DbConnection.GetDataTable(CommandType.StoredProcedure, "GetImportedHistory", ObjParam));
+            }
         }
         public static DataTable GetImportedHistory_ByImportedId(int ImportedId)
         {

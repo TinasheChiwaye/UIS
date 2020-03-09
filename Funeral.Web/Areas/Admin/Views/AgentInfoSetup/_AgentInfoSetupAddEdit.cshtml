@@ -42,7 +42,7 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.ContactNumber, new { @class = "control-label" })
                             <span class="text-danger"><em>*</em></span>
-                            @Html.TextBoxFor(m => m.ContactNumber, null, new { @class = "form-control", @maxlength = "10", placeholder = "Contact Number" })
+                            @Html.TextBoxFor(m => m.ContactNumber, null, new { @class = "form-control",@onkeypress="return onlyNumberKey(event)", @maxlength = "13", placeholder = "Contact Number" })
                             @Html.ValidationMessageFor(m => m.ContactNumber, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                         </div>
                         <div class="form-group">

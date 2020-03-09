@@ -436,11 +436,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Admin\Members.aspx" />
     <Content Include="Scripts\app\ActiveMenu.js" />
-    <Content Include="Scripts\app\IdNumberValidationJS.js" />
     <Content Include="Scripts\app\inspinia.js" />
     <Content Include="Scripts\app\messagebox.js" />
     <Content Include="Scripts\app\multisearchdatatable.js" />
     <Content Include="Scripts\app\searchdatatable.js" />
+    <Content Include="Scripts\app\ValidateIdNumber.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap-timepicker.js" />
     <Content Include="Scripts\bootstrap.js" />

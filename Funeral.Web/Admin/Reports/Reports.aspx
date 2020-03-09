@@ -61,14 +61,14 @@
                                                                     <div class="form-group">
                                                                         <label class="">Date From </label>
                                                                         <%-- <asp:RequiredFieldValidator ValidationGroup="pnlPolicyStatus" ID="RequiredFieldValidator29" ForeColor="Red" ControlToValidate="txtPolicyDateFrom" runat="server" ErrorMessage="*"></asp:RequiredFieldValidator>--%>
-                                                                        <asp:TextBox CssClass="form-control datepicker" placeholder="DD/MM/YYYY" ID="txtDateFrom" runat="server"></asp:TextBox>
+                                                                        <asp:TextBox CssClass="form-control datepicker" placeholder="DD/MM/YYYY" autocomplete="off" ID="txtDateFrom" runat="server"></asp:TextBox>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-6 DateDisabled">
                                                                     <div class="form-group">
                                                                         <label class="">Date To </label>
                                                                         <%--<asp:RequiredFieldValidator ValidationGroup="pnlPolicyStatus" ID="RequiredFieldValidator30" ForeColor="Red" ControlToValidate="txtPolicyDateTo" runat="server" ErrorMessage="*"></asp:RequiredFieldValidator>--%>
-                                                                        <asp:TextBox CssClass="form-control datepicker" placeholder="DD/MM/YYYY" ID="txtDateTo" runat="server"></asp:TextBox>
+                                                                        <asp:TextBox CssClass="form-control datepicker" placeholder="DD/MM/YYYY" autocomplete="off" ID="txtDateTo" runat="server"></asp:TextBox>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-6">
@@ -128,21 +128,21 @@
                                                                         </asp:DropDownList>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-6">
+                                                                <div class="col-sm-6" style="display:none">
                                                                     <div class="form-group">
                                                                         <label class="">Custom :</label>
                                                                         <asp:DropDownList ID="ddlCustom1" runat="server" class="form-control">
                                                                         </asp:DropDownList>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-6">
+                                                                <div class="col-sm-6" style="display:none">
                                                                     <div class="form-group">
                                                                         <label class="">Custom 2:</label>
                                                                         <asp:DropDownList ID="ddlCustom2" runat="server" class="form-control">
                                                                         </asp:DropDownList>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-6">
+                                                                <div class="col-sm-6" style="display:none">
                                                                     <div class="form-group">
                                                                         <label class="">Custom 3:</label>
                                                                         <asp:DropDownList ID="ddlCustom3" runat="server" class="form-control">

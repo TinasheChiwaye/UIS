@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Funeral.Web.Areas.Admin.Controllers
@@ -12,7 +9,10 @@ namespace Funeral.Web.Areas.Admin.Controllers
         [HttpPost]
         public void ChangeParlour(Guid parlourId)
         {
-            CurrentParlourId = parlourId;
+            if (!parlourId.Equals(Guid.Empty))
+            {
+                CurrentParlourId = parlourId;
+            }
         }
     }
 }

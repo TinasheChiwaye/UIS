@@ -1,4 +1,4 @@
-﻿@model Funeral.Model.Search.BaseSearch
+﻿@model Funeral.Model.Search.PaymentSearchNew
 @Styles.Render("~/Content/datatablecss")
 @Scripts.Render("~/bundles/jqueryval")
 
@@ -16,13 +16,13 @@
                     <div class="row">
                         <div class="col-lg-3" id="dvAdministrator">
                             <div class="form-group">
-                                <label>Show entries</label>
+                                <label>Show entries:</label>
                                 @Html.DropDownListFor(m => m.PageSize, new SelectList(ViewBag.EntriesCount, "Value", "Key"), new { @class = "form-control" })
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label>Scheme </label>
+                                <label>Scheme: </label>
                                 @Html.DropDownList("ddlSelectCompany", new SelectList(ViewBag.Companies, "parlourid", "ApplicationName"), new { @id = "ddlSelectCompany", @class = "form-control" })
                             </div>
                         </div>
@@ -97,7 +97,8 @@
             });
         });
 
-        function ConfigureDatatable(){
+        function ConfigureDatatable() {
+            var statusId = @Html.Raw(Json.Encode(@Model.StatusId));
             var sortOrder = @Html.Raw(Json.Encode(@Model.SortOrder));
             var sortBy =@Html.Raw(Json.Encode(@Model.SortBy));
             var totalRecord =@Html.Raw(Json.Encode(@Model.TotalRecord));
@@ -107,7 +108,7 @@
 
 			DOMIDs.Datatable = "societySetupDataTable";
             tableConfigs.SearchUrls = '@Url.Action("GroupSearchData", "GroupPayment", new { }, Request.Url.Scheme)';
-			setsearchmodel('200', sortOrder, sortBy, totalRecord, pageNum, pageSize, searchText);
+			setsearchmodel(statusId, sortOrder, sortBy, totalRecord, pageNum, pageSize, searchText);
 
             columnsArray =
                 [{ "data": "GroupName", "name": "Group Name", "autoWidth": true },
@@ -145,6 +146,7 @@
             model1.PageNum = 1;
             model1.PageSize = jQuery('#PageSize').val();
             model1.SarchText = jQuery("#SarchText").val();
+            model1.StatusId = jQuery("#ddlSelectCompany").val();
             jQuery("#PageNum1").val(model1.PageNum);
         }
     

@@ -75,6 +75,7 @@ namespace Funeral.Model
         public string ClaimantAddressLine3 { get; set; }
         public string ClaimantAddressLine4 { get; set; }
         public string ClaimantCode { get; set; }
+        [StringLength(10)]
         public string ClaimantContactNumber { get; set; }
         public string BeneficiaryBank { get; set; }
         public string BeneficiaryAccountHolder { get; set; }
@@ -100,6 +101,7 @@ namespace Funeral.Model
         public int CreatedBy { get; set; }
         public int AssignedTo { get; set; }
         public string AssignedToName { get; set; }
+        [Required(ErrorMessage = "The Email is required.")]
         public string Email { get; set; }
     }
 }

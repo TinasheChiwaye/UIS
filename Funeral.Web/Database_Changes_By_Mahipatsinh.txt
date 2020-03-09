@@ -768,3 +768,45 @@ Truncate table ClaimStatus
 Truncate table ClaimReasons
 
 And Add New Record from Local Database
+
+
+
+
+26-02-2020
+======================================
+new sp
+---------------------------------------
+1.[SaveMemberStaging_New]
+
+Alter SP
+-------------------------
+1.SaveMemberStagingNew
+
+
+
+04-03-2020
+===========================================
+New sp
+------------------------
+1.SelectAllClaimsWithouthParlourId
+2.[MemberSelectAll_WithoutParlour]
+
+
+05-03-2020
+===================================
+
+new sp
+---------------------------------
+1.[MemberPaymentSelectAll_WithouthParlour]
+2.[GetImportedHistory_WithoutParlour]
+
+
+
+
+06-03-2020
+====================================
+
+Alter SP
+---------------------------
+1.[MemberPaymentSelectAll_WithouthParlour]
+2.[MemberPaymentSelectAllByPage]

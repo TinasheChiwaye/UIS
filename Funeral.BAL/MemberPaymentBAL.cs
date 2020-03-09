@@ -3,24 +3,22 @@ using Funeral.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Funeral.BAL
 {
     public class MemberPaymentBAL
     {
-        public static MembersPaymentViewModel GetAllPayentMembers(Guid ParlourId, string PolicyNo, string IDNumber, int PageSize, int PageNum, string SortBy, string SortOrder,string PolicyStatus)
+        public static MembersPaymentViewModel GetAllPayentMembers(Guid ParlourId, string PolicyNo, string IDNumber, int PageSize, int PageNum, string SortBy, string SortOrder, string PolicyStatus, string BookName = "")
         {
             DataSet ds = MemberPaymetsDAL.GetAllPayentMembersdt(ParlourId, PolicyNo, IDNumber, PageSize, PageNum, SortBy, SortOrder, PolicyStatus);
             DataTable dr = ds.Tables[0];
             MembersPaymentViewModel objViewModel = new MembersPaymentViewModel();
-            objViewModel.MemberList = FuneralHelper.DataTableMapToList<MembersPaymentModel>(dr, true);
-            
+            var MemberList = FuneralHelper.DataTableMapToList<MembersPaymentModel>(dr, true);
+            MemberList = !string.IsNullOrEmpty(BookName) ? MemberList.Where(x => x.ApplicationName.Contains(BookName)).ToList() : MemberList;
+            objViewModel.MemberList = MemberList;
             objViewModel.TotalRecord = Convert.ToInt64(ds.Tables[1].Rows[0]["TotalRecord"].ToString());
-              
+
             return objViewModel;
         }
 
@@ -85,7 +83,7 @@ namespace Funeral.BAL
         #endregion
         public static string GetCurrencyByParlourId(Guid parlourId)
         {
-           return MemberPaymetsDAL.GetCurrencyByParlourId(parlourId);           
+            return MemberPaymetsDAL.GetCurrencyByParlourId(parlourId);
         }
 
         public static int RecreateBillingMemberPayments(RegenerateBillingModal ModelPayment)

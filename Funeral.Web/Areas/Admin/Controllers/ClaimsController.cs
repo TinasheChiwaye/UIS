@@ -58,7 +58,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             ViewBag.SocietyLists = CommonBAL.GetSocietyByParlourId(CurrentParlourId);
             ViewBag.Statuses = statusList;
             LoadEntriesCount();
-            BindCompanyList();
+            BindCompanyList("Search");
             var bankList = CommonBAL.GetBankList();
             ViewBag.Banks = bankList;
             ViewBag.Provinces = CommonBAL.GetProvinces();
@@ -95,25 +95,6 @@ namespace Funeral.Web.Areas.Admin.Controllers
             keyValues.Add(new KeyValue { Key = "250", Value = "250" });
             keyValues.Add(new KeyValue { Key = "500", Value = "500" });
             ViewBag.EntriesCount = keyValues;
-        }
-        #endregion
-        #region BindCompanyList
-        public void BindCompanyList()
-        {
-            List<SelectListItem> companyListItems = new List<SelectListItem>();
-            List<ApplicationSettingsModel> model = new List<ApplicationSettingsModel>();
-            if (this.IsAdministrator)
-            {
-                model = ToolsSetingBAL.GetAllApplicationList(ParlourId, 1, 0).ToList();
-                if (model == null)
-                    model.Add(new ApplicationSettingsModel() { ApplicationName = ApplicationName, parlourid = ParlourId });
-            }
-            else
-            {
-                model.Add(new ApplicationSettingsModel() { ApplicationName = ApplicationName, parlourid = ParlourId });
-            }
-
-            ViewBag.Companies = model;
         }
         #endregion
         #region SearchData
@@ -352,7 +333,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 var applicationSettings = ToolsSetingBAL.GetApplictionByParlourID(changeStatus.ParlourID);
                 var fromMail = ConfigurationManager.AppSettings["ReportEmailSenderId"].ToString().Trim();
                 #region ClaimHistory
-                ClaimsBAL.SaveClaimHistory(IPAddress, changeStatus.ClaimID, StaticMessages.ClaimStatusUpdated, UserName, changeStatus.ParlourID, applicationSettings);
+                await ClaimsBAL.SaveClaimHistoryAsync(IPAddress, changeStatus.ClaimID, StaticMessages.ClaimStatusUpdated, UserName, changeStatus.ParlourID, applicationSettings);
                 #endregion
                 if (applicationSettings != null && fromMail != null)
                 {
@@ -395,8 +376,9 @@ namespace Funeral.Web.Areas.Admin.Controllers
         #endregion
         #region ClaimAddEdit
         [HttpGet]
-        public ActionResult ClaimAddEdit(int pkiClaimID)
+        public ActionResult ClaimAddEdit(int pkiClaimID, Guid? parlourId)
         {
+            CurrentParlourId = parlourId == null || parlourId == Guid.Empty ? CurrentParlourId : Guid.Parse(parlourId.ToString());
             ClaimandFuneralModel claimandFuneral = new ClaimandFuneralModel();
             if (pkiClaimID == 0)
             {

@@ -77,12 +77,12 @@
                         <div class="form-group">
                             @Html.Label("Telephone Number", new { @class = "control-label" })
                             <strong><span class="text-danger"><em>*</em></span></strong>
-                            @Html.TextBoxFor(m => m.ManageTelNumber, null, new { @class = "form-control", @maxlength = "25", placeholder = "Telephone Number" })
+                            @Html.TextBoxFor(m => m.ManageTelNumber, null, new { @class = "form-control",@onkeypress="return onlyNumberKey(event)", @maxlength = "13", placeholder = "Telephone Number" })
                             @Html.ValidationMessageFor(m => m.ManageTelNumber, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                         </div>
                         <div class="form-group">
                             @Html.Label("Cellphone Number", new { @class = "control-label" })
-                            @Html.TextBoxFor(m => m.ManageCellNumber, null, new { @class = "form-control", @maxlength = "25", placeholder = "Cellphone Number" })
+                            @Html.TextBoxFor(m => m.ManageCellNumber, null, new { @class = "form-control",@onkeypress="return onlyNumberKey(event)", @maxlength = "13", placeholder = "Cellphone Number" })
                         </div>
                         <div class="form-group">
                             @Html.Label("Fax Number", new { @class = "control-label" })
@@ -202,13 +202,13 @@
                         <div class="form-group">
                             @Html.Label("Telephone Number", new { @class = "control-label" })
                             <strong><span class="text-danger"><em>*</em></span></strong>
-                            @Html.TextBoxFor(m => m.OwnerTelNumber, null, new { @class = "form-control", @maxlength = "25", placeholder = "Telephone Number" })
+                            @Html.TextBoxFor(m => m.OwnerTelNumber, null, new { @class = "form-control",@onkeypress="return onlyNumberKey(event)", @maxlength = "13", placeholder = "Telephone Number" })
                             @Html.ValidationMessageFor(m => m.OwnerTelNumber, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                         </div>
                         <div class="form-group">
                             @Html.Label("Cellphone Number", new { @class = "control-label" })
                             <strong><span class="text-danger"><em>*</em></span></strong>
-                            @Html.TextBoxFor(m => m.OwnerCellNumber, null, new { @class = "form-control", @maxlength = "25", placeholder = "Cellphone Number" })
+                            @Html.TextBoxFor(m => m.OwnerCellNumber, null, new { @class = "form-control",@onkeypress="return onlyNumberKey(event)", @maxlength = "13", placeholder = "Cellphone Number" })
                             @Html.ValidationMessageFor(m => m.OwnerCellNumber, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                         </div>
                         <div class="form-group">

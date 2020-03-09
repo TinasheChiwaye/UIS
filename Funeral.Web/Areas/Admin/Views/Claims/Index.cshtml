@@ -17,13 +17,10 @@
     <div class="col-lg-12">
         <div class="ibox ">
             <div class="ibox-title">
-                <div class="ibox-title">
                     <h5>Claim Details</h5>
-                    <div class="pull-right">
+                    @*<div class="pull-right">
                         <a href="@Url.Action("ClaimAddEdit", "Claims", new { pkiClaimID = 0 })" class="btn btn-primary"><i class="fa fa-plus"></i> Add Claims</a>
-                    </div>
-                </div>
-
+                    </div>*@
             </div>
             <div class="ibox-content">
                 <div class="row">
@@ -35,29 +32,31 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-1">
+                        <div class="col-sm-2">
                             <label>Show Entries:</label>
                             @Html.DropDownListFor(m => m.PageSize, new SelectList(ViewBag.EntriesCount, "Value", "Key"), new { @class = "form-control" })
                         </div>
-                        <div class="col-lg-2" id="dvAdministrator">
+                        <div class="col-lg-5" id="dvAdministrator">
                             <div class="form-group">
-                                <label>Scheme </label>
+                                <label>Scheme: </label>
                                 @Html.DropDownListFor(m => m.CompanyId, new SelectList(ViewBag.Companies, "parlourid", "ApplicationName"), new { @class = "form-control" })
                             </div>
                         </div>
-                          <div class="col-lg-2" id="dvAdministrator">
+                        <div class="col-lg-5" id="dvAdministrator">
                             <div class="form-group">
-                                <label>Group </label>
-                                 @Html.DropDownListFor(m => m.SocietyID, new SelectList(ViewBag.SocietyLists, "pkiSocietyID", "SocietyName"),"Select Group", new { @id = "ddlClaimSociety", @class = "form-control" })
+                                <label>Book: </label>
+                                @Html.DropDownListFor(m => m.SocietyID, new SelectList(ViewBag.SocietyLists, "pkiSocietyID", "SocietyName"), "Select Group", new { @id = "ddlClaimSociety", @class = "form-control" })
                             </div>
                         </div>
-                        <div class="col-sm-1">
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
                             <div class="form-group">
                                 <label>Date From:</label>
                                 @Html.TextBoxFor(x => x.DateFrom, "{0:dd MMM yyyy}", new { @placeholder = "DD MM YYYY", @id = "txtDateFrom", @autocomplete = "off", @class = "form-control DatepickerSelection" })
                             </div>
                         </div>
-                        <div class="col-sm-1">
+                        <div class="col-sm-3">
                             <div class="form-group">
                                 <label>Date To:</label>
                                 @Html.TextBoxFor(x => x.DateTo, "{0:dd MMM yyyy}", new { @placeholder = "DD MM YYYY", @id = "txtDateTo", @autocomplete = "off", @class = "form-control DatepickerSelection" })
@@ -69,11 +68,11 @@
                                 @Html.DropDownListFor(x => x.StatusId, new SelectList(ViewBag.Statuses, "Status", "Status"), "Select", new { @class = "form-control" })
                             </div>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-4">
                             <div class="form-group">
-                                <label>wildcard search : </label>
+                                <label>Search: </label>
                                 <div class="input-group">
-                                    @Html.TextBoxFor(x => x.SarchText, new { @placeholder = "Search By Keyword", @class = "form-control" })
+                                    @Html.TextBoxFor(x => x.SarchText, new { @placeholder = "Search", @class = "form-control" })
                                     <span class="input-group-btn">
                                         <input type="button" id="btnSearch" value="Search" class="btn btn-w-m btn-primary" />
                                     </span>
@@ -94,9 +93,9 @@
                                     <th>ID Number</th>
                                     <th>Member No.</th>
                                     <th>Full Name</th>
-                                    <th>Claim Notes</th>
-                                    <th>Cause of Death</th>
-                                    <th>Contact No</th>
+                                    @*<th>Claim Notes</th>*@
+                                    @*<th>Cause of Death</th>*@
+                                    @*<th>Contact No</th>*@
                                     <th>Last Modified</th>
                                     <th>Created Date</th>
                                     <th>Assigned To</th>
@@ -241,9 +240,9 @@
                                  return full.ClaimantFullname + " " + full.ClaimantSurname;
                             }
                         },
-                        { "data": "ClaimNotes", "name": "ClaimNotes" },
-                        { "data": "CourseOfDearth", "name": "CourseOfDearth" },
-                        { "data": "ClaimantContactNumber", "name": "ClaimantContactNumber" },
+                        //{ "data": "ClaimNotes", "name": "ClaimNotes" },
+                        //{ "data": "CourseOfDearth", "name": "CourseOfDearth" },
+                        //{ "data": "ClaimantContactNumber", "name": "ClaimantContactNumber" },
                         {
                             "data": "LastModified", "name": "Last Modified", "autoWidth": true,
                             "render": function (data) {
@@ -292,7 +291,7 @@
                                 if (hasEditRights || hasDeleteRights) {
                                     var dom = "<div class='row'>";
                                     if (hasEditRights) {
-                                        var editClaimUrl = '<div class="col-sm-3"><a href="@Url.Action("ClaimAddEdit", "Claims", null, Request.Url.Scheme)?pkiClaimID=' + full.pkiClaimID + '"><i class="fa fa-edit"></i></a></div>';
+                                        var editClaimUrl = '<div class="col-sm-3"><a href="@Url.Action("ClaimAddEdit", "Claims", null, Request.Url.Scheme)?pkiClaimID=' + full.pkiClaimID + '&parlourId='+full.parlourid+'"><i class="fa fa-edit"></i></a></div>';
                                         dom = dom + editClaimUrl;
                                     }
 
@@ -309,7 +308,7 @@
                                     return dom;
                                 }
                                 else {
-                                    table.DataTable().columns([8]).visible(false)
+                                    table.DataTable().columns([7]).visible(false)
                                     return "";
                                 }
                             }
@@ -324,10 +323,10 @@
 
             var table = $('#claimDataTable');
             if (hasEditRights == 'True' || hasDeleteRights == 'True') {
-                table.DataTable().columns([8]).visible(true)
+                table.DataTable().columns([7]).visible(true)
             }
             else {
-                table.DataTable().columns([8]).visible(false)
+                table.DataTable().columns([7]).visible(false)
             }
 
             $('#PageSize').change(function () {

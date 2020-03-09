@@ -19,7 +19,7 @@
         <div class="ibox ">
             <div class="ibox-title">
                 <div class="ibox-title">
-                    <h5> <a href="@Url.Action("Index","Claims")" class="btn btn-default"><i class="fa fa-arrow-left"></i></a> Claim Details</h5>
+                    <h5> <a href="@Url.Action("Index","Claims")" class="btn btn-default"><i class="fa fa-arrow-left"></i></a> Claim logging</h5>
                 </div>
             </div>
             @using (Html.BeginForm("ClaimAddEdit", "Claims", FormMethod.Post, new { @id = "frm_ClaimAddEditForm" }))
@@ -48,9 +48,9 @@
                                 <div class="panel-options" id="Tabs">
 
                                     <ul class="nav nav-tabs" id="myTab">
-                                        <li class="active" id="tab1"><a data-toggle="tab" href="#tab-1" id="atab1" aria-expanded="true">Claim Details</a></li>
-                                        <li class="" id="tab2"><a data-toggle="tab" href="#tab-2" id="atab2" aria-expanded="false">Claimant Details</a></li>
-                                        <li class="" id="tab3"><a data-toggle="tab" href="#tab-3" id="atab3" aria-expanded="false">Deceased Details</a></li>
+                                        <li class="active" id="tab1"><a data-toggle="tab" href="#tab-1" id="atab1" aria-expanded="true">Claim details</a></li>
+                                        <li class="" id="tab2"><a data-toggle="tab" href="#tab-2" id="atab2" aria-expanded="false">Claimant details</a></li>
+                                        <li class="" id="tab3"><a data-toggle="tab" href="#tab-3" id="atab3" aria-expanded="false">Deceased details</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -72,18 +72,18 @@
                                                             </div>
                                                             <div class="col-sm-2">
                                                                 <div class="divMargin">
-                                                                    @Html.CheckBox("chkClaimForMember", new { @id = "chkClaimForMember", @value = "Claiming For Member" })Claiming For Member
+                                                                    @Html.CheckBox("chkClaimForMember", new { @id = "chkClaimForMember", @value = "Claiming For Member" })Claiming for member
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-2">
                                                                 <div class="divMargin">
-                                                                    @Html.CheckBox("chkWaitingPeriod", false, new { @id = "chkWaitingPeriod", @value = "Claiming For Member" })Apply Waiting Period
+                                                                    @Html.CheckBox("chkWaitingPeriod", false, new { @id = "chkWaitingPeriod", @value = "Claiming For Member" })Apply waiting period
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-3 pull-right">
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        @Html.TextBox("txtSearchKeyword", "", new { @id = "txtSearchKeyword", @name = "txtSearchKeyword", @placeholder = "wild card search", @class = "form-control" })
+                                                                        @Html.TextBox("txtSearchKeyword", "", new { @id = "txtSearchKeyword", @name = "txtSearchKeyword", @placeholder = "Search", @class = "form-control" })
                                                                         <span class="input-group-btn">
                                                                             <input type="button" value="search" class="btn btn-sm btn-primary" onclick="searchMemberDependentData()" id="btnSearchKeyword" name="btnSearchKeyword" />
                                                                         </span>
@@ -97,55 +97,55 @@
                                             <div class="col-lg-12">
                                                 <div class="form-group">
                                                     <div class="ibox-title">
-                                                        <h5>Claim Details</h5>
+                                                        <h5>Claim details</h5>
                                                     </div>
                                                     <div class="ibox-content">
                                                         <div class="row">
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
-                                                                    <label>Claim Date <em>*</em></label>
+                                                                    <label>Claim date <em>*</em></label>
                                                                     @Html.TextBoxFor(x => x.claimsModel.ClaimDate, "{0:dd MMM yyyy}", new { @id = "txtClaimDate", @class = "form-control DatepickerSelection", @placeholder = "DD/MM/YYYY", @autocomplete = "off" })
                                                                     @Html.ValidationMessageFor(x => x.claimsModel.ClaimDate, "", new { @class = "text-danger" })
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
-                                                                    <label>Claim Number</label>
-                                                                    @Html.TextBoxFor(x => x.claimsModel.ClaimNumber, new { @id = "txtClaimNumber", @class = "form-control", @placeholder = "Claim Number", @readonly = true })
+                                                                    <label>Claim number</label>
+                                                                    @Html.TextBoxFor(x => x.claimsModel.ClaimNumber, new { @id = "txtClaimNumber", @class = "form-control", @placeholder = "Claim number", @readonly = true })
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
-                                                                    <label>Cause of Death</label>
-                                                                    @Html.TextBoxFor(x => x.claimsModel.CourseOfDearth, new { @id = "txtCauseOfDeath", @class = "form-control", @placeholder = "Cause Of Death" })
+                                                                    <label>Cause of death</label>
+                                                                    @Html.TextBoxFor(x => x.claimsModel.CourseOfDearth, new { @id = "txtCauseOfDeath", @class = "form-control", @placeholder = "Cause of death" })
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
-                                                                    <label>Select Group</label>
-                                                                    @Html.DropDownListFor(m => m.claimsModel.SocietyID, new SelectList(ViewBag.SocietyLists, "pkiSocietyID", "SocietyName"), "Select Group", new { @id = "ddlClaimSociety", @class = "form-control" })
+                                                                    <label>Select book</label>
+                                                                    @Html.DropDownListFor(m => m.claimsModel.SocietyID, new SelectList(ViewBag.SocietyLists, "pkiSocietyID", "SocietyName"), "Select book", new { @id = "ddlClaimSociety", @class = "form-control" })
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
-                                                                    <label>Claim Notes</label>
-                                                                    @Html.TextAreaFor(x => x.claimsModel.ClaimNotes, 4, 3, new { @id = "txtClaimNotes", @class = "form-control", @placeholder = "Claim Note", })
+                                                                    <label>Claim notes</label>
+                                                                    @Html.TextAreaFor(x => x.claimsModel.ClaimNotes, 4, 3, new { @id = "txtClaimNotes", @class = "form-control", @placeholder = "Claim note", })
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
-                                                                    <label>Cover Amount</label>
-                                                                    @Html.TextBoxFor(x => x.claimsModel.Cover, new { @id = "txtCoverAmount", @class = "form-control", @placeholder = "Cover Amount", @readonly = true })
+                                                                    <label>Cover amount</label>
+                                                                    @Html.TextBoxFor(x => x.claimsModel.Cover, new { @id = "txtCoverAmount", @class = "form-control", @placeholder = "Cover amount", @readonly = true })
                                                                     <div class="divMarginChk">
-                                                                        @Html.CheckBoxFor(x => x.claimsModel.Payout, new { @style = "margin-right:5px;", @id = "chkPayout", @onclick = "ShowHideDiv(this)", @value = "Add Payout" })Add Payout
+                                                                        @Html.CheckBoxFor(x => x.claimsModel.Payout, new { @style = "margin-right:5px;", @id = "chkPayout", @onclick = "ShowHideDiv(this)" })Add payout
                                                                     </div>
                                                                     <div id="dvPayout" style="display:none;">
-                                                                        <label>Add Payout</label>
-                                                                        @Html.TextBoxFor(x => x.claimsModel.PayoutValue, new { @id = "txtAddPayout", @class = "form-control", @placeholder = "Cover Amount", })
+                                                                        <label>Add payout</label>
+                                                                        @Html.TextBoxFor(x => x.claimsModel.PayoutValue, new { @id = "txtAddPayout", @class = "form-control", @placeholder = "Payout amount", })
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -166,7 +166,7 @@
                                                                 @if (Model.claimsModel.pkiClaimID > 0)
                                                                 {
                                                                     <div class="form-group">
-                                                                        <h3>Supporting Documents</h3>
+                                                                        <h3>Supporting documents</h3>
                                                                         <label id="lblDataMsg" hidden>There is no document uploaded.</label>
                                                                         <div class="table-responsive">
                                                                             <table id="documentDataTable" class="table table-bordered table-hover table-striped" cellspacing="0">
@@ -233,7 +233,7 @@
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <div class="col-sm-6">
-                                                                            <h3>Payment History</h3>
+                                                                            <h3>Payment history</h3>
                                                                             <table id="memberDataTable" class="fixed_header fixed_header-bordered" cellspacing="0">
                                                                                 <thead>
                                                                                     <tr>
@@ -271,7 +271,7 @@
                                                                             </table>
                                                                         </div>
                                                                         <div class="col-sm-6">
-                                                                            <h3>Claim History</h3>
+                                                                            <h3>Claim history</h3>
                                                                             <table id="memberDataTable" class="fixed_header fixed_header-bordered" cellspacing="0">
                                                                                 <thead>
                                                                                     <tr>
@@ -332,33 +332,34 @@
                                                             </div>
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
-                                                                    <label>Street Address </label>
-                                                                    @Html.TextBoxFor(x => x.claimsModel.ClaimantAddressLine1, new { @id = "txtClaimantStreet", @maxlength = "50", @class = "form-control"})
+                                                                    <label>Street address </label>
+                                                                    @Html.TextBoxFor(x => x.claimsModel.ClaimantAddressLine1, new { @id = "txtClaimantStreet", @maxlength = "50", @class = "form-control" })
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-sm-6">
-                                                                <div class="form-group">
-                                                                    <label>Last Name  <em>*</em> </label>
-                                                                    @Html.TextBoxFor(x => x.claimsModel.ClaimantSurname, new { @id = "txtClaimantLastName", @maxlength = "50", @class = "form-control", @required = true })
-                                                                    @Html.ValidationMessageFor(x => x.claimsModel.ClaimantSurname, "", new { @class = "text-danger" })
+                                                               <div class="form-group">
+                                                                    <label>First name  <em>*</em> </label>
+                                                                    @Html.TextBoxFor(x => x.claimsModel.ClaimantFullname, new { @id = "txtClaimFirstName", @maxlength = "50", @class = "form-control", @required = true })
+                                                                    @Html.ValidationMessageFor(x => x.claimsModel.ClaimantFullname, "", new { @class = "text-danger" })
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
-                                                                    <label>Town or City  </label>
+                                                                    <label>Town or city  </label>
                                                                     @Html.TextBoxFor(x => x.claimsModel.ClaimantAddressLine2, new { @id = "txtClaimantTownOrCity", @maxlength = "50", @class = "form-control" })
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-sm-6">
-                                                                <div class="form-group">
-                                                                    <label>First Name  <em>*</em> </label>
-                                                                    @Html.TextBoxFor(x => x.claimsModel.ClaimantFullname, new { @id = "txtClaimFirstName", @maxlength = "50", @class = "form-control", @required = true })
-                                                                    @Html.ValidationMessageFor(x => x.claimsModel.ClaimantFullname, "", new { @class = "text-danger" })
+                                                                  <div class="form-group">
+                                                                    <label>Last name  <em>*</em> </label>
+                                                                    @Html.TextBoxFor(x => x.claimsModel.ClaimantSurname, new { @id = "txtClaimantLastName", @maxlength = "50", @class = "form-control", @required = true })
+                                                                    @Html.ValidationMessageFor(x => x.claimsModel.ClaimantSurname, "", new { @class = "text-danger" })
                                                                 </div>
+                                                               
                                                             </div>
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
@@ -370,7 +371,7 @@
                                                         <div class="row">
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
-                                                                    <label>ID Number  <em>*</em> </label>
+                                                                    <label>ID number  <em>*</em> </label>
                                                                     @Html.TextBoxFor(x => x.claimsModel.ClaimantIDNumber, new { @id = "txtClaimantIDNumber", @onkeyup = "return DateComparisionJavascriptFun(this);", @maxlength = "13", @class = "form-control", @required = true })
                                                                     @Html.ValidationMessageFor(x => x.claimsModel.ClaimantIDNumber, "", new { @class = "text-danger" })
                                                                 </div>
@@ -385,14 +386,14 @@
                                                         <div class="row">
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
-                                                                    <label>Date of Birth  </label>
+                                                                    <label>Date of birth  </label>
                                                                     @Html.TextBoxFor(x => x.claimsModel.ClaimantDateOfBirth, "{0:dd MMM yyyy}", new { @id = "txtClaimantDateOfBirth", @maxlength = "50", @class = "form-control DatepickerSelection", @placeholder = "DD/MM/YYYY", @autocomplete = "off" })
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
-                                                                    <label>Contact Number  </label>
-                                                                    @Html.TextBoxFor(x => x.claimsModel.ClaimantContactNumber, new { @type = "number", @id = "txtClaimantContact", @maxlength = "10", @class = "form-control" })
+                                                                    <label>Contact number  </label>
+                                                                    @Html.TextBoxFor(x => x.claimsModel.ClaimantContactNumber, new { @id = "txtClaimantContact",@onkeypress="return onlyNumberKey(event)", @maxlength = "13", @class = "form-control" })
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -423,18 +424,18 @@
                                                     <div class="form-group">
                                                         <div class="ibox-content">
                                                             <div class="ibox-title">
-                                                                <h5>Beneficiary Banking Details</h5>
+                                                                <h5>Beneficiary banking details</h5>
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-sm-6">
                                                                     <div class="form-group">
-                                                                        <label>Bank Name  </label>
+                                                                        <label>Bank name  </label>
                                                                         @Html.DropDownListFor(x => x.claimsModel.BeneficiaryBank, new SelectList(ViewBag.Banks, "BankID", "BankName"), "Select", new { @class = "form-control", @id = "ddlBankList", @name = "ddlBankList" })
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-6">
                                                                     <div class="form-group">
-                                                                        <label>Account Holder  </label>
+                                                                        <label>Account holder  </label>
                                                                         @Html.TextBoxFor(x => x.claimsModel.BeneficiaryAccountHolder, new { @id = "txtClaimantAccHolder", @maxlength = "50", @class = "form-control" })
                                                                     </div>
                                                                 </div>
@@ -442,13 +443,13 @@
                                                             <div class="row">
                                                                 <div class="col-sm-6">
                                                                     <div class="form-group">
-                                                                        <label>Bank Branch</label>
+                                                                        <label>Bank branch</label>
                                                                         @Html.TextBoxFor(x => x.claimsModel.BeneficiaryBankBranch, new { @id = "txtClaimantBnkBranch", @maxlength = "50", @class = "form-control" })
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-6">
                                                                     <div class="form-group">
-                                                                        <label>Account Number</label>
+                                                                        <label>Account number</label>
                                                                         @Html.TextBoxFor(x => x.claimsModel.BeneficiaryAccountNumber, new { @id = "txtClaimantAcntNumber", @maxlength = "50", @class = "form-control" })
                                                                     </div>
                                                                 </div>
@@ -456,13 +457,13 @@
                                                             <div class="row">
                                                                 <div class="col-sm-6">
                                                                     <div class="form-group">
-                                                                        <label>Branch Code</label>
+                                                                        <label>Branch code</label>
                                                                         @Html.TextBoxFor(x => x.claimsModel.BeneficiaryBranchCode, new { @id = "txtClaimantBranchCode", @maxlength = "50", @class = "form-control" })
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-6">
                                                                     <div class="form-group">
-                                                                        <label>Account Type</label>
+                                                                        <label>Account type</label>
                                                                         @Html.DropDownListFor(x => x.claimsModel.BeneficiaryAccountType, new SelectList(ViewBag.Accounts, "AccountTypeID", "AccountType"), "Select", new { @class = "form-control", @id = "ddlAccountTypeList", @name = "ddlAccountTypeList" })
                                                                     </div>
                                                                 </div>
@@ -508,9 +509,9 @@
                                                                      },new {@class="form-control",@readonly=true})
                                                                 </div>
                                                             </div>
-                                                             <div class="col-sm-6">
+                                                            <div class="col-sm-6">
                                                                 <div class="form-group">
-                                                                    <label>Cause of Death  </label>
+                                                                    <label>Cause of death  </label>
                                                                     @Html.TextBoxFor(x => x.funeralModel.CourseOfDearth, new { @id = "txtDeceaseCauseOfDeath", @class = "form-control", @readonly = true })
                                                                 </div>
                                                             </div>
@@ -518,13 +519,13 @@
                                                         <div class="row">
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
-                                                                    <label>First Name  <em>*</em> </label>
+                                                                    <label>First name  <em>*</em> </label>
                                                                     @Html.TextBoxFor(x => x.funeralModel.FullNames, new { @id = "txtDeceaseName", @maxlength = "50", @class = "form-control", @required = true, @readonly = true })
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
-                                                                    <label>Date of Death  </label>
+                                                                    <label>Date of death  </label>
                                                                     @Html.TextBoxFor(x => x.funeralModel.DateOfDeath, "{0:dd MMM yyyy}", new { @id = "txtDeceaseDateOfDeath", @maxlength = "50", @class = "form-control DatepickerSelection", @placeholder = "DD/MM/YYYY", @autocomplete = "off" })
                                                                 </div>
                                                             </div>
@@ -532,41 +533,41 @@
                                                         <div class="row">
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
-                                                                    <label>Last Name  <em>*</em> </label>
+                                                                    <label>Last name  <em>*</em> </label>
                                                                     @Html.TextBoxFor(x => x.funeralModel.Surname, new { @id = "txtDeceaseLastName", @maxlength = "50", @class = "form-control", @required = true, @readonly = true })
                                                                 </div>
                                                             </div>
-                                                             <div class="col-sm-6">
+                                                            <div class="col-sm-6">
                                                                 <div class="form-group">
-                                                                    <label>Contact Person </label>
-                                                                    @Html.TextBoxFor(x => x.funeralModel.ContactPerson, new { @id = "txtDeceaseContactPerson", @maxlength = "50", @class = "form-control" })
+                                                                    <label>Contact person </label>
+                                                                    @Html.TextBoxFor(x => x.funeralModel.ContactPerson, new { @id = "txtDeceaseContactPerson",@onkeypress="return onlyNumberKey(event)", @maxlength = "13", @class = "form-control" })
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
-                                                                    <label>ID Number  <em>*</em> </label>
+                                                                    <label>ID number  <em>*</em> </label>
                                                                     @Html.TextBoxFor(x => x.funeralModel.IDNumber, new { @id = "txtDeceaseIDNumber", @maxlength = "50", @class = "form-control", @required = true, @readonly = true })
                                                                 </div>
                                                             </div>
-                                                             <div class="col-sm-6">
+                                                            <div class="col-sm-6">
                                                                 <div class="form-group">
-                                                                    <label>Contact Person Number  </label>
-                                                                    @Html.TextBoxFor(x => x.funeralModel.ContactPersonNumber, new { @type = "number", @id = "txtDeceaseCntPerNo", @maxlength = "10", @class = "form-control" })
+                                                                    <label>Contact number  </label>
+                                                                    @Html.TextBoxFor(x => x.funeralModel.ContactPersonNumber, new { @id = "txtDeceaseCntPerNo",@onkeypress="return onlyNumberKey(event)", @maxlength = "13", @class = "form-control" })
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="row">
-                                                           <div class="col-sm-6">
+                                                            <div class="col-sm-6">
                                                                 <div class="form-group">
-                                                                    <label>Date of Birth  </label>
+                                                                    <label>Date of birth  </label>
                                                                     @Html.TextBoxFor(x => x.funeralModel.DateOfBirth, "{0:dd MMM yyyy}", new { @id = "txtDeceaseDateOfBirth", @maxlength = "50", @class = "form-control", @placeholder = "DD/MM/YYYY", @autocomplete = "off", @readonly = true })
                                                                 </div>
                                                             </div>
-                                                             <div class="col-sm-6">
+                                                            <div class="col-sm-6">
                                                                 <div class="form-group">
-                                                                    <label>BI663 Serial No  </label>
+                                                                    <label>BI663 serial no.  </label>
                                                                     @Html.TextBoxFor(x => x.funeralModel.BI1663, new { @id = "txtDeceaseSerialNo", @maxlength = "50", @class = "form-control" })
                                                                 </div>
                                                             </div>
@@ -595,8 +596,9 @@
                                                         {
                                                             <button class="btn btn-sm btn-primary pull-right m-t-n-xs" style="margin-right:10px;" name="tab4btnReset" id="tab4btnReset">Reset</button>
                                                         }
-                                                        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                                                       
                                                     </div>
+                                                     @Html.ValidationSummary(false, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
                                         </div>
@@ -902,13 +904,13 @@
     }
     function BindGroupDropdown(ParlourId) {
         var ddlCustomers = $("#ddlClaimSociety");
-        ddlCustomers.empty().append('<option selected="selected" value="0" disabled = "disabled">Select Group.....</option>');
+        ddlCustomers.empty().append('<option selected="selected" value="0" disabled = "disabled">Select Book</option>');
         jQuery.ajax({
             url: '@Url.Action("BindGroupByCompanyId","Claims")',
             data: { CompanyId: ParlourId },
             type: "post",
             success: function (response) {
-                ddlCustomers.empty().append('<option selected="selected" value="0">Please select</option>');
+                ddlCustomers.empty().append('<option selected="selected" value="0">Select Book</option>');
                 jQuery.each(response, function () {
                     ddlCustomers.append($("<option></option>").val(this['Value']).html(this['Text']));
                 });
@@ -965,13 +967,19 @@
             $('#txtClaimantDateOfBirth').datepicker({ format: 'dd M yyyy', autoclose: true }).datepicker("setDate", dateFormat(new Date(fullDate), "dd/mm/yyyy", false));
             var genderCode = idNumber.substring(6, 10);
             var gender = parseInt(genderCode) < 5000 ? "Female" : "Male";
-            if(gender == "Female")
-            {
-                $("#ClaimentFemale").prop('checked',true);
-            }else{
-                $("#ClaimentMale").prop('checked',true);
+            if (gender == "Female") {
+                $("#ClaimentFemale").prop('checked', true);
+            } else {
+                $("#ClaimentMale").prop('checked', true);
             }
             //CalculateAge(fullDate);
+        }
+        else {
+            if (idNumber != "") {
+                alert("Id Number invalid");
+                $("#txtClaimantIDNumber").val("");
+                $("#txtClaimantDateOfBirth").val("");
+            }
         }
         return false;
     }

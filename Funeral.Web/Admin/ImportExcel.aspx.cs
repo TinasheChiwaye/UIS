@@ -19,88 +19,7 @@ namespace Funeral.Web.Admin
     public partial class ImportExcel : AdminBasePage
     {
         private readonly ISiteSettings _siteConfig = new SiteSettings();
-        private static readonly List<string> memberTableColumns = new List<string>() {
-                                                                            "CreateDate",
-                                                                            "MemberType",
-                                                                            "Title",
-                                                                            "Full Names",
-                                                                            "Surname",
-                                                                            "Gender",
-                                                                            "Active",
-                                                                            "ID Number" ,
-                                                                            "Date Of Birth",
-                                                                            "Telephone",
-                                                                            "Cellphone",
-                                                                            "Address1",
-                                                                            "Address2",
-                                                                            "Address3",
-                                                                            "Address4",
-                                                                            "Code",
-                                                                            "MemeberNumber",//PolicyNumber
-                                                                            "MemberSociety",
-                                                                            "InceptionDate",
-                                                                            "Claimnumber",
-                                                                            "PolicyStatus",
-                                                                            "parlourid",
-                                                                            "Agent",
-                                                                            "AccountHolder",
-                                                                            "Bank",
-                                                                            "BranchCode",
-                                                                            "Branch",
-                                                                            "AccountNumber",
-                                                                            "AccountType",
-                                                                            "DebitDate",
-                                                                            "MemberBranch",
-                                                                            "CoverDate",
-                                                                            "Email",
-                                                                            "Citizenship",
-                                                                            "Passport",
-                                                                            "StartDate",
-                                                                            "CustomId1",
-                                                                            "CustomId2",
-                                                                            "CustomId3",
-                                                                            "PlanName",
-                                                                            "Premium",
-                                                                            //new Columns 21-1-2020
-                                                                            "Age"
-                                                                             ,"PlanDesc"
-                                                                             ,"PlanSubscription"
-                                                                             ,"Cover"
-                                                                             ,"WaitingPeriod"
-                                                                             ,"PolicyLaps"
-                                                                             ,"PlanUnderwriter"
-                                                                             ,"JoiningFee"
-                                                                             ,"UnderwriterId"
-                                                                             ,"AgeBand"
-                                                                             ,"AgeFrom"
-                                                                             ,"AgeTo"
-                                                                             ,"UnderwriterCover"
-                                                                             ,"UnderwriterPremium"
-                                                                             ,"ReinsurancePremium"
-                                                                             ,"OfficePremium"
-                                                                             ,"EffectiveDate"
-                                                                        };
-
-        private static readonly List<MappedDependents> FixExcelColumn = new List<MappedDependents> {
-            new MappedDependents() { SystemTypeName = "MemeberNumber", ExcelTypeName = "Arl Policy Number"},
-            new MappedDependents() { SystemTypeName = "MemberSociety", ExcelTypeName = "Scheme Name"},
-            new MappedDependents() { SystemTypeName = "PlanName", ExcelTypeName = "Book Name"},
-            new MappedDependents() { SystemTypeName = "ID Number", ExcelTypeName = "ID Number" },
-            new MappedDependents() { SystemTypeName = "Full Names", ExcelTypeName = "Name"},
-            new MappedDependents() { SystemTypeName = "Surname", ExcelTypeName = "Surname"},
-            new MappedDependents() { SystemTypeName = "Date Of Birth", ExcelTypeName = "Date  Of Birth"},
-            new MappedDependents() { SystemTypeName = "Gender", ExcelTypeName = "Gender"},
-            new MappedDependents() { SystemTypeName = "Age", ExcelTypeName = "Age"},
-            new MappedDependents() { SystemTypeName = "AgeBand", ExcelTypeName = "Age Band"},
-            new MappedDependents() { SystemTypeName = "Cover", ExcelTypeName = "Cover Amount"},
-            new MappedDependents() { SystemTypeName = "EffectiveDate", ExcelTypeName = "Effective Date"},
-            new MappedDependents() { SystemTypeName = "MemberType", ExcelTypeName = "Relationship  Type"},
-            new MappedDependents() { SystemTypeName = "PlanDesc", ExcelTypeName = "Rate Type"},
-            new MappedDependents() { SystemTypeName = "InceptionDate", ExcelTypeName = "Inception Date"},
-            new MappedDependents() { SystemTypeName = "PolicyStatus", ExcelTypeName = "Policy Status"},
-            new MappedDependents() { SystemTypeName = "Premium", ExcelTypeName = "Premium"},
-            new MappedDependents() { SystemTypeName = "ReinsurancePremium", ExcelTypeName = "Risk Premium"},
-        };
+        private static readonly List<KeyValue> memberTableColumns = CommonBAL.ColumnList();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -123,9 +42,11 @@ namespace Funeral.Web.Admin
                     if (!Directory.Exists(saveFolder))
                         Directory.CreateDirectory(saveFolder);
 
-                    string filePath = Path.Combine(saveFolder, fn_excelFile.FileName);
+                    string systemDateTimeTicks = DateTime.Now.Ticks.ToString();
+                    string filePath = Path.Combine(saveFolder, systemDateTimeTicks + fn_excelFile.FileName);
+
                     Session["filePath"] = filePath;
-                    Session["ImportedFileName"] = fn_excelFile.FileName;
+                    Session["ImportedFileName"] = systemDateTimeTicks + fn_excelFile.FileName;
                     string fileExt = Path.GetExtension(filePath);
                     fn_excelFile.SaveAs(filePath);
                     btnSubmit.Visible = true;
@@ -196,16 +117,16 @@ namespace Funeral.Web.Admin
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                string SelectedValue = string.Empty;
-                var SelectedValueList = FixExcelColumn.FirstOrDefault(p => p.ExcelTypeName.ToLower().Equals(e.Row.Cells[1].Text.ToLower()));
-                MembersModel model = new MembersModel();
-                var List = memberTableColumns.OrderBy(q => q).ToList();
+                var List = memberTableColumns.OrderBy(q => q.NameText.ToString()).ToList();
+                string gridValue = e.Row.Cells[1].Text.ToLower().Replace(" ", "");
+                gridValue = gridValue == "effectivedate" ? "startdate" : gridValue;
+                var SelectedValueList = List.FirstOrDefault(p => p.NameText.ToString().Replace(" ", "").ToLower().Equals(gridValue));
                 DropDownList DropDownList1 = (e.Row.FindControl("ddMemberColumn") as DropDownList);
                 DropDownList1.DataSource = List;
                 DropDownList1.DataBind();
                 DropDownList1.Items.Insert(0, new ListItem("--Select Column--", "0"));
                 if (SelectedValueList != null)
-                    DropDownList1.SelectedValue = SelectedValueList.SystemTypeName;
+                    DropDownList1.SelectedValue = SelectedValueList.Key.ToString();
             }
         }
         protected void btnSubmit_Click(object sender, EventArgs e)
@@ -213,9 +134,9 @@ namespace Funeral.Web.Admin
             try
             {
                 DataTable dataTable = new DataTable();
-                foreach (string item in memberTableColumns.OrderBy(q => q).ToList())
+                foreach (KeyValue item in memberTableColumns.OrderBy(q => q.Key).ToList())
                 {
-                    dataTable.Columns.Add(new DataColumn(item, typeof(string)));
+                    dataTable.Columns.Add(new DataColumn(item.Key.ToString(), typeof(string)));
                 }
 
                 dataTable.Columns.Add(new DataColumn("ImportedId", typeof(Guid)));
@@ -600,7 +521,6 @@ namespace Funeral.Web.Admin
                 if (getHistory != null)
                 {
                     string dbColumnName = string.Empty;
-
                     var GetAttributesColumn = ToolsSetingBAL.GetXMLColumn(getHistory.MappingColumn);
                     if (GetAttributesColumn.Item1 != null)
                     {

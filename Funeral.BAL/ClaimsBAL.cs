@@ -246,6 +246,24 @@ namespace Funeral.BAL
             }
             #endregion
         }
+        public static async Task SaveClaimHistoryAsync(string IPAddress, int ClaimID, String Message, string CreatedBy, Guid ParlourID, ApplicationSettingsModel applicationSettings, bool SendEmail = true)
+        {
+            String msg = String.Format(Message, ClaimID, CreatedBy);
+            ClaimHistory claimHistory = new ClaimHistory();
+            claimHistory.IPAddress = IPAddress;
+            claimHistory.FkiClaimId = ClaimID;
+            claimHistory.Note = msg;
+            claimHistory.ParlourId = ParlourID;
+            claimHistory.CreatedBy = CreatedBy;
+            ClaimsDAL.SaveClaimHistory(claimHistory);
+            #region Send All Action Email
+            if (SendEmail)
+            {
+                var fromMail = ConfigurationManager.AppSettings["ReportEmailSenderId"].ToString().Trim();
+                await SendMail_StatusChanged_Async(applicationSettings.EmailForClaimNotification, fromMail, applicationSettings.ApplicationName, "ARL Notification", msg);
+            }
+            #endregion
+        }
         public static List<ClaimReasonModel> GetClaimReasonList(Guid Parlourid)
         {
             DataTable dr = ClaimsDAL.GetClaimReasonList(Parlourid);

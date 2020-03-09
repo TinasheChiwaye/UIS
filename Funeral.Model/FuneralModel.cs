@@ -72,6 +72,7 @@ namespace Funeral.Model
         public string Code { get; set; }
         public string MemeberNumber { get; set; }
         public string ContactPerson { get; set; }
+        [StringLength(10)]
         public string ContactPersonNumber { get; set; }
         public string BodyCollectedFrom { get; set; }
         public string CourseOfDearth { get; set; }

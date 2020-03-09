@@ -305,14 +305,19 @@
                                                 <label>Scheme </label>
                                                 @Html.DropDownList("ddlSelectCompany", new SelectList(ViewBag.Companies, "parlourid", "ApplicationName"), new { @id = "ddlSelectCompany", @class = "form-control" })
                                             </div>
-                                            <div class="form-group">
-                                                <label>Last Name  <em>*</em> </label>
-                                                <input type="text" maxlength="25" id="txtLastName" name="txtLastName" class="form-control">
+                                             <div class="form-group">
+                                                <label>Book</label>
+                                                @Html.DropDownList("SocietyList", Model.SocietyList, "Please select", new { Name = "SocietyName", @id = "ddlMemberSociety", @style = "width:100%", @class = "form-control" })
                                             </div>
                                             <div class="form-group">
                                                 <label>First Name  <em>*</em>  </label>
                                                 <input type="text" maxlength="25" id="txtFirstname" name="txtFirstname" class="form-control">
                                             </div>
+                                            <div class="form-group">
+                                                <label>Last Name  <em>*</em> </label>
+                                                <input type="text" maxlength="25" id="txtLastName" name="txtLastName" class="form-control">
+                                            </div>
+
                                             <div class="form-group">
                                                 <label>ID Number <em>*</em>  </label>
                                                 @{
@@ -331,12 +336,9 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Date of Birth </label>
-                                                <input type="text" id="txtBirthDay" name="txtBirthDay" class="form-control birthDate DatepickerSelection">
+                                                <input type="text" id="txtBirthDay" name="txtBirthDay" class="form-control birthDate DatepickerSelection" readonly="readonly">
                                             </div>
-                                            <div class="form-group">
-                                                <label>Age</label>
-                                                <input type="text" maxlength="25" id="txtAge" name="txtAge" class="form-control" readonly placeholder="Will be Calculated From Date Of Birth">
-                                            </div>
+                                            
                                             <div class="form-group">
                                                 <label>Gender</label><br>
                                                 <input type="radio" name="gender" value="0" checked> Male
@@ -344,13 +346,14 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
+                                           
                                             <div class="form-group">
                                                 <label>Cellphone Number <em>*</em>  </label>
-                                                <input type="number" maxlength="10" id="txtCellphone" name="txtCellphone" class="form-control">
+                                                <input type="text"  id="txtCellphone" name="txtCellphone" onkeypress="return onlyNumberKey(event)" maxlength="13" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label>Telephone Number</label>
-                                                <input type="number" maxlength="10" id="txtTelePhone" name="txtTelePhone" class="form-control">
+                                                <input type="text" onkeypress="return onlyNumberKey(event)" maxlength="13" id="txtTelePhone" name="txtTelePhone" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label>Email Address</label>
@@ -366,6 +369,10 @@
                                             </div>
                                             <div class="form-group">
                                                 <input type="checkbox" id="chkIdORPass">&nbsp;<label>Either Allow Passport Number Or ID Number</label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Age</label>
+                                                <input type="text" maxlength="25" id="txtAge" name="txtAge" class="form-control" readonly placeholder="Will be Calculated From Date Of Birth">
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
@@ -418,7 +425,7 @@
                                                                 <div class="col-lg-6">
 
                                                                     <div class="form-group">
-                                                                        <label>Policy Name<em>*</em> </label>
+                                                                        <label>Rate Type<em>*</em> </label>
                                                                         @Html.DropDownList("PolicyList", Model.PolicyList, "Select", new { Name = "CitizenShip", @id = "ddlPolicyPopupPolicy", @style = "width:100%", @class = "form-control" })
                                                                     </div>
                                                                     <div class="form-group">
@@ -456,10 +463,6 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-lg-6">
-                                                                    <div class="form-group">
-                                                                        <label>Group</label>
-                                                                        @Html.DropDownList("SocietyList", Model.SocietyList, "Select", new { Name = "SocietyName", @id = "ddlMemberSociety", @style = "width:100%", @class = "form-control" })
-                                                                    </div>
                                                                     <div class="form-group">
                                                                         <label>Policy Start Date</label>
                                                                         <input type="text" id="txtPolicyStartDate" name="txtPolicyStartDate" class="form-control policyPopupDate DatepickerSelection">
@@ -572,7 +575,7 @@
                                         <div class="col-lg-6">
 
                                             <div class="form-group">
-                                                <label>Policy Name<em>*</em> </label>
+                                                <label>Rate Type<em>*</em> </label>
                                                 @Html.DropDownList("PolicyList", Model.PolicyList, "Select", new { Name = "CitizenShip", @id = "ddlPolicy", @style = "width:100%", @class = "form-control" })
                                             </div>
                                             <div class="form-group">
@@ -621,16 +624,9 @@
                                                 <label>Total Premium</label>
                                                 <input type="text" maxlength="20" id="txtTotalPremium" value="@Model.Currency @Model.TotalPremium" name="name" class="form-control" disabled>
                                             </div>
-                                            <div class="form-group">
-                                                <label>Policy Status</label>
-                                                @Html.DropDownList("StatusList", new SelectList(ViewBag.Statuses, "Status", "Status"), new { @class = "form-control", @id = "ddlPolicyStatus", @name = "ddlPolicyStatus" })
-                                            </div>
+                                          
                                         </div>
                                         <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Group</label>
-                                                @Html.DropDownList("SocietyList", Model.SocietyList, "Select", new { Name = "SocietyName", @id = "ddlMemberSociety", @style = "width:100%", @class = "form-control" })
-                                            </div>
                                             <div class="form-group">
                                                 <label>Policy Start Date</label>
                                                 <input type="text" id="txtPolicyStartDate" name="txtPolicyStartDate" class="form-control date1 DatepickerSelection">
@@ -652,7 +648,10 @@
                                                 <label>Policy Agent or Broker</label>
                                                 @Html.DropDownList("AgentList", Model.AgentList, "Select", new { Name = "Agent", @id = "ddlAgent", @style = "width:100%", @class = "form-control" })
                                             </div>
-
+                                              <div class="form-group">
+                                                <label>Policy Status</label>
+                                                @Html.DropDownList("StatusList", new SelectList(ViewBag.Statuses, "Status", "Status"), new { @class = "form-control", @id = "ddlPolicyStatus", @name = "ddlPolicyStatus" })
+                                            </div>
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="form-group">
@@ -760,14 +759,14 @@
                                 <!-- #region Tab4 -->
                                 <div id="tab-4" class="tab-pane">
                                     <div class="row">
-                                        <div class="col-lg-12">
+                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <div class="input-group">
+                                                <div class="input-group" style="color:red;">
+                                                    <ul id="validationTab4Message" hidden></ul>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
-
                                             <div class="form-group">
                                                 <label>Account Holder</label>
                                                 <input type="text" maxlength="25" id="txtAccountholder" name="name" class="form-control">
@@ -1952,7 +1951,7 @@
                 CustomId1: CustomId1,
                 CustomId2:CustomId2 ,
                 CustomId3: CustomId3,
-                MemberSociety: $("#tab-3 #ddlMemberSociety").val(),
+                MemberSociety: $("#tab-1 #ddlMemberSociety").val(),
                 StartDate: dateFormat($("#tab-3 #txtPolicyStartDate").val(), 'dd-mm-yyyy', false),
                 InceptionDate: dateFormat($("#tab-3 #txtInception").val(), 'dd-mm-yyyy', false),
                 CoverDate: dateFormat($("#tab-3 #txtCoverDate").val(), 'dd-mm-yyyy', false),
@@ -1991,23 +1990,24 @@
 				success: function (result) {
 					console.log(result);
                     if (result.success == false) {
-                        alert(result.errors);
+                        $("#validationTab4Message").show();
+                        $("#validationTab4Message").empty().append(result.errors);
                     }
                     else {
-                    if(result.pkiMemberID == 0 || result.pkiMemberID == "undefined")
-                    {
-                        window.location.href = '@Url.Action("ManageMembers", "Members")';
-                    }else{
-                        var printMemberDataUrl = '@Url.Action("ManageMembers", "Members", new { pkiMemberID = "pkiMemberIDVal" }, Request.Url.Scheme)';
-                        printMemberDataUrl = printMemberDataUrl.replace("pkiMemberIDVal", result.pkiMemberID);
-                        window.location.href = printMemberDataUrl;
-                        $("#tab5").addClass('active');
-                        alert("Member saved successfully...!!");
+                        if (result.pkiMemberID == 0 || result.pkiMemberID == "undefined") {
+                            window.location.href = '@Url.Action("ManageMembers", "Members")';
+                        } else {
+                            var printMemberDataUrl = '@Url.Action("ManageMembers", "Members", new { pkiMemberID = "pkiMemberIDVal" }, Request.Url.Scheme)';
+                            printMemberDataUrl = printMemberDataUrl.replace("pkiMemberIDVal", result.pkiMemberID);
+                            window.location.href = printMemberDataUrl;
+                            $("#tab5").addClass('active');
+                            alert("Member saved successfully...!!");
                         }
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    alert(thrownError);
+                    $("#validationTab4Message").show();
+                    $("#validationTab4Message").empty().append(result.errors);
                 }
 
             })
@@ -2062,7 +2062,7 @@
             $("#tab-3 #ddlCustom2").val('');
             $("#tab-3 #ddlCustom3").val('');
 			$("#tab-3 #txtCoverDate").val('');
-			$("#tab-3 #ddlMemberSociety").val('');
+			$("#tab-1 #ddlMemberSociety").val('');
 		    $("#tab-3 #txtPolicyStartDate").val('');
 		    $("#tab-3 #ddlAgent").val('');
 			$("#tab-3 #txtInception").val('');
@@ -2758,7 +2758,7 @@
             $("#tab-3 #ddlCustom1").val(member.CustomId1);
             $("#tab-3 #ddlCustom2").val(member.CustomId2);
             $("#tab-3 #ddlCustom3").val(member.CustomId3);
-            $("#tab-3 #ddlMemberSociety").val(member.MemberSociety);
+            $("#tab-1 #ddlMemberSociety").val(member.MemberSociety);
 
             $("#tab-1 #ddlAgent option").each(function () {
                 if ($(this).val() == member.Agent) {
@@ -4142,6 +4142,7 @@
         else {
             if (idNumber != "") {
                 alert("Id Number invalid");
+                $("#txtIdNumber").val("")
                 $("#txtBirthDay").val("");
                 $("#tab-1 #txtAge").val("");
             }
@@ -4213,8 +4214,9 @@
             CalculateDependentExtendedAge(fullDate);
         }
         else {
-              if (idNumber != "") {
+            if (idNumber != "") {
                 alert("Id Number invalid");
+                $("#tab-5 #txtDependentIdNumber").val("");
                 $("#tab-5 #txtDependentDateOfBirth").val("");
                 $("#tab-5 #txtDependentAge").val("");
             }
@@ -4287,8 +4289,9 @@
             CalculateAgePopup(fullDate);
         }
          else {
-              if (idNumber != "") {
+            if (idNumber != "") {
                 alert("Id Number invalid");
+                $("#txtIdNumberPopup").val("");
                 $("#txtDateOfBirthPopup").val("");
                 $("#txtAgePopup").val("");
             }
@@ -4650,9 +4653,12 @@
 
 
     });
+    $("#txtStreetPostalAddress").on('keyup', function () {
+        $("#txtStreetAddress").val($(this).val())
+    });
     function BindGroupDropdown(ParlourId) {
-        var ddlCustomers = jQuery("#tab-3 #ddlMemberSociety");
-        ddlCustomers.empty().append('<option selected="selected" value="0" disabled = "disabled">Select Group.....</option>');
+        var ddlCustomers = jQuery("#tab-1 #ddlMemberSociety");
+        ddlCustomers.empty().append('<option selected="selected" value="0" disabled = "disabled">Please select.....</option>');
         jQuery.ajax({
             url: '@Url.Action("BindGroupByCompanyId","Members")',
             data: { CompanyId: ParlourId },

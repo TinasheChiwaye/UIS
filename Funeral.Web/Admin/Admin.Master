@@ -262,26 +262,49 @@
     <script>
 
 
-        $(document).ready(function () {
-            $('.nav li').removeClass("active"); // if you want to style the li
-            $('.nav li a').removeClass("active"); // if you want to style a specific a
-            var pageTitle = window.location.pathname.replace(/^.*\/([^/]*)/, "$1");
-            ///// Apply active class to selected page link
-            $('.nav a').each(function () {
-                var arr = $(this).attr('href').toLowerCase().split('.');
-                $(this).removeClass('active');// // if you want to style a specific a
-                $(this).closest('li').removeClass('active');// if you want to style the li
-                $(this).closest('li').closest('ul').removeClass('active in');
-                $("li").removeClass('active');
-                $("li a").removeClass('active');
-                $("ul").removeClass('active in');
-                if (arr[0] == window.location.pathname.toLocaleLowerCase()) {
-                    $(this).addClass('active');// // if you want to style a specific a
-                    $(this).closest('li').addClass('active');// if you want to style the li
-                    $(this).closest('li').closest('ul').addClass('active in');
-                }
+        //$(document).ready(function () {
+        //    $('.nav li').removeClass("active"); // if you want to style the li
+        //    $('.nav li a').removeClass("active"); // if you want to style a specific a
+        //    var pageTitle = window.location.pathname.replace(/^.*\/([^/]*)/, "$1");
+        //    ///// Apply active class to selected page link
+        //    $('.nav a').each(function () {
+        //        var arr = $(this).attr('href').toLowerCase().split('.');
+        //        $(this).removeClass('active');// // if you want to style a specific a
+        //        $(this).closest('li').removeClass('active');// if you want to style the li
+        //        $(this).closest('li').closest('ul').removeClass('active in');
+        //        $("li").removeClass('active');
+        //        $("li a").removeClass('active');
+        //        $("ul").removeClass('active in');
+        //        if (arr[0] == window.location.pathname.toLocaleLowerCase()) {
+        //            $(this).addClass('active');// // if you want to style a specific a
+        //            $(this).closest('li').addClass('active');// if you want to style the li
+        //            $(this).closest('li').closest('ul').addClass('active in');
+        //        }
+        //    });
+        //});
+         $(document).ready(function () {
+                $('.nav li').removeClass("active"); // if you want to style the li
+                $('.nav li a').removeClass("active"); // if you want to style a specific a
+                var pageTitle = window.location.pathname.replace(/^.*\/([^/]*)/, "$1");
+                ///// Apply active class to selected page link
+                $('.nav a').each(function () {
+                    var oldMenu = $(this).attr('href').toLowerCase();
+                    var selectedMenu = window.location.pathname.toLocaleLowerCase() + window.location.search.toLowerCase();
+                    if (oldMenu == selectedMenu) {
+                        $(this).removeClass('active');// // if you want to style a specific a
+                        $(this).closest('li').removeClass('active');// if you want to style the li
+                        $(this).closest('li').closest('ul').removeClass('active in');
+                        $("li").removeClass('active');
+                        $("li a").removeClass('active');
+                        $("ul").removeClass('active in');
+
+                        $(this).addClass('active');// // if you want to style a specific a
+                        $(this).closest('li').addClass('active');// if you want to style the li
+                        $(this).closest('li').closest('ul').addClass('active in');
+                        $(this).closest('li').closest('ul').parents("ul").addClass('active in');
+                    }
+                });
             });
-        });
     </script>
 </body>
 </html>

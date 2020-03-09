@@ -127,8 +127,8 @@
                                     <PagerStyle CssClass="pagination-ys" />
                                     <Columns>
                                         <asp:TemplateField HeaderText="Member Column Name">
-                                            <ItemTemplate>
-                                                <asp:DropDownList ID="ddMemberColumn" Style="width: 300px;" runat="server"></asp:DropDownList>
+                                            <ItemTemplate> 
+                                                <asp:DropDownList ID="ddMemberColumn" DataValueField="Key"    DataTextField="NameText"   Style="width: 300px;" runat="server"></asp:DropDownList>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>

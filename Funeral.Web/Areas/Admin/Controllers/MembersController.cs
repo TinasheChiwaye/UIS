@@ -46,7 +46,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
                 LoadStatus();
                 LoadEntriesCount();
-                BindCompanyList();
+                BindCompanyList("Search");
 
                 Model.Search.MemberSearch search = new Model.Search.MemberSearch();
                 search.CompanyId = new Guid(CurrentParlourId.ToString());
@@ -85,27 +85,6 @@ namespace Funeral.Web.Areas.Admin.Controllers
             keyValues.Add(new KeyValue { Key = "250", Value = "250" });
             keyValues.Add(new KeyValue { Key = "500", Value = "500" });
             ViewBag.EntriesCount = keyValues;
-        }
-        public void BindCompanyList()
-        {
-            List<SelectListItem> companyListItems = new List<SelectListItem>();
-            List<ApplicationSettingsModel> model = new List<ApplicationSettingsModel>();
-
-            if (this.IsAdministrator)
-            {
-                model = ToolsSetingBAL.GetAllApplicationList(ParlourId, 1, 0).ToList();
-
-                if (model == null)
-                {
-                    model.Add(new ApplicationSettingsModel() { ApplicationName = ApplicationName, parlourid = ParlourId });
-                }
-            }
-            else
-            {
-                model.Add(new ApplicationSettingsModel() { ApplicationName = ApplicationName, parlourid = ParlourId });
-            }
-
-            ViewBag.Companies = model;
         }
         [HttpPost]
         public ActionResult SearchData(Model.Search.MemberSearch search)
@@ -694,7 +673,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
             if (!ModelState.IsValid)
             {
-                return Json(new { success = false, errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList() }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => "<li>" + x.ErrorMessage + "</li>").ToList() }, JsonRequestBehavior.AllowGet);
             }
             Member.pkiMemberID = MemberId;
             Member.PolicyStatus = Member.PolicyStatus;

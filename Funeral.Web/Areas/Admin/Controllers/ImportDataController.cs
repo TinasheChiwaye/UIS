@@ -20,7 +20,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
         public ActionResult ImportedHistory()
         {
             LoadEntriesCount();
-            BindCompanyList();
+            BindCompanyList("Search");
             MemberSearch search = new MemberSearch();
             search.CompanyId = new Guid(CurrentParlourId.ToString());
             search.PageNum = 1;
@@ -47,26 +47,6 @@ namespace Funeral.Web.Areas.Admin.Controllers
             keyValues.Add(new KeyValue { Key = "250", Value = "250" });
             keyValues.Add(new KeyValue { Key = "500", Value = "500" });
             ViewBag.EntriesCount = keyValues;
-        }
-        public void BindCompanyList()
-        {
-            List<SelectListItem> companyListItems = new List<SelectListItem>();
-            List<ApplicationSettingsModel> model = new List<ApplicationSettingsModel>();
-
-            if (this.IsAdministrator)
-            {
-                model = ToolsSetingBAL.GetAllApplicationList(ParlourId, 1, 0).ToList();
-
-                if (model == null)
-                {
-                    model.Add(new ApplicationSettingsModel() { ApplicationName = ApplicationName, parlourid = ParlourId });
-                }
-            }
-            else
-            {
-                model.Add(new ApplicationSettingsModel() { ApplicationName = ApplicationName, parlourid = ParlourId });
-            }
-            ViewBag.Companies = model;
         }
         [HttpPost]
         public ActionResult SearchData(MemberSearch search)
