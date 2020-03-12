@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace Funeral.Web.Areas.Tools.Controllers
 {
-    public class ClaimToolsController : BaseAdminController
+    public class ClaimToolsController : BaseToolController
     {
         // GET: Tools/ClaimTools
         public ActionResult ClaimStatus()

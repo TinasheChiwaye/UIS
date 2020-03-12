@@ -73,6 +73,7 @@
     <Compile Include="ApplicationTnCModel.cs" />
     <Compile Include="Attributes\ValidateDateAttribute.cs" />
     <Compile Include="Attributes\ValidateIdAttribute.cs" />
+    <Compile Include="BankDetails.cs" />
     <Compile Include="BankingDetailSending.cs" />
     <Compile Include="BankModel.cs" />
     <Compile Include="BaseViewModel.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="BranchModel.cs" />
     <Compile Include="ChangeStatusReason.cs" />
     <Compile Include="ClaimandFuneralModel.cs" />
+    <Compile Include="ClaimAssigned.cs" />
     <Compile Include="ClaimDocument.cs" />
     <Compile Include="ClaimFollowUp.cs" />
     <Compile Include="ClaimHistory.cs" />
@@ -95,6 +97,7 @@
     <Compile Include="CustomDetailsEnum.cs" />
     <Compile Include="Dashboard.cs" />
     <Compile Include="ExpensesModel.cs" />
+    <Compile Include="ExternalUserLink.cs" />
     <Compile Include="FamilyDependencyModel.cs" />
     <Compile Include="FamilyDependencyTypeModel.cs" />
     <Compile Include="ClaimDocumentModel.cs" />
@@ -106,12 +109,15 @@
     <Compile Include="FuneralServiceManageModel.cs" />
     <Compile Include="FuneralServiceSelectModel.cs" />
     <Compile Include="GroupPayment.cs" />
+    <Compile Include="GroupPaymentInsertResultModel.cs" />
     <Compile Include="GroupPaymentList.cs" />
+    <Compile Include="ImportedHistory.cs" />
     <Compile Include="ISiteSettings.cs" />
     <Compile Include="JoiningFeeModel.cs" />
     <Compile Include="KeyName.cs" />
     <Compile Include="KeyValue.cs" />
     <Compile Include="LoginModel.cs" />
+    <Compile Include="MappedDependents.cs" />
     <Compile Include="MemberExcelData.cs" />
     <Compile Include="MemberInvoiceModel.cs" />
     <Compile Include="MemberNotesModel.cs" />
@@ -123,6 +129,9 @@
     <Compile Include="OtherPaymentModel.cs" />
     <Compile Include="PackageServiceModel.cs" />
     <Compile Include="PackageServicesSelectionModel.cs" />
+    <Compile Include="PlanStagingList.cs" />
+    <Compile Include="RegenerateBillingModal.cs" />
+    <Compile Include="ReportParameters.cs" />
     <Compile Include="ResponseResult.cs" />
     <Compile Include="OtherPaymentsSearchResult.cs" />
     <Compile Include="Search\AddOnProductSearch.cs" />

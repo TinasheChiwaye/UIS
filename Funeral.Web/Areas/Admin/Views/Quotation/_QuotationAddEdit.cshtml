@@ -54,12 +54,12 @@ new SelectListItem() { Text = "Prof", Value = "Prof" }
                         <div class="form-group">
                             @Html.Label("Cellphone Number", new { @class = "control-label" })
                             <strong><span class="text-danger"><em>*</em></span></strong>
-                            @Html.TextBoxFor(m => m.CellNumber, null, new { @class = "form-control", @maxlength = "10", placeholder = "Cellphone Number" })
+                            @Html.TextBoxFor(m => m.CellNumber, null, new { @class = "form-control",onkeypress="return onlyNumberKey(event)", @maxlength = "13", placeholder = "Cellphone Number" })
                             @Html.ValidationMessageFor(m => m.CellNumber, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                         </div>
                         <div class="form-group">
                             @Html.Label("Telephone Number", new { @class = "control-label" })
-                            @Html.TextBoxFor(m => m.TelNumber, null, new { @class = "form-control", @maxlength = "10", placeholder = "Telephone Number" })
+                            @Html.TextBoxFor(m => m.TelNumber, null, new { @class = "form-control",@onkeypress="return onlyNumberKey(event)", @maxlength = "13", placeholder = "Telephone Number" })
                         </div>
 
                         @if (Model.QuotationID != 0)

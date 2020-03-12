@@ -9,6 +9,7 @@
     var policyBalance = ViewBag.policyBalance;
     var LatePanelty = ViewBag.LatePanelty;
     var MemberId = ViewBag.MemberID;
+    var ParlourID = ViewBag.ParlourID;
 }
 
 <style>
@@ -173,7 +174,7 @@
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <div class="form-group">
-                                            <a href="@Url.Action("Index","Payments")" value="Back" id="btnBack" class="btn btn-md btn-primary" >Back</a>
+                                            <a href="@Url.Action("Index","Payments")" value="Back" id="btnBack" class="btn btn-md btn-primary">Back</a>
                                         </div>
                                     </div>
                                 </div>
@@ -279,7 +280,7 @@
                             <div class="row">
                                 <div class="col-lg-3">
                                     <div class="form-group">
-                                        <a href="@Url.Action("btnStatement", "Payments", new { memberId = MemberId })" class="btn btn-md btn-primary" id="lbtnStatement">Statement</a>
+                                        <a href="@Url.Action("btnStatement", "Payments", new { memberId = MemberId,parlourId=ParlourID})" class="btn btn-md btn-primary" id="lbtnStatement">Statement</a>
                                     </div>
                                 </div>
                             </div>

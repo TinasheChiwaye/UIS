@@ -65,7 +65,6 @@ namespace Funeral.Model
         [DataType(DataType.Time)]
         public DateTime TimeOfFuneral { get; set; }
         public string FuneralCemetery { get; set; }
-        [Required(ErrorMessage = "The Street Address is required")]
         public string Address1 { get; set; }
         public string Address2 { get; set; }
         public string Address3 { get; set; }
@@ -73,6 +72,7 @@ namespace Funeral.Model
         public string Code { get; set; }
         public string MemeberNumber { get; set; }
         public string ContactPerson { get; set; }
+        [StringLength(10)]
         public string ContactPersonNumber { get; set; }
         public string BodyCollectedFrom { get; set; }
         public string CourseOfDearth { get; set; }
@@ -91,6 +91,7 @@ namespace Funeral.Model
         public Decimal Discount { get; set; }
         public Decimal Tax { get; set; }
 
+        public string MemberType { get; set; }
 
     }
 }

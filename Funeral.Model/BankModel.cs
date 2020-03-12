@@ -11,6 +11,7 @@ namespace Funeral.Model
        public Guid BankID { get; set; }
        public string BankName { get; set; }
        public string BranchCode { get; set; }
+
     }
     public class Provinces
     {

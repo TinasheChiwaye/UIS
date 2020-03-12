@@ -41,7 +41,7 @@ namespace Funeral.Model
         }
         public int pkiApplicationID { get; set; }
 
-        [Required(ErrorMessage = "Please enter Company Name")]
+        [Required(ErrorMessage = "Please enter Scheme Name")]
         public string ApplicationName { get; set; }
 
         public string ApplicationLogoPath { get; set; }

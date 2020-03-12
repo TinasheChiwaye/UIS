@@ -13,7 +13,7 @@ using static Funeral.Web.Areas.Admin.Controllers.MembersController;
 
 namespace Funeral.Web.Areas.Tools.Controllers
 {
-    public class MenuController : BaseAdminController
+    public class MenuController : BaseToolController
     {
         public MenuController() : base(10)
         {

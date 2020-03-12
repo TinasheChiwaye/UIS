@@ -8,6 +8,7 @@ namespace Funeral.Model
 {
     public class GroupPaymentList
     {
+        public int GroupId { get; set; }
         public string GroupName { get; set; }
         public int IDNumbersIssues { get; set; }
         public int MissingIDNumbers { get; set; }
@@ -19,7 +20,9 @@ namespace Funeral.Model
         public decimal Balance { get; set; }
         public Guid parlourid { get; set; }
         public DateTime InceptionDate { get; set; }
+        public DateTime BillingMonth { get; set; }
         public decimal AmountAtRisk { get; set; }
         public decimal TotalRiskCovered { get; set; }
+        public string ReferenceNumber { get; set; }
     }
 }

@@ -20,9 +20,10 @@
             @Html.TextBox("Surname_Beneficiary", "", new { @type = "text", @maxlength = "20", @id = "txtSurname_Beneficiary", @class = "form-control", @placeholder = "Surname" })
         </div>
         <div class="form-group">
-            <label>Date Of Birth<em>*</em></label>
-            @Html.TextBox("DateOfBirth_Beneficiary", "", new { @type = "text", @id = "txtDateOfBirth_Beneficiary", @class = "form-control", @placeholder = "Date Of Birth" })
+            <label>ID Number<em>*</em></label>
+            @Html.TextBox("IDNumber_Beneficiary", "", new { @maxlength = "13", @onkeyup = "return GetIdNumberDetails_beneficiery(this);", @id = "txtIDNumber_Beneficiary", @class = "form-control", @placeholder = "ID Number" })
         </div>
+
     </div>
     <div class="col-lg-6">
         <div class="form-group">
@@ -43,8 +44,8 @@
             @Html.TextBox("Percentages_Beneficiary", "", new { @type = "number", @onInput = "return check(event,value)", @min = "0", @max = "100", @step = "0.01", @id = "txtPercentages_Beneficiary", @class = "form-control", @placeholder = "Percentages" })
         </div>
         <div class="form-group">
-            <label>ID Number<em>*</em></label>
-            @Html.TextBox("IDNumber_Beneficiary", "", new { @pattern = "/d*", @maxlength = "20", @id = "txtIDNumber_Beneficiary", @class = "form-control", @placeholder = "ID Number" })
+            <label>Date Of Birth<em>*</em></label>
+            @Html.TextBox("DateOfBirth_Beneficiary", "", new { @type = "text", @id = "txtDateOfBirth_Beneficiary", @class = "form-control", @placeholder = "Date Of Birth" })
         </div>
     </div>
     <div class="form-group">
@@ -219,15 +220,19 @@
                     { "data": "Percentages", "name": "Percentages", "autoWidth": true },
                     {
                         "render": function (data, type, full, meta) {
-
+                            var hasEditRights = '@ViewBag.HasEditRight' == "True" ? true : false;
+                            var hasDeleteRights = '@ViewBag.HasDeleteRight' == "True" ? true : false;
                             var dom = "<div class='row'>";
                             var data1 = JSON.stringify(full);
                             data1 = data1.replace(/"/g, "\'")
-                            var editProductUrl = '<div class="col-sm-4 text-center"><a  onclick="EditBeneficiary(' + data1 + ')"><i class="fa fa-edit"></i></a></div>';
-                            dom = dom + editProductUrl;
-
-                            var deleteProductUrl = '<div class="col-sm-4 text-center"> <a onclick="DeleteBeneficiary(' + data1 + ')"; ><i class="fa fa-trash-o"></i></a></div>';
-                            dom = dom + deleteProductUrl;
+                            if (hasEditRights) {
+                                var editProductUrl = '<div class="col-sm-4 text-center"><a  onclick="EditBeneficiary(' + data1 + ')"><i class="fa fa-edit"></i></a></div>';
+                                dom = dom + editProductUrl;
+                            }
+                            if (hasDeleteRights) {
+                                var deleteProductUrl = '<div class="col-sm-4 text-center"> <a onclick="DeleteBeneficiary(' + data1 + ')"; ><i class="fa fa-trash-o"></i></a></div>';
+                                dom = dom + deleteProductUrl;
+                            }
 
                             dom = dom + "</div>";
                             return dom;
@@ -239,11 +244,12 @@
         });
     }
     function EditBeneficiary(Beneficiary) {
+        debugger;
         $("#txtpkiBeneficiaryID").val(Beneficiary.pkiBeneficiaryID);
         $("#ddlDependentDependencyType_Beneficiary").val(Beneficiary.DependencyType_Beneficiary);
         $("#txtFullName_Beneficiary").val(Beneficiary.FullName_Beneficiary);
         $("#txtSurname_Beneficiary").val(Beneficiary.Surname_Beneficiary);
-        $('#txtDateOfBirth_Beneficiary').datepicker({ format: 'dd MM yyyy',autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(Beneficiary.DateOfBirth_string)), "dd/mm/yyyy", false));
+        $('#txtDateOfBirth_Beneficiary').datepicker({ format: 'dd MM yyyy',autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(Beneficiary.DateOfBirth_Beneficiary)), "dd/mm/yyyy", false));
         $("#ddlRelationshipType_Beneficiary").val(Beneficiary.RelationshipType_Beneficiary);
         $("#txtPercentages_Beneficiary").val(Beneficiary.Percentages);
         $("#txtIDNumber_Beneficiary").val(Beneficiary.IDNumber_Beneficiary);
@@ -260,6 +266,61 @@
                  dataType: 'html'
              }).success(function (result) { BeneficiaryDataTable.fnDraw(); }).error(function (xhr, status) { alert(status); });
          }
+    }
+    function GetIdNumberDetails_beneficiery(IdNumberControls) {
+        var idNumber = IdNumberControls.value;
+        var textLength = idNumber.length;
+        if (textLength == 13) {
+            ValidateIdNumber(idNumber);
+        }
+    }
+    function ValidateIdNumber(idNumber) {
+        debugger;
+        var correct = true;
+        if (idNumber.length != 13 || !isNumber(idNumber)) {
+            correct = false;
+        }
+
+        var tempDate = new Date(idNumber.substring(0, 2), idNumber.substring(2, 4) - 1, idNumber.substring(4, 6));
+        var id_date = tempDate.getDate();
+        var id_month = tempDate.getMonth();
+        var dMonth = id_month + 1;
+        var dMonthName = tempDate.getMonthName();
+        var id_year = idNumber.substring(0, 2);
+
+        var cutoff = (new Date()).getFullYear() - 2000;
+        var fullDate = id_date + " " + dMonthName + " " + (id_year > cutoff ? '19' : '20') + id_year;
+        if (!((tempDate.getYear() == idNumber.substring(0, 2)) && (id_month == idNumber.substring(2, 4) - 1) && (id_date == idNumber.substring(4, 6)))) {
+            correct = false;
+        }
+        var citzenship = parseInt(idNumber.substring(10, 11)) == 0 ? "Yes" : "No";
+        var tempTotal = 0;
+        var checkSum = 0;
+        var multiplier = 1;
+        for (var i = 0; i < 13; ++i) {
+            tempTotal = parseInt(idNumber.charAt(i)) * multiplier;
+            if (tempTotal > 9) {
+                tempTotal = parseInt(tempTotal.toString().charAt(0)) + parseInt(tempTotal.toString().charAt(1));
+            }
+            checkSum = checkSum + tempTotal;
+            multiplier = (multiplier % 2 == 0) ? 1 : 2;
+        }
+        if ((checkSum % 10) != 0) {
+            correct = false;
+        };
+        if (correct) {
+            $('#txtDateOfBirth_Beneficiary').datepicker({ format: 'dd M yyyy', autoclose: true }).datepicker("setDate", dateFormat(new Date(fullDate), "dd/mm/yyyy", false));
+            var genderCode = idNumber.substring(6, 10);
+            var gender = parseInt(genderCode) < 5000 ? "Female" : "Male";
+            //if(gender == "Female")
+            //{
+            //    $("#ClaimentFemale").prop('checked',true);
+            //}else{
+            //    $("#ClaimentMale").prop('checked',true);
+            //}
+            //CalculateAge(fullDate);
+        }
+        return false;
     }
 
 </script>

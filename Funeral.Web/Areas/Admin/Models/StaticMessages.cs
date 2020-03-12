@@ -11,5 +11,8 @@ namespace Funeral.Web.Areas.Admin.Models
         public const String ClaimDocumentUploaded = "Claim No. {0} Document has been Uploaded By {1}";
         public const String ClaimDocumentDeleted = "Claim No. {0} Document has been Deleted By {1}";
         public const String ClaimDocumentStatusChanged = "Claim No. {0} Document status has been Changed By {1}";
+
+        public const String ClaimAssigned = "Claim No. {0} has been Assigned to {1}";
+        public const String ClaimExternalLink = "Claim No. {0} has generated external link and sent to {1}";
     }
 }

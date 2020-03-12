@@ -7,7 +7,7 @@
     <div class="col-lg-12">
         <div class="ibox ">
             <div class="ibox-title">
-                <h5>AddOnProduct Setup</h5>
+                <h5>Supplementary benefits Setup</h5>
             </div>
             <div class="ibox-content">
                 @Html.HiddenFor(m => m.pkiProductID)
@@ -28,13 +28,19 @@
                             @Html.TextBoxFor(m => m.ProductDesc, null, new { @class = "form-control", @maxlength = "50", placeholder = "Product Description" })
                             @Html.ValidationMessageFor(m => m.ProductDesc, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                         </div>
-                    </div>
-                    <div class="col-lg-6">
                         <div class="form-group">
                             @Html.Label("Premium", new { @class = "control-label" })
                             <strong><span class="text-danger"><em>*</em></span></strong>
                             @Html.TextBoxFor(m => m.ProductCost, null, new { @class = "form-control", @maxlength = "25", placeholder = "Premium" })
                             @Html.ValidationMessageFor(m => m.ProductCost, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.Label("Underwriter Premium", new { @class = "control-label" })
+                            <strong><span class="text-danger"><em>*</em></span></strong>
+                            @Html.TextBoxFor(m => m.UnderwriterPremium, null, new { @class = "form-control", @maxlength = "25", placeholder = "Underwriter Premium" })
+                            @Html.ValidationMessageFor(m => m.UnderwriterPremium, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                         </div>
                         <div class="form-group">
                             @Html.Label("Cover", new { @class = "control-label" })
@@ -44,10 +50,20 @@
                         </div>
                         <div class="form-group">
                             <div class="checkbox">
-                                <label class="control-label">@Html.CheckBox("IsProductOngoing")Is Product Ongoing</label>                                
+                                <label class="control-label">@Html.CheckBox("IsProductOngoing")Is Product Ongoing</label>
                             </div>
                             <div class="checkbox">
                                 <label class="control-label">@Html.CheckBox("IsProductLaybye")Is Product Laybye</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <div class="btn-group">
+                                <input type="button" id="btnCancel" value="Cancel" class="btn btn-w-m btn-primary" />
+                            </div>
+                            <div class="btn-group">
+                                <input id="btnSubmit" type="submit" value="Save" class="btn btn-w-m btn-primary" />
                             </div>
                         </div>
                     </div>
@@ -55,17 +71,6 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-12">
-        <div class="form-group">
-            <div class="btn-group">
-                <input type="button" id="btnCancel" value="Cancel" class="btn btn-w-m btn-primary" />
-            </div>
-            <div class="btn-group">
-                <input id="btnSubmit" type="submit" value="Save" class="btn btn-w-m btn-primary" />
-            </div>
-        </div>
-    </div>
-
     if (TempData.Peek("IsAddOnProductSetupSaved") != null && (bool)TempData.Peek("IsAddOnProductSetupSaved") == true)
     {
         <script>
@@ -76,21 +81,22 @@
     }
 
     <script type="text/javascript">
-		jQuery(document).ready(function () {
+        jQuery(document).ready(function () {
 
 
-			jQuery("#btnCancel").click(function (event) {
-				jQuery("#ProductName").val("");
-				jQuery("#ProductDesc").val("");
-				jQuery("#ProductCost").val("");
-				jQuery("#ProductCover").val("");
-			})
+            jQuery("#btnCancel").click(function (event) {
+                jQuery("#ProductName").val("");
+                jQuery("#ProductDesc").val("");
+                jQuery("#ProductCost").val("");
+                jQuery("#ProductCover").val("");
+                jQuery("#UnderwriterPremium").val("");
+            })
 
             var form = jQuery("#addOnProductSetupAddEditform");
             form.validate();
             jQuery("#btnSubmit").click(function (event) {
                 if (jQuery(form).valid()) {
-                   
+
                     if (jQuery("#IsProductOngoing").val() == 'true') {
                         jQuery("#IsProductOngoing").val(1);
                     }

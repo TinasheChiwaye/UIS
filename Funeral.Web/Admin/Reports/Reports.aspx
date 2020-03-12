@@ -43,6 +43,9 @@
                                                                 <asp:DropDownList ID="ddlAdminReort" class="form-control" runat="server" onchange="GetSelectedPanel(this)">
                                                                     <asp:ListItem Text="Select Report" Value="0"></asp:ListItem>
                                                                 </asp:DropDownList>
+                                                                <div id="chk_dateDisabledDiv" style="display: none">
+                                                                    <asp:CheckBox ID="chk_dateDisabled" runat="server" onclick="DisableDateSelection(this)" Text="Disabled date" />
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -54,18 +57,18 @@
                                                         </div>
                                                         <div class="panel-body">
                                                             <div role="form" class="form col-sm-12">
-                                                                <div class="col-sm-6">
+                                                                <div class="col-sm-6 DateDisabled">
                                                                     <div class="form-group">
                                                                         <label class="">Date From </label>
                                                                         <%-- <asp:RequiredFieldValidator ValidationGroup="pnlPolicyStatus" ID="RequiredFieldValidator29" ForeColor="Red" ControlToValidate="txtPolicyDateFrom" runat="server" ErrorMessage="*"></asp:RequiredFieldValidator>--%>
-                                                                        <asp:TextBox CssClass="form-control datepicker" placeholder="DD/MM/YYYY" ID="txtDateFrom" runat="server"></asp:TextBox>
+                                                                        <asp:TextBox CssClass="form-control datepicker" placeholder="DD/MM/YYYY" autocomplete="off" ID="txtDateFrom" runat="server"></asp:TextBox>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-6">
+                                                                <div class="col-sm-6 DateDisabled">
                                                                     <div class="form-group">
                                                                         <label class="">Date To </label>
                                                                         <%--<asp:RequiredFieldValidator ValidationGroup="pnlPolicyStatus" ID="RequiredFieldValidator30" ForeColor="Red" ControlToValidate="txtPolicyDateTo" runat="server" ErrorMessage="*"></asp:RequiredFieldValidator>--%>
-                                                                        <asp:TextBox CssClass="form-control datepicker" placeholder="DD/MM/YYYY" ID="txtDateTo" runat="server"></asp:TextBox>
+                                                                        <asp:TextBox CssClass="form-control datepicker" placeholder="DD/MM/YYYY" autocomplete="off" ID="txtDateTo" runat="server"></asp:TextBox>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-6">
@@ -125,21 +128,21 @@
                                                                         </asp:DropDownList>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-6">
+                                                                <div class="col-sm-6" style="display:none">
                                                                     <div class="form-group">
                                                                         <label class="">Custom :</label>
                                                                         <asp:DropDownList ID="ddlCustom1" runat="server" class="form-control">
                                                                         </asp:DropDownList>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-6">
+                                                                <div class="col-sm-6" style="display:none">
                                                                     <div class="form-group">
                                                                         <label class="">Custom 2:</label>
                                                                         <asp:DropDownList ID="ddlCustom2" runat="server" class="form-control">
                                                                         </asp:DropDownList>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-6">
+                                                                <div class="col-sm-6" style="display:none">
                                                                     <div class="form-group">
                                                                         <label class="">Custom 3:</label>
                                                                         <asp:DropDownList ID="ddlCustom3" runat="server" class="form-control">
@@ -155,7 +158,7 @@
                                                         <label class="">Report Export Type:</label>
                                                         <asp:DropDownList ID="rptExportType" runat="server" class="form-control">
                                                             <asp:ListItem>PDF</asp:ListItem>
-                                                            <asp:ListItem>Excel</asp:ListItem>
+                                                            <asp:ListItem Selected="True">Excel</asp:ListItem>
                                                             <asp:ListItem>Word</asp:ListItem>
                                                         </asp:DropDownList>
                                                     </div>
@@ -163,7 +166,7 @@
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label class="">SendEmail</label>
-                                                        <asp:TextBox  runat="server" ID="txtcemail" name="name" type="text" class="form-control"></asp:TextBox>
+                                                        <asp:TextBox runat="server" ID="txtcemail" name="name" type="text" class="form-control"></asp:TextBox>
                                                         <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ValidationGroup="CompanyRegi" ErrorMessage="Invalid email." ControlToValidate="txtcemail" ValidationExpression="^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$" />
                                                     </div>
                                                 </div>
@@ -237,11 +240,25 @@
                     alert(msg);
                 }
             });
-            }
+        }
         function GetSelectedPanel(ddlAdmin) {
-                //var selectedText = ddlAdmin.options[ddlAdmin.selectedIndex].innerHTML;
-                var selectedValue = ddlAdmin.value;
-                document.getElementById('<%=hfAdminReport.ClientID%>').value = selectedValue;
+            var selectedValue = ddlAdmin.value;
+            document.getElementById('<%=hfAdminReport.ClientID%>').value = selectedValue;
+            if (selectedValue == "UIS All Members Report") {
+                $("#chk_dateDisabledDiv").show();
             }
+            else {
+                $("#chk_dateDisabledDiv").hide();
+                $(".DateDisabled").show();
+                $("#MainContent_chk_dateDisabled").prop('checked', false)
+            }
+        }
+        function DisableDateSelection(Control) {
+            if ($("#" + Control.id).is(":checked")) {
+                $(".DateDisabled").hide();
+            } else {
+                $(".DateDisabled").show();
+            }
+        }
     </script>
 </asp:Content>

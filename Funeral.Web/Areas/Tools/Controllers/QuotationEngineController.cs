@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace Funeral.Web.Areas.Tools.Controllers
 {
-    public class QuotationEngineController : BaseAdminController
+    public class QuotationEngineController : BaseToolController
     {
         // GET: Tools/QuotationEngine
 

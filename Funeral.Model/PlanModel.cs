@@ -114,6 +114,9 @@ namespace Funeral.Model
 
         public decimal UnderwriterCover { get; set; }
 
+        public decimal ReinsurancePremium { get; set; }
+        public decimal OfficePremium { get; set; }
+
         public bool TableRawStatus { get; set; }
         public bool IsActive { get; set; }
         public DateTime DeletedDate { get; set; }
@@ -121,6 +124,9 @@ namespace Funeral.Model
 
         public DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }
+
+        public string PlanName { get; set; }
+        public string PlanDesc { get; set; }
     }
 }
 

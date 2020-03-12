@@ -247,12 +247,17 @@ namespace Funeral.Web.Tools {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator6;
         
         /// <summary>
+        /// txtOwnersEmail control.
         /// txtClaimEmailAddress control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtOwnersEmail;
+        
+        /// <summary>
+        /// RegularExpressionValidator10 control.
         protected global::System.Web.UI.WebControls.TextBox txtClaimEmailAddress;
         
         /// <summary>
@@ -262,6 +267,10 @@ namespace Funeral.Web.Tools {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator10;
+        
+        /// <summary>
+        /// RequiredFieldValidator100 control.
         protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator3;
         
         /// <summary>
@@ -271,6 +280,7 @@ namespace Funeral.Web.Tools {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator100;
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
         
         /// <summary>
@@ -328,13 +338,13 @@ namespace Funeral.Web.Tools {
         protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator5;
         
         /// <summary>
-        /// txtOwnersEmail control.
+        /// txtEmailForClaimNotification control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtOwnersEmail;
+        protected global::System.Web.UI.WebControls.TextBox txtEmailForClaimNotification;
         
         /// <summary>
         /// RegularExpressionValidator1 control.

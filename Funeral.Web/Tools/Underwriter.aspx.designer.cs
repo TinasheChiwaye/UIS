@@ -31,13 +31,13 @@ namespace Funeral.Web.Tools {
         protected global::System.Web.UI.WebControls.ValidationSummary vSummaryPlanSetup;
         
         /// <summary>
-        /// txtUnderwriterName control.
+        /// ddlUnderwriterList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtUnderwriterName;
+        protected global::System.Web.UI.WebControls.DropDownList ddlUnderwriterList;
         
         /// <summary>
         /// RequiredFieldValidator1 control.
@@ -49,13 +49,13 @@ namespace Funeral.Web.Tools {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
         
         /// <summary>
-        /// txtPlanName control.
+        /// ddlPlanList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPlanName;
+        protected global::System.Web.UI.WebControls.DropDownList ddlPlanList;
         
         /// <summary>
         /// RequiredFieldValidator2 control.

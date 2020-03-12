@@ -1,0 +1,127 @@
+﻿@model Tuple<List<Funeral.Model.MembersModel>, List<Funeral.Model.FamilyDependencyModel>>
+
+<div class="modal fade" id="dvMemberDependentPartialPopUp" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
+                <h4 class="modal-title">Search Result</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12" style="height:300px;overflow:auto;">
+                        @{
+                            if (Model.Item1 != null)
+                            {
+                                if (Model.Item1.Count > 0)
+                                {
+                                    <table class="table table-bordered table-responsive table-hover table-striped" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>Policy Number</th>
+                                                <th>Member Name</th>
+                                                <th>Gender</th>
+                                                <th>MemberType</th>
+                                                <th>ID Number</th>
+                                                <th>Contact No</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.Item1)
+                                            {
+                                                <tr>
+                                                    <td>@item.MemeberNumber</td>
+                                                    <td style="white-space: pre-line">@item.FullNames @item.Surname</td>
+                                                    <td>@(item.Gender == "0" || item.Gender == null || item.Gender == string.Empty ? "Male" : "Female")</td>
+                                                    <td>Main Member</td>
+                                                    <td>@item.IDNumber</td>
+                                                    <td>@item.Cellphone</td>
+                                                    <td>
+                                                        @{
+                                                            if (item.ClaimExistCount == 0)
+                                                            {
+                                                                <a onclick="BindMainMemberUpdate(@item.pkiMemberID)" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-primary">Select</a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <label class="text text-danger">Claim Already Logged</label>
+                                                            }
+                                                        }
+
+                                                    </td>
+                                                </tr>
+                                            }
+
+                                        </tbody>
+                                    </table>
+                                }
+                                else
+                                {
+
+                                    <h3 style="text-align:center">No data available</h3>
+                                }
+                            }
+                            else if (Model.Item2 != null)
+                            {
+                                if (Model.Item2.Count > 0)
+                                {
+                                    <table class="table table-bordered table-responsive table-hover table-striped" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>Policy Number</th>
+                                                <th>Dependent Name</th>
+                                                <th>Gender</th>
+                                                <th>MemberType</th>
+                                                <th>ID Number</th>
+                                                <th>Contact No</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.Item2)
+                                            {
+                                                <tr>
+                                                    <td>@item.MemeberNumber</td>
+                                                    <td style="white-space: pre-line">@item.FullName @item.Surname</td>
+                                                    <td>@(item.Gender == "0" || item.Gender == null || item.Gender == string.Empty ? "Male" : "Female")</td>
+                                                    <td>@item.DependencyType</td>
+                                                    <td>@item.IDNumber</td>
+                                                    <td>@item.Cellphone</td>
+                                                    <td>
+                                                        @{
+                                                            if (item.ClaimExistCount == 0)
+                                                            {
+                                                                <a onclick="BindDependentUpdate(@item.pkiDependentID)" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-primary">Select</a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <label class="text text-danger">Claim Already Logged</label>
+                                                            }
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
+                                else
+                                {
+                                    <h3 style="text-align:center">No data available</h3>
+                                }
+                            }
+                            else
+                            {
+                                <h3 style="text-align:center">No data available</h3>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

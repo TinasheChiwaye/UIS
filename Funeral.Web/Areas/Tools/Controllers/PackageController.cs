@@ -10,7 +10,7 @@ using System.Web.Security;
 
 namespace Funeral.Web.Areas.Tools.Controllers
 {
-    public class PackageController : Admin.Controllers.BaseAdminController
+    public class PackageController : Admin.Controllers.BaseToolController
     {
         public PackageController() : base(26)
         {

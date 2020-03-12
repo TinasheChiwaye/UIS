@@ -11,89 +11,149 @@ new SelectListItem() {Text = "EFT", Value="EFT"},
 new SelectListItem() {Text = "Other", Value="Other"}
 };
 }
-@using (Html.BeginForm("Save", "GroupPayment", FormMethod.Post, new { id = "GroupPaymentAddEditform" }))
+@using (Html.BeginForm("Save", "GroupPayment", FormMethod.Post, new { id = "GroupPaymentAddEditform", @enctype = "multipart/form-data" }))
 {
     @Html.HiddenFor(x => x.GroupInvoiceID, new { @id = "txtGroupInvoiceID" })
-    <div class="col-sm-12">
-        <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <h5>Group Payment Details</h5>
-            </div>
-            <div class="ibox-content">
-                <div class="form-group row">
-                    <div class="messagealert" id="alert_container"></div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        @Html.HiddenFor(x => x.SocietyId, new { })
-                        <label>Payment Method</label>
-                        @Html.DropDownListFor(x => x.PaymentMethod, paymentMethodList, new { @id = "ddl_PaymentMethodSelection", @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.PaymentMethod, "", new { @class = "text-danger" })
-                        @Html.ValidationMessageFor(x => x.SocietyId, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-group">
-                        <label>Amount</label>
-                        @Html.TextBoxFor(x => x.AmountPaid, new { @type = "number", @id = "txtPaymentAmount", @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.AmountPaid, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-group">
-                        <label>Payment Date</label>
-                        @Html.TextBoxFor(x => x.DatePaid, "{0:dd MMMM yyyy}", new { @id = "txtPaymentDate", @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.DatePaid, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label>Notes</label>
-                        @Html.TextAreaFor(x => x.Notes, new { @id = "txtNotes", @rows = "8", @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.Notes, "", new { @class = "text-danger" })
-                    </div>
-
-                </div>
-                <div class="col-lg-12">
-                    <div class="col-sm-2">
-                        <div class="form-group">
-                            <input type="submit" value="Add Payment" id="btnSubmit" class="btn btn-md btn-primary" style="width:95%;">
-                        </div>
-                    </div>
-                    @*<div class="col-lg-6">
-                            <div class="form-group">
-                                <input type="submit" name="ctl00$MainContent$btnPrint" value="Print" id="MainContent_btnPrint" class="btn btn-md btn-primary" style="width:95%;">
-                            </div>
-                        </div>*@
-                </div>
-            </div>
-        </div>
-    </div>
+    @Html.HiddenFor(x => x.CompanyGroupId, new { @id = "txtCompanyGroupId" })
     if (TempData.Peek("IsSocietySetupSaved") != null && (bool)TempData.Peek("IsSocietySetupSaved") == true)
     {
         <script>
             ShowSaveMessage('#alert_container', 'Group Payment successfully!');
         </script>
-
         TempData.Remove("IsSocietySetupSaved");
     }
+    <div class="col-sm-6">
+        <div class="ibox">
+            <div class="ibox-title">
+                <h5>Add Group Payment</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="form-group row">
+                        <div class="messagealert" id="alert_container"></div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.HiddenFor(x => x.SocietyId, new { })
+                            @Html.HiddenFor(x => x.parlourid, new { })
+                            @Html.Hidden("txtFixPaymentAmount", Model.AmountPaid, new { @id = "txtFixPaymentAmount" })
+                            <label>Payment Method</label>
+                            @Html.DropDownListFor(x => x.PaymentMethod, paymentMethodList, new { @id = "ddl_PaymentMethodSelection", @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.PaymentMethod, "", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(x => x.SocietyId, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <label>Amount</label>
+                            @Html.TextBoxFor(x => x.AmountPaid, "{0:0.00}", new { @type = "number", @id = "txtPaymentAmount", @class = "form-control", onchange = "ChangePaymentAmount(this)" })
+                            @Html.ValidationMessageFor(x => x.AmountPaid, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <label>Payment Date</label>
+                            @Html.TextBoxFor(x => x.DatePaid, "{0:dd MMMM yyyy}", new { @id = "txtPaymentDate", @class = "form-control", @autocomplete = false })
+                            @Html.ValidationMessageFor(x => x.DatePaid, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.CheckBoxFor(x => x.AutoAllocatePremiumToMember, new { @id = "chk_AutoAllocatePremiumToMember", @onclick = "AutoAllocatePremium(this);" })
+                            <label>Auto Allocate Premium To Member</label>
+                        </div>
+                        <div class="form-group" id="dvExcelFileSelection">
+                            <label>Select Excel File</label>
+                            <input type="file" id="fnSelectedFile" name="fnSelectedFile" />
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Ref. Number</label>
+                            @Html.TextBoxFor(x => x.ReferenceNumber, new { @type = "text", @id = "txtRefNumber", @class = "form-control", @readonly = true })
+                            @Html.ValidationMessageFor(x => x.ReferenceNumber, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <label>Notes</label>
+                            @Html.TextAreaFor(x => x.Notes, new { @id = "txtNotes", @rows = "5", @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.Notes, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group pull-left">
+                            <input type="submit" value="Add Payment" id="btnSubmit" class="btn btn-md btn-primary" style="width:95%;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <script type="text/javascript">
         jQuery(document).ready(function () {
-            $('#txtPaymentDate').datepicker({ format: 'dd MM yyyy',autoclose: true,setDate: new Date()  })
-            // $("#txtPaymentDate").datepicker("update");
-            var form = jQuery("#GroupPaymentAddEditform");
-            form.validate();
-            jQuery("#btnSubmit").click(function (event) {
-                if (jQuery(form).valid()) {
-                    return true;
-                }
-                else {
-                    return false;
-                }
-            });
-
+            var CheckSelection = '@Model.AutoAllocatePremiumToMember';
+            if (CheckSelection == "True") {
+                $('#chk_AutoAllocatePremiumToMember').trigger('click');
+            }
+            $('#txtPaymentDate').datepicker({ format: 'dd MM yyyy', autoclose: true, setDate: new Date() });
             eventConfigs.pageChange.action(RefreshAddEditData);
             eventConfigs.searchClick.action(RefreshAddEditData);
-        });
 
+        });
+        function AutoAllocatePremium(cb) {
+            if (cb.checked) {
+                $("#dvExcelFileSelection").hide()
+            }
+            else {
+                $("#dvExcelFileSelection").show()
+            }
+        }
         function RefreshAddEditData(e) {
             LoadSocietyAddEdit();
         }
+        function ChangePaymentAmount(Control) {
+            var isChecked = $("#chk_AutoAllocatePremiumToMember").is(":checked");
+            var FixPayment = parseFloat($("#txtFixPaymentAmount").val());
+            var CurrentPayment = parseFloat(Control.value);
+            if (CurrentPayment != FixPayment) {
+                if (!isChecked) {
+                    $('#chk_AutoAllocatePremiumToMember').trigger('click');
+                }
+            }
+            else {
+                if (isChecked) {
+                     $('#chk_AutoAllocatePremiumToMember').trigger('click');
+                }
+            }
+        }
     </script>
 }
+
+<div class="col-sm-6">
+    <div class="ibox">
+        <div class="ibox-title">
+            <h5>Group Payment Details</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="form-group row">
+                    <div class="messagealert" id="alert_container"></div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>AmountAtRisk</label>
+                        @Html.TextBoxFor(x => x.AmountAtRisk, "{0:0.00}", new { @type = "number", @class = "form-control", @readonly = true })
+                    </div>
+                    <div class="form-group">
+                        <label>Total Risk Covered</label>
+                        @Html.TextBoxFor(x => x.TotalRiskCovered, "{0:0.00}", new { @type = "number", @class = "form-control", @readonly = true })
+                    </div>
+
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Balance</label>
+                        @Html.TextBoxFor(x => x.Balance, "{0:0.00}", new { @type = "number", @class = "form-control", @readonly = true })
+                    </div>
+                    <div class="form-group">
+                        <label>Inception Date</label>
+                        @Html.TextBoxFor(x => x.InceptionDate, "{0:dd MMMM yyyy}", new { @class = "form-control", @readonly = true })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

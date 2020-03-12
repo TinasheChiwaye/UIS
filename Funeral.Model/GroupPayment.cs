@@ -25,10 +25,16 @@ namespace Funeral.Model
         [Required(ErrorMessage = "Please select Group")]
         public int SocietyId { get; set; }
         public int GroupID { get; set; }
+        public decimal TotalRiskCovered { get; set; }
+        public decimal Balance { get; set; }
+        public decimal AmountAtRisk { get; set; }
+        public Guid CompanyGroupId { get; set; }
+
         [Required(ErrorMessage = "Please enter Payment Date")]
         public DateTime DatePaid { get; set; }
         [Required(ErrorMessage = "Please enter Amount")]
         public decimal AmountPaid { get; set; }
+        public string ReferenceNumber { get; set; }
         public string RecievedBy { get; set; }
         [Required(ErrorMessage = "Please select Payment Method")]
         public string PaymentMethod { get; set; }
@@ -40,6 +46,8 @@ namespace Funeral.Model
         public List<SocietyModel> SocietyDropdown { get; set; }
 
         public string SocietyName { get; set; }
+        public DateTime InceptionDate { get; set; }
+        public bool AutoAllocatePremiumToMember { get; set; }
 
 
     }

@@ -9,6 +9,8 @@ namespace Funeral.Model.Search
         public DateTime DateTo { get; set; }
         public Guid CompanyId { get; set; }
         public string StatusId { get; set; }
+        public string SocietyID { get; set; }
         public string keyword { get; set; }
+        public string SearchType { get; set; }
     }
 }

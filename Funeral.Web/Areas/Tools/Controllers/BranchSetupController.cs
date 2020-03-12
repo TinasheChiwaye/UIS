@@ -13,7 +13,7 @@ using static Funeral.Web.Areas.Admin.Controllers.MembersController;
 
 namespace Funeral.Web.Areas.Tools.Controllers
 {
-    public class BranchSetupController : BaseAdminController
+    public class BranchSetupController : BaseToolController
     {
         public BranchSetupController():base(15) {
             this.dbPageId = 15;

@@ -230,8 +230,9 @@ Alter SP
 ================================
 New Table 
 ------------------
-1.ClaimFollowUp
-2.Provinces
+1.ClaimHistory
+2.ClaimFollowUp
+3.Provinces
 	INSERT INTO Provinces (ProvinceName)values('Northern Cape') 
 	INSERT INTO Provinces (ProvinceName)values('Eastern Cape') 
 	INSERT INTO Provinces (ProvinceName)values('Free State') 
@@ -295,3 +296,517 @@ New table
 Alter SP
 ------------------
 1.[SaveFuneral_New]
+
+
+
+NEW pages data
+-------------------------------
+INSERT INTO tblPages (PageName,PageTitle,URL,MVCURL,IsActive,IsExcludedRight,ParentRoleId,IconClass,MenuOrder,MenuLevel,IsMenu)
+VALUES('Unindexed','Unindexed','/Admin/Claims?StatusId=Unindexed','/Admin/Claims?StatusId=Unindexed',1,0,12,NULL,1,1,1)
+
+INSERT INTO tblPages (PageName,PageTitle,URL,MVCURL,IsActive,IsExcludedRight,ParentRoleId,IconClass,MenuOrder,MenuLevel,IsMenu)
+VALUES('Quality Checking','Quality Checking','/Admin/Claims?StatusId=QualityChecking','/Admin/Claims?StatusId=QualityChecking',1,0,12,NULL,2,1,1)
+
+INSERT INTO tblPages (PageName,PageTitle,URL,MVCURL,IsActive,IsExcludedRight,ParentRoleId,IconClass,MenuOrder,MenuLevel,IsMenu)
+VALUES('UnClaimed','UnClaimed','/Admin/Claims?StatusId=UnClaimed','/Admin/Claims?StatusId=UnClaimed',1,0,12,NULL,3,1,1)
+
+INSERT INTO tblPages (PageName,PageTitle,URL,MVCURL,IsActive,IsExcludedRight,ParentRoleId,IconClass,MenuOrder,MenuLevel,IsMenu)
+VALUES('Req''s'' Pending','Req''s'' Pending','/Admin/Claims?StatusId=ReqsPending','/Admin/Claims?StatusId=ReqsPending',1,4,12,NULL,0,1,1)
+
+INSERT INTO tblPages (PageName,PageTitle,URL,MVCURL,IsActive,IsExcludedRight,ParentRoleId,IconClass,MenuOrder,MenuLevel,IsMenu)
+VALUES('Closed','Closed','/Admin/Claims?StatusId=Closed','/Admin/Claims?StatusId=Closed',1,0,12,NULL,5,1,1)
+
+INSERT INTO tblPages (PageName,PageTitle,URL,MVCURL,IsActive,IsExcludedRight,ParentRoleId,IconClass,MenuOrder,MenuLevel,IsMenu)
+VALUES('TL Review','TL Review','/Admin/Claims?StatusId=TLReview','/Admin/Claims?StatusId=TLReview',1,0,12,NULL,6,1,1)
+
+INSERT INTO tblPages (PageName,PageTitle,URL,MVCURL,IsActive,IsExcludedRight,ParentRoleId,IconClass,MenuOrder,MenuLevel,IsMenu)
+VALUES('Finance','Finance','/Admin/Claims?StatusId=Finance','/Admin/Claims?StatusId=Finance',1,0,12,NULL,7,1,1)
+
+INSERT INTO tblPages (PageName,PageTitle,URL,MVCURL,IsActive,IsExcludedRight,ParentRoleId,IconClass,MenuOrder,MenuLevel,IsMenu)
+VALUES('Manager Review','Manager Review','/Admin/Claims?StatusId=ManagerReview','/Admin/Claims?StatusId=ManagerReview',1,0,12,NULL,8,1,1)
+
+New Status Data
+-------------------------------------
+
+INSERT INTO ClaimStatus (StatusName,CreatedDate,SequencePriority,IsActive)
+VALUES ('Manager-Approved',GETDATE(),11,1)
+
+
+INSERT INTO ClaimStatus (StatusName,CreatedDate,SequencePriority,IsActive)
+VALUES ('Manager-Approved',GETDATE(),11,1)
+
+
+
+08-01-2020
+===================================================
+New SP
+-----------------------
+1.[DeleteClaimDocuments]
+
+
+Alter SP
+----------------------
+1.[GetClaimDocumentsByClaimId]
+
+Alter Table 
+--------------------------
+1.ClaimDocuments
+	ALTER TABLE ClaimDocuments ADD IsActive bit NULL DEFAULT (1) WITH VALUES 
+
+
+
+08-01-2020    
+=========================================
+
+UPDATE tblPages SET PageName='Scheme Setup',PageTitle='Scheme Setup' WHERE ID=16
+
+INSERT INTO tblPages (PageName,PageTitle,URL,MVCURL,IsActive,IsExcludedRight,ParentRoleId,IconClass,MenuOrder,MenuLevel,IsMenu)
+VALUES('Claims Process','Claims Process','#','#',1,0,12,NULL,0,1,1)
+
+
+
+09-01-2020
+==============================================
+
+
+UPDATE tblPages SET PageName='Supplementary benefits',PageTitle='Supplementary benefits',URL='/Tools/AddonProductSetup',MVCURL='/Tools/AddonProductSetup' WHERE ID=14
+
+
+Truncate DocumentDefination table 
+-------------------------------
+	Insert new data into the table using Script
+
+Alter Table 
+---------------------
+1.[Funerals]
+	ALTER TABLE [Funerals] ADD MemberType NVARCHAR(100) NULL
+
+
+Alter SP
+-----------------
+1.[SaveFuneral_New]
+2.[GetFuneralByClaimId]
+3.[GetClaimDocumentsByClaimId]
+
+
+
+10-01-2020
+==============================================
+New Table 
+---------------------
+1.ExternalUserLink
+
+
+New SP
+----------------------
+1.[getAllSecureUser]
+2.[ChangeClaimAssigned]
+3.[SaveExternalUserLink]
+4.[UpdateExternalUserLink]
+5.[GetExternalUserLink]
+6.SaveApplicationSetting_New
+
+
+
+
+Alter Table
+-------------------
+1.Claims
+	
+	ALTER TABLE Claims ADD CreatedBy int NULL 
+	ALTER TABLE Claims ADD AssignedTo int NULL
+	ALTER TABLE Claims ADD AssignedDate Datetime NULL 
+	ALTER TABLE Claims ADD Email NVARCHAR(255) NULL 
+Alter SP
+-------------------
+1.[SelectAllClaims]
+2.[SaveClaims]
+
+
+
+
+11-01-2020
+==============================================
+Alter Table
+----------------------
+1.PlanCreator
+	ALTER TABLE PlanCreator ADD ReinsurancePremium numeric(18,2) NULL 
+	ALTER TABLE PlanCreator ADD OfficePremium numeric(18,2) NULL 
+
+2.AddonProducts
+	ALTER TABLE AddonProducts ADD UnderwriterPremium numeric(18,2) NULL 
+
+New SP
+-----------------------------
+1.[SavePlanCreatorDetails_New]
+2.[SaveAddonProductDetails_new]
+
+
+Alter SP
+------------------------
+1.[EditPlanCreatorbyID]
+2.[EditAddonProductbyID]
+
+
+
+
+
+
+
+16-1-2020
+==========================================================
+NEW SP
+----------------------------
+1.SchemeSummaryByParlourId
+
+
+
+---------------------------
+
+
+
+
+21-1-2020
+==========================================================
+
+ALTER TABLE 
+--------------------
+1.MembersRowImport
+	ALTER TABLE MembersRowImport ADD PlanDesc NVARCHAR(500) NULL
+
+New SP
+-----------------------------
+1.[AddPlanStaging_and_getPlanList]
+2.[SavePlanCreatorStaging]
+3.[SaveMemberStaging]
+4.GetImportedMemberList
+
+
+23-1-2020
+==================================================
+Alter Table 
+----------------------------
+1.MembersRowImport
+	Copy PlanStaging Column into this
+
+DROP TABLE 
+------------------
+DROP TABLE Plans_Staging
+
+Alter sp
+---------------------
+1.[AddPlanStaging_and_getPlanList]
+2.[SaveMemberStaging]
+
+
+24-1-2020
+===================================
+New SP
+-----------------
+1.[getUnderwriterSetupListByParlourId]
+
+
+
+28-1-2020
+======================================
+
+tblPages data Updated 
+
+
+New Tables 
+-------------------
+1.ImportedHistory
+
+New SP
+---------------------------
+1.[SaveImportedHistory]
+2.[GetImportedHistory]
+3.[GetImportedHistory_ByImportedId]
+4.[GetImportedHistory_ByNewImportedId]
+
+
+30-1-2020
+==============================
+
+New Tables
+---------------------
+1.ImportDependentMapping
+
+
+New SP
+----------------
+1.[SaveDependentMapping]
+2.[GetMappedDependent_ByImportedId]
+
+Alter SP
+-------------------------------------
+1.[SaveMemberStaging]
+3.[SaveImportedHistory]
+
+
+05-02-2020
+====================================================
+Alter Table
+----------------------
+1.MembersRowImport
+	ALTER TABLE MembersRowImport ADD IsExecuted bit NULL
+	ALTER TABLE MembersRowImport ADD ExecutionError nvarchar(max) NULL
+
+
+Add SQL Type
+------------------------
+CREATE TYPE [dbo].[MemberStagingType] AS TABLE(
+      [ID] INT NULL,
+	  [Date Of Birth] nvarchar(100) NULL,
+      InceptionDate nvarchar(100) NULL,
+      CoverDate nvarchar(100)  NULL,
+	  DebitDate nvarchar(100) null,
+	  EffectiveDate nvarchar(100) null,
+	  StartDate nvarchar(100) null
+)
+GO
+
+Add New SP
+---------------------------
+1.[UpdateMemberStagingTable]
+
+Alter SP
+-----------------------
+1.[SaveMemberStaging]
+2.[AddPlanStaging_and_getPlanList]
+3.[SavePlanCreatorStaging]
+4.[SaveImportedHistory]
+5.[SavePlanCreatorStaging]
+
+
+10-02-2020
+=====================================================================
+
+Alter Table 
+-------------------------
+1.GroupInvoices
+	ALTER TABLE GroupInvoices ADD ReferenceNumber nvarchar(100) NULL
+
+
+Alter SP
+---------------------
+1.[AddEditGroupPayment]
+
+
+
+
+11-02-2020
+======================================
+
+INSERT INTO tblPages (PageName,PageTitle,URL,MVCURL,IsActive,IsExcludedRight,ParentRoleId,IconClass,MenuOrder,MenuLevel,IsMenu)
+VALUES('Schema payments','Schema payments','/Admin/SchemaPayment/Index','/Admin/SchemaPayment/Index',1,0,5,null,2,1,1)
+
+Change Datepicker plugging in content/plugin
+
+NEW SP
+------------------------------
+1.[sp_RecreateBillingMemberPayments]
+
+
+
+
+12-02-2020
+==========================
+
+UPDATE POLICY NUMBER IN CLAIM AND FUNERAL
+-------------------------------------------------------
+update Claims set MemberNumber=m.MemeberNumber  from Claims s inner join Members m on m.pkiMemberID=s.fkiMemberID 
+update Funerals set MemeberNumber=m.MemberNumber  from Funerals s inner join Claims m on m.pkiClaimID=s.FkiClaimID
+
+
+
+Alter SP
+--------------------------
+1.[selectMemberByPkidAndParlor]
+2.[SaveClaims]
+3.[SelectClaimsBypkid]
+4.[GetFuneralByClaimId]
+5.[AddGroupPaymentExcelData]
+6.[AddEditGroupPayment]
+7.[sp_RecreateBillingMemberPayments]
+8.[SaveMemberStaging]
+
+New SP
+-----------------------
+1.AddGroupPaymentExcelData
+2.autoallocateMemberPayments
+3.AutoallocateMemberPaymentsNew
+
+
+SQL Function
+--------------------------
+1.GetAutoGenrateReferenceNumber
+
+Alter Table 
+--------------------------
+1.Claims
+	ALTER TABLE [Claims] ADD SocietyID int NULL
+2.Invoices
+	ALTER TABLE Invoices ADD ReferenceNumber NVARCHAR(100) NULL
+
+3.MemberPaymentReminders
+	ALTER TABLE MemberPaymentReminders ADD ReferenceNumber NVARCHAR(50) NULL
+
+
+
+14-02-2020
+=============================================================
+
+Alter SP
+----------------------------------
+RPT_UIS_SchemeBillingReconReportSummary
+SchemeSummary
+ReturnMemberPlanDetailsWithBalanceBuild
+RPT_UIS_SchemeBillingReconReport
+AddEditGroupPayment
+SchemeSummaryByParlourId
+sp_RecreateBillingMemberPayments
+sp_UpdateMemberPayments
+AutoallocateMemberPaymentsNew
+
+
+
+15-02-2020
+===================================================
+
+Alter SP
+---------------------
+1.[SelectMemberBeneficiaries]
+2.[SelectMembersAndDependencies]
+
+
+
+17-02-2020
+============================================================
+New SP
+-------------------------------
+1.[GetBanksByParlourId]
+2.[CheckDuplicateClaims]
+
+
+18-02-2020
+===================================================
+Alter Table
+--------------------
+1.Claim 
+	ALTER TABLE Claims ADD ClaimNumber NVARCHAR(50) NULL
+
+
+SQL FUnction
+--------------------
+1.GetAutoGenrateClaimNumber
+
+
+Alter SP
+-------------------------
+1.[SelectClaimsBypkid]
+2.[SaveClaims]
+
+
+19-02-2020
+====================================
+New SP
+-----------------------------------------
+1.[UpdatePolicyStatus]
+
+
+
+20-02-2020
+===============================
+Alter Table 
+-----------------
+1.ClaimReasons
+	ALTER TABLE ClaimReasons ADD ClaimStatusId int NULL
+
+New SP
+-------------------------
+1.[GetClaimReasonByClaimStatus]
+
+
+21-02-2020
+===========================
+
+SQL FUNCTION
+----------------------------
+1.RemoveChars
+
+
+Alert Table
+-------------------------
+1.ImportedHistory
+	ALTER TABLE ImportedHistory ADD Status nvarchar(max) NULL
+	ALTER TABLE ImportedHistory ADD StartTime Datetime NULL
+	ALTER TABLE ImportedHistory ADD EndTime Datetime NULL
+	ALTER TABLE ImportedHistory ADD ReadyToImport bit NULL
+
+
+New SP
+--------------------------
+1.[SaveMemberStagingNew]
+3.ImportMemberReadyForJob
+
+Alter SP
+-------------------------
+1.[SaveImportedHistory]
+
+
+
+24-02-2020
+======================================================
+Alter Store Procedure
+------------------------------
+1.[GetClaimReasonByClaimStatus]
+
+Table Data
+------------------
+Truncate table ClaimStatus
+Truncate table ClaimReasons
+
+And Add New Record from Local Database
+
+
+
+
+26-02-2020
+======================================
+new sp
+---------------------------------------
+1.[SaveMemberStaging_New]
+
+Alter SP
+-------------------------
+1.SaveMemberStagingNew
+
+
+
+04-03-2020
+===========================================
+New sp
+------------------------
+1.SelectAllClaimsWithouthParlourId
+2.[MemberSelectAll_WithoutParlour]
+
+
+05-03-2020
+===================================
+
+new sp
+---------------------------------
+1.[MemberPaymentSelectAll_WithouthParlour]
+2.[GetImportedHistory_WithoutParlour]
+
+
+
+
+06-03-2020
+====================================
+
+Alter SP
+---------------------------
+1.[MemberPaymentSelectAll_WithouthParlour]
+2.[MemberPaymentSelectAllByPage]

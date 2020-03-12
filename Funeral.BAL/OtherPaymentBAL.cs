@@ -27,7 +27,12 @@ namespace Funeral.BAL
         }
         public static int AddEditGroupPayment(GroupPayment model)
         {
-            return OtherPaymentDAl.AddEditGroupPayment(model);
+            return OtherPaymentDAl.AddEditGroupPayment(model);       
+        }
+
+        public static int AddExcelSheetData(List<GroupPayment> payments)
+        {
+            return OtherPaymentDAl.AddExcelSheetData(payments);
         }
         public static List<SocietyModel> GetAllSocietyes(Guid ParlourId)
         {
@@ -47,6 +52,10 @@ namespace Funeral.BAL
         public static int DeleteGroupPayment(int ID)
         {
             return OtherPaymentDAl.DeleteGroupPayment(ID);
+        }
+        public static int AutoallocateMemberPayments(string UserName, Guid ParlourId,string referenceNumber)
+        {
+            return OtherPaymentDAl.AutoallocateMemberPayments(UserName, ParlourId, referenceNumber);
         }
     }
 }

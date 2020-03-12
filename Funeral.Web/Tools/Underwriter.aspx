@@ -33,25 +33,27 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label>Underwriter Name <em>*</em> </label>
-                                <asp:TextBox runat="server" ID="txtUnderwriterName" name="UnderwriterName" type="text" class="form-control"></asp:TextBox>
-                                <asp:RequiredFieldValidator Display="None" ValidationGroup="PlanSetup" ControlToValidate="txtUnderwriterName" ID="RequiredFieldValidator1" ForeColor="red" runat="server" ErrorMessage="Please enter Underwriter Name"></asp:RequiredFieldValidator>
+                                <asp:DropDownList runat="server" ID="ddlUnderwriterList" class="form-control"></asp:DropDownList>
+                                <%--<asp:TextBox runat="server" ID="txtUnderwriterName" name="UnderwriterName"  type="text" class="form-control"></asp:TextBox>--%>
+                                <asp:RequiredFieldValidator Display="None" ValidationGroup="PlanSetup" ControlToValidate="ddlUnderwriterList" ID="RequiredFieldValidator1" ForeColor="red" runat="server" ErrorMessage="Please enter Underwriter Name"></asp:RequiredFieldValidator>
                             </div>
                             <div class="form-group">
                                 <label>Plan Name <em>*</em>  </label>
-                                <asp:TextBox MaxLength="50" runat="server" ID="txtPlanName" name="PlanName" type="text" class="form-control"></asp:TextBox>
-                                <asp:RequiredFieldValidator Display="None" ValidationGroup="PlanSetup" ControlToValidate="txtPlanName" ID="RequiredFieldValidator2" ForeColor="red" runat="server" ErrorMessage="Please enter Plan Name"></asp:RequiredFieldValidator>
+                                <asp:DropDownList runat="server" ID="ddlPlanList" class="form-control"></asp:DropDownList>
+                                <%--<asp:TextBox MaxLength="50" runat="server" ID="txtPlanName" name="PlanName" type="text" class="form-control"></asp:TextBox>--%>
+                                <asp:RequiredFieldValidator Display="None" ValidationGroup="PlanSetup" ControlToValidate="ddlPlanList" ID="RequiredFieldValidator2" ForeColor="red" runat="server" ErrorMessage="Please enter Plan Name"></asp:RequiredFieldValidator>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label>Premium <em>*</em> </label>
-                                <asp:TextBox MaxLength="20" runat="server" ID="txtPremium" name="Premium" type="text" class="form-control"></asp:TextBox>
+                                <asp:TextBox MaxLength="20" runat="server" ID="txtPremium" name="Premium" type="number" class="form-control"></asp:TextBox>
                                 <asp:RequiredFieldValidator Display="None" ValidationGroup="PlanSetup" ControlToValidate="txtPremium" ID="RequiredFieldValidator13" ForeColor="red" runat="server" ErrorMessage="Please enter Premium"></asp:RequiredFieldValidator>
                                 <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator7" ValidationGroup="PlanSetup" runat="server" ControlToValidate="txtPremium" ErrorMessage="Premium Enter Only Number With 2 Desimal" ValidationExpression="((\d+)((\.\d{1,2})?))$" />
                             </div>
                             <div class="form-group">
-                                <label>cover amount <em>*</em> </label>
-                                <asp:TextBox MaxLength="25" runat="server" ID="txtCover" name="MianMember" type="text" class="form-control"></asp:TextBox>
+                                <label>Cover amount <em>*</em> </label>
+                                <asp:TextBox MaxLength="25" runat="server" ID="txtCover" name="MianMember" type="number" class="form-control"></asp:TextBox>
                                 <asp:RequiredFieldValidator Display="None" ValidationGroup="PlanSetup" ControlToValidate="txtCover" ID="RequiredFieldValidator6" ForeColor="red" runat="server" ErrorMessage="Please enter Main Member/cover amount"></asp:RequiredFieldValidator>
                                 <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator9" ValidationGroup="PlanSetup" runat="server" ControlToValidate="txtCover" ErrorMessage=">Main Member/cover amount Enter Only Number With 2 Desimal" ValidationExpression="((\d+)((\.\d{1,2})?))$" />
                             </div>
@@ -309,10 +311,11 @@
                                             <ItemTemplate>
                                                 <%--<asp:HyperLink runat="server" ToolTip='Click here to Edit - ' ID="hrLink" NavigateUrl='<%#Eval("pkiMemberID", "~/Admin/ManageMember.aspx?Id={0}") %>'><i class="fa fa-edit"></i></asp:HyperLink>--%>
                                                 <% if (this.HasEditRight)
-                                                   {%>
+                                                    {%>
                                                 <asp:LinkButton runat="server" ToolTip='Click here to Edit - ' ID="lbtnEdit" CommandArgument='<%#Eval("PkiUnderwriterId")%>' CommandName="EditUnderwriter"><i class="fa fa-edit"></i></asp:LinkButton>
-                                                <%} if (this.HasDeleteRight)
-                                                   { %>
+                                                <%}
+                                                    if (this.HasDeleteRight)
+                                                    { %>
                                                 <asp:LinkButton runat="server" ID="lbtnDelete" OnClientClick="return confirm('Are you sure you want to delete?')" CommandArgument='<%#Eval("PkiUnderwriterId")%>' CommandName="deleteUnderwriter"><i class="fa fa-trash-o"></i></asp:LinkButton>
                                                 <%} %>
                                             </ItemTemplate>

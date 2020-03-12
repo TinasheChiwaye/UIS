@@ -38,9 +38,10 @@ namespace Funeral.Model
             this.BeneficiaryAccountType = string.Empty;
             this.LoggedBy = string.Empty;
             this.Cover = 0;
+            this.SocietyID = 0;
             this.BodyCollectedFrom = string.Empty;
             this.ClaimingFor = string.Empty;
-            this.CreatedDate=DateTime.Now;
+            this.CreatedDate = DateTime.Now;
             this.IsDeleted = false;
             this.DeletedBy = string.Empty;
             this.Status = string.Empty;
@@ -49,11 +50,13 @@ namespace Funeral.Model
             this.PayoutValue = 0;
         }
         public int pkiClaimID { get; set; }
+        public string ClaimNumber { get; set; }
         public int fkiMemberID { get; set; }
         public string MemberNumber { get; set; }
         [Required(ErrorMessage = "The Claim Date is required")]
         public DateTime ClaimDate { get; set; }
         public string ClaimNotes { get; set; }
+        public int? SocietyID { get; set; }
         public string CourseOfDearth { get; set; }
         public Boolean HostingFuneral { get; set; }
         public string ClaimantTitle { get; set; }
@@ -61,16 +64,18 @@ namespace Funeral.Model
         public string ClaimantFullname { get; set; }
         [Required(ErrorMessage = "The Claimant Surname is required")]
         public string ClaimantSurname { get; set; }
-        [Required(ErrorMessage = "The Claimant Id number is required")]
+
+
+        [Required(ErrorMessage = "A valid RSA ID Number is required.")]
         public string ClaimantIDNumber { get; set; }
         public DateTime ClaimantDateOfBirth { get; set; }
         public string ClaimantGender { get; set; }
-        [Required(ErrorMessage = "The Street Address is required")]
         public string ClaimantAddressLine1 { get; set; }
         public string ClaimantAddressLine2 { get; set; }
         public string ClaimantAddressLine3 { get; set; }
         public string ClaimantAddressLine4 { get; set; }
         public string ClaimantCode { get; set; }
+        [StringLength(10)]
         public string ClaimantContactNumber { get; set; }
         public string BeneficiaryBank { get; set; }
         public string BeneficiaryAccountHolder { get; set; }
@@ -92,5 +97,11 @@ namespace Funeral.Model
         public string Status { get; set; }
         public bool Payout { get; set; }
         public decimal PayoutValue { get; set; }
+
+        public int CreatedBy { get; set; }
+        public int AssignedTo { get; set; }
+        public string AssignedToName { get; set; }
+        [Required(ErrorMessage = "The Email is required.")]
+        public string Email { get; set; }
     }
 }

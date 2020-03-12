@@ -11,6 +11,8 @@
         <link href='<%=ResolveUrl("~/Content/animate.css") %>' rel="stylesheet" />
         <link href='<%=ResolveUrl("~/Content/style.css") %>' rel="stylesheet" />
     </asp:PlaceHolder>
+    <script src='<%=ResolveUrl("~/Scripts/jquery-2.1.1.js") %>' type="text/javascript"></script>
+    <script src='<%=ResolveUrl("~/Scripts/bootstrap.min.js") %>' type="text/javascript"></script>
     <style type="text/css">
         .auto-style1 {
             width: 400px;
@@ -36,11 +38,12 @@
     </script>
 </head>
 <body style="background-color: #fafafa">
+    <div class="col-sm-4">
+        <img alt="" class="responsive" src='<%=ResolveUrl("~/Content/images/LoginPageImage/featureLeft1.png") %>' />
+        <img alt="" class="responsive" src='<%=ResolveUrl("~/Content/images/LoginPageImage/SalesLeft1.png") %>' />
+    </div>
     <form id="form1" runat="server" class="m-t" role="form">
-        <div class="col-sm-4">
-            <img alt="" class="responsive" src='<%=ResolveUrl("~/Content/images/LoginPageImage/featureLeft1.png") %>' />
-            <img alt="" class="responsive" src='<%=ResolveUrl("~/Content/images/LoginPageImage/SalesLeft1.png") %>' />
-        </div>
+
         <div class="col-sm-4 text-center animated fadeInDown">
             <div class="ibox">
                 <div class="ibox-title" style="background-color: red;">
@@ -66,8 +69,6 @@
                             <asp:TextBox runat="server" TextMode="Password" ID="password" PlaceHolder="Enter password" CssClass="form-control" required="" />
                         </div>
                         <asp:Button CssClass="btn btn-primary block full-width m-b" Style="background-color: red; font-weight: bold" runat="server" ID="Button1" Text="Login" OnClick="Login_click" />
-                        <%--<a href="<%=ResolveUrl("~/Admin/Login/ForgotPassword") %>" ><b><small>Forgot password?</small></b></a>--%>
-                        <%--<a href="NewRegistration.aspx"><b><small>New Registration</small></b></a>--%>
                         <p class="m-t"><b><small>Unplugg IT Solutions &copy; <%=DateTime.Now.Year %></small></b> </p>
                         <p>
                             <asp:Label runat="server" ID="lblMessage"></asp:Label>
@@ -76,12 +77,12 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-4">
-            <img alt="" class="responsive" src='<%=ResolveUrl("~/Content/images/LoginPageImage/PlatformRight1.png") %>' />
-            <img alt="" class="responsive" src='<%=ResolveUrl("~/Content/images/LoginPageImage/screensRight1.png") %>' />
-        </div>
+
     </form>
-    <script src='<%=ResolveUrl("~/Scripts/jquery-2.1.1.js") %>' type="text/javascript"></script>
-    <script src='<%=ResolveUrl("~/Scripts/bootstrap.min.js") %>' type="text/javascript"></script>
+    <div class="col-sm-4">
+        <img alt="" class="responsive" src='<%=ResolveUrl("~/Content/images/LoginPageImage/PlatformRight1.png") %>' />
+        <img alt="" class="responsive" src='<%=ResolveUrl("~/Content/images/LoginPageImage/screensRight1.png") %>' />
+    </div>
+
 </body>
 </html>
