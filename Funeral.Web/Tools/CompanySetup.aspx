@@ -169,6 +169,11 @@
                                 <asp:RegularExpressionValidator Display="None" runat="server" ID="RegularExpressionValidator10" ValidationGroup="CompanySetup" ControlToValidate="txtOwnersEmail" ErrorMessage="Please enter valid Owners email address" ForeColor="Red" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"></asp:RegularExpressionValidator>
                                 <asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtOwnersEmail" ID="RequiredFieldValidator100" ForeColor="red" runat="server" ErrorMessage="Please enter Owners Email Address"></asp:RequiredFieldValidator>
                             </div>
+                                <label>Claim Email Address<em>*</em> </label>
+                                <asp:TextBox MaxLength="30" runat="server" ID="txtClaimEmailAddress" name="ClaimEmailAddress" type="text" class="form-control"></asp:TextBox>
+                                <asp:RegularExpressionValidator Display="None" runat="server" ID="RegularExpressionValidator3" ValidationGroup="CompanySetup" ControlToValidate="txtClaimEmailAddress" ErrorMessage="Please enter valid Claim Email Address" ForeColor="Red" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"></asp:RegularExpressionValidator>
+                                <asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtClaimEmailAddress" ID="RequiredFieldValidator2" ForeColor="red" runat="server" ErrorMessage="Please Enter Claim Email Address"></asp:RequiredFieldValidator>
+                            </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">

@@ -112,7 +112,9 @@ namespace Funeral.Web.Tools
             txtCover.Text = string.Empty;
             chkongoing.Checked = false;
             chkLaybye.Checked = false;
-            txtAddonName.Text = string.Empty; ;
+            txtAddonName.Text = string.Empty;
+            txtUnderwriterCover.Text = string.Empty;
+            txtUnderwriterPremium.Text = string.Empty;
         }
         #endregion
 
@@ -153,6 +155,8 @@ namespace Funeral.Web.Tools
                     model.LastModified = System.DateTime.Now;
                     model.ModifiedUser = UserName;
                     model.ProductName = txtAddonName.Text;
+                    model.UnderWriterCover = Convert.ToDecimal(txtUnderwriterCover.Text);
+                    model.UnderWriterPremium = Convert.ToDecimal(txtUnderwriterPremium.Text);
 
 
 

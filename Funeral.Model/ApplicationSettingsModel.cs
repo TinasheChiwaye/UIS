@@ -122,6 +122,9 @@ namespace Funeral.Model
         public List<smsTempletModel> SMSSettings { get; set; }
 
         public BankingDetailSending BankDetails { get; set; }
+
+        [Required(ErrorMessage = "Please Enter Claim Email Address")]
+        [RegularExpression(pattern: @"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", ErrorMessage = "Please enter valid Claim email address")]
         public string EmailForClaimNotification { get; set; }
 
 
