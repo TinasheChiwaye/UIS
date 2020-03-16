@@ -94,14 +94,14 @@ namespace Funeral.Web.Areas.Admin.Controllers
             search.SortBy = "";
             search.SortOrder = "Asc";
             search.TotalRecord = 0;
-            var searchResult = new SearchResult<Model.Search.BaseSearch, SocietyModel>(search, new List<SocietyModel>(), o => o.SocietyName.Contains(search.SarchText));
+            var searchResult = new SearchResult<Model.Search.BaseSearch, GroupPaymentList>(search, new List<GroupPaymentList>(), o => o.GroupName.Contains(search.SarchText));
             var pageCountEntries = GetEntriesCount();
             ViewBag.EntriesCount = pageCountEntries;
             return PartialView("~/Areas/Admin/Views/GroupPayment/_GroupPaymentList.cshtml", search);
         }
         public ActionResult SearchData(Model.Search.BaseSearch search)
         {
-            var searchResult = new SearchResult<Model.Search.BaseSearch, SocietyModel>(search, new List<SocietyModel>(), o => o.SocietyName.Contains(search.SarchText));
+            var searchResult = new SearchResult<Model.Search.BaseSearch, GroupPaymentList>(search, new List<GroupPaymentList>(), o => o.GroupName.Contains(search.SarchText));
 
             try
             {
@@ -113,7 +113,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-                return Json(WebApiResult<Model.Search.BaseSearch, SocietyModel>.Error(searchResult, ex));
+                return Json(WebApiResult<Model.Search.BaseSearch, GroupPaymentList>.Error(searchResult, ex));
             }
         }
         [PageRightsAttribute(CurrentPageId = 7, Right = new isPageRight[] { isPageRight.HasEdit })]
@@ -147,7 +147,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             search.SortOrder = "Asc";
             search.TotalRecord = 0;
 
-            var searchResult = new SearchResult<Model.Search.BaseSearch, SocietyModel>(search, new List<SocietyModel>(), o => o.SocietyName.Contains(search.SarchText));
+            var searchResult = new SearchResult<Model.Search.BaseSearch, GroupPaymentList>(search, new List<GroupPaymentList>(), o => o.GroupName.Contains(search.SarchText));
 
             var pageCountEntries = GetEntriesCount();
             ViewBag.EntriesCount = pageCountEntries;
@@ -156,16 +156,16 @@ namespace Funeral.Web.Areas.Admin.Controllers
         }
         public ActionResult GroupSearchData(Model.Search.BaseSearch search)
         {
-            var searchResult = new SearchResult<Model.Search.BaseSearch, SocietyModel>(search, new List<SocietyModel>(), o => o.SocietyName.Contains(search.SarchText));
+            var searchResult = new SearchResult<Model.Search.BaseSearch, GroupPaymentList>(search, new List<GroupPaymentList>(), o => o.GroupName.Contains(search.SarchText));
 
             try
             {
-                var SocietyList = ToolsSetingBAL.GetAllSocietyes(ParlourId);
-                return Json(new SearchResult<Model.Search.BaseSearch, SocietyModel>(search, SocietyList, o => o.SocietyName.Contains(search.SarchText)));
+                var SocietyList = ToolsSetingBAL.GetAllSocietyes_PaymentList(ParlourId);
+                return Json(new SearchResult<Model.Search.BaseSearch, GroupPaymentList>(search, SocietyList, o => o.GroupName.Contains(search.SarchText)));
             }
             catch (Exception ex)
             {
-                return Json(WebApiResult<Model.Search.BaseSearch, SocietyModel>.Error(searchResult, ex));
+                return Json(WebApiResult<Model.Search.BaseSearch, GroupPaymentList>.Error(searchResult, ex));
             }
         }
     }

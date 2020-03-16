@@ -21,12 +21,12 @@
         </div>
         <div class="form-group">
             <label>Date Of Birth<em>*</em></label>
-            @Html.TextBox("DateOfBirth_Beneficiary", "", new { @type = "text", @id = "txtDateOfBirth_Beneficiary", @class = "form-control", @placeholder = "Date Of Birth" })
+            @Html.TextBox("DateOfBirth_Beneficiary", "", new { @type = "text", @id = "txtDateOfBirth_Beneficiary", @class = "form-control", @placeholder = "Date Of Birth"  })
         </div>
     </div>
     <div class="col-lg-6">
         <div class="form-group">
-            <label>Select Relationship Type</label>
+            <label>Select Relationship Types</label>
             @Html.DropDownList("RelationshipType_Beneficiary", new List<SelectListItem>
                 {
                     new SelectListItem{ Text="Parents", Value = "Parents" },
@@ -44,7 +44,7 @@
         </div>
         <div class="form-group">
             <label>ID Number<em>*</em></label>
-            @Html.TextBox("IDNumber_Beneficiary", "", new { @pattern = "/d*", @maxlength = "20", @id = "txtIDNumber_Beneficiary", @class = "form-control", @placeholder = "ID Number" })
+            @Html.TextBox("IDNumber_Beneficiary", "", new { @pattern = "/d*", @maxlength = "20", @id = "txtIDNumber_Beneficiary", @class = "form-control", @placeholder = "ID Number", @onkeyup = "DateComparisionJavascriptBen();" }) 
         </div>
     </div>
     <div class="form-group">
@@ -262,4 +262,75 @@
          }
     }
 
+    function DateComparisionJavascriptBen() {
+        var idNumber = $("#txtIDNumber_Beneficiary").val();
+        var textLength = idNumber.length;
+        if (textLength == 13) {
+            Validate();
+        }
+    }
+
+    function Validate() {
+        var idNumber = $("#txtIDNumber_Beneficiary").val();
+        // assume everything is correct and if it later turns out not to be, just set this to false
+        var correct = true;
+
+        //Ref: http://www.sadev.co.za/content/what-south-african-id-number-made
+        // SA ID Number have to be 13 digits, so check the length
+        if (idNumber.length != 13 || !isNumber(idNumber)) {
+            correct = false;
+        }
+
+        // get first 6 digits as a valid date
+
+        var tempDate = new Date(idNumber.substring(0, 2), idNumber.substring(2, 4) - 1, idNumber.substring(4, 6));
+        var id_date = tempDate.getDate();
+        var id_month = tempDate.getMonth();
+        var dMonth = id_month + 1;
+        var dMonthName = tempDate.getMonthName();
+        var id_year = tempDate.getFullYear();
+
+        var fullDate = id_date + " " + dMonthName + " " + id_year;
+        if (!((tempDate.getYear() == idNumber.substring(0, 2)) && (id_month == idNumber.substring(2, 4) - 1) && (id_date == idNumber.substring(4, 6)))) {
+            correct = false;
+        }
+
+        // get country ID for citzenship
+        var citzenship = parseInt(idNumber.substring(10, 11)) == 0 ? "Yes" : "No";
+
+        // apply Luhn formula for check-digits
+        var tempTotal = 0;
+        var checkSum = 0;
+        var multiplier = 1;
+        for (var i = 0; i < 13; ++i) {
+            tempTotal = parseInt(idNumber.charAt(i)) * multiplier;
+            if (tempTotal > 9) {
+                tempTotal = parseInt(tempTotal.toString().charAt(0)) + parseInt(tempTotal.toString().charAt(1));
+            }
+            checkSum = checkSum + tempTotal;
+            multiplier = (multiplier % 2 == 0) ? 1 : 2;
+        }
+        if ((checkSum % 10) != 0) {
+            //    error.append('<p>ID number does not appear to be authentic - check digit is not valid</p>');
+            correct = false;
+        };
+
+
+        // if no error found, hide the error message
+        if (correct) {
+            $("#txtIDNumber_Beneficiary").val(fullDate);
+            $("#txtIDNumber_Beneficiary").val(fullDate).datepicker('update');
+
+            var genderCode = idNumber.substring(6, 10);
+            var gender = parseInt(genderCode) < 5000 ? "Female" : "Male";
+
+            if (gender == "Female") {
+                $("#tab-10 input[name=gender][value=1]").prop('checked', true);
+            } else {
+                $("#tab-10 input[name=gender][value=0]").prop('checked', true);
+            }
+            CalculateAge(fullDate);
+        }
+        return false;
+    }
 </script>
