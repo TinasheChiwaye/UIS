@@ -20,12 +20,12 @@
                                     <div class="panel blank-panel">
                                         <div class="panel-heading">
                                             <div class="panel-title">
-                                                <h4>Generate Report by Selecting Reference</h4>
+                                                <h4>Generate Reports</h4>
                                                 <asp:ValidationSummary runat="server" ID="vSummaryCompRegi" ValidationGroup="CompanyRegi" ForeColor="Red" />
                                                 <div class="ibox-content">
                                                     <div class="col-sm-6" runat="server" id="dvAdministrator">
                                                         <div class="form-group">
-                                                            <label class="m-l">Group name </label>
+                                                            <label class="m-l">Scheme </label>
                                                             <asp:DropDownList ID="ddlCompanyList" Width="97%" CssClass="form-control m-l" AutoPostBack="true" OnSelectedIndexChanged="ddlCompanyList_SelectedIndexChanged" runat="server"></asp:DropDownList>
                                                         </div>
                                                     </div>
@@ -79,7 +79,7 @@
                                                                 </div>
                                                                 <div class="col-sm-6">
                                                                     <div class="form-group">
-                                                                        <label class="">Book name </label>
+                                                                        <label class="">Book </label>
                                                                         <asp:DropDownList ID="ddlSociety" runat="server" DataTextField="SocietyName" DataValueField="pkiSocietyID" CssClass="form-control"></asp:DropDownList>
                                                                     </div>
                                                                 </div>

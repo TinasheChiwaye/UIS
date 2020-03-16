@@ -44,6 +44,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
                 ViewBag.totalPremium = Currency;
 
+                ViewBag.SocietyLists = CommonBAL.GetSocietyByParlourId(CurrentParlourId);
+
                 LoadStatus();
                 LoadEntriesCount();
                 BindCompanyList("Search");
@@ -57,8 +59,11 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 search.SortOrder = "Asc";
                 search.StatusId = "0";
                 search.TotalRecord = 0;
+                search.BookID = "";
 
-                var searchResult = new Funeral.Model.SearchResult<Model.Search.MemberSearch, MembersModel>(search, new List<MembersModel>(), o => o.IDNumber.Contains(search.SarchText) || o.MemeberNumber.Contains(search.SarchText));
+                var searchResult = new Funeral.Model.SearchResult<Model.Search.MemberSearch, MembersModel>(search, new List<MembersModel>(),
+                    o => o.IDNumber.Contains(search.SarchText)
+                    || o.MemeberNumber.Contains(search.SarchText));
                 return View(search);
             }
             else
@@ -92,7 +97,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             var searchResult = new Funeral.Model.SearchResult<Model.Search.MemberSearch, MembersModel>(search, new List<MembersModel>(), o => o.IDNumber.ToLower().Contains(search.SarchText.ToLower()));
             try
             {
-                var members = MembersBAL.GetAllMembers(search.CompanyId, search.PageSize, search.PageNum, search.SarchText, search.SortBy, search.SortOrder, search.StatusId.ToString());
+                var members = MembersBAL.GetAllMembers(search.CompanyId, search.PageSize, search.PageNum, search.SarchText, search.SortBy, search.SortOrder, search.StatusId.ToString(), search.BookID.ToString());
                 return Json(new Funeral.Model.SearchResult<Model.Search.MemberSearch, MembersModel>(search, members.MemberList, o => o.IDNumber.ToLower().Contains(search.SarchText.ToLower()) || o.MemeberNumber.ToLower().Contains(search.SarchText.ToLower()) || o.Surname.ToLower().Contains(search.SarchText.ToLower()) || o.FullNames.ToLower().Contains(search.SarchText.ToLower()) || o.Cellphone.ToLower().Contains(search.SarchText.ToLower()) || o.EasyPayNo.ToLower().Contains(search.SarchText.ToLower())));
             }
             catch (Exception ex)

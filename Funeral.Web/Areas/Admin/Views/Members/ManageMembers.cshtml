@@ -310,7 +310,7 @@
                                                 @Html.DropDownList("SocietyList", Model.SocietyList, "Please select", new { Name = "SocietyName", @id = "ddlMemberSociety", @style = "width:100%", @class = "form-control" })
                                             </div>
                                             <div class="form-group">
-                                                <label>Full name  <em>*</em>  </label>
+                                                <label>Full Name  <em>*</em>  </label>
                                                 <input type="text" maxlength="25" id="txtFirstname" name="txtFirstname" class="form-control">
                                             </div>
                                             <div class="form-group">
@@ -429,7 +429,7 @@
                                                                         @Html.DropDownList("PolicyList", Model.PolicyList, "Select", new { Name = "CitizenShip", @id = "ddlPolicyPopupPolicy", @style = "width:100%", @class = "form-control" })
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <label>Policy Premium </label>
+                                                                        <label>Risk Premium </label>
                                                                         <input type="text" maxlength="25" id="txtPolicyPopupPremium" name="name" class="form-control" disabled>
                                                                     </div>
                                                                     <div class="form-group">
@@ -579,16 +579,16 @@
                                                 @Html.DropDownList("PolicyList", Model.PolicyList, "Select", new { Name = "CitizenShip", @id = "ddlPolicy", @style = "width:100%", @class = "form-control" })
                                             </div>
                                             <div class="form-group">
-                                                <label>Policy Premium </label>
+                                                <label>Risk Premium </label>
                                                 <input type="text" maxlength="25" id="txtPolicyPremium" name="name" class="form-control" disabled>
                                             </div>
                                             <div class="form-group">
-                                                <label>Policy Cover </label>
+                                                <label> Cover Amount</label>
                                                 <input type="text" maxlength="25" id="txtPolicyCoverAmount" name="name" class="form-control" disabled>
                                             </div>
                                             <div class="form-group">
                                                 <label>
-                                                    Policy No / Membership No<em>*</em>
+                                                    Membership Number<em>*</em>
                                                 </label>
                                                 @if ((bool)TempData["IsPolicyNoEnabled"])
                                                 {
@@ -694,7 +694,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Dependent type</label>
+                                                <label>Dependent Type</label>
                                                 @Html.DropDownList("DependencyList_Product", Model.ExtendedFamily, "Main Member", new { Name = "Dependency", @id = "ddlDependentDependencyType_Product", @style = "width:100%", @class = "form-control" })
                                             </div>
                                             <div class="form-group">
@@ -850,12 +850,11 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6">
-                                                          
-
                                                             <div class="form-group">
-                                                                <label>Full name <em>*</em></label>
+                                                                <label>Full Name <em>*</em></label>
                                                                 <input type="text" maxlength="25" id="txtDependentFirstname" name="name" class="form-control">
-                                                            </div>  <div class="form-group">
+                                                            </div>
+                                                            <div class="form-group">
                                                                 <label>Surname <em>*</em></label>
                                                                 <input type="text" maxlength="25" id="txtDependentLastname" name="name" class="form-control">
                                                             </div>
@@ -881,9 +880,7 @@
                                                                 &nbsp; &nbsp;
                                                                 <input type="radio" name="dependentGender" value="male" id="male" checked="checked"> Male
                                                                 <input type="radio" name="dependentGender" value="female" id="female"> Female<br>
-
                                                             </div>
-                                                            
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
@@ -903,7 +900,7 @@
                                                                        class="form-control dependantCoverDate DatepickerSelection" readonly>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label>Dependency Type</label>
+                                                                <label>Relationship Type</label>
                                                                 @*<input type="text" maxlength="25" id="txtDepnduncyType" name="name" class="form-control">*@
                                                                 @Html.DropDownList("DependencyList", Model.DependencyTypeList, "Select", new { Name = "Dependency", @id = "ddlDependentDependencyType", @style = "width:100%", @class = "form-control" })
                                                             </div>
@@ -919,10 +916,12 @@
                                                                     <option value="On Trial">On Trial</option>
                                                                 </select>
                                                             </div>
-
-                                                            
                                                             <div class="form-group">
-                                                                <label>Cover <em>*</em></label>
+                                                                <label>Risk Premium <em>*</em></label>
+                                                                <input type="text" maxlength="25" id="txtDependentPremium" name="name" class="form-control" disabled>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>Cover Amount <em>*</em></label>
                                                                 <input type="text" maxlength="25" id="txtDependentCoverAmount" name="name" class="form-control" disabled>
                                                             </div>
 
@@ -985,7 +984,7 @@
                                                         <th>InvoiceID</th>
                                                         <th>Amount</th>
                                                         <th>Date Paid</th>
-                                                        <th>Recieved By</th>
+                                                        <th>Received By</th>
                                                         <th>Invoice Number</th>
                                                         <th>Payment Branch</th>
                                                     </tr>
@@ -1176,7 +1175,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="form-group">
-                            <label>Policy Premium<em>*</em> </label>
+                            <label>Risk Premium<em>*</em> </label>
                             <input type="text" id="popupTxtPremium" class="form-control" value="">
                         </div>
                     </div>

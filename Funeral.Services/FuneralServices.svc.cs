@@ -57,7 +57,7 @@ namespace Funeral.Services
 
         public MembersViewModel GetAllMembers(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder, string status)
         {
-            return MembersBAL.GetAllMembers(ParlourId, PageSize, PageNum, Keyword, SortBy, SortOrder, status);
+            return MembersBAL.GetAllMembers(ParlourId, PageSize, PageNum, Keyword, SortBy, SortOrder, status,"");
         }
         public List<PolicyModel> GetPolicyByParlourId(Guid parlourid)
         {

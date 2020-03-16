@@ -144,5 +144,6 @@ namespace Funeral.Model
         public int CustomId3 { get; set; }
         public int FK_MemberId { get; set; }
         public int ClaimExistCount { get; set; }
+        public string ApplicationName { get; set; }
     }
 }

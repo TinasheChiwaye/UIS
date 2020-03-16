@@ -14,14 +14,14 @@
                     <div class="row">
                         <div class="col-lg-12" id="dvAdministrator">
                             <div class="col-lg-2">
-                                <label>Show entries:</label>
+                                <label>Show Entries:</label>
                                 @Html.DropDownListFor(m => m.PageSize, new SelectList(ViewBag.EntriesCount, "Value", "Key"), new { @class = "form-control" })
                             </div>
 
                             @if (ViewBag.CompanyDropDisplay)
                             {
                                 <div class="col-sm-3">
-                                    <label>Select Company:</label>
+                                    <label>Scheme:</label>
                                     @Html.DropDownListFor(m => m.StatusId, new SelectList(ViewBag.Companies, "ParlourId", "ApplicationName"), new { @id = "CompanyDropdownSelection", @class = "form-control" })
                                 </div>
                                 <div class="col-sm-3">
@@ -62,10 +62,10 @@
                                             <th>Scheme</th>
                                             <th>Book Name</th>
                                             <th>Policy No</th>
-                                            <th>ID No</th>
-                                            <th>Member</th>
-                                            <th>EasyPayNo</th>
-                                            <th>Cover date</th>
+                                            <th>ID Number</th>
+                                            <th>Full Name</th>
+                                            @*<th>EasyPayNo</th>*@
+                                            <th>Cover Date</th>
                                             <th>Policy Status</th>
                                             <th>Actions</th>
                                         </tr>
@@ -128,7 +128,7 @@
                 { "data": "MemeberNumber", "name": "Policy Number", "autoWidth": true },
                 { "data": "IDNumber", "name": "ID No", "autoWidth": true },
                 { "data": "FullNames", "name": "Member", "autoWidth": true },
-                { "data": "EasyPayNo", "name": "EasyPayNumber", "autoWidth": true },
+                //{ "data": "EasyPayNo", "name": "EasyPayNumber", "autoWidth": true },
                 {
                     "data": "CoverDate", "name": "Cover date", "autoWidth": true,
                     "render": function (data) {
@@ -148,7 +148,7 @@
                         var hasDeleteRights = '@ViewBag.HasDeleteRight' == "True" ? true : false;
 
                         if (hasEditRights || hasDeleteRights) {
-                            tableConfigs.table.DataTable().columns([9]).visible(true)
+                            tableConfigs.table.DataTable().columns([8]).visible(true)
                             var dom = "<div class='row'>";
 
                             if (hasEditRights) {
@@ -165,7 +165,7 @@
                         }
                         else {
 
-                            tableConfigs.table.DataTable().columns([9]).visible(false);
+                            tableConfigs.table.DataTable().columns([8]).visible(false);
                             return "";
                         }
                     }

@@ -94,7 +94,7 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label>FileName</label>
+                                <label>File Name</label>
                                 <asp:FileUpload CssClass="form-control" ID="fn_excelFile" runat="server" />
                                 <asp:RequiredFieldValidator ValidationGroup="ImportDetail" ControlToValidate="fn_excelFile" ID="RequiredFieldValidator3" ForeColor="red" runat="server" ErrorMessage="Please select File"></asp:RequiredFieldValidator>
                             </div>

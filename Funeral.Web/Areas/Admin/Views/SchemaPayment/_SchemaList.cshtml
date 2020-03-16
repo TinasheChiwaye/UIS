@@ -17,7 +17,7 @@
                     <div class="row">
                         <div class="col-lg-3" id="dvAdministrator">
                             <div class="form-group">
-                                <label>Show entries:</label>
+                                <label>Show Entries:</label>
                                 @Html.DropDownListFor(m => m.PageSize, new SelectList(ViewBag.EntriesCount, "Value", "Key"), new { @class = "form-control" })
                             </div>
                         </div>
@@ -29,7 +29,7 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                @Html.Label("Search Society:", new { @class = "control-label" })
+                                @Html.Label("Search Scheme:", new { @class = "control-label" })
                                 <div class="input-group">
                                     @Html.TextBoxFor(m => m.SarchText, null, new { @class = "form-control", @maxlength = "50", placeholder = "Search by keyword" })
                                     <span class="input-group-btn">

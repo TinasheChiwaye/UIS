@@ -32,9 +32,11 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-2">
-                            <label>Show Entries:</label>
-                            @Html.DropDownListFor(m => m.PageSize, new SelectList(ViewBag.EntriesCount, "Value", "Key"), new { @class = "form-control" })
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                             <label>Status:</label>
+                             @Html.DropDownListFor(x => x.StatusId, new SelectList(ViewBag.Statuses, "Status", "Status"), "Select", new { @class = "form-control" })
+                            </div>
                         </div>
                         <div class="col-lg-5" id="dvAdministrator">
                             <div class="form-group">
@@ -42,7 +44,7 @@
                                 @Html.DropDownListFor(m => m.CompanyId, new SelectList(ViewBag.Companies, "parlourid", "ApplicationName"), new { @class = "form-control" })
                             </div>
                         </div>
-                        <div class="col-lg-5" id="dvAdministrator">
+                        <div class="col-lg-4" id="dvAdministrator">
                             <div class="form-group">
                                 <label>Book: </label>
                                 @Html.DropDownListFor(m => m.SocietyID, new SelectList(ViewBag.SocietyLists, "pkiSocietyID", "SocietyName"), "Select Group", new { @id = "ddlClaimSociety", @class = "form-control" })
@@ -62,11 +64,10 @@
                                 @Html.TextBoxFor(x => x.DateTo, "{0:dd MMM yyyy}", new { @placeholder = "DD MM YYYY", @id = "txtDateTo", @autocomplete = "off", @class = "form-control DatepickerSelection" })
                             </div>
                         </div>
+                       
                         <div class="col-sm-2">
-                            <div class="form-group">
-                                <label>Status:</label>
-                                @Html.DropDownListFor(x => x.StatusId, new SelectList(ViewBag.Statuses, "Status", "Status"), "Select", new { @class = "form-control" })
-                            </div>
+                            <label>Show Entries:</label>
+                            @Html.DropDownListFor(m => m.PageSize, new SelectList(ViewBag.EntriesCount, "Value", "Key"), new { @class = "form-control" })
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
@@ -361,6 +362,13 @@
             })
         }
     });
+
+
+
+
+
+
+
     function OpenEmailPopup(ClaimId, MemberID) {
         $("#txtClaimID_SentEmail").val(ClaimId)
         $("#txtMemeberID_SentEmail").val(MemberID)

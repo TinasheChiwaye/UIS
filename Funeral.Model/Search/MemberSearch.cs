@@ -11,6 +11,9 @@ namespace Funeral.Model.Search
         public string StatusId { get; set; }
         public Guid CompanyId { get; set; }
 
+        public string BookID { get; set; }
+
+
 
     }
 }
