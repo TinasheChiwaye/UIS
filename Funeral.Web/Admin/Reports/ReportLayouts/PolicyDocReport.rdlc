@@ -72,7 +72,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>First Name</Value>
+                <Value>full name</Value>
                 <Style>
                   <FontWeight>Bold</FontWeight>
                 </Style>

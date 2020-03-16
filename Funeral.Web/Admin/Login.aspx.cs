@@ -50,8 +50,8 @@ namespace Funeral.Web.Admin
                             Session["SessionVariablesClass"] = BAL.RightsBAL.LoadSideMenu(model.parlourid, model.PkiUserID);
                         }
                         catch { }
-                        //Response.Redirect("~/Admin/Dashboard/Index");
-                        Response.Redirect("Dashboard.aspx", false);
+                        Response.Redirect("~/Admin/Dashboard/Index");
+                        //Response.Redirect("Dashboard.aspx", false);
 
                     }
                     else

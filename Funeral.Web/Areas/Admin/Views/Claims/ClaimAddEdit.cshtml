@@ -340,7 +340,7 @@
                                                         <div class="row">
                                                             <div class="col-sm-6">
                                                                <div class="form-group">
-                                                                    <label>First name  <em>*</em> </label>
+                                                                    <label>Full name  <em>*</em> </label>
                                                                     @Html.TextBoxFor(x => x.claimsModel.ClaimantFullname, new { @id = "txtClaimFirstName", @maxlength = "50", @class = "form-control", @required = true })
                                                                     @Html.ValidationMessageFor(x => x.claimsModel.ClaimantFullname, "", new { @class = "text-danger" })
                                                                 </div>
@@ -355,7 +355,7 @@
                                                         <div class="row">
                                                             <div class="col-sm-6">
                                                                   <div class="form-group">
-                                                                    <label>Last name  <em>*</em> </label>
+                                                                    <label>Surname  <em>*</em> </label>
                                                                     @Html.TextBoxFor(x => x.claimsModel.ClaimantSurname, new { @id = "txtClaimantLastName", @maxlength = "50", @class = "form-control", @required = true })
                                                                     @Html.ValidationMessageFor(x => x.claimsModel.ClaimantSurname, "", new { @class = "text-danger" })
                                                                 </div>
@@ -519,7 +519,7 @@
                                                         <div class="row">
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
-                                                                    <label>First name  <em>*</em> </label>
+                                                                    <label>Full name  <em>*</em> </label>
                                                                     @Html.TextBoxFor(x => x.funeralModel.FullNames, new { @id = "txtDeceaseName", @maxlength = "50", @class = "form-control", @required = true, @readonly = true })
                                                                 </div>
                                                             </div>
@@ -533,7 +533,7 @@
                                                         <div class="row">
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
-                                                                    <label>Last name  <em>*</em> </label>
+                                                                    <label>Surname  <em>*</em> </label>
                                                                     @Html.TextBoxFor(x => x.funeralModel.Surname, new { @id = "txtDeceaseLastName", @maxlength = "50", @class = "form-control", @required = true, @readonly = true })
                                                                 </div>
                                                             </div>

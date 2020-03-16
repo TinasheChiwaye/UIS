@@ -40,29 +40,19 @@
                                 <asp:TextBox MaxLength="50" runat="server" ID="txtDescription" name="Description" type="text" class="form-control"></asp:TextBox>
                                 <asp:RequiredFieldValidator Display="None" ValidationGroup="AddonSetup" ControlToValidate="txtDescription" ID="RequiredFieldValidator2" ForeColor="red" runat="server" ErrorMessage="Please enter Description"></asp:RequiredFieldValidator>
                             </div>
-                            <div class="form-group">
-                                <label>Underwriter Premium<em>*</em> </label>
-                                <asp:TextBox MaxLength="50" runat="server" ID="txtUnderwriterPremium" name="UnderwriterPremium" type="text" class="form-control"></asp:TextBox>
-                                <asp:RequiredFieldValidator Display="None" ValidationGroup="AddonSetup" ControlToValidate="txtUnderwriterPremium" ID="RequiredFieldValidator5" ForeColor="red" runat="server" ErrorMessage="Please enter Underwriter Premium"></asp:RequiredFieldValidator>
-                            </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label>Premium<em>*</em> </label>
                                 <asp:TextBox MaxLength="25" runat="server" ID="txtPremium" name="Premium" type="text" class="form-control"></asp:TextBox>
                                 <asp:RequiredFieldValidator Display="None" ValidationGroup="AddonSetup" ControlToValidate="txtPremium" ID="RequiredFieldValidator3" ForeColor="red" runat="server" ErrorMessage="Please enter Premium"></asp:RequiredFieldValidator>
-                                <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator7" ValidationGroup="AddonSetup" runat="server" ControlToValidate="txtPremium" ErrorMessage="Premium Enter Only Number With 2 Decimals" ValidationExpression="((\d+)((\.\d{1,2})?))$" />
+                                <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator7" ValidationGroup="AddonSetup" runat="server" ControlToValidate="txtPremium" ErrorMessage="Premium Enter Only Number With 2 Desimal" ValidationExpression="((\d+)((\.\d{1,2})?))$" />
                             </div>
                             <div class="form-group">
                                 <label>Cover <em>*</em> </label>
                                 <asp:TextBox MaxLength="25" runat="server" ID="txtCover" name="Cover" type="text" class="form-control"></asp:TextBox>
-                                <asp:RequiredFieldValidator Display="None" ValidationGroup="AddonSetup" ControlToValidate="txtCover" ID="RequiredFieldValidator4" ForeColor="red" runat="server" ErrorMessage="Please enter Cover Amount"></asp:RequiredFieldValidator>
-                                <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator1" ValidationGroup="AddonSetup" runat="server" ControlToValidate="txtCover" ErrorMessage="Cover Enter Only Number With 2 Decimals" ValidationExpression="((\d+)((\.\d{1,2})?))$" />
-                            </div>
-                            <div class="form-group">
-                                <label>Underwriter Cover <em>*</em> </label>
-                                <asp:TextBox MaxLength="50" runat="server" ID="txtUnderwriterCover" name="UnderwriterCover" type="text" class="form-control"></asp:TextBox>
-                                <asp:RequiredFieldValidator Display="None" ValidationGroup="AddonSetup" ControlToValidate="txtUnderwriterCover" ID="RequiredFieldValidator6" ForeColor="red" runat="server" ErrorMessage="Please enter Underwriter Cover"></asp:RequiredFieldValidator>
+                                <asp:RequiredFieldValidator Display="None" ValidationGroup="AddonSetup" ControlToValidate="txtCover" ID="RequiredFieldValidator4" ForeColor="red" runat="server" ErrorMessage="Please enter Cover"></asp:RequiredFieldValidator>
+                                <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator1" ValidationGroup="AddonSetup" runat="server" ControlToValidate="txtCover" ErrorMessage="Cover Enter Only Number With 2 Desimal" ValidationExpression="((\d+)((\.\d{1,2})?))$" />
                             </div>
                             <div class="form-group">
                                 <div class="checkbox">

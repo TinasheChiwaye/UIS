@@ -35,16 +35,16 @@ namespace Funeral.Model
             set;
         }
 
-        [Required(ErrorMessage = "Please enter first name")]
-        [RegularExpression(@"[a-zA-Z ]*$", ErrorMessage = "First Name Enter Only characters")]
+        [Required(ErrorMessage = "Please enter full name")]
+        [RegularExpression(@"[a-zA-Z ]*$", ErrorMessage = "full name Enter Only characters")]
         public string FullName
         {
             get;
             set;
         }
 
-        [Required(ErrorMessage = "Please enter Last name")]
-        [RegularExpression(@"[a-zA-Z ]*$", ErrorMessage = "Last Name Enter Only characters")]
+        [Required(ErrorMessage = "Please enter Surname")]
+        [RegularExpression(@"[a-zA-Z ]*$", ErrorMessage = "Surname Enter Only characters")]
         public string Surname
         {
             get;

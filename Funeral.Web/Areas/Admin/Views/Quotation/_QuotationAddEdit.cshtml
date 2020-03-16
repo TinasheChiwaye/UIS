@@ -40,15 +40,15 @@ new SelectListItem() { Text = "Prof", Value = "Prof" }
                             @Html.DropDownListFor(m => m.ContactTitle, ddlMethod, "Select an option", new { Name = "ContactTitle", @class = "form-control  " })
                         </div>
                         <div class="form-group">
-                            @Html.Label("Last Name", new { @class = "control-label" })
+                            @Html.Label("Surname", new { @class = "control-label" })
                             <strong><span class="text-danger"><em>*</em></span></strong>
-                            @Html.TextBoxFor(m => m.ContactLastName, null, new { @class = "form-control", @maxlength = "25", placeholder = "Last Name" })
+                            @Html.TextBoxFor(m => m.ContactLastName, null, new { @class = "form-control", @maxlength = "25", placeholder = "Surname" })
                             @Html.ValidationMessageFor(m => m.ContactLastName, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                         </div>
                         <div class="form-group">
-                            @Html.Label("First Name", new { @class = "control-label" })
+                            @Html.Label("Full Name", new { @class = "control-label" })
                             <strong><span class="text-danger"><em>*</em></span></strong>
-                            @Html.TextBoxFor(m => m.ContactFirstName, null, new { @class = "form-control", @maxlength = "25", placeholder = "First Name" })
+                            @Html.TextBoxFor(m => m.ContactFirstName, null, new { @class = "form-control", @maxlength = "25", placeholder = "Full Name" })
                             @Html.ValidationMessageFor(m => m.ContactFirstName, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                         </div>
                         <div class="form-group">

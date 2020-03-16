@@ -18,8 +18,7 @@ namespace Funeral.Model
             LastModified = System.DateTime.Now;
             ModifiedUser = string.Empty;
             ProductName = string.Empty;
-            UnderWriterCover = 0;
-            UnderWriterPremium = 0;
+
         }
         public Guid pkiProductID { get; set; }
         public DateTime DateCreated { get; set; }
@@ -34,7 +33,7 @@ namespace Funeral.Model
         public DateTime LastModified { get; set; }
         public string ModifiedUser { get; set; }
         public string ProductName { get; set; }
-        public decimal UnderWriterCover { get; set; }
-        public decimal UnderWriterPremium { get; set; }
+
+
     }
 }

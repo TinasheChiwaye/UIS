@@ -25,7 +25,7 @@
                                                 <div class="ibox-content">
                                                     <div class="col-sm-6" runat="server" id="dvAdministrator">
                                                         <div class="form-group">
-                                                            <label class="m-l">Company </label>
+                                                            <label class="m-l">Group name </label>
                                                             <asp:DropDownList ID="ddlCompanyList" Width="97%" CssClass="form-control m-l" AutoPostBack="true" OnSelectedIndexChanged="ddlCompanyList_SelectedIndexChanged" runat="server"></asp:DropDownList>
                                                         </div>
                                                     </div>
@@ -79,7 +79,7 @@
                                                                 </div>
                                                                 <div class="col-sm-6">
                                                                     <div class="form-group">
-                                                                        <label class="">Society </label>
+                                                                        <label class="">Book name </label>
                                                                         <asp:DropDownList ID="ddlSociety" runat="server" DataTextField="SocietyName" DataValueField="pkiSocietyID" CssClass="form-control"></asp:DropDownList>
                                                                     </div>
                                                                 </div>
