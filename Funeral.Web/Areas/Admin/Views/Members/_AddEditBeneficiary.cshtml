@@ -21,7 +21,7 @@
         </div>
         <div class="form-group">
             <label>ID Number<em>*</em></label>
-            @Html.TextBox("IDNumber_Beneficiary", "", new { @maxlength = "13", @onkeyup = "return GetIdNumberDetails_beneficiery(this);", @id = "txtIDNumber_Beneficiary", @class = "form-control", @placeholder = "ID Number" })
+            @Html.TextBox("IDNumber_Beneficiary", "", new { @maxlength = "13", @pattern = "/d*", @onkeyup = "GetIdNumberDetails_beneficiery(this);", @id = "txtIDNumber_Beneficiary", @class = "form-control", @placeholder = "ID Number" })
         </div>
 
     </div>
@@ -275,7 +275,6 @@
         }
     }
     function ValidateIdNumber(idNumber) {
-        debugger;
         var correct = true;
         if (idNumber.length != 13 || !isNumber(idNumber)) {
             correct = false;
@@ -312,13 +311,13 @@
             $('#txtDateOfBirth_Beneficiary').datepicker({ format: 'dd M yyyy', autoclose: true }).datepicker("setDate", dateFormat(new Date(fullDate), "dd/mm/yyyy", false));
             var genderCode = idNumber.substring(6, 10);
             var gender = parseInt(genderCode) < 5000 ? "Female" : "Male";
-            //if(gender == "Female")
-            //{
-            //    $("#ClaimentFemale").prop('checked',true);
-            //}else{
-            //    $("#ClaimentMale").prop('checked',true);
-            //}
-            //CalculateAge(fullDate);
+        }
+        else {
+            if (idNumber != "") {
+                alert("Id Number invalid");
+                $("#txtIDNumber_Beneficiary").val("")
+                $("#txtDateOfBirth_Beneficiary").val("");
+            }
         }
         return false;
     }

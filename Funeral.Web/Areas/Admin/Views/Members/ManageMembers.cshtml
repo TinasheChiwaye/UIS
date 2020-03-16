@@ -871,6 +871,10 @@
                                                                 <input type="text" maxlength="25" id="txtDependentAge" name="name" class="form-control" readonly>
                                                             </div>
                                                             <div class="form-group">
+                                                                <label>Premium <em>*</em></label>
+                                                                <input type="text" maxlength="25" id="txtDependentPremium" name="name" class="form-control" disabled>
+                                                            </div>
+                                                            <div class="form-group">
                                                                 <label>Gender</label>
                                                                 <br />
                                                                 &nbsp; &nbsp;
@@ -912,7 +916,6 @@
                                                                     <option value="On Trial">On Trial</option>
                                                                 </select>
                                                             </div>
-
                                                             <div class="form-group">
                                                                 <label>Risk Premium <em>*</em></label>
                                                                 <input type="text" maxlength="25" id="txtDependentPremium" name="name" class="form-control" disabled>
@@ -1212,12 +1215,12 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label>Last Name <em>*</em></label>
+                            <label>Surame <em>*</em></label>
                             <input type="text" maxlength="25" id="txtLastnamePopup" name="name" class="form-control">
                         </div>
 
                         <div class="form-group">
-                            <label>First Name <em>*</em></label>
+                            <label>Full name <em>*</em></label>
                             <input type="text" maxlength="25" id="txtFirstnamePopup" name="name" class="form-control">
                         </div>
                         <div class="form-group">
@@ -1371,8 +1374,8 @@
                 if (lastName == "" && FirstName == "" && IdNumber == "" && CellNumber == "" && TellNumber == "" && (SelectedCompanyId == "" || SelectedCompanyId == null))
                 {
                     $("#validationMessage").show();
-                    $("#validationMessage").append('<li id="EnterLastNameid">Please enter Last Name.</li>');
-                    $("#validationMessage").append('<li id="EnterFirstName">Please enter First Name.</li>');
+                    $("#validationMessage").append('<li id="EnterLastNameid">Please enter Surename.</li>');
+                    $("#validationMessage").append('<li id="EnterFirstName">Please enter Full Name.</li>');
                     $("#validationMessage").append('<li id="enterIdNumber">Please enter Id Number.</li>');
                     $("#validationMessage").append('<li id="txtCellphonevalId">Please enter Cell Number.</li>');
                     $("#validationMessage").append('<li id="txtTelePhoneid">Please enter Telephone Number.</li>');
@@ -1397,7 +1400,7 @@
                     //    $("li#EnterLastNameid").hide();
                     //    $("li#EnterLastNameid").html('');
                     //    $("#validationMessage").show();
-                    //    $("#validationMessage").append('<li id="txtLastNameid">Last Name Enter Only characters.</li>');
+                    //    $("#validationMessage").append('<li id="txtLastNameid">Surname Enter Only characters.</li>');
                     //    lastNameFlag = false;
                     //}
                 }else{
@@ -1406,7 +1409,7 @@
                     $("li#EnterLastNameid").hide();
                     $("li#EnterLastNameid").html('');
                     $("#validationMessage").show();
-                    $("#validationMessage").append('<li id="EnterLastNameid">Please Enter Last Name.</li>');
+                    $("#validationMessage").append('<li id="EnterLastNameid">Please Enter Surname.</li>');
                     lastNameFlag= false;
                 }
                 if (FirstName != "") {
@@ -1424,7 +1427,7 @@
                     //    $("li#EnterFirstName").hide();
                     //    $("li#EnterFirstName").html('');
                     //    $("li#validationMessage").show();
-                    //    $("#validationMessage").append('<li id="txtFirstNameid">First Name Enter Only characters</li>');
+                    //    $("#validationMessage").append('<li id="txtFirstNameid">Full name Enter Only characters</li>');
                     //    firstNameFlag = false;
                     //}
                 }else{
@@ -1433,7 +1436,7 @@
                     $("li#EnterFirstName").hide();
                     $("li#EnterFirstName").html('');
                     $("#validationMessage").show();
-                    $("#validationMessage").append('<li id="EnterFirstName">Please Enter First Name.</li>');
+                    $("#validationMessage").append('<li id="EnterFirstName">Please Enter Full name.</li>');
                     firstNameFlag = false;
                 }
                 if(IdNumber != ""){
@@ -3258,8 +3261,8 @@
             $("#ValidationSummary4").hide();
             $("#ValidationSummary4").html('');
             $("#ValidationSummary4").show();
-            $("#ValidationSummary4").append('<li id="txtLastNameId">Please enter dependency last name.</li>');
-            $("#ValidationSummary4").append('<li id="txtFirstNameId">Please enter dependency first name.</li>');
+            $("#ValidationSummary4").append('<li id="txtLastNameId">Please enter dependency Surname.</li>');
+            $("#ValidationSummary4").append('<li id="txtFirstNameId">Please enter dependency Full name.</li>');
             $("#ValidationSummary4").append('<li id="txtBirthDateId">Please enter date of birth.</li>');
             $("#ValidationSummary4").append('<li id="txtStartDateId">Please enter Start date.</li>');
             $("#ValidationSummary4").append('<li id="txtPremiumId">Please enter premium.</li>');
@@ -3284,7 +3287,7 @@
                 //    $("li#EnterLastNameid").hide();
                 //    $("li#EnterLastNameid").html('');
                 //    $("#ValidationSummary4").show();
-                //    $("#ValidationSummary4").append('<li id="EnterLastNameid">Last Name Enter Only characters.</li>');
+                //    $("#ValidationSummary4").append('<li id="EnterLastNameid">Surname Enter Only characters.</li>');
                 //    lastNameFlag = false;
                 //}
             }else{
@@ -3293,7 +3296,7 @@
                 $("li#EnterLastNameid").hide();
                 $("li#EnterLastNameid").html('');
                 $("#ValidationSummary4").show();
-                $("#ValidationSummary4").append('<li id="EnterLastNameid">Please enter dependency last name.</li>');
+                $("#ValidationSummary4").append('<li id="EnterLastNameid">Please enter dependency Surname.</li>');
                 lastNameFlag= false;
             }
 
@@ -3315,7 +3318,7 @@
                 //    $("li#EnterFirstNameid").hide();
                 //    $("li#EnterFirstNameid").html('');
                 //    $("#ValidationSummary4").show();
-                //    $("#ValidationSummary4").append('<li id="txtFirstNameId">First Name Enter Only Characters.</li>');
+                //    $("#ValidationSummary4").append('<li id="txtFirstNameId">Full name Enter Only Characters.</li>');
                 //    firstNameFlag = false;
                 //}
             }else{
@@ -3324,7 +3327,7 @@
                 $("li#EnterFirstNameid").hide();
                 $("li#EnterFirstNameid").html('');
                 $("#ValidationSummary4").show();
-                $("#ValidationSummary4").append('<li id="EnterFirstNameid">Please enter dependency first name.</li>');
+                $("#ValidationSummary4").append('<li id="EnterFirstNameid">Please enter dependency Full name.</li>');
                 firstNameFlag = false;
             }
 
@@ -4430,8 +4433,8 @@
             $("#ValidationSummary3").hide();
             $("#ValidationSummary3").html('');
             $("#ValidationSummary3").show();
-            $("#ValidationSummary3").append('<li id="txtLastNameIdPop">Please enter dependency last name.</li>');
-            $("#ValidationSummary3").append('<li id="txtFirstNameIdPop">Please enter dependency first name.</li>');
+            $("#ValidationSummary3").append('<li id="txtLastNameIdPop">Please enter dependency Surname.</li>');
+            $("#ValidationSummary3").append('<li id="txtFirstNameIdPop">Please enter dependency Full name.</li>');
             $("#ValidationSummary3").append('<li id="txtBirthDateIdPop">Please enter date of birth.</li>');
             $("#ValidationSummary3").append('<li id="txtStartDateIdPop">Please enter Start date.</li>');
             $("#ValidationSummary3").append('<li id="txtPremiumIdPop">Please enter premium.</li>');
@@ -4455,7 +4458,7 @@
                     $("li#EnterLastNameIdPop").hide();
                     $("li#EnterLastNameIdPop").html('');
                     $("#ValidationSummary3").show();
-                    $("#ValidationSummary3").append('<li id="EnterLastNameIdPop">Last Name Enter Only characters.</li>');
+                    $("#ValidationSummary3").append('<li id="EnterLastNameIdPop">Surname Enter Only characters.</li>');
                     lastNameFlagPop = false;
                 }
             }else{
@@ -4464,7 +4467,7 @@
                 $("li#EnterLastNameIdPop").hide();
                 $("li#EnterLastNameIdPop").html('');
                 $("#ValidationSummary3").show();
-                $("#ValidationSummary3").append('<li id="EnterLastNameIdPop">Please enter dependency last name.</li>');
+                $("#ValidationSummary3").append('<li id="EnterLastNameIdPop">Please enter dependency Surname.</li>');
                 lastNameFlagPop = false;
             }
 
@@ -4485,7 +4488,7 @@
                     $("li#EnterFirstNameIdPop").hide();
                     $("li#EnterFirstNameIdPop").html('');
                     $("#ValidationSummary3").show();
-                    $("#ValidationSummary3").append('<li id="txtFirstNameIdPop">First Name Enter Only Characters.</li>');
+                    $("#ValidationSummary3").append('<li id="txtFirstNameIdPop">Full name Enter Only Characters.</li>');
                     firstNameFlagPop = false;
                 }
             }else{
@@ -4494,7 +4497,7 @@
                 $("li#EnterFirstNameIdPop").hide();
                 $("li#EnterFirstNameIdPop").html('');
                 $("#ValidationSummary3").show();
-                $("#ValidationSummary3").append('<li id="EnterFirstNameIdPop">Please enter dependency first name.</li>');
+                $("#ValidationSummary3").append('<li id="EnterFirstNameIdPop">Please enter dependency Full name.</li>');
                 firstNameFlagPop = false;
             }
 

@@ -117,15 +117,15 @@
                             </div>
                         <div class="col-lg-6">
                               <div class="form-group">
-                                <label>First Name <em>*</em> </label>
+                                <label>full name<em>*</em> </label>
                                 <asp:TextBox MaxLength="25" runat="server" ID="txtFirstName" name="FirstName" type="text" class="form-control"></asp:TextBox>
-                                <asp:RequiredFieldValidator Display="None" ValidationGroup="Registration" ControlToValidate="txtFirstName" ID="RequiredFieldValidator3" ForeColor="red" runat="server" ErrorMessage="Please enter  First Name"></asp:RequiredFieldValidator>
+                                <asp:RequiredFieldValidator Display="None" ValidationGroup="Registration" ControlToValidate="txtFirstName" ID="RequiredFieldValidator3" ForeColor="red" runat="server" ErrorMessage="Please enter  full name"></asp:RequiredFieldValidator>
                                 <%--<asp:RegularExpressionValidator Display="None" ID="RegExp1" ValidationGroup="Registration" runat="server" ErrorMessage="Company Name Enter Only characters" ControlToValidate="txtCompanyName" ValidationExpression="[a-zA-Z ]*$" />--%>
                             </div>
                               <div class="form-group">
-                                <label>Last Name <em>*</em> </label>
+                                <label>Surname <em>*</em> </label>
                                 <asp:TextBox MaxLength="25" runat="server" ID="txtLastName" name="LastName" type="text" class="form-control"></asp:TextBox>
-                                <asp:RequiredFieldValidator Display="None" ValidationGroup="Registration" ControlToValidate="txtLastName" ID="RequiredFieldValidator7" ForeColor="red" runat="server" ErrorMessage="Please enter Last Name"></asp:RequiredFieldValidator>
+                                <asp:RequiredFieldValidator Display="None" ValidationGroup="Registration" ControlToValidate="txtLastName" ID="RequiredFieldValidator7" ForeColor="red" runat="server" ErrorMessage="Please enter Surname"></asp:RequiredFieldValidator>
                                 <%--<asp:RegularExpressionValidator Display="None" ID="RegExp1" ValidationGroup="Registration" runat="server" ErrorMessage="Company Name Enter Only characters" ControlToValidate="txtCompanyName" ValidationExpression="[a-zA-Z ]*$" />--%>
                             </div>
                               <div class="form-group">
