@@ -44,9 +44,11 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
                 ViewBag.totalPremium = Currency;
 
+                ViewBag.SocietyLists = CommonBAL.GetSocietyByParlourId(CurrentParlourId);
+
                 LoadStatus();
                 LoadEntriesCount();
-                BindCompanyList();
+                BindCompanyList("Search");
 
                 Model.Search.MemberSearch search = new Model.Search.MemberSearch();
                 search.CompanyId = new Guid(CurrentParlourId.ToString());
@@ -57,8 +59,11 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 search.SortOrder = "Asc";
                 search.StatusId = "0";
                 search.TotalRecord = 0;
+                search.BookID = "";
 
-                var searchResult = new Funeral.Model.SearchResult<Model.Search.MemberSearch, MembersModel>(search, new List<MembersModel>(), o => o.IDNumber.Contains(search.SarchText) || o.MemeberNumber.Contains(search.SarchText));
+                var searchResult = new Funeral.Model.SearchResult<Model.Search.MemberSearch, MembersModel>(search, new List<MembersModel>(),
+                    o => o.IDNumber.Contains(search.SarchText)
+                    || o.MemeberNumber.Contains(search.SarchText));
                 return View(search);
             }
             else
@@ -70,12 +75,6 @@ namespace Funeral.Web.Areas.Admin.Controllers
         public void LoadStatus()
         {
             var statusList = CommonBAL.GetStatus(FuneralEnum.StatusAssociatedTable.Members.ToString()).Select(status => new { status.Status, status.ID }).Distinct();
-            //List<SelectListItem> statusListItems = new List<SelectListItem>();
-            //foreach (var statusListItem in statusList)
-            //{
-            //    statusListItems.Add(new SelectListItem { Text = statusListItem.Status, Value = Convert.ToString(statusListItem.ID) });
-            //}
-
             ViewBag.Statuses = statusList;
         }
         public void LoadEntriesCount()
@@ -92,34 +91,13 @@ namespace Funeral.Web.Areas.Admin.Controllers
             keyValues.Add(new KeyValue { Key = "500", Value = "500" });
             ViewBag.EntriesCount = keyValues;
         }
-        public void BindCompanyList()
-        {
-            List<SelectListItem> companyListItems = new List<SelectListItem>();
-            List<ApplicationSettingsModel> model = new List<ApplicationSettingsModel>();
-
-            if (this.IsAdministrator)
-            {
-                model = ToolsSetingBAL.GetAllApplicationList(ParlourId, 1, 0).ToList();
-
-                if (model == null)
-                {
-                    model.Add(new ApplicationSettingsModel() { ApplicationName = ApplicationName, parlourid = ParlourId });
-                }
-            }
-            else
-            {
-                model.Add(new ApplicationSettingsModel() { ApplicationName = ApplicationName, parlourid = ParlourId });
-            }
-
-            ViewBag.Companies = model;
-        }
         [HttpPost]
         public ActionResult SearchData(Model.Search.MemberSearch search)
         {
             var searchResult = new Funeral.Model.SearchResult<Model.Search.MemberSearch, MembersModel>(search, new List<MembersModel>(), o => o.IDNumber.ToLower().Contains(search.SarchText.ToLower()));
             try
             {
-                var members = MembersBAL.GetAllMembers(search.CompanyId, search.PageSize, search.PageNum, search.SarchText, search.SortBy, search.SortOrder, search.StatusId.ToString());
+                var members = MembersBAL.GetAllMembers(search.CompanyId, search.PageSize, search.PageNum, search.SarchText, search.SortBy, search.SortOrder, search.StatusId.ToString(), search.BookID.ToString());
                 return Json(new Funeral.Model.SearchResult<Model.Search.MemberSearch, MembersModel>(search, members.MemberList, o => o.IDNumber.ToLower().Contains(search.SarchText.ToLower()) || o.MemeberNumber.ToLower().Contains(search.SarchText.ToLower()) || o.Surname.ToLower().Contains(search.SarchText.ToLower()) || o.FullNames.ToLower().Contains(search.SarchText.ToLower()) || o.Cellphone.ToLower().Contains(search.SarchText.ToLower()) || o.EasyPayNo.ToLower().Contains(search.SarchText.ToLower())));
             }
             catch (Exception ex)
@@ -146,8 +124,16 @@ namespace Funeral.Web.Areas.Admin.Controllers
             }
         }
         [PageRightsAttribute(CurrentPageId = 4)]
-        public ActionResult ManageMembers(int pkiMemberID = 0)
+        public ActionResult ManageMembers(int pkiMemberID = 0, Guid? parlourId = null)
         {
+
+            var guidIsEmpty = parlourId == Guid.Empty;
+            if (parlourId != null)
+            {
+                CurrentParlourId = new Guid(parlourId.ToString());
+            }
+
+            BindCompanyList();
             if (pkiMemberID == 0)
             {
                 if (!HasCreateRight)
@@ -180,7 +166,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
             MembersModel member = new MembersModel();
             if (pkiMemberID != 0)
                 member = MembersBAL.GetMemberByID(pkiMemberID, CurrentParlourId);
-
+            else
+                member.parlourid = CurrentParlourId;
             var Managemembers = new ManageMembersVM();
 
 
@@ -207,21 +194,20 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
             Managemembers.IsSuperUser = this.IsSuperUser;
             Managemembers.IsAdministrator = this.IsAdministrator;
-
             Managemembers.BankList = BanksBAL.SelectAll().Select(x => new SelectListItem() { Text = x.BankName, Value = x.BranchCode });
             Managemembers.AllAccountTypesList = BanksBAL.AccountTypeSelectAll().Select(x => new SelectListItem() { Text = x.AccountType, Value = x.AccountTypeID.ToString() });
             Managemembers.AgentList = MembersBAL.SelectAllAgent(CurrentParlourId).Select(x => new SelectListItem() { Text = x.Agent, Value = x.AgentID.ToString() });
             Managemembers.PolicyList = CommonBAL.GetPolicyByParlourId(CurrentParlourId).Select(x => new SelectListItem() { Text = x.PlanName, Value = x.pkiPlanID.ToString() });
             Managemembers.countryList = MembersBAL.GetCountry().Select(x => new SelectListItem() { Text = x.Name, Value = x.CountryCode });
-            Managemembers.BranchList = CommonBAL.GetBranchByParlourId(ParlourId).Select(x => new SelectListItem() { Text = x.BranchName, Value = x.Brancheid.ToString() });
-            Managemembers.ProductAddOnList = MembersBAL.SelectProductName(ParlourId).Select(x => new SelectListItem() { Text = x.ProductName, Value = x.pkiProductID.ToString() });
-            Managemembers.SocietyList = CommonBAL.GetSocietyByParlourId(ParlourId).Select(x => new SelectListItem() { Text = x.SocietyName, Value = x.pkiSocietyID.ToString() });
-            Managemembers.CustomPaymentMethod = CustomDetailsBAL.GetAllCustomDetailsByParlourId(ParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom1)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
-            Managemembers.CustomGrouping2 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(ParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom2)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
-            Managemembers.CustomGrouping3 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(ParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom3)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
+            Managemembers.BranchList = CommonBAL.GetBranchByParlourId(CurrentParlourId).Select(x => new SelectListItem() { Text = x.BranchName, Value = x.Brancheid.ToString() });
+            Managemembers.ProductAddOnList = MembersBAL.SelectProductName(CurrentParlourId).Select(x => new SelectListItem() { Text = x.ProductName, Value = x.pkiProductID.ToString() });
+            Managemembers.SocietyList = CommonBAL.GetSocietyByParlourId(CurrentParlourId).Select(x => new SelectListItem() { Text = x.SocietyName, Value = x.pkiSocietyID.ToString() });
+            Managemembers.CustomPaymentMethod = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom1)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
+            Managemembers.CustomGrouping2 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom2)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
+            Managemembers.CustomGrouping3 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom3)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
             Managemembers.Member = member;
             Managemembers.DependencyTypeList = CommonBAL.GetUserTypes().Select(x => new SelectListItem() { Text = x.UserTypeName, Value = x.UserTypeId.ToString() });
-
+            ViewBag.Provinces = CommonBAL.GetProvinces();
             Managemembers.ExtendedFamily = MembersBAL.GetExtendedFamilyList(CurrentParlourId, MemberId).Select(x => new SelectListItem() { Text = x.FullName, Value = x.pkiDependentID.ToString() });
 
 
@@ -234,7 +220,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 Managemembers.TotalPremium = float.Parse(totalPremium, CultureInfo.InvariantCulture.NumberFormat);
             }
             Session["Id"] = pkiMemberID;
-             Managemembers.ProductSearch = new BaseSearch()
+            Managemembers.ProductSearch = new BaseSearch()
             {
                 PageNum = 0,
                 PageSize = 10,
@@ -349,7 +335,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
         {
             if (pkiMemberId != 0)
             {
-                return MembersBAL.SumOfPremium(pkiMemberId, ParlourId).ToString();
+                return MembersBAL.SumOfPremium(pkiMemberId, CurrentParlourId).ToString();
             }
             return "0.0";
         }
@@ -359,7 +345,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
             try
             {
-                var invoices = MembersBAL.GetInvoicesByMemberID(ParlourId, MemberId).ToList();
+                var invoices = MembersBAL.GetInvoicesByMemberID(CurrentParlourId, MemberId).ToList();
                 search.TotalRecord = invoices.Count;
                 return Json(new Funeral.Model.SearchResult<Model.Search.BaseSearch, MemberInvoiceModel>(search, invoices, o => o.InvNumber.Contains(search.SarchText)));
                 //return Json(new Funeral.Model.SearchResult<Model.Search.BaseSearch, MemberAddonProductsModel>(search, products, o => o.ProductName.Contains(search.SarchText)));
@@ -372,6 +358,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
         public ActionResult GetMember(int pkiMemberId = 0)
         {
             MembersModel member = new MembersModel();
+            member.parlourid = CurrentParlourId;
             if (pkiMemberId != 0)
             {
                 member = MembersBAL.GetMemberByID(pkiMemberId, CurrentParlourId);
@@ -380,6 +367,16 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 member.PolicyPremium = objPolicyModel != null ? objPolicyModel.PlanSubscription : string.Empty;
                 member.CoverAmount = objPolicyModel != null ? (objPolicyModel.CoverAmount == "" || objPolicyModel.CoverAmount == null ? "0" : objPolicyModel.CoverAmount) : "0";
                 member.TotalPremium = float.Parse(BindTotalPremium(pkiMemberId), CultureInfo.InvariantCulture.NumberFormat);
+            }
+            var BankDetails = CommonBAL.GetBankDetails_ByParlourId(CurrentParlourId);
+            if (BankDetails != null)
+            {
+                member.AccountHolder = BankDetails.AccountHolder;
+                member.Bank = BankDetails.Bank;
+                member.Branch = BankDetails.Branch;
+                member.BranchCode = BankDetails.BranchCode;
+                member.AccountNumber = BankDetails.AccountNumber;
+                member.AccountType = BankDetails.AccountType;
             }
             return Json(new { success = true, Member = member }, JsonRequestBehavior.AllowGet);
         }
@@ -555,7 +552,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                                     ObjSupportedDocumentModel.ImageFile = bytes;
                                     ObjSupportedDocumentModel.fkiMemberID = MemberId;
                                     ObjSupportedDocumentModel.CreateDate = System.DateTime.Now;
-                                    ObjSupportedDocumentModel.parlourid = this.ParlourId;
+                                    ObjSupportedDocumentModel.parlourid = this.CurrentParlourId;
                                     ObjSupportedDocumentModel.LastModified = DateTime.Now;
                                     ObjSupportedDocumentModel.ModifiedUser = this.User.Identity.Name;
                                     ObjSupportedDocumentModel.DocType = documentType;
@@ -601,7 +598,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             var searchResult = new Funeral.Model.SearchResult<Model.Search.BaseSearch, FamilyDependencyModel>(search, new List<FamilyDependencyModel>(), o => o.FullName.Contains(search.SarchText));
             try
             {
-                var familyDependancies = MembersBAL.GetFamilyDependencyByMemberID(ParlourId, MemberId);
+                var familyDependancies = MembersBAL.GetFamilyDependencyByMemberID(CurrentParlourId, MemberId);
                 search.Currency = Currency;
                 search.TotalRecord = familyDependancies.Count;
                 return Json(new Funeral.Model.SearchResult<Model.Search.BaseSearch, FamilyDependencyModel>(search, familyDependancies, o => o.FullName.Contains(search.SarchText)));
@@ -681,9 +678,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
             if (!ModelState.IsValid)
             {
-                return Json(new { success = false, errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList() }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => "<li>" + x.ErrorMessage + "</li>").ToList() }, JsonRequestBehavior.AllowGet);
             }
-
             Member.pkiMemberID = MemberId;
             Member.PolicyStatus = Member.PolicyStatus;
             Member.CreateDate = System.DateTime.Now;
@@ -716,7 +712,6 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
             Member.ModifiedUser = UserName;
             Member.Active = false;
-
             int retId = MembersBAL.SaveMembers(Member);
             Member.pkiMemberID = retId;
 
@@ -780,7 +775,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
         [PageRightsAttribute(CurrentPageId = 4)]
         public JsonResult GetMemberById(int MemberId)
         {
-            var memberDetails = MembersBAL.GetMemberByID(MemberId, ParlourId);
+            var memberDetails = MembersBAL.GetMemberByID(MemberId, CurrentParlourId);
             return Json(memberDetails, JsonRequestBehavior.AllowGet);
         }
         [PageRightsAttribute(CurrentPageId = 4)]
@@ -1143,7 +1138,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             com.Connection.Open();
             com.CommandText = "CopyPolicyOfMember";
             com.Parameters.Add(new SqlParameter("@id", pkId));
-            com.Parameters.Add(new SqlParameter("@parlourid", ParlourId));
+            com.Parameters.Add(new SqlParameter("@parlourid", CurrentParlourId));
 
             int SendOpration = Convert.ToInt32(com.ExecuteScalar());
             com.Connection.Close();
@@ -1373,10 +1368,13 @@ namespace Funeral.Web.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (MembersBAL.SumOfBeneficiaryPercentage(objModel.pkiMemberID) < 100)
+                    var CurrenrPer = MembersBAL.SumOfBeneficiaryPercentage(objModel.pkiMemberID);
+                    var NewPer = Convert.ToDouble(objModel.Percentages);
+                    var TotalSum = CurrenrPer + NewPer;
+                    if (TotalSum < 100)
                     {
                         objModel.ModifiedUser = User.Identity.Name;
-                        objModel.parlourid = ParlourId;
+                        objModel.parlourid = CurrentParlourId;
                         var AddOnProductID = MembersBAL.SaveBeneficiary(objModel);
                         if (objModel.pkiBeneficiaryID == 0)
                             Message = "Inserted";
@@ -1422,6 +1420,17 @@ namespace Funeral.Web.Areas.Admin.Controllers
         {
             MembersBAL.DeleteBeneficiary(pkiBeneficiaryID);
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult BindGroupByCompanyId(Guid CompanyId)
+        {
+            var Company = CommonBAL.GetSocietyByParlourId(CompanyId).Select(x => new SelectListItem() { Text = x.SocietyName, Value = x.pkiSocietyID.ToString() });
+            return Json(Company, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public void ChangeParlour(Guid parlourId, int MemberId)
+        {
+            CurrentParlourId = parlourId;
         }
     }
 }

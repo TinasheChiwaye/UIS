@@ -14,16 +14,24 @@
                     <div class="row">
                         <div class="col-lg-12" id="dvAdministrator">
                             <div class="col-lg-2">
-                                <label>Show entries</label>
+                                <label>Show Entries:</label>
                                 @Html.DropDownListFor(m => m.PageSize, new SelectList(ViewBag.EntriesCount, "Value", "Key"), new { @class = "form-control" })
                             </div>
-                            <div class="col-sm-3">
-                                @if (ViewBag.CompanyDropDisplay)
-                                {
-                                    <label>Select Company</label>
-                                    @Html.DropDownListFor(m => m.StatusId, new SelectList(ViewBag.CompanyList, "ParlourId", "ApplicationName"), "select..", new { @id = "CompanyDropdownSelection", @class = "form-control" })
-                                }
-                            </div>
+
+                            @if (ViewBag.CompanyDropDisplay)
+                            {
+                                <div class="col-sm-3">
+                                    <label>Scheme:</label>
+                                    @Html.DropDownListFor(m => m.StatusId, new SelectList(ViewBag.Companies, "ParlourId", "ApplicationName"), new { @id = "CompanyDropdownSelection", @class = "form-control" })
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label>Book: </label>
+                                        @Html.DropDownListFor(m => m.BookName, new SelectList(ViewBag.SocietyLists, "SocietyName", "SocietyName"), "Select Group", new { @id = "ddlBookNamelist", @class = "form-control" })
+                                    </div>
+                                </div>
+                            }
+
                             <div class="col-sm-4 pull-right">
                                 <label>Search Payment:</label>
                                 <div class="input-group">
@@ -51,11 +59,13 @@
                                     <thead>
                                         <tr>
                                             <th class="hide">Number</th>
+                                            <th>Scheme</th>
+                                            <th>Book Name</th>
                                             <th>Policy No</th>
-                                            <th>ID No</th>
-                                            <th>Member</th>
-                                            <th>EasyPayNo</th>
-                                            <th>Cover date</th>
+                                            <th>ID Number</th>
+                                            <th>Full Name</th>
+                                            @*<th>EasyPayNo</th>*@
+                                            <th>Cover Date</th>
                                             <th>Policy Status</th>
                                             <th>Actions</th>
                                         </tr>
@@ -95,7 +105,7 @@
             });
         });
 
-        function ConfigureDatatable(){
+        function ConfigureDatatable() {
             var companyId = @Html.Raw(Json.Encode(@Model.StatusId));
             var sortOrder = @Html.Raw(Json.Encode(@Model.SortOrder));
             var sortBy =@Html.Raw(Json.Encode(@Model.SortBy));
@@ -103,58 +113,63 @@
             var pageNum =@Html.Raw(Json.Encode(@Model.PageNum));
             var pageSize =@Html.Raw(Json.Encode(@Model.PageSize));
             var searchText =@Html.Raw(Json.Encode(@Model.SarchText));
+            var bookName =@Html.Raw(Json.Encode(@Model.BookName));
 
             DOMIDs.Datatable = "PaymentDataTable";
             tableConfigs.SearchUrls = '@Url.Action("SearchData", "Payments", null, Request.Url.Scheme)';
-            setsearchmodel(companyId, sortOrder, sortBy, totalRecord, pageNum, pageSize, searchText);
+            setsearchmodel(companyId, sortOrder, sortBy, totalRecord, pageNum, pageSize, searchText,bookName);
 
             columnsArray =
-            [{"data": "pkiMemberID", "name": "pkiMemberID", "autoWidth": true, "visible": false },
-            { "data": "MemeberNumber", "name": "Policy Number", "autoWidth": true},
-            { "data": "IDNumber", "name": "ID No", "autoWidth": true },
-            { "data": "FullNames", "name": "Member", "autoWidth": true },
-            { "data": "EasyPayNo", "name": "EasyPayNumber", "autoWidth": true },
-            { "data": "CoverDate", "name": "Cover date", "autoWidth": true,
-                "render": function (data) {
-                    if(data != null)
-                    {
-                        var date = new Date(parseInt(data.replace('/Date(', '')));
-                        return dateFormat(date, dateFormat.masks.isoDate, true);
-                    }else{
-                    return "<div></div>"
-                    }
-                }
-            },
-            { "data": "PolicyStatus", "name": "PolicyStatus", "autoWidth": true },
-            {
-                "render": function (data, type, full, meta) {
+                [{ "data": "pkiMemberID", "name": "pkiMemberID", "autoWidth": true, "visible": false },
 
-                    var hasEditRights = '@ViewBag.HasEditRight' == "True" ? true : false;
-                    var hasDeleteRights = '@ViewBag.HasDeleteRight' == "True" ? true : false;
+                { "data": "ApplicationName", "name": "Scheme", "autoWidth": true },
+                { "data": "MemberSociety", "name": "Book Name", "autoWidth": true },
 
-                    if (hasEditRights || hasDeleteRights) {
-                        tableConfigs.table.DataTable().columns([6]).visible(true)
-                        var dom = "<div class='row'>";
-
-                        if (hasEditRights) {
-							//var ParlourId = full.parlourid;
-                            var editMemberUrl = '<div class="col-sm-4 text-center"><a class="btn btn-w-m btn-primary" href="@Html.Raw(Url.Action("ManageMembersPayment", "Payments", new { id = "MemeberNumberVal", ParlourID = "ParlourId" }))"">Make payment</a></div>';//onclick="EditOtherPayment(\'' +full.IDNumber+','+full.pkiMemberID+ '\')
-							editMemberUrl = editMemberUrl.replace("MemeberNumberVal", full.pkiMemberID);
-							editMemberUrl = editMemberUrl.replace("ParlourId", full.parlourid);
-
-                            dom = dom + editMemberUrl;
+                { "data": "MemeberNumber", "name": "Policy Number", "autoWidth": true },
+                { "data": "IDNumber", "name": "ID No", "autoWidth": true },
+                { "data": "FullNames", "name": "Member", "autoWidth": true },
+                //{ "data": "EasyPayNo", "name": "EasyPayNumber", "autoWidth": true },
+                {
+                    "data": "CoverDate", "name": "Cover date", "autoWidth": true,
+                    "render": function (data) {
+                        if (data != null) {
+                            var date = new Date(parseInt(data.replace('/Date(', '')));
+                            return dateFormat(date, dateFormat.masks.isoDate, true);
+                        } else {
+                            return "<div></div>"
                         }
-
-                        dom = dom + "</div>";
-                        return dom;
                     }
-                    else {
+                },
+                { "data": "PolicyStatus", "name": "PolicyStatus", "autoWidth": true },
+                {
+                    "render": function (data, type, full, meta) {
 
-                        tableConfigs.table.DataTable().columns([6]).visible(false);
-                        return "";
+                        var hasEditRights = '@ViewBag.HasEditRight' == "True" ? true : false;
+                        var hasDeleteRights = '@ViewBag.HasDeleteRight' == "True" ? true : false;
+
+                        if (hasEditRights || hasDeleteRights) {
+                            tableConfigs.table.DataTable().columns([8]).visible(true)
+                            var dom = "<div class='row'>";
+
+                            if (hasEditRights) {
+                                //var ParlourId = full.parlourid;
+                                var editMemberUrl = '<div class="col-sm-4 text-center"><a class="btn btn-w-m btn-primary" href="@Html.Raw(Url.Action("ManageMembersPayment", "Payments", new { id = "MemeberNumberVal", ParlourID = "ParlourId" }))"">Make payment</a></div>';//onclick="EditOtherPayment(\'' +full.IDNumber+','+full.pkiMemberID+ '\')
+                                editMemberUrl = editMemberUrl.replace("MemeberNumberVal", full.pkiMemberID);
+                                editMemberUrl = editMemberUrl.replace("ParlourId", full.parlourid);
+
+                                dom = dom + editMemberUrl;
+                            }
+
+                            dom = dom + "</div>";
+                            return dom;
+                        }
+                        else {
+
+                            tableConfigs.table.DataTable().columns([8]).visible(false);
+                            return "";
+                        }
                     }
-                }
-            }];
+                }];
         }
 
         function InitModel() {
@@ -162,6 +177,7 @@
             model1.PageSize = jQuery('#PageSize').val();
             model1.SarchText = jQuery("#SarchText").val();
             model1.StatusId = jQuery("#CompanyDropdownSelection").val();
+            model1.BookName = jQuery("#ddlBookNamelist").val();
             $("#PageNum1").val(model1.PageNum);
         }
 

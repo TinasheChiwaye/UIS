@@ -74,7 +74,6 @@ namespace Funeral.DAL
                 ObjParam[48] = new DbParameter("@CustomId1", DbParameter.DbType.Int, 0, model.CustomId1);
                 ObjParam[49] = new DbParameter("@CustomId2", DbParameter.DbType.Int, 0, model.CustomId2);
                 ObjParam[50] = new DbParameter("@CustomId3", DbParameter.DbType.Int, 0, model.CustomId3);
-
                 return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
             }
             catch (Exception ex)
@@ -172,7 +171,6 @@ namespace Funeral.DAL
         public static DataSet GetAllMembersdt(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder, string status)
         {
             DbParameter[] ObjParam = new DbParameter[7];
-
             try
             {
                 ObjParam[0] = new DbParameter("@pagesize", DbParameter.DbType.Int, 0, PageSize);
@@ -182,7 +180,14 @@ namespace Funeral.DAL
                 ObjParam[4] = new DbParameter("@orderby", DbParameter.DbType.NVarChar, 0, SortOrder);
                 ObjParam[5] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
                 ObjParam[6] = new DbParameter("@Status", DbParameter.DbType.VarChar, 0, status);
-                return DbConnection.GetDataSet(CommandType.StoredProcedure, "MemberSelectAllByPage", ObjParam);
+                if (ParlourId == Guid.Empty)
+                {
+                    return DbConnection.GetDataSet(CommandType.StoredProcedure, "MemberSelectAll_WithoutParlour", ObjParam);
+                }
+                else
+                {
+                    return DbConnection.GetDataSet(CommandType.StoredProcedure, "MemberSelectAllByPage", ObjParam);
+                }
             }
             catch (Exception ex)
             {
@@ -952,6 +957,14 @@ namespace Funeral.DAL
                 sqlCommand.ExecuteNonQuery();
             }
         }
+        public static void SaveMemberStaging(string MemberType, Guid ImportId)
+        {
+            string query = "SaveMemberStaging_New"; //"SaveMemberStagingNew";//"SaveMemberStaging";
+            DbParameter[] ObjParam = new DbParameter[2];
+            ObjParam[0] = new DbParameter("@MemberType", DbParameter.DbType.NVarChar, 0, MemberType);
+            ObjParam[1] = new DbParameter("@ImportId", DbParameter.DbType.UniqueIdentifier, 0, ImportId);
+            DbConnection.ExecuteNonQuery(CommandType.StoredProcedure, query, ObjParam);
+        }
 
         public static int GetLastCopiedMemberForDependency()
         {
@@ -1007,6 +1020,12 @@ namespace Funeral.DAL
             ObjParam[0] = new DbParameter("@Parlourid", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetUnderWriterList", ObjParam);
         }
-       
+        public static void ReadyToImportMember( Guid ImportId)
+        {
+            string query = "ImportMemberReadyForJob";//"SaveMemberStaging";
+            DbParameter[] ObjParam = new DbParameter[1];
+            ObjParam[0] = new DbParameter("@ImportId", DbParameter.DbType.UniqueIdentifier, 0, ImportId);
+            DbConnection.ExecuteNonQuery(CommandType.StoredProcedure, query, ObjParam);
+        }
     }
 }

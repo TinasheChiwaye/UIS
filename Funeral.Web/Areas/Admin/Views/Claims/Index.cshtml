@@ -17,13 +17,10 @@
     <div class="col-lg-12">
         <div class="ibox ">
             <div class="ibox-title">
-                <div class="ibox-title">
                     <h5>Claim Details</h5>
-                    <div class="pull-right">
+                    @*<div class="pull-right">
                         <a href="@Url.Action("ClaimAddEdit", "Claims", new { pkiClaimID = 0 })" class="btn btn-primary"><i class="fa fa-plus"></i> Add Claims</a>
-                    </div>
-                </div>
-
+                    </div>*@
             </div>
             <div class="ibox-content">
                 <div class="row">
@@ -35,39 +32,48 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-1">
-                            <label>Show Entries:</label>
-                            @Html.DropDownListFor(m => m.PageSize, new SelectList(ViewBag.EntriesCount, "Value", "Key"), new { @class = "form-control" })
-                        </div>
-                        <div class="col-lg-2" id="dvAdministrator">
+                        <div class="col-sm-3">
                             <div class="form-group">
-                                <label>Company </label>
+                             <label>Status:</label>
+                             @Html.DropDownListFor(x => x.StatusId, new SelectList(ViewBag.Statuses, "Status", "Status"), "Select", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-lg-5" id="dvAdministrator">
+                            <div class="form-group">
+                                <label>Scheme: </label>
                                 @Html.DropDownListFor(m => m.CompanyId, new SelectList(ViewBag.Companies, "parlourid", "ApplicationName"), new { @class = "form-control" })
                             </div>
                         </div>
-                        <div class="col-sm-2">
+                        <div class="col-lg-4" id="dvAdministrator">
+                            <div class="form-group">
+                                <label>Book: </label>
+                                @Html.DropDownListFor(m => m.SocietyID, new SelectList(ViewBag.SocietyLists, "pkiSocietyID", "SocietyName"), "Select Group", new { @id = "ddlClaimSociety", @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
                             <div class="form-group">
                                 <label>Date From:</label>
-                                @Html.TextBoxFor(x => x.DateFrom, "{0:dd/MM/yyyy}", new { @placeholder = "DD/MM/YYYY", @id = "txtDateFrom", @autocomplete = "off", @class = "form-control DatepickerSelection" })
-                            </div>
-                        </div>
-                        <div class="col-sm-2">
-                            <div class="form-group">
-                                <label>Date To:</label>
-                                @Html.TextBoxFor(x => x.DateTo, "{0:dd/MM/yyyy}", new { @placeholder = "DD/MM/YYYY", @id = "txtDateTo", @autocomplete = "off", @class = "form-control DatepickerSelection" })
-                            </div>
-                        </div>
-                        <div class="col-sm-2">
-                            <div class="form-group">
-                                <label>Status:</label>
-                                @Html.DropDownListFor(x => x.StatusId, new SelectList(ViewBag.Statuses, "Status", "Status"), "Select", new { @class = "form-control" })
+                                @Html.TextBoxFor(x => x.DateFrom, "{0:dd MMM yyyy}", new { @placeholder = "DD MM YYYY", @id = "txtDateFrom", @autocomplete = "off", @class = "form-control DatepickerSelection" })
                             </div>
                         </div>
                         <div class="col-sm-3">
                             <div class="form-group">
-                                <label>Keyword: </label>
+                                <label>Date To:</label>
+                                @Html.TextBoxFor(x => x.DateTo, "{0:dd MMM yyyy}", new { @placeholder = "DD MM YYYY", @id = "txtDateTo", @autocomplete = "off", @class = "form-control DatepickerSelection" })
+                            </div>
+                        </div>
+                       
+                        <div class="col-sm-2">
+                            <label>Show Entries:</label>
+                            @Html.DropDownListFor(m => m.PageSize, new SelectList(ViewBag.EntriesCount, "Value", "Key"), new { @class = "form-control" })
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Search: </label>
                                 <div class="input-group">
-                                    @Html.TextBoxFor(x => x.SarchText, new { @placeholder = "Search By Keyword", @class = "form-control" })
+                                    @Html.TextBoxFor(x => x.SarchText, new { @placeholder = "Search", @class = "form-control" })
                                     <span class="input-group-btn">
                                         <input type="button" id="btnSearch" value="Search" class="btn btn-w-m btn-primary" />
                                     </span>
@@ -82,17 +88,18 @@
                     <div class="table-responsive">
                         @Html.EditorFor(model => model.PageNum, new { htmlAttributes = new { @class = "hidden", id = "PageNum1" } })
                         @Html.EditorFor(model => model.PageSize, new { htmlAttributes = new { @class = "hidden", id = "PageSize1" } })
-                        <table id="claimDataTable" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+                        <table id="claimDataTable" class="table table-responsive table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>ID Number</th>
                                     <th>Member No.</th>
                                     <th>Full Name</th>
-                                    <th>Surname</th>
-                                    <th>Claim Notes</th>
-                                    <th>Cause of Death</th>
-                                    <th>Claimant Code</th>
-                                    <th>Contact No</th>
+                                    @*<th>Claim Notes</th>*@
+                                    @*<th>Cause of Death</th>*@
+                                    @*<th>Contact No</th>*@
+                                    <th>Last Modified</th>
+                                    <th>Created Date</th>
+                                    <th>Assigned To</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -105,7 +112,7 @@
         </div>
     </div>
 </div>
-<div id="LoadPartialView_ManageClaims"></div>
+@*<div id="LoadPartialView_ManageClaims"></div>*@
 <div class="modal fade" id="dvSendEmail" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -167,6 +174,8 @@
             var pageNum =@Html.Raw(Json.Encode(@Model.PageNum));
             var pageSize =@Html.Raw(Json.Encode(@Model.PageSize));
             var searchText =@Html.Raw(Json.Encode(@Model.SarchText));
+            var searchType =@Html.Raw(Json.Encode(@Model.SearchType));
+            var societyid =@Html.Raw(Json.Encode(@Model.SocietyID));
 
             var model1 = {
                 StatusId: statusId,
@@ -176,7 +185,9 @@
                 TotalRecord: totalRecord,
                 PageNum: pageNum,
                 PageSize: pageSize,
-                SarchText: searchText
+                SarchText: searchText,
+                SearchType: searchType,
+                SocietyID: societyid
             };
             var datatable = $('#claimDataTable')
                 .on('page.dt', function () {
@@ -225,12 +236,46 @@
                     "columns": [
                         { "data": "ClaimantIDNumber", "name": "ClaimantIDNumber" },
                         { "data": "MemberNumber", "name": "MemberNumber" },
-                        { "data": "ClaimantFullname", "name": "ClaimantFullname" },
-                        { "data": "ClaimantSurname", "name": "ClaimantSurname" },
-                        { "data": "ClaimNotes", "name": "ClaimNotes" },
-                        { "data": "CourseOfDearth", "name": "CourseOfDearth" },
-                        { "data": "ClaimantCode", "name": "ClaimantCode" },
-                        { "data": "ClaimantContactNumber", "name": "ClaimantContactNumber" },
+                        {
+                             "render": function (data, type, full, meta) {
+                                 return full.ClaimantFullname + " " + full.ClaimantSurname;
+                            }
+                        },
+                        //{ "data": "ClaimNotes", "name": "ClaimNotes" },
+                        //{ "data": "CourseOfDearth", "name": "CourseOfDearth" },
+                        //{ "data": "ClaimantContactNumber", "name": "ClaimantContactNumber" },
+                        {
+                            "data": "LastModified", "name": "Last Modified", "autoWidth": true,
+                            "render": function (data) {
+
+                                var date = new Date(parseInt(data.replace('/Date(', '')));
+                                if (date.getFullYear() > 1900) {
+                                    return dateFormat(date, dateFormat.masks.PerfectDate, true);
+                                }
+                                return null;
+                            }
+                        },
+                         {
+                            "data": "CreatedDate", "name": "Created Date", "autoWidth": true,
+                            "render": function (data) {
+
+                                var date = new Date(parseInt(data.replace('/Date(', '')));
+                                if (date.getFullYear() > 1900) {
+                                    return dateFormat(date, dateFormat.masks.PerfectDate, true);
+                                }
+                                return null;
+                            }
+                        },
+                        {
+                            "render": function (data, type, full, meta) {
+                                var dom = "<div class='row'>";
+                                var SendMailClaimUrl = '<div class="col-sm-12"><a accessKey="' + full.parlourid + '"  placeholder="Click to Change Assigned User" onclick="OpenClaimAssignedToPopUp(' + full.pkiClaimID + ',this)">' + full.AssignedToName + '</a></div>';
+                                dom = dom + SendMailClaimUrl;
+                                dom = dom + "</div>";
+                                return dom;
+                            }
+                        },
+
                         {
                             "render": function (data, type, full, meta) {
                                 var dom = "<div class='row'>";
@@ -247,7 +292,7 @@
                                 if (hasEditRights || hasDeleteRights) {
                                     var dom = "<div class='row'>";
                                     if (hasEditRights) {
-                                        var editClaimUrl = '<div class="col-sm-3"><a href="@Url.Action("ClaimAddEdit", "Claims", null, Request.Url.Scheme)?pkiClaimID=' + full.pkiClaimID + '"><i class="fa fa-edit"></i></a></div>';
+                                        var editClaimUrl = '<div class="col-sm-3"><a href="@Url.Action("ClaimAddEdit", "Claims", null, Request.Url.Scheme)?pkiClaimID=' + full.pkiClaimID + '&parlourId='+full.parlourid+'"><i class="fa fa-edit"></i></a></div>';
                                         dom = dom + editClaimUrl;
                                     }
 
@@ -264,7 +309,7 @@
                                     return dom;
                                 }
                                 else {
-                                    table.DataTable().columns([8]).visible(false)
+                                    table.DataTable().columns([7]).visible(false)
                                     return "";
                                 }
                             }
@@ -279,10 +324,10 @@
 
             var table = $('#claimDataTable');
             if (hasEditRights == 'True' || hasDeleteRights == 'True') {
-                table.DataTable().columns([8]).visible(true)
+                table.DataTable().columns([7]).visible(true)
             }
             else {
-                table.DataTable().columns([8]).visible(false)
+                table.DataTable().columns([7]).visible(false)
             }
 
             $('#PageSize').change(function () {
@@ -297,6 +342,7 @@
             function InitModel() {
                 model1.PageNum = 1;
                 model1.CompanyId = $('#CompanyId').val();
+                model1.SocietyID = $('#ddlClaimSociety').val();
                 model1.PageSize = $('#PageSize').val();
                 model1.SarchText = $("#SarchText").val();
                 model1.StatusId = ($('#StatusId').val() == '' ? '0' : $('#StatusId').val());
@@ -311,10 +357,18 @@
                     success: function (result) {
 
                     }
-                })
+                });
+                BindGroupDropdown($('#CompanyId').val());
             })
         }
     });
+
+
+
+
+
+
+
     function OpenEmailPopup(ClaimId, MemberID) {
         $("#txtClaimID_SentEmail").val(ClaimId)
         $("#txtMemeberID_SentEmail").val(MemberID)
@@ -351,50 +405,18 @@
             $('.modal-backdrop').removeClass("modal-backdrop");
         });
     }
-	function BindDocument(claimId) {
-		$.ajax({
-			type: "POST",
-			url: SearchDocumentDataurl,
-			data: '{claimid :'+ claimId + '}',
-			contentType: "application/json; charset=utf-8",
-			dataType: "json",
-			success: function (msg) {
-				if (msg != null) {
-					$("#tab-2 #lblDataMsg").hide();
-					$("#tab-2 #documentDataTable").show();
-					populateData(msg)
-				}
-				else {
-					$("#tab-2 #lblDataMsg").show();
-					$("#tab-2 #documentDataTable").hide();
-				}
-			}
-		});
-	}
-	function populateData(data) {
-		var row = "";
-		$.each(data, function (index, obj) {
-			var jsonDate = new Date(parseInt(obj.CreateDate.substr(6)));
-			var resultDate = JSON.stringify(jsonDate.format("dd/mm/yyyy"));
-			var removeQoute = new String();
-			removeQoute = resultDate.toString().replace(/"/g, "");
-			var docType = new String();
-			if (obj.DocType == 1) {
-				docType = "BI663 Document";
-			}
-			else if (obj.DocType == 2) {
-				docType = "Death Certificate";
-			}
-			else if (obj.DocType == 3) {
-				docType = "Other Document";
-			}
-			else {
-				docType = "No Type is Selected";
-			}
-			row += ' <tr> <td> ' + obj.ImageName + ' </td> <td> ' + docType + ' </td> <td>' + removeQoute + '</td> <td><a  onclick="DownloadDocument(' + obj.pkiClaimPictureID + ')"><i class="glyphicon glyphicon-download"></i> <i class="fa fa-trash"></i></td> </tr>'
-			$("#tab-2 #documentDataTable tbody").html(row);
-		});
-	}
+    function OpenClaimAssignedToPopUp(GetClaimId,control) {
+        var GenerateSendMailURL = "@Url.Action("ClaimAssignedToPartial","Claims",new {ClaimId="GetClaimId",ParlourId="GetParlourId"})".replace("GetClaimId", GetClaimId).replace("GetParlourId", control.accessKey).replace("amp;", "");
+        $.ajax({
+            url: GenerateSendMailURL,
+            type: 'GET',
+            cache: false,
+        }).done(function (result) {
+            $('#LoadPartialView_ManageClaims').empty().html(result);
+            $("#dvChangeStatusModel").modal("show");
+            $('.modal-backdrop').removeClass("modal-backdrop");
+        });
+    }
 	function DownloadDocument(ClaimPictureID) {
 		var downloadDocument = $("#DownloadCliamDocument").val();
 		var id = ClaimPictureID;
@@ -413,5 +435,26 @@
 				alert(thrownError);
 			}
 		})
+    }
+     function BindGroupDropdown(ParlourId) {
+        var ddlCustomers = $("#ddlClaimSociety");
+        ddlCustomers.empty().append('<option selected="selected" value="">Select Group.....</option>');
+        jQuery.ajax({
+            url: '@Url.Action("BindGroupByCompanyId","Claims")',
+            data: { CompanyId: ParlourId },
+            type: "post",
+            success: function (response) {
+                ddlCustomers.empty().append('<option selected="selected" value="0">Please select</option>');
+                jQuery.each(response, function () {
+                    ddlCustomers.append($("<option></option>").val(this['Value']).html(this['Text']));
+                });
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
     }
 </script>

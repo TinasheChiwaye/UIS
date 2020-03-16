@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net.Mail;
+using System.Threading.Tasks;
 
 namespace Funeral.BAL
 {
@@ -184,9 +185,29 @@ namespace Funeral.BAL
                 return false;
             }
         }
-        public static List<ClaimDocumentModel> GetClaimDocumentsByClaimId(int fkiClaimID, Guid Parlourid)
+        public static async Task SendMail_StatusChanged_Async(string ToEmail, string FromEmail, string ApplicationName, string Subject, string msg)
         {
-            DataTable dr = ClaimsDAL.GetClaimDocumentsByClaimId(fkiClaimID, Parlourid);
+            try
+            {
+                using (SmtpClient smtpClient = new SmtpClient())
+                {
+                    MailMessage mm = new MailMessage(FromEmail, ToEmail);
+                    mm.Subject = Subject;
+                    string body = ApplicationName + " ,";
+                    body += "<br /><br />";
+                    body += msg;
+                    mm.Body = body;
+                    mm.IsBodyHtml = true;
+                    await smtpClient.SendMailAsync(mm);
+                }
+            }
+            catch (Exception e)
+            {
+            }
+        }
+        public static List<ClaimDocumentModel> GetClaimDocumentsByClaimId(int fkiClaimID, Guid Parlourid, string MemberType)
+        {
+            DataTable dr = ClaimsDAL.GetClaimDocumentsByClaimId(fkiClaimID, Parlourid, MemberType);
             return FuneralHelper.DataTableMapToList<ClaimDocumentModel>(dr);
         }
         public static List<FuneralDocument> GetUploadedDocumentList(int pkiClaimID, Guid Parlourid)
@@ -207,7 +228,7 @@ namespace Funeral.BAL
         {
             ClaimsDAL.UpdateClaimDocument(model);
         }
-        public static void SaveClaimHistory(string IPAddress, int ClaimID, String Message, string CreatedBy, Guid ParlourID)
+        public static void SaveClaimHistory(string IPAddress, int ClaimID, String Message, string CreatedBy, Guid ParlourID, ApplicationSettingsModel applicationSettings, bool SendEmail = true)
         {
             String msg = String.Format(Message, ClaimID, CreatedBy);
             ClaimHistory claimHistory = new ClaimHistory();
@@ -217,11 +238,30 @@ namespace Funeral.BAL
             claimHistory.ParlourId = ParlourID;
             claimHistory.CreatedBy = CreatedBy;
             ClaimsDAL.SaveClaimHistory(claimHistory);
-
             #region Send All Action Email
-            var applicationSettings = ToolsSetingBAL.GetApplictionByParlourID(ParlourID);
-            var fromMail = ConfigurationManager.AppSettings["ReportEmailSenderId"].ToString().Trim();
-            SendMail_StatusChanged(applicationSettings.EmailForClaimNotification, fromMail, applicationSettings.ApplicationName, "ARL Notification", msg);
+            if (SendEmail)
+            {
+                var fromMail = ConfigurationManager.AppSettings["ReportEmailSenderId"].ToString().Trim();
+                SendMail_StatusChanged(applicationSettings.EmailForClaimNotification, fromMail, applicationSettings.ApplicationName, "ARL Notification", msg);
+            }
+            #endregion
+        }
+        public static async Task SaveClaimHistoryAsync(string IPAddress, int ClaimID, String Message, string CreatedBy, Guid ParlourID, ApplicationSettingsModel applicationSettings, bool SendEmail = true)
+        {
+            String msg = String.Format(Message, ClaimID, CreatedBy);
+            ClaimHistory claimHistory = new ClaimHistory();
+            claimHistory.IPAddress = IPAddress;
+            claimHistory.FkiClaimId = ClaimID;
+            claimHistory.Note = msg;
+            claimHistory.ParlourId = ParlourID;
+            claimHistory.CreatedBy = CreatedBy;
+            ClaimsDAL.SaveClaimHistory(claimHistory);
+            #region Send All Action Email
+            if (SendEmail)
+            {
+                var fromMail = ConfigurationManager.AppSettings["ReportEmailSenderId"].ToString().Trim();
+                await SendMail_StatusChanged_Async(applicationSettings.EmailForClaimNotification, fromMail, applicationSettings.ApplicationName, "ARL Notification", msg);
+            }
             #endregion
         }
         public static List<ClaimReasonModel> GetClaimReasonList(Guid Parlourid)
@@ -234,7 +274,28 @@ namespace Funeral.BAL
             DataTable dr = ClaimsDAL.GetDocumentFollowUpHistory(pkiClaimPictureID, Parlourid);
             return FuneralHelper.DataTableMapToList<ClaimFollowUp>(dr);
         }
-
+        public static int ChangeClaimAssigned(ClaimAssigned claimAssigned)
+        {
+            return ClaimsDAL.ChangeClaimAssigned(claimAssigned);
+        }
+        public static int SaveExternalLink(ExternalUserLink externalUser)
+        {
+            return ClaimsDAL.SaveExternalLink(externalUser);
+        }
+        public static int UpdateExternalLink(Guid ExternalToken, bool TokenAccess)
+        {
+            return ClaimsDAL.UpdateExternalLink(ExternalToken, TokenAccess);
+        }
+        public static ExternalUserLink GetExternalLink(Guid ExternalToken)
+        {
+            DataTable dr = ClaimsDAL.GetExternalLink(ExternalToken);
+            return FuneralHelper.DataTableMapToList<ExternalUserLink>(dr).FirstOrDefault();
+        }
+        public static FuneralModel CheckDuplicateClaims(Guid ParlourId, string IDNumber, string PolicyNumber)
+        {
+            DataTable dr = ClaimsDAL.CheckDuplicateClaims(ParlourId, IDNumber, PolicyNumber);
+            return FuneralHelper.DataTableMapToList<FuneralModel>(dr).FirstOrDefault();
+        }
 
     }
 }

@@ -32,6 +32,25 @@ namespace Funeral.Web.Areas.Admin.Controllers
             if (pageId != 0)
                 this.dbPageId = pageId;
         }
+        public void BindCompanyList(string type = null)
+        {
+            List<ApplicationSettingsModel> model = new List<ApplicationSettingsModel>();
+            if (this.IsAdministrator)
+            {
+                if (!string.IsNullOrEmpty(type))
+                {
+                    model.Add(new ApplicationSettingsModel() { ApplicationName = "All", parlourid = Guid.Empty });
+                }
+                model.AddRange(ToolsSetingBAL.GetAllApplicationList(ParlourId, 1, 0).ToList());
+                if (model == null)
+                    model.Add(new ApplicationSettingsModel() { ApplicationName = ApplicationName, parlourid = ParlourId });
+            }
+            else
+            {
+                model.Add(new ApplicationSettingsModel() { ApplicationName = ApplicationName, parlourid = ParlourId });
+            }
+            ViewBag.Companies = model;
+        }
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             this._filterContext = filterContext;
@@ -44,7 +63,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 HasAccess = obj.Where(x => x.ID == dbPageId).Select(x => x.HasAccess).FirstOrDefault();
                 HasCreateRight = obj.Where(x => x.ID == dbPageId).Select(x => x.IsWrite).FirstOrDefault();
                 HasReadRight = obj.Where(x => x.ID == dbPageId).Select(x => x.IsRead).FirstOrDefault();
-                HasDeleteRight = obj.Where(x => x.ID == dbPageId).Select(x => x.IsDelete).FirstOrDefault();
+                HasDeleteRight = false;//obj.Where(x => x.ID == dbPageId).Select(x => x.IsDelete).FirstOrDefault();
                 HasEditRight = obj.Where(x => x.ID == dbPageId).Select(x => x.IsUpdate).FirstOrDefault();
                 HasReversalPayment = obj.Where(x => x.ID == dbPageId).Select(x => x.IsReversalPayment).FirstOrDefault();
 
@@ -57,7 +76,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                     HasAccess = true;
                     HasCreateRight = true;
                     HasReadRight = true;
-                    HasDeleteRight = true;
+                    HasDeleteRight = false;//true;
                     HasEditRight = true;
                     HasReversalPayment = true;
                 }
@@ -315,6 +334,24 @@ namespace Funeral.Web.Areas.Admin.Controllers
             set
             {
                 System.Web.HttpContext.Current.Session["SecurUserGroupModel"] = value;
+            }
+        }
+        public List<KeyValue> ClaimStatusTypes
+        {
+            get
+            {
+                List<KeyValue> keyValues = new List<KeyValue>();
+                keyValues.Add(new KeyValue { Key = "New", NameText = "New", Value = "1" });
+                keyValues.Add(new KeyValue { Key = "Assessment", NameText = "Assessment", Value = "2" });
+                keyValues.Add(new KeyValue { Key = "ReqsPending", NameText = "ReqsPending", Value = "3" });
+                keyValues.Add(new KeyValue { Key = "AllDocsReceived", NameText = "AllDocsReceived", Value = "4" });
+                keyValues.Add(new KeyValue { Key = "PreAuth", NameText = "PreAuth", Value = "5" });
+                keyValues.Add(new KeyValue { Key = "FinalAuth", NameText = "FinalAuth", Value = "6" });
+                keyValues.Add(new KeyValue { Key = "Finance", NameText = "Finance", Value = "7" });
+                keyValues.Add(new KeyValue { Key = "Declined", NameText = "Declined", Value = "8" });
+                keyValues.Add(new KeyValue { Key = "UnClaimed", NameText = "UnClaimed", Value = "9" });
+                keyValues.Add(new KeyValue { Key = "Closed", NameText = "Closed", Value = "10" });
+                return keyValues;
             }
         }
         public bool IsAdministrator

@@ -2,8 +2,11 @@
 using Funeral.Model;
 using Funeral.Web.App_Start;
 using Funeral.Web.Common;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 
@@ -35,28 +38,42 @@ namespace Funeral.Web.Areas.Admin.Controllers
         {
             return View("Index");
         }
-
-
         [PageRightsAttribute(CurrentPageId = 7, Right = new isPageRight[] { isPageRight.HasAccess })]
-        public ActionResult GroupPaymentView(int id)
+        public ActionResult GroupPaymentView(Guid id, string RefNo)
         {
             ViewBag.GroupId = id;
             TempData["GroupId"] = id;
+            TempData["ReferenceNumber"] = RefNo;
             return View();
         }
         [PageRightsAttribute(CurrentPageId = 7, Right = new isPageRight[] { isPageRight.HasAdd })]
         public PartialViewResult Add(GroupPayment GroupPayment)
         {
-            GroupPayment.parlourid = ParlourId;
+
             object value = TempData.Peek("GroupId");
             TempData.Keep("GroupId");
-            GroupPayment.SocietyId = Convert.ToInt32(value);
+            string ReferenceNumber = TempData.Peek("ReferenceNumber").ToString();
+            TempData.Keep("ReferenceNumber");
+            Guid getParlourId = Guid.Parse(value.ToString());
+            var GetDetails = ToolsSetingBAL.GetGroupPayment_ByParlourId(getParlourId, ReferenceNumber);
+            if (GetDetails != null)
+            {
+                GroupPayment.SocietyId = GetDetails.GroupId;
+                GroupPayment.AmountPaid = GetDetails.Premium;
+                GroupPayment.CompanyGroupId = GetDetails.parlourid;
+                GroupPayment.TotalRiskCovered = GetDetails.TotalRiskCovered;
+                GroupPayment.Balance = GetDetails.Balance;
+                GroupPayment.AmountAtRisk = GetDetails.AmountAtRisk;
+                GroupPayment.InceptionDate = GetDetails.InceptionDate;
+                GroupPayment.ReferenceNumber = GetDetails.ReferenceNumber;
+            }
             GroupPayment.DatePaid = DateTime.Now;
-            GroupPayment.SocietyDropdown = CommonBAL.GetAllSocietyesList(ParlourId);
+            GroupPayment.parlourid = getParlourId;
+            GroupPayment.SocietyDropdown = CommonBAL.GetAllSocietyesList(getParlourId);
             ModelState.Clear();
             return PartialView("~/Areas/Admin/Views/GroupPayment/_AddGroupPayment.cshtml", GroupPayment);
         }
-        public ActionResult Save(GroupPayment groupPayment)
+        public ActionResult Save(GroupPayment groupPayment, FormCollection formCollection)
         {
             try
             {
@@ -64,13 +81,62 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 {
                     FormsIdentity formIdentity = (FormsIdentity)User.Identity;
                     groupPayment.LastModified = System.DateTime.Now;
-                    groupPayment.parlourid = ParlourId;
                     groupPayment.PaidBy = formIdentity.Name;
                     groupPayment.RecievedBy = formIdentity.Name;
-                    var agentInfoSetupData = OtherPaymentBAL.AddEditGroupPayment(groupPayment);
+                    int invoiceGroupId = OtherPaymentBAL.AddEditGroupPayment(groupPayment);
                     TempData["IsSocietySetupSaved"] = true;
                     TempData.Keep("IsSocietySetupSaved");
-                    return RedirectToAction("GroupPaymentView", "GroupPayment", new { id = groupPayment.SocietyId, Area = "Admin" });
+
+                    if (groupPayment.AutoAllocatePremiumToMember)
+                    {
+                        OtherPaymentBAL.AutoallocateMemberPayments(UserName, groupPayment.parlourid, groupPayment.ReferenceNumber);
+                    }
+                    else
+                    {
+                        var groupPaymentList = new List<GroupPayment>();
+                        HttpPostedFileBase file = Request.Files["fnSelectedFile"];
+                        if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
+                        {
+                            string fileName = file.FileName;
+                            string fileContentType = file.ContentType;
+                            byte[] fileBytes = new byte[file.ContentLength];
+                            var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
+
+                            using (var package = new ExcelPackage(file.InputStream))
+                            {
+                                var currentSheet = package.Workbook.Worksheets;
+                                var workSheet = currentSheet.First();
+                                var noOfCol = workSheet.Dimension.End.Column;
+                                var noOfRow = workSheet.Dimension.End.Row;
+                                if (Convert.ToString(workSheet.Cells[1, 1].Value).Replace(" ", "") == "ReferenceNumber")
+                                {
+                                    for (int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
+                                    {
+                                        var excelData = new GroupPayment();
+                                        excelData.parlourid = groupPayment.parlourid;
+                                        excelData.LastModified = DateTime.Now;
+                                        excelData.DatePaid = groupPayment.DatePaid;
+                                        excelData.RecievedBy = UserName;
+                                        excelData.PaidBy = UserName;
+                                        if (Convert.ToString(workSheet.Cells[rowIterator, 1].Value) != "")
+                                            excelData.ReferenceNumber = Convert.ToString(workSheet.Cells[rowIterator, 1].Value);
+                                        if (Convert.ToString(workSheet.Cells[rowIterator, 2].Value) != "")
+                                            excelData.AmountPaid = Convert.ToInt32(workSheet.Cells[rowIterator, 2].Value);
+                                        if (Convert.ToString(workSheet.Cells[rowIterator, 3].Value) != "")
+                                            excelData.Notes = Convert.ToString(workSheet.Cells[rowIterator, 3].Value);
+                                        if (excelData.ReferenceNumber != null || excelData.AmountPaid != 0 || excelData.Notes != "")
+                                            groupPaymentList.Add(excelData);
+                                    }
+                                }
+                                else
+                                {
+                                    TempData["message"] = ShowMessage(MessageType.Danger, "ExcelSheet is not Proper Format.First Columns must be in sequence Reference Number,Amount,PolicyNumber");
+                                }
+                            }
+                        }
+                        var sheetData = OtherPaymentBAL.AddExcelSheetData(groupPaymentList);
+                    }
+                    return RedirectToAction("GroupPaymentView", "GroupPayment", new { id = groupPayment.CompanyGroupId, RefNo = groupPayment.ReferenceNumber, Area = "Admin" });
                 }
             }
             catch (Exception ex)
@@ -94,33 +160,49 @@ namespace Funeral.Web.Areas.Admin.Controllers
             search.SortBy = "";
             search.SortOrder = "Asc";
             search.TotalRecord = 0;
-            var searchResult = new SearchResult<Model.Search.BaseSearch, GroupPaymentList>(search, new List<GroupPaymentList>(), o => o.GroupName.Contains(search.SarchText));
+            var searchResult = new SearchResult<Model.Search.BaseSearch, GroupPayment>(search, new List<GroupPayment>(), o => o.SocietyName.Contains(search.SarchText));
             var pageCountEntries = GetEntriesCount();
             ViewBag.EntriesCount = pageCountEntries;
             return PartialView("~/Areas/Admin/Views/GroupPayment/_GroupPaymentList.cshtml", search);
         }
         public ActionResult SearchData(Model.Search.BaseSearch search)
         {
-            var searchResult = new SearchResult<Model.Search.BaseSearch, GroupPaymentList>(search, new List<GroupPaymentList>(), o => o.GroupName.Contains(search.SarchText));
+            var searchResult = new SearchResult<Model.Search.BaseSearch, GroupPayment>(search, new List<GroupPayment>(), o => o.SocietyName.Contains(search.SarchText));
 
             try
             {
                 object value = TempData.Peek("GroupId");
                 TempData.Keep("GroupId");
-                int GroupId = Convert.ToInt32(value);
-                var SocietyList = OtherPaymentBAL.GetAllGroupPaymentList(ParlourId, GroupId);
+
+                string ReferenceNumber = TempData.Peek("ReferenceNumber").ToString();
+                TempData.Keep("ReferenceNumber");
+
+                var groupPayment = ToolsSetingBAL.GetGroupPayment_ByParlourId(Guid.Parse(value.ToString()), ReferenceNumber);
+                var SocietyList = new List<GroupPayment>();
+                if (groupPayment != null)
+                {
+                    SocietyList = OtherPaymentBAL.GetAllGroupPaymentList(ParlourId, groupPayment.GroupId);
+                }
                 return Json(new SearchResult<Model.Search.BaseSearch, GroupPayment>(search, SocietyList, o => o.SocietyName.ToLower().Contains(search.SarchText.ToLower())));
             }
             catch (Exception ex)
             {
-                return Json(WebApiResult<Model.Search.BaseSearch, GroupPaymentList>.Error(searchResult, ex));
+                return Json(WebApiResult<Model.Search.BaseSearch, GroupPayment>.Error(searchResult, ex));
             }
         }
         [PageRightsAttribute(CurrentPageId = 7, Right = new isPageRight[] { isPageRight.HasEdit })]
         public PartialViewResult Edit(int ID)
         {
             var groupPayment = OtherPaymentBAL.EditGroupPaymentByID(ID, ParlourId);
+            var GetDetails = ToolsSetingBAL.GetGroupPayment_ByParlourId(groupPayment.parlourid, groupPayment.ReferenceNumber);
             groupPayment.SocietyDropdown = CommonBAL.GetAllSocietyesList(ParlourId);
+            if (GetDetails != null)
+            {
+                groupPayment.AmountAtRisk = GetDetails.AmountAtRisk;
+                groupPayment.Balance = GetDetails.Balance;
+                groupPayment.TotalRiskCovered = GetDetails.TotalRiskCovered;
+                groupPayment.InceptionDate = GetDetails.InceptionDate;
+            }
             return PartialView("~/Areas/Admin/Views/GroupPayment/_AddGroupPayment.cshtml", groupPayment);
         }
         [PageRightsAttribute(CurrentPageId = 7, Right = new isPageRight[] { isPageRight.HasDelete })]
@@ -136,10 +218,11 @@ namespace Funeral.Web.Areas.Admin.Controllers
         [PageRightsAttribute(CurrentPageId = 7)]
         public PartialViewResult GroupList()
         {
+            BindCompanyList("Search");
             ViewBag.HasEditRight = HasEditRight;
             ViewBag.HasDeleteRight = HasDeleteRight;
 
-            Model.Search.BaseSearch search = new Model.Search.BaseSearch();
+            Model.Search.PaymentSearchNew search = new Model.Search.PaymentSearchNew();
             search.PageNum = 1;
             search.PageSize = 10;
             search.SarchText = string.Empty;
@@ -147,26 +230,28 @@ namespace Funeral.Web.Areas.Admin.Controllers
             search.SortOrder = "Asc";
             search.TotalRecord = 0;
 
-            var searchResult = new SearchResult<Model.Search.BaseSearch, GroupPaymentList>(search, new List<GroupPaymentList>(), o => o.GroupName.Contains(search.SarchText));
+            var searchResult = new SearchResult<Model.Search.BaseSearch, SocietyModel>(search, new List<SocietyModel>(), o => o.SocietyName.Contains(search.SarchText));
 
             var pageCountEntries = GetEntriesCount();
             ViewBag.EntriesCount = pageCountEntries;
 
             return PartialView("~/Areas/Admin/Views/GroupPayment/_PaymentList.cshtml", search);
         }
-        public ActionResult GroupSearchData(Model.Search.BaseSearch search)
+        public ActionResult GroupSearchData(Model.Search.PaymentSearchNew search)
         {
-            var searchResult = new SearchResult<Model.Search.BaseSearch, GroupPaymentList>(search, new List<GroupPaymentList>(), o => o.GroupName.Contains(search.SarchText));
+            var searchResult = new SearchResult<Model.Search.BaseSearch, SocietyModel>(search, new List<SocietyModel>(), o => o.SocietyName.Contains(search.SarchText));
 
             try
             {
-                var SocietyList = ToolsSetingBAL.GetAllSocietyes_PaymentList(ParlourId);
+                var SocietyList = ToolsSetingBAL.GetAllSocietyes_PaymentList(Guid.Empty);
+                SocietyList = search.StatusId != Guid.Empty ? SocietyList.Where(x => x.parlourid.Equals(search.StatusId)).ToList() : SocietyList;
                 return Json(new SearchResult<Model.Search.BaseSearch, GroupPaymentList>(search, SocietyList, o => o.GroupName.Contains(search.SarchText)));
             }
             catch (Exception ex)
             {
-                return Json(WebApiResult<Model.Search.BaseSearch, GroupPaymentList>.Error(searchResult, ex));
+                return Json(WebApiResult<Model.Search.BaseSearch, SocietyModel>.Error(searchResult, ex));
             }
         }
+
     }
 }

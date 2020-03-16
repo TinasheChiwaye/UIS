@@ -15,9 +15,10 @@ var model1 = {
     TotalRecord: 0,
     PageNum: 1,
     PageSize: 10,
-    SarchText: ''
+    SarchText: '',
+    BookName: ''
 };
-function setsearchmodel(statusid, sortorder, sortby, totalrecord, pagenum, pagesize, searchtext) {
+function setsearchmodel(statusid, sortorder, sortby, totalrecord, pagenum, pagesize, searchtext, bookName = "") {
     model1.StatusId = statusid;
     model1.SortOrder = sortorder;
     model1.SortBy = sortby;
@@ -25,6 +26,7 @@ function setsearchmodel(statusid, sortorder, sortby, totalrecord, pagenum, pages
     model1.PageNum = pagenum;
     model1.PageSize = pagesize;
     model1.SarchText = searchtext;
+    model1.BookName = bookName;
 }
 function InitDataTable() {
     jQuery(document).ready(function () {
@@ -113,7 +115,7 @@ var eventConfigs = {
         domElement: function (domElement) {
             return domElement;
         },
-        dispatchEvent: function () {            
+        dispatchEvent: function () {
             if (this.domElement == undefined)
                 this.domElement = new object();
 
@@ -123,7 +125,7 @@ var eventConfigs = {
         action: function (delegate) {
             this.searchDelegate = delegate;
         },
-        attachEvent: function () {            
+        attachEvent: function () {
             this.searchEvent = new Event(this.eventName);
             this.searchEvent.detail = this.data;
 

@@ -150,11 +150,11 @@
                             </div>
                             <div class="form-group">
                                 <label>Contact Person </label>
-                                @Html.TextBoxFor(m => m.ContactPerson, null, new { @class = "form-control", @id = "DateOfApplication", @maxlength = "25" })
+                                @Html.TextBoxFor(m => m.ContactPerson, null, new { @class = "form-control",@onkeypress="return onlyNumberKey(event)", @id = "DateOfApplication", @maxlength = "13" })
                             </div>
                             <div class="form-group">
                                 <label>Contact Number </label>
-                                @Html.TextBoxFor(m => m.ContactPersonNumber, null, new { @class = "form-control", @id = "TelNumber", @maxlength = "10" })
+                                @Html.TextBoxFor(m => m.ContactPersonNumber, null, new { @class = "form-control",@onkeypress="return onlyNumberKey(event)", @id = "TelNumber", @maxlength = "13" })
                             </div>
                         </div>
                         <div class="col-lg-6">

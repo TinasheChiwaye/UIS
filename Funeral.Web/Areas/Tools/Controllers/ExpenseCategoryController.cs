@@ -12,7 +12,7 @@ using static Funeral.Web.Areas.Admin.Controllers.MembersController;
 
 namespace Funeral.Web.Areas.Tools.Controllers
 {
-    public class ExpenseCategoryController : BaseAdminController
+    public class ExpenseCategoryController : BaseToolController
     {
         public ExpenseCategoryController() : base(18)
         {
@@ -43,8 +43,8 @@ namespace Funeral.Web.Areas.Tools.Controllers
         [PageRightsAttribute(CurrentPageId = 18)]
         public PartialViewResult List()
         {
-            //ViewBag.HasEditRight = HasEditRight;
-            //ViewBag.HasDeleteRight = HasDeleteRight;
+            ViewBag.HasEditRight = HasEditRight;
+            ViewBag.HasDeleteRight = HasDeleteRight;
 
             Model.Search.ExpenseCategorySearch search = new Model.Search.ExpenseCategorySearch();
             search.PageNum = 1;
@@ -77,7 +77,7 @@ namespace Funeral.Web.Areas.Tools.Controllers
             }
         }
 
-        [PageRightsAttribute(CurrentPageId = 18, Right = new isPageRight[] { isPageRight.HasAdd})]
+        [PageRightsAttribute(CurrentPageId = 18, Right  = new isPageRight[] { isPageRight.HasAdd})]
         public PartialViewResult Add(ExpensesModel expense)
         {
             expense.parlourid = ParlourId;

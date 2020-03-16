@@ -12,7 +12,7 @@ using System.Web.UI.WebControls;
 
 namespace Funeral.Web.Areas.Tools.Controllers
 {
-    public class FuneralServicesController : BaseAdminController
+    public class FuneralServicesController : BaseToolController
     {
         public FuneralServicesController() : base(15)
         {

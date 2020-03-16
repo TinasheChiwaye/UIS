@@ -21,6 +21,7 @@ namespace Funeral.Model
         }
         public int pkiClaimPictureID { get; set; }
         public string DocumentName { get; set; }
+        public bool IsUploaded { get; set; }
         public string ImageName { get; set; }
         public string Status { get; set; }
         public string Comment { get; set; }
@@ -31,6 +32,7 @@ namespace Funeral.Model
         public DateTime LastModified { get; set; }
         public string ModifiedUser { get; set; }
         public int DocType { get; set; }
+        public int DocumentId { get; set; }
         public string DocContentType { get; set; }
 
     }

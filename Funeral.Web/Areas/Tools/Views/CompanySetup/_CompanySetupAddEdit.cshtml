@@ -35,7 +35,7 @@
     <div class="col-lg-12">
         <div class="ibox ">
             <div class="ibox-title">
-                <h5>Company Setup</h5>
+                <h5>Scheme Setup</h5>
             </div>
             <div class="ibox-content">
                 <div class="form-group row">
@@ -44,9 +44,9 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.Label("Company Name", new { @class = "control-label" })
+                            @Html.Label("Scheme Name", new { @class = "control-label" })
                             <strong><span class="text-danger"><em>*</em></span></strong>
-                            @Html.TextBoxFor(m => m.ApplicationName, null, new { @class = "form-control", @maxlength = "150", placeholder = "Company Name" })
+                            @Html.TextBoxFor(m => m.ApplicationName, null, new { @class = "form-control", @maxlength = "150", placeholder = "Scheme Name" })
                             @Html.ValidationMessageFor(m => m.ApplicationName, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                         </div>
                         <div class="form-group">
@@ -58,12 +58,12 @@
                             @Html.TextBoxFor(m => m.FSBNumber, null, new { @class = "form-control", @maxlength = "50", placeholder = "FSB Number" })
                         </div>
                         <div class="form-group">
-                            @Html.Label("Company Slogan", new { @class = "control-label" })
-                            @Html.TextBoxFor(m => m.ManageSlogan, null, new { @class = "form-control", @maxlength = "255", placeholder = "Company Slogan" })
+                            @Html.Label("Scheme Slogan", new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.ManageSlogan, null, new { @class = "form-control", @maxlength = "255", placeholder = "Scheme Slogan" })
                         </div>
                         <div class="form-group">
-                            @Html.Label("Company Rules", new { @class = "control-label" })
-                            @Html.TextAreaFor(m => m.ApplicationRules, 4, 100, new { @class = "form-control", placeholder = "Company Slogan" })
+                            @Html.Label("Scheme Rules", new { @class = "control-label" })
+                            @Html.TextAreaFor(m => m.ApplicationRules, 4, 100, new { @class = "form-control", placeholder = "Scheme Slogan" })
                         </div>
 
                     </div>
@@ -77,12 +77,12 @@
                         <div class="form-group">
                             @Html.Label("Telephone Number", new { @class = "control-label" })
                             <strong><span class="text-danger"><em>*</em></span></strong>
-                            @Html.TextBoxFor(m => m.ManageTelNumber, null, new { @class = "form-control", @maxlength = "25", placeholder = "Telephone Number" })
+                            @Html.TextBoxFor(m => m.ManageTelNumber, null, new { @class = "form-control",@onkeypress="return onlyNumberKey(event)", @maxlength = "13", placeholder = "Telephone Number" })
                             @Html.ValidationMessageFor(m => m.ManageTelNumber, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                         </div>
                         <div class="form-group">
                             @Html.Label("Cellphone Number", new { @class = "control-label" })
-                            @Html.TextBoxFor(m => m.ManageCellNumber, null, new { @class = "form-control", @maxlength = "25", placeholder = "Cellphone Number" })
+                            @Html.TextBoxFor(m => m.ManageCellNumber, null, new { @class = "form-control",@onkeypress="return onlyNumberKey(event)", @maxlength = "13", placeholder = "Cellphone Number" })
                         </div>
                         <div class="form-group">
                             @Html.Label("Fax Number", new { @class = "control-label" })
@@ -202,13 +202,13 @@
                         <div class="form-group">
                             @Html.Label("Telephone Number", new { @class = "control-label" })
                             <strong><span class="text-danger"><em>*</em></span></strong>
-                            @Html.TextBoxFor(m => m.OwnerTelNumber, null, new { @class = "form-control", @maxlength = "25", placeholder = "Telephone Number" })
+                            @Html.TextBoxFor(m => m.OwnerTelNumber, null, new { @class = "form-control",@onkeypress="return onlyNumberKey(event)", @maxlength = "13", placeholder = "Telephone Number" })
                             @Html.ValidationMessageFor(m => m.OwnerTelNumber, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                         </div>
                         <div class="form-group">
                             @Html.Label("Cellphone Number", new { @class = "control-label" })
                             <strong><span class="text-danger"><em>*</em></span></strong>
-                            @Html.TextBoxFor(m => m.OwnerCellNumber, null, new { @class = "form-control", @maxlength = "25", placeholder = "Cellphone Number" })
+                            @Html.TextBoxFor(m => m.OwnerCellNumber, null, new { @class = "form-control",@onkeypress="return onlyNumberKey(event)", @maxlength = "13", placeholder = "Cellphone Number" })
                             @Html.ValidationMessageFor(m => m.OwnerCellNumber, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                         </div>
                         <div class="form-group">
@@ -370,7 +370,7 @@
     if (TempData.Peek("IsCompanySetupSaved") != null && (bool)TempData.Peek("IsCompanySetupSaved") == true)
     {
         <script>
-            ShowSaveMessage('#alert_container', 'Company setup saved successfully!');
+            ShowSaveMessage('#alert_container', 'Scheme setup saved successfully!');
         </script>
 
         TempData.Remove("IsCompanySetupSaved");

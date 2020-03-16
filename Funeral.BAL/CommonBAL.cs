@@ -5,13 +5,77 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Net.Mail;
+using System.Linq;
 using System.Reflection;
 
 namespace Funeral.BAL
 {
     public class CommonBAL
     {
+        public static List<KeyValue> ColumnList()
+        {
+            List<KeyValue> keyValues = new List<KeyValue>();
+            keyValues.Add(new KeyValue { Key = "CreateDate", Value = "CreateDate", NameText = "CreateDate" });
+            keyValues.Add(new KeyValue { Key = "MemberType", Value = "MemberType", NameText = "Relationship Type" });
+            keyValues.Add(new KeyValue { Key = "Title", Value = "Title", NameText = "Title" });
+            keyValues.Add(new KeyValue { Key = "Full Names", Value = "Full Names", NameText = "Full Names" });
+            keyValues.Add(new KeyValue { Key = "Surname", Value = "Surname", NameText = "Surname" });
+            keyValues.Add(new KeyValue { Key = "Gender", Value = "Gender", NameText = "Gender" });
+            keyValues.Add(new KeyValue { Key = "Active", Value = "Active", NameText = "Active" });
+            keyValues.Add(new KeyValue { Key = "ID Number", Value = "ID Number", NameText = "ID Number" });
+            keyValues.Add(new KeyValue { Key = "Date Of Birth", Value = "Date Of Birth", NameText = "Date Of Birth" });
+            keyValues.Add(new KeyValue { Key = "Telephone", Value = "Telephone", NameText = "Telephone" });
+            keyValues.Add(new KeyValue { Key = "Cellphone", Value = "Cellphone", NameText = "Cellphone" });
+            keyValues.Add(new KeyValue { Key = "Address1", Value = "Address1", NameText = "Address1" });
+            keyValues.Add(new KeyValue { Key = "Address2", Value = "Address2", NameText = "Address2" });
+            keyValues.Add(new KeyValue { Key = "Address3", Value = "Address3", NameText = "Address3" });
+            keyValues.Add(new KeyValue { Key = "Address4", Value = "Address4", NameText = "Address4" });
+            keyValues.Add(new KeyValue { Key = "Code", Value = "Code", NameText = "Code" });
+            keyValues.Add(new KeyValue { Key = "MemeberNumber", Value = "MemeberNumber", NameText = "ARL Policy Number" });
+            keyValues.Add(new KeyValue { Key = "MemberSociety", Value = "MemberSociety", NameText = "Book Name" });
+            keyValues.Add(new KeyValue { Key = "InceptionDate", Value = "InceptionDate", NameText = "InceptionDate" });
+            keyValues.Add(new KeyValue { Key = "Claimnumber", Value = "Claimnumber", NameText = "Claimnumber" });
+            keyValues.Add(new KeyValue { Key = "PolicyStatus", Value = "PolicyStatus", NameText = "PolicyStatus" });
+            keyValues.Add(new KeyValue { Key = "parlourid", Value = "parlourid", NameText = "parlourid" });
+            keyValues.Add(new KeyValue { Key = "Agent", Value = "Agent", NameText = "Agent" });
+            keyValues.Add(new KeyValue { Key = "AccountHolder", Value = "AccountHolder", NameText = "AccountHolder" });
+            keyValues.Add(new KeyValue { Key = "Bank", Value = "Bank", NameText = "Bank" });
+            keyValues.Add(new KeyValue { Key = "BranchCode", Value = "BranchCode", NameText = "BranchCode" });
+            keyValues.Add(new KeyValue { Key = "Branch", Value = "Branch", NameText = "Branch" });
+            keyValues.Add(new KeyValue { Key = "AccountNumber", Value = "AccountNumber", NameText = "AccountNumber" });
+            keyValues.Add(new KeyValue { Key = "AccountType", Value = "AccountType", NameText = "AccountType" });
+            keyValues.Add(new KeyValue { Key = "DebitDate", Value = "DebitDate", NameText = "DebitDate" });
+            keyValues.Add(new KeyValue { Key = "MemberBranch", Value = "MemberBranch", NameText = "Scheme Name" });
+            keyValues.Add(new KeyValue { Key = "CoverDate", Value = "CoverDate", NameText = "CoverDate" });
+            keyValues.Add(new KeyValue { Key = "Email", Value = "Email", NameText = "Email" });
+            keyValues.Add(new KeyValue { Key = "Citizenship", Value = "Citizenship", NameText = "Citizenship" });
+            keyValues.Add(new KeyValue { Key = "Passport", Value = "Passport", NameText = "Passport" });
+            keyValues.Add(new KeyValue { Key = "CustomId1", Value = "CustomId1", NameText = "CustomId1" });
+            keyValues.Add(new KeyValue { Key = "CustomId2", Value = "CustomId2", NameText = "CustomId2" });
+            keyValues.Add(new KeyValue { Key = "CustomId3", Value = "CustomId3", NameText = "CustomId3" });
+            keyValues.Add(new KeyValue { Key = "PlanName", Value = "PlanName", NameText = "Rate Type" });
+            //keyValues.Add(new KeyValue { Key = "Premium", Value = "Premium", NameText = "Premium" });
+            keyValues.Add(new KeyValue { Key = "Premium", Value = "Premium", NameText = "Risk Premium" });
+            keyValues.Add(new KeyValue { Key = "Age", Value = "Age", NameText = "Age" });
+            keyValues.Add(new KeyValue { Key = "PlanDesc", Value = "PlanDesc", NameText = "PlanDesc" });
+            keyValues.Add(new KeyValue { Key = "PlanSubscription", Value = "PlanSubscription", NameText = "PlanSubscription" });
+            keyValues.Add(new KeyValue { Key = "Cover", Value = "Cover", NameText = "Cover" });
+            keyValues.Add(new KeyValue { Key = "WaitingPeriod", Value = "WaitingPeriod", NameText = "WaitingPeriod" });
+            keyValues.Add(new KeyValue { Key = "PolicyLaps", Value = "PolicyLaps", NameText = "PolicyLaps" });
+            keyValues.Add(new KeyValue { Key = "PlanUnderwriter", Value = "PlanUnderwriter", NameText = "PlanUnderwriter" });
+            keyValues.Add(new KeyValue { Key = "JoiningFee", Value = "JoiningFee", NameText = "JoiningFee" });
+            keyValues.Add(new KeyValue { Key = "UnderwriterId", Value = "UnderwriterId", NameText = "UnderwriterId" });
+            keyValues.Add(new KeyValue { Key = "AgeBand", Value = "AgeBand", NameText = "AgeBand" });
+            keyValues.Add(new KeyValue { Key = "AgeFrom", Value = "AgeFrom", NameText = "AgeFrom" });
+            keyValues.Add(new KeyValue { Key = "AgeTo", Value = "AgeTo", NameText = "AgeTo" });
+            keyValues.Add(new KeyValue { Key = "UnderwriterCover", Value = "UnderwriterCover", NameText = "UnderwriterCover" });
+            keyValues.Add(new KeyValue { Key = "UnderwriterPremium", Value = "UnderwriterPremium", NameText = "UnderwriterPremium" });
+            keyValues.Add(new KeyValue { Key = "ReinsurancePremium", Value = "ReinsurancePremium", NameText = "ReinsurancePremium" });
+            keyValues.Add(new KeyValue { Key = "OfficePremium", Value = "OfficePremium", NameText = "OfficePremium" });
+            keyValues.Add(new KeyValue { Key = "EffectiveDate", Value = "EffectiveDate", NameText = "Effective Date" });
+            keyValues.Add(new KeyValue { Key = "StartDate", Value = "StartDate", NameText = "Start Date" });
+            return keyValues;
+        }
         public static List<PolicyModel> GetPolicyByParlourId(Guid parlourid)
         {
             DataTable dr = MembersDAL.GetPolicyByParlourIddt(parlourid);
@@ -27,6 +91,7 @@ namespace Funeral.BAL
             DataTable dr = MembersDAL.GetAllSocietydt(parlourid);
             return FuneralHelper.DataTableMapToList<SocietyModel>(dr);
         }
+
         public static List<BranchModel> GetBranchByParlourId(Guid parlourid)
         {
             DataTable dr = MembersDAL.GetBranchByParlourIddt(parlourid);
@@ -388,6 +453,49 @@ namespace Funeral.BAL
                 }
             }
             return obj;
+        }
+        public static List<SecureUsersModel> GetAllUser(Guid parlourid)
+        {
+            DataTable dr = CommonDAL.GetAllUser(parlourid);
+            return FuneralHelper.DataTableMapToList<SecureUsersModel>(dr);
+        }
+        //public static DataTable GetDataTable_FromGridView(GridView dtg)
+        //{
+        //    DataTable dt = new DataTable();
+        //    if (dtg.HeaderRow != null)
+        //    {
+        //        for (int i = 0; i < dtg.HeaderRow.Cells.Count; i++)
+        //        {
+        //            dt.Columns.Add(dtg.HeaderRow.Cells[i].Text);
+        //        }
+        //    }
+
+        //    foreach (GridViewRow row in dtg.Rows)
+        //    {
+        //        DataRow dr;
+        //        dr = dt.NewRow();
+        //        for (int i = 0; i < row.Cells.Count; i++)
+        //        {
+        //            string value = "";
+        //            foreach (Control cc in row.Cells[i].Controls)
+        //            {
+        //                value = ((TextBox)cc).Text;
+        //            }
+        //            dr[i] = value.Replace(" ", "").Replace("&nbsp;", "");
+        //        }
+        //        dt.Rows.Add(dr);
+        //    }
+        //    return dt;
+        //}
+        public static BankDetails GetBankDetails_ByParlourId(Guid ParlourId)
+        {
+            DataTable dr = CommonDAL.GetBankDetails_ByParlourId(ParlourId);
+            return FuneralHelper.DataTableMapToList<BankDetails>(dr).FirstOrDefault();
+        }
+        public static List<ClaimReasonModel> GetClaimReasonByClaimStatus(string ClaimStatus, Guid Parlourid)
+        {
+            DataTable dr = CommonDAL.GetClaimReasonByClaimStatus(ClaimStatus, Parlourid);
+            return FuneralHelper.DataTableMapToList<ClaimReasonModel>(dr);
         }
     }
 }

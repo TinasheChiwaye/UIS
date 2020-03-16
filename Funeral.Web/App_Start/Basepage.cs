@@ -77,7 +77,9 @@ namespace Funeral.Web.App_Start
                     FormsAuthenticationTicket ticket = id.Ticket;
                     string[] strData = ticket.UserData.Split('|');
                     if (strData.Count() > 0)
+                    {
                         return strData[2];
+                    }
                     else
                         return string.Empty;
                     //return new Guid(string.IsNullOrEmpty(ticket.UserData) ? "00000000-0000-0000-0000-000000000000" : ticket.UserData);
@@ -241,7 +243,7 @@ namespace Funeral.Web.App_Start
                         HasAccess = obj.Where(x => x.ID == dbPageId).Select(x => x.HasAccess).FirstOrDefault();
                         HasCreateRight = obj.Where(x => x.ID == dbPageId).Select(x => x.IsWrite).FirstOrDefault();
                         HasReadRight = obj.Where(x => x.ID == dbPageId).Select(x => x.IsRead).FirstOrDefault();
-                        HasDeleteRight = obj.Where(x => x.ID == dbPageId).Select(x => x.IsDelete).FirstOrDefault();
+                        HasDeleteRight = false;// obj.Where(x => x.ID == dbPageId).Select(x => x.IsDelete).FirstOrDefault();
                         HasEditRight = obj.Where(x => x.ID == dbPageId).Select(x => x.IsUpdate).FirstOrDefault();
                         HasReversalPayment = obj.Where(x => x.ID == dbPageId).Select(x => x.IsReversalPayment).FirstOrDefault();
                     }
@@ -255,7 +257,7 @@ namespace Funeral.Web.App_Start
                         HasAccess = true;
                         HasCreateRight = true;
                         HasReadRight = true;
-                        HasDeleteRight = true;
+                        HasDeleteRight = false; ;
                         HasEditRight = true;
                         HasReversalPayment = true;
                     }

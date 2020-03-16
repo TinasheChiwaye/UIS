@@ -59,5 +59,24 @@ namespace Funeral.DAL
             ObjParam[0] = new DbParameter("@Parlourid", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetDocumentList_ByParlourId", ObjParam);
         }
+        public static DataTable GetAllUser(Guid parlourid)
+        {
+            DbParameter[] ObjParam = new DbParameter[1];
+            ObjParam[0] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, parlourid);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "getAllSecureUser", ObjParam);
+        }
+        public static DataTable GetBankDetails_ByParlourId(Guid ParlourId)
+        {
+            DbParameter[] ObjParam = new DbParameter[1];
+            ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetBanksByParlourId", ObjParam);
+        }
+        public static DataTable GetClaimReasonByClaimStatus(string ClaimStatus, Guid Parlourid)
+        {
+            DbParameter[] ObjParam = new DbParameter[2];
+            ObjParam[0] = new DbParameter("@ClaimStatus", DbParameter.DbType.NVarChar, 0, ClaimStatus);
+            ObjParam[1] = new DbParameter("@Parlourid", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetClaimReasonByClaimStatus", ObjParam);
+        }
     }
 }

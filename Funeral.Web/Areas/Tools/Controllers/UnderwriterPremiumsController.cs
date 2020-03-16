@@ -11,7 +11,7 @@ using System.Web.UI.WebControls;
 
 namespace Funeral.Web.Areas.Tools.Controllers
 {
-    public class UnderwriterPremiumsController : BaseAdminController
+    public class UnderwriterPremiumsController : BaseToolController
     {
         public UnderwriterPremiumsController() : base(42)
         {

@@ -3,8 +3,6 @@ using Funeral.Model;
 using Funeral.Web.App_Start;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -97,10 +95,12 @@ namespace Funeral.Web.Tools
             if (!Page.IsPostBack)
             {
                 BindUndewriterList();
+                BindPlan();
+                BindUnderwriter();
             }
         }
         #endregion
-        
+
         #region Methods
         public void BindUndewriterList()
         {
@@ -119,10 +119,10 @@ namespace Funeral.Web.Tools
             else
             {
                 UnderwriterId = model.PkiUnderwriterId;
-                txtUnderwriterName.Text = model.UnderwriterName.ToString();
-                 txtPlanName.Text = model.PlanName;
+                ddlUnderwriterList.SelectedValue = model.UnderwriterName.ToString();
+                ddlPlanList.SelectedValue = model.PlanName;
                 txtPremium.Text = model.Premium.ToString();
-                
+
                 txtCover.Text = model.Cover.ToString("#,0.00");
                 ddlSpouse.Text = model.Spouse.ToString();
                 ddlChildren.Text = model.Children.ToString();
@@ -145,8 +145,6 @@ namespace Funeral.Web.Tools
         public void ClearControl()
         {
             UnderwriterId = 0;
-            txtUnderwriterName.Text = string.Empty;
-            txtPlanName.Text = string.Empty;
             txtPremium.Text = string.Empty;
 
             txtCover.Text = string.Empty;
@@ -190,7 +188,7 @@ namespace Funeral.Web.Tools
             {
 
                 UnderwriterModel model;
-                model = UnderwriterBAL.SelectUnderwriterByName(txtUnderwriterName.Text, ParlourId);
+                model = UnderwriterBAL.SelectUnderwriterByName(ddlUnderwriterList.SelectedValue, ParlourId);
                 if (model != null && UnderwriterId == 0)
                 {
                     ShowMessage(ref lblMessage, MessageType.Danger, "Underwriter Already Exists.");
@@ -200,8 +198,8 @@ namespace Funeral.Web.Tools
                     model = new UnderwriterModel();
 
                     model.PkiUnderwriterId = UnderwriterId;
-                    model.PlanName = txtPlanName.Text;
-                    model.UnderwriterName = txtUnderwriterName.Text;
+                    model.PlanName = ddlPlanList.SelectedValue;
+                    model.UnderwriterName = ddlUnderwriterList.SelectedValue;
                     model.Cover = (txtCover.Text == string.Empty ? 0 : Convert.ToDecimal(txtCover.Text));
                     model.Spouse = Convert.ToInt32(ddlSpouse.Text);
                     model.Children = Convert.ToInt32(ddlChildren.Text);
@@ -315,7 +313,7 @@ namespace Funeral.Web.Tools
                 int SPlanId = Convert.ToInt32(e.CommandArgument);
                 try
                 {
-                    int retID = UnderwriterBAL.DeleteUnderwriterByID(SPlanId,UserName);
+                    int retID = UnderwriterBAL.DeleteUnderwriterByID(SPlanId, UserName);
                     ShowMessage(ref lblMessage, MessageType.Success, "Record deleted successfully.");
                     lblMessage.Visible = true;
                     BindUndewriterList();
@@ -330,5 +328,33 @@ namespace Funeral.Web.Tools
         }
         #endregion
 
+        #region BindUnderWriterDropdown
+        public void BindUnderwriter()
+        {
+            List<UnderwriterSetupModel> model = ToolsSetingBAL.GetAllUnderwriterList(ParlourId);
+            if (model != null)
+            {
+                ddlUnderwriterList.Visible = true;
+                ddlUnderwriterList.DataTextField = "UnderwriterName";
+                ddlUnderwriterList.DataValueField = "UnderwriterName";
+                ddlUnderwriterList.DataSource = model;
+                ddlUnderwriterList.DataBind();
+                ddlUnderwriterList.Items.Insert(0, "Select Underwriter");
+            }
+        }
+        public void BindPlan()
+        {
+            List<PlanModel> model = ToolsSetingBAL.GetAllPlansList(ParlourId);
+            if (model != null)
+            {
+                ddlPlanList.Visible = true;
+                ddlPlanList.DataTextField = "PlanName";
+                ddlPlanList.DataValueField = "PlanName";
+                ddlPlanList.DataSource = model;
+                ddlPlanList.DataBind();
+                ddlPlanList.Items.Insert(0, "Select Plan");
+            }
+        }
+        #endregion
     }
 }

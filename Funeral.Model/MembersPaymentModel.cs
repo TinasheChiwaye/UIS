@@ -31,7 +31,8 @@ namespace Funeral.Model
             EasyPayNo = string.Empty;
         }
 
-         public DateTime? CoverDate { get; set; }
+        public string ApplicationName { get; set; }
+        public DateTime? CoverDate { get; set; }
          public string Telephone { get; set; }
         public int pkiMemberID { get; set; }
         public DateTime CreateDate { get; set; }

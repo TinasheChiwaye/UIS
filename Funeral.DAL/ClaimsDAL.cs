@@ -18,7 +18,7 @@ namespace Funeral.DAL
         {
             string query = "SaveClaims";
 
-            DbParameter[] ObjParam = new DbParameter[33];
+            DbParameter[] ObjParam = new DbParameter[36];
 
             ObjParam[0] = new DbParameter("@pkiClaimID", DbParameter.DbType.Int, 0, model.pkiClaimID);
             ObjParam[1] = new DbParameter("@fkiMemberID", DbParameter.DbType.Int, 0, model.fkiMemberID);
@@ -53,8 +53,9 @@ namespace Funeral.DAL
             ObjParam[30] = new DbParameter("@ModifiedUser", DbParameter.DbType.VarChar, 0, model.ModifiedUser);
             ObjParam[31] = new DbParameter("@Payout", DbParameter.DbType.Bit, 0, model.Payout);
             ObjParam[32] = new DbParameter("@PayoutValue", DbParameter.DbType.Money, 0, model.PayoutValue);
-
-
+            ObjParam[33] = new DbParameter("@CreatedBy", DbParameter.DbType.Int, 0, model.CreatedBy);
+            ObjParam[34] = new DbParameter("@Email", DbParameter.DbType.NVarChar, 0, model.Email);
+            ObjParam[35] = new DbParameter("@SocietyID", DbParameter.DbType.Int, 0, model.SocietyID == null ? 0 : model.SocietyID);
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
         }
 
@@ -76,10 +77,19 @@ namespace Funeral.DAL
 
         public static DataTable SelectAllClaims(Guid ParlourId)
         {
-            string SP = "SelectAllClaims";
-            DbParameter[] ObjParam = new DbParameter[1];
-            ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
-            return (DbConnection.GetDataTable(CommandType.StoredProcedure, SP, ObjParam));
+
+            if (ParlourId.Equals(Guid.Empty))
+            {
+                return (DbConnection.GetDataTable(CommandType.StoredProcedure, "SelectAllClaimsWithouthParlourId"));
+            }
+            else
+            {
+                string SP = "SelectAllClaims";
+                DbParameter[] ObjParam = new DbParameter[1];
+                ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+                return (DbConnection.GetDataTable(CommandType.StoredProcedure, SP, ObjParam));
+            }
+
         }
 
         public static DataTable SelectAllClaimsByParlourIddt(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder, DateTime DateFrom, DateTime DateTo, string status)
@@ -109,6 +119,7 @@ namespace Funeral.DAL
 
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.Text, query, ObjParam));
         }
+
         public static int DeleteClaimByID(int ID)
         {
             //pkiClaimID
@@ -242,8 +253,6 @@ namespace Funeral.DAL
             ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
             ObjParam[1] = new DbParameter("@ClaimingForMember", DbParameter.DbType.Bit, 0, MainMem);
             ObjParam[2] = new DbParameter("@keyword", DbParameter.DbType.NVarChar, 0, Keyword);
-
-
             return (DbConnection.GetDataReader(CommandType.StoredProcedure, "SelectMembersAndDependencies", ObjParam));
         }
 
@@ -273,6 +282,14 @@ namespace Funeral.DAL
             ObjParam[1] = new DbParameter("@ID", DbParameter.DbType.Int, 0, MemId);
 
             return (DbConnection.GetDataTable(CommandType.StoredProcedure, "selectMemberByPkidAndParlor", ObjParam));
+        }
+        public static DataTable CheckDuplicateClaims(Guid ParlourId, string IdNumber, string PolicyNumber)
+        {
+            DbParameter[] ObjParam = new DbParameter[3];
+            ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+            ObjParam[1] = new DbParameter("@IdNumber", DbParameter.DbType.NVarChar, 0, IdNumber);
+            ObjParam[2] = new DbParameter("@PolicyNumber", DbParameter.DbType.NVarChar, 0, PolicyNumber);
+            return (DbConnection.GetDataTable(CommandType.StoredProcedure, "CheckDuplicateClaims", ObjParam));
         }
         public static SqlDataReader GetPlanDetailsByPlanId(int planid)
         {
@@ -318,11 +335,10 @@ namespace Funeral.DAL
 
         public static int DeleteClaimsdocumentById(int pkiClaimPictureID)
         {
-            string query = "Delete from ClaimDocuments Where pkiClaimPictureID=@pkiClaimPictureID";
+            string query = "DeleteClaimDocuments";
             DbParameter[] ObjParam = new DbParameter[1];
             ObjParam[0] = new DbParameter("@pkiClaimPictureID", DbParameter.DbType.Int, 0, pkiClaimPictureID);
-
-            return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.Text, query, ObjParam));
+            return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
         }
         public static int ClaimDocumentStatusUpdated(int DocumentId, string ApprovedBy, int ClaimId)
         {
@@ -476,12 +492,13 @@ namespace Funeral.DAL
             ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
             return (DbConnection.GetDataTable(CommandType.StoredProcedure, SP, ObjParam));
         }
-        public static DataTable GetClaimDocumentsByClaimId(int fkiClaimID, Guid Parlourid)
+        public static DataTable GetClaimDocumentsByClaimId(int fkiClaimID, Guid Parlourid, string MemberType)
         {
             string query = "GetClaimDocumentsByClaimId";
-            DbParameter[] ObjParam = new DbParameter[2];
+            DbParameter[] ObjParam = new DbParameter[3];
             ObjParam[0] = new DbParameter("@fkiClaimID", DbParameter.DbType.Int, 0, fkiClaimID);
-            ObjParam[1] = new DbParameter("@Parlourid", DbParameter.DbType.UniqueIdentifier, 0, @Parlourid);
+            ObjParam[1] = new DbParameter("@Parlourid", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
+            ObjParam[2] = new DbParameter("@MemberType", DbParameter.DbType.NVarChar, 0, MemberType);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, query, ObjParam);
         }
         public static DataTable GetClaimDocumentsByDocumentId(int pkiClaimPictureID, Guid Parlourid)
@@ -499,7 +516,7 @@ namespace Funeral.DAL
             ObjParam[1] = new DbParameter("@pkiClaimID", DbParameter.DbType.Int, 0, pkiClaimID);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetUploadedDocumentList", ObjParam);
         }
-      
+
         public static int AddClaimFollowUp(ClaimFollowUp claimFollow)
         {
             string query = "AddClaimFollowUp";
@@ -544,6 +561,39 @@ namespace Funeral.DAL
             ObjParam[0] = new DbParameter("@Parlourid", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
             ObjParam[1] = new DbParameter("@pkiClaimPictureID", DbParameter.DbType.Int, 0, pkiClaimPictureID);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetDcoumentFollowUpHistory", ObjParam);
+        }
+        public static int ChangeClaimAssigned(ClaimAssigned claimAssigned)
+        {
+            string query = "ChangeClaimAssigned";
+            DbParameter[] ObjParam = new DbParameter[2];
+            ObjParam[0] = new DbParameter("@AssignedTo", DbParameter.DbType.Int, 0, claimAssigned.NewAssigned);
+            ObjParam[1] = new DbParameter("@pkiClaimID", DbParameter.DbType.Int, 0, claimAssigned.ClaimId);
+            return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
+        }
+        public static int SaveExternalLink(ExternalUserLink external)
+        {
+            string query = "SaveExternalUserLink";
+            DbParameter[] ObjParam = new DbParameter[5];
+            ObjParam[0] = new DbParameter("@ClaimId", DbParameter.DbType.Int, 0, external.ClaimId);
+            ObjParam[1] = new DbParameter("@Email", DbParameter.DbType.NVarChar, 0, external.Email);
+            ObjParam[2] = new DbParameter("@ExternalToken", DbParameter.DbType.UniqueIdentifier, 0, external.ExternalToken);
+            ObjParam[3] = new DbParameter("@parlourId", DbParameter.DbType.UniqueIdentifier, 0, external.parlourId);
+            ObjParam[4] = new DbParameter("@SentBy", DbParameter.DbType.NVarChar, 0, external.SentBy);
+            return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
+        }
+        public static int UpdateExternalLink(Guid ExternalToken, bool TokenAccess)
+        {
+            string query = "UpdateExternalUserLink";
+            DbParameter[] ObjParam = new DbParameter[2];
+            ObjParam[0] = new DbParameter("@ExternalToken", DbParameter.DbType.UniqueIdentifier, 0, ExternalToken);
+            ObjParam[1] = new DbParameter("@TokenAccess", DbParameter.DbType.Bit, 0, TokenAccess);
+            return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
+        }
+        public static DataTable GetExternalLink(Guid ExternalToken)
+        {
+            DbParameter[] ObjParam = new DbParameter[1];
+            ObjParam[0] = new DbParameter("@ExternalToken", DbParameter.DbType.UniqueIdentifier, 0, ExternalToken);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetExternalUserLink", ObjParam);
         }
     }
 }

@@ -41,7 +41,7 @@ namespace Funeral.Model
         }
         public int pkiApplicationID { get; set; }
 
-        [Required(ErrorMessage = "Please enter Company Name")]
+        [Required(ErrorMessage = "Please enter Scheme Name")]
         public string ApplicationName { get; set; }
 
         public string ApplicationLogoPath { get; set; }
@@ -122,9 +122,6 @@ namespace Funeral.Model
         public List<smsTempletModel> SMSSettings { get; set; }
 
         public BankingDetailSending BankDetails { get; set; }
-
-        [Required(ErrorMessage = "Please Enter Claim Email Address")]
-        [RegularExpression(pattern: @"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", ErrorMessage = "Please enter valid Claim email address")]
         public string EmailForClaimNotification { get; set; }
 
 

@@ -46,7 +46,7 @@ namespace Funeral.DAL
         {
             //string query = "SaveFuneral"; New By Mahipatsinh
             string query = "SaveFuneral_New";
-            DbParameter[] ObjParam = new DbParameter[27];
+            DbParameter[] ObjParam = new DbParameter[28];
             ObjParam[0] = new DbParameter("@pkiFuneralID", DbParameter.DbType.Int, 0, model.pkiFuneralID);
             ObjParam[1] = new DbParameter("@FullNames", DbParameter.DbType.NVarChar, 0, model.FullNames);
             ObjParam[2] = new DbParameter("@Surname", DbParameter.DbType.NVarChar, 0, model.Surname);
@@ -74,9 +74,10 @@ namespace Funeral.DAL
             ObjParam[24] = new DbParameter("@BurialOrderNo", DbParameter.DbType.NVarChar, 0, model.BurialOrderNo);
             ObjParam[25] = new DbParameter("@FkiClaimID", DbParameter.DbType.NVarChar, 0, model.FkiClaimID);
             ObjParam[26] = new DbParameter("@MemeberNumber", DbParameter.DbType.NVarChar, 0, model.MemeberNumber);
+            ObjParam[27] = new DbParameter("@MemberType", DbParameter.DbType.NVarChar, 0, model.MemberType);
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
         }
-       
+
         public static int UpdateFuneral(FuneralModel model)
         {
             string query = "SaveFuneral_New";
@@ -336,6 +337,15 @@ namespace Funeral.DAL
             DbParameter[] ObjParam = new DbParameter[1];
             ObjParam[0] = new DbParameter("@pkiClaimID", DbParameter.DbType.Int, 0, ID);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetFuneralByClaimId", ObjParam);
+        }
+        public static int UpdatePolicyStatus_MemberOfDependent(int ClaimId,string IDNumber,Guid parlourid)
+        {
+            DbParameter[] ObjParam = new DbParameter[3];
+            ObjParam[0] = new DbParameter("@FkiClaimID", DbParameter.DbType.Int, 0, ClaimId);
+            ObjParam[1] = new DbParameter("@IDNumber", DbParameter.DbType.NVarChar, 0, IDNumber);
+            ObjParam[2] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, parlourid);
+            return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "UpdatePolicyStatus", ObjParam));
+
         }
 
     }

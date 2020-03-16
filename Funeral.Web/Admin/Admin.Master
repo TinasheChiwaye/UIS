@@ -128,7 +128,8 @@
                                     <asp:Label runat="server" ID="Label2" Text="">Tel:&nbsp 011 321 0194</asp:Label><br />
                                     <asp:Label runat="server" ID="Label3" Text="">Email:&nbsp support@unpluggit.co.za</asp:Label><br />
                                     <asp:Label runat="server" ID="Label4" Text="">&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp   log a Call For Help Desk</asp:Label><br />
-                                </span></span>
+                                </span>
+                                </span>
 
                                 <ul class="dropdown-menu animated fadeInRight m-t-xs">
                                     <li>
@@ -155,11 +156,29 @@
                                     if (item.MVCURL == "#")
                                     {%>
                         <li>
-                            <a href="<%=ResolveUrl("~/Default.aspx")%>"><i class="<%=item.IconClass %>"></i><span class="nav-label "><%=item.PageName %></span></a>
+                            <a href="<%=ResolveUrl("~/Default.aspx")%>"><i class="<%=item.IconClass %>"></i><span class="nav-label "><%=item.PageName %></span><span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <%foreach (var chielditem in RightsModels.Where(x => x.ParentRoleId == item.ID).ToList())
                                     {%>
-                                <li><a id="childmenu<%=item.ID %>" href="<%=ResolveUrl("~"+chielditem.MVCURL)%>"><%=chielditem.PageName %></a></li>
+                                <%if (chielditem.MenuLevel == 1)
+                                    { %>
+                                <li><a id="childmenu<%=item.ID %>" href="<%=ResolveUrl("~" + chielditem.MVCURL)%>"><%=chielditem.PageName %></a></li>
+                                <%}
+                                    else
+                                    {%>
+                                <li>
+                                    <a href="#"><span class="nav-label"><%=chielditem.PageName %></span><span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level">
+
+                                        <%foreach (var thirdLevelitem in RightsModels.Where(x => x.ParentRoleId == chielditem.ID).ToList())
+                                            { %>
+
+                                        <li><a id="childmenu<%=chielditem.ID %>" href="<%=ResolveUrl("~" + thirdLevelitem.MVCURL)%>"><%=thirdLevelitem.PageName %></a></li>
+                                        <%} %>
+                                    </ul>
+                                </li>
+                                <%} %>
+
                                 <%} %>
                             </ul>
                         </li>
@@ -200,7 +219,7 @@
                         </div>
                         <ul class="nav navbar-top-links navbar-right">
                             <li>
-                                <strong>Company name:</strong>&nbsp;<asp:Label runat="server" ID="ltrCompany"></asp:Label>
+                                <strong>Scheme name:</strong>&nbsp;<asp:Label runat="server" ID="ltrCompany"></asp:Label>
                             </li>
                             <li>
                                 <asp:HyperLink NavigateUrl="~/Admin/Login.aspx" runat="server"> <i class="fa fa-fw fa-power-off"></i> Log Out</asp:HyperLink>
@@ -235,32 +254,57 @@
         <script src="<%=ResolveUrl("~/Scripts/plugins/datapicker/bootstrap-datepicker.js") %>"></script>
         <link href='<%=ResolveUrl ("~/Content/plugins/datapicker/datepicker3.css") %>' rel="stylesheet" />
         <script src="<%=ResolveUrl("~/Scripts/plugins/blueimp/jquery.blueimp-gallery.min.js")%>"></script>
+
+
         <asp:ContentPlaceHolder runat="server" ID="ScriptControl">
         </asp:ContentPlaceHolder>
     </form>
     <script>
 
 
-        $(document).ready(function () {
-            $('.nav li').removeClass("active"); // if you want to style the li
-            $('.nav li a').removeClass("active"); // if you want to style a specific a
-            var pageTitle = window.location.pathname.replace(/^.*\/([^/]*)/, "$1");
-            ///// Apply active class to selected page link
-            $('.nav a').each(function () {
-                var arr = $(this).attr('href').toLowerCase().split('.');
-                $(this).removeClass('active');// // if you want to style a specific a
-                $(this).closest('li').removeClass('active');// if you want to style the li
-                $(this).closest('li').closest('ul').removeClass('active in');
-                $("li").removeClass('active');
-                $("li a").removeClass('active');
-                $("ul").removeClass('active in');
-                if (arr[0] == window.location.pathname.toLocaleLowerCase()) {
-                    $(this).addClass('active');// // if you want to style a specific a
-                    $(this).closest('li').addClass('active');// if you want to style the li
-                    $(this).closest('li').closest('ul').addClass('active in');
-                }
+        //$(document).ready(function () {
+        //    $('.nav li').removeClass("active"); // if you want to style the li
+        //    $('.nav li a').removeClass("active"); // if you want to style a specific a
+        //    var pageTitle = window.location.pathname.replace(/^.*\/([^/]*)/, "$1");
+        //    ///// Apply active class to selected page link
+        //    $('.nav a').each(function () {
+        //        var arr = $(this).attr('href').toLowerCase().split('.');
+        //        $(this).removeClass('active');// // if you want to style a specific a
+        //        $(this).closest('li').removeClass('active');// if you want to style the li
+        //        $(this).closest('li').closest('ul').removeClass('active in');
+        //        $("li").removeClass('active');
+        //        $("li a").removeClass('active');
+        //        $("ul").removeClass('active in');
+        //        if (arr[0] == window.location.pathname.toLocaleLowerCase()) {
+        //            $(this).addClass('active');// // if you want to style a specific a
+        //            $(this).closest('li').addClass('active');// if you want to style the li
+        //            $(this).closest('li').closest('ul').addClass('active in');
+        //        }
+        //    });
+        //});
+         $(document).ready(function () {
+                $('.nav li').removeClass("active"); // if you want to style the li
+                $('.nav li a').removeClass("active"); // if you want to style a specific a
+                var pageTitle = window.location.pathname.replace(/^.*\/([^/]*)/, "$1");
+                ///// Apply active class to selected page link
+                $('.nav a').each(function () {
+                    var oldMenu = $(this).attr('href').toLowerCase();
+                    var selectedMenu = window.location.pathname.toLocaleLowerCase() + window.location.search.toLowerCase();
+                    if (oldMenu == selectedMenu) {
+                        $(this).removeClass('active');// // if you want to style a specific a
+                        $(this).closest('li').removeClass('active');// if you want to style the li
+                        $(this).closest('li').closest('ul').removeClass('active in');
+                        $("li").removeClass('active');
+                        $("li a").removeClass('active');
+                        $("ul").removeClass('active in');
+
+                        $(this).addClass('active');// // if you want to style a specific a
+                        $(this).closest('li').addClass('active');// if you want to style the li
+                        $(this).closest('li').closest('ul').addClass('active in');
+                        $(this).closest('li').closest('ul').parents("ul").addClass('active in');
+                    }
+                });
             });
-        });
     </script>
 </body>
 </html>

@@ -4,8 +4,10 @@
 
 @Scripts.Render("~/bundles/jquery")
 <script src="~/Scripts/app/searchdatatable.js"></script>
-<div class="row" id="GroupPaymentAddEdit"></div>
-<div class="row" id="GroupPaymentList"></div>
+<div class="row">
+    <div id="GroupPaymentAddEdit"></div>
+    <div id="GroupPaymentList"></div>
+</div>
 <script>
     var societyId = '@ViewBag.SocietyId';
     var hasRight = '@ViewBag.HasAccess';

@@ -13,7 +13,7 @@ using static Funeral.Web.Areas.Admin.Controllers.MembersController;
 
 namespace Funeral.Web.Areas.Tools.Controllers
 {
-    public class CustomManagementController : BaseAdminController
+    public class CustomManagementController : BaseToolController
     {
         public CustomManagementController() :base(28){
             this.dbPageId = 28;

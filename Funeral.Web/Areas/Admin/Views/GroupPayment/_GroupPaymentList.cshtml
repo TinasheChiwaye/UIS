@@ -44,7 +44,7 @@
 									<thead>
 										<tr>
 											<th class="hidden"></th>
-											<th>Society Name</th>
+											<th>Group Name</th>
                                             <th>Amount</th>
                                             <th>Received By</th>
 											<th>Payment Type</th>
@@ -63,26 +63,26 @@
 	</div>
 
 	<script type="text/javascript">
-		$(document).ready(function () {
-                ConfigureDatatable();
-                InitDataTable();
-                eventConfigs.pageChange.eventName = 'btnPageChanged';
-                eventConfigs.pageChange.domElement = jQuery('#PageSize')[0];
-                eventConfigs.searchClick.eventName = 'btnSearchClicked';
-                eventConfigs.searchClick.domElement = jQuery('#btnSearch')[0];
+        $(document).ready(function () {
+            ConfigureDatatable();
+            InitDataTable();
+            eventConfigs.pageChange.eventName = 'btnPageChanged';
+            eventConfigs.pageChange.domElement = jQuery('#PageSize')[0];
+            eventConfigs.searchClick.eventName = 'btnSearchClicked';
+            eventConfigs.searchClick.domElement = jQuery('#btnSearch')[0];
 
-			$('#PageSize').change(function () {
-                    InitModel();
-                    tableConfigs.table.DataTable().page.len(model1.PageSize).draw();
-                    eventConfigs.pageChange.dispatchEvent();
-                });
-
-			$("#btnSearch").click(function () {
-                    InitModel();
-                    tableConfigs.table.fnDraw();
-                    eventConfigs.searchClick.dispatchEvent();
-                });
+            $('#PageSize').change(function () {
+                InitModel();
+                tableConfigs.table.DataTable().page.len(model1.PageSize).draw();
+                eventConfigs.pageChange.dispatchEvent();
             });
+
+            $("#btnSearch").click(function () {
+                InitModel();
+                tableConfigs.table.fnDraw();
+                eventConfigs.searchClick.dispatchEvent();
+            });
+        });
 
         function ConfigureDatatable(){
 

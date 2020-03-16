@@ -61,7 +61,7 @@ namespace Funeral.Model
         [Required(ErrorMessage = "Please enter first name")]
         [RegularExpression(@"[a-zA-Z ]*$", ErrorMessage = "First Name Enter Only characters")]
         public string FullNames { get; set; }
-
+        public int SocietyId { get; set; }
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Please enter Last name")]
@@ -143,5 +143,7 @@ namespace Funeral.Model
         public int CustomId2 { get; set; }
         public int CustomId3 { get; set; }
         public int FK_MemberId { get; set; }
+        public int ClaimExistCount { get; set; }
+        public string ApplicationName { get; set; }
     }
 }

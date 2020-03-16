@@ -40,14 +40,15 @@ namespace Funeral.BAL
             return FuneralHelper.DataTableMapToList<FamilyDependencyModel>(dr).FirstOrDefault();
         }
 
-        public static MembersViewModel GetAllMembers(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder, string status)
+        public static MembersViewModel GetAllMembers(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder, string status,string BookName)
         {
             try
             {
                 DataSet ds = MembersDAL.GetAllMembersdt(ParlourId, PageSize, PageNum, Keyword, SortBy, SortOrder, status);
                 DataTable dr = ds.Tables[0];
                 MembersViewModel objViewModel = new MembersViewModel();
-                objViewModel.MemberList = FuneralHelper.DataTableMapToList<MembersModel>(dr, true);
+               var membersList = FuneralHelper.DataTableMapToList<MembersModel>(dr, true);
+                objViewModel.MemberList = !string.IsNullOrEmpty(BookName) ? membersList.Where(x => x.MemberSociety.Equals(BookName)).ToList() : membersList;
                 //dr.NextResult();
                 //dr.Read();
                 objViewModel.TotalRecord = objViewModel.MemberList.Count;
@@ -325,27 +326,26 @@ namespace Funeral.BAL
         {
             return MembersDAL.DeleteMemberNote(ID);
         }
-        //public static List<MembersModel> MemberRowImportToMember(string MemberType)
-        public static void MemberRowImportToMember(string memberType,Guid importId)
+        public static void MemberRowImportToMember(string memberType, Guid importId)
         {
             try
             {
                 MembersDAL.MemberRowImportToMember(memberType, importId);
-                //DataTable dr = MembersDAL.MemberRowImportToMember(MemberType);
-                //return FuneralHelper.DataTableMapToList<MembersModel>(dr);
             }
             catch (Exception exc)
             {
                 throw exc;
             }
-
         }
 
+        public static void SaveMemberStaging(string memberType, Guid importId)
+        {
+            MembersDAL.SaveMemberStaging(memberType, importId);
+        }
         public static int GetLastCopiedMemberForDependency()
         {
             return MembersDAL.GetLastCopiedMemberForDependency();
         }
-
         public static void UpdateMemberPolicyStatus(string policyStatus, int memberId)
         {
             MembersDAL.UpdateMemberPolicyStatus(policyStatus, memberId);
@@ -375,5 +375,9 @@ namespace Funeral.BAL
             return FuneralHelper.DataTableMapToList<FamilyDependencyModel>(dr);
         }
 
+        public static void MakeReadyForImportMember(Guid importId)
+        {
+            MembersDAL.ReadyToImportMember(importId);
+        }
     }
 }

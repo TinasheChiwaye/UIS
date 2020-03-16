@@ -267,10 +267,7 @@
                                                 <div class="form-group">
                                                     <label>Citizenship</label>
                                                     <%--<asp:RequiredFieldValidator ValidationGroup="tab4" ControlToValidate="txtInception" ID="RequiredFieldValidator22" ForeColor="red" runat="server" ErrorMessage="*"></asp:RequiredFieldValidator>--%>
-                                                    <asp:DropDownList ID="ddlCitizenship" runat="server" DataTextField="Name" DataValueField="CountryCode" CssClass="form-control m-b">
-                                                            
-                                                           
-                                                    </asp:DropDownList>
+                                                    <asp:DropDownList ID="ddlCitizenship" runat="server" DataTextField="Name" DataValueField="CountryCode" CssClass="form-control m-b"></asp:DropDownList>
                                                     <%--<asp:RequiredFieldValidator ValidationGroup="tab4" ControlToValidate="txtInception" ID="RequiredFieldValidator22" ForeColor="red" runat="server" ErrorMessage="*"></asp:RequiredFieldValidator>--%>
                                                 </div>
                                                 <div class="form-group">
@@ -1497,16 +1494,6 @@
                 Validatedep();
             }
         }
-        function DateComparisionJavascriptFunben() {
-            var idNumberdep = $("#<%=txtDependencyIdNumber.ClientID %>").val();
-            //alert(idNumberdep);
-            var textLengthdep = idNumberdep.length;
-            if (textLengthdep == 13) {
-                // //alert(textLength);
-                Validatedep();
-            }
-        }
-
         function Validatedep() {
 
             var idNumberd = $("#<%=txtDependencyIdNumber.ClientID %>").val();

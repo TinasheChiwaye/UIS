@@ -54,6 +54,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
         [PageRightsAttribute(CurrentPageId = 34)]
         public PartialViewResult List()
         {
+            ViewBag.SocietyLists = CommonBAL.GetSocietyByParlourId(CurrentParlourId);
             ViewBag.HasEditRight = HasEditRight;
             ViewBag.HasDeleteRight = HasDeleteRight;
             Model.Search.PaymentSearchNew search = new Model.Search.PaymentSearchNew();
@@ -73,7 +74,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             if (IsAdministrator)
             {
                 ViewBag.CompanyDropDisplay = true;
-                ViewBag.CompanyList = ToolsSetingBAL.GetAllApplicationList(ParlourId, 1, 0);
+                BindCompanyList("Search");
             }
 
             CultureInfo cInfo = new CultureInfo(info.ToString());
@@ -88,18 +89,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
             var searchResult = new SearchResult<Model.Search.PaymentSearchNew, MembersPaymentModel>(search, new List<MembersPaymentModel>(), o => o.FullNames.Contains(search.SarchText) || o.IDNumber.Contains(search.SarchText) || o.MemeberNumber.Contains(search.SarchText) || o.PolicyStatus.Contains(search.SarchText));
             try
             {
-                if (search.StatusId == Guid.Empty)
-                {
-                    var otherPayment = MemberPaymentBAL.GetAllPayentMembers(ParlourId, "", "", search.PageSize, search.PageNum, search.SortBy, search.SortOrder, "");
-                    return Json(new SearchResult<Model.Search.PaymentSearchNew, MembersPaymentModel>(search, otherPayment.MemberList, o => o.FullNames.Contains(search.SarchText) || o.IDNumber.Contains(search.SarchText) || o.MemeberNumber.Contains(search.SarchText) || o.PolicyStatus.Contains(search.SarchText)));
-                }
-                else
-                {
-                    var otherPayment = MemberPaymentBAL.GetAllPayentMembers(search.StatusId, "", "", search.PageSize, search.PageNum, search.SortBy, search.SortOrder, "");
-                    return Json(new SearchResult<Model.Search.PaymentSearchNew, MembersPaymentModel>(search, otherPayment.MemberList, o => o.FullNames.Contains(search.SarchText) || o.IDNumber.Contains(search.SarchText) || o.MemeberNumber.Contains(search.SarchText) || o.PolicyStatus.Contains(search.SarchText)));
-                }
-
-
+                var otherPayment = MemberPaymentBAL.GetAllPayentMembers(search.StatusId, "", "", search.PageSize, search.PageNum, search.SortBy, search.SortOrder, "", search.BookName);
+                return Json(new SearchResult<Model.Search.PaymentSearchNew, MembersPaymentModel>(search, otherPayment.MemberList, o => o.FullNames.Contains(search.SarchText) || o.IDNumber.Contains(search.SarchText) || o.MemeberNumber.Contains(search.SarchText) || o.PolicyStatus.Contains(search.SarchText)));
             }
             catch (Exception ex)
             {
@@ -131,14 +122,15 @@ namespace Funeral.Web.Areas.Admin.Controllers
                     ViewBag.PolicyStatus = model.PolicyStatus;
                 }
 
-                var policyBalance = model.Currency + " " + Convert.ToDouble(model.Balance) + ".00";
+                var policyBalance = model.Currency + " " + Convert.ToDouble(model.Balance);
                 ViewBag.policyBalance = policyBalance;
-                var latePanelty = model.Currency + " " + Convert.ToDouble(model.LatePaymentPenalty) + ".00";
+                var latePanelty = model.Currency + " " + Convert.ToDouble(model.LatePaymentPenalty);
                 ViewBag.LatePanelty = latePanelty;
-                var totalPremium = model.Currency + " " + Convert.ToDouble(MembersBAL.SumOfPremium(id, ParlourID)) + ".00";
+                var totalPremium = model.Currency + " " + Convert.ToDouble(MembersBAL.SumOfPremium(id, ParlourID));
                 ViewBag.TotalPremium = totalPremium;
                 ViewBag.MemberInvoiceList = MembersBAL.GetInvoicesByMemberID(ParlourID, id);
                 ViewBag.MemberID = model.MemeberNumber;
+                ViewBag.ParlourID = ParlourID;
             }
             var info = CultureInfo.InvariantCulture.Clone() as CultureInfo;
             info.NumberFormat.NumberDecimalSeparator = ".";
@@ -329,7 +321,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
             }
         }
-        public void btnStatement(string memberId)
+        public void btnStatement(string memberId, Guid parlourid)
         {
             Warning[] warnings;
             string[] streamids;
@@ -337,26 +329,22 @@ namespace Funeral.Web.Areas.Admin.Controllers
             string encoding;
             string filenameExtension;
             string filename;
-
             try
             {
                 ReportViewer rpw = new ReportViewer();
                 rpw.ProcessingMode = ProcessingMode.Remote;
                 IReportServerCredentials irsc = new MyReportServerCredentials();
                 rpw.ServerReport.ReportServerCredentials = irsc;
-
                 rpw.ProcessingMode = ProcessingMode.Remote;
                 rpw.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
                 rpw.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/UIS_Customer Payments Statement";
                 ReportParameterCollection reportParameters = new ReportParameterCollection();
-
                 reportParameters.Add(new ReportParameter("MemberID", memberId));//txtMemberNo.Text
-                reportParameters.Add(new ReportParameter("Parlourid", this.ParlourId.ToString()));
+                reportParameters.Add(new ReportParameter("Parlourid", parlourid.ToString()));
                 rpw.ServerReport.SetParameters(reportParameters);
                 string ExportTypeExtensions = "pdf";
                 byte[] bytes = rpw.ServerReport.Render(ExportTypeExtensions, null, out mimeType, out encoding, out ExportTypeExtensions, out streamids, out warnings);
                 filename = string.Format("{0}.{1}", "UIS_Customer Payments Statement", ExportTypeExtensions);
-
                 Response.ClearHeaders();
                 Response.Clear();
                 Response.AddHeader("Content-Disposition", "attachment;filename=" + filename);
@@ -364,17 +352,11 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 Response.BinaryWrite(bytes);
                 Response.Flush();
                 Response.End();
-
-
             }
             catch (Exception exc)
             {
                 //ShowMessage(ref "lblMessage", MessageType.Danger, exc.Message);
             }
-
-
-
         }
-
     }
 }

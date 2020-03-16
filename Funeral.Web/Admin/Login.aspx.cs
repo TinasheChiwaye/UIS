@@ -33,6 +33,7 @@ namespace Funeral.Web.Admin
                     {
 
                         string UserName = username.Text;
+                        Session["UserName"] = UserName;
                         string cookiestr;
                         FormsAuthenticationTicket tkt = new FormsAuthenticationTicket(1, UserName, DateTime.Now,
                             DateTime.Now.AddMinutes(30), false, model.parlourid.ToString() + "|" + model.ApplicationName + "|" + model.Name + "|" + model.PkiUserID + "|" + model.Currency);
@@ -45,6 +46,7 @@ namespace Funeral.Web.Admin
                         try
                         {
                             //Session["SessionVariablesClass"] = serviceClient.tblRightGetAll();
+                            Session["Loginparlourid"] = model.parlourid;
                             Session["SessionVariablesClass"] = BAL.RightsBAL.LoadSideMenu(model.parlourid, model.PkiUserID);
                         }
                         catch { }
@@ -55,17 +57,17 @@ namespace Funeral.Web.Admin
                     else
                     {
                         //  ErrorMessage.InnerHtml = "<div id=\"ErrMsg\" class=\"message error closeable\" ><span class=\"message-close\"></span><h3>Error!<p> Invalid user name of password</p></h3> </div>";
-                        lblMessage.Text = "<div class='ibox-content'><div class='alert alert-Danger'>Invalid user name or password</div>";
+                        lblMessage.Text = "<div class='ibox-content'><div class='alert alert-Danger'>Invalid user name or password</div></div>";
                     }
                 }
                 catch (FaultException<FuneralServiceFault> fault)
                 {
-                    lblMessage.Text = "<div class='ibox-content'><div class='alert alert-Danger'>" + fault.Detail.Message + "</div>";
+                    lblMessage.Text = "<div class='ibox-content'><div class='alert alert-Danger'>" + fault.Detail.Message + "</div></div>";
 
                 }
                 catch (Exception ex)
                 {
-                    lblMessage.Text = "<div class='ibox-content'><div class='alert alert-Danger'>" + ex.Message + "</div>";
+                    lblMessage.Text = "<div class='ibox-content'><div class='alert alert-Danger'>" + ex.Message + "</div></div>";
                     // ErrorMessage.InnerHtml = "<div id=\"ErrMsg\" class=\"message error closeable\" ><span class=\"message-close\"></span><h3>Error!<p>" + ex.Message + "</p></h3> </div>";
                 }
             }

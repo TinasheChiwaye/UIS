@@ -128,6 +128,9 @@ namespace Funeral.Model
         public DateTime? StartDate { get; set; }
 
         public decimal Cover { get; set; }
+        public string MemeberNumber { get; set; }
+
+        public int ClaimExistCount { get; set; }
     }
 
 
