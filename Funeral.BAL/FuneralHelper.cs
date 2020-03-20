@@ -44,7 +44,6 @@ namespace Funeral.BAL
                 obj = Activator.CreateInstance<T>();
                 foreach (PropertyInfo prop in obj.GetType().GetProperties())
                 {
-
                     if (HasColumn(dt, prop.Name))
                     {
                         if (!object.Equals(dr[prop.Name.ToString()], DBNull.Value))
@@ -52,7 +51,6 @@ namespace Funeral.BAL
                             prop.SetValue(obj, dr[prop.Name], null);
                         }
                     }
-
                 }
                 list.Add(obj);
             }
@@ -80,7 +78,5 @@ namespace Funeral.BAL
             } //Still here? Column not found. 
             return false;
         }
-
-       
     }
 }

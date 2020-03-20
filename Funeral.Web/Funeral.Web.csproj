@@ -325,6 +325,7 @@
     <Content Include="Content\plugins\blueimp\img\video-play.svg" />
     <Content Include="Content\plugins\bootstrap-rtl\bootstrap-rtl.css" />
     <Content Include="Content\plugins\bootstrap-rtl\bootstrap-rtl.min.css" />
+    <Content Include="Content\plugins\c3\c3.min.css" />
     <Content Include="Content\plugins\chosen\chosen-sprite%402x.png" />
     <Content Include="Content\plugins\chosen\chosen-sprite.png" />
     <Content Include="Content\plugins\chosen\chosen.css" />
@@ -755,6 +756,7 @@
     <Content Include="Areas\Admin\Views\SchemaPayment\_ReportParametersModal.cshtml" />
     <Content Include="Areas\Admin\Views\SchemaPayment\_ReportEmailSendModal.cshtml" />
     <Content Include="Areas\Admin\Views\SchemaPayment\_ReconReportModal.cshtml" />
+    <Content Include="Areas\Admin\Views\Claims\_ClaimDashboard.cshtml" />
     <None Include="DevDataDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DevDataDataSet.Designer.cs</LastGenOutput>
@@ -926,6 +928,7 @@
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.2.1.min %281%29.js" />
     <Content Include="Scripts\jquery-ui-1.8.20.js" />
     <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
@@ -940,7 +943,14 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\Pages\Common.js" />
+    <Content Include="Scripts\plugins\apexChartBundle\apexcharts.amd.js" />
+    <Content Include="Scripts\plugins\apexChartBundle\apexcharts.common.js" />
+    <Content Include="Scripts\plugins\apexChartBundle\apexcharts.css" />
+    <Content Include="Scripts\plugins\apexChartBundle\apexcharts.esm.js" />
+    <Content Include="Scripts\plugins\apexChartBundle\apexcharts.js" />
+    <Content Include="Scripts\plugins\apexChartBundle\apexcharts.min.js" />
     <Content Include="Scripts\plugins\blueimp\jquery.blueimp-gallery.min.js" />
+    <Content Include="Scripts\plugins\c3\c3.min.js" />
     <Content Include="Scripts\plugins\ChartJScript\Chart.bundle.js" />
     <Content Include="Scripts\plugins\ChartJScript\ChartJS_script.js" />
     <Content Include="Scripts\plugins\ChartJScript\jquery.min.js" />
@@ -1143,6 +1153,7 @@
     <Content Include="Scripts\plugins\codemirror\mode\z80\z80.js" />
     <Content Include="Scripts\plugins\colorpicker\bootstrap-colorpicker.min.js" />
     <Content Include="Scripts\plugins\cropper\cropper.min.js" />
+    <Content Include="Scripts\plugins\d3\d3.min.js" />
     <Content Include="Scripts\plugins\datapicker\bootstrap-datepicker.js" />
     <Content Include="Scripts\plugins\datapicker\bootstrap-timepicker.js" />
     <Content Include="Scripts\plugins\datapicker\bootstrap-timepicker.min.js" />
@@ -1350,6 +1361,7 @@
     <Content Include="Scripts\plugins\video\responsible-video.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\plugins\d3\LICENSE" />
     <None Include="Scripts\_references.js" />
     <Content Include="Global.asax" />
     <Content Include="Properties\DataSources\Funeral.Model.MembersModel.datasource" />

@@ -158,10 +158,19 @@ namespace Funeral.BAL
             DataTable dr = ClaimsDAL.GetClaimStatusHistories(ClaimId);
             return FuneralHelper.DataTableMapToList<ClaimStatusHistory>(dr);
         }
-        public static List<ClaimStatusCount> GetStatusCountList_Dashboard(Guid ParlourId)
+        public static List<ClaimStatusCount> GetStatusCountList_Dashboard(Guid ParlourId, int BookId)
         {
-            DataTable dr = ClaimsDAL.GetStatusCountList_Dashboard(ParlourId);
+            DataTable dr = ClaimsDAL.GetStatusCountList_Dashboard(ParlourId, BookId);
             return FuneralHelper.DataTableMapToList<ClaimStatusCount>(dr);
+        }
+        public static ClaimDashboard claimDashboardData(Guid ParlourId, int BookId)
+        {
+            ClaimDashboard claimDashboard = new ClaimDashboard();
+            claimDashboard.claimStatuses = FuneralHelper.DataTableMapToList<ClaimStatusCount>(ClaimsDAL.GetStatusCountList_Dashboard(ParlourId, BookId));
+            claimDashboard.claimDashboardLabel = FuneralHelper.DataTableMapToList<ClaimDashboardLabel>(ClaimsDAL.GetClaimDashboarLabel(ParlourId, BookId)).FirstOrDefault();
+            claimDashboard.claimCostGraphs = FuneralHelper.DataTableMapToList<ClaimCostGraph>(ClaimsDAL.ClaimCostGraph(ParlourId, BookId));
+            claimDashboard.claimPolicyGraph = FuneralHelper.DataTableMapToList<ClaimPolicyGraph>(ClaimsDAL.ClaimDashboardGraph_ByPolicy(ParlourId, BookId));
+            return claimDashboard;
         }
         public static bool SendMail_StatusChanged(string ToEmail, string FromEmail, string ApplicationName, string Subject, string msg)
         {
