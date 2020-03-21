@@ -365,7 +365,7 @@
                 success: function (response) {
                     ddlCustomers.empty().append('<option selected="selected" value="0">Please select</option>');
                     jQuery.each(response, function () {
-                        ddlCustomers.append(jQuery("<option></option>").val(this['Value']).html(this['Text']));
+                        ddlCustomers.append(jQuery("<option></option>").val(this['Text']).html(this['Text']));
                     });
                 },
                 failure: function (response) {

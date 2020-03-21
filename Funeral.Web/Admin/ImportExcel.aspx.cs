@@ -349,6 +349,7 @@ namespace Funeral.Web.Admin
                     //{
                     //    ShowMessage(ref lblMessage, MessageType.Danger, "Record could not imported");
                     //}
+                    ShowMessage(ref lblMessage, MessageType.Success, "Data is ready for import");
                 }
                 else
                 {
@@ -531,6 +532,7 @@ namespace Funeral.Web.Admin
                     hdnMemberName.Value = getHistory.MemberType;
                     txtMainMemberName.Text = getHistory.MemberType;
                     BindImportedMembers(getHistory.NewImportedId);
+                    btnConfirmAndSubmit.Enabled = getHistory.ReadyToImport = true ? false : true;
                 }
             }
             catch (Exception e)

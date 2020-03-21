@@ -130,7 +130,6 @@ namespace Funeral.DAL
 
         public static int AddPayments(MembersPaymentDetailsModel ModelPayment, bool IsJoiningFee)
         {
-
             int returnValue = 0;
             int invNumber = 0;
             DataSet dsData = GetInvoiceNumberByParlourID(ModelPayment.ParlourId);
@@ -143,9 +142,7 @@ namespace Funeral.DAL
                 returnValue = 0;
                 return returnValue;
             }
-
             DataTable dtMember = SearchMemberIDByMemberNo(ModelPayment.MemeberNumber, "", ModelPayment.ParlourId);
-
             if (dtMember.Rows.Count > 0 && ModelPayment.pkiMemberID != 0)
             {
 
@@ -199,9 +196,7 @@ namespace Funeral.DAL
                 DbParameter[] ObjNotesParams = new DbParameter[2];
                 ObjNotesParams[0] = new DbParameter("@pkiMemberid", DbParameter.DbType.Int, 0, ModelPayment.pkiMemberID);
                 ObjNotesParams[1] = new DbParameter("@PolicyStatus", DbParameter.DbType.VarChar, 0, PolicyStatus);
-                returnValue = Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "UpdateMemberPolicy", ObjNotesParams));
-
-
+                Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "UpdateMemberPolicy", ObjNotesParams));
                 AddAudit(ModelPayment.ReceivedBy, ModelPayment.ParlourId, "AddPayments  MemberNumber=('" + ModelPayment.MemeberNumber + "')");
             }
             return returnValue;

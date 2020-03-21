@@ -26,6 +26,7 @@ namespace Funeral.Model
         public string Status { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
+        public bool ReadyToImport { get; set; }
 
     }
 }

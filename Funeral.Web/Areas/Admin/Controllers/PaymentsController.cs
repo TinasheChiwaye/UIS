@@ -154,7 +154,16 @@ namespace Funeral.Web.Areas.Admin.Controllers
             data.ParlourId = ParlourId;
             data.NextPaymentDate = Convert.ToDateTime(data.PaymentDate).AddMonths(Convert.ToInt32(data.MonthOwing));
             var paymentId = MemberPaymentBAL.AddPayments(data, true);
-            return Json("Payment added successfully.", JsonRequestBehavior.AllowGet);
+            if (paymentId > 0)
+            {
+                TempData["message"] = ShowMessage(MessageType.Success, "Payment added successfully");
+                return Json("Payment added successfully.", JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                TempData["message"] = ShowMessage(MessageType.Danger, "Payment not added successfully");
+                return Json("Payment not added successfully.", JsonRequestBehavior.AllowGet);
+            }
         }
         public ActionResult PrintPaymentReceipt(int id, int Type, string PolicyNumber, string DatePaid, string AmountPaid, string PaidBy, string ReceivedBy, string MonthPaid, int memberId, Guid parlourId)
         {
