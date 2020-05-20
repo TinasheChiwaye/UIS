@@ -755,6 +755,7 @@
     <Content Include="Areas\Admin\Views\SchemaPayment\_ReportParametersModal.cshtml" />
     <Content Include="Areas\Admin\Views\SchemaPayment\_ReportEmailSendModal.cshtml" />
     <Content Include="Areas\Admin\Views\SchemaPayment\_ReconReportModal.cshtml" />
+    <Content Include="Areas\Admin\Views\DebitOrder\Index.cshtml" />
     <None Include="DevDataDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DevDataDataSet.Designer.cs</LastGenOutput>
@@ -1961,6 +1962,7 @@
     <Compile Include="Areas\Admin\Controllers\CarTrackController.cs" />
     <Compile Include="Areas\Admin\Controllers\ClaimsController.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DebitOrderController.cs" />
     <Compile Include="Areas\Admin\Controllers\ErrorController.cs" />
     <Compile Include="Areas\Admin\Controllers\FuneralController.cs" />
     <Compile Include="Areas\Admin\Controllers\GroupPaymentController.cs" />

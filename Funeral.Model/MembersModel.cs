@@ -23,6 +23,13 @@ namespace Funeral.Model
             Address3 = string.Empty;
             Address4 = string.Empty;
             Code = string.Empty;
+            //New data feilds [Tab 2] - Postal Address
+            Address1_Post = string.Empty;
+            Address2_Post = string.Empty;
+            Address3_Post = string.Empty;
+            Address4_Post = string.Empty;
+            Code_Post = string.Empty;
+            //end
             MemeberNumber = string.Empty;
             MemberSociety = string.Empty;
             fkiPlanID = 1;
@@ -100,7 +107,13 @@ namespace Funeral.Model
         public string Address3 { get; set; }
         public string Address4 { get; set; }
         public string Code { get; set; }
-
+        //New Data - [Tab 2] Address
+        public string Address1_Post { get; set; }
+        public string Address2_Post { get; set; }
+        public string Address3_Post { get; set; }
+        public string Address4_Post { get; set; }
+        public string Code_Post { get; set; }
+        //end
         public string MemeberNumber { get; set; }
 
         public string MemberSociety { get; set; }

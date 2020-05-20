@@ -15,7 +15,7 @@ namespace Funeral.DAL
             {
                 AdditionalMemberInfoModel model1 = new AdditionalMemberInfoModel();
                 string query = "SaveMembers";
-                DbParameter[] ObjParam = new DbParameter[51];
+                DbParameter[] ObjParam = new DbParameter[56];
                 ObjParam[0] = new DbParameter("@pkiMemberID", DbParameter.DbType.Int, 0, model.pkiMemberID);
                 ObjParam[1] = new DbParameter("@CreateDate", DbParameter.DbType.DateTime, 0, System.DateTime.Now);
                 ObjParam[2] = new DbParameter("@MemberType", DbParameter.DbType.NVarChar, 0, model.MemberType);
@@ -37,7 +37,7 @@ namespace Funeral.DAL
                 ObjParam[17] = new DbParameter("@MemberSociety", DbParameter.DbType.NVarChar, 0, String.IsNullOrWhiteSpace(model.MemberSociety) ? (object)DBNull.Value : (object)model.MemberSociety);
                 ObjParam[18] = new DbParameter("@fkiPlanID", DbParameter.DbType.Int, 0, model.fkiPlanID);
                 ObjParam[19] = new DbParameter("@Active", DbParameter.DbType.Bit, 0, model.Active);
-
+                
                 ObjParam[20] = new DbParameter("@InceptionDate", DbParameter.DbType.DateTime, 0, model.InceptionDate);
                 ObjParam[21] = new DbParameter("@Claimnumber", DbParameter.DbType.NVarChar, 0, String.IsNullOrWhiteSpace(model.Claimnumber) ? (object)DBNull.Value : (object)model.Claimnumber);
                 ObjParam[22] = new DbParameter("@PolicyStatus", DbParameter.DbType.NVarChar, 0, String.IsNullOrWhiteSpace(model.PolicyStatus) ? (object)DBNull.Value : (object)model.PolicyStatus);
@@ -74,6 +74,13 @@ namespace Funeral.DAL
                 ObjParam[48] = new DbParameter("@CustomId1", DbParameter.DbType.Int, 0, model.CustomId1);
                 ObjParam[49] = new DbParameter("@CustomId2", DbParameter.DbType.Int, 0, model.CustomId2);
                 ObjParam[50] = new DbParameter("@CustomId3", DbParameter.DbType.Int, 0, model.CustomId3);
+                //New data feilds [Tab 2] - Postal Address
+                ObjParam[51] = new DbParameter("@Address1_Post", DbParameter.DbType.NVarChar, 0, String.IsNullOrWhiteSpace(model.Address1) ? (object)DBNull.Value : (object)model.Address1_Post);
+                ObjParam[52] = new DbParameter("@Address2_Post", DbParameter.DbType.NVarChar, 0, String.IsNullOrWhiteSpace(model.Address2) ? (object)DBNull.Value : (object)model.Address2_Post);
+                ObjParam[53] = new DbParameter("@Address3_Post", DbParameter.DbType.NVarChar, 0, String.IsNullOrWhiteSpace(model.Address3) ? (object)DBNull.Value : (object)model.Address3_Post);
+                ObjParam[54] = new DbParameter("@Address4_Post", DbParameter.DbType.NVarChar, 0, String.IsNullOrWhiteSpace(model.Address4) ? (object)DBNull.Value : (object)model.Address4_Post);
+                ObjParam[55] = new DbParameter("@Code_Post", DbParameter.DbType.NVarChar, 0, String.IsNullOrWhiteSpace(model.Code) ? (object)DBNull.Value : (object)model.Code_Post);
+
                 return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
             }
             catch (Exception ex)

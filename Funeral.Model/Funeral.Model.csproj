@@ -78,6 +78,7 @@
     <Compile Include="BankModel.cs" />
     <Compile Include="BaseViewModel.cs" />
     <Compile Include="Base\BaseResult.cs" />
+    <Compile Include="BatchPaymentlistModel.cs" />
     <Compile Include="Beneficiary_model.cs" />
     <Compile Include="BranchModel.cs" />
     <Compile Include="ChangeStatusReason.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="CustomDetails.cs" />
     <Compile Include="CustomDetailsEnum.cs" />
     <Compile Include="Dashboard.cs" />
+    <Compile Include="DebitTransactionListModel.cs" />
     <Compile Include="ExpensesModel.cs" />
     <Compile Include="ExternalUserLink.cs" />
     <Compile Include="FamilyDependencyModel.cs" />
