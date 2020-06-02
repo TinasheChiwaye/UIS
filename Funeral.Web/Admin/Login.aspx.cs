@@ -31,7 +31,8 @@ namespace Funeral.Web.Admin
                     AdminModel model = BAL.AdminBAL.AdminLogin(username.Text, password.Text);
                     if (model != null)
                     {
-
+                        string message = "User Login " + model.Name;
+                        BAL.CommonBAL.SaveAudit(username.Text, model.parlourid, message);
                         string UserName = username.Text;
                         Session["UserName"] = UserName;
                         string cookiestr;

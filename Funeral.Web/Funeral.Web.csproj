@@ -14,7 +14,7 @@
     <RootNamespace>Funeral.Web</RootNamespace>
     <AssemblyName>Funeral.Web</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -757,6 +757,14 @@
     <Content Include="Areas\Admin\Views\SchemaPayment\_ReportEmailSendModal.cshtml" />
     <Content Include="Areas\Admin\Views\SchemaPayment\_ReconReportModal.cshtml" />
     <Content Include="Areas\Admin\Views\Claims\_ClaimDashboard.cshtml" />
+    <Content Include="Areas\Client\Views\web.config" />
+    <Content Include="Areas\Client\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Client\Views\Login\Index.cshtml" />
+    <Content Include="Areas\Client\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\Client\Views\Dashboard\_DashboardCharts.cshtml" />
+    <Content Include="Areas\Client\Views\Dashboard\_DashboardModal.cshtml" />
+    <Content Include="Areas\Client\Views\Dashboard\_PolicyPremiumList.cshtml" />
+    <Content Include="Areas\Client\Views\MyPolicy\Index.cshtml" />
     <None Include="DevDataDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DevDataDataSet.Designer.cs</LastGenOutput>
@@ -1995,6 +2003,11 @@
     <Compile Include="Areas\Admin\Models\ViewModel\MembersOtherPaymentDetailsVM.cs" />
     <Compile Include="Areas\Admin\Models\ViewModel\PrintViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ViewModel\TombStoneServiceVM.cs" />
+    <Compile Include="Areas\Client\ClientAreaRegistration.cs" />
+    <Compile Include="Areas\Client\Controllers\BaseClientController.cs" />
+    <Compile Include="Areas\Client\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Client\Controllers\LoginController.cs" />
+    <Compile Include="Areas\Client\Controllers\MyPolicyController.cs" />
     <Compile Include="Areas\Tools\Controllers\AddOnProductSetupController.cs" />
     <Compile Include="Areas\Tools\Controllers\BaseAdminController.cs" />
     <Compile Include="Areas\Tools\Controllers\ClaimToolsController.cs" />
@@ -2295,6 +2308,7 @@
     <Folder Include="Areas\Admin\Views\CarTrack\" />
     <Folder Include="Areas\Admin\Views\Parlour\" />
     <Folder Include="Areas\Admin\Views\Report\" />
+    <Folder Include="Areas\Client\Models\" />
     <Folder Include="Areas\Tools\Views\Underwriter\" />
     <Folder Include="ErrorLog\" />
     <Folder Include="Models\" />
@@ -2426,7 +2440,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>3863</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:3863/</IISUrl>
+          <IISUrl>http://localhost/Funeral.Web</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

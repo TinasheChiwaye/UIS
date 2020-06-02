@@ -497,5 +497,9 @@ namespace Funeral.BAL
             DataTable dr = CommonDAL.GetClaimReasonByClaimStatus(ClaimStatus, Parlourid);
             return FuneralHelper.DataTableMapToList<ClaimReasonModel>(dr);
         }
+        public static int SaveAudit(string Username, Guid ParlourId, string AuditDesc)
+        {
+            return CommonDAL.AddAudit(Username, ParlourId, AuditDesc);
+        }
     }
 }

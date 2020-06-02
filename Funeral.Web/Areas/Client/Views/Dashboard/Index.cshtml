@@ -1,0 +1,94 @@
+﻿@model Funeral.Model.Dashboard
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/app/searchdatatable.js"></script>
+<script src="~/Scripts/plugins/ChartJScript/ChartJS_script.js"></script>
+<script type="text/javascript">
+     var IsDisplayDashboarTable = @Html.Raw(Json.Encode(Model.IsDisplayDashboarTable));
+    if (IsDisplayDashboarTable == true) {
+      function LoadFuneralList() {
+        jQuery.ajax({
+            url: '@Url.Action("List", "Dashboard", new {},Request.Url.Scheme)',
+            type: "Get",
+            contentType: "application/html; charset=utf-8",
+            dataType: 'html'
+        })
+            .success(function (result) {
+                    jQuery("#DashboardList").html(result);
+        })
+        .error(function (xhr, status) {
+            alert(status);
+        });
+    }
+    }
+</script>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox ">
+            <div class="ibox-title">
+                <h5>Funeral Policy Admin</h5>
+                <asp:Label ID="lblMessage"></asp:Label>
+            </div>
+            <div class="ibox-content" id="DivpaymentCollection">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="widget style1 red-bg">
+                            <div class="row">
+                                <div class="col-sm-4 text-left">
+                                    <i class="fa fa-envelope-o fa-5x"></i>
+                                </div>
+                                <div class="col-sm-8 text-right">
+                                    <span>SMS Credits</span>
+                                    <h2 class="font-bold" id="OpenModel">
+                                        <label id="lblTotalSMSCreditsCount" data-toggle="modal" data-target="#divSMSTopupModal">@Model.TotalSMSCreditsCount</label>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="widget style1 red-bg">
+                            <div class="row">
+                                <div class="col-sm-4 text-left">
+                                    <i class="fa fa-bell fa-5x"></i>
+                                </div>
+                                <div class="col-sm-8 text-right">
+                                    <span>Outstanding Payments</span>
+                                    <h2 class="font-bold">
+                                        <label id="lblOutstandingPaymentsCount" data-toggle="modal" data-target="#divOutstandingSendMessages">@Model.OutstandingPaymentsCount</label>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="widget style1 red-bg">
+                            <div class="row">
+                                <div class="col-sm-4 text-left">
+                                    <i class="fa fa-trophy fa-5x"></i>
+                                </div>
+                                <div class="col-sm-8 text-right">
+                                    <span>Premium Collected</span>
+                                    <h2 class="font-bold">
+                                        <label id="lblTodayTotalPayment" data-toggle="modal" data-target="#divGenerateCashUpReport_FromDashboard">@Model.TodayTotalPayment</label>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ibox-content">
+                @{ Html.RenderPartial("~/Areas/Admin/Views/Dashboard/_DashboardCharts.cshtml", Model.dashboardChart); }
+            </div>
+
+            <div class="ibox-content">
+                <div class="row" id="DashboardList"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

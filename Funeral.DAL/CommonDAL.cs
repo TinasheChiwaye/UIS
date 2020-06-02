@@ -78,5 +78,13 @@ namespace Funeral.DAL
             ObjParam[1] = new DbParameter("@Parlourid", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetClaimReasonByClaimStatus", ObjParam);
         }
+        public static int AddAudit(string strUserName, Guid pgParlourID, string actionDesc)
+        {
+            DbParameter[] ObjParam = new DbParameter[3];
+            ObjParam[0] = new DbParameter("@strUserName", DbParameter.DbType.VarChar, 0, strUserName);
+            ObjParam[1] = new DbParameter("@pgParlourID", DbParameter.DbType.UniqueIdentifier, 0, pgParlourID);
+            ObjParam[2] = new DbParameter("@actionDesc", DbParameter.DbType.VarChar, 0, actionDesc);
+            return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "AddAudit", ObjParam));
+        }
     }
 }
