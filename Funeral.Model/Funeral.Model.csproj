@@ -97,6 +97,8 @@
     <Compile Include="CustomDetails.cs" />
     <Compile Include="CustomDetailsEnum.cs" />
     <Compile Include="Dashboard.cs" />
+    <Compile Include="DebitBatchListModel.cs" />
+    <Compile Include="DebitOrderTransactionModel.cs" />
     <Compile Include="DebitTransactionListModel.cs" />
     <Compile Include="ExpensesModel.cs" />
     <Compile Include="ExternalUserLink.cs" />

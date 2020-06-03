@@ -227,6 +227,7 @@
     <Content Include="Admin\AddTax.aspx" />
     <Content Include="Admin\CarTrack.aspx" />
     <Content Include="Admin\Claims.aspx" />
+    <Content Include="Admin\DebitOrder.aspx" />
     <Content Include="Admin\FuneralPayment.aspx" />
     <Content Include="Admin\FuneralServicesSelect.aspx" />
     <Content Include="Admin\HtmlPage1.html" />
@@ -1608,6 +1609,13 @@
     </Compile>
     <Compile Include="Admin\Error.aspx.designer.cs">
       <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\DebitOrder.aspx.cs">
+      <DependentUpon>DebitOrder.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\DebitOrder.aspx.designer.cs">
+      <DependentUpon>DebitOrder.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\FuneralPayment.aspx.cs">
       <DependentUpon>FuneralPayment.aspx</DependentUpon>

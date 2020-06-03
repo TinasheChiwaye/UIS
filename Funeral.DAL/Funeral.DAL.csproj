@@ -67,6 +67,7 @@
     <Compile Include="ClaimsDAL.cs" />
     <Compile Include="CommonDAL.cs" />
     <Compile Include="CustomDetailsDAL.cs" />
+    <Compile Include="DebitOrderTransactionsDAL.cs" />
     <Compile Include="FuneralDAL.cs" />
     <Compile Include="FuneralPackageDAL.cs" />
     <Compile Include="Helper\DatabaseFactory.cs" />

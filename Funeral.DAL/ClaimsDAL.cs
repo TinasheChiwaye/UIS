@@ -349,7 +349,7 @@ namespace Funeral.DAL
             ObjParam[2] = new DbParameter("@ApprovedBy", DbParameter.DbType.NVarChar, 0, ApprovedBy);
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
 
-            return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.Text, query, ObjParam));
+            //return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.Text, query, ObjParam));
         }
         public static SqlDataReader SelectClaimsDocumentsByPKId(int DocumentId)
         {
