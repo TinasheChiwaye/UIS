@@ -51,7 +51,7 @@ namespace Funeral.Model
         public int pkiFuneralID { get; set; }
         public int FkiClaimID { get; set; }
         public string Title { get; set; }
-        [Required(ErrorMessage = "The First name is required")]
+        [Required(ErrorMessage = "The full name is required")]
         public string FullNames { get; set; }
         [Required(ErrorMessage = "The Surname is required")]
         public string Surname { get; set; }

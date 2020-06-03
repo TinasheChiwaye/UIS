@@ -60,7 +60,7 @@ namespace Funeral.Model
         public string CourseOfDearth { get; set; }
         public Boolean HostingFuneral { get; set; }
         public string ClaimantTitle { get; set; }
-        [Required(ErrorMessage = "The Claimant First name is required")]
+        [Required(ErrorMessage = "The Claimant full name is required")]
         public string ClaimantFullname { get; set; }
         [Required(ErrorMessage = "The Claimant Surname is required")]
         public string ClaimantSurname { get; set; }

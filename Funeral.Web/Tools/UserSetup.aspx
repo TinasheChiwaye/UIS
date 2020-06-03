@@ -32,15 +32,16 @@
                 <div class="ibox-content">
                     <div class="row">
                         <div class="col-lg-6">
-                            <div class="form-group">
-                                <label>Surname <em>*</em> </label>
-                                <asp:TextBox MaxLength="50" runat="server" ID="txtSurname" name="Surname" type="text" class="form-control"></asp:TextBox>
-                                <asp:RequiredFieldValidator Display="None" ValidationGroup="UserSetup" ControlToValidate="txtSurname" ID="RequiredFieldValidator1" ForeColor="red" runat="server" ErrorMessage="Please enter Surname"></asp:RequiredFieldValidator>
-                            </div>
+                            
                             <div class="form-group">
                                 <label>Full Name <em>*</em>  </label>
                                 <asp:TextBox MaxLength="50" runat="server" ID="txtFullName" name="FullName" type="text" class="form-control"></asp:TextBox>
                                 <asp:RequiredFieldValidator Display="None" ValidationGroup="UserSetup" ControlToValidate="txtFullName" ID="RequiredFieldValidator2" ForeColor="red" runat="server" ErrorMessage="Please enter Full Name"></asp:RequiredFieldValidator>
+                            </div>
+                            <div class="form-group">
+                                <label>Surname <em>*</em> </label>
+                                <asp:TextBox MaxLength="50" runat="server" ID="txtSurname" name="Surname" type="text" class="form-control"></asp:TextBox>
+                                <asp:RequiredFieldValidator Display="None" ValidationGroup="UserSetup" ControlToValidate="txtSurname" ID="RequiredFieldValidator1" ForeColor="red" runat="server" ErrorMessage="Please enter Surname"></asp:RequiredFieldValidator>
                             </div>
                             <div class="form-group">
                                 <label>ID Number/ passport Number&nbsp; </label>

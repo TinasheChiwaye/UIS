@@ -102,7 +102,7 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label>Main Member Name</label>
-                                <asp:TextBox runat="server" placeholder="Type Main Member Name" ID="txtMainMemberName" name="txtEmail" type="text" class="form-control"></asp:TextBox>
+                                <asp:TextBox runat="server" placeholder="Type the main member name" ID="txtMainMemberName" name="txtEmail" Text="Principal Member" type="text" class="form-control"></asp:TextBox>
                                 <asp:RequiredFieldValidator ValidationGroup="ImportDetail" ControlToValidate="txtMainMemberName" ID="RequiredFieldValidator1" ForeColor="red" runat="server" ErrorMessage="Please Enter Name"></asp:RequiredFieldValidator>
                             </div>
                         </div>
@@ -149,7 +149,7 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Excel">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtDependentType" Style="width: 200px;" runat="server"></asp:TextBox>
+                                                <asp:TextBox ID="txtDependentType" Text='<%# Eval("UserTypeName") %>' Style="width: 200px;" runat="server"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>

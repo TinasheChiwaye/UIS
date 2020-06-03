@@ -208,16 +208,16 @@
 
 
                                                 <div class="form-group">
-                                                    <label>Last Name  <em>*</em> </label>
+                                                    <label>Surname <em>*</em> </label>
                                                     <asp:TextBox MaxLength="25" runat="server" ID="txtLastName" name="name" type="text" class="form-control"></asp:TextBox>
-                                                    <asp:RequiredFieldValidator Display="None" ValidationGroup="tab1" ControlToValidate="txtLastName" ID="RequiredFieldValidator1" ForeColor="red" runat="server" ErrorMessage="Please enter Last name"></asp:RequiredFieldValidator>
-                                                    <asp:RegularExpressionValidator Display="None" ID="RegExp1" ValidationGroup="tab1" runat="server" ErrorMessage="Last Name Enter Only characters" ControlToValidate="txtLastName" ValidationExpression="[a-zA-Z ]*$" />
+                                                    <asp:RequiredFieldValidator Display="None" ValidationGroup="tab1" ControlToValidate="txtLastName" ID="RequiredFieldValidator1" ForeColor="red" runat="server" ErrorMessage="Please enter Surname"></asp:RequiredFieldValidator>
+                                                    <asp:RegularExpressionValidator Display="None" ID="RegExp1" ValidationGroup="tab1" runat="server" ErrorMessage="Surname Enter Only characters" ControlToValidate="txtLastName" ValidationExpression="[a-zA-Z ]*$" />
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>First Name  <em>*</em>  </label>
+                                                    <label>full name<em>*</em>  </label>
                                                     <asp:TextBox MaxLength="25" runat="server" ID="txtFirstname" name="name" type="text" class="form-control"></asp:TextBox>
-                                                    <asp:RequiredFieldValidator Display="None" ValidationGroup="tab1" ControlToValidate="txtFirstName" ID="RequiredFieldValidator2" ForeColor="red" runat="server" ErrorMessage="Please enter first name"></asp:RequiredFieldValidator>
-                                                    <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator1" ValidationGroup="tab1" runat="server" ControlToValidate="txtFirstname" ErrorMessage="First Name Enter Only characters" ValidationExpression="[a-zA-Z ]*$" />
+                                                    <asp:RequiredFieldValidator Display="None" ValidationGroup="tab1" ControlToValidate="txtFirstName" ID="RequiredFieldValidator2" ForeColor="red" runat="server" ErrorMessage="Please enter full name"></asp:RequiredFieldValidator>
+                                                    <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator1" ValidationGroup="tab1" runat="server" ControlToValidate="txtFirstname" ErrorMessage="full name Enter Only characters" ValidationExpression="[a-zA-Z ]*$" />
                                                 </div>
                                                 <div class="form-group">
                                                     <label>ID Number <em>*</em>  </label>
@@ -723,17 +723,17 @@
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
-                                                                    <label>Last Name <em>*</em></label>
-                                                                    <asp:TextBox MaxLength="50" runat="server" ID="txtDependencyLastName" placeholder="Enter Last Name" name="name" type="text" class="form-control"></asp:TextBox>
-                                                                    <asp:RequiredFieldValidator ValidationGroup="tab5" ControlToValidate="txtDependencyLastName" ID="RequiredFieldValidator19" ForeColor="red" runat="server" Display="None" ErrorMessage="Please enter dependency last name"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator4" ValidationGroup="tab5" runat="server" ErrorMessage="Last Name Enter Only characters" ControlToValidate="txtDependencyLastName" ValidationExpression="[a-zA-Z ]*$" />
+                                                                    <label>Surname <em>*</em></label>
+                                                                    <asp:TextBox MaxLength="50" runat="server" ID="txtDependencyLastName" placeholder="Enter Surname" name="name" type="text" class="form-control"></asp:TextBox>
+                                                                    <asp:RequiredFieldValidator ValidationGroup="tab5" ControlToValidate="txtDependencyLastName" ID="RequiredFieldValidator19" ForeColor="red" runat="server" Display="None" ErrorMessage="Please enter dependency Surname"></asp:RequiredFieldValidator>
+                                                                    <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator4" ValidationGroup="tab5" runat="server" ErrorMessage="Surname Enter Only characters" ControlToValidate="txtDependencyLastName" ValidationExpression="[a-zA-Z ]*$" />
                                                                 </div>
 
                                                                 <div class="form-group">
-                                                                    <label>First Name <em>*</em></label>
-                                                                    <asp:TextBox MaxLength="50" runat="server" ID="txtDependencyFirstName" placeholder="Enter First Name" name="name" type="text" class="form-control"></asp:TextBox>
-                                                                    <asp:RequiredFieldValidator ValidationGroup="tab5" ControlToValidate="txtDependencyFirstName" ID="RequiredFieldValidator29" ForeColor="red" runat="server" ErrorMessage="Please enter dependency first name" Display="None"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator5" ValidationGroup="tab5" runat="server" ErrorMessage="First Name Enter Only characters" ControlToValidate="txtDependencyFirstName" ValidationExpression="[a-zA-Z ]*$" />
+                                                                    <label>full name <em>*</em></label>
+                                                                    <asp:TextBox MaxLength="50" runat="server" ID="txtDependencyFirstName" placeholder="Enter full name" name="name" type="text" class="form-control"></asp:TextBox>
+                                                                    <asp:RequiredFieldValidator ValidationGroup="tab5" ControlToValidate="txtDependencyFirstName" ID="RequiredFieldValidator29" ForeColor="red" runat="server" ErrorMessage="Please enter dependency full name" Display="None"></asp:RequiredFieldValidator>
+                                                                    <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator5" ValidationGroup="tab5" runat="server" ErrorMessage="full name Enter Only characters" ControlToValidate="txtDependencyFirstName" ValidationExpression="[a-zA-Z ]*$" />
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label>ID Number <em></em></label>
@@ -1820,18 +1820,18 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label>Last Name <em>*</em></label>
-                                <asp:TextBox MaxLength="50" runat="server" ID="txtDependencyCopiedPolicyLastName" placeholder="Enter Last Name" name="name" type="text" class="form-control"></asp:TextBox>
-                                <%-- <asp:RequiredFieldValidator ValidationGroup="tab5" ControlToValidate="txtDependencyLastName" ID="RequiredFieldValidator9" ForeColor="red" runat="server" Display="None" ErrorMessage="Please enter dependency last name"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator6" ValidationGroup="tab5" runat="server" ErrorMessage="Last Name Enter Only characters" ControlToValidate="txtDependencyLastName" ValidationExpression="[a-zA-Z ]*$" />
+                                <label>Surname <em>*</em></label>
+                                <asp:TextBox MaxLength="50" runat="server" ID="txtDependencyCopiedPolicyLastName" placeholder="Enter Surname" name="name" type="text" class="form-control"></asp:TextBox>
+                                <%-- <asp:RequiredFieldValidator ValidationGroup="tab5" ControlToValidate="txtDependencyLastName" ID="RequiredFieldValidator9" ForeColor="red" runat="server" Display="None" ErrorMessage="Please enter dependency Surname"></asp:RequiredFieldValidator>
+                                                                    <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator6" ValidationGroup="tab5" runat="server" ErrorMessage="Surname Enter Only characters" ControlToValidate="txtDependencyLastName" ValidationExpression="[a-zA-Z ]*$" />
                                 --%>
                             </div>
 
                             <div class="form-group">
-                                <label>First Name <em>*</em></label>
-                                <asp:TextBox MaxLength="50" runat="server" ID="txtDependencyCopiedPolicyFirstName" placeholder="Enter First Name" name="name" type="text" class="form-control"></asp:TextBox>
-                                <%-- <asp:RequiredFieldValidator ValidationGroup="tab5" ControlToValidate="txtDependencyFirstName" ID="RequiredFieldValidator11" ForeColor="red" runat="server" ErrorMessage="Please enter dependency first name" Display="None"></asp:RequiredFieldValidator>
-                                                                    <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator7" ValidationGroup="tab5" runat="server" ErrorMessage="First Name Enter Only characters" ControlToValidate="txtDependencyFirstName" ValidationExpression="[a-zA-Z ]*$" />
+                                <label>full name<em>*</em></label>
+                                <asp:TextBox MaxLength="50" runat="server" ID="txtDependencyCopiedPolicyFirstName" placeholder="Enter full name" name="name" type="text" class="form-control"></asp:TextBox>
+                                <%-- <asp:RequiredFieldValidator ValidationGroup="tab5" ControlToValidate="txtDependencyFirstName" ID="RequiredFieldValidator11" ForeColor="red" runat="server" ErrorMessage="Please enter dependency full name" Display="None"></asp:RequiredFieldValidator>
+                                                                    <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator7" ValidationGroup="tab5" runat="server" ErrorMessage="full name Enter Only characters" ControlToValidate="txtDependencyFirstName" ValidationExpression="[a-zA-Z ]*$" />
                                 --%>
                             </div>
                             <div class="form-group">

@@ -186,15 +186,15 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.Label("First Name", new { @class = "control-label" })
+                            @Html.Label("Full name", new { @class = "control-label" })
                             <strong><span class="text-danger"><em>*</em></span></strong>
-                            @Html.TextBoxFor(m => m.OwnerFirstName, null, new { @class = "form-control", @maxlength = "50", placeholder = "First Name" })
+                            @Html.TextBoxFor(m => m.OwnerFirstName, null, new { @class = "form-control", @maxlength = "50", placeholder = "Full name" })
                             @Html.ValidationMessageFor(m => m.OwnerFirstName, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                         </div>
                         <div class="form-group">
-                            @Html.Label("Last Name", new { @class = "control-label" })
+                            @Html.Label("Surname", new { @class = "control-label" })
                             <strong><span class="text-danger"><em>*</em></span></strong>
-                            @Html.TextBoxFor(m => m.OwnerSurname, null, new { @class = "form-control", @maxlength = "50", placeholder = "Last Name" })
+                            @Html.TextBoxFor(m => m.OwnerSurname, null, new { @class = "form-control", @maxlength = "50", placeholder = "Surname" })
                             @Html.ValidationMessageFor(m => m.OwnerSurname, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                         </div>
                     </div>

@@ -173,7 +173,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 reportParameters.Add(new ReportParameter("DateFrom", modal.fromDate.ToString("yyyy/MM/dd")));
                 reportParameters.Add(new ReportParameter("DateTo", modal.toDate.ToString("yyyy/MM/dd")));
                 reportParameters.Add(new ReportParameter("Parlourid", modal.parlourId.ToString()));
-                //reportParameters.Add(new ReportParameter("RefNo", modal.ReferenceNumber.ToString()));
+                reportParameters.Add(new ReportParameter("RefNo", modal.ReferenceNumber.ToString()));
                 rpw.ServerReport.SetParameters(reportParameters);
                 byte[] bytes = rpw.ServerReport.Render("Excel", null, out mimeType, out encoding, out extension, out streamids, out warnings);
                 filename = string.Format("{0}.{1}", modal.ReportName, ExportTypeExtensions);

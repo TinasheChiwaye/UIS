@@ -46,11 +46,11 @@ namespace Funeral.Model
 
         public string ApplicationLogoPath { get; set; }
 
-        [Required(ErrorMessage = "Please enter Owner First Name")]
+        [Required(ErrorMessage = "Please enter Owner Full name")]
         [RegularExpression(pattern: @"[a-zA-Z ]*$", ErrorMessage = "Owner FirstName Enter Only characters")]
         public string OwnerFirstName { get; set; }
 
-        [Required(ErrorMessage = "Please enter Owner Last Name")]
+        [Required(ErrorMessage = "Please enter Owner Surname")]
         [RegularExpression(pattern: @"[a-zA-Z ]*$", ErrorMessage = "Owner SurName Enter Only characters")]
         public string OwnerSurname { get; set; }
 
