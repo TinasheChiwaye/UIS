@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Funeral.Model;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -27,6 +28,32 @@ namespace Funeral.DAL
             {
                 throw ex;
             }
+        }
+        public static int SaveClientPayment(PayfastRequestModel model)
+        {
+            string query = "SaveClientPayment";
+
+            DbParameter[] ObjParam = new DbParameter[12];
+            ObjParam[0] = new DbParameter("@merchant_id", DbParameter.DbType.NVarChar, 0, model.merchant_id);
+            ObjParam[1] = new DbParameter("@amount_fee", DbParameter.DbType.Decimal, 0, model.amount_fee);
+            ObjParam[2] = new DbParameter("@amount_gross", DbParameter.DbType.Decimal, 0, model.amount_gross);
+            ObjParam[3] = new DbParameter("@amount_net", DbParameter.DbType.Decimal, 0, model.amount_net);
+            ObjParam[4] = new DbParameter("@email_address", DbParameter.DbType.NVarChar, 0, model.email_address);
+            ObjParam[5] = new DbParameter("@item_name", DbParameter.DbType.NVarChar, 0, model.item_name);
+            ObjParam[6] = new DbParameter("@item_description", DbParameter.DbType.NVarChar, 0, model.item_description);
+            ObjParam[7] = new DbParameter("@m_payment_id", DbParameter.DbType.NVarChar, 0, model.m_payment_id);
+            ObjParam[8] = new DbParameter("@payment_status", DbParameter.DbType.NVarChar, 0, model.payment_status);
+            ObjParam[9] = new DbParameter("@token", DbParameter.DbType.NVarChar, 0, model.token);
+            ObjParam[10] = new DbParameter("@MemberId", DbParameter.DbType.Int, 0, model.custom_int1);
+            ObjParam[11] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0,Guid.Parse(model.custom_str1));
+            return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
+        }
+        public static DataTable ReturnMemberPlanDetailsWithBalancedt(string strMemberNo, Guid pgParlourID)
+        {
+            DbParameter[] ObjParam = new DbParameter[2];
+            ObjParam[0] = new DbParameter("@MemberNo", DbParameter.DbType.NVarChar, 0, strMemberNo);
+            ObjParam[1] = new DbParameter("@ParlourID", DbParameter.DbType.UniqueIdentifier, 0, pgParlourID);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "MemberParlourIDAndMemberNoByID_New", ObjParam);//[MemberParlourIDAndMemberNoByID]
         }
     }
 }

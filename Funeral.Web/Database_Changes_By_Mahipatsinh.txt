@@ -859,3 +859,20 @@ Alert SP
 ---------------------------
 1.[MemberSelectAllByPage]
 2.[MemberSelectAll_WithoutParlour]
+
+04-06-2020
+=============================
+Add New Table
+-------------------------
+1.ClientPayment
+
+Add New Store Procedure
+--------------------------
+1.SaveClientPayment
+2.getMyPoliceByIDnumber
+
+Alter Store Procedure
+------------------------------
+1.MemberParlourIDAndMemberNoByID_New
+2.SearchMemberIDByMemberNo
+3.MemberPaymentSelectAllByPage

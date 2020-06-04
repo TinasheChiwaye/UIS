@@ -74,7 +74,7 @@ namespace Funeral.Web.Areas.Client.Controllers
         [HttpGet]
         public ActionResult MakePayment(int id, Guid ParlourID)
         {
-            MembersPaymentDetailsModel model = MemberPaymentBAL.ReturnMemberPlanDetailsWithBalance(Convert.ToString(id), ParlourID);
+            MembersPaymentDetailsModel model = ClientPortalBAL.ReturnMemberPlanDetailsWithBalance(Convert.ToString(id), ParlourID);
             if (model != null)
             {
                 model.Currency = Currency;
@@ -118,53 +118,57 @@ namespace Funeral.Web.Areas.Client.Controllers
         public ActionResult AddPayments(MembersPaymentDetailsModel data)
         {
 
-            //MembersModel objmember = MembersBAL.GetMemberByID(data.pkiMemberID, data.ParlourId);
-            //if (objmember.MemberBranch != "")
-            //{
-            //    data.Branch = objmember.MemberBranch;
-            //}
-            //data.ParlourId = data.ParlourId;
-            //data.NextPaymentDate = Convert.ToDateTime(data.PaymentDate).AddMonths(Convert.ToInt32(data.MonthOwing));
-            //var paymentId = MemberPaymentBAL.AddPayments(data, true);
-            //if (paymentId > 0)
-            //{
-            TempData["message"] = ShowMessage(MessageType.Success, "Payment added successfully");
+            MembersModel objmember = MembersBAL.GetMemberByID(data.pkiMemberID, data.ParlourId);
+            if (objmember.MemberBranch != "")
+            {
+                data.Branch = objmember.MemberBranch;
+            }
+            data.ParlourId = data.ParlourId;
+            data.NextPaymentDate = Convert.ToDateTime(data.PaymentDate).AddMonths(Convert.ToInt32(data.MonthOwing));
+            var paymentId = MemberPaymentBAL.AddPayments(data, true);
+            if (paymentId > 0)
+            {
 
-            var onceOffRequest = new PayFastRequest(this.payFastSettings.PassPhrase);
-            // Merchant Details
-            onceOffRequest.merchant_id = this.payFastSettings.MerchantId;
-            onceOffRequest.merchant_key = this.payFastSettings.MerchantKey;
-            onceOffRequest.return_url = this.payFastSettings.ReturnUrl;
-            onceOffRequest.cancel_url = this.payFastSettings.CancelUrl;
-            onceOffRequest.notify_url = this.payFastSettings.NotifyUrl;
+                var onceOffRequest = new PayFastRequest(this.payFastSettings.PassPhrase);
+                // Merchant Details
+                onceOffRequest.merchant_id = this.payFastSettings.MerchantId;
+                onceOffRequest.merchant_key = this.payFastSettings.MerchantKey;
+                onceOffRequest.return_url = this.payFastSettings.ReturnUrl;
+                onceOffRequest.cancel_url = this.payFastSettings.CancelUrl;
+                onceOffRequest.notify_url = this.payFastSettings.NotifyUrl;
 
-            // Buyer Details
-            onceOffRequest.email_address = "pmahipatsinh88@gmail.com";
+                onceOffRequest.custom_int1 = data.pkiMemberID;
+                onceOffRequest.custom_str1 = data.ParlourId.ToString();
 
-            // Transaction Details
-            onceOffRequest.m_payment_id = "8d00bf49-e979-4004-228c-08d452b86380";
-            onceOffRequest.amount = Convert.ToDouble(data.Amount);
-            onceOffRequest.item_name = "Member policy Payment";
-            onceOffRequest.item_description = "Member policy Payment";
 
-            // Transaction Options
-            onceOffRequest.email_confirmation = true;
-            onceOffRequest.confirmation_address = "pmahipatsinh88@gmail.com";
 
-            var redirectUrl = $"{this.payFastSettings.ProcessUrl}{onceOffRequest.ToString()}";
+                // Buyer Details
+                onceOffRequest.email_address = "hemant@truecodemasters.com";
 
-            return Json(redirectUrl, JsonRequestBehavior.AllowGet);
-            //return Redirect(redirectUrl);
-            //}
-            //else
-            //{
-            //    TempData["message"] = ShowMessage(MessageType.Danger, "Payment not added successfully");
-            //    return Json("Error", JsonRequestBehavior.AllowGet);
-            //}
+                // Transaction Details
+                onceOffRequest.m_payment_id = paymentId.ToString();
+                onceOffRequest.amount = Convert.ToDouble(data.Amount);
+                onceOffRequest.item_name = "Member policy Payment";
+                onceOffRequest.item_description = "Member policy Payment";
+
+                // Transaction Options
+                onceOffRequest.email_confirmation = true;
+                onceOffRequest.confirmation_address = "contact@truecodemasters.com";
+
+                var redirectUrl = $"{this.payFastSettings.ProcessUrl}{onceOffRequest.ToString()}";
+
+                return Json(redirectUrl, JsonRequestBehavior.AllowGet);
+                //return Redirect(redirectUrl);
+            }
+            else
+            {
+                TempData["message"] = ShowMessage(MessageType.Danger, "Payment not added successfully");
+                return Json("Error", JsonRequestBehavior.AllowGet);
+            }
         }
         public ActionResult Return()
         {
-            return View();
+            return RedirectToAction("Index", "MyPolice");
         }
 
         public ActionResult Cancel()
@@ -179,7 +183,11 @@ namespace Funeral.Web.Areas.Client.Controllers
         {
             try
             {
-                PayFastNotify payFastNotify = ConvertToModel(payFastNotifyViewModel);
+                PayfastRequestModel payFastNotify = ConvertToModel(payFastNotifyViewModel);
+                int MemberId = Convert.ToInt32(payFastNotify.custom_int1);
+                Guid parlourId = Guid.Parse(payFastNotify.custom_str1);
+                ClientPortalBAL.SaveClientPayment(payFastNotify);
+                TempData["message"] = ShowMessage(MessageType.Success, "Payment added successfully");
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
             catch (Exception ex)
@@ -194,11 +202,11 @@ namespace Funeral.Web.Areas.Client.Controllers
         {
             return View();
         }
-        private PayFastNotify ConvertToModel(PayFastNotify payFastNotifyViewModel)
+        private PayfastRequestModel ConvertToModel(PayFastNotify payFastNotifyViewModel)
         {
             try
             {
-                return new PayFastNotify()
+                return new PayfastRequestModel()
                 {
                     amount_fee = payFastNotifyViewModel.amount_fee,
                     token = payFastNotifyViewModel.token,
