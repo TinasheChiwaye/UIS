@@ -122,10 +122,9 @@ namespace Funeral.Web.Areas.Client.Controllers
                 //    return 0;
                 //    //return new Guid("00000000-0000-0000-0000-000000000000");
                 //}
-                return "7807025446080";
+                return "7909064764082";
             }
         }
-
 
         //public int UserID
         //{

@@ -186,17 +186,19 @@
                             },
                             {
                                 "render": function (data, type, full, meta) {
-                                        var dom = "<div class='row'>";
+                                    var dom = "<div class='row'>";
 
-                                            var editMemberUrl = '<div class="col-sm-4 text-center"><a href="@Url.Action("ManageMembers", "Members", null, Request.Url.Scheme)?pkiMemberID=' + full.pkiMemberID + '"><i class="fa fa-edit"></i></a></div>';
-                                            dom = dom + editMemberUrl;
+                                    var editMemberUrl = '<div class="col-sm-4 text-center"><a href="@Url.Action("ManageMembers", "Members", null, Request.Url.Scheme)?pkiMemberID=' + full.pkiMemberID + '"><i class="fa fa-edit"></i></a></div>';
+                                    dom = dom + editMemberUrl;
 
-                                            var deleteMemberUrl = '<div class="col-sm-4 text-center"><a href="@Url.Action("ManageMembers", "Members", null, Request.Url.Scheme)?pkiMemberID=' + full.pkiMemberID + '"><i class="fa fa-edit"></i>Make Payment</a></div>';
-                                            dom = dom + deleteMemberUrl;
+                                    var deleteMemberUrl = '<div class="col-sm-4 text-center"><a href="@Html.Raw(Url.Action("MakePayment", "MyPolicy", new { id = "MemeberNumberVal", ParlourID = "ParlourId" }))"><i class="fa fa-university"></i></a></div>';
+                                    deleteMemberUrl = deleteMemberUrl.replace("MemeberNumberVal", full.pkiMemberID);
+                                    deleteMemberUrl = deleteMemberUrl.replace("ParlourId", full.parlourid);
+                                    dom = dom + deleteMemberUrl;
 
 
-                                        dom = dom + "</div>";
-                                        return dom;
+                                    dom = dom + "</div>";
+                                    return dom;
                                 }
                             }
                         ]

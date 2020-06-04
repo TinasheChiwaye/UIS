@@ -134,12 +134,17 @@
     <Reference Include="Neodynamic.SDK.WebClientPrint">
       <HintPath>..\packages\Neodynamic.SDK.WebClientPrint.2.0.2013.1216\lib\Neodynamic.SDK.WebClientPrint.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="PayFast, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PayFast.1.0.4\lib\net45\PayFast.dll</HintPath>
+    </Reference>
+    <Reference Include="PayFast.AspNet, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PayFast.AspNet.1.0.4\lib\net45\PayFast.AspNet.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System.IO.Compression" />
@@ -765,6 +770,7 @@
     <Content Include="Areas\Client\Views\Dashboard\_DashboardModal.cshtml" />
     <Content Include="Areas\Client\Views\Dashboard\_PolicyPremiumList.cshtml" />
     <Content Include="Areas\Client\Views\MyPolicy\Index.cshtml" />
+    <Content Include="Areas\Client\Views\MyPolicy\MakePayment.cshtml" />
     <None Include="DevDataDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DevDataDataSet.Designer.cs</LastGenOutput>
