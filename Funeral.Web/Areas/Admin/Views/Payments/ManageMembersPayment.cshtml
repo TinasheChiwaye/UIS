@@ -191,13 +191,13 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label>Rate Type  <em>*</em> </label>
+                                        <label>Plan Name<em>*</em> </label>
                                         @Html.EditorFor(Model => Model.PlanName, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtPlan", @name = "name", @readonly = "readonly" } })
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label>Risk Premium  <em>*</em> </label>
+                                        <label>Premium <em>*</em> </label>
                                         @Html.EditorFor(Model => Model.PlanSubscription, new { @class = "form-control", @maxlength = "255", @id = "txtPremium", @name = "txtPremium", @readonly = "readonly" })
                                     </div>
                                 </div>
@@ -239,7 +239,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label>Total Risk Premium</label>
+                                        <label>Total Premium</label>
                                         @*@Html.TextBoxFor(Model => Model.PlanSubscription, null,new { @class = "form-control", @maxlength = "255", @id = "txtTotalPremium",  @readonly = "readonly" } )*@
                                         <input type="text" class="form-control" maxlength="255" id="txtTotalPremium" readonly="readonly" value="@totalPremium">
                                     </div>
