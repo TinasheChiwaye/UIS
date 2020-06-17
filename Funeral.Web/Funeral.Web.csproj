@@ -14,7 +14,7 @@
     <RootNamespace>Funeral.Web</RootNamespace>
     <AssemblyName>Funeral.Web</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -2446,7 +2446,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>3863</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/Funeral.Web</IISUrl>
+          <IISUrl>http://localhost:3863/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
