@@ -184,33 +184,6 @@ namespace Funeral.Web.Tools {
         protected global::System.Web.UI.WebControls.DropDownList ddlBankBranch;
         
         /// <summary>
-        /// ddlCustom1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlCustom1;
-        
-        /// <summary>
-        /// ddlCustom2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlCustom2;
-        
-        /// <summary>
-        /// ddlCustom3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlCustom3;
-        
-        /// <summary>
         /// chkSecurityGroup control.
         /// </summary>
         /// <remarks>

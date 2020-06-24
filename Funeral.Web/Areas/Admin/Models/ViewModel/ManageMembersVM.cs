@@ -9,6 +9,7 @@ namespace Funeral.Web.Areas.Admin.Models.ViewModel
 {
     public class ManageMembersVM : BaseViewModel
     {
+        public IEnumerable<SelectListItem> UnderwritterList { get; set; }
         public IEnumerable<SelectListItem> countryList { get; set; }
         public IEnumerable<SelectListItem> PolicyList { get; set; }
         public IEnumerable<SelectListItem> BankList { get; set; }

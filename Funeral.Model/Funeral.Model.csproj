@@ -191,6 +191,7 @@
     <Compile Include="UnderwriterPremiumEnums.cs" />
     <Compile Include="UnderwriterPremiumModel.cs" />
     <Compile Include="UnderwriterSetupModel.cs" />
+    <Compile Include="UnderwritterModel.cs" />
     <Compile Include="VendorModel.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -4,7 +4,7 @@
 
 @using (Html.BeginForm("Save", "ExpenseCategory", FormMethod.Post, new { id = "expenseCategoryAddEditform" }))
 {
-    <div class="col-lg-12">
+    @*<div class="col-lg-12">
         <div class="ibox ">
             <div class="ibox-title">
                 <h5>Expense Category</h5>
@@ -41,7 +41,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>*@
 
     if (TempData.Peek("IsExpenseCategorySaved") != null && (bool)TempData.Peek("IsExpenseCategorySaved") == true)
     {

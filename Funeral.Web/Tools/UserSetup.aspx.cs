@@ -231,9 +231,9 @@ namespace Funeral.Web.Tools
                 // txtAgentName.Text = model.AgentName;
                 //txtAgentSurname.Text = model.AgentSurname;
                 /* changes for custom field implemented on 10th April 2017*/
-                ddlCustom1.SelectedValue = model.CustomId1.ToString();
-                ddlCustom2.SelectedValue = model.CustomId2.ToString();
-                ddlCustom3.SelectedValue = model.CustomId3.ToString();
+                //ddlCustom1.SelectedValue = model.CustomId1.ToString();
+                //ddlCustom2.SelectedValue = model.CustomId2.ToString();
+                //ddlCustom3.SelectedValue = model.CustomId3.ToString();
                 /* changes for custom field implemented on 10th April 2017  completed*/
                 ddlBankBranch.SelectedValue = model.BranchId.ToString();
 
@@ -321,12 +321,12 @@ namespace Funeral.Web.Tools
                     model.ModifiedUser = UserName;
                     model.Email = txtUserNameUser.Text;
                     model.Code = txtpostalcode.Text;
-                    model.CustomId1 = Convert.ToInt32(ddlCustom1.SelectedValue);
-                    model.CustomId2 = Convert.ToInt32(ddlCustom2.SelectedValue);
+                    //model.CustomId1 = Convert.ToInt32(ddlCustom1.SelectedValue);
+                    //model.CustomId2 = Convert.ToInt32(ddlCustom2.SelectedValue);
                     model.Active = true;
 
 
-                    model.CustomId3 = Convert.ToInt32(ddlCustom3.SelectedValue);
+                    //model.CustomId3 = Convert.ToInt32(ddlCustom3.SelectedValue);
 
                     if (ddlBankBranch.SelectedIndex != -1)
                         model.BranchId = new Guid(ddlBankBranch.SelectedValue);
@@ -474,23 +474,23 @@ namespace Funeral.Web.Tools
             var custom1 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(selectedParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom1));
             var custom2 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(selectedParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom2));
             var custom3 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(selectedParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom3));
-            ddlCustom1.DataSource = custom1;
-            ddlCustom1.DataTextField = "Name";
-            ddlCustom1.DataValueField = "Id";
-            ddlCustom1.DataBind();
-            ddlCustom1.Items.Insert(0, new ListItem("All", "0"));
+            //ddlCustom1.DataSource = custom1;
+            //ddlCustom1.DataTextField = "Name";
+            //ddlCustom1.DataValueField = "Id";
+            //ddlCustom1.DataBind();
+            //ddlCustom1.Items.Insert(0, new ListItem("All", "0"));
 
-            ddlCustom2.DataSource = custom2;
-            ddlCustom2.DataTextField = "Name";
-            ddlCustom2.DataValueField = "Id";
-            ddlCustom2.DataBind();
-            ddlCustom2.Items.Insert(0, new ListItem("All", "0"));
+            //ddlCustom2.DataSource = custom2;
+            //ddlCustom2.DataTextField = "Name";
+            //ddlCustom2.DataValueField = "Id";
+            //ddlCustom2.DataBind();
+            //ddlCustom2.Items.Insert(0, new ListItem("All", "0"));
 
-            ddlCustom3.DataSource = custom3;
-            ddlCustom3.DataTextField = "Name";
-            ddlCustom3.DataValueField = "Id";
-            ddlCustom3.DataBind();
-            ddlCustom3.Items.Insert(0, new ListItem("All", "0"));
+            //ddlCustom3.DataSource = custom3;
+            //ddlCustom3.DataTextField = "Name";
+            //ddlCustom3.DataValueField = "Id";
+            //ddlCustom3.DataBind();
+            //ddlCustom3.Items.Insert(0, new ListItem("All", "0"));
 
         }
 

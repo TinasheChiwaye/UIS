@@ -146,7 +146,10 @@
                                                    {%>
                                                 <asp:LinkButton runat="server" ID="lbtnEditDependant" ToolTip="Click here To Edite Funeral" CommandArgument='<%#Eval("pkiServiceID") %>' CommandName="EditFuneralService"><i class="fa fa-edit"></i></asp:LinkButton>
                                                 &nbsp;
-                                           <%} %>
+                                           <%} if (this.HasDeleteRight)
+                                               {%>
+                                                <asp:LinkButton runat="server" ID="lbtnDelete" OnClientClick="return confirm('Are you sure you want to delete?')" CommandArgument='<%#Eval("pkiServiceID")%>' CommandName="deleteFuneral"><i class="fa fa-trash" aria-hidden="true"></i></asp:LinkButton>
+                                                <% }%>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>

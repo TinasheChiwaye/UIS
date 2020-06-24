@@ -262,8 +262,8 @@
                 <h5>Members Details</h5>
                 <div class="pull-right">
                     <div class="btn-group">
-                        <input type="submit" id="btnCopy" style="margin-right: 12px; margin-top: -5px;display:none" class="btn btn-sm btn-primary" value="CopyPolicy" disabled>
-                        <input type="submit" style="display:none" id="PolicyDoc" class="btn btn-sm btn-primary pull-right m-t-n-xs" value="Policy Doc" onclick="location.href='@Url.Action("btnPolicyDoc", "Members")'" disabled>
+                        <input type="submit" id="btnCopy" style="margin-right: 12px; margin-top: -5px;display:none" class="btn btn-sm btn-primary" value="CopyPolicy" >
+                        <input type="submit" style="display:inline" id="PolicyDoc" class="btn btn-sm btn-primary pull-right m-t-n-xs" value="Policy Doc" onclick="location.href='@Url.Action("btnPolicyDoc", "Members")'">
                     </div>
                 </div>
             </div>
@@ -679,9 +679,14 @@
                                                 <label>Policy Cover Date</label>
                                                 <input type="text" maxlength="30" id="txtCoverDate" name="name" class="form-control DatepickerSelection" disabled>
                                             </div>
-                                            <div class="form-group">
+                                            @*<div class="form-group">
                                                 <label>Policy Underwritten By</label>
                                                 <input type="text" maxlength="50" id="txtUnderwriter" name="name" class="form-control">
+                                            </div>*@
+
+                                            <div class="form-group">
+                                                <label>Policy Underwritten By</label>
+                                                @Html.DropDownList("UnderwritterList", Model.UnderwritterList, "Select", new { Name = "Underwritter", @id = "ddlUnderwritter", @style = "width:100%", @class = "form-control" })
                                             </div>
                                             
                                             <div class="form-group">
@@ -2255,7 +2260,7 @@
                             {
                                 "render": function (data, type, full, meta) {
                                     var hasEditRights = '@ViewBag.HasEditRight' == "True" ? true : false;
-                                    var hasDeleteRights = '@ViewBag.HasDeleteRight' == "True" ? true : false;
+                                    var hasDeleteRights = true;
 
                                     var dom = "<div class='row'>";
                                     var data1 = JSON.stringify(full);
@@ -3204,7 +3209,7 @@
                             {
                                 "render": function (data, type, full, meta) {
                                     var hasEditRights = '@ViewBag.HasEditRight' == "True" ? true : false;
-                                    var hasDeleteRights = '@ViewBag.HasDeleteRight' == "True" ? true : false;
+                                    var hasDeleteRights = true;
                                     var dom = "<div class='row'>";
                                     var data1 = JSON.stringify(full);
                                     data1 = data1.replace(/"/g, "\'")
@@ -4425,33 +4430,33 @@
         })
     })
 
-    //$("#PolicyDoc").click(function(){
-    //    var btnPolicyDocUrl = $("#btnPolicyDocUrl").val();
-    //    var data = {
-    //        PKiD : $("#pkiMemberID").val()
-    //    };
+    $("#PolicyDoc").click(function(){
+        var btnPolicyDocUrl = $("#btnPolicyDocUrl").val();
+        var data = {
+            PKiD : $("#pkiMemberID").val()
+        };
 
-    //    $.ajax({
-    //        url: btnPolicyDocUrl,
-    //        data: data,
-    //        type: "post",
-    //        cache: false,
-    //        success: function (result) {
-    //            if(result != "true")
-    //            {
-    //                $("#lblMessage").html('');
-    //                $("#lblMessage").append('<div class="alert alert-danger">'+result+'</div>');
-    //            }
+        $.ajax({
+            url: btnPolicyDocUrl,
+            data: data,
+            type: "post",
+            cache: false,
+            success: function (result) {
+                if(result != "true")
+                {
+                    $("#lblMessage").html('');
+                    $("#lblMessage").append('<div class="alert alert-danger">Download Succefull</div>');
+                }
 
-    //            //jQuery("#TaskCopyPopupModel").modal({
-    //            //    show: 'true'
-    //            //});
-    //        },
-    //        error: function (xhr, ajaxOptions, thrownError) {
-    //            alert(thrownError);
-    //        }
-    //    })
-    //})
+                //jQuery("#TaskCopyPopupModel").modal({
+                //    show: 'true'
+                //});
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(thrownError);
+            }
+        })
+    })
 
     $("#btnPremiumSubmit").click(function(){
         jQuery("#TaskCopyPopupModel").modal('toggle');

@@ -171,7 +171,7 @@
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label class="">SendEmail</label>
+                                                        <label class="">Send Email</label>
                                                         <asp:TextBox runat="server" ID="txtcemail" name="name" type="text" class="form-control"></asp:TextBox>
                                                         <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ValidationGroup="CompanyRegi" ErrorMessage="Invalid email." ControlToValidate="txtcemail" ValidationExpression="^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$" />
                                                     </div>

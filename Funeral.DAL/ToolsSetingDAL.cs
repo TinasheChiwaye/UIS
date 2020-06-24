@@ -686,6 +686,13 @@ namespace Funeral.DAL
             ObjParam[0] = new DbParameter("@pkiSocietyID", DbParameter.DbType.Int, 0, id);
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "DeleteSociety", ObjParam));
         }
+        public static int DeleteFuneralService(int Id)
+        {
+            DbParameter[] ObjParams = new DbParameter[1];
+            ObjParams[0] = new DbParameter("@pkiServiceID", DbParameter.DbType.Int, 0, Id);
+            return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "DeleteFuneral", ObjParams));
+
+        }
         public static SqlDataReader GetAllVendores(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder)
         {
             DbParameter[] ObjParam = new DbParameter[6];

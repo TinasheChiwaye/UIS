@@ -48,7 +48,8 @@ namespace Funeral.BAL
                 DataTable dr = ds.Tables[0];
                 MembersViewModel objViewModel = new MembersViewModel();
                var membersList = FuneralHelper.DataTableMapToList<MembersModel>(dr, true);
-                objViewModel.MemberList = !string.IsNullOrEmpty(BookName) ? membersList.Where(x => x.MemberSociety.Equals(BookName)).ToList() : membersList;
+                //objViewModel.MemberList = !string.IsNullOrEmpty(BookName) ? membersList.Where(x => x.MemberSociety.Equals(BookName)).ToList() : membersList;
+                objViewModel.MemberList = !string.IsNullOrEmpty(BookName) && BookName != "0" ? membersList.Where(x => x.MemberSociety.Equals(BookName)).ToList() : membersList;
                 //dr.NextResult();
                 //dr.Read();
                 objViewModel.TotalRecord = objViewModel.MemberList.Count;
@@ -276,6 +277,11 @@ namespace Funeral.BAL
         {
             DataTable dr = MembersDAL.SelectAllAgentdt(ParlourId);
             return FuneralHelper.DataTableMapToList<AgentModel>(dr);
+        }
+        public static List<UnderwritterModel> SelectAllUnderwritters(Guid Parlourid)
+        {
+            DataTable dr = MembersDAL.SelectAllUnderwritterdt(Parlourid);
+            return FuneralHelper.DataTableMapToList<UnderwritterModel>(dr);
         }
         public static NewMemberInvoiceModel GetInvoiceByid(int InvoiceId)
         {

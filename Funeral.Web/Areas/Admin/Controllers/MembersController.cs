@@ -33,14 +33,14 @@ namespace Funeral.Web.Areas.Admin.Controllers
         [PageRightsAttribute(CurrentPageId = 4)]
         public ActionResult Index()
         {
-            //ViewBag.HasAccess = HasAccess;
+            ViewBag.HasAccess = HasAccess;
             if (ViewBag.HasAccess == true)
             {
                 var statusList = CommonBAL.GetStatus(FuneralEnum.StatusAssociatedTable.Members.ToString()).Select(x => new SelectListItem() { Text = x.ID.ToString(), Value = x.Status });
                 ViewBag.StatusList = statusList;
 
-                //ViewBag.HasEditRight = HasEditRight;
-                //ViewBag.HasDeleteRight = HasDeleteRight;
+                ViewBag.HasEditRight = HasEditRight;
+                ViewBag.HasDeleteRight = HasDeleteRight;
 
                 ViewBag.totalPremium = Currency;
 
@@ -97,7 +97,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             var searchResult = new Funeral.Model.SearchResult<Model.Search.MemberSearch, MembersModel>(search, new List<MembersModel>(), o => o.IDNumber.ToLower().Contains(search.SarchText.ToLower()));
             try
             {
-                var members = MembersBAL.GetAllMembers(search.CompanyId, search.PageSize, search.PageNum, search.SarchText, search.SortBy, search.SortOrder, search.StatusId.ToString(), search.BookID.ToString());
+                var members = MembersBAL.GetAllMembers(search.CompanyId, search.PageSize, search.PageNum, search.SarchText, search.SortBy, search.SortOrder, search.StatusId.ToString(), search.BookID);
                 return Json(new Funeral.Model.SearchResult<Model.Search.MemberSearch, MembersModel>(search, members.MemberList, o => o.IDNumber.ToLower().Contains(search.SarchText.ToLower()) || o.MemeberNumber.ToLower().Contains(search.SarchText.ToLower()) || o.Surname.ToLower().Contains(search.SarchText.ToLower()) || o.FullNames.ToLower().Contains(search.SarchText.ToLower()) || o.Cellphone.ToLower().Contains(search.SarchText.ToLower()) || o.EasyPayNo.ToLower().Contains(search.SarchText.ToLower())));
             }
             catch (Exception ex)
@@ -197,6 +197,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             Managemembers.BankList = BanksBAL.SelectAll().Select(x => new SelectListItem() { Text = x.BankName, Value = x.BranchCode });
             Managemembers.AllAccountTypesList = BanksBAL.AccountTypeSelectAll().Select(x => new SelectListItem() { Text = x.AccountType, Value = x.AccountTypeID.ToString() });
             Managemembers.AgentList = MembersBAL.SelectAllAgent(CurrentParlourId).Select(x => new SelectListItem() { Text = x.Agent, Value = x.AgentID.ToString() });
+            Managemembers.UnderwritterList = MembersBAL.SelectAllUnderwritters(CurrentParlourId).Select(x => new SelectListItem() { Text = x.UnderwriterName, Value = x.pkiUnderWriterSetupId.ToString() });
             Managemembers.PolicyList = CommonBAL.GetPolicyByParlourId(CurrentParlourId).Select(x => new SelectListItem() { Text = x.PlanName, Value = x.pkiPlanID.ToString() });
             Managemembers.countryList = MembersBAL.GetCountry().Select(x => new SelectListItem() { Text = x.Name, Value = x.CountryCode });
             Managemembers.BranchList = CommonBAL.GetBranchByParlourId(CurrentParlourId).Select(x => new SelectListItem() { Text = x.BranchName, Value = x.Brancheid.ToString() });

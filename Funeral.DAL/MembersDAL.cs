@@ -824,6 +824,20 @@ namespace Funeral.DAL
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "SelectDistinctAgent", ObjParam);
         }
 
+        public static SqlDataReader SelectAllUnderwritter(Guid Parlourid)
+        {
+            DbParameter[] ObjParam = new DbParameter[1];
+            ObjParam[0] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
+            return DbConnection.GetDataReader(CommandType.StoredProcedure, "SelectDistinctUnderwritter",ObjParam);
+        }
+
+        public static DataTable SelectAllUnderwritterdt(Guid Parlourid)
+        {
+            DbParameter[] ObjParam = new DbParameter[1];
+            ObjParam[0] = new DbParameter("@parlourid",DbParameter.DbType.UniqueIdentifier,0,Parlourid);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "SelectDistinctUnderwritter",ObjParam);
+        }
+
         public static SqlDataReader GetInvoiceByid(int InvoiceId)
         {
             DbParameter[] ObjParam = new DbParameter[1];

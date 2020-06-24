@@ -330,8 +330,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
             string encoding;
             string filenameExtension;
             string filename;
-            try
-            {
+            //try
+            //{
                 ReportViewer rpw = new ReportViewer();
                 rpw.ProcessingMode = ProcessingMode.Remote;
                 IReportServerCredentials irsc = new MyReportServerCredentials();
@@ -353,11 +353,11 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 Response.BinaryWrite(bytes);
                 Response.Flush();
                 Response.End();
-            }
-            catch (Exception exc)
-            {
+            //}
+            //catch (Exception exc)
+            //{
                 //ShowMessage(ref "lblMessage", MessageType.Danger, exc.Message);
-            }
+            //}
         }
     }
 }

@@ -205,6 +205,10 @@ namespace Funeral.BAL
         {
             return ToolsSetingDAL.DeleteSociety(ID);
         }
+        public static int DeleteFuneral(int Id)
+        {
+            return ToolsSetingDAL.DeleteFuneralService(Id);
+        }
         public static List<VendorModel> GetAllVendores(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder)
         {
             DataTable dr = ToolsSetingDAL.GetAllVendoresdt(ParlourId, PageSize, PageNum, Keyword, SortBy, SortOrder);

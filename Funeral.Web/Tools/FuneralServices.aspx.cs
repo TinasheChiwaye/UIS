@@ -350,6 +350,23 @@ namespace Funeral.Web.Tools
                 }
             }
 
+            if (e.CommandName == "deleteFuneral")
+            {
+                int FuneralID = Convert.ToInt32(e.CommandArgument);
+                try
+                {
+                    int delID = ToolsSetingBAL.DeleteFuneral(FuneralID);
+                    ShowMessage(ref lblMessage, MessageType.Success, "Record deleted successfully.");
+                    lblMessage.Visible = true;
+                    bindFuneralServiceList();
+                }
+                catch (Exception ex)
+                {
+                    ShowMessage(ref lblMessage, MessageType.Danger, ex.Message);
+                    lblMessage.Visible = true;
+                }
+            }
+
         }
         #endregion
 
