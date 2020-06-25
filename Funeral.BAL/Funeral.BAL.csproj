@@ -72,12 +72,12 @@
     <Compile Include="AdminBAL.cs" />
     <Compile Include="BanksBAL.cs" />
     <Compile Include="ClaimsBAL.cs" />
-    <Compile Include="ClientPortalBAL.cs" />
     <Compile Include="CommonBAL.cs" />
     <Compile Include="CustomDetailsBAL.cs" />
     <Compile Include="FuneralBAL.cs" />
     <Compile Include="FuneralHelper.cs" />
     <Compile Include="FuneralPackageBAL.cs" />
+    <Compile Include="GenerateDebitOrderBAL.cs" />
     <Compile Include="MemberPaymentBAL.cs" />
     <Compile Include="MembersBAL.cs" />
     <Compile Include="OtherPaymentBAL.cs" />

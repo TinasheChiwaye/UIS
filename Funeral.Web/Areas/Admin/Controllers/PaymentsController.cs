@@ -58,6 +58,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             ViewBag.HasEditRight = HasEditRight;
             ViewBag.HasDeleteRight = HasDeleteRight;
             Model.Search.PaymentSearchNew search = new Model.Search.PaymentSearchNew();
+            search.StatusId = new Guid(CurrentParlourId.ToString());
             search.PageNum = 1;
             search.PageSize = 10;
             search.SarchText = string.Empty;
