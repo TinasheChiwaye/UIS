@@ -691,6 +691,13 @@ namespace Funeral.DAL
             DbParameter[] ObjParams = new DbParameter[1];
             ObjParams[0] = new DbParameter("@pkiServiceID", DbParameter.DbType.Int, 0, Id);
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "DeleteFuneral", ObjParams));
+        }
+
+        public static int DeleteTombstoneService(int Id)
+        {
+            DbParameter[] ObjParams = new DbParameter[1];
+            ObjParams[0] = new DbParameter("@pkiTombstoneID", DbParameter.DbType.Int, 0, Id);
+            return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "DeleteTombstoneService", ObjParams));
 
         }
         public static SqlDataReader GetAllVendores(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder)
@@ -1191,6 +1198,31 @@ namespace Funeral.DAL
             ObjParam[5] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
             return (DbConnection.GetDataTable(CommandType.StoredProcedure, query, ObjParam));
         }
+
+        public static SqlDataReader SelectTombstoneServiceByParlID(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder)
+        {
+            string query = "SelectTombstoneServiceByParlID";
+            DbParameter[] ObjParam = new DbParameter[6];
+            ObjParam[0] = new DbParameter("@pagesize", DbParameter.DbType.Int, 0, PageSize);
+            ObjParam[1] = new DbParameter("@pagenum", DbParameter.DbType.Int, 0, PageNum);
+            ObjParam[2] = new DbParameter("@Keyword", DbParameter.DbType.NVarChar, 0, Keyword);
+            ObjParam[3] = new DbParameter("@field", DbParameter.DbType.NVarChar, 0, SortBy);
+            ObjParam[4] = new DbParameter("@orderby", DbParameter.DbType.NVarChar, 0, SortOrder);
+            ObjParam[5] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+            return (DbConnection.GetDataReader(CommandType.StoredProcedure, query, ObjParam));
+        }
+        public static DataTable SelectTombstoneServiceByParlIDdt(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder)
+        {
+            string query = "SelectTombstoneServiceByParlID";
+            DbParameter[] ObjParam = new DbParameter[6];
+            ObjParam[0] = new DbParameter("@pagesize", DbParameter.DbType.Int, 0, PageSize);
+            ObjParam[1] = new DbParameter("@pagenum", DbParameter.DbType.Int, 0, PageNum);
+            ObjParam[2] = new DbParameter("@Keyword", DbParameter.DbType.NVarChar, 0, Keyword);
+            ObjParam[3] = new DbParameter("@field", DbParameter.DbType.NVarChar, 0, SortBy);
+            ObjParam[4] = new DbParameter("@orderby", DbParameter.DbType.NVarChar, 0, SortOrder);
+            ObjParam[5] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+            return (DbConnection.GetDataTable(CommandType.StoredProcedure, query, ObjParam));
+        }
         public static int SaveFuneralManageService(FuneralServiceManageModel Model1)
         {
             string query = "SaveFuneralManageService";
@@ -1207,6 +1239,23 @@ namespace Funeral.DAL
 
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
         }
+
+        public static int SaveTombstoneServices(TombstoneServiceModel model1)
+        {
+            string query = "SaveTombstoneServices";
+            DbParameter[] ObjParam = new DbParameter[9];
+            ObjParam[0] = new DbParameter("@pkiTombstoneID", DbParameter.DbType.Int, 0, model1.pkiTombstoneID);
+            ObjParam[1] = new DbParameter("@ServiceName", DbParameter.DbType.NVarChar, 0, model1.ServiceName);
+            ObjParam[2] = new DbParameter("@ServiceDesc", DbParameter.DbType.NVarChar, 0, model1.ServiceDesc);
+            ObjParam[3] = new DbParameter("@ServiceCost", DbParameter.DbType.Money, 0, model1.ServiceCost);
+            ObjParam[4] = new DbParameter("@QTY", DbParameter.DbType.Int, 0, model1.QTY);
+            ObjParam[5] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, model1.parlourid);
+            ObjParam[6] = new DbParameter("@ModifiedUser", DbParameter.DbType.VarChar, 0, model1.ModifiedUser);
+            ObjParam[7] = new DbParameter("@VendorId", DbParameter.DbType.Int, 0, model1.VendorId);
+            ObjParam[8] = new DbParameter("@CostOfSale", DbParameter.DbType.Money, 0, model1.CostOfSale);
+
+            return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));            
+        }
         public static SqlDataReader SelectFuneralManageServiceByParlANdID(int pkiServiceID, Guid ParlourId)
         {
             string SpName = "SelectFuneralManageServiceByParlANdID";
@@ -1222,6 +1271,23 @@ namespace Funeral.DAL
             ObjParam[0] = new DbParameter("@pkiServiceID", DbParameter.DbType.Int, 0, pkiServiceID);
             ObjParam[1] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, SpName, ObjParam);
+        }
+
+        public static SqlDataReader SelectTombstoneServiceById(int pkiTombstoneID ,Guid ParlourId)
+        {
+            string spName = "SelectTombstoneByIDAndParlour";
+            DbParameter[] dbParameters = new DbParameter[2];
+            dbParameters[0] = new DbParameter("@pkiTombstoneID", DbParameter.DbType.Int, 0, pkiTombstoneID);
+            dbParameters[1] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+            return DbConnection.GetDataReader(CommandType.StoredProcedure, spName, dbParameters);
+        }
+        public static DataTable SelectTombstoneServiceByIdAndParldt(int pkiTombstoneID, Guid ParlourId)
+        {
+            string spName = "SelectTombstoneByIDAndParlour";
+            DbParameter[] dbParameters = new DbParameter[2];
+            dbParameters[0] = new DbParameter("@pkiTombstoneID", DbParameter.DbType.Int, 0, pkiTombstoneID);
+            dbParameters[1] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, spName, dbParameters);
         }
         public static int DeleteFuneralManageServiceById(int pkiServiceID)
         {

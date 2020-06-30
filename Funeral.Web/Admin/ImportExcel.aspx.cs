@@ -349,6 +349,7 @@ namespace Funeral.Web.Admin
                     //{
                     //    ShowMessage(ref lblMessage, MessageType.Danger, "Record could not imported");
                     //}
+                    ShowMessage(ref lblMessage, MessageType.Success, "Data has been imported");
                 }
                 else
                 {

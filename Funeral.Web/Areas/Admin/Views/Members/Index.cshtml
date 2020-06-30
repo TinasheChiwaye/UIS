@@ -132,7 +132,7 @@
     }
 
 
-    <script type="text/javascript">
+        <script type="text/javascript">
         var pkMemberId = null;
         function UpdateStatus(data1) {
             var drpValue = data1.PolicyStatus;
@@ -168,7 +168,7 @@
         
         $.noConflict();
         jQuery(document).ready(function ($) {
-            var hasRight = '@ViewBag.HasAccess';
+            var hasRight = '@ViewBag.HasAccess';            
             if (hasRight == 'false') {
                 var url = '@Url.Action("Error403", "Error", new { })';
                 window.location.href = url;
@@ -278,7 +278,7 @@
                             {
                                 "render": function (data, type, full, meta) {
                                     var hasEditRights = '@ViewBag.HasEditRight' == "True" ? true : false;
-                                    var hasDeleteRights = true;
+                                    var hasDeleteRights = '@ViewBag.HasDeleteRight' == "True" ? true : false;
 
                                     if (hasEditRights || hasDeleteRights) {
 
@@ -339,7 +339,7 @@
                     $("#PageNum1").val(model1.PageNum);
                 }
                 $('#CompanyId').change(function () {
-                    debugger;
+                    //debugger;
                     jQuery.ajax({
                         url: '@Url.Action("ChangeParlour", "Parlour", null, Request.Url.Scheme)',
                         data: { parlourId: $('#CompanyId').val() },
@@ -361,7 +361,7 @@
                 success: function (response) {
                     ddlCustomers.empty().append('<option selected="selected" value="0">Please select</option>');
                     jQuery.each(response, function () {
-                        ddlCustomers.append(jQuery("<option></option>").val(this['Value']).html(this['Text']));
+                        ddlCustomers.append(jQuery("<option></option>").val(this['Text']).html(this['Text']));
                     });
                 },
                 failure: function (response) {
@@ -372,7 +372,7 @@
                 }
             });
         }
-    </script>
+        </script>
     @*</form>*@
 }
 <style>

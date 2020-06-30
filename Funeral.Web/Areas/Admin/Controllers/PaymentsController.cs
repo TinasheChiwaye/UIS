@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Web.Mvc;
+using System.Data;
+using System.Linq;
 
 namespace Funeral.Web.Areas.Admin.Controllers
 {
@@ -358,6 +360,13 @@ namespace Funeral.Web.Areas.Admin.Controllers
             //{
                 //ShowMessage(ref "lblMessage", MessageType.Danger, exc.Message);
             //}
+        }
+
+        [HttpPost]
+        public JsonResult BindGroupByCompanyId(Guid CompanyId)
+        {
+            var Company = CommonBAL.GetSocietyByParlourId(CompanyId).Select(x => new SelectListItem() { Text = x.SocietyName, Value = x.pkiSocietyID.ToString() });
+            return Json(Company, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -20,10 +20,11 @@
 
                             @if (ViewBag.CompanyDropDisplay)
                             {
-                                <div class="col-sm-3">
-                                    <label>Scheme:</label>
-                                    @Html.DropDownListFor(m => m.StatusId, new SelectList(ViewBag.Companies, "ParlourId", "ApplicationName"), new { @id = "CompanyDropdownSelection", @class = "form-control" })
-                                </div>
+                            <div class="col-sm-3">
+                                <label>Scheme:</label>
+                                @*@Html.DropDownListFor(m => m.StatusId, new SelectList(ViewBag.Companies, "ParlourId", "ApplicationName"), new { @id = "CompanyDropdownSelection", @class = "form-control" })*@
+                                @Html.DropDownListFor(m => m.StatusId, new SelectList(ViewBag.Companies, "ParlourId", "ApplicationName"), new { @class = "form-control" })
+                            </div>
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                         <label>Book: </label>
@@ -82,7 +83,7 @@
 
     <script type="text/javascript">
 
-        //jQuery.noConflict();
+       //jQuery.noConflict();
         $(document).ready(function () {
             ConfigureDatatable();
             InitDataTable();
@@ -169,7 +170,10 @@
                             return "";
                         }
                     }
-                }];
+                    }];
+
+
+                
         }
 
         function InitModel() {
@@ -180,6 +184,7 @@
             model1.BookName = jQuery("#ddlBookNamelist").val();
             $("#PageNum1").val(model1.PageNum);
         }
+
 
     </script>
 }

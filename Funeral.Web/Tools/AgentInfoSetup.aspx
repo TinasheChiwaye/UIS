@@ -78,7 +78,7 @@
                                 <asp:TextBox MaxLength="50" runat="server" ID="txtaddress4" name="Address4" type="text" class="form-control"></asp:TextBox>
                             </div>
                             <div class="form-group">
-                                <label>Code <em>*</em> </label>
+                                <label>Code 1 <em>*</em> </label>
                                 <asp:TextBox MaxLength="30" runat="server" ID="txtcode" name="Code" type="text" class="form-control"></asp:TextBox>
                                 <asp:RequiredFieldValidator Display="None" ValidationGroup="AgentSetup" ControlToValidate="txtcode" ID="RequiredFieldValidator3" ForeColor="red" runat="server" ErrorMessage="Please enter Code"></asp:RequiredFieldValidator>
                                 <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator6" ValidationGroup="AgentSetup" runat="server" ControlToValidate="txtcode" ErrorMessage="Postal Code Enter Only Number" ValidationExpression="^[0-9]*$" />

@@ -1446,6 +1446,7 @@
     <Content Include="packages.config" />
     <None Include="Service References\FuneralServiceReference\FuneralServices1.disco" />
     <None Include="Service References\FuneralServiceReference\FuneralServices11.disco" />
+    <Content Include="Tools\TombstoneServices.aspx" />
     <Content Include="Upload\CompanyImage\CreditProtection_1.png" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -2219,6 +2220,13 @@
     </Compile>
     <Compile Include="Tools\TombstonePackage.aspx.designer.cs">
       <DependentUpon>TombstonePackage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\TombstoneServices.aspx.cs">
+      <DependentUpon>TombstoneServices.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tools\TombstoneServices.aspx.designer.cs">
+      <DependentUpon>TombstoneServices.aspx</DependentUpon>
     </Compile>
     <Compile Include="Tools\Underwriter.aspx.cs">
       <DependentUpon>Underwriter.aspx</DependentUpon>

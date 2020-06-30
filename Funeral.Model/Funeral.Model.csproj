@@ -185,6 +185,7 @@
     <Compile Include="tblPageModel.cs" />
     <Compile Include="TombStoneModel.cs" />
     <Compile Include="TombstonePackageModel.cs" />
+    <Compile Include="TombstoneServiceModel.cs" />
     <Compile Include="TombStoneServiceSelectModel.cs" />
     <Compile Include="TombStonesPaymentModel.cs" />
     <Compile Include="UnderwriterModel.cs" />
