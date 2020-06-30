@@ -40,15 +40,14 @@ namespace Funeral.BAL
             return FuneralHelper.DataTableMapToList<FamilyDependencyModel>(dr).FirstOrDefault();
         }
 
-        public static MembersViewModel GetAllMembers(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder, string status,string BookName)
+        public static MembersViewModel GetAllMembers(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder, string status, string BookName)
         {
             try
             {
                 DataSet ds = MembersDAL.GetAllMembersdt(ParlourId, PageSize, PageNum, Keyword, SortBy, SortOrder, status);
                 DataTable dr = ds.Tables[0];
                 MembersViewModel objViewModel = new MembersViewModel();
-               var membersList = FuneralHelper.DataTableMapToList<MembersModel>(dr, true);
-                //objViewModel.MemberList = !string.IsNullOrEmpty(BookName) ? membersList.Where(x => x.MemberSociety.Equals(BookName)).ToList() : membersList;
+                var membersList = FuneralHelper.DataTableMapToList<MembersModel>(dr, true);
                 objViewModel.MemberList = !string.IsNullOrEmpty(BookName) && BookName != "0" ? membersList.Where(x => x.MemberSociety.Equals(BookName)).ToList() : membersList;
                 //dr.NextResult();
                 //dr.Read();
@@ -277,11 +276,6 @@ namespace Funeral.BAL
         {
             DataTable dr = MembersDAL.SelectAllAgentdt(ParlourId);
             return FuneralHelper.DataTableMapToList<AgentModel>(dr);
-        }
-        public static List<UnderwritterModel> SelectAllUnderwritters(Guid Parlourid)
-        {
-            DataTable dr = MembersDAL.SelectAllUnderwritterdt(Parlourid);
-            return FuneralHelper.DataTableMapToList<UnderwritterModel>(dr);
         }
         public static NewMemberInvoiceModel GetInvoiceByid(int InvoiceId)
         {

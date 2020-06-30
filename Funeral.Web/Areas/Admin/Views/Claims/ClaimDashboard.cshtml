@@ -1,11 +1,63 @@
-﻿@model dynamic
-@{
+﻿@{
     ViewBag.Title = "Claim Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script type="text/javascript">
+    $(function () {
+        RenderClaimDashboard(document.getElementById("CompanyList"))
+    });
     function RedirectToClaimPage(CurrentValue) {
         $.post("@Url.Action("Index","Claims")", { Status: CurrentValue }, function (result) {});
+    }
+    function RenderClaimDashboard(Control) {
+        var CompanyId = Control.value;
+        if (CompanyId != null && CompanyId != "") {
+            BindGroupDropdown(CompanyId);
+            var BookId = $("#ddlClaimSociety").val();
+            LoadClaimDashboard(CompanyId,BookId)
+        }
+        else {
+            alert("Please select Scheme");
+        }
+    }
+    function LoadClaimDashboard(CompanyId, BookId) {
+        var Geturl = "@Url.Action("RenderClaimDashboard", "Claims", new {CompanyId="GetCompanyId",BookId="getBookId"})".replace("GetCompanyId", CompanyId).replace("amp;", "").replace("getBookId", BookId);
+        $.ajax({
+            url: Geturl,
+            type: 'GET',
+            cache: false,
+        }).done(function (result) { $('#dvClaimDashboardRendering').empty().html(result); });
+    }
+    function BindGroupDropdown(ParlourId) {
+        var ddlCustomers = $("#ddlClaimSociety");
+        ddlCustomers.empty().append('<option selected="selected" value="0">All</option>');
+        jQuery.ajax({
+            url: '@Url.Action("BindGroupByCompanyId","Claims")',
+            data: { CompanyId: ParlourId },
+            type: "post",
+            success: function (response) {
+                ddlCustomers.empty().append('<option selected="selected" value="0">All</option>');
+                jQuery.each(response, function () {
+                    ddlCustomers.append($("<option></option>").val(this['Value']).html(this['Text']));
+                });
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+    }
+     function ChangeBook_LoadDashboard(Control) {
+        var BookId = Control.value;
+        if (BookId != null && BookId != "") {
+            var CompanyId = $("#CompanyList").val();
+            LoadClaimDashboard(CompanyId,BookId)
+        }
+        else {
+            alert("Please select Book");
+        }
     }
 </script>
 <div class="row">
@@ -16,33 +68,20 @@
             </div>
             <div class="ibox-content">
                 <div class="row">
-                    <div class="col-lg-12">
-                        <div class="table-responsive">
-                            <table id="ClaimStatusDataTable" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
-                                <thead>
-                                    <tr>
-                                        <th>Status</th>
-                                        <th>Count</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{
-                                        if (Model.getStatusCount != null ? (Model.getStatusCount.Count > 0 ? true : false) : false)
-                                        {
-                                            for (int i = 0; i < Model.getStatusCount.Count; i++)
-                                            {
-                                                <tr>
-                                                    <td><b>@Model.getStatusCount[i].Status</b></td>
-                                                    <td><a href="@Url.Action("Index","Claims",new {Status= Model.getStatusCount[i].Status})">@Model.getStatusCount[i].StatusCount</a></td>
-                                                </tr>
-                                            }
-                                        }
-                                    }
-                                </tbody>
-                            </table>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Scheme: </label>
+                            @Html.DropDownList("CompanyList", new SelectList(ViewBag.Companies, "parlourid", "ApplicationName"), new { @onchange = "RenderClaimDashboard(this)", @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Book: </label>
+                            <select class="form-control" id="ddlClaimSociety" onchange="ChangeBook_LoadDashboard(this)"></select>
                         </div>
                     </div>
                 </div>
+                <div id="dvClaimDashboardRendering"></div>
             </div>
         </div>
     </div>

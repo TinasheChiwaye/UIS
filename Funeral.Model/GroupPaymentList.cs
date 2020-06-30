@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Funeral.Model
 {
@@ -24,5 +20,6 @@ namespace Funeral.Model
         public decimal AmountAtRisk { get; set; }
         public decimal TotalRiskCovered { get; set; }
         public string ReferenceNumber { get; set; }
+        public int DuplicateIDsWithCovers100K { get; set; }
     }
 }

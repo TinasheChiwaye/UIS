@@ -485,12 +485,63 @@ namespace Funeral.DAL
             ObjParam[0] = new DbParameter("@ClaimId", DbParameter.DbType.Int, 0, ClaimId);
             return (DbConnection.GetDataTable(CommandType.StoredProcedure, SP, ObjParam));
         }
-        public static DataTable GetStatusCountList_Dashboard(Guid ParlourId)
+        public static DataTable GetStatusCountList_Dashboard(Guid ParlourId, int BookId)
         {
-            string SP = "GetClaimStatusCount_dashboard";
-            DbParameter[] ObjParam = new DbParameter[1];
-            ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
-            return (DbConnection.GetDataTable(CommandType.StoredProcedure, SP, ObjParam));
+            if (ParlourId == Guid.Empty && BookId == 0)
+            {
+                var data = DbConnection.GetDataTable(CommandType.StoredProcedure, "GetClaimStatusCountAll");
+                return data;
+            }
+            else
+            {
+                DbParameter[] ObjParam = new DbParameter[2];
+                ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+                ObjParam[1] = new DbParameter("@BookId", DbParameter.DbType.Int, 0, BookId);
+                return (DbConnection.GetDataTable(CommandType.StoredProcedure, "GetClaimStatusCount_ByCompanyAndGroup", ObjParam));
+            }
+        }
+        public static DataTable ClaimCostGraph(Guid ParlourId, int BookId)
+        {
+            if (ParlourId == Guid.Empty && BookId == 0)
+            {
+                var data = DbConnection.GetDataTable(CommandType.StoredProcedure, "GetClaimCostAll_DashboardGraph");
+                return data;
+            }
+            else
+            {
+                DbParameter[] ObjParam = new DbParameter[2];
+                ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+                ObjParam[1] = new DbParameter("@BookId", DbParameter.DbType.Int, 0, BookId);
+                return (DbConnection.GetDataTable(CommandType.StoredProcedure, "GetClaimCost_DashboardGraph", ObjParam));
+            }
+        }
+        public static DataTable GetClaimDashboarLabel(Guid ParlourId, int BookId)
+        {
+            if (ParlourId == Guid.Empty)
+            {
+                return (DbConnection.GetDataTable(CommandType.StoredProcedure, "GetClaimDashboarLabel"));
+            }
+            else
+            {
+                DbParameter[] ObjParam = new DbParameter[2];
+                ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+                ObjParam[1] = new DbParameter("@BookId", DbParameter.DbType.Int, 0, BookId);
+                return (DbConnection.GetDataTable(CommandType.StoredProcedure, "GetClaimDashboarLabel_ByCompanyAndGroup", ObjParam));
+            }
+        }
+        public static DataTable ClaimDashboardGraph_ByPolicy(Guid ParlourId, int BookId)
+        {
+            if (ParlourId == Guid.Empty && BookId == 0)
+            {
+                return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetClaimCountAlAByPolicy");
+            }
+            else
+            {
+                DbParameter[] ObjParam = new DbParameter[2];
+                ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+                ObjParam[1] = new DbParameter("@BookId", DbParameter.DbType.Int, 0, BookId);
+                return (DbConnection.GetDataTable(CommandType.StoredProcedure, "GetClaimCostByPolicy_ClaimDashboard", ObjParam));
+            }
         }
         public static DataTable GetClaimDocumentsByClaimId(int fkiClaimID, Guid Parlourid, string MemberType)
         {

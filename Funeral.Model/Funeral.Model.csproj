@@ -133,6 +133,7 @@
     <Compile Include="OtherPaymentModel.cs" />
     <Compile Include="PackageServiceModel.cs" />
     <Compile Include="PackageServicesSelectionModel.cs" />
+    <Compile Include="PayfastRequestModel.cs" />
     <Compile Include="PlanStagingList.cs" />
     <Compile Include="RegenerateBillingModal.cs" />
     <Compile Include="ReportParameters.cs" />

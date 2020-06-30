@@ -27,11 +27,11 @@
 
 <div class="row">
     <div class="col-lg-12">
+
         <div class="row">
-
-            @*@Html.Hidden("AddPayments", Url.Action("AddPayments"))*@
-
-            <div class="col-lg-6">
+            <div class="col-sm-12">
+                @*@Html.Hidden("AddPayments", Url.Action("AddPayments"))*@
+                <span id="lblMessage"></span>
             </div>
         </div>
         <div class="ibox ">
@@ -418,10 +418,7 @@
             type: "post",
             cache: false,
             success: function (result) {
-                if (result == "Payment added successfully.") {
-                    alert("Payment added successfully.");
-                    location.reload();
-                }
+                location.reload();
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);

@@ -810,3 +810,69 @@ Alter SP
 ---------------------------
 1.[MemberPaymentSelectAll_WithouthParlour]
 2.[MemberPaymentSelectAllByPage]
+
+
+
+
+17-03-2020
+=================================================
+
+NEW SP
+-------------------------------
+1.[GetClaimStatusCountAll]
+2.[GetClaimStatusCount_ByCompanyAndGroup]
+3.[GetClaimDashboarLabel]
+4.[GetClaimDashboarLabel_ByCompanyAndGroup]
+
+18-03-2020
+=========================
+New SQL FUNCTION
+--------------------------------------------
+1.dbo.fn_ConvertToDateTime()
+2.dbo.UNIX_Timestamp()
+
+
+New SP
+================================
+1.[GetClaimCost_DashboardGraph]
+2.[GetClaimCostAll_DashboardGraph]
+
+Alter SP
+------------------------
+1.[SchemeSummary]
+
+19-03-2020
+====================================
+New SP
+-------------------------
+1.[GetClaimCostByPolicy_ClaimDashboard]
+2.[GetClaimCountAlAByPolicy]
+
+
+Hide Module Update SQL Query
+-------------------------------------
+update tblPages set IsActive=0 where PageName in ('Supplementary Benefits','Branch Setup','Agent Setup','Expense Category Setup','Vendor Setup','Funeral Services','Funeral Package','Tombstone Package','Custom Details')
+
+20-03-2020
+=======================================
+Alert SP
+---------------------------
+1.[MemberSelectAllByPage]
+2.[MemberSelectAll_WithoutParlour]
+
+04-06-2020
+=============================
+Add New Table
+-------------------------
+1.ClientPayment
+
+Add New Store Procedure
+--------------------------
+1.SaveClientPayment
+2.getMyPoliceByIDnumber
+
+Alter Store Procedure
+------------------------------
+1.MemberParlourIDAndMemberNoByID_New
+2.SearchMemberIDByMemberNo
+3.MemberPaymentSelectAllByPage

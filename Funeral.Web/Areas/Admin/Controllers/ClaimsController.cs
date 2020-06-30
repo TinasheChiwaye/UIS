@@ -7,7 +7,6 @@ using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -479,9 +478,17 @@ namespace Funeral.Web.Areas.Admin.Controllers
         #region Claim Dashboard
         public ActionResult ClaimDashboard()
         {
-            dynamic model = new ExpandoObject();
-            model.getStatusCount = ClaimsBAL.GetStatusCountList_Dashboard(CurrentParlourId);
-            return View(model);
+            BindCompanyList("Search");
+            ViewBag.SocietyLists = CommonBAL.GetSocietyByParlourId(CurrentParlourId);
+            return View();
+        }
+        [HttpGet]
+        public ActionResult RenderClaimDashboard(Guid CompanyId, int BookId)
+        {
+            ClaimDashboard claimDashboard = new ClaimDashboard();
+            //dynamic model = new ExpandoObject();
+            claimDashboard = ClaimsBAL.claimDashboardData(CompanyId, BookId);
+            return PartialView("_ClaimDashboard", claimDashboard);
         }
         #endregion
         #region Upload Claim Document
@@ -708,13 +715,14 @@ namespace Funeral.Web.Areas.Admin.Controllers
             return Json(new { PlanModel = objpan, MembersModel = objmodel, flag = flag }, JsonRequestBehavior.AllowGet);
         }
         #endregion
+        #region Bind Group by CompanyId
         [HttpPost]
         public JsonResult BindGroupByCompanyId(Guid CompanyId)
         {
             var Company = CommonBAL.GetSocietyByParlourId(CompanyId).Select(x => new SelectListItem() { Text = x.SocietyName, Value = x.pkiSocietyID.ToString() });
             return Json(Company, JsonRequestBehavior.AllowGet);
         }
-
+        #endregion
         #region Claim reason By CLaim Status
         [HttpPost]
         public JsonResult BindClaimReason(string ClaimStatus)
