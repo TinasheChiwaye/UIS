@@ -81,8 +81,8 @@ namespace Funeral.Web.Areas.Tools.Controllers
         [PageRightsAttribute(CurrentPageId = 15)]
         public PartialViewResult ListPackage()
         {
-            //ViewBag.HasEditRight = HasEditRight;
-            //ViewBag.HasDeleteRight = HasDeleteRight;
+            ViewBag.HasEditRight = HasEditRight;
+            ViewBag.HasDeleteRight = HasDeleteRight;
 
             Model.Search.BaseSearch search = new Model.Search.BaseSearch();
             search.PageNum = 1;
@@ -105,8 +105,8 @@ namespace Funeral.Web.Areas.Tools.Controllers
         public ActionResult ListServices(int pkiPackageID)
         {
 
-            //ViewBag.HasEditRight = HasEditRight;
-            //ViewBag.HasDeleteRight = HasDeleteRight;
+            ViewBag.HasEditRight = HasEditRight;
+            ViewBag.HasDeleteRight = HasDeleteRight;
 
             Model.Search.BaseSearch search = new Model.Search.BaseSearch();
             search.PageNum = 1;

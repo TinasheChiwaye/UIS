@@ -45,8 +45,8 @@ namespace Funeral.Web.Areas.Tools.Controllers
         [PageRightsAttribute(CurrentPageId = 26)]
         public PartialViewResult List()
         {
-            //ViewBag.HasEditRight = HasEditRight;
-            //ViewBag.HasDeleteRight = HasDeleteRight;
+            ViewBag.HasEditRight = HasEditRight;
+            ViewBag.HasDeleteRight = HasDeleteRight;
 
             Model.Search.PackageSearch search = new Model.Search.PackageSearch();
             search.PageNum = 1;

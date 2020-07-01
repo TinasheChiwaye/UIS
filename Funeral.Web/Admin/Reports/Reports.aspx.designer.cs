@@ -49,6 +49,15 @@ namespace Funeral.Web.Admin.Reports {
         protected global::System.Web.UI.WebControls.DropDownList ddlCompanyList;
         
         /// <summary>
+        /// ddlSociety control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlSociety;
+        
+        /// <summary>
         /// ddlReportType control.
         /// </summary>
         /// <remarks>
@@ -101,15 +110,6 @@ namespace Funeral.Web.Admin.Reports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlBranch;
-        
-        /// <summary>
-        /// ddlSociety control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlSociety;
         
         /// <summary>
         /// ddlAgent control.

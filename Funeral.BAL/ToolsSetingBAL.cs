@@ -205,6 +205,14 @@ namespace Funeral.BAL
         {
             return ToolsSetingDAL.DeleteSociety(ID);
         }
+        public static int DeleteFuneral(int Id)
+        {
+            return ToolsSetingDAL.DeleteFuneralService(Id);
+        }
+        public static int DeleteTombstone(int Id)
+        {
+            return ToolsSetingDAL.DeleteTombstoneService(Id);
+        }
         public static List<VendorModel> GetAllVendores(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder)
         {
             DataTable dr = ToolsSetingDAL.GetAllVendoresdt(ParlourId, PageSize, PageNum, Keyword, SortBy, SortOrder);
@@ -368,14 +376,29 @@ namespace Funeral.BAL
             DataTable dr = ToolsSetingDAL.SelectFuneralManageServiceByParlIDdt(ParlourId, PageSize, PageNum, Keyword, SortBy, SortOrder);
             return FuneralHelper.DataTableMapToList<FuneralServiceManageModel>(dr);
         }
+        public static List<TombstoneServiceModel> SelectTombstoneServiceByParlID(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder)
+        {
+            DataTable dr = ToolsSetingDAL.SelectTombstoneServiceByParlIDdt(ParlourId, PageSize, PageNum, Keyword, SortBy, SortOrder);
+            return FuneralHelper.DataTableMapToList<TombstoneServiceModel>(dr);
+        }
         public static int SaveFuneralManageService(FuneralServiceManageModel Model1)
         {
             return ToolsSetingDAL.SaveFuneralManageService(Model1);
+        }
+
+        public static int SaveTombstoneServices(TombstoneServiceModel model1)
+        {
+            return ToolsSetingDAL.SaveTombstoneServices(model1);
         }
         public static FuneralServiceManageModel SelectFuneralManageServiceByParlANdID(int pkiServiceID, Guid ParlourId)
         {
             DataTable dr = ToolsSetingDAL.SelectFuneralManageServiceByParlANdIDdt(pkiServiceID, ParlourId);
             return FuneralHelper.DataTableMapToList<FuneralServiceManageModel>(dr).FirstOrDefault();
+        }
+        public static TombstoneServiceModel SelectTombstoneServiceByIdAndParlour(int pkiTombstoneID,Guid Parlourid)
+        {
+            DataTable dr = ToolsSetingDAL.SelectTombstoneServiceByIdAndParldt(pkiTombstoneID, Parlourid);
+            return FuneralHelper.DataTableMapToList<TombstoneServiceModel>(dr).FirstOrDefault();
         }
         public static int DeleteFuneralManageServiceById(int pkiServiceID)
         {

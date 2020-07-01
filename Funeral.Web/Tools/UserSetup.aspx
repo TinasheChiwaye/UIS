@@ -107,27 +107,27 @@
                                 </asp:DropDownList>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <%--<div class="col-lg-6">
                             <div class="form-group">
                                 <label>Custom Grouping 1</label>
                                 <asp:DropDownList ID="ddlCustom1" class="form-control" runat="server">
                                 </asp:DropDownList>
                             </div>
-                        </div>
-                        <div class="col-lg-6">
+                        </div>--%>
+                        <%--<div class="col-lg-6">
                             <div class="form-group">
                                 <label>Custom Grouping 2</label>
                                 <asp:DropDownList ID="ddlCustom2" class="form-control" runat="server">
                                 </asp:DropDownList>
                             </div>
-                        </div>
-                        <div class="col-lg-6">
+                        </div>--%>
+                       <%-- <div class="col-lg-6">
                             <div class="form-group">
                                 <label>Custom Grouping 3</label>
                                 <asp:DropDownList ID="ddlCustom3" class="form-control" runat="server">
                                 </asp:DropDownList>
                             </div>
-                        </div>
+                        </div>--%>
                     </div>
                 </div>
             </div>

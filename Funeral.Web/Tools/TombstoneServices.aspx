@@ -1,5 +1,4 @@
-﻿<%@ Page Title="Manage Service" Language="C#" MasterPageFile="~/Admin/Admin.Master" AutoEventWireup="true" CodeBehind="FuneralServices.aspx.cs" Inherits="Funeral.Web.Tools.FuneralServices" %>
-
+﻿<%@ Page Title="Manage Funeral Service" Language="C#" MasterPageFile="~/Admin/Admin.Master" AutoEventWireup="true" CodeBehind="TombstoneServices.aspx.cs" Inherits="Funeral.Web.Tools.TombstoneServices" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeaderContent" runat="server">
 </asp:Content>
@@ -128,7 +127,7 @@
                     <div class="row">
                         <div class="col-lg-12 ">
                             <div class="table-responsive">
-                                <asp:GridView ID="gvFuneralServiceList" OnRowDataBound="gvFuneralServiceList_RowDataBound" OnPageIndexChanging="gvFuneralService_PageIndexChanging" OnRowCommand="gvFuneralService_RowCommand" OnSorting="gvFuneralService_Sorting" AllowSorting="true" runat="server" Width="100%" CssClass="table table-striped table-bordered table-hover" AutoGenerateColumns="False" AllowPaging="True" PageSize="25" EmptyDataText="There are no Services  added.">
+                                <asp:GridView ID="gvTombstoneServiceList" OnRowDataBound="gvTombstoneServiceList_RowDataBound" OnPageIndexChanging="gvTombstoneService_PageIndexChanging" OnRowCommand="gvTombstoneService_RowCommand" OnSorting="gvTombstoneService_Sorting" AllowSorting="true" runat="server" Width="100%" CssClass="table table-striped table-bordered table-hover" AutoGenerateColumns="False" AllowPaging="True" PageSize="25" EmptyDataText="There are no Services  added.">
 
                                     <PagerStyle CssClass="pagination-ys" />
                                     <Columns>
@@ -144,11 +143,11 @@
                                             <ItemTemplate>
                                                 <% if (this.HasEditRight)
                                                    {%>
-                                                <asp:LinkButton runat="server" ID="lbtnEditDependant" ToolTip="Click here To Edite Funeral" CommandArgument='<%#Eval("pkiServiceID") %>' CommandName="EditFuneralService"><i class="fa fa-edit"></i></asp:LinkButton>
+                                                <asp:LinkButton runat="server" ID="lbtnEditDependant" ToolTip="Click here To Edite Funeral" CommandArgument='<%#Eval("pkiTombstoneID") %>' CommandName="EditFuneralService"><i class="fa fa-edit"></i></asp:LinkButton>
                                                 &nbsp;
                                            <%} if (this.HasDeleteRight)
                                                {%>
-                                                <asp:LinkButton runat="server" ID="lbtnDelete" OnClientClick="return confirm('Are you sure you want to delete?')" CommandArgument='<%#Eval("pkiServiceID")%>' CommandName="deleteFuneral"><i class="fa fa-trash" aria-hidden="true"></i></asp:LinkButton>
+                                                <asp:LinkButton runat="server" ID="lbtnDelete" OnClientClick="return confirm('Are you sure you want to delete?')" CommandArgument='<%#Eval("pkiTombstoneID")%>' CommandName="deleteFuneral"><i class="fa fa-trash" aria-hidden="true"></i></asp:LinkButton>
                                                 <% }%>
                                             </ItemTemplate>
                                         </asp:TemplateField>

@@ -78,6 +78,7 @@
     <Compile Include="BankModel.cs" />
     <Compile Include="BaseViewModel.cs" />
     <Compile Include="Base\BaseResult.cs" />
+    <Compile Include="BatchPaymentlistModel.cs" />
     <Compile Include="Beneficiary_model.cs" />
     <Compile Include="BranchModel.cs" />
     <Compile Include="ChangeStatusReason.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Dashboard.cs" />
     <Compile Include="DebitBatchListModel.cs" />
     <Compile Include="DebitOrderTransactionModel.cs" />
+    <Compile Include="DebitTransactionListModel.cs" />
     <Compile Include="ExpensesModel.cs" />
     <Compile Include="ExternalUserLink.cs" />
     <Compile Include="FamilyDependencyModel.cs" />
@@ -184,12 +186,14 @@
     <Compile Include="tblPageModel.cs" />
     <Compile Include="TombStoneModel.cs" />
     <Compile Include="TombstonePackageModel.cs" />
+    <Compile Include="TombstoneServiceModel.cs" />
     <Compile Include="TombStoneServiceSelectModel.cs" />
     <Compile Include="TombStonesPaymentModel.cs" />
     <Compile Include="UnderwriterModel.cs" />
     <Compile Include="UnderwriterPremiumEnums.cs" />
     <Compile Include="UnderwriterPremiumModel.cs" />
     <Compile Include="UnderwriterSetupModel.cs" />
+    <Compile Include="UnderwritterModel.cs" />
     <Compile Include="VendorModel.cs" />
   </ItemGroup>
   <ItemGroup>

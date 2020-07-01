@@ -7,79 +7,137 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-
-namespace Funeral.Web.Admin
-{
-
-
-    public partial class DebitOrder
-    {
+namespace Funeral.Web.Tools {
+    
+    
+    public partial class TombstoneServices {
+        
         /// <summary>
-        /// scriptManager1 control.
+        /// ScriptManager1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.ScriptManager scriptManager1;
-
+        protected global::System.Web.UI.ScriptManager ScriptManager1;
+        
         /// <summary>
-        /// ddlBatchPageSize control.
+        /// lblMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlBatchPageSize;
+        protected global::System.Web.UI.WebControls.Label lblMessage;
+        
         /// <summary>
-        /// Panel1 control.
+        /// ddlCompanyList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel Panel1;
-
+        protected global::System.Web.UI.WebControls.DropDownList ddlCompanyList;
+        
         /// <summary>
-        /// TextBox1 control.
+        /// vSummaryFuneral control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox1;
+        protected global::System.Web.UI.WebControls.ValidationSummary vSummaryFuneral;
+        
         /// <summary>
-        /// Button1 control.
+        /// txtServicename control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.TextBox txtServicename;
+        
         /// <summary>
-        /// Label2 control.
+        /// RequiredFieldValidator1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+        
         /// <summary>
-        /// Label3 control.
+        /// txtServiceCost control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
+        protected global::System.Web.UI.WebControls.TextBox txtServiceCost;
+        
         /// <summary>
-        /// gvDebitBatches control.
+        /// RequiredFieldValidator2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvDebitBatches;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
+        
+        /// <summary>
+        /// ddlVendor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlVendor;
+        
+        /// <summary>
+        /// txtServiceDesc control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtServiceDesc;
+        
+        /// <summary>
+        /// txtQty control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtQty;
+        
+        /// <summary>
+        /// txtCostOfSale control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCostOfSale;
+        
+        /// <summary>
+        /// btnAddService control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAddService;
+        
+        /// <summary>
+        /// btnReset control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnReset;
+        
         /// <summary>
         /// ddlPageSize control.
         /// </summary>
@@ -88,6 +146,7 @@ namespace Funeral.Web.Admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlPageSize;
+        
         /// <summary>
         /// pnlSearch control.
         /// </summary>
@@ -96,6 +155,7 @@ namespace Funeral.Web.Admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlSearch;
+        
         /// <summary>
         /// txtKeyword control.
         /// </summary>
@@ -104,6 +164,7 @@ namespace Funeral.Web.Admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtKeyword;
+        
         /// <summary>
         /// btnSearch control.
         /// </summary>
@@ -112,6 +173,7 @@ namespace Funeral.Web.Admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSearch;
+        
         /// <summary>
         /// Label1 control.
         /// </summary>
@@ -120,6 +182,7 @@ namespace Funeral.Web.Admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label1;
+        
         /// <summary>
         /// lblRecords control.
         /// </summary>
@@ -128,13 +191,14 @@ namespace Funeral.Web.Admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblRecords;
+        
         /// <summary>
-        /// gvDebitTransactionsList control.
+        /// gvTombstoneServiceList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvDebitTransactionsList;
+        protected global::System.Web.UI.WebControls.GridView gvTombstoneServiceList;
     }
 }

@@ -19,7 +19,9 @@ using System.Web.Mvc;
 
 namespace Funeral.Web.Admin
 {
+
     public partial class DebitOrder : AdminBasePage
+
     //System.Web.UI.Page
     {
         private readonly ISiteSettings _siteConfig = new SiteSettings();
