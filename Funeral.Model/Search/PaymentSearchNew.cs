@@ -6,5 +6,6 @@ namespace Funeral.Model.Search
     {
         public Guid StatusId { get; set; }
         public string BookName { get; set; }
+        public int BookID { get; set; }
     }
 }

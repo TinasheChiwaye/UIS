@@ -9,7 +9,7 @@ using System.Web.UI.WebControls;
 
 namespace Funeral.Web.Tools
 {
-    public partial class FuneralServices : AdminBasePage
+    public partial class TombstoneServices : AdminBasePage
     {
         #region Fields
         #endregion
@@ -70,7 +70,7 @@ namespace Funeral.Web.Tools
             {
                 object viewState = this.ViewState["sortBYExpression"];
 
-                return (viewState == null) ? "pkiServiceID" : (string)viewState;
+                return (viewState == null) ? "pkiTombstoneID" : (string)viewState;
             }
             set { this.ViewState["sortBYExpression"] = value; }
         }
@@ -173,10 +173,10 @@ namespace Funeral.Web.Tools
         {
             if (!IsPostBack)
             {
-                gvFuneralServiceList.PageSize = PageSize;
-                List<FuneralServiceManageModel> objModel = ToolsSetingBAL.SelectFuneralManageServiceByParlID(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
-                gvFuneralServiceList.DataSource = objModel;
-                gvFuneralServiceList.DataBind();
+                gvTombstoneServiceList.PageSize = PageSize;
+                List<TombstoneServiceModel> objModel = ToolsSetingBAL.SelectTombstoneServiceByParlID(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
+                gvTombstoneServiceList.DataSource = objModel;
+                gvTombstoneServiceList.DataBind();
                 ViewState["NewParlourID"] = ParlourId;
             }
             else
@@ -184,10 +184,10 @@ namespace Funeral.Web.Tools
 
                 if (ddlCompanyList.SelectedValue == "" || ddlCompanyList.SelectedValue == null || ddlCompanyList.SelectedValue == "0")
                 {
-                    gvFuneralServiceList.PageSize = PageSize;
-                    List<FuneralServiceManageModel> objModel = ToolsSetingBAL.SelectFuneralManageServiceByParlID(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
-                    gvFuneralServiceList.DataSource = objModel;
-                    gvFuneralServiceList.DataBind();
+                    gvTombstoneServiceList.PageSize = PageSize;
+                    List<TombstoneServiceModel> objModel = ToolsSetingBAL.SelectTombstoneServiceByParlID(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
+                    gvTombstoneServiceList.DataSource = objModel;
+                    gvTombstoneServiceList.DataBind();
 
                 }
                 else
@@ -196,10 +196,10 @@ namespace Funeral.Web.Tools
                     ApplicationSettingsModel ComName = ToolsSetingBAL.GetAllApplicationList2(ParlourId, 2, AppId);
                     Guid New = ComName.parlourid;
                     ViewState["NewParlourID"] = New;
-                    gvFuneralServiceList.PageSize = PageSize;
-                    List<FuneralServiceManageModel> objModel = ToolsSetingBAL.SelectFuneralManageServiceByParlID(New, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
-                    gvFuneralServiceList.DataSource = objModel;
-                    gvFuneralServiceList.DataBind();
+                    gvTombstoneServiceList.PageSize = PageSize;
+                    List<TombstoneServiceModel> objModel = ToolsSetingBAL.SelectTombstoneServiceByParlID(New, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
+                    gvTombstoneServiceList.DataSource = objModel;
+                    gvTombstoneServiceList.DataBind();
                 }
             }
         }
@@ -207,14 +207,14 @@ namespace Funeral.Web.Tools
         {
             btnReset.Enabled = true;
             SecureUserGroupsModel Access = ToolsSetingBAL.GetSuperUserAccessByID(UserID, ParlourId).Where(x => x.fkiSecureGroupID == 12).FirstOrDefault();
-            FuneralServiceManageModel model = ToolsSetingBAL.SelectFuneralManageServiceByParlANdID(ServiceID, ParlourId);
+            TombstoneServiceModel model = ToolsSetingBAL.SelectTombstoneServiceByIdAndParlour(ServiceID, ParlourId);
             if ((Access == null) && (model == null))
             {
                 Response.Write("<script>alert('Sorry!you are not authorized to perform edit on this Service.');</script>");
             }
             else
             {
-                ServiceID = model.pkiServiceID;
+                ServiceID = model.pkiTombstoneID;
                 txtServicename.Text = model.ServiceName;
                 txtServiceCost.Text = (model.ServiceCost).ToString("N2");
                 txtServiceDesc.Text = model.ServiceDesc;
@@ -261,10 +261,10 @@ namespace Funeral.Web.Tools
             {
                 try
                 {
-                    FuneralServiceManageModel objModel;
-                    objModel = new FuneralServiceManageModel();
+                    TombstoneServiceModel objModel;
+                    objModel = new TombstoneServiceModel();
 
-                    objModel.pkiServiceID = ServiceID;
+                    objModel.pkiTombstoneID = ServiceID;
                     objModel.VendorId = Convert.ToInt32(ddlVendor.SelectedValue);
                     objModel.CostOfSale = Convert.ToInt32(txtCostOfSale.Text);
 
@@ -290,7 +290,7 @@ namespace Funeral.Web.Tools
                     objModel.ModifiedUser = UserName;
 
 
-                    int a = ToolsSetingBAL.SaveFuneralManageService(objModel);
+                    int a = ToolsSetingBAL.SaveTombstoneServices(objModel);
 
                     ShowMessage(ref lblMessage, MessageType.Success, "Service Successfully Saved.");
                     ClearControl();
@@ -315,7 +315,7 @@ namespace Funeral.Web.Tools
         #endregion
 
         #region control event
-        protected void gvFuneralServiceList_RowDataBound(object sender, GridViewRowEventArgs e)
+        protected void gvTombstoneServiceList_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row != null)
             {
@@ -333,7 +333,7 @@ namespace Funeral.Web.Tools
                 }
             }
         }
-        protected void gvFuneralService_RowCommand(object sender, GridViewCommandEventArgs e)
+        protected void gvTombstoneService_RowCommand(object sender, GridViewCommandEventArgs e)
         {
 
             if (e.CommandName == "EditFuneralService")
@@ -355,7 +355,7 @@ namespace Funeral.Web.Tools
                 int FuneralID = Convert.ToInt32(e.CommandArgument);
                 try
                 {
-                    int delID = ToolsSetingBAL.DeleteFuneral(FuneralID);
+                    int delID = ToolsSetingBAL.DeleteTombstone(FuneralID);
                     ShowMessage(ref lblMessage, MessageType.Success, "Record deleted successfully.");
                     lblMessage.Visible = true;
                     bindFuneralServiceList();
@@ -371,9 +371,9 @@ namespace Funeral.Web.Tools
         #endregion
 
         #region pagelist
-        protected void gvFuneralService_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        protected void gvTombstoneService_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            gvFuneralServiceList.PageIndex = e.NewPageIndex;
+            gvTombstoneServiceList.PageIndex = e.NewPageIndex;
             bindFuneralServiceList();
         }
         #endregion
@@ -401,7 +401,7 @@ namespace Funeral.Web.Tools
             sortType = direction;
         }
 
-        protected void gvFuneralService_Sorting(object sender, GridViewSortEventArgs e)
+        protected void gvTombstoneService_Sorting(object sender, GridViewSortEventArgs e)
         {
             string sortExpression = e.SortExpression;
 
@@ -418,6 +418,5 @@ namespace Funeral.Web.Tools
             bindFuneralServiceList();
         }
         #endregion
-
     }
 }

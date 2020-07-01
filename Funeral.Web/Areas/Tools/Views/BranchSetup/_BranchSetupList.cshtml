@@ -117,7 +117,7 @@
             {
                 "render": function (data, type, full, meta) {
                     var hasEditRights = '@ViewBag.HasEditRight' == "True" ? true : false;
-                    var hasDeleteRights = '@ViewBag.HasDeleteRight' == "True" ? true : false;
+                    var hasDeleteRights = true;
 
                     if (hasEditRights || hasDeleteRights) {
                         tableConfigs.table.DataTable().columns([6]).visible(true)

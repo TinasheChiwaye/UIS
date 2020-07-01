@@ -22,15 +22,15 @@
         <div class="col-lg-12">
             <div class="ibox ">
                 <div class="ibox-title">
-                    <h5>Society setup</h5>
+                    <h5>Group setup</h5>
                 </div>
                 <div class="ibox-content">
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label>Society Name <em>*</em> </label>
+                                <label>Group Name <em>*</em> </label>
                                 <asp:TextBox MaxLength="25" runat="server" ID="txtSocietyName" name="SocietyName" type="text" class="form-control"></asp:TextBox>
-                                <asp:RequiredFieldValidator Display="None" ValidationGroup="SocietySetup" ControlToValidate="txtSocietyName" ID="RequiredFieldValidator1" ForeColor="red" runat="server" ErrorMessage="Please enter Society Name"></asp:RequiredFieldValidator>
+                                <asp:RequiredFieldValidator Display="None" ValidationGroup="SocietySetup" ControlToValidate="txtSocietyName" ID="RequiredFieldValidator1" ForeColor="red" runat="server" ErrorMessage="Please enter Group Name"></asp:RequiredFieldValidator>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -70,7 +70,7 @@
                                     <PagerStyle CssClass="pagination-ys" />
                                     <Columns>
                                         <%-- <asp:BoundField DataField="pkiSocietyID" HeaderText="ID" ReadOnly="True" />--%>
-                                        <asp:BoundField DataField="SocietyName" HeaderText="Society Name" ReadOnly="True" />
+                                        <asp:BoundField DataField="SocietyName" HeaderText="Group Name" ReadOnly="True" />
                                         <asp:BoundField DataField="ModifiedUser" HeaderText="Modified User" ReadOnly="True" />
                                         <asp:BoundField DataField="LastModified" HeaderText="Modified date" DataFormatString="{0:d}" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg" />
                                         <asp:TemplateField HeaderText="Actions">

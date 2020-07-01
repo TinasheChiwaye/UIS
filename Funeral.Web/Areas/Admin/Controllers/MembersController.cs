@@ -33,14 +33,14 @@ namespace Funeral.Web.Areas.Admin.Controllers
         [PageRightsAttribute(CurrentPageId = 4)]
         public ActionResult Index()
         {
-            //ViewBag.HasAccess = HasAccess;
+            ViewBag.HasAccess = HasAccess;
             if (ViewBag.HasAccess == true)
             {
                 var statusList = CommonBAL.GetStatus(FuneralEnum.StatusAssociatedTable.Members.ToString()).Select(x => new SelectListItem() { Text = x.ID.ToString(), Value = x.Status });
                 ViewBag.StatusList = statusList;
 
-                //ViewBag.HasEditRight = HasEditRight;
-                //ViewBag.HasDeleteRight = HasDeleteRight;
+                ViewBag.HasEditRight = HasEditRight;
+                ViewBag.HasDeleteRight = HasDeleteRight;
 
                 ViewBag.totalPremium = Currency;
 
@@ -197,6 +197,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             Managemembers.BankList = BanksBAL.SelectAll().Select(x => new SelectListItem() { Text = x.BankName, Value = x.BranchCode });
             Managemembers.AllAccountTypesList = BanksBAL.AccountTypeSelectAll().Select(x => new SelectListItem() { Text = x.AccountType, Value = x.AccountTypeID.ToString() });
             Managemembers.AgentList = MembersBAL.SelectAllAgent(CurrentParlourId).Select(x => new SelectListItem() { Text = x.Agent, Value = x.AgentID.ToString() });
+            Managemembers.UnderwritterList = MembersBAL.SelectAllUnderwritters(CurrentParlourId).Select(x => new SelectListItem() { Text = x.UnderwriterName, Value = x.pkiUnderWriterSetupId.ToString() });
             Managemembers.PolicyList = CommonBAL.GetPolicyByParlourId(CurrentParlourId).Select(x => new SelectListItem() { Text = x.PlanName, Value = x.pkiPlanID.ToString() });
             Managemembers.countryList = MembersBAL.GetCountry().Select(x => new SelectListItem() { Text = x.Name, Value = x.CountryCode });
             Managemembers.BranchList = CommonBAL.GetBranchByParlourId(CurrentParlourId).Select(x => new SelectListItem() { Text = x.BranchName, Value = x.Brancheid.ToString() });

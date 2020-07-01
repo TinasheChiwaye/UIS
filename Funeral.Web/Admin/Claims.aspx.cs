@@ -19,6 +19,7 @@ namespace Funeral.Web.Admin
 {
     public partial class Claims : AdminBasePage
     {
+        private readonly ISiteSettings _siteConfig = new SiteSettings();
         #region Fields
         #endregion
 
@@ -348,8 +349,53 @@ namespace Funeral.Web.Admin
         }
         protected void btnPrintClaim_click(object sender, EventArgs e)
         {
-            BindReportData();
-            ClientScript.RegisterStartupScript(GetType(), "hwa", "selectFollowUpPopUp(\'Report\');", true);
+            //BindReportData();
+            //ClientScript.RegisterStartupScript(GetType(), "hwa", "selectFollowUpPopUp(\'Report\');", true);
+
+
+            Warning[] warnings;
+            string[] streamids;
+            string mimeType;
+            string encoding;
+            string filenameExtension;
+            string filename;
+
+            try
+            {
+                ReportViewer rpw = new ReportViewer();
+                rpw.ProcessingMode = ProcessingMode.Remote;
+                IReportServerCredentials irsc = new MyReportServerCredentials();
+                rpw.ServerReport.ReportServerCredentials = irsc;
+
+                rpw.ProcessingMode = ProcessingMode.Remote;
+                rpw.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
+                rpw.ServerReport.ReportPath = "/Unplugg IT Solution BI Reporting/Claims doc";
+                ReportParameterCollection reportParameters = new ReportParameterCollection();
+
+                reportParameters.Add(new ReportParameter("PkiClaimID", pkiClaimID.ToString()));
+                reportParameters.Add(new ReportParameter("Parlourid", this.ParlourId.ToString()));
+                rpw.ServerReport.SetParameters(reportParameters);
+                string ExportTypeExtensions = "pdf";
+                byte[] bytes = rpw.ServerReport.Render(ExportTypeExtensions, null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
+                filename = string.Format("{0}.{1}", "Claims doc", ExportTypeExtensions);
+
+                Response.ClearHeaders();
+                Response.Clear();
+                Response.AddHeader("Content-Disposition", "attachment;filename=" + filename);
+                Response.ContentType = mimeType;
+                Response.BinaryWrite(bytes);
+                Response.Flush();
+                Response.End();
+
+
+            }
+            catch (Exception exc)
+            {
+                ShowMessage(ref lblMessage, MessageType.Danger, exc.Message);
+            }
+
+            //BindReportData();
+            //ClientScript.RegisterStartupScript(GetType(), "hwa", "selectFollowUpPopUp(\'Report\');", true);
         }
         public void BindReportData()
         {
@@ -1293,6 +1339,7 @@ namespace Funeral.Web.Admin
             string[] streamids;
             string mimeType;
             string encoding;
+            string filename;
             string filenameExtension;
             MemberId = Convert.ToInt32(hdnMemberID.Value);
             try
@@ -1303,75 +1350,36 @@ namespace Funeral.Web.Admin
                 MembersModel objmodel = ClaimsBAL.selectMemberByPkidAndParlor(ParlourId, MemberId);
                 if (objmodel != null)
                 {
-                    //PlanModel pm = client.GetPlanDetailsByPlanId(objmodel.fkiPlanID);
-                    SqlCommand com = new SqlCommand();
-                    com.CommandType = CommandType.StoredProcedure;
-                    com.Connection = new SqlConnection(ConfigurationManager.ConnectionStrings["FuneralConnection"].ConnectionString);
-                    com.CommandText = "GetPlanDetailsByPlanId";
-                    com.Parameters.Add(new SqlParameter("@ID", objmodel.fkiPlanID));
-                    SqlDataAdapter planadp = new SqlDataAdapter(com);
-                    DataTable PlanDt = new DataTable();
-                    planadp.Fill(PlanDt);
-                    SqlCommand com2 = new SqlCommand();
-                    com2.CommandType = CommandType.StoredProcedure;
-                    com2.Connection = new SqlConnection(ConfigurationManager.ConnectionStrings["FuneralConnection"].ConnectionString);
-                    com2.CommandText = "MemberSelectList";
-                    com2.Parameters.Add(new SqlParameter("@ID", MemberId));
-                    com2.Parameters.Add(new SqlParameter("@ParlourId", ParlourId));
-                    SqlDataAdapter MemberAdp = new SqlDataAdapter(com2);
-                    DataTable Memberdt = new DataTable();
-                    MemberAdp.Fill(Memberdt);
-                    SqlCommand com3 = new SqlCommand();
-                    com3.CommandType = CommandType.StoredProcedure;
-                    com3.Connection = new SqlConnection(ConfigurationManager.ConnectionStrings["FuneralConnection"].ConnectionString);
-                    com3.CommandText = "GetClaimsbyMemeberNumber";
-                    com3.Parameters.Add(new SqlParameter("@MemberNumber", pkiClaimID));
-                    SqlDataAdapter ClaimAdp = new SqlDataAdapter(com3);
-                    DataTable claimDT = new DataTable();
-                    ClaimAdp.Fill(claimDT);
-                    SqlCommand com4 = new SqlCommand();
-                    com4.CommandType = CommandType.StoredProcedure;
-                    com4.Connection = new SqlConnection(ConfigurationManager.ConnectionStrings["FuneralConnection"].ConnectionString);
-                    com4.CommandText = "SelectFuneralByMemberNo";
-                    com4.Parameters.Add(new SqlParameter("@MemberNumber", pkiClaimID.ToString()));
-                    SqlDataAdapter DeceAdp4 = new SqlDataAdapter(com4);
-                    DataTable decedt = new DataTable();
-                    DeceAdp4.Fill(decedt);
-                    SqlCommand com5 = new SqlCommand();
-                    com5.CommandType = CommandType.StoredProcedure;
-                    com5.Connection = new SqlConnection(ConfigurationManager.ConnectionStrings["FuneralConnection"].ConnectionString);
-                    com5.CommandText = "SelectApplicationTnCByParlourId";
-                    com5.Parameters.Add(new SqlParameter("@ParlourId", ParlourId));
-                    SqlDataAdapter TnCadp = new SqlDataAdapter(com5);
-                    DataTable dtTnC = new DataTable();
-                    TnCadp.Fill(dtTnC);
+                    ReportViewer rpw = new ReportViewer();
+                    rpw.ProcessingMode = ProcessingMode.Remote;
+                    IReportServerCredentials irsc = new MyReportServerCredentials();
+                    rpw.ServerReport.ReportServerCredentials = irsc;
 
-                    ReportViewerdata.Visible = true;
-                    ReportViewerdata.LocalReport.EnableExternalImages = true;
-                    ReportViewerdata.LocalReport.ReportPath = "admin/Reports/ReportLayouts/ReservationClaim.rdlc";
-                    ReportViewerdata.LocalReport.DataSources.Add(new ReportDataSource("DtApplicationSetting", LocalQoute));
-                    ReportViewerdata.LocalReport.DataSources.Add(new ReportDataSource("dsGetPlanDetailsByPlanId", PlanDt));
-                    ReportViewerdata.LocalReport.DataSources.Add(new ReportDataSource("dsMemberSelectList", Memberdt));
-                    ReportViewerdata.LocalReport.DataSources.Add(new ReportDataSource("DsClaimReoprt", claimDT));
-                    ReportViewerdata.LocalReport.DataSources.Add(new ReportDataSource("dsFuneralDataset", decedt));
-                    ReportViewerdata.LocalReport.DataSources.Add(new ReportDataSource("dsTermsAndConditionOfApplication", dtTnC));
-
-                    ReportViewerdata.DataBind();
+                    rpw.ProcessingMode = ProcessingMode.Remote;
+                    rpw.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
+                    rpw.ServerReport.ReportPath = "/Unplugg IT Solution BI Reporting/Claims doc";
                     ReportParameterCollection reportParameters = new ReportParameterCollection();
-                    reportParameters.Add(new ReportParameter("txtApplicantName", ApplicationName));
-                    this.ReportViewerdata.LocalReport.SetParameters(reportParameters);
-                    byte[] bytes = ReportViewerdata.LocalReport.Render(
-                        "PDF", null, out mimeType, out encoding, out filenameExtension,
-                        out streamids, out warnings);
+
+                    reportParameters.Add(new ReportParameter("PkiClaimID", pkiClaimID.ToString()));
+                    reportParameters.Add(new ReportParameter("Parlourid", this.ParlourId.ToString()));
+                    rpw.ServerReport.SetParameters(reportParameters);
+                    string ExportTypeExtensions = "pdf";
+
+
+
+                    byte[] bytes = rpw.ServerReport.Render(ExportTypeExtensions, null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
+                    filename = string.Format("{0}.{1}", "Claims doc", ExportTypeExtensions);
 
                     MemoryStream s = new MemoryStream(bytes);
                     s.Seek(0, SeekOrigin.Begin);
-                    Attachment claimdoc = new Attachment(s, "ClaimDoc CLMNo" + pkiClaimID.ToString() + ".pdf");
+                    Attachment claimdoc = new Attachment(s, filename);
 
 
                     using (SmtpClient smtpClient = new SmtpClient())
                     {
-                        MailMessage message = new MailMessage(ConfigurationManager.AppSettings["ClaimDocumentSender"].ToString().Trim(), txtEmailAddress.Text.Trim(), "Claim document", "Please find all attached document");
+                        MailMessage message = new MailMessage(ConfigurationManager.AppSettings["ClaimDocumentSender"].ToString().Trim(), txtEmailAddress.Text.Trim(), "Claims document", "Please find all attached document");
+
+
                         List<ClaimDocumentModel> documentModel = ClaimsBAL.SelectClaimDocumentsByClaimId(Convert.ToInt32(hdnClaimID.Value)).ToList();
                         if (documentModel != null)
                         {

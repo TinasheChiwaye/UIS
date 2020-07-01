@@ -78,7 +78,7 @@
                                         <%--<asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtcompanyRules" ID="RequiredFieldValidator20" ForeColor="red" runat="server" ErrorMessage="Please enter Company Rules"></asp:RequiredFieldValidator>--%>
                                     </div>
                                     <div class="form-group">
-                                        <label>Terms And Condition</label>
+                                        <label>Terms And Condition <em>*</em></label>
                                         <asp:TextBox runat="server" ID="txtTnC" name="CompanyRules" type="text" class="form-control" TextMode="MultiLine" Rows="4"></asp:TextBox>
 
                                     </div>
