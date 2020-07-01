@@ -7,6 +7,16 @@ namespace Funeral.Model
     {
     }
 
+    public class login
+    {
+        public string Username { get; set; }
+        public string password { get; set; }
+    }
+    public class mobileOTP
+    {
+        public string MobileNumber { get; set; }
+        public string OTP { get; set; }
+    }
 
     public class ForgotPassword
     {

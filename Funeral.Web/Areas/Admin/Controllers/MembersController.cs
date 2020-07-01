@@ -1358,6 +1358,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
         {
             MembersBAL.UpdateMemberPolicyStatus(policyStatus, memberId);
+            CommonBAL.SaveAudit(UserName, CurrentParlourId, "Policy Status Changed");
         }
         [HttpPost]
         [PageRightsAttribute(CurrentPageId = 4)]
