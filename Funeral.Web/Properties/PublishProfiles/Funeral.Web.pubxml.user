@@ -621,10 +621,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/22/2020 20:38:27</publishTime>
     </File>
     <File Include="Areas/Tools/Views/PlanSetup/Index.cshtml">
-      <publishTime>05/22/2020 20:38:27</publishTime>
+      <publishTime>06/29/2020 13:34:31</publishTime>
     </File>
     <File Include="Areas/Tools/Views/PlanSetup/_PlanSetupAddEdit.cshtml">
-      <publishTime>05/22/2020 20:39:42</publishTime>
+      <publishTime>06/29/2020 18:57:02</publishTime>
     </File>
     <File Include="Areas/Tools/Views/PlanSetup/_PlanSetupList.cshtml">
       <publishTime>05/22/2020 20:38:27</publishTime>
@@ -921,10 +921,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/25/2020 20:47:53</publishTime>
     </File>
     <File Include="bin/Funeral.Web.dll">
-      <publishTime>06/25/2020 20:47:58</publishTime>
+      <publishTime>07/01/2020 11:25:46</publishTime>
     </File>
     <File Include="bin/Funeral.Web.pdb">
-      <publishTime>06/25/2020 20:47:58</publishTime>
+      <publishTime>07/01/2020 11:25:46</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.Identity.Core.dll">
       <publishTime>04/03/2015 17:07:22</publishTime>
@@ -3492,7 +3492,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/22/2020 20:38:28</publishTime>
     </File>
     <File Include="Tools/CompanySetup.aspx">
-      <publishTime>05/22/2020 20:39:42</publishTime>
+      <publishTime>06/29/2020 11:12:55</publishTime>
     </File>
     <File Include="Tools/CustomManagement.aspx">
       <publishTime>05/22/2020 20:38:28</publishTime>
@@ -3582,7 +3582,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/22/2020 20:38:28</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>05/22/2020 20:39:43</publishTime>
+      <publishTime>06/30/2020 10:43:05</publishTime>
     </File>
     <File Include="Views/web.config">
       <publishTime>05/22/2020 20:38:28</publishTime>
