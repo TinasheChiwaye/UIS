@@ -127,7 +127,7 @@
                             <div class="form-group">
                                 <label>Terms And Condition For Funeral</label>
                                 <asp:TextBox runat="server" ID="txtTncFuneral" name="CompanyRules" type="text" class="form-control" TextMode="MultiLine" Rows="4"></asp:TextBox>
-
+                                <asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtTncFuneral" ID="RequiredFieldValidator2" ForeColor="red" runat="server" ErrorMessage="Please enter Terms And Condition"></asp:RequiredFieldValidator>
                             </div>
                             <div class="form-group">
                                 <label>Terms And Condition For TombStones</label>
