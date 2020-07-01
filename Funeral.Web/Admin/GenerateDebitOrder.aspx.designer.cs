@@ -7,13 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-
-namespace Funeral.Web.Admin
-{
-
-
-    public partial class DebitOrder
-    {
+namespace Funeral.Web.Admin {
+    
+    
+    public partial class GenerateDebitOrder {
+        
         /// <summary>
         /// scriptManager1 control.
         /// </summary>
@@ -22,7 +20,7 @@ namespace Funeral.Web.Admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.ScriptManager scriptManager1;
-
+        
         /// <summary>
         /// ddlBatchPageSize control.
         /// </summary>
@@ -31,6 +29,7 @@ namespace Funeral.Web.Admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlBatchPageSize;
+        
         /// <summary>
         /// Panel1 control.
         /// </summary>
@@ -39,7 +38,7 @@ namespace Funeral.Web.Admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel Panel1;
-
+        
         /// <summary>
         /// TextBox1 control.
         /// </summary>
@@ -48,6 +47,7 @@ namespace Funeral.Web.Admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TextBox1;
+        
         /// <summary>
         /// Button1 control.
         /// </summary>
@@ -56,6 +56,7 @@ namespace Funeral.Web.Admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button1;
+        
         /// <summary>
         /// Label2 control.
         /// </summary>
@@ -64,6 +65,7 @@ namespace Funeral.Web.Admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label2;
+        
         /// <summary>
         /// Label3 control.
         /// </summary>
@@ -72,6 +74,7 @@ namespace Funeral.Web.Admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label3;
+        
         /// <summary>
         /// gvDebitBatches control.
         /// </summary>
@@ -80,6 +83,7 @@ namespace Funeral.Web.Admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvDebitBatches;
+        
         /// <summary>
         /// ddlPageSize control.
         /// </summary>
@@ -88,6 +92,7 @@ namespace Funeral.Web.Admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlPageSize;
+        
         /// <summary>
         /// pnlSearch control.
         /// </summary>
@@ -96,6 +101,7 @@ namespace Funeral.Web.Admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlSearch;
+        
         /// <summary>
         /// txtKeyword control.
         /// </summary>
@@ -104,6 +110,7 @@ namespace Funeral.Web.Admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtKeyword;
+        
         /// <summary>
         /// btnSearch control.
         /// </summary>
@@ -112,6 +119,7 @@ namespace Funeral.Web.Admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSearch;
+        
         /// <summary>
         /// Label1 control.
         /// </summary>
@@ -120,6 +128,7 @@ namespace Funeral.Web.Admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label1;
+        
         /// <summary>
         /// lblRecords control.
         /// </summary>
@@ -128,6 +137,7 @@ namespace Funeral.Web.Admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblRecords;
+        
         /// <summary>
         /// gvDebitTransactionsList control.
         /// </summary>

@@ -1,5 +1,4 @@
-﻿<%@ Page Title="" Language="C#" AutoEventWireup="true" MasterPageFile="~/Admin/Admin.Master" CodeBehind="DebitOrder.aspx.cs" Inherits="Funeral.Web.Admin.DebitOrder" %>
-
+﻿<%@ Page Title="" Language="C#" AutoEventWireup="true" MasterPageFile="~/Admin/Admin.Master" CodeBehind="GenerateDebitOrder.aspx.cs" Inherits="Funeral.Web.Admin.GenerateDebitOrder" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeaderContent" runat="server">
     <link href="../Content/plugins/datapicker/bootstrap-timepicker.min.css" rel="stylesheet" />
@@ -156,7 +155,7 @@
                                     <PagerStyle CssClass="pagination-ys" />
                                     <Columns>                         
                                         
-                                        <asp:BoundField DataField="pkiDebitBatch" HeaderText="pkiDebitBatch" SortExpression="pkiDebitBatch" ReadOnly="True" ItemStyle-CssClass="visible-lg" HeaderStyle-CssClass="visible-lg" Visible="False">
+                                        <asp:BoundField DataField="pkiDebitBatch" HeaderText="pkiDebitBatch" SortExpression="pkiDebitBatch" ReadOnly="True" ItemStyle-CssClass="visible-lg" HeaderStyle-CssClass="visible-lg" Visible="true">
                                             <HeaderStyle CssClass="visible-lg"></HeaderStyle>
 
                                            <ItemStyle CssClass="visible-lg"></ItemStyle>

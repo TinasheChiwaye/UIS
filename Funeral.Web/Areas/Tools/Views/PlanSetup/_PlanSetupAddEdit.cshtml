@@ -279,6 +279,8 @@
         msg += '</td></tr>';
         $("#" + tableBodyId).append(msg);
         FillDynamicDropdown();
+        $("select").removeClass("usertypeDropdown");
+        
     }
     $("#tblDynamicRowBodyId").on('click', '.DeleteDynamicRow', function () {
         $(this).parent().parent().hide();

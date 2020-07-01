@@ -28,11 +28,9 @@ namespace Funeral.BAL
             DataTable dr = ds.Tables[0];
             MembersPaymentViewModel objViewModel = new MembersPaymentViewModel();
             var MemberList = FuneralHelper.DataTableMapToList<MembersPaymentModel>(dr, true);
-            //MemberList = !string.IsNullOrEmpty(BookName) ? MemberList.Where(x => x.ApplicationName.Contains(BookName)).ToList() : MemberList;
-            objViewModel.MemberList = !string.IsNullOrEmpty(BookName) && BookName != "0" ? MemberList.Where(x => x.MemberSociety.Equals(BookName)).ToList() : MemberList;
-            //objViewModel.MemberList = MemberList;
-            //objViewModel.TotalRecord = Convert.ToInt64(ds.Tables[1].Rows[0]["TotalRecord"].ToString());
-            objViewModel.TotalRecord = objViewModel.MemberList.Count;
+            MemberList = !string.IsNullOrEmpty(BookName) ? MemberList.Where(x => x.MemberSociety.Contains(BookName)).ToList() : MemberList;
+            objViewModel.MemberList = MemberList;
+            objViewModel.TotalRecord = Convert.ToInt64(ds.Tables[1].Rows[0]["TotalRecord"].ToString());
 
 
             return objViewModel;

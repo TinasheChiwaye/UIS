@@ -65,7 +65,6 @@
     <Compile Include="AdminDAL.cs" />
     <Compile Include="BanksDAL.cs" />
     <Compile Include="ClaimsDAL.cs" />
-    <Compile Include="ClientPortalDAL.cs" />
     <Compile Include="CommonDAL.cs" />
     <Compile Include="CustomDetailsDAL.cs" />
     <Compile Include="DebitOrderTransactionsDAL.cs" />

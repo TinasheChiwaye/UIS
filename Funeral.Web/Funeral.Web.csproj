@@ -232,8 +232,10 @@
     <Content Include="Admin\AddTax.aspx" />
     <Content Include="Admin\CarTrack.aspx" />
     <Content Include="Admin\Claims.aspx" />
+    <Content Include="Admin\DebitOrder.aspx" />
     <Content Include="Admin\FuneralPayment.aspx" />
     <Content Include="Admin\FuneralServicesSelect.aspx" />
+    <Content Include="Admin\GenerateDebitOrder.aspx" />
     <Content Include="Admin\HtmlPage1.html" />
     <Content Include="Admin\Images\False.png" />
     <Content Include="Admin\Images\True.png" />
@@ -762,15 +764,6 @@
     <Content Include="Areas\Admin\Views\SchemaPayment\_ReportEmailSendModal.cshtml" />
     <Content Include="Areas\Admin\Views\SchemaPayment\_ReconReportModal.cshtml" />
     <Content Include="Areas\Admin\Views\Claims\_ClaimDashboard.cshtml" />
-    <Content Include="Areas\Client\Views\web.config" />
-    <Content Include="Areas\Client\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Client\Views\Login\Index.cshtml" />
-    <Content Include="Areas\Client\Views\Dashboard\Index.cshtml" />
-    <Content Include="Areas\Client\Views\Dashboard\_DashboardCharts.cshtml" />
-    <Content Include="Areas\Client\Views\Dashboard\_DashboardModal.cshtml" />
-    <Content Include="Areas\Client\Views\Dashboard\_PolicyPremiumList.cshtml" />
-    <Content Include="Areas\Client\Views\MyPolicy\Index.cshtml" />
-    <Content Include="Areas\Client\Views\MyPolicy\MakePayment.cshtml" />
     <None Include="DevDataDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DevDataDataSet.Designer.cs</LastGenOutput>
@@ -1620,6 +1613,13 @@
     <Compile Include="Admin\Dashboard.aspx.designer.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Admin\DebitOrder.aspx.cs">
+      <DependentUpon>DebitOrder.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\DebitOrder.aspx.designer.cs">
+      <DependentUpon>DebitOrder.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1647,6 +1647,12 @@
     </Compile>
     <Compile Include="Admin\FuneralServicesSelect.aspx.designer.cs">
       <DependentUpon>FuneralServicesSelect.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\GenerateDebitOrder.aspx.cs">
+      <DependentUpon>GenerateDebitOrder.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\GenerateDebitOrder.aspx.designer.cs">
+      <DependentUpon>GenerateDebitOrder.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\ImportExcelBackup.aspx.cs">
       <DependentUpon>ImportExcelBackup.aspx</DependentUpon>
@@ -2009,11 +2015,6 @@
     <Compile Include="Areas\Admin\Models\ViewModel\MembersOtherPaymentDetailsVM.cs" />
     <Compile Include="Areas\Admin\Models\ViewModel\PrintViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ViewModel\TombStoneServiceVM.cs" />
-    <Compile Include="Areas\Client\ClientAreaRegistration.cs" />
-    <Compile Include="Areas\Client\Controllers\BaseClientController.cs" />
-    <Compile Include="Areas\Client\Controllers\DashboardController.cs" />
-    <Compile Include="Areas\Client\Controllers\LoginController.cs" />
-    <Compile Include="Areas\Client\Controllers\MyPolicyController.cs" />
     <Compile Include="Areas\Tools\Controllers\AddOnProductSetupController.cs" />
     <Compile Include="Areas\Tools\Controllers\BaseAdminController.cs" />
     <Compile Include="Areas\Tools\Controllers\ClaimToolsController.cs" />
@@ -2314,7 +2315,6 @@
     <Folder Include="Areas\Admin\Views\CarTrack\" />
     <Folder Include="Areas\Admin\Views\Parlour\" />
     <Folder Include="Areas\Admin\Views\Report\" />
-    <Folder Include="Areas\Client\Models\" />
     <Folder Include="Areas\Tools\Views\Underwriter\" />
     <Folder Include="ErrorLog\" />
     <Folder Include="Models\" />

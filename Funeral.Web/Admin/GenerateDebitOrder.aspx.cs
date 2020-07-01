@@ -19,9 +19,7 @@ using System.Web.Mvc;
 
 namespace Funeral.Web.Admin
 {
-
-    public partial class DebitOrder : AdminBasePage
-
+    public partial class GenerateDebitOrder : AdminBasePage
     //System.Web.UI.Page
     {
         private readonly ISiteSettings _siteConfig = new SiteSettings();
@@ -99,7 +97,7 @@ namespace Funeral.Web.Admin
         {
             get
             {
-                if (ViewState["_batchId"] == null)
+                if ( ViewState["_batchId"] == null)
                     return 0;
                 else
                     return Convert.ToInt32(ViewState["_batchId"]);
@@ -115,7 +113,7 @@ namespace Funeral.Web.Admin
             //DebitOrderInstruction();
             //BindDate();
             //BindTransactionList();
-
+            
             if (!IsPostBack)
             {
                 BindBatchList();
@@ -131,14 +129,14 @@ namespace Funeral.Web.Admin
 
             //BindTransactionList();
         }
-        protected void btn_LoadTransactions(object sender, EventArgs e)
-        {
+        protected void btn_LoadTransactions(object sender,EventArgs e)
+        {             
             gvDebitTransactionsList.Visible = true;
             BindTransactionList();
-        }
+        }        
 
         public void BindTransactionList()
-        {
+        {   
             gvDebitTransactionsList.PageSize = PageSize;
             List<DebitOrderTransactionModel> objTransactionModel = GenerateDebitOrderBAL.SelectTransactionListById(BatchID, ParlourId);
             gvDebitTransactionsList.DataSource = objTransactionModel;
@@ -146,7 +144,7 @@ namespace Funeral.Web.Admin
         }
 
         public void BindBatchList()
-        {
+        {           
             gvDebitBatches.PageSize = PageSize;
             List<DebitBatchListModel> objBatchModel = GenerateDebitOrderBAL.SelectAllDebitBatchesByParlourId(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression_Batch, sortType);
             gvDebitBatches.DataSource = objBatchModel;
@@ -219,11 +217,11 @@ namespace Funeral.Web.Admin
         {
 
             if (e.CommandName == "ViewTransactions")
-            {
+            {                
                 int rowindex = Convert.ToInt32(e.CommandArgument);
-                GridViewRow row = gvDebitBatches.Rows[rowindex - 1];
+                GridViewRow row = gvDebitBatches.Rows[rowindex - 1 ];
                 var value = row.Cells[0];
-                BatchID = int.Parse(row.Cells[0].Text);
+                BatchID =  int.Parse (row.Cells[0].Text);               
                 gvDebitTransactionsList.Visible = true;
                 BindTransactionList();
             }
@@ -237,7 +235,7 @@ namespace Funeral.Web.Admin
                 Download_Click();
             }
         }
-
+        
         private const string ASCENDING = "ASC";
         private const string DESCENDING = "DESC";
         private Label lblMessage;
@@ -303,7 +301,7 @@ namespace Funeral.Web.Admin
             }
             BindBatchList();
         }
-
+        
         public string sortBYExpression_Batch
         {
             get
@@ -313,7 +311,7 @@ namespace Funeral.Web.Admin
                 return (viewState == null) ? "pkiDebitBatch" : (string)viewState;
             }
             set { this.ViewState["sortBYExpression"] = value; }
-        }
+        }       
 
         protected void gvDebitBatches_SelectedIndexChanged(object sender, EventArgs e)
         {

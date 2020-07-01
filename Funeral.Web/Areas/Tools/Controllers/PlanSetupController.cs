@@ -69,7 +69,7 @@ namespace Funeral.Web.Areas.Tools.Controllers
                 return Json(WebApiResult<Model.Search.BaseSearch, PlanModel>.Error(searchResult, ex));
             }
         }
-        [FuneralAuth(PageId = 15, Right = new Rights[] { Rights.HasAdd })]
+        //[FuneralAuth(PageId = 15, Right = new Rights[] { Rights.HasAdd })]
         public PartialViewResult Add()
         {
             PlanModel planModel = new PlanModel();
@@ -109,7 +109,7 @@ namespace Funeral.Web.Areas.Tools.Controllers
 
             ViewBag.Companies = model;
         }
-        [FuneralAuth(PageId = 15, Right = new Rights[] { Rights.HasEdit })]
+     //   [FuneralAuth(PageId = 15, Right = new Rights[] { Rights.HasEdit })]
         public PartialViewResult Edit(int ID)
         {
             var planSetup = ToolsSetingBAL.EditPlanbyID(ID, ParlourId);
