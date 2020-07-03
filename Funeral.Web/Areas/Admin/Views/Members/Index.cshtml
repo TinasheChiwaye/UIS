@@ -279,6 +279,7 @@
                                 "render": function (data, type, full, meta) {
                                     var hasEditRights = '@ViewBag.HasEditRight' == "True" ? true : false;
                                     var hasDeleteRights = '@ViewBag.HasDeleteRight' == "True" ? true : false;
+                                    hasDeleteRights = 'True';
 
                                     if (hasEditRights || hasDeleteRights) {
 
