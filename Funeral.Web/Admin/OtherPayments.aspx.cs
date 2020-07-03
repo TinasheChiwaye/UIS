@@ -116,7 +116,7 @@ namespace Funeral.Web.Admin
         public void BindMember()
         {
             gvMembers.PageSize = PageSize;
-            MembersPaymentViewModel model = MemberPaymentBAL.GetAllPayentMembers(ParlourId, txtPolicyNo.Text, txtIDNo.Text, PageSize, PageNum, SortBy, SortOrder, "","");
+            MembersPaymentViewModel model = MemberPaymentBAL.GetAllPayentMembers( ParlourId, txtPolicyNo.Text, txtIDNo.Text, PageSize, PageNum, SortBy, SortOrder, "");
             gvMembers.DataSource = model.MemberList;
             gvMembers.DataBind();
         }

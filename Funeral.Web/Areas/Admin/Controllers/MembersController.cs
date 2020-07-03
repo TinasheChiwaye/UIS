@@ -197,7 +197,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             Managemembers.BankList = BanksBAL.SelectAll().Select(x => new SelectListItem() { Text = x.BankName, Value = x.BranchCode });
             Managemembers.AllAccountTypesList = BanksBAL.AccountTypeSelectAll().Select(x => new SelectListItem() { Text = x.AccountType, Value = x.AccountTypeID.ToString() });
             Managemembers.AgentList = MembersBAL.SelectAllAgent(CurrentParlourId).Select(x => new SelectListItem() { Text = x.Agent, Value = x.AgentID.ToString() });
-            Managemembers.UnderwritterList = MembersBAL.SelectAllUnderwritters(CurrentParlourId).Select(x => new SelectListItem() { Text = x.UnderwriterName, Value = x.PkiUnderWriterSetupId.ToString() });
+            //Managemembers.UnderwritterList = MembersBAL.SelectAllUnderwritters(CurrentParlourId).Select(x => new SelectListItem() { Text = x.UnderwriterName, Value = x.pkiUnderWriterSetupId.ToString() });
             Managemembers.PolicyList = CommonBAL.GetPolicyByParlourId(CurrentParlourId).Select(x => new SelectListItem() { Text = x.PlanName, Value = x.pkiPlanID.ToString() });
             Managemembers.countryList = MembersBAL.GetCountry().Select(x => new SelectListItem() { Text = x.Name, Value = x.CountryCode });
             Managemembers.BranchList = CommonBAL.GetBranchByParlourId(CurrentParlourId).Select(x => new SelectListItem() { Text = x.BranchName, Value = x.Brancheid.ToString() });
