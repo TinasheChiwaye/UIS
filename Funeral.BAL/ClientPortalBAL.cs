@@ -32,6 +32,15 @@ namespace Funeral.BAL
                 throw ex;
             }
         }
+        public static int SaveClientPayment(PayfastRequestModel payFastNotifyViewModel)
+        {
+            return ClientPortalDAL.SaveClientPayment(payFastNotifyViewModel);
+        }
+        public static MembersPaymentDetailsModel ReturnMemberPlanDetailsWithBalance(string strMemberNo, Guid pgParlourID)
+        {
+            DataTable dr = MemberPaymetsDAL.ReturnMemberPlanDetailsWithBalancedt(strMemberNo, pgParlourID);
+            return FuneralHelper.DataTableMapToList<MembersPaymentDetailsModel>(dr).FirstOrDefault();
+        }
     }
 
 

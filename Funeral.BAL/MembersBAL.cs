@@ -49,6 +49,7 @@ namespace Funeral.BAL
                 MembersViewModel objViewModel = new MembersViewModel();
                 var membersList = FuneralHelper.DataTableMapToList<MembersModel>(dr, true);
                 objViewModel.MemberList = !string.IsNullOrEmpty(BookName) && BookName != "0" ? membersList.Where(x => x.MemberSociety.Equals(BookName)).ToList() : membersList;
+                
                 //dr.NextResult();
                 //dr.Read();
                 objViewModel.TotalRecord = objViewModel.MemberList.Count;
