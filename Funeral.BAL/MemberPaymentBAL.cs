@@ -22,6 +22,20 @@ namespace Funeral.BAL
             return objViewModel;
         }
 
+        //public static MembersPaymentViewModel GetAllPayentMembers(Guid ParlourId, string PolicyNo, string IDNumber, int PageSize, int PageNum, string SortBy, string SortOrder, string PolicyStatus, string BookName )
+        //{
+        //    DataSet ds = MemberPaymetsDAL.GetAllPayentMembersdt(ParlourId, PolicyNo, IDNumber, PageSize, PageNum, SortBy, SortOrder, PolicyStatus);
+        //    DataTable dr = ds.Tables[0];
+        //    MembersPaymentViewModel objViewModel = new MembersPaymentViewModel();
+        //    var MemberList = FuneralHelper.DataTableMapToList<MembersPaymentModel>(dr, true);
+        //    MemberList = !string.IsNullOrEmpty(BookName) ? MemberList.Where(x => x.MemberSociety.Contains(BookName)).ToList() : MemberList;
+        //    objViewModel.MemberList = MemberList;
+        //    objViewModel.TotalRecord = Convert.ToInt64(ds.Tables[1].Rows[0]["TotalRecord"].ToString());
+
+
+        //    return objViewModel;
+        //}
+
         public static MembersPaymentDetailsModel GetMemberPaymnetDetailsByID(int ID)
         {
             DataTable dr = MemberPaymetsDAL.GetMemberPaymnetDetailsByIDdt(ID);

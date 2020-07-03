@@ -76,7 +76,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             System.Web.HttpContext.Current.Session["HasCreateRight"] = HasCreateRight;
             System.Web.HttpContext.Current.Session["HasReadRight"] = HasReadRight;
             System.Web.HttpContext.Current.Session["HasDeleteRight"] = HasDeleteRight;
-            System.Web.HttpContext.Current.Session["HasEditRight"] = false;
+            System.Web.HttpContext.Current.Session["HasEditRight"] = HasEditRight;
             System.Web.HttpContext.Current.Session["HasReversalPayment"] = HasReversalPayment;
 
             base.OnActionExecuting(filterContext);

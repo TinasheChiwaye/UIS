@@ -465,6 +465,13 @@ namespace Funeral.Web.Admin
                 txtProvince.Text = model.Address3;
                 txtStreetPostalAddress.Text = model.Address4;
                 txtCode.Text = model.Code;
+                //New Data
+                //txtStreetAddress_Post.Text = model.Address1_Post;
+                //txtTown_Post.Text = model.Address2_Post;
+                //txtProvince_Post.Text = model.Address3_Post;
+                //txtStreetPostalAddress_Post.Text = model.Address4_Post;
+                //txtCode_Post.Text = model.Code_Post;
+                //end
                 ddlBankBranch.SelectedValue = model.MemberBranch;
 
                 //ddlAgent.SelectedItem.Text = model.Agent;
@@ -1349,6 +1356,13 @@ namespace Funeral.Web.Admin
                     model.Address3 = txtProvince.Text;
                     model.Address4 = txtStreetPostalAddress.Text;
                     model.Code = txtCode.Text;
+                    //New Data
+                    //model.Address1_Post = txtStreetAddress_Post.Text;
+                    //model.Address2_Post = txtTown_Post.Text;
+                    //model.Address3_Post = txtProvince_Post.Text;
+                    //model.Address4_Post = txtStreetPostalAddress_Post.Text;
+                    //model.Code_Post = txtCode_Post.Text;
+                    //end
                     model.MemberBranch = ddlBankBranch.SelectedValue;
                     if (ddlAgent.SelectedValue == "0")
                         model.Agent = string.Empty;

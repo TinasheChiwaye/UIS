@@ -354,6 +354,19 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 return keyValues;
             }
         }
+        public List<KeyValue> DashboardReportTypes
+        {
+            get
+            {
+                List<KeyValue> keyValues = new List<KeyValue>();
+                keyValues.Add(new KeyValue { Key = "UIS_Daily Cash Up Summary Dashboard", NameText = "Daily Cash Up Summary", Value = "1" });
+                keyValues.Add(new KeyValue { Key = "UIS_Daily Cash Up Summary Dashboard", NameText = "Sent SMS Report", Value = "2" });
+                keyValues.Add(new KeyValue { Key = "UIS_Daily Cash Up Summary Dashboard", NameText = "Premiums Collected Report", Value = "3" });
+                keyValues.Add(new KeyValue { Key = "UIS_Daily Cash Up Summary Dashboard", NameText = "Total Policy Report", Value = "4" });
+                keyValues.Add(new KeyValue { Key = "UIS_Daily Cash Up Summary Dashboard", NameText = "Outstanding Payments Report", Value = "5" });
+                return keyValues;
+            }
+        }
         public bool IsAdministrator
         {
             get

@@ -29,6 +29,12 @@
                                                             <asp:DropDownList ID="ddlCompanyList" Width="97%" CssClass="form-control m-l" AutoPostBack="true" OnSelectedIndexChanged="ddlCompanyList_SelectedIndexChanged" runat="server"></asp:DropDownList>
                                                         </div>
                                                     </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="">Book </label>
+                                                            <asp:DropDownList ID="ddlSociety" runat="server" DataTextField="SocietyName" DataValueField="pkiSocietyID" CssClass="form-control"></asp:DropDownList>
+                                                        </div>
+                                                    </div>
                                                     <div role="form" class="form col-sm-12">
 
                                                         <div class="col-sm-6">
@@ -77,12 +83,12 @@
                                                                         <asp:DropDownList ID="ddlBranch" runat="server" DataTextField="BranchName" DataValueField="Brancheid" CssClass="form-control"></asp:DropDownList>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-6">
+                                                               <%-- <div class="col-sm-6">
                                                                     <div class="form-group">
                                                                         <label class="">Book </label>
                                                                         <asp:DropDownList ID="ddlSociety" runat="server" DataTextField="SocietyName" DataValueField="pkiSocietyID" CssClass="form-control"></asp:DropDownList>
                                                                     </div>
-                                                                </div>
+                                                                </div>--%>
                                                                 <div class="col-sm-6">
                                                                     <div class="form-group">
                                                                         <label class="">Agent </label>
@@ -165,7 +171,7 @@
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label class="">SendEmail</label>
+                                                        <label class="">Send Email</label>
                                                         <asp:TextBox runat="server" ID="txtcemail" name="name" type="text" class="form-control"></asp:TextBox>
                                                         <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ValidationGroup="CompanyRegi" ErrorMessage="Invalid email." ControlToValidate="txtcemail" ValidationExpression="^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$" />
                                                     </div>

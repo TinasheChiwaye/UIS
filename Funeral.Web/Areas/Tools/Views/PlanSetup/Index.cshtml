@@ -73,20 +73,20 @@
 				//Cover66to75year = 0,
 				//CashPayout = 0
     //    };
-		var model = {};
+        var model = {};
 
             jQuery.ajax({
-                url: '@Url.Action("Add", "PlanSetup", new {},Request.Url.Scheme)',
+                url: '@Url.Action("Add", "PlanSetup")',
                 type: "Post",
-                data: JSON.stringify(model),
                 contentType: "application/html; charset=utf-8",
                 dataType: 'html'
             })
             .success(function (result) {
                 jQuery("#" + DOMIDs.AddEdit).html(result);
             })
-            .error(function (xhr, status) {
-                alert(status);
+                .error(function (xhr, status) {
+                    console.log(xhr);
+                alert(xhr);
             });
     }
 </script>
