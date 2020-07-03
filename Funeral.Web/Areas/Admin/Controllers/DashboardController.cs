@@ -6,6 +6,7 @@ using Funeral.Web.Common;
 using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace Funeral.Web.Areas.Admin.Controllers
@@ -161,9 +162,66 @@ namespace Funeral.Web.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 result = ex.Message;
-                throw ex;
+                Response.Redirect("~/Admin/Dashboard/Index");
             }
         }
 
+        public void DashboardReportDownload(string ReportId)
+        {
+            var getReportDetails = DashboardReportTypes.Where(x => x.Value.Equals(ReportId)).FirstOrDefault();
+            if (getReportDetails != null)
+            {
+                Warning[] warnings;
+                string[] streamids;
+                string mimeType;
+                string encoding;
+                string filename;
+                string result;
+
+                try
+                {
+                    ReportViewer rpw = new ReportViewer();
+                    rpw.ProcessingMode = ProcessingMode.Remote;
+                    IReportServerCredentials irsc = new MyReportServerCredentials();
+                    rpw.ServerReport.ReportServerCredentials = irsc;
+
+                    rpw.ProcessingMode = ProcessingMode.Remote;
+                    rpw.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
+                    rpw.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/" + getReportDetails.Key;
+                    ReportParameterCollection reportParameters = new ReportParameterCollection();
+
+                    DateTime d1 = DateTime.Now;
+
+                    var IsSuperUserStatus = IsSuperUser == true ? "1" : "0";
+
+                    reportParameters.Add(new ReportParameter("DateFrom", d1.AddDays(-1).ToShortDateString()));
+                    reportParameters.Add(new ReportParameter("DateTo", d1.ToShortDateString()));
+                    reportParameters.Add(new ReportParameter("Parlourid", ParlourId.ToString()));
+                    reportParameters.Add(new ReportParameter("UserID", this.UserID.ToString()));
+                    reportParameters.Add(new ReportParameter("IsSuperUser", IsSuperUserStatus));
+
+
+                    rpw.ServerReport.SetParameters(reportParameters);
+                    string ExportTypeExtensions = "pdf";
+                    byte[] bytes = rpw.ServerReport.Render(ExportTypeExtensions, null, out mimeType, out encoding, out ExportTypeExtensions, out streamids, out warnings);
+                    filename = string.Format("{0}.{1}", getReportDetails.NameText, ExportTypeExtensions);
+
+                    Response.ClearHeaders();
+                    Response.Clear();
+                    Response.AddHeader("Content-Disposition", "attachment;filename=" + filename);
+                    Response.ContentType = mimeType;
+                    Response.BinaryWrite(bytes);
+                    Response.Flush();
+                    Response.End();
+                    result = "true";
+
+                }
+                catch (Exception ex)
+                {
+                    result = ex.Message;
+                    Response.Redirect("~/Admin/Dashboard/Index");
+                }
+            }
+        }
     }
 }

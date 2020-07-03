@@ -379,5 +379,10 @@ namespace Funeral.BAL
         {
             MembersDAL.ReadyToImportMember(importId);
         }
+        public static List<UnderwriterSetupModel> SelectAllUnderwritters(Guid parlourid)
+        {
+            DataTable dr = MembersDAL.GetUnderwriterList(parlourid);
+            return FuneralHelper.DataTableMapToList<UnderwriterSetupModel>(dr);
+        }
     }
 }

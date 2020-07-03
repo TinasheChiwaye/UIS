@@ -61,7 +61,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             var searchResult = new OtherPaymentsSearchResult<Model.Search.OthrePaymentSearch, MembersPaymentModel>(search, new List<MembersPaymentModel>(), o =>  o.IDNumber.Contains(search.SearchPolicyId) || o.MemeberNumber.Contains(search.SearchId));
             try
             {
-                var otherPayment = MemberPaymentBAL.GetAllPayentMembers(ParlourId, search.SearchPolicyId, search.SearchId, search.PageSize, search.PageNum, search.SortBy, search.SortOrder, "");
+                var otherPayment = MemberPaymentBAL.GetAllPayentMembers(ParlourId, search.SearchPolicyId, search.SearchId, search.PageSize, search.PageNum, search.SortBy, search.SortOrder, "","");
                 if(search.SearchId == null )
                 {
                     return Json(new OtherPaymentsSearchResult<Model.Search.OthrePaymentSearch, MembersPaymentModel>(search, otherPayment.MemberList, o => o.MemeberNumber.Contains(search.SearchPolicyId)));
@@ -137,7 +137,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
         public ActionResult OtherPaymentsSearch()
         {
             MembersPaymentViewModel model = new MembersPaymentViewModel();
-            model = MemberPaymentBAL.GetAllPayentMembers(ParlourId, "", "", 10, 1, "pkiMemberID", "ASC", "");
+            model = MemberPaymentBAL.GetAllPayentMembers(ParlourId, "", "", 10, 1, "pkiMemberID", "ASC", "","");
             return View("Index", model);
         }
 

@@ -49,6 +49,7 @@
             <div class="modal-footer">
                 <button ID="btnAddTopUp" onclick="AddsmstopUpSave()" class="btn btn-default">Save</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <a href="@Url.Action("DashboardReportDownload", "Dashboard",new { ReportId="2"})" class="btn btn-sm btn-info">Download Report</a>
             </div>
         </div>
     </div>
@@ -64,6 +65,7 @@
             <div class="modal-footer">
                 <button ID="btnSendMessagesoutstaning" onclick="SendMessagesoutstaning()" class="btn btn-default">Yes</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                <a href="@Url.Action("DashboardReportDownload", "Dashboard",new { ReportId="5"})" class="btn btn-sm btn-info">Download Report</a>
             </div>
         </div>
     </div>
@@ -77,8 +79,10 @@
                 <h4 class="modal-title">Would you like to generate daily Cashup report ?</h4>
             </div>
             <div class="modal-footer">
-                <a href="@Url.Action("GenerateCashup_Report", "Dashboard")" class="btn btn-default">Yes</a>
+                @*<a href="@Url.Action("GenerateCashup_Report", "Dashboard")" class="btn btn-default">Yes</a>*@
+                <a href="@Url.Action("DashboardReportDownload", "Dashboard",new { ReportId="1"})" class="btn btn-sm btn-default">Yes</a>
                 <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                <a href="@Url.Action("DashboardReportDownload", "Dashboard",new { ReportId="3"})" class="btn btn-sm btn-info">Download Report</a>
             </div>
         </div>
     </div>

@@ -19,10 +19,13 @@
     </div>
     <div class="col-lg-6 ">
         <div class="table-responsive">
-            <div id="container1" style="width: 100%;">
+            <div id="container1" style="width: 100%;text-align:center">
                 <canvas id="piechart"></canvas>
+                <a href="@Url.Action("DashboardReportDownload", "Dashboard",new { ReportId="4"})" class="btn btn-sm btn-info">Download Report</a>
             </div>
+
         </div>
+
     </div>
 </div>
 
@@ -169,6 +172,6 @@ var ctx = document.getElementById("canvas").getContext("2d");
         LoadFuneralList();
 
     });
-  
+
 
 </script>
