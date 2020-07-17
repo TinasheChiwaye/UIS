@@ -219,7 +219,7 @@
 
         </span>
         <!-- #region ActionUrls -->
-        @*@Html.Hidden("Members", Url.Action("GetPremiumForPolicy"))*@
+        @Html.Hidden("Members", Url.Action("GetPremiumForPolicy"))
         @Html.Hidden("SaveManageMembers", Url.Action("SaveManageMembers"))
         @Html.Hidden("BindPolicyCoverDateUrl", Url.Action("BindPolicyCoverDate"))
         @Html.Hidden("GetMemberToUpdate", Url.Action("GetMember"))
@@ -243,7 +243,7 @@
         @Html.Hidden("btnPolicyDocUrl", Url.Action("btnPolicyDoc"))
         @Html.Hidden("DependentForDuplicatePolicyUrl", Url.Action("DependentForDuplicatePolicy"))
         @Html.Hidden("DependencyStartdateChangeUrl", Url.Action("DependencyStartdateChange"))
-        @*@Html.Hidden("DeleteMemberPolicy", Url.Action("DeleteMemberPolicy"))*@
+        @Html.Hidden("DeleteMemberPolicy", Url.Action("DeleteMemberPolicy"))
         @Html.Hidden("SaveAddonProductUrl", Url.Action("SaveAddonProduct"))
         <!-- #endregion -->
     </div>
@@ -262,8 +262,8 @@
                 <h5>Members Details</h5>
                 <div class="pull-right">
                     <div class="btn-group">
-                        <input type="submit" id="btnCopy" style="margin-right: 12px; margin-top: -5px;display:none" class="btn btn-sm btn-primary" value="CopyPolicy" disabled>
-                        <input type="submit" style="display:none" id="PolicyDoc" class="btn btn-sm btn-primary pull-right m-t-n-xs" value="Policy Doc" onclick="location.href='@Url.Action("btnPolicyDoc", "Members")'" disabled>
+                        <input type="submit" id="btnCopy" style="margin-right: 12px; margin-top: -5px;display:none" class="btn btn-sm btn-primary" value="CopyPolicy" >
+                        <input type="submit" style="display:inline" id="PolicyDoc" class="btn btn-sm btn-primary pull-right m-t-n-xs" value="Policy Doc" onclick="location.href='@Url.Action("btnPolicyDoc", "Members")'">
                     </div>
                 </div>
             </div>
@@ -276,7 +276,7 @@
                                     <li class="active" id="tab1"><a data-toggle="tab" href="#tab-1" id="atab1" aria-expanded="true">Personal Details</a></li>
                                     <li class="" id="tab2"><a data-toggle="tab" href="#tab-2" id="atab2" aria-expanded="false">Physical Address</a></li>
                                     <li class="" id="tab3"><a data-toggle="tab" href="#tab-3" id="atab3" aria-expanded="false">Policy Details</a></li>
-                                    <li class="" id="tab9"><a data-toggle="tab" href="#tab-9" id="atab9" aria-expanded="false" style="display:none">Product</a></li>
+                                    <li class="" id="tab9"><a data-toggle="tab" href="#tab-9" id="atab9" aria-expanded="false" >Product</a></li>
                                     <li class="" id="tab4"><a data-toggle="tab" href="#tab-4" id="atab4" aria-expanded="false">Banking Details</a></li>
                                     <li class="" id="tab5"><a data-toggle="tab" href="#tab-5" id="atab5" aria-expanded="false">Dependent & Extended Family </a></li>
                                     <li class="" id="tab6"><a data-toggle="tab" href="#tab-6" id="atab6" aria-expanded="false">Payment History</a></li>
@@ -305,7 +305,7 @@
                                                 <label>Scheme </label>
                                                 @Html.DropDownList("ddlSelectCompany", new SelectList(ViewBag.Companies, "parlourid", "ApplicationName"), new { @id = "ddlSelectCompany", @class = "form-control" })
                                             </div>
-                                             <div class="form-group">
+                                            <div class="form-group">
                                                 <label>Book</label>
                                                 @Html.DropDownList("SocietyList", Model.SocietyList, "Please select", new { Name = "SocietyName", @id = "ddlMemberSociety", @style = "width:100%", @class = "form-control" })
                                             </div>
@@ -338,7 +338,7 @@
                                                 <label>Date of Birth </label>
                                                 <input type="text" id="txtBirthDay" name="txtBirthDay" class="form-control birthDate DatepickerSelection" readonly="readonly">
                                             </div>
-                                            
+
                                             <div class="form-group">
                                                 <label>Gender</label><br>
                                                 <input type="radio" name="gender" value="0" checked> Male
@@ -346,10 +346,10 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
-                                           
+
                                             <div class="form-group">
                                                 <label>Cellphone Number <em>*</em>  </label>
-                                                <input type="text"  id="txtCellphone" name="txtCellphone" onkeypress="return onlyNumberKey(event)" maxlength="13" class="form-control">
+                                                <input type="text" id="txtCellphone" name="txtCellphone" onkeypress="return onlyNumberKey(event)" maxlength="13" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label>Telephone Number</label>
@@ -425,11 +425,11 @@
                                                                 <div class="col-lg-6">
 
                                                                     <div class="form-group">
-                                                                        <label>Rate Type<em>*</em> </label>
+                                                                        <label>Plan Name<em>*</em> </label>
                                                                         @Html.DropDownList("PolicyList", Model.PolicyList, "Select", new { Name = "CitizenShip", @id = "ddlPolicyPopupPolicy", @style = "width:100%", @class = "form-control" })
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <label>Risk Premium </label>
+                                                                        <label>Premium </label>
                                                                         <input type="text" maxlength="25" id="txtPolicyPopupPremium" name="name" class="form-control" disabled>
                                                                     </div>
                                                                     <div class="form-group">
@@ -526,9 +526,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-6" id="Physical">
                                             <div class="form-group">
-                                                <label>Postal Address</label>
+                                                <label>Physical Address</label>
                                                 <input type="text" maxlength="100" id="txtStreetPostalAddress" name="name" class="form-control">
                                             </div>
                                             <div class="form-group">
@@ -548,6 +548,12 @@
                                                 <input type="text" maxlength="50" id="txtCode" onkeypress="return isDecimalNumber(event,this);" name="name" class="form-control">
                                             </div>
                                             <div class="form-group">
+                                                @*<label>Gender</label><br>*@
+                                                @*<input type="checkbox" id="CopyValues" name="CopyValues" class="cb-element"> Check if Physical Address matches Postal Address*@
+                                                <button class="btn btn-sm btn-primary pull-right m-t-n-xs" id="CopyValues" name="CopyValues">Copy</button>
+                                                @*<input type="radio" name="gender" value="1"> Female*@
+                                            </div>
+                                            <div class="form-group">
                                                 <div class="btn-group">
                                                     <a data-toggle="tab" href="#tab-1" id="tab2BackButton" class="btn btn-sm btn-primary pull-right m-t-n-xs" aria-expanded="true">Back</a>
                                                 </div>
@@ -558,6 +564,39 @@
                                                     <a data-toggle="tab" href="#tab-3" id="tab2NextButton" class="btn btn-sm btn-primary pull-right m-t-n-xs" aria-expanded="true">Next</a>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="col-lg-6" id="Postal">
+                                            <div class="form-group">
+                                                <label>Postal Address</label>
+                                                <input type="text" maxlength="100" id="txtStreetPostalAddress_Post" name="name" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Street Address</label>
+                                                <input type="text" maxlength="50" id="txtStreetAddress_Post" name="name" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Town or City</label>
+                                                <input type="text" maxlength="50" id="txtTownOrCity_Post" name="name" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Province</label>
+                                                @Html.DropDownList("Province", new SelectList(ViewBag.Provinces, "ProvinceName", "ProvinceName"), "Select", new { @class = "form-control", @id = "txtProvince_Post" })
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Code</label>
+                                                <input type="text" maxlength="50" id="txtCode_Post" onkeypress="return isDecimalNumber(event,this);" name="name" class="form-control">
+                                            </div>
+                                            @*<div class="form-group">
+                                                    <div class="btn-group">
+                                                        <a data-toggle="tab" href="#tab-1" id="tab2BackButton" class="btn btn-sm btn-primary pull-right m-t-n-xs" aria-expanded="true">Back</a>
+                                                    </div>
+                                                    <div class="btn-group" style="display:none">
+                                                        <button class="btn btn-sm btn-primary pull-right m-t-n-xs" id="btnPhysicalAddressReset">Reset</button>
+                                                    </div>
+                                                    <div class="btn-group">
+                                                        <a data-toggle="tab" href="#tab-3" id="tab2NextButton" class="btn btn-sm btn-primary pull-right m-t-n-xs" aria-expanded="true">Next</a>
+                                                    </div>
+                                                </div>*@
                                         </div>
                                     </div>
                                 </div>
@@ -575,11 +614,11 @@
                                         <div class="col-lg-6">
 
                                             <div class="form-group">
-                                                <label>Rate Type<em>*</em> </label>
-                                                @Html.DropDownList("PolicyList", Model.PolicyList, "Select", new { Name = "CitizenShip", @id = "ddlPolicy", @style = "width:100%",  = "form-control" })
+                                                <label>Plan Name<em>*</em> </label>
+                                                @Html.DropDownList("PolicyList", Model.PolicyList, "Select", new { Name = "CitizenShip", @id = "ddlPolicy", @style = "width:100%", @class = "form-control" })
                                             </div>
                                             <div class="form-group">
-                                                <label>Risk Premium </label>
+                                                <label>Premium </label>
                                                 <input type="text" maxlength="25" id="txtPolicyPremium" name="name" class="form-control" disabled>
                                             </div>
                                             <div class="form-group">
@@ -624,7 +663,7 @@
                                                 <label>Total Premium</label>
                                                 <input type="text" maxlength="20" id="txtTotalPremium" value="@Model.Currency @Model.TotalPremium" name="name" class="form-control" disabled>
                                             </div>
-                                          
+
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
@@ -644,11 +683,17 @@
                                                 <label>Policy Underwritten By</label>
                                                 <input type="text" maxlength="50" id="txtUnderwriter" name="name" class="form-control">
                                             </div>
+
+                                            @*<div class="form-group">
+                                                <label>Policy Underwritten By</label>
+                                                @Html.DropDownList("UnderwritterList", Model.UnderwritterList, "Select", new { Name = "Underwritter", @id = "ddlUnderwritter", @style = "width:100%", @class = "form-control" })
+                                            </div>*@
+                                            
                                             <div class="form-group">
                                                 <label>Policy Agent or Broker</label>
                                                 @Html.DropDownList("AgentList", Model.AgentList, "Select", new { Name = "Agent", @id = "ddlAgent", @style = "width:100%", @class = "form-control" })
                                             </div>
-                                              <div class="form-group">
+                                            <div class="form-group">
                                                 <label>Policy Status</label>
                                                 @Html.DropDownList("StatusList", new SelectList(ViewBag.Statuses, "Status", "Status"), new { @class = "form-control", @id = "ddlPolicyStatus", @name = "ddlPolicyStatus" })
                                             </div>
@@ -674,7 +719,7 @@
                                 </div>
                                 <!-- #endregion Tab3 -->
                                 <!-- #region Tab9 -->
-                                <div id="tab-9" class="tab-pane" style="display:none">
+                                <div id="tab-9" class="tab-pane" >
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="form-group">
@@ -759,7 +804,7 @@
                                 <!-- #region Tab4 -->
                                 <div id="tab-4" class="tab-pane">
                                     <div class="row">
-                                         <div class="col-lg-12">
+                                        <div class="col-lg-12">
                                             <div class="form-group">
                                                 <div class="input-group" style="color:red;">
                                                     <ul id="validationTab4Message" hidden></ul>
@@ -917,7 +962,7 @@
                                                                 </select>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label>Risk Premium <em>*</em></label>
+                                                                <label>Premium<em>*</em></label>
                                                                 <input type="text" maxlength="25" id="txtDependentPremium" name="name" class="form-control" disabled>
                                                             </div>
                                                             <div class="form-group">
@@ -1175,7 +1220,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="form-group">
-                            <label>Risk Premium<em>*</em> </label>
+                            <label>Premium<em>*</em> </label>
                             <input type="text" id="popupTxtPremium" class="form-control" value="">
                         </div>
                     </div>
@@ -1938,11 +1983,16 @@
                 Citizenship:$("#ddlCitizenship :selected").text(),
                 Passport:$("#txtPassport").val(),
                 Address1: $("#txtStreetPostalAddress").val(),
+                Address1_Post: $("#txtStreetPostalAddress_Post").val(),
                 parlourid: $("#ddlSelectCompany").val(),
-                Address2:$("#txtStreetAddress").val(),
-                Address3:$("#tab-2 #txtTownOrCity").val(),
-                Address4:$("#txtProvince").val(),
-                Code:$("#txtCode").val(),
+                Address2: $("#txtStreetAddress").val(),
+                Address2_Post: $("#txtStreetAddress_Post").val(),
+                Address3: $("#tab-2 #txtTownOrCity").val(),
+                Address3_Post: $("#tab-2 #txtTownOrCity_Post").val(),
+                Address4: $("#txtProvince").val(),
+                Address4_Post: $("#txtProvince_Post").val(),
+                Code: $("#txtCode").val(),
+                Code_Post: $("#txtCode_Post").val(),
                 fkiPlanID: $("#tab-3 #ddlPolicy").val(),
                 MemeberNumber: $("#tab-3 #txtPolicyNo").val(),
                 EasyPayNo: $("#tab-3 #txtEasyToPay").val(),
@@ -2210,7 +2260,7 @@
                             {
                                 "render": function (data, type, full, meta) {
                                     var hasEditRights = '@ViewBag.HasEditRight' == "True" ? true : false;
-                                    var hasDeleteRights = '@ViewBag.HasDeleteRight' == "True" ? true : false;
+                                    var hasDeleteRights = true;
 
                                     var dom = "<div class='row'>";
                                     var data1 = JSON.stringify(full);
@@ -2746,11 +2796,16 @@
             $("#tab-3 #txtPolicyCoverAmount").val(member.CoverAmount);
             $("#txtPassport").val(member.Passport);
             $("#txtStreetPostalAddress").val(member.Address1);
+            $("#txtStreetPostalAddress_Post").val(member.Address1_Post);
             $("#txtAge").val(member.Age);
             $("#txtStreetAddress").val(member.Address2);
+            $("#txtStreetAddress_Post").val(member.Address2_Post);
             $("#txtTownOrCity").val(member.Address3);
+            $("#txtTownOrCity_Post").val(member.Address3_Post);
             $("#txtProvince").val(member.Address4);
+            $("#txtProvince_Post").val(member.Address4_Post);
             $("#txtCode").val(member.Code);
+            $("#txtCode_Post").val(member.Code_Post);
             $("#ddlPolicyStatus").val(member.PolicyStatus)
             $("#tab-3 #txtPolicyNo").val(member.MemeberNumber);
             $("#tab-3 #txtEasyToPay").val(member.EasyPayNo);
@@ -3154,7 +3209,7 @@
                             {
                                 "render": function (data, type, full, meta) {
                                     var hasEditRights = '@ViewBag.HasEditRight' == "True" ? true : false;
-                                    var hasDeleteRights = '@ViewBag.HasDeleteRight' == "True" ? true : false;
+                                    var hasDeleteRights = true;
                                     var dom = "<div class='row'>";
                                     var data1 = JSON.stringify(full);
                                     data1 = data1.replace(/"/g, "\'")
@@ -4390,12 +4445,12 @@
     //            if(result != "true")
     //            {
     //                $("#lblMessage").html('');
-    //                $("#lblMessage").append('<div class="alert alert-danger">'+result+'</div>');
+    //                $("#lblMessage").append('<div class="alert alert-success">Download Successful</div>');
     //            }
 
-    //            //jQuery("#TaskCopyPopupModel").modal({
-    //            //    show: 'true'
-    //            //});
+    //            jQuery("#TaskCopyPopupModel").modal({
+    //                show: 'true'
+    //            });
     //        },
     //        error: function (xhr, ajaxOptions, thrownError) {
     //            alert(thrownError);
@@ -4653,9 +4708,11 @@
 
 
     });
-    $("#txtStreetPostalAddress").on('keyup', function () {
-        $("#txtStreetAddress").val($(this).val())
-    });
+    //$("#txtStreetPostalAddress").on('keyup', function () {
+    //    $("#txtStreetAddress").val($(this).val())
+    //});
+
+
     function BindGroupDropdown(ParlourId) {
         var ddlCustomers = jQuery("#tab-1 #ddlMemberSociety");
         ddlCustomers.empty().append('<option selected="selected" value="0" disabled = "disabled">Please select.....</option>');
@@ -4729,4 +4786,20 @@
 
         return true;
     }
+
+    $(document).ready(function () {
+        $("#CopyValues").on("click", function (e) {
+            e.preventDefault();
+            var leftside = $("#Physical input[type='text']");
+            var rightside = $("#Postal input[type='text']");
+            //$("#txtProvince").val()= $("#txtProvince option:selected").text();
+            $("#txtProvince_Post").val($("#txtProvince").val())
+
+            for (var i = 0; i < leftside.length; i++) {
+                var leftValue = leftside.eq(i).val();
+                var rightFieldId = $("#Postal input[type='text']")[i].id;
+                $("#" + rightFieldId).val(leftValue);
+            }
+        });
+    });
 </script>
