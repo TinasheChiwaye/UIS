@@ -20,11 +20,11 @@
 
                             @if (ViewBag.CompanyDropDisplay)
                             {
-                            <div class="col-sm-3">
-                                <label>Scheme:</label>
-                                @*@Html.DropDownListFor(m => m.StatusId, new SelectList(ViewBag.Companies, "ParlourId", "ApplicationName"), new { @id = "CompanyDropdownSelection", @class = "form-control" })*@
-                                @Html.DropDownListFor(m => m.StatusId, new SelectList(ViewBag.Companies, "ParlourId", "ApplicationName"), new { @class = "form-control" })
-                            </div>
+                                <div class="col-sm-3">
+                                    <label>Scheme:</label>
+                                    @*@Html.DropDownListFor(m => m.StatusId, new SelectList(ViewBag.Companies, "ParlourId", "ApplicationName"), new { @id = "CompanyDropdownSelection", @class = "form-control" })*@
+                                    @Html.DropDownListFor(m => m.StatusId, new SelectList(ViewBag.Companies, "ParlourId", "ApplicationName"), new { @class = "form-control" })
+                                </div>
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                         <label>Book: </label>
@@ -81,7 +81,84 @@
         </div>
     </div>
 
+
+    @*if (ViewBag.AdministratorOrSuperUser == true)
+    {
+        <div class="modal fade" id="PolicyUpdateStatus" role="dialog" tabindex="-1" area-hidden="true" style="margin-top: 0px; overflow: auto; height: 400px;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span data-dismiss="modal" class="closePopUp">x</span>
+                        <h4 id="PopForPolicyStatus" class="modal-title">Policy Status</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    @Html.DropDownList("StatusList", new SelectList(ViewBag.StatusList, "Text", "Value"), new { @class = "form-control", @id = "ddlPolicyStatus", @name = "ddlPolicyStatus" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Reason</label>
+                                    <textarea maxlength="25" id="txtReason" name="reason" class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <div class="btn-group">
+                                        <button id="BtnUpdatePolicyPopup" class="btn btn-sm btn-primary pull-right m-t-n-xs">Update</button>
+                                    </div>
+                                    <div class="btn-group">
+                                        <button class="btn btn-sm btn-primary pull-right m-t-n-xs" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }*@
+
     <script type="text/javascript">
+
+
+        var pkMemberId = null;
+        function UpdateStatus(data1) {
+            var drpValue = data1.PolicyStatus;
+            pkMemberId = data1.pkiMemberID
+            jQuery('select#ddlPolicyStatus option').each(function () {
+                if (jQuery(this).text() == drpValue) {
+                    jQuery(this).prop('selected', 'selected');
+                    return;
+                }
+            });
+            var options = {
+                'backdrop': false,
+                'show': true
+            }
+            jQuery("#PolicyUpdateStatus").modal(options);
+
+            //jQuery("#ddlPolicyStatus option[value='drpValue']").attr("selected", "selected");
+        }
+        $("#BtnUpdatePolicyPopup").click(function () {
+            var UpdatePolicyStatusURL = jQuery("#UpdatePolicyStatus").val();
+            var data = jQuery("#ddlPolicyStatus :selected").text();
+            var id = pkMemberId;
+            jQuery.ajax({
+                url: UpdatePolicyStatusURL,
+                data: { policyStatus: data, memberId: id },
+                type: "post",
+                cache: false,
+                success: function (result) {
+
+                }
+            })
+        });
 
        //jQuery.noConflict();
         $(document).ready(function () {
@@ -141,7 +218,22 @@
                         }
                     }
                 },
-                { "data": "PolicyStatus", "name": "PolicyStatus", "autoWidth": true },
+                {
+                    "data": "PolicyStatus", "name": "PolicyStatus", "autoWidth": true,
+                    "render": function (data, type, full, meta) {
+                                    jQuery('.btn[href^=#]').click(function () {
+                                        var href = jQuery(this).attr('href');
+                                        jQuery(href).modal('toggle');
+                                    })
+                                    var data1 = JSON.stringify(full);
+                                    data1 = data1.replace(/"/g, "\'")
+                                    if ('@ViewBag.AdministratorOrSuperUser' == "True")
+                                        return '<a onclick = "UpdateStatus(' + data1 + ')">' + data + '</a>';
+                                    else
+                                        return data;
+
+                                }
+                },
                 {
                     "render": function (data, type, full, meta) {
 
@@ -173,7 +265,7 @@
                     }];
 
 
-                
+
         }
 
         function InitModel() {

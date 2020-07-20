@@ -101,7 +101,7 @@
                         </div>
                         <div class="form-group">
                             @Html.Label("Select Underwriter", new { @class = "control-label" })
-                            @Html.DropDownListFor(m => m.UnderwriterId, new SelectList(Model.UnderwriterList, "PkiUnderwriterId", "UnderwriterName", Model.UnderwriterId), "Select Underwriter", new { @class = "form-control" })
+                            @Html.DropDownListFor(m => m.UnderwriterId, new SelectList(Model.UnderwriterList, "PkiUnderwriterId", "UnderwriterName", Model.UnderwriterId), "Select Underwriter", new { @class = "form-control", @id = "ddlUnderwriterList"})
                         </div>
                     </div>
                 </div>
@@ -237,11 +237,11 @@
         $("#PlanDesc").val("");
     });
 
-    jQuery(document).ready(function () {
-
+    jQuery(document).ready(function () {        
         var form = jQuery("#planSetupAdddEditform");
         form.validate();
         jQuery("#btnSubmit").click(function (event) {
+            
             $.validator.setDefaults({ignore: ':hidden, [readonly=readonly]'});
             if (jQuery(form).valid()) {
                 return true;
