@@ -666,6 +666,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
         [PageRightsAttribute(CurrentPageId = 4, Right = new isPageRight[] { isPageRight.HasAdd })]
         public JsonResult SaveManageMembers(MembersModel Member, int fkiMemberid, string ProductName, string ProductCost, Guid fkiProductID)
         {
+            
             if (ModelState["pkiMemberID"] != null && ModelState["pkiMemberID"].Errors.Count > 0)
                 ModelState["pkiMemberID"].Errors.Clear();
             if (ModelState["Passport"] != null && ModelState["Passport"].Errors.Count > 0)
@@ -676,6 +677,16 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 ModelState["parlourid"].Errors.Clear();
             if (ModelState["FK_MemberId"] != null && ModelState["FK_MemberId"].Errors.Count > 0)
                 ModelState["FK_MemberId"].Errors.Clear();
+
+
+
+            //if (MembersBAL.GetMemberByIDNum(Member.IDNumber, this.ParlourId) != null)
+            //{
+            //    return Json(new { success = false, errors = ModelState.Values.Select(x => x.Errors).Select(x => "<li>" + "Member Already Exists" + "</li>").ToList() }, JsonRequestBehavior.AllowGet);
+
+            //}
+            
+
 
             if (!ModelState.IsValid)
             {
@@ -709,10 +720,21 @@ namespace Funeral.Web.Areas.Admin.Controllers
             if (Member.CoverDate == null || Member.CoverDate == DateTime.MinValue)
             {
                 Member.CoverDate = DateTime.Now;
-            }
-
+            }            
             Member.ModifiedUser = UserName;
             Member.Active = false;
+
+            //MembersModel ObjCheckMember = new MembersModel();
+            //ObjCheckMember = MembersBAL.GetMemberByIDNum(Member.IDNumber,this.ParlourId);
+            //ObjCheckMember.IDNumber = Member.IDNumber;
+            //if (ObjCheckMember.IDNumber == null)
+            //{
+            //    MembersBAL.SaveMembers(Member);
+            //}
+            //else
+            //{
+
+            //}
             int retId = MembersBAL.SaveMembers(Member);
             Member.pkiMemberID = retId;
 

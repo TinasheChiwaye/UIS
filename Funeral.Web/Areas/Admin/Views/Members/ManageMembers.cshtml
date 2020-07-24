@@ -679,15 +679,15 @@
                                                 <label>Policy Cover Date</label>
                                                 <input type="text" maxlength="30" id="txtCoverDate" name="name" class="form-control DatepickerSelection" disabled>
                                             </div>
-                                            @*<div class="form-group">
-                                                <label>Policy Underwritten By</label>
-                                                <input type="text" maxlength="50" id="txtUnderwriter" name="name" class="form-control">
-                                            </div>*@
-
                                             <div class="form-group">
                                                 <label>Policy Underwritten By</label>
-                                                @Html.DropDownList("UnderwritterList", Model.UnderwritterList, "Select", new { Name = "Underwritter", @id = "ddlUnderwritter", @style = "width:100%", @class = "form-control" })
+                                                <input type="text" maxlength="50" id="txtUnderwriter" name="name" class="form-control">
                                             </div>
+
+                                            @*<div class="form-group">
+                                                <label>Policy Underwritten By</label>
+                                                @Html.DropDownList("UnderwritterList", Model.UnderwritterList, "Select", new { Name = "Underwritter", @id = "ddlUnderwritter", @style = "width:100%", @class = "form-control" })
+                                            </div>*@
                                             
                                             <div class="form-group">
                                                 <label>Policy Agent or Broker</label>
@@ -2021,7 +2021,9 @@
                 FK_MemberId: fkiMemberid,
                 PolicyPremium: $("#tab-3 #txtPolicyPremium").val(),
                 PolicyPremium: $("#tab-3 #txtPolicyCoverAmount").val(),
-                MemberBranch:$("#tab-4 #txtBankBranch").val(), //$("#ddlBankBranch :selected").text()
+                MemberBranch: $("#tab-4 #txtBankBranch").val(), //$("#ddlBankBranch :selected").text()
+
+               
 
             };
 
@@ -2042,6 +2044,7 @@
                     if (result.success == false) {
                         $("#validationTab4Message").show();
                         $("#validationTab4Message").empty().append(result.errors);
+                        
                     }
                     else {
                         if (result.pkiMemberID == 0 || result.pkiMemberID == "undefined") {
@@ -2057,7 +2060,7 @@
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     $("#validationTab4Message").show();
-                    $("#validationTab4Message").empty().append(result.errors);
+                    $("#validationTab4Message").empty().append(result.errors);                    
                 }
 
             })

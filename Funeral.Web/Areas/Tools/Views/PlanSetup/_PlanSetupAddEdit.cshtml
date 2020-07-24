@@ -231,18 +231,20 @@
         $("#OfficeSplit").val("");
         $("#CompanySplit").val("");
         $("#HeadManagerSplit").val("");
-        $("#SpouseCover").val("");
-
+         $("#SpouseCover").val("");
+         $("#ddlUnderwriterList").val("");
         $("#PlanName").val("");
         $("#PlanDesc").val("");
     });
 
-    jQuery(document).ready(function () {        
+        jQuery(document).ready(function () { 
         var form = jQuery("#planSetupAdddEditform");
+        //$("#ddlUnderwriterList option:selected").text()
+        //jQuery("#ddlUnderwriterList option:selected").val();
+
         form.validate();
         jQuery("#btnSubmit").click(function (event) {
-            
-            $.validator.setDefaults({ignore: ':hidden, [readonly=readonly]'});
+            $.validator.setDefaults({ ignore: ':hidden, [readonly=readonly]' });
             if (jQuery(form).valid()) {
                 return true;
             }
@@ -252,8 +254,13 @@
         });
         eventConfigs.pageChange.action(RefreshAddEditData);
         eventConfigs.searchClick.action(RefreshAddEditData);
-    });
 
+            //$('#ddlUnderwriterList').change(function () {                
+            //    var job = $('#ddlUnderwriterList').val();
+            //    alert(job);
+            //});
+
+        });
     function RefreshAddEditData(e) {
         LoadPlanAddEdit();
     }
@@ -313,7 +320,7 @@
             option += '<option value="' + p + '">' + p + '</option>';
         }
         $('.AgeDropdown').append(option);
-    }
+    } 
     </script>
 
 }
