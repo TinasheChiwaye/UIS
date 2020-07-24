@@ -677,66 +677,86 @@ namespace Funeral.Web.Areas.Admin.Controllers
             if (ModelState["FK_MemberId"] != null && ModelState["FK_MemberId"].Errors.Count > 0)
                 ModelState["FK_MemberId"].Errors.Clear();
 
+            //PlanModel Plan = new PlanModel();
+
+            if ( MembersBAL.GetMemberByIDNumber(Member.IDNumber, this.ParlourId, Member.fkiPlanID) != null)
+            {
+                //return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member Already Exists" + "</li>").ToList() }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member already exists in this plan." +  "</li>").First() }, JsonRequestBehavior.AllowGet);
+            }
+
+
+
             if (!ModelState.IsValid)
-            {
-                return Json(new { success = false, errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => "<li>" + x.ErrorMessage + "</li>").ToList() }, JsonRequestBehavior.AllowGet);
-            }
-            Member.pkiMemberID = MemberId;
-            Member.PolicyStatus = Member.PolicyStatus;
-            Member.CreateDate = System.DateTime.Now;
-            if (Member.Passport == null)
-                Member.Passport = "";
-            if (Member.Title == null)
-                Member.Title = "";
-            if (Member.DateOfBirth == null || Member.DateOfBirth == DateTime.MinValue)
-                Member.DateOfBirth = DateTime.MaxValue;
-            if (Member.DebitDate == null || Member.DebitDate == DateTime.MinValue)
-                Member.DebitDate = DateTime.MaxValue;
+                {
+                    return Json(new { success = false, errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => "<li>" + x.ErrorMessage + "</li>").ToList() }, JsonRequestBehavior.AllowGet);
+                }
+                Member.pkiMemberID = MemberId;
+                Member.PolicyStatus = Member.PolicyStatus;
+                Member.CreateDate = System.DateTime.Now;
+                if (Member.Passport == null)
+                    Member.Passport = "";
+                if (Member.Title == null)
+                    Member.Title = "";
+                if (Member.DateOfBirth == null || Member.DateOfBirth == DateTime.MinValue)
+                    Member.DateOfBirth = DateTime.MaxValue;
+                if (Member.DebitDate == null || Member.DebitDate == DateTime.MinValue)
+                    Member.DebitDate = DateTime.MaxValue;
 
-            if (Member.parlourid != Guid.Empty && ParlourId != Member.parlourid && IsAdministrator)
-                Member.parlourid = Member.parlourid;
-            else
-                Member.parlourid = CurrentParlourId;
-            Member.MemeberNumber = Member.PolicyNumber;
+                if (Member.parlourid != Guid.Empty && ParlourId != Member.parlourid && IsAdministrator)
+                    Member.parlourid = Member.parlourid; 
+                else
+                    Member.parlourid = CurrentParlourId;
+                Member.MemeberNumber = Member.PolicyNumber;
 
-            Member.pkiAdditionalMemberInfo = Guid.NewGuid();
+                Member.pkiAdditionalMemberInfo = Guid.NewGuid();
 
-            if (Member.StartDate == null || Member.StartDate == DateTime.MinValue)
-            {
-                Member.StartDate = DateTime.Now;
-            }
+                if (Member.StartDate == null || Member.StartDate == DateTime.MinValue)
+                {
+                    Member.StartDate = DateTime.Now;
+                }
 
-            if (Member.CoverDate == null || Member.CoverDate == DateTime.MinValue)
-            {
-                Member.CoverDate = DateTime.Now;
-            }
+                if (Member.CoverDate == null || Member.CoverDate == DateTime.MinValue)
+                {
+                    Member.CoverDate = DateTime.Now;
+                }
 
-            Member.ModifiedUser = UserName;
-            Member.Active = false;
-            int retId = MembersBAL.SaveMembers(Member);
-            Member.pkiMemberID = retId;
+                Member.ModifiedUser = UserName;
+                Member.Active = false;
+                int retId = MembersBAL.SaveMembers(Member);
+                Member.pkiMemberID = retId;
 
-            if (Request.QueryString["ID"] == null)
-            { saveAddproduct(retId); }
-            //Add On Product
-            //var addOnProduct = new MemberAddonProductsModel();
-            //if (ProductName != "Select" && ProductCost != "0")
-            //{
-            //    addOnProduct.fkiMemberid = retId;
-            //    addOnProduct.LastModified = DateTime.Now;
-            //    addOnProduct.UserID = Request.LogonUserIdentity.User.ToString();
-            //    addOnProduct.ModifiedUser = this.User.Identity.Name;
-            //    addOnProduct.Deleted = 0;
-            //    addOnProduct.parlourid = this.ParlourId;
-            //    addOnProduct.pkiMemberProductID = Guid.NewGuid();
-            //    addOnProduct.ProductName = ProductName;
-            //    addOnProduct.ProductPrice = ProductCost;
-            //    addOnProduct.ProductCost = Convert.ToDecimal(ProductCost);
-            //    addOnProduct.fkiProductID = fkiProductID;
-            //    if (addOnProduct.fkiMemberid != 0)
-            //    { var AddonProductID = MembersBAL.SaveAddonProducts(addOnProduct); }
-            //}
-            return Json(Member, JsonRequestBehavior.AllowGet);
+
+                //string error = "id number already exists";
+                //var dtidnum = MembersBAL.GetMemberByIDNum(Member.IDNumber, this.ParlourId).ToString();
+                //if (Member.IDNumber == dtidnum)
+                //{
+                //    return Json(new { success = "false", responsetext = error });
+                //}
+
+
+                if (Request.QueryString["ID"] == null)
+                { saveAddproduct(retId); }
+                //Add On Product
+                //var addOnProduct = new MemberAddonProductsModel();
+                //if (ProductName != "Select" && ProductCost != "0")
+                //{
+                //    addOnProduct.fkiMemberid = retId;
+                //    addOnProduct.LastModified = DateTime.Now;
+                //    addOnProduct.UserID = Request.LogonUserIdentity.User.ToString();
+                //    addOnProduct.ModifiedUser = this.User.Identity.Name;
+                //    addOnProduct.Deleted = 0;
+                //    addOnProduct.parlourid = this.ParlourId;
+                //    addOnProduct.pkiMemberProductID = Guid.NewGuid();
+                //    addOnProduct.ProductName = ProductName;
+                //    addOnProduct.ProductPrice = ProductCost;
+                //    addOnProduct.ProductCost = Convert.ToDecimal(ProductCost);
+                //    addOnProduct.fkiProductID = fkiProductID;
+                //    if (addOnProduct.fkiMemberid != 0)
+                //    { var AddonProductID = MembersBAL.SaveAddonProducts(addOnProduct); }
+                //}
+                return Json(Member, JsonRequestBehavior.AllowGet);
+            
         }
         public JsonResult BindPolicyCoverDate(int id, DateTime date)
         {
