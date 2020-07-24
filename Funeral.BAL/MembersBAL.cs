@@ -34,6 +34,12 @@ namespace Funeral.BAL
             DataTable dr = MembersDAL.GetMemberByIDNumdt(ID, ParlourId);
             return FuneralHelper.DataTableMapToList<MembersModel>(dr).FirstOrDefault();
         }
+
+        public static MembersModel GetMemberByIDNumber(string ID, Guid ParlourId, int PlanId)
+        {
+            DataTable dr = MembersDAL.GetMemberByIDNumber(ID, ParlourId, PlanId);
+            return FuneralHelper.DataTableMapToList<MembersModel>(dr).FirstOrDefault();
+        }
         public static FamilyDependencyModel GetDependencByIDNum(string ID, Guid ParlourId, int MemberID)
         {
             DataTable dr = MembersDAL.GetDependencByIDNumdt(ID, ParlourId, MemberID);

@@ -332,6 +332,13 @@
                                                     {
                                                         <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="DateComparisionJavascriptFun();">
                                                     }
+
+
+                                                    //DataTable dr = MembersDAL.GetMemberByIDdt(ID, ParlourId);
+
+                                                    //MembersViewModel objViewModel = new MembersViewModel();
+                                                    //var membersList = FuneralHelper.DataTableMapToList<MembersModel>(dr, true);
+
                                                 }
                                             </div>
                                             <div class="form-group">
@@ -1934,6 +1941,7 @@
             var productName = null;
             var productCost = 0;
             var fkiMemberid = 0;
+            var PlanName = null;
             var fkiProductID = "00000000-0000-0000-0000-000000000000";
             if($("#tab-3 #ddlCustom1").val()!=null){
                 CustomId1=$("#tab-3 #ddlCustom1").val();
@@ -1965,13 +1973,16 @@
             if($("#drpProductName option:selected").val() != ""){
                 fkiProductID = $("#drpProductName option:selected").val();
             }
+            //if ($("#ddlPolicyPopupPolicy option:selected").val() != "") {
+            //    PlanName: $("#ddlPolicyPopupPolicy option:selected").val();
+            //}
 
 
             fkiMemberid=$("#pkiMemberID").val();
             var data = {
                 pkiMemberID :$("#pkiMemberID").val(),
                 MemberType:"Main",
-                Title:"",
+                Title: "",
                 FullNames:$("#tab-1 #txtFirstname").val(),
                 Surname: $("#tab-1 #txtLastName").val(),
                 Gender: $("#tab-1 input[name='Gender']:checked").val(),
@@ -1994,6 +2005,7 @@
                 Code: $("#txtCode").val(),
                 Code_Post: $("#txtCode_Post").val(),
                 fkiPlanID: $("#tab-3 #ddlPolicy").val(),
+                PlanName: $("#tab-3 #ddlPolicy").val(),
                 MemeberNumber: $("#tab-3 #txtPolicyNo").val(),
                 EasyPayNo: $("#tab-3 #txtEasyToPay").val(),
                 //Branch: $("#tab-4 #txtBankBranch").val(),
@@ -2035,13 +2047,15 @@
                     fkiMemberid:fkiMemberid,
                     ProductName:productName,
                     ProductCost:productCost,
-                    fkiProductID:fkiProductID
+                    fkiProductID: fkiProductID,
+                    //PlanName: PlanName
                 },
                 type: "post",
                 cache: false,
 				success: function (result) {
 					console.log(result);
                     if (result.success == false) {
+
                         $("#validationTab4Message").show();
                         $("#validationTab4Message").empty().append(result.errors);
                         

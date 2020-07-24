@@ -54,6 +54,7 @@ namespace Funeral.Model
             Passport = string.Empty;
             Citizenship = string.Empty;
             EasyPayNo = string.Empty;
+            PlanName = string.Empty;
             pkiAdditionalMemberInfo = new Guid("00000000-0000-0000-0000-000000000000");
             StartDate = System.DateTime.Now;
             Administratorparlourid = new Guid("00000000-0000-0000-0000-000000000000");
@@ -149,6 +150,7 @@ namespace Funeral.Model
         public string Passport { get; set; }
         public string EasyPayNo { get; set; }
         public Guid pkiAdditionalMemberInfo { get; set; }
+        public string PlanName { get; set; }
 
         [Required(ErrorMessage = "Please enter Start date")]
         public DateTime StartDate { get; set; }

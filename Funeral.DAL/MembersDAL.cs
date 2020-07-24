@@ -145,6 +145,16 @@ namespace Funeral.DAL
             ObjParam[1] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "MemberSelectByIdNum", ObjParam);
         }
+
+        public static DataTable GetMemberByIDNumber(string ID, Guid ParlourId, int PlanId)
+        {
+            DbParameter[] ObjParam = new DbParameter[3];
+            ObjParam[0] = new DbParameter("@ID", DbParameter.DbType.NVarChar, 0, ID);
+            ObjParam[1] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+            ObjParam[2] = new DbParameter("@PlanId", DbParameter.DbType.Int, 0, PlanId);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "MemberSelectByIdNumber", ObjParam);
+        }
+
         public static SqlDataReader GetDependencByIDNum(string ID, Guid ParlourId, int MemberID)
         {
             DbParameter[] ObjParam = new DbParameter[3];
