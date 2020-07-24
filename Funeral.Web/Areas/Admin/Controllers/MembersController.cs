@@ -678,16 +678,6 @@ namespace Funeral.Web.Areas.Admin.Controllers
             if (ModelState["FK_MemberId"] != null && ModelState["FK_MemberId"].Errors.Count > 0)
                 ModelState["FK_MemberId"].Errors.Clear();
 
-
-
-            //if (MembersBAL.GetMemberByIDNum(Member.IDNumber, this.ParlourId) != null)
-            //{
-            //    return Json(new { success = false, errors = ModelState.Values.Select(x => x.Errors).Select(x => "<li>" + "Member Already Exists" + "</li>").ToList() }, JsonRequestBehavior.AllowGet);
-
-            //}
-            
-
-
             if (!ModelState.IsValid)
             {
                 return Json(new { success = false, errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => "<li>" + x.ErrorMessage + "</li>").ToList() }, JsonRequestBehavior.AllowGet);
