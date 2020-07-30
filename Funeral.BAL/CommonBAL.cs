@@ -31,12 +31,12 @@ namespace Funeral.BAL
             keyValues.Add(new KeyValue { Key = "Address3", Value = "Address3", NameText = "Address3" });
             keyValues.Add(new KeyValue { Key = "Address4", Value = "Address4", NameText = "Address4" });
             keyValues.Add(new KeyValue { Key = "Code", Value = "Code", NameText = "Code" });
-            keyValues.Add(new KeyValue { Key = "MemeberNumber", Value = "MemeberNumber", NameText = "ARL Policy Number" });
+            keyValues.Add(new KeyValue { Key = "MemeberNumber", Value = "MemeberNumber", NameText = "Policy Number" });
             keyValues.Add(new KeyValue { Key = "MemberSociety", Value = "MemberSociety", NameText = "Book Name" });
             keyValues.Add(new KeyValue { Key = "InceptionDate", Value = "InceptionDate", NameText = "InceptionDate" });
             keyValues.Add(new KeyValue { Key = "Claimnumber", Value = "Claimnumber", NameText = "Claimnumber" });
             keyValues.Add(new KeyValue { Key = "PolicyStatus", Value = "PolicyStatus", NameText = "PolicyStatus" });
-            keyValues.Add(new KeyValue { Key = "parlourid", Value = "parlourid", NameText = "parlourid" });
+            keyValues.Add(new KeyValue { Key = "parlourid", Value = "parlourid", NameText = "Parlourid" });
             keyValues.Add(new KeyValue { Key = "Agent", Value = "Agent", NameText = "Agent" });
             keyValues.Add(new KeyValue { Key = "AccountHolder", Value = "AccountHolder", NameText = "AccountHolder" });
             keyValues.Add(new KeyValue { Key = "Bank", Value = "Bank", NameText = "Bank" });
@@ -53,9 +53,9 @@ namespace Funeral.BAL
             keyValues.Add(new KeyValue { Key = "CustomId1", Value = "CustomId1", NameText = "CustomId1" });
             keyValues.Add(new KeyValue { Key = "CustomId2", Value = "CustomId2", NameText = "CustomId2" });
             keyValues.Add(new KeyValue { Key = "CustomId3", Value = "CustomId3", NameText = "CustomId3" });
-            keyValues.Add(new KeyValue { Key = "PlanName", Value = "PlanName", NameText = "Rate Type" });
+            keyValues.Add(new KeyValue { Key = "PlanName", Value = "PlanName", NameText = "Plan Name" });
             //keyValues.Add(new KeyValue { Key = "Premium", Value = "Premium", NameText = "Premium" });
-            keyValues.Add(new KeyValue { Key = "Premium", Value = "Premium", NameText = "Risk Premium" });
+            keyValues.Add(new KeyValue { Key = "Premium", Value = "Premium", NameText = "Premium" });
             keyValues.Add(new KeyValue { Key = "Age", Value = "Age", NameText = "Age" });
             keyValues.Add(new KeyValue { Key = "PlanDesc", Value = "PlanDesc", NameText = "PlanDesc" });
             keyValues.Add(new KeyValue { Key = "PlanSubscription", Value = "PlanSubscription", NameText = "PlanSubscription" });

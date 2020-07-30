@@ -4,6 +4,7 @@
 <script src="~/Scripts/plugins/dateformat/DateFormat.js"></script>  <!-- https://gist.github.com/eralston/968809 -->
 @using (Html.BeginForm())
 {
+    @Html.Hidden("UpdatePolicyStatus", Url.Action("UpdatePolicyStatus"))
     <div class="dataTables_wrapper" id="tblMemberPaymentSearch_wrapper">
         <div class="col-lg-12">
             <div class="ibox ">
@@ -128,6 +129,7 @@
 
 
         var pkMemberId = null;
+
         function UpdateStatus(data1) {
             var drpValue = data1.PolicyStatus;
             pkMemberId = data1.pkiMemberID
@@ -155,9 +157,11 @@
                 type: "post",
                 cache: false,
                 success: function (result) {
+                    $('#tblMemberPaymentSearch_wrapper').html(result);
 
                 }
             })
+            //location.reload();
         });
 
        //jQuery.noConflict();

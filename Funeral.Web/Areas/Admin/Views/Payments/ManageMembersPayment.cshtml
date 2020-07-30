@@ -276,6 +276,15 @@
                                 </div>
 
                             </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Joining Fee</label>
+                                        @Html.EditorFor(Model => Model.JoiningFee, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtJoiningFee", @name = "name", @readonly = "readonly" } })
+                                    </div>
+                                </div>
+                            </div>
+
 
                             <div class="row">
                                 <div class="col-lg-3">
@@ -330,9 +339,10 @@
                                                 </a>
                                             </td>
                                             <td>
+                                                
                                                 @if (ViewBag.HasReversalPayment)
                                                 {
-                                                    if (item.IsReversal == false && item.AmountPaidNumeric > 0)
+                                                    if (item.IsReversal == false && item.AmountPaidNumeric > 0 )
                                                     {
                                                         <a class="btn btn-w-m btn-primary paymentreversal" role="@item.InvoiceID" id="btnReversalPayment">Reversal Payment</a>
                                                     }
