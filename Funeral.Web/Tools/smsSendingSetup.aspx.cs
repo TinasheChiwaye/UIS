@@ -12,6 +12,7 @@ using Funeral.BAL;
 using System.Data.SqlClient;
 using System.IO;
 using Funeral.DAL;
+using System.Text.RegularExpressions;
 
 namespace Funeral.Web.Tools
 {
@@ -64,6 +65,18 @@ namespace Funeral.Web.Tools
             smsModel.parlourid = ParlourId;
             int SendOpration = MemberPaymetsDAL.InsertSendReminder(smsModel);
         }
+
+        public void SendBulkMessge()
+        {
+            SendReminderModel smsModel = new SendReminderModel();
+            smsModel.MemeberID = UserID.ToString();
+            smsModel.MemberData = txtMessage.Text;
+            smsModel.parlourid = ParlourId;
+            int SendOpration = MemberPaymetsDAL.SendingBulkSms(smsModel);
+        }
+
+
+
         public void ClearControl()
         {
             txtCellphoneNumber.Text = string.Empty;
@@ -85,21 +98,13 @@ namespace Funeral.Web.Tools
             RegularExpressionValidator4.Enabled = false;
                 if (chkAllMember.Checked)
                 {
-                    List<MembersModel> model= ToolsSetingBAL.GetAllMemberCellphon(ParlourId);
-                    if (model != null)
-                    {
-                        foreach (MembersModel modelnew in model)
-                        {
-                            SendMassge(modelnew.Cellphone);
-                        }
-                    }
-
-                    ShowMessage(ref lblMessage, MessageType.Success, " Send SMS Success To All");
+                    SendBulkMessge();
+                    ShowMessage(ref lblMessage, MessageType.Success, "SMS Sent Successfully to All");
                 }
                 else
                 {
                     SendMassge(txtCellphoneNumber.Text);
-                    ShowMessage(ref lblMessage, MessageType.Success, txtCellphoneNumber.Text + " Send SMS Success");
+                    ShowMessage(ref lblMessage, MessageType.Success, txtCellphoneNumber.Text + " SMS Sent Successfully");
                 }
                 ClearControl();
                 lblMessage.Visible = true;
