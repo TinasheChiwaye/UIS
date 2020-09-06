@@ -206,8 +206,8 @@ namespace Funeral.Web.Admin.Reports
             SqlCommand com = new SqlCommand();
             com.CommandType = CommandType.StoredProcedure;
             com.Connection = new SqlConnection(ConfigurationManager.ConnectionStrings["FuneralConnection"].ConnectionString);
-            com.CommandText = "SelectDistinctAgent";
-            com.Parameters.Add(new SqlParameter("@parlourid", CompanyId));
+            com.CommandText = "SelectUsers";
+            com.Parameters.Add(new SqlParameter("@Parlourid", CompanyId));
             SqlDataAdapter adp = new SqlDataAdapter(com);
             DataTable dt = new DataTable();
             adp.Fill(dt);
@@ -263,10 +263,19 @@ namespace Funeral.Web.Admin.Reports
                 rpw.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/" + hfAdminReport.Value;
                 ReportParameterCollection reportParameters = new ReportParameterCollection();
 
+
                 if (chk_dateDisabled.Checked)
                 {
-                    reportParameters.Add(new ReportParameter("DateFrom", DateTime.Now.AddYears(-100).ToString()));
-                    reportParameters.Add(new ReportParameter("DateTo", DateTime.Now.ToString()));
+                    if (hfAdminReport.Value.Contains("Daily"))
+                    {
+                        reportParameters.Add(new ReportParameter("DateFrom", DateTime.Today.ToString("yyyy-MM-dd HH:mm:ss.fff")));
+                        reportParameters.Add(new ReportParameter("DateTo", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")));
+                    }
+                    else
+                    {
+                        reportParameters.Add(new ReportParameter("DateFrom", DateTime.Now.AddYears(-100).ToString("yyyy-MM-dd HH:mm:ss.fff")));
+                        reportParameters.Add(new ReportParameter("DateTo", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")));
+                    }
                 }
                 else
                 {
@@ -308,6 +317,12 @@ namespace Funeral.Web.Admin.Reports
                 {
                     reportParameters.Add(new ReportParameter("Parlourid", this.ParlourId.ToString()));
                 }
+
+                if (hfAdminReport.Value.Contains("Cash"))
+                {
+                    reportParameters.Add(new ReportParameter("UserId", this.UserID.ToString()));
+                }
+
 
                 rpw.ServerReport.SetParameters(reportParameters);
                 //

@@ -91,6 +91,13 @@ namespace Funeral.DAL
             return DbConnection.GetDataTable(CommandType.StoredProcedure, query, ObjParam);
 
         }
+
+        public static DataTable GetPlaceholders()
+        {
+            DbParameter[] ObjParam = new DbParameter[0];
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetSMSPlaceholders", ObjParam);
+        }
+
         public static SqlDataReader SaveAdditionalApplication(AdditionalApplicationSettingsModel model)
         {
             string query = "AddUpdateAdditionalApplicationSettings";

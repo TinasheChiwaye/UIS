@@ -101,6 +101,13 @@ namespace Funeral.BAL
             DataTable dr = ToolsSetingDAL.GetSecureGrouListdt();
             return FuneralHelper.DataTableMapToList<SecureGroupModel>(dr);
         }
+
+        public static List<SMSPlaceholderModel> GetPlaceholder()
+        {
+            DataTable dr = ToolsSetingDAL.GetPlaceholders();
+            return FuneralHelper.DataTableMapToList<SMSPlaceholderModel>(dr);
+        }
+
         public static SecureUsersModel GetUserByID(string ID, Guid ParlourId)
         {
             DataTable dr = ToolsSetingDAL.GetUserByIDdt(ID, ParlourId);

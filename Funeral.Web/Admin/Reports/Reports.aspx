@@ -250,14 +250,7 @@
         function GetSelectedPanel(ddlAdmin) {
             var selectedValue = ddlAdmin.value;
             document.getElementById('<%=hfAdminReport.ClientID%>').value = selectedValue;
-            if (selectedValue == "UIS All Members Report") {
-                $("#chk_dateDisabledDiv").show();
-            }
-            else {
-                $("#chk_dateDisabledDiv").hide();
-                $(".DateDisabled").show();
-                $("#MainContent_chk_dateDisabled").prop('checked', false)
-            }
+            $("#chk_dateDisabledDiv").show();
         }
         function DisableDateSelection(Control) {
             if ($("#" + Control.id).is(":checked")) {
