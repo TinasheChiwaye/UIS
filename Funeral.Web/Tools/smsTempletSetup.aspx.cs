@@ -63,6 +63,7 @@ namespace Funeral.Web.Tools
             {
 
                 BindTempletList();
+                bindgvSmsPlaceholder();
             }
         }
 
@@ -142,6 +143,13 @@ namespace Funeral.Web.Tools
                 ID = ObjList.ID;
                 txtMessage.Text = ObjList.smsText;
             }
+        }
+
+        private void bindgvSmsPlaceholder()
+        {
+            List<SMSPlaceholderModel> placeholder = ToolsSetingBAL.GetPlaceholder();
+            gvTemplate.DataSource = placeholder;
+            gvTemplate.DataBind();
         }
 
         #endregion

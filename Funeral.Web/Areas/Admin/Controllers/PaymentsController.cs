@@ -56,6 +56,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
         [PageRightsAttribute(CurrentPageId = 34)]
         public PartialViewResult List()
         {
+            var statusList = CommonBAL.GetStatus(FuneralEnum.StatusAssociatedTable.Members.ToString()).Select(x => new SelectListItem() { Text = x.ID.ToString(), Value = x.Status });
+            ViewBag.StatusList = statusList;
             ViewBag.SocietyLists = CommonBAL.GetSocietyByParlourId(CurrentParlourId);
             ViewBag.HasEditRight = HasEditRight;
             ViewBag.HasDeleteRight = HasDeleteRight;
@@ -273,6 +275,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
         [PageRightsAttribute(CurrentPageId = 34, Right = new isPageRight[] { isPageRight.HasReversalPayment })]
         public ActionResult PaymentReversal(int id)
         {
+            //ViewBag.HasReversalPayment = HasReversalPayment;
             int PaymentID = MemberPaymentBAL.AddReversalPayments(id, UserName, ParlourId);
             string Message = "";
             if (PaymentID != 0)
@@ -377,5 +380,53 @@ namespace Funeral.Web.Areas.Admin.Controllers
             var Company = CommonBAL.GetSocietyByParlourId(CompanyId).Select(x => new SelectListItem() { Text = x.SocietyName, Value = x.pkiSocietyID.ToString() });
             return Json(Company, JsonRequestBehavior.AllowGet);
         }
+
+
+        [HttpPost]
+        //public void UpdatePolicyStatus(string policyStatus, int memberId)
+
+        [PageRightsAttribute(CurrentPageId = 6)]
+        public void UpdatePolicyStatus(string policyStatus, int memberId)
+
+        {
+            MembersBAL.UpdateMemberPolicyStatus(policyStatus, memberId);
+            CommonBAL.SaveAudit(UserName, CurrentParlourId, "Policy Status Changed");
+        }
+
+        //[PageRightsAttribute(CurrentPageId = 6)]
+        //public ActionResult UpdatePolicyPopup(MembersModel policy)
+        //{
+        //    MembersModel model = MembersBAL.GetMemberByID(MemberId, CurrentParlourId);
+        //    model.pkiMemberID = MemberId;
+        //    model.MemberBranch = policy.MemberBranch;
+        //    model.Agent = policy.Agent;
+        //    model.MemberSociety = policy.MemberSociety;
+        //    model.InceptionDate = policy.InceptionDate;
+        //    model.fkiPlanID = policy.fkiPlanID;
+        //    model.MemeberNumber = policy.MemeberNumber;
+        //    model.EasyPayNo = policy.EasyPayNo;
+        //    model.Email = policy.Email;
+        //    model.MemberBranch = policy.MemberBranch;
+        //    //==model.
+
+        //    if (model.StartDate == null || model.StartDate == DateTime.MinValue)
+        //    {
+        //        model.StartDate = DateTime.Now;
+        //    }
+
+        //    if (model.CoverDate == null || model.CoverDate == DateTime.MinValue)
+        //    {
+        //        model.CoverDate = DateTime.Now;
+        //    }
+
+        //    model.CustomId1 = policy.CustomId1;
+        //    model.CustomId2 = policy.CustomId2;
+        //    model.CustomId3 = policy.CustomId3;
+
+        //    //================================================================ 
+        //    int retID = MembersBAL.SaveMembers(model);
+        //    MemberId = retID;
+        //    return Json(model, JsonRequestBehavior.AllowGet);
+        //}
     }
 }

@@ -75,6 +75,14 @@
                                 <div class="col-lg-2">
                                     <asp:Button class="btn btn-md btn-warning pull-left" Visible="true" ID="btnCancel" runat="server" Text="Cancel" OnClick="btnCancel_Click" />
                                 </div>
+
+                                <asp:GridView ID="gvTemplate" style="margin-top:20px;" runat="server" CssClass="table table-striped table-bordered table-hover" AutoGenerateColumns="false">
+                                  <PagerStyle CssClass="pagination-ys" />
+                                    <Columns>
+                                        <asp:BoundField DataField="Name" HeaderText="Name" ReadOnly="True" />
+                                        <asp:BoundField DataField="PlaceHolder" HeaderText="Placeholder" ReadOnly="True" />
+                                    </Columns>
+                                </asp:GridView>
                             </div>
                         </div>
                     </div>

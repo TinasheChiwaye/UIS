@@ -274,7 +274,7 @@
                             <div class="panel-options" id="Tabs">
                                 <ul class="nav nav-tabs" id="myTab">
                                     <li class="active" id="tab1"><a data-toggle="tab" href="#tab-1" id="atab1" aria-expanded="true">Personal Details</a></li>
-                                    <li class="" id="tab2"><a data-toggle="tab" href="#tab-2" id="atab2" aria-expanded="false">Physical Address</a></li>
+                                    <li class="" id="tab2"><a data-toggle="tab" href="#tab-2" id="atab2" aria-expanded="false">Member Address</a></li>
                                     <li class="" id="tab3"><a data-toggle="tab" href="#tab-3" id="atab3" aria-expanded="false">Policy Details</a></li>
                                     <li class="" id="tab9"><a data-toggle="tab" href="#tab-9" id="atab9" aria-expanded="false" >Product</a></li>
                                     <li class="" id="tab4"><a data-toggle="tab" href="#tab-4" id="atab4" aria-expanded="false">Banking Details</a></li>
@@ -535,7 +535,7 @@
                                         </div>
                                         <div class="col-lg-6" id="Physical">
                                             <div class="form-group">
-                                                <label>Physical Address</label>
+                                                <label>Member Address</label>
                                                 <input type="text" maxlength="100" id="txtStreetPostalAddress" name="name" class="form-control">
                                             </div>
                                             <div class="form-group">
@@ -968,10 +968,10 @@
                                                                     <option value="On Trial">On Trial</option>
                                                                 </select>
                                                             </div>
-                                                            <div class="form-group">
+                                                            @*<div class="form-group">
                                                                 <label>Premium<em>*</em></label>
                                                                 <input type="text" maxlength="25" id="txtDependentPremium" name="name" class="form-control" disabled>
-                                                            </div>
+                                                            </div>*@
                                                             <div class="form-group">
                                                                 <label>Cover Amount <em>*</em></label>
                                                                 <input type="text" maxlength="25" id="txtDependentCoverAmount" name="name" class="form-control" disabled>
@@ -2033,7 +2033,9 @@
                 FK_MemberId: fkiMemberid,
                 PolicyPremium: $("#tab-3 #txtPolicyPremium").val(),
                 PolicyPremium: $("#tab-3 #txtPolicyCoverAmount").val(),
-                MemberBranch:$("#tab-4 #txtBankBranch").val(), //$("#ddlBankBranch :selected").text()
+                MemberBranch: $("#tab-4 #txtBankBranch").val(), //$("#ddlBankBranch :selected").text()
+
+               
 
             };
 
@@ -2056,6 +2058,7 @@
 
                         $("#validationTab4Message").show();
                         $("#validationTab4Message").empty().append(result.errors);
+                        
                     }
                     else {
                         if (result.pkiMemberID == 0 || result.pkiMemberID == "undefined") {
@@ -2071,7 +2074,7 @@
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     $("#validationTab4Message").show();
-                    $("#validationTab4Message").empty().append(result.errors);
+                    $("#validationTab4Message").empty().append(result.errors);                    
                 }
 
             })
@@ -2577,7 +2580,7 @@
             };
 
             $(document).ready(function () {
-                $("#btnSaveProduct").prop('disabled', false);
+                $("#btnSbtnSaveProductaveProduct").prop('disabled', false);
                 $("#btnUpdateProduct").prop('disabled', true);
                 jQuery.noConflict();
                 productDatatable = $($('#productDataTable')[0]).on('page.dt', function () {
@@ -4692,7 +4695,8 @@
 
             }
         });
-        location.reload();
+        //location.reload();
+        BindGroupDropdown($('#ddlSelectCompany').val());
     });
     $("#txtStartDatePopup").change(function () {
         var DependencyStartdateChangeUrl = $("#DependencyStartdateChangeUrl").val();

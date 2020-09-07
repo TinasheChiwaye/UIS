@@ -155,6 +155,8 @@ namespace Funeral.Web.Areas.Tools.Controllers
                     FormsIdentity formIdentity = (FormsIdentity)User.Identity;
                     planSetup.LastModified = System.DateTime.Now;
                     planSetup.ModifiedUser = formIdentity.Name;
+                    planSetup.PlanUnderwriter = planSetup.PlanUnderwriter;
+                    planSetup.UnderwriterId = planSetup.UnderwriterId;
                     var agentInfoSetupData = ToolsSetingBAL.NewSavePlanDetails(planSetup);
                     if (planSetup.planCreators != null)
                     {

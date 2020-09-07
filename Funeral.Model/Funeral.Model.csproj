@@ -177,6 +177,7 @@
     <Compile Include="SecureUsersModel.cs" />
     <Compile Include="SendReminderModel.cs" />
     <Compile Include="SiteSettings.cs" />
+    <Compile Include="SMSPlaceholderModel.cs" />
     <Compile Include="smsSendingGroupModel.cs" />
     <Compile Include="smsTempletModel.cs" />
     <Compile Include="SocietyModel.cs" />

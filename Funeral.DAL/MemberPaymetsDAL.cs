@@ -95,7 +95,7 @@ namespace Funeral.DAL
             DbParameter[] ObjParam = new DbParameter[2];
             ObjParam[0] = new DbParameter("@MemberNo", DbParameter.DbType.NVarChar, 0, strMemberNo);
             ObjParam[1] = new DbParameter("@ParlourID", DbParameter.DbType.UniqueIdentifier, 0, pgParlourID);
-            return DbConnection.GetDataTable(CommandType.StoredProcedure, "MemberParlourIDAndMemberNoByID_New", ObjParam);//[MemberParlourIDAndMemberNoByID]
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "MemberParlourIDAndMemberNoByID_New", ObjParam);//[MemberParlourIDAndMemberNoByID_New]
         }
 
         public static SqlDataReader ReturnMemberPlanDetailsWithBalance(string strMemberNo)
