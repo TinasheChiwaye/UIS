@@ -84,26 +84,26 @@ namespace Funeral.Web.Admin
         #endregion
 
         #region Page load event
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            //lblMessage.Visible = false;
-            if (!IsPostBack)
-            {
-                ddlPageSize.SelectedIndex = ddlPageSize.Items.IndexOf(ddlPageSize.Items.FindByValue(PageSize.ToString()));
-                BindCompanyList(ddlCompanyList, dvAdministrator);
-                BindMember();
-                LoadUserRights();
-            }
-        }
+        //protected void Page_Load(object sender, EventArgs e)
+        //{
+        //    //lblMessage.Visible = false;
+        //    if (!IsPostBack)
+        //    {
+        //        ddlPageSize.SelectedIndex = ddlPageSize.Items.IndexOf(ddlPageSize.Items.FindByValue(PageSize.ToString()));
+        //        BindCompanyList(ddlCompanyList, dvAdministrator);
+        //        BindMember();
+        //        LoadUserRights();
+        //    }
+        //}
         #endregion
 
         #region Page size change event
-        protected void ddlPageSize_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            PageSize = Convert.ToInt32(ddlPageSize.SelectedValue);
+        //protected void ddlPageSize_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    PageSize = Convert.ToInt32(ddlPageSize.SelectedValue);
 
-            BindMember();
-        }
+        //    BindMember();
+        //}
         #endregion
 
         #region Private/Public function and methods
@@ -116,33 +116,33 @@ namespace Funeral.Web.Admin
         /// </summary>
         /// 
 
-        public void BindMember()
-        {
-            gvMembers.PageSize = PageSize;            
-            MembersPaymentViewModel model = MemberPaymentBAL.GetAllPayentMembers(new Guid(ddlCompanyList.SelectedValue), txtPolicyNo.Text, txtIDNo.Text, PageSize, PageNum, SortBy, SortOrder, ddlPolicyStatus.SelectedValue,"");
-            gvMembers.DataSource = model.MemberList;
-            gvMembers.DataBind();
-        }
+        //public void BindMember()
+        //{
+        //    gvMembers.PageSize = PageSize;            
+        //    MembersPaymentViewModel model = MemberPaymentBAL.GetAllPayentMembers(new Guid(ddlCompanyList.SelectedValue), txtPolicyNo.Text, txtIDNo.Text, PageSize, PageNum, SortBy, SortOrder, ddlPolicyStatus.SelectedValue,"");
+        //    gvMembers.DataSource = model.MemberList;
+        //    gvMembers.DataBind();
+        //}
         #endregion
 
         #region Keyword search event
-        protected void btnSearch_Click(object sender, EventArgs e)
-        {
-            BindMember();
-        }
+        //protected void btnSearch_Click(object sender, EventArgs e)
+        //{
+        //    BindMember();
+        //}
 
-        protected void gvMembers_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            gvMembers.PageIndex = e.NewPageIndex;
-            BindMember();
-        }
+        //protected void gvMembers_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        //{
+        //    gvMembers.PageIndex = e.NewPageIndex;
+        //    BindMember();
+        //}
         #endregion
 
-        protected void gvMembers_PageIndexChanging1(object sender, GridViewPageEventArgs e)
-        {
-            gvMembers.PageIndex = e.NewPageIndex;
-            BindMember();
-        }
+        //protected void gvMembers_PageIndexChanging1(object sender, GridViewPageEventArgs e)
+        //{
+        //    gvMembers.PageIndex = e.NewPageIndex;
+        //    BindMember();
+        //}
 
 
         //protected void gvMembers_RowDataBound(object sender, GridViewRowEventArgs e)

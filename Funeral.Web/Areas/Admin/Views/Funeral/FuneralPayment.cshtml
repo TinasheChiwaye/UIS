@@ -112,7 +112,7 @@
                                                         <td class="visible-lg">@item.ServiceDesc</td>
                                                         <td class="visible-lg">@item.ServiceCost</td>
                                                         <td class="visible-lg">@item.Quantity</td>
-                                                        <td class="visible-lg" align="right">USD @item.Amount</td>
+                                                        <td class="visible-lg" align="right">R @item.Amount</td>
                                                     </tr>
                                                         }
                                                     }
@@ -150,7 +150,7 @@
                                     {
                                 <tr>
                                     <td class="visible-lg">@item.DatePaid</td>
-                                    <td align="right">USD @item.AmountPaid</td>
+                                    <td align="right">R @item.AmountPaid</td>
                                     <td class="visible-lg">@item.RecievedBy</td>
                                     <td class="visible-lg">@item.Notes</td>
                                     <td>
@@ -158,6 +158,16 @@
                                         <a id="ucPaymenthistory" title="Click here Print " href="@Url.Action("PrintForm","Funeral")"><i class="glyphicon glyphicon-print"></i></a>
 
                                     </td>
+                                    @*<td>
+                                        @if (ViewBag.HasReversalPayment)
+                                        {
+                                            if (item.)
+                                            {
+
+                                            }
+                                        }
+
+                                    </td>*@
                                 </tr>
                                     }
                                 }

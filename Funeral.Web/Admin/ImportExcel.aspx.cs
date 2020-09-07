@@ -583,8 +583,9 @@ namespace Funeral.Web.Admin
 
         protected void btnExceptionReport_Click(object sender, EventArgs e)
         {
+            
             string ExportTypeExtensions = "xls";
-            string ReportName = "ARL Import Data Exception Report";
+            string ReportName = "ARL Import Data Exception Report";//Copy of ARL Import Data Exception Report
             Warning[] warnings;
             string[] streamids;
             string mimeType;

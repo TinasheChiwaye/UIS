@@ -6,24 +6,77 @@ using Funeral.Web.Common;
 using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.IO;
+using System.Web;
+using System.Web.UI.WebControls;
 using System.Globalization;
 using System.Threading;
 using System.Web.Mvc;
 using System.Data;
 using System.Linq;
+using Funeral.Model.Search;
+	
 
 namespace Funeral.Web.Areas.Admin.Controllers
 {
-    public class PaymentsController : BaseAdminController
+    public class MemberPaymentsController : BaseAdminController
     {
-        private readonly ISiteSettings _siteConfig = new SiteSettings();
-        public PaymentsController() : base(34)
+        // GET: Admin/MemberPayments
+        private readonly ISiteSettings _siteConfig  = new SiteSettings();
+
+        public MemberPaymentsController() : base(72)
         {
-            this.dbPageId = 34;
+            this.dbPageId = 72;
         }
-        public List<KeyValue> GetEntriesCount()
+
+
+        [PageRightsAttribute(CurrentPageId = 72)]
+        public ActionResult Index()
+        {
+            ViewBag.HasAccess = HasAccess;
+            if (ViewBag.HasAccess == true)
+            {
+                var statusList = CommonBAL.GetStatus(FuneralEnum.StatusAssociatedTable.Members.ToString()).Select(x => new SelectListItem() { Text = x.ID.ToString(), Value = x.Status });
+                ViewBag.StatusList = statusList;
+
+                ViewBag.HasEditRight = HasEditRight;
+                ViewBag.HasDeleteRight = HasDeleteRight;
+
+                ViewBag.totalPremium = Currency;
+
+                ViewBag.SocietyLists = CommonBAL.GetSocietyByParlourId(CurrentParlourId);
+
+                LoadStatus();
+                LoadEntriesCount();
+                BindCompanyList("Search");
+
+                Model.Search.MemberSearch search = new Model.Search.MemberSearch();
+                search.CompanyId = new Guid(CurrentParlourId.ToString());
+                search.PageNum = 1;
+                search.PageSize = 10;
+                search.SarchText = "";
+                search.SortBy = "";
+                search.SortOrder = "Asc";
+                search.StatusId = "0";
+                search.TotalRecord = 0;
+                search.BookID = "";
+
+                var searchResult = new Funeral.Model.SearchResult<Model.Search.MemberSearch, MembersModel>(search, new List<MembersModel>(),
+                    o => o.IDNumber.Contains(search.SarchText)
+                    || o.MemeberNumber.Contains(search.SarchText));
+                return View(search);
+            }
+            else
+            {
+                return View();
+            }
+        }
+        public void LoadEntriesCount()
         {
             List<KeyValue> keyValues = new List<KeyValue>();
+            List<SelectListItem> entriesItems = new List<SelectListItem>();
             keyValues.Add(new KeyValue { Key = "10", Value = "10" });
             keyValues.Add(new KeyValue { Key = "20", Value = "20" });
             keyValues.Add(new KeyValue { Key = "25", Value = "25" });
@@ -32,78 +85,36 @@ namespace Funeral.Web.Areas.Admin.Controllers
             keyValues.Add(new KeyValue { Key = "200", Value = "200" });
             keyValues.Add(new KeyValue { Key = "250", Value = "250" });
             keyValues.Add(new KeyValue { Key = "500", Value = "500" });
-            return keyValues;
+            ViewBag.EntriesCount = keyValues;
         }
-        [PageRightsAttribute(CurrentPageId = 34, Right = new isPageRight[] { isPageRight.HasAccess })]
-        public ActionResult Index()
+        public void LoadStatus()
         {
-            //ViewBag.HasAccess = HasAccess;
-            if (ViewBag.HasAccess == true)
-            {
-                var info = CultureInfo.InvariantCulture.Clone() as CultureInfo;
-                info.NumberFormat.NumberDecimalSeparator = ".";
-
-                CultureInfo cInfo = new CultureInfo(info.ToString());
-                cInfo.NumberFormat.NumberDecimalSeparator = ".";
-
-                Thread.CurrentThread.CurrentCulture = cInfo;
-
-            }
-            return View("Index");
-
+            var statusList = CommonBAL.GetStatus(FuneralEnum.StatusAssociatedTable.Members.ToString()).Select(status => new { status.Status, status.ID }).Distinct();
+            ViewBag.Statuses = statusList;
         }
-
-        [PageRightsAttribute(CurrentPageId = 34)]
-        public PartialViewResult List()
+        [HttpPost]
+        public ActionResult SearchData(Model.Search.MemberSearch search)
         {
-            var statusList = CommonBAL.GetStatus(FuneralEnum.StatusAssociatedTable.Members.ToString()).Select(x => new SelectListItem() { Text = x.ID.ToString(), Value = x.Status });
-            ViewBag.StatusList = statusList;
-            ViewBag.SocietyLists = CommonBAL.GetSocietyByParlourId(CurrentParlourId);
-            ViewBag.HasEditRight = HasEditRight;
-            ViewBag.HasDeleteRight = HasDeleteRight;
-            Model.Search.PaymentSearchNew search = new Model.Search.PaymentSearchNew();
-            search.StatusId = new Guid(CurrentParlourId.ToString());
-            search.PageNum = 1;
-            search.PageSize = 10;
-            search.SarchText = string.Empty;
-            search.SortBy = "";
-            search.SortOrder = "Asc";
-            search.TotalRecord = 0;
-            var searchResult = new SearchResult<Model.Search.PaymentSearchNew, MembersPaymentModel>(search, new List<MembersPaymentModel>(), o => o.FullNames.Contains(search.SarchText));
-            var pageCountEntries = GetEntriesCount();
-            ViewBag.EntriesCount = pageCountEntries;
-            var info = CultureInfo.InvariantCulture.Clone() as CultureInfo;
-            info.NumberFormat.NumberDecimalSeparator = ".";
-
-            ViewBag.CompanyDropDisplay = false;
-            if (IsAdministrator)
-            {
-                ViewBag.CompanyDropDisplay = true;
-                BindCompanyList("Search");
-            }
-
-            CultureInfo cInfo = new CultureInfo(info.ToString());
-            cInfo.NumberFormat.NumberDecimalSeparator = ".";
-
-            Thread.CurrentThread.CurrentCulture = cInfo;
-
-            return PartialView("~/Areas/Admin/Views/Payments/_PaymentList.cshtml", search);
-        }
-        public ActionResult SearchData(Model.Search.PaymentSearchNew search)
-        {
-            var searchResult = new SearchResult<Model.Search.PaymentSearchNew, MembersPaymentModel>(search, new List<MembersPaymentModel>(), o => o.FullNames.Contains(search.SarchText) || o.IDNumber.Contains(search.SarchText) || o.MemeberNumber.Contains(search.SarchText) || o.PolicyStatus.Contains(search.SarchText));
+            var searchResult = new Funeral.Model.SearchResult<Model.Search.MemberSearch, MembersModel>(search, new List<MembersModel>(), o => o.IDNumber.ToLower().Contains(search.SarchText.ToLower()));
             try
             {
-                var otherPayment = MemberPaymentBAL.GetAllPayentMembers(search.StatusId, "", "", search.PageSize, search.PageNum, search.SortBy, search.SortOrder, "", search.BookName);
-                return Json(new SearchResult<Model.Search.PaymentSearchNew, MembersPaymentModel>(search, otherPayment.MemberList, o => o.FullNames.Contains(search.SarchText) || o.IDNumber.Contains(search.SarchText) || o.MemeberNumber.Contains(search.SarchText) || o.PolicyStatus.Contains(search.SarchText)));
+                var members = MembersBAL.GetAllMembers(search.CompanyId, search.PageSize, search.PageNum, search.SarchText, search.SortBy, search.SortOrder, search.StatusId.ToString(), search.BookID);
+                return Json(new Funeral.Model.SearchResult<Model.Search.MemberSearch, MembersModel>(search, members.MemberList, o => o.IDNumber.ToLower().Contains(search.SarchText.ToLower()) || o.MemeberNumber.ToLower().Contains(search.SarchText.ToLower()) || o.Surname.ToLower().Contains(search.SarchText.ToLower()) || o.FullNames.ToLower().Contains(search.SarchText.ToLower()) || o.Cellphone.ToLower().Contains(search.SarchText.ToLower()) || o.EasyPayNo.ToLower().Contains(search.SarchText.ToLower())));
             }
             catch (Exception ex)
             {
-                return Json(WebApiResult<Model.Search.PaymentSearchNew, MembersPaymentModel>.Error(searchResult, ex));
+                return Json(WebApiResult<Model.Search.MemberSearch, MembersModel>.Error(searchResult, ex));
             }
         }
+        [HttpPost]
+        public ActionResult GetAllData(Model.Search.MemberSearch search)
+        {
+            return null;
+        }
+
+
         [HttpGet]
-        [PageRightsAttribute(CurrentPageId = 34)]
+        [PageRightsAttribute(CurrentPageId = 72)]
         public ActionResult ManageMembersPayment(int id, Guid ParlourID)
         {
             MembersPaymentDetailsModel model = MemberPaymentBAL.ReturnMemberPlanDetailsWithBalance(Convert.ToString(id), ParlourID);
@@ -147,7 +158,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             return View(model);
         }
         [HttpPost]
-        [PageRightsAttribute(CurrentPageId = 34, Right = new isPageRight[] { isPageRight.HasAdd })]
+        [PageRightsAttribute(CurrentPageId = 72, Right = new isPageRight[] { isPageRight.HasAdd })]
         public JsonResult AddPayments(MembersPaymentDetailsModel data)
         {
             //add Joining fee boolean in method
@@ -272,10 +283,9 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
             return Json(Amount + "~" + monthPaid + "~" + TotalPremium + "~" + currency, JsonRequestBehavior.AllowGet);
         }
-        [PageRightsAttribute(CurrentPageId = 34, Right = new isPageRight[] { isPageRight.HasReversalPayment })]
+        [PageRightsAttribute(CurrentPageId = 72, Right = new isPageRight[] { isPageRight.HasReversalPayment })]
         public ActionResult PaymentReversal(int id)
         {
-            //ViewBag.HasReversalPayment = HasReversalPayment;
             int PaymentID = MemberPaymentBAL.AddReversalPayments(id, UserName, ParlourId);
             string Message = "";
             if (PaymentID != 0)
@@ -381,11 +391,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             return Json(Company, JsonRequestBehavior.AllowGet);
         }
 
-
-        [HttpPost]
-        //public void UpdatePolicyStatus(string policyStatus, int memberId)
-
-        [PageRightsAttribute(CurrentPageId = 6)]
+        [PageRightsAttribute(CurrentPageId = 72)]
         public void UpdatePolicyStatus(string policyStatus, int memberId)
 
         {
@@ -393,40 +399,5 @@ namespace Funeral.Web.Areas.Admin.Controllers
             CommonBAL.SaveAudit(UserName, CurrentParlourId, "Policy Status Changed");
         }
 
-        //[PageRightsAttribute(CurrentPageId = 6)]
-        //public ActionResult UpdatePolicyPopup(MembersModel policy)
-        //{
-        //    MembersModel model = MembersBAL.GetMemberByID(MemberId, CurrentParlourId);
-        //    model.pkiMemberID = MemberId;
-        //    model.MemberBranch = policy.MemberBranch;
-        //    model.Agent = policy.Agent;
-        //    model.MemberSociety = policy.MemberSociety;
-        //    model.InceptionDate = policy.InceptionDate;
-        //    model.fkiPlanID = policy.fkiPlanID;
-        //    model.MemeberNumber = policy.MemeberNumber;
-        //    model.EasyPayNo = policy.EasyPayNo;
-        //    model.Email = policy.Email;
-        //    model.MemberBranch = policy.MemberBranch;
-        //    //==model.
-
-        //    if (model.StartDate == null || model.StartDate == DateTime.MinValue)
-        //    {
-        //        model.StartDate = DateTime.Now;
-        //    }
-
-        //    if (model.CoverDate == null || model.CoverDate == DateTime.MinValue)
-        //    {
-        //        model.CoverDate = DateTime.Now;
-        //    }
-
-        //    model.CustomId1 = policy.CustomId1;
-        //    model.CustomId2 = policy.CustomId2;
-        //    model.CustomId3 = policy.CustomId3;
-
-        //    //================================================================ 
-        //    int retID = MembersBAL.SaveMembers(model);
-        //    MemberId = retID;
-        //    return Json(model, JsonRequestBehavior.AllowGet);
-        //}
     }
 }

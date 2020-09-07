@@ -57,19 +57,20 @@ namespace Funeral.Model
             set;
         }
 
+        [Required(ErrorMessage ="Please Select Title")]
         public virtual string ContactTitle
         {
             get;
             set;
         }
 
-        
+        [Required(ErrorMessage ="Please First Name")]
         public virtual string ContactFirstName
         {
             get;
             set;
         }
-
+        [Required(ErrorMessage = "Please Enter LastName")]
         public virtual string ContactLastName
         {
             get;
@@ -81,7 +82,7 @@ namespace Funeral.Model
             get;
             set;
         }
-
+        [Required(ErrorMessage = "Please Enter CellPhone Number")]
         public virtual string CellNumber
         {
             get;

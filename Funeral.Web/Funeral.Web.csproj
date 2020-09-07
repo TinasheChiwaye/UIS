@@ -764,6 +764,8 @@
     <Content Include="Areas\Admin\Views\SchemaPayment\_ReportEmailSendModal.cshtml" />
     <Content Include="Areas\Admin\Views\SchemaPayment\_ReconReportModal.cshtml" />
     <Content Include="Areas\Admin\Views\Claims\_ClaimDashboard.cshtml" />
+    <Content Include="Areas\Admin\Views\MemberPayments\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\MemberPayments\ManageMembersPayment.cshtml" />
     <None Include="DevDataDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DevDataDataSet.Designer.cs</LastGenOutput>
@@ -1999,6 +2001,7 @@
     <Compile Include="Areas\Admin\Controllers\GroupPaymentController.cs" />
     <Compile Include="Areas\Admin\Controllers\ImportDataController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MemberPaymentsController.cs" />
     <Compile Include="Areas\Admin\Controllers\MembersController.cs" />
     <Compile Include="Areas\Admin\Controllers\OtherPaymentController.cs" />
     <Compile Include="Areas\Admin\Controllers\ParlourController.cs" />

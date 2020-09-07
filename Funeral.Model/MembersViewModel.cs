@@ -17,4 +17,10 @@ namespace Funeral.Model
         public List<MembersPaymentModel> MemberList { get; set; }
         public Int64 TotalRecord { get; set; }
     }
+
+    public class GroupPaymentsViewModel
+    {
+        public List<GroupPaymentList> groupPaymentLists { get; set; }
+        public Int64 TotalRecord { get; set; }
+    }
 }

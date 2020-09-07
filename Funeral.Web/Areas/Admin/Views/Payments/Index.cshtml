@@ -8,7 +8,6 @@
 <div class="row" id="MembersPaymentList"></div>
 
 <script>
-
     var PkiMemberIDId = '@ViewBag.MemberID';
      var hasRight = '@ViewBag.HasAccess';
     jQuery(function ($) {
@@ -17,7 +16,7 @@
                 var url = '@Url.Action("Error403", "Error", new { })';
                 window.location.href = url;
             }
-            else {*@ 
+            else {*@
             $.noConflict();
             LoadMembersPaymentList();
             //LoadMembersPaymentAddEdit();
@@ -26,7 +25,6 @@
             //}
         });
     })
-
     function LoadMembersPaymentList() {
         jQuery.ajax({
             url: '@Url.Action("List", "Payments", new {},Request.Url.Scheme)',
@@ -41,9 +39,7 @@
             alert(status);
         });
     }
-
     function LoadMembersPaymentAddEdit() {
-
             var model = {
                 MemeberNumber: 0,
                 FullNames: '',
@@ -54,7 +50,6 @@
                 MethodOfPayment: '',
                 Notes: '',
         };
-
         jQuery.ajax({
                 url: '@Url.Action("Add", "Payments", new {},Request.Url.Scheme)',
                 type: "Post",
@@ -70,7 +65,3 @@
             });
     }
 </script>
-
-
-
-

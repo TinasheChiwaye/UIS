@@ -84,37 +84,38 @@
 
 
     @*if (ViewBag.AdministratorOrSuperUser == true)
-    {
-        <div class="modal fade" id="PolicyUpdateStatus" role="dialog" tabindex="-1" area-hidden="true" style="margin-top: 0px; overflow: auto; height: 400px;">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <span data-dismiss="modal" class="closePopUp">x</span>
-                        <h4 id="PopForPolicyStatus" class="modal-title">Policy Status</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label>Status</label>
-                                    @Html.DropDownList("StatusList", new SelectList(ViewBag.StatusList, "Text", "Value"), new { @class = "form-control", @id = "ddlPolicyStatus", @name = "ddlPolicyStatus" })
-                                </div>
-                            </div>
+        {
+            <div class="modal fade" id="PolicyUpdateStatus" role="dialog" tabindex="-1" area-hidden="true" style="margin-top: 0px; overflow: auto; height: 400px;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <span data-dismiss="modal" class="closePopUp">x</span>
+                            <h4 id="PopForPolicyStatus" class="modal-title">Policy Status</h4>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label>Reason</label>
-                                    <textarea maxlength="25" id="txtReason" name="reason" class="form-control"></textarea>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label>Status</label>
+                                        @Html.DropDownList("StatusList", new SelectList(ViewBag.StatusList, "Text", "Value"), new { @class = "form-control", @id = "ddlPolicyStatus", @name = "ddlPolicyStatus" })
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <div class="btn-group">
-                                        <button id="BtnUpdatePolicyPopup" class="btn btn-sm btn-primary pull-right m-t-n-xs">Update</button>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label>Reason</label>
+                                        <textarea maxlength="25" id="txtReason" name="reason" class="form-control"></textarea>
                                     </div>
-                                    <div class="btn-group">
-                                        <button class="btn btn-sm btn-primary pull-right m-t-n-xs" data-dismiss="modal">Close</button>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div class="btn-group">
+                                            <button id="BtnUpdatePolicyPopup" class="btn btn-sm btn-primary pull-right m-t-n-xs">Update</button>
+                                        </div>
+                                        <div class="btn-group">
+                                            <button class="btn btn-sm btn-primary pull-right m-t-n-xs" data-dismiss="modal">Close</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -122,14 +123,10 @@
                     </div>
                 </div>
             </div>
-        </div>
-    }*@
+        }*@
 
     <script type="text/javascript">
-
-
         var pkMemberId = null;
-
         function UpdateStatus(data1) {
             var drpValue = data1.PolicyStatus;
             pkMemberId = data1.pkiMemberID
@@ -144,7 +141,6 @@
                 'show': true
             }
             jQuery("#PolicyUpdateStatus").modal(options);
-
             //jQuery("#ddlPolicyStatus option[value='drpValue']").attr("selected", "selected");
         }
         $("#BtnUpdatePolicyPopup").click(function () {
@@ -158,35 +154,29 @@
                 cache: false,
                 success: function (result) {
                     $('#tblMemberPaymentSearch_wrapper').html(result);
-
                 }
             })
             //location.reload();
         });
-
        //jQuery.noConflict();
         $(document).ready(function () {
             ConfigureDatatable();
             InitDataTable();
-
             //eventConfigs.pageChange.eventName = 'btnPageChanged';
             //eventConfigs.pageChange.domElement = jQuery('#PageSize')[0];
             //eventConfigs.searchClick.eventName = 'btnSearchClicked';
             //eventConfigs.searchClick.domElement = jQuery('#btnSearch')[0];
-
             $('#PageSize').change(function () {
                 InitModel();
                 tableConfigs.table.DataTable().page.len(model1.PageSize).draw();
                 //eventConfigs.pageChange.dispatchEvent();
             });
-
             $("#btnSearch").click(function () {
                 InitModel();
                 tableConfigs.table.fnDraw();
                 //eventConfigs.searchClick.dispatchEvent();
             });
         });
-
         function ConfigureDatatable() {
             var companyId = @Html.Raw(Json.Encode(@Model.StatusId));
             var sortOrder = @Html.Raw(Json.Encode(@Model.SortOrder));
@@ -196,17 +186,13 @@
             var pageSize =@Html.Raw(Json.Encode(@Model.PageSize));
             var searchText =@Html.Raw(Json.Encode(@Model.SarchText));
             var bookName =@Html.Raw(Json.Encode(@Model.BookName));
-
             DOMIDs.Datatable = "PaymentDataTable";
             tableConfigs.SearchUrls = '@Url.Action("SearchData", "Payments", null, Request.Url.Scheme)';
             setsearchmodel(companyId, sortOrder, sortBy, totalRecord, pageNum, pageSize, searchText,bookName);
-
             columnsArray =
                 [{ "data": "pkiMemberID", "name": "pkiMemberID", "autoWidth": true, "visible": false },
-
                 { "data": "ApplicationName", "name": "Scheme", "autoWidth": true },
                 { "data": "MemberSociety", "name": "Book Name", "autoWidth": true },
-
                 { "data": "MemeberNumber", "name": "Policy Number", "autoWidth": true },
                 { "data": "IDNumber", "name": "ID No", "autoWidth": true },
                 { "data": "FullNames", "name": "Member", "autoWidth": true },
@@ -235,43 +221,32 @@
                                         return '<a onclick = "UpdateStatus(' + data1 + ')">' + data + '</a>';
                                     else
                                         return data;
-
                                 }
                 },
                 {
                     "render": function (data, type, full, meta) {
-
                         var hasEditRights = '@ViewBag.HasEditRight' == "True" ? true : false;
                         var hasDeleteRights = '@ViewBag.HasDeleteRight' == "True" ? true : false;
-
                         if (hasEditRights || hasDeleteRights) {
                             tableConfigs.table.DataTable().columns([8]).visible(true)
                             var dom = "<div class='row'>";
-
                             if (hasEditRights) {
                                 //var ParlourId = full.parlourid;
                                 var editMemberUrl = '<div class="col-sm-4 text-center"><a class="btn btn-w-m btn-primary" href="@Html.Raw(Url.Action("ManageMembersPayment", "Payments", new { id = "MemeberNumberVal", ParlourID = "ParlourId" }))"">Make payment</a></div>';//onclick="EditOtherPayment(\'' +full.IDNumber+','+full.pkiMemberID+ '\')
                                 editMemberUrl = editMemberUrl.replace("MemeberNumberVal", full.pkiMemberID);
                                 editMemberUrl = editMemberUrl.replace("ParlourId", full.parlourid);
-
                                 dom = dom + editMemberUrl;
                             }
-
                             dom = dom + "</div>";
                             return dom;
                         }
                         else {
-
                             tableConfigs.table.DataTable().columns([8]).visible(false);
                             return "";
                         }
                     }
                     }];
-
-
-
         }
-
         function InitModel() {
             model1.PageNum = 1;
             model1.PageSize = jQuery('#PageSize').val();
@@ -280,7 +255,5 @@
             model1.BookName = jQuery("#ddlBookNamelist").val();
             $("#PageNum1").val(model1.PageNum);
         }
-
-
     </script>
 }

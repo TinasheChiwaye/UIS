@@ -38,18 +38,13 @@ namespace Funeral.Web.Areas.Admin.Controllers
             {
                 var statusList = CommonBAL.GetStatus(FuneralEnum.StatusAssociatedTable.Members.ToString()).Select(x => new SelectListItem() { Text = x.ID.ToString(), Value = x.Status });
                 ViewBag.StatusList = statusList;
-
                 ViewBag.HasEditRight = HasEditRight;
                 ViewBag.HasDeleteRight = HasDeleteRight;
-
                 ViewBag.totalPremium = Currency;
-
                 ViewBag.SocietyLists = CommonBAL.GetSocietyByParlourId(CurrentParlourId);
-
                 LoadStatus();
                 LoadEntriesCount();
                 BindCompanyList("Search");
-
                 Model.Search.MemberSearch search = new Model.Search.MemberSearch();
                 search.CompanyId = new Guid(CurrentParlourId.ToString());
                 search.PageNum = 1;
@@ -61,8 +56,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 search.TotalRecord = 0;
                 search.BookID = "";
 
-                var searchResult = new Funeral.Model.SearchResult<Model.Search.MemberSearch, MembersModel>(search, new List<MembersModel>(),
-                    o => o.IDNumber.Contains(search.SarchText)
+                var searchResult = new Funeral.Model.SearchResult<Model.Search.MemberSearch, MembersModel>(search, new List<MembersModel>(),o => o.IDNumber.Contains(search.SarchText)
                     || o.MemeberNumber.Contains(search.SarchText));
                 return View(search);
             }

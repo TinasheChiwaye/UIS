@@ -44,7 +44,7 @@ namespace Funeral.Web.App_Start
                         filterContext.Controller.ViewBag.HasAccess = obj.Where(x => x.ID == CurrentPageId).Select(x => x.HasAccess).FirstOrDefault();
                         filterContext.Controller.ViewBag.HasCreateRight = obj.Where(x => x.ID == CurrentPageId).Select(x => x.IsWrite).FirstOrDefault();
                         filterContext.Controller.ViewBag.HasReadRight = obj.Where(x => x.ID == CurrentPageId).Select(x => x.IsRead).FirstOrDefault();
-                        filterContext.Controller.ViewBag.HasDeleteRight = false;//obj.Where(x => x.ID == CurrentPageId).Select(x => x.IsDelete).FirstOrDefault();
+                        filterContext.Controller.ViewBag.HasDeleteRight = obj.Where(x => x.ID == CurrentPageId).Select(x => x.IsDelete).FirstOrDefault();
                         filterContext.Controller.ViewBag.HasEditRight = obj.Where(x => x.ID == CurrentPageId).Select(x => x.IsUpdate).FirstOrDefault();
                         filterContext.Controller.ViewBag.HasReversalPayment = obj.Where(x => x.ID == CurrentPageId).Select(x => x.IsReversalPayment).FirstOrDefault();
                         filterContext.Controller.ViewBag.AdministratorOrSuperUser = false;
@@ -58,7 +58,7 @@ namespace Funeral.Web.App_Start
                             filterContext.Controller.ViewBag.HasAccess = true;
                             filterContext.Controller.ViewBag.HasCreateRight = true;
                             filterContext.Controller.ViewBag.HasReadRight = true;
-                            filterContext.Controller.ViewBag.HasDeleteRight = false; //true;
+                            filterContext.Controller.ViewBag.HasDeleteRight = true; //true;
                             filterContext.Controller.ViewBag.HasEditRight = true;
                             filterContext.Controller.ViewBag.HasReversalPayment = true;
                             filterContext.Controller.ViewBag.AdministratorOrSuperUser = true;

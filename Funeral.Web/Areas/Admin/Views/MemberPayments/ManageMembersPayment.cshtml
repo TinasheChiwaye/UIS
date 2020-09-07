@@ -139,42 +139,42 @@
 
                             </div>
                             @*<div class="row">
-                                <div class="col-lg-6">
-                                    @if (policyStatus == "Active" || policyStatus == "1")
-                                    {
-                                        <div class="form-group">
-                                            <button id="btnReunstate" class="btn btn-md btn-primary" value="Reinstate Policy" style="width: 96%;" disabled>Reinstate Policy</button>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <div class="form-group">
-                                            <button id="btnReunstate" class="btn btn-md btn-primary" value="Reinstate Policy" style="width: 96%;">Reinstate Policy</button>
-                                        </div>
-                                    }
+                                    <div class="col-lg-6">
+                                        @if (policyStatus == "Active" || policyStatus == "1")
+                                        {
+                                            <div class="form-group">
+                                                <button id="btnReunstate" class="btn btn-md btn-primary" value="Reinstate Policy" style="width: 96%;" disabled>Reinstate Policy</button>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="form-group">
+                                                <button id="btnReunstate" class="btn btn-md btn-primary" value="Reinstate Policy" style="width: 96%;">Reinstate Policy</button>
+                                            </div>
+                                        }
 
-                                </div>
-                                <div class="col-lg-6">
-                                    @if (policyStatus == "Active" || policyStatus == "1")
-                                    {
-                                        <div class="form-group">
-                                            <button id="btnRejoin" class="btn btn-md btn-primary" value="Rejoin Policy" style="width: 96%;" disabled>Rejoin Policy</button>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <div class="form-group">
-                                            <button id="btnRejoin" class="btn btn-md btn-primary" value="Rejoin Policy" style="width: 96%;">Rejoin Policy</button>
-                                        </div>
-                                    }
+                                    </div>
+                                    <div class="col-lg-6">
+                                        @if (policyStatus == "Active" || policyStatus == "1")
+                                        {
+                                            <div class="form-group">
+                                                <button id="btnRejoin" class="btn btn-md btn-primary" value="Rejoin Policy" style="width: 96%;" disabled>Rejoin Policy</button>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="form-group">
+                                                <button id="btnRejoin" class="btn btn-md btn-primary" value="Rejoin Policy" style="width: 96%;">Rejoin Policy</button>
+                                            </div>
+                                        }
 
-                                </div>
-                            </div>*@
+                                    </div>
+                                </div>*@
                             <div class="row">
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <div class="form-group">
-                                            <a href="@Url.Action("Index","Payments")" value="Back" id="btnBack" class="btn btn-md btn-primary">Back</a>
+                                            <a href="@Url.Action("Index","MemberPayments")" value="Back" id="btnBack" class="btn btn-md btn-primary">Back</a>
                                         </div>
                                     </div>
                                 </div>
@@ -269,11 +269,11 @@
                                     </div>
                                 </div>
                                 @*<div class="col-lg-6">
-            <div class="form-group">
-                <label>Month Owing</label>
-                @Html.EditorFor(Model => Model.MonthOwing, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtMonthOwing", @name = "name", @readonly = "readonly" } })
-            </div>
-        </div>*@
+                                        <div class="form-group">
+                                            <label>Month Owing</label>
+                                            @Html.EditorFor(Model => Model.MonthOwing, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtMonthOwing", @name = "name", @readonly = "readonly" } })
+                                        </div>
+                                    </div>*@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>Joining Fee</label>
@@ -284,11 +284,11 @@
                             </div>
                             <div class="row">
                                 @*<div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label>Joining Fee</label>
-                                        @Html.EditorFor(Model => Model.JoiningFee, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtJoiningFee", @name = "name", @readonly = "readonly" } })
-                                    </div>
-                                </div>*@
+                                        <div class="form-group">
+                                            <label>Joining Fee</label>
+                                            @Html.EditorFor(Model => Model.JoiningFee, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtJoiningFee", @name = "name", @readonly = "readonly" } })
+                                        </div>
+                                    </div>*@
                             </div>
 
 
@@ -345,10 +345,10 @@
                                                 </a>
                                             </td>
                                             <td>
-                                                
+
                                                 @if (ViewBag.HasReversalPayment)
                                                 {
-                                                    if (item.IsReversal == false && item.AmountPaidNumeric > 0 )
+                                                    if (item.IsReversal == false && item.AmountPaidNumeric > 0)
                                                     {
                                                         <a class="btn btn-w-m btn-primary paymentreversal" role="@item.InvoiceID" id="btnReversalPayment">Reversal Payment</a>
                                                     }
