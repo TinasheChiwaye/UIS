@@ -59,8 +59,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
         [PageRightsAttribute(CurrentPageId = 9)]
         public PartialViewResult List()
         {
-            //ViewBag.HasEditRight = HasEditRight;
-            //ViewBag.HasDeleteRight = HasDeleteRight;
+            ViewBag.HasEditRight = HasEditRight;
+            ViewBag.HasDeleteRight = HasDeleteRight;
 
             Model.Search.BaseSearch search = new Model.Search.BaseSearch();
             search.PageNum = 1;
@@ -105,6 +105,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
         [PageRightsAttribute(CurrentPageId = 9, Right = new isPageRight[] { isPageRight.HasAdd })]
         public PartialViewResult Add(QuotationModel quotationModel)
         {
+            ViewBag.Provinces = CommonBAL.GetProvinces();
             quotationModel.parlourid = ParlourId;
             ModelState.Clear();
             return PartialView("~/Areas/Admin/Views/Quotation/_QuotationAddEdit.cshtml", quotationModel);
@@ -118,6 +119,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
         [PageRightsAttribute(CurrentPageId = 9, Right = new isPageRight[] { isPageRight.HasEdit })]
         public PartialViewResult Edit(int QuotationId)
         {
+            ViewBag.Provinces = CommonBAL.GetProvinces();
             var quotation = QuotationBAL.SelectQuotationByQuotationId(QuotationId, ParlourId);
             return PartialView("~/Areas/Admin/Views/Quotation/_QuotationAddEdit.cshtml", quotation);
         }
@@ -139,11 +141,43 @@ namespace Funeral.Web.Areas.Admin.Controllers
         /// <param name="quotationModel"></param>
         /// <returns></returns>
         [HttpPost]
+        //public ActionResult Save(QuotationModel quotationModel)
+        //{
+        //    try
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            FormsIdentity formIdentity = (FormsIdentity)User.Identity;
+        //            quotationModel.LastModified = System.DateTime.Now;
+        //            quotationModel.ModifiedUser = formIdentity.Name;
+
+        //            var agentInfoSetupData = QuotationBAL.SaveQuotation(quotationModel);
+
+        //            TempData["IsQuotationModelSaved"] = true;
+        //            TempData.Keep("IsQuotationModelSaved");
+
+        //            return RedirectToAction("Index", "Quotation");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+
+        //    TempData["IsQuotationModelSaved"] = false;
+        //    TempData.Keep("IsQuotationModelSaved");
+
+        //    return RedirectToAction(ControllerContext.RouteData.Values["action"] as string, ControllerContext.RouteData.Values["controller"] as string);
+        //}
         public ActionResult Save(QuotationModel quotationModel)
         {
             try
             {
-                if (ModelState.IsValid)
+                if(!ModelState.IsValid)
+                {
+                    return Json(new { success = false, errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => "<li>" + x.ErrorMessage + "</li>").ToList() }, JsonRequestBehavior.AllowGet);
+                }
+                else if (ModelState.IsValid)
                 {
                     FormsIdentity formIdentity = (FormsIdentity)User.Identity;
                     quotationModel.LastModified = System.DateTime.Now;
@@ -176,6 +210,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
         [PageRightsAttribute(CurrentPageId = 9, Right = new isPageRight[] { isPageRight.HasDelete })]
         public JsonResult Delete(int QuotationID)
         {
+            //ViewBag.HasDeleteRight = HasDeleteRight;
+
             int quotationID = QuotationBAL.QuotationDelete(QuotationID, UserName);
             var result = new ResponseResult() { Error = null, Message = "Deleted Successfully.", StatusCode = (int)Enum.Parse(typeof(System.Net.HttpStatusCode), System.Net.HttpStatusCode.OK.ToString()) };
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -189,6 +225,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
         /// <returns></returns>
         public ActionResult QuotationService(int qutId)
         {
+            //ViewBag.Provinces = CommonBAL.GetProvinces();
             QuotationServiceVM quotationServiceVM = new QuotationServiceVM();
             quotationServiceVM.Currency = Currency;
             quotationServiceVM.TaxSettings = TaxSettingBAL.GetAllTaxSettings().Select(f => new SelectListItem { Text = f.TaxText, Value = f.TaxValue.ToString() }).ToList();

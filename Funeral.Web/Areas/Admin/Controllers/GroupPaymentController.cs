@@ -229,6 +229,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             search.SortBy = "";
             search.SortOrder = "Asc";
             search.TotalRecord = 0;
+            //search.StatusId = CurrentParlourId;
 
             var searchResult = new SearchResult<Model.Search.BaseSearch, SocietyModel>(search, new List<SocietyModel>(), o => o.SocietyName.Contains(search.SarchText));
 
@@ -243,7 +244,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
             try
             {
-                var SocietyList = ToolsSetingBAL.GetAllSocietyes_PaymentList(Guid.Empty);
+                var SocietyList = ToolsSetingBAL.GetAllSocietyes_PaymentList(CurrentParlourId);
                 SocietyList = search.StatusId != Guid.Empty ? SocietyList.Where(x => x.parlourid.Equals(search.StatusId)).ToList() : SocietyList;
                 return Json(new SearchResult<Model.Search.BaseSearch, GroupPaymentList>(search, SocietyList, o => o.GroupName.Contains(search.SarchText)));
             }

@@ -63,7 +63,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 HasAccess = obj.Where(x => x.ID == dbPageId).Select(x => x.HasAccess).FirstOrDefault();
                 HasCreateRight = obj.Where(x => x.ID == dbPageId).Select(x => x.IsWrite).FirstOrDefault();
                 HasReadRight = obj.Where(x => x.ID == dbPageId).Select(x => x.IsRead).FirstOrDefault();
-                HasDeleteRight = false;//obj.Where(x => x.ID == dbPageId).Select(x => x.IsDelete).FirstOrDefault();
+                HasDeleteRight = obj.Where(x => x.ID == dbPageId).Select(x => x.IsDelete).FirstOrDefault();//false
                 HasEditRight = obj.Where(x => x.ID == dbPageId).Select(x => x.IsUpdate).FirstOrDefault();
                 HasReversalPayment = obj.Where(x => x.ID == dbPageId).Select(x => x.IsReversalPayment).FirstOrDefault();
 
@@ -76,7 +76,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                     HasAccess = true;
                     HasCreateRight = true;
                     HasReadRight = true;
-                    HasDeleteRight = false;//true;
+                    HasDeleteRight = true;//false;
                     HasEditRight = true;
                     HasReversalPayment = true;
                 }

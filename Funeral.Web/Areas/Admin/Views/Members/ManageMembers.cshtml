@@ -650,8 +650,8 @@
                                                 <label>Easy Pay</label>
                                                 <input type="text" maxlength="50" id="txtEasyToPay" name="name" class="form-control">
                                             </div>
-                                            <div class="form-group" style="display:none">
-                                                <label>Select Branch</label>
+                                            <div class="form-group" >
+                                                <label>Select Branch<em>*</em></label>
                                                 @Html.DropDownList("BranchList", Model.BranchList, "Select", new { Name = "BranchList", @id = "ddlBankBranch", @style = "width:100%", @class = "form-control" })
                                             </div>
                                             <div class="form-group" style="display:none">
@@ -1426,12 +1426,12 @@
                 if (lastName == "" && FirstName == "" && IdNumber == "" && CellNumber == "" && TellNumber == "" && (SelectedCompanyId == "" || SelectedCompanyId == null))
                 {
                     $("#validationMessage").show();
-                    $("#validationMessage").append('<li id="EnterLastNameid">Please enter Surename.</li>');
-                    $("#validationMessage").append('<li id="EnterFirstName">Please enter Full Name.</li>');
-                    $("#validationMessage").append('<li id="enterIdNumber">Please enter Id Number.</li>');
-                    $("#validationMessage").append('<li id="txtCellphonevalId">Please enter Cell Number.</li>');
-                    $("#validationMessage").append('<li id="txtTelePhoneid">Please enter Telephone Number.</li>');
-                    $("#validationMessage").append('<li id="ddlCompanySelection">Please select Scheme.</li>');
+                    $("#validationMessage").append('<li id="EnterLastNameid">Please Enter Surename.</li>');
+                    $("#validationMessage").append('<li id="EnterFirstName">Please Enter Full Name.</li>');
+                    $("#validationMessage").append('<li id="enterIdNumber">Please Enter ID Number.</li>');
+                    $("#validationMessage").append('<li id="txtCellphonevalId">Please Enter Cell Number.</li>');
+                    $("#validationMessage").append('<li id="txtTelePhoneid">Please Enter Telephone Number.</li>');
+                    $("#validationMessage").append('<li id="ddlCompanySelection">Please Select Scheme.</li>');
                     flag = false;
                 }
 
@@ -1516,7 +1516,7 @@
                     $("li#enterIdNumber").hide();
                     $("li#enterIdNumber").html('');
                     $("#validationMessage").show();
-                    $("#validationMessage").append('<li id="enterIdNumber">Please Enter Id Number.</li>');
+                    $("#validationMessage").append('<li id="enterIdNumber">Please Enter ID Number.</li>');
                     idNumberFlag = false;
                 }
 
@@ -1555,11 +1555,13 @@
             $("#tab3NextButton").click(function () {
                 var policyName = $("#tab-3 #ddlPolicy").val();
                 var PolicyNo = $("#tab-3 #txtPolicyNo").val();
+                var BranchName = $("#tab-3 #ddlBankBranch").val()
                 var flag = true;
                 var policyNameFlag = true;
                 var PolicyNoFlag = true;
+                var BranchNameFlag = true;
                 //var startDate = $("#tab-3 #txtPolicyStartDate").val();
-                if (policyName == "" && PolicyNo == "") {
+                if (policyName == "" && PolicyNo == "" && BranchName == "") {
                     if ($("#tab-3 #txtPolicyNo").attr('disabled') || $("#tab-3 #txtPolicyNo").prop('disabled')) {
                         $("li#SelectPolicyId").html('');
                     $("li#SelectPolicyId").hide();
@@ -1610,7 +1612,21 @@
 
 
                     }
-                    if(flag == false || policyNameFlag == false || PolicyNoFlag == false)
+                    if (BranchName == "") {
+                        $("li#SelectBranchName").html('');
+                        $("li#SelectBranchName").hide();
+                        BranchNameFlag = true;
+
+                    } else {
+                        $("li#SelectBranchName").html('');
+                        $("li#SelectBranchName").hide();
+                        $("#validationTabMessage").show();
+                        $("#validationTabMessage").append('<li id="SelectPolicyId">Select Branch.</li>');
+                        BranchNameFlag = false;
+
+
+                    }
+                    if(flag == false || policyNameFlag == false || PolicyNoFlag == false || BranchNameFlag == false)
                         return false;
                     else{
                         $("#tab3").removeClass('active')

@@ -59,8 +59,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
             try
             {
-                var SocietyList = ToolsSetingBAL.GetAllSocietyes_PaymentList(Guid.Empty);
-                SocietyList = search.StatusId != Guid.Empty ? SocietyList.Where(x => x.parlourid.Equals(search.StatusId)).ToList() : SocietyList;
+                var SocietyList = ToolsSetingBAL.GetAllSocietyes_PaymentList(CurrentParlourId);
+                SocietyList = search.StatusId != Guid.Empty ? SocietyList.Where(x => x.parlourid.Equals(search.StatusId)).ToList() : SocietyList; // StatusID => CompanyId
                 return Json(new SearchResult<Model.Search.BaseSearch, GroupPaymentList>(search, SocietyList, o => o.GroupName.Contains(search.SarchText)));
             }
             catch (Exception ex)

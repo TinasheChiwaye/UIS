@@ -132,6 +132,7 @@
 
                     var hasEditRights = '@ViewBag.HasEditRight' == "True" ? true : false;
                     var hasDeleteRights = '@ViewBag.HasDeleteRight' == "True" ? true : false;
+                    //hasDeleteRights = 'True';
 
                     if (hasEditRights || hasDeleteRights) {
                         tableConfigs.table.DataTable().columns([6]).visible(true)
@@ -141,7 +142,7 @@
                             var editMemberUrl = '<div class="col-sm-4 text-center"><a  onclick="EditQuotation(\'' + full.QuotationID + '\')"><i class="fa fa-edit"></i></a></div>';
                             dom = dom + editMemberUrl;
                         }
-                        if (hasDeleteRights) {
+                        if (hasDeleteRights ) {
                             var deleteMemberUrl = '<div class="col-sm-4 text-center"> <a onclick="DeleteQuotation(\'' + full.QuotationID + '\')"; ><i class="fa fa-trash-o"></i></a></div>';
                             dom = dom + deleteMemberUrl;
                         }

@@ -610,12 +610,28 @@ namespace Funeral.DAL
             return DbConnection.GetDataReader(CommandType.StoredProcedure, "GetAllSocietyes", ObjParam);
         }
 
+        //public static DataTable GetAllSocietye_PaymentList(Guid ParlourId)
+        //{
+        //    DbParameter[] ObjParam = new DbParameter[1];
+        //    ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+        //    return DbConnection.GetDataTable(CommandType.StoredProcedure, "SchemeSummary", ObjParam);
+        //}
+
+        //Test
         public static DataTable GetAllSocietye_PaymentList(Guid ParlourId)
         {
             DbParameter[] ObjParam = new DbParameter[1];
             ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
-            return DbConnection.GetDataTable(CommandType.StoredProcedure, "SchemeSummary", ObjParam);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "SchemeSummary_Test", ObjParam);
         }
+        //Test End
+
+        //public static DataSet GetAllSocietye_PaymentListdt(Guid ParlourId)
+        //{
+        //    DbParameter[] ObjParam = new DbParameter[1];
+        //    ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+        //    return DbConnection.GetDataSet(CommandType.StoredProcedure, "SchemeSummary", ObjParam);
+        //}
         public static DataTable GetGroupPayment_ByParlourId(Guid ParlourId, string ReferenceNumber)
         {
             DbParameter[] ObjParam = new DbParameter[2];

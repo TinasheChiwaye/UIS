@@ -18,7 +18,7 @@ var model1 = {
     SarchText: '',
     BookName: ''
 };
-function setsearchmodel(statusid, sortorder, sortby, totalrecord, pagenum, pagesize, searchtext, bookName = "") {
+function setsearchmodel (statusid, sortorder, sortby, totalrecord, pagenum, pagesize, searchtext, bookName = "") {
     model1.StatusId = statusid;
     model1.SortOrder = sortorder;
     model1.SortBy = sortby;

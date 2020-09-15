@@ -179,11 +179,20 @@ namespace Funeral.BAL
             DataTable dr = ToolsSetingDAL.GetAllSocietyesdt(ParlourId);
             return FuneralHelper.DataTableMapToList<SocietyModel>(dr);
         }
+        //public static List<GroupPaymentList> GetAllSocietyes_PaymentList(Guid ParlourId)
+        //{
+        //    DataTable dr = ToolsSetingDAL.GetAllSocietye_PaymentList(ParlourId);
+        //    return FuneralHelper.DataTableMapToList<GroupPaymentList>(dr);
+        //}
+
+        //test
         public static List<GroupPaymentList> GetAllSocietyes_PaymentList(Guid ParlourId)
         {
             DataTable dr = ToolsSetingDAL.GetAllSocietye_PaymentList(ParlourId);
             return FuneralHelper.DataTableMapToList<GroupPaymentList>(dr);
         }
+        //end test
+
         public static GroupPaymentList GetGroupPayment_ByParlourId(Guid ParlourId,string ReferenceNumber)
         {
             DataTable dr = ToolsSetingDAL.GetGroupPayment_ByParlourId(ParlourId, ReferenceNumber);

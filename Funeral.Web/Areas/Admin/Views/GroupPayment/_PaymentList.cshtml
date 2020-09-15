@@ -135,7 +135,7 @@
                         var MakePayment = '<div class="col-sm-4" placeholder="Make payment"><a class="btn btn-primary btn-sm" href="@Url.Action("GroupPaymentView", "GroupPayment", null, Request.Url.Scheme)?id=' + full.parlourid + '&RefNo=' + full.ReferenceNumber + '"><i class="fa fa-credit-card"></i> Make Payment</a></div>';
                         dom = dom + MakePayment;
 
-
+                        
                         var ReconBilling = '<div class="col-sm-4"><a class="btn btn-primary btn-sm" placeholder="Regenerate Billing Schedule" onclick="DownloadReconReportPopUp(\'' + full.parlourid + '\',\'' + full.ReferenceNumber + '\')"><i class="fa fa-envelope"></i> Recon Billing</a></div>';
                         dom = dom + ReconBilling;
 
