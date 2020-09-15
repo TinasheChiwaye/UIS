@@ -298,6 +298,7 @@
     <Content Include="Content\fontCss.css" />
     <Content Include="Content\images\45.gif" />
     <Content Include="Content\images\ajax-loader.gif" />
+    <Content Include="Content\images\favicon.png" />
     <Content Include="Content\images\LoginPageImage\screensRight1.png" />
     <Content Include="Content\images\LoginPageImage\featureLeft1.png" />
     <Content Include="Content\images\LoginPageImage\PlatformRight1.png" />

@@ -7,7 +7,8 @@
 <script src="~/Scripts/plugins/ChartJScript/ChartJS_script.js"></script>
 <script type="text/javascript">
      var IsDisplayDashboarTable = @Html.Raw(Json.Encode(Model.IsDisplayDashboarTable));
-    if (IsDisplayDashboarTable == true) {
+    if (IsDisplayDashboarTable == true)
+    {
       function LoadFuneralList() {
         jQuery.ajax({
             url: '@Url.Action("List", "Dashboard", new {},Request.Url.Scheme)',
@@ -21,7 +22,10 @@
         .error(function (xhr, status) {
             alert(status);
         });
-    }
+        }
+        $(document).ready(function () {
+            LoadFuneralList();
+        });
     }
 </script>
 <div class="row">

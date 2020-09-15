@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <asp:PlaceHolder runat="server">
         <link href='<%=ResolveUrl("~/Content/bootstrap.min.css") %>' rel="stylesheet" />
-        <link href='<%=ResolveUrl("~/font-awesome/css") %>' rel="stylesheet" />
+        <link href='<%=ResolveUrl("~/Content/font-awesome.css") %>' rel="stylesheet" />
         <link href='<%=ResolveUrl("~/Content/animate.css") %>' rel="stylesheet" />
         <link href='<%=ResolveUrl("~/Content/style.css") %>' rel="stylesheet" />
     </asp:PlaceHolder>

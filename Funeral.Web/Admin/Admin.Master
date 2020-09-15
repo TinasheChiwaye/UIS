@@ -20,7 +20,7 @@
         <link href='<%=ResolveUrl ("~/Content/plugins/datapicker/datepicker3.css") %>' rel="stylesheet" />
         <link href='<%=ResolveUrl ("~/Content/plugins/blueimp/css/blueimp-gallery.min.css") %>' rel="stylesheet" />
     </asp:PlaceHolder>
-    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href='<%=ResolveUrl ("~/Content/images/favicon.png") %>' rel="shortcut icon" type="image/x-icon" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

@@ -16,10 +16,12 @@ namespace Funeral.Web.Controllers
             return View();
         }
 
-        public RedirectResult LogOut() {
+        public RedirectResult LogOut() {            
             FormsAuthentication.SignOut();
+            Session.Abandon();
+            Session.Clear();
             var url = string.Format("{0}://{1}{2}/{3}", this.HttpContext.Request.Url.Scheme, this.HttpContext.Request.Url.Authority, this.HttpContext.Request.ApplicationPath, "/admin/login.aspx");
-            return Redirect(url);
+            return Redirect("~/Admin/Login.aspx");
         }
     }
 }
