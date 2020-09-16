@@ -300,7 +300,6 @@ namespace Funeral.DAL
                 ObjParam[1] = new DbParameter("@UserID", DbParameter.DbType.VarChar, 0, ModelPayment.MemeberID);
                 ObjParam[2] = new DbParameter("@Data", DbParameter.DbType.VarChar, 0, ModelPayment.MemberData);
                 ObjParam[3] = new DbParameter("@ToNumber", DbParameter.DbType.VarChar, 0, ModelPayment.MemeberToNumber);
-
                 DbConnection.GetScalarValue(CommandType.StoredProcedure, "SendSMS", ObjParam);
                 return 1;
             }
@@ -309,6 +308,25 @@ namespace Funeral.DAL
                 return 0;
             }
         }
+
+        public static int SendingBulkSms(SendReminderModel ModelPayment)
+        {
+            try
+            {
+                DbParameter[] ObjParam = new DbParameter[3];
+                ObjParam[0] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, ModelPayment.parlourid);
+                ObjParam[1] = new DbParameter("@UserID", DbParameter.DbType.VarChar, 0, ModelPayment.MemeberID);
+                ObjParam[2] = new DbParameter("@Data", DbParameter.DbType.VarChar, 0, ModelPayment.MemberData);
+
+                DbConnection.GetScalarValue(CommandType.StoredProcedure, "SendBulkSMS", ObjParam);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
         public static void AddUpdateReceiptPrintCounter(int invoiceId, Guid parlourId)
         {
             try
