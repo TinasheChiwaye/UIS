@@ -330,6 +330,13 @@
                     InitModel();
                     datatable.fnDraw();
                 });
+                $(document).keypress(function (event) {
+                    var keyCode = event.keyCode || event.which;
+                    if (keyCode == '13') {
+                        $('#btnSearch').click();
+                        event.preventDefault();
+                    }
+                });
                 function InitModel() {
                     model1.PageNum = 1;
                     model1.CompanyId = $('#CompanyId').val();

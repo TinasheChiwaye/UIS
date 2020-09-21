@@ -300,6 +300,7 @@ namespace Funeral.Web.Admin
                     bulkCopy.ColumnMappings.Add("AgeTo", "AgeTo");
                     bulkCopy.ColumnMappings.Add("UnderwriterCover", "UnderwriterCover");
                     bulkCopy.ColumnMappings.Add("IsExecuted", "IsExecuted");
+                    bulkCopy.ColumnMappings.Add("UnderwriterPremium", "UnderwriterPremium");
                     bulkCopy.WriteToServer(dt);
                     con.Close();
                 }

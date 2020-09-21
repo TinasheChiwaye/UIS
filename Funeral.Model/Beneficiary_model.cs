@@ -25,11 +25,13 @@ namespace Funeral.Model
         public string ModifiedUser { get; set; }
         public Guid parlourid { get; set; }
         public int pkiMemberID { get; set; }
+        [Required(ErrorMessage = "Please Enter Cellphone Number")]
+        public string Cellphone_Beneficiary { get; set; }
 
-        [Required(ErrorMessage = "Please enter Date of birth")]
+        [Required(ErrorMessage = "Please Enter Date of birth")]
         public string DateOfBirth_string { get; set; }
 
-        [Required(ErrorMessage = "Please enter Percentage")]
+        [Required(ErrorMessage = "Please Enter Percentage")]
         public decimal Percentages { get; set; }
 
 

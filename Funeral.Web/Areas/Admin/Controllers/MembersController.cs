@@ -859,6 +859,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 ObjFamilyDependencyModel.Relationship = Convert.ToInt32(dependency.Relationship);
                 ObjFamilyDependencyModel.DependencyType = dependency.DependencyType;
                 ObjFamilyDependencyModel.Premium = dependency.Premium;
+                ObjFamilyDependencyModel.Cover = dependency.Cover;
+
             }
 
 

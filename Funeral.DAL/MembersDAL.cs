@@ -1012,7 +1012,7 @@ namespace Funeral.DAL
         }
         public static int SaveBeneficiary(Beneficiary_model ModalProduct)
         {
-            DbParameter[] ObjParam = new DbParameter[11];
+            DbParameter[] ObjParam = new DbParameter[12];
             ObjParam[0] = new DbParameter("@pkiBeneficiaryID", DbParameter.DbType.Int, 0, ModalProduct.pkiBeneficiaryID);
             ObjParam[1] = new DbParameter("@fkiMemberID", DbParameter.DbType.Int, 0, ModalProduct.pkiMemberID);
             ObjParam[2] = new DbParameter("@FullName", DbParameter.DbType.VarChar, 0, ModalProduct.FullName_Beneficiary);
@@ -1024,6 +1024,7 @@ namespace Funeral.DAL
             ObjParam[8] = new DbParameter("@ModifiedUser", DbParameter.DbType.VarChar, 0, ModalProduct.ModifiedUser);
             ObjParam[9] = new DbParameter("@LastModified", DbParameter.DbType.DateTime, 0, System.DateTime.Now);
             ObjParam[10] = new DbParameter("@Percentage", DbParameter.DbType.Decimal, 0, ModalProduct.Percentages);
+            ObjParam[11] = new DbParameter("@CellPhoneNumber", DbParameter.DbType.NVarChar, 0, ModalProduct.Cellphone_Beneficiary);
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "NewAddEditBeneficiaries", ObjParam));
         }
         public static DataTable SearchBeneficiaryData(int fkiMemberid)

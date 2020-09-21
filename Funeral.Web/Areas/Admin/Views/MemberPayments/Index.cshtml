@@ -348,6 +348,13 @@
                 //        datatable.fnDraw();
                 //    }
                 //});
+                $(document).keypress(function (envent) {
+                    var keyCode = event.keyCode || envent.which;
+                    if (keyCode == '13') {
+                        $('#btnSearch').click();
+                        envent.preventDefault();
+                    }
+                });
                 function InitModel() {
                     model1.PageNum = 1;
                     model1.CompanyId = $('#CompanyId').val();
