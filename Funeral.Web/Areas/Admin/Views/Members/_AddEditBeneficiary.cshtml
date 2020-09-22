@@ -12,21 +12,25 @@
     </div>
     <div class="col-lg-6">
         <div class="form-group">
-            <label>Surname<em>*</em></label>
-            @Html.TextBox("Surname_Beneficiary", "", new { @type = "text", @maxlength = "20", @id = "txtSurname_Beneficiary", @class = "form-control", @placeholder = "Surname" })
-        </div>
-        <div class="form-group">
             <label>Full Name<em>*</em></label>
             @Html.TextBox("FullName_Beneficiary", "", new { @type = "text", @maxlength = "20", @id = "txtFullName_Beneficiary", @class = "form-control", @placeholder = "Full name" })
         </div>
         <div class="form-group">
+            <label>Surname<em>*</em></label>
+            @Html.TextBox("Surname_Beneficiary", "", new { @type = "text", @maxlength = "20", @id = "txtSurname_Beneficiary", @class = "form-control", @placeholder = "Surname" })
+        </div>
+        <div class="form-group">
             <label>ID Number<em>*</em></label>
-            @Html.TextBox("IDNumber_Beneficiary", "", new { @pattern = "/d*", @maxlength = "20", @id = "txtIDNumber_Beneficiary", @class = "form-control", @placeholder = "ID Number" })
+            @Html.TextBox("IDNumber_Beneficiary", "", new { @maxlength = "13", @pattern = "/d*", @onkeyup = "GetIdNumberDetails_beneficiery(this);", @id = "txtIDNumber_Beneficiary", @class = "form-control", @placeholder = "ID Number" })
         </div>
         <div class="form-group">
             <label>Date Of Birth<em>*</em></label>
             @Html.TextBox("DateOfBirth_Beneficiary", "", new { @type = "text", @id = "txtDateOfBirth_Beneficiary", @class = "form-control", @placeholder = "Date Of Birth" })
         </div>
+        <button class="btn btn-sm btn-primary" id="btnSaveBeneficiary" onclick="AddEditBeneficiary()">Save Beneficiary</button>
+        <button class="btn btn-sm btn-primary" id="btnCancelBeneficiary" onclick="NullInputControls()">Cancel</button>
+        <br />
+        <br />
     </div>
     <div class="col-lg-6">
         <div class="form-group">
@@ -50,24 +54,17 @@
             <label>Percentages<em>*</em></label>
             @Html.TextBox("Percentages_Beneficiary", "", new { @type = "number", @onInput = "return check(event,value)", @min = "0", @max = "100", @step = "0.01", @id = "txtPercentages_Beneficiary", @class = "form-control", @placeholder = "Percentages" })
         </div>
-        @*<div class="form-group" style="display:none">
-                <label>ID Number<em>*</em></label>
-                @Html.TextBox("IDNumber_Beneficiary", "", new { @pattern = "/d*", @maxlength = "20", @id = "txtIDNumber_Beneficiary", @class = "form-control", @placeholder = "ID Number" })
-            </div>*@
-        <button class="btn btn-sm btn-primary " id="btnSaveBeneficiary" onclick="AddEditBeneficiary()">Save Beneficiary</button>
-        <button class="btn btn-sm btn-primary " id="btnCancelBeneficiary" onclick="NullInputControls()">Cancel</button>
-
-    </div>
-    @*&nbsp;
-        &nbsp;
-        &nbsp;
-        <div class="form-group">
-            <button class="btn btn-sm btn-primary " id="btnSaveBeneficiary" onclick="AddEditBeneficiary()">Save Beneficiary</button>
-            <button class="btn btn-sm btn-primary " id="btnCancelBeneficiary" onclick="NullInputControls()">Cancel</button>
-            <br />
-            <br />
-            <br />
+        @*<div class="form-group">
+            <label>Date Of Birth<em>*</em></label>
+            @Html.TextBox("DateOfBirth_Beneficiary", "", new { @type = "text", @id = "txtDateOfBirth_Beneficiary", @class = "form-control", @placeholder = "Date Of Birth" })
         </div>*@
+    </div>
+    @*<div class="form-group">
+        <button class="btn btn-sm btn-primary" id="btnSaveBeneficiary" onclick="AddEditBeneficiary()">Save Beneficiary</button>
+        <button class="btn btn-sm btn-primary" id="btnCancelBeneficiary" onclick="NullInputControls()">Cancel</button>
+        <br />
+        <br />
+    </div>*@
 </div>
 <div class="row">
     <div class="col-lg-12 ">
@@ -109,7 +106,7 @@
     }
     return true;
     }
-      $('#txtDateOfBirth_Beneficiary').datepicker({format: 'dd MM yyyy', autoclose: true});
+      $('#txtDateOfBirth_Beneficiary').datepicker({format: 'dd MM yyyy', autoclose: true,setDate: new Date()});
     function AddEditBeneficiary() {
         var DependencyType = $("#ddlDependentDependencyType_Beneficiary").val();
         var FullName = $("#txtFullName_Beneficiary").val();
@@ -117,15 +114,14 @@
         var DateOfBirth = $("#txtDateOfBirth_Beneficiary").val();
         var RelationshipType = $("#ddlRelationshipType_Beneficiary").val();
         var IDNumber = $("#txtIDNumber_Beneficiary").val();
-        var CellPhoneNumber = $("#txtCellPhoneNumber_Beneficiary").val();
         var Code = $("#txtCode_Beneficiary").val();
+        var CellPhoneNumber = $("#txtCellPhoneNumber_Beneficiary").val();
         var pkiBeneficiaryID_Beneficiary = $("#txtpkiBeneficiaryID").val();
         var SaveBeneficiaryUrl = $("#SaveBeneficiaryUrl").val();
         var ActualDate = new Date().format("dd-mm-yyyy");
         if (DateOfBirth != "") {
             ActualDate = new Date(DateOfBirth).format("dd-mm-yyyy");
         }
-
         $("#ValidationSummary_Beneficiary").hide();
         var objProductModel = {
             pkiBeneficiaryID: pkiBeneficiaryID_Beneficiary,
@@ -147,7 +143,7 @@
             type: "post",
             cache: false,
             success: function (result) {
-                if (result == "Inserted" || result == "Updated") {
+                if (result == "Inserted"||result == "Updated") {
                     BeneficiaryDataTable.fnDraw();
                     NullInputControls();
                     $("#lblMessage").html('');
@@ -159,8 +155,6 @@
                     $("#lblMessage").append('<div class="alert alert-danger">Total percentage limit of 100%  bas been completed</div>');
                 }
                 else {
-                    $("#lblMessage").html('');
-                    $("#lblMessage").append('<div class="alert alert-danger">' + result + '</div>');
                     $("#ValidationSummary_Beneficiary").show();
                     $("#ValidationSummary_Beneficiary").empty().append(result);
                 }
@@ -179,9 +173,7 @@
         $("#txtIDNumber_Beneficiary").val("");
         $("#txtCode_Beneficiary").val("");
         $("#pkiBeneficiaryID").val("");
-        $("#txtCellPhoneNumber_Beneficiary").val("");
     }
-
     function bindBeneficiaryDatatable()
     {
         var sortOrder = @Html.Raw(Json.Encode(@Model.ProductSearch.SortOrder));
@@ -239,19 +231,21 @@
                     { "data": "Percentages", "name": "Percentages", "autoWidth": true },
                     {
                         "render": function (data, type, full, meta) {
-
+                            var hasEditRights = '@ViewBag.HasEditRight' == "True" ? true : false;
+                            var hasDeleteRights = '@ViewBag.HasDeleteRight' == "True" ? true : false;
                             var dom = "<div class='row'>";
                             var data1 = JSON.stringify(full);
                             data1 = data1.replace(/"/g, "\'")
-                            var editProductUrl = '<div class="col-sm-4 text-center"><a  onclick="EditBeneficiary(' + data1 + ')"><i class="fa fa-edit"></i></a></div>';
-                            dom = dom + editProductUrl;
-
-                            var deleteProductUrl = '<div class="col-sm-4 text-center"> <a onclick="DeleteBeneficiary(' + data1 + ')"; ><i class="fa fa-trash-o"></i></a></div>';
-                            dom = dom + deleteProductUrl;
-
+                            if (hasEditRights) {
+                                var editProductUrl = '<div class="col-sm-4 text-center"><a  onclick="EditBeneficiary(' + data1 + ')"><i class="fa fa-edit"></i></a></div>';
+                                dom = dom + editProductUrl;
+                            }
+                            if (hasDeleteRights) {
+                                var deleteProductUrl = '<div class="col-sm-4 text-center"> <a onclick="DeleteBeneficiary(' + data1 + ')"; ><i class="fa fa-trash-o"></i></a></div>';
+                                dom = dom + deleteProductUrl;
+                            }
                             dom = dom + "</div>";
                             return dom;
-
                         }
                     }
                 ]
@@ -259,18 +253,19 @@
         });
     }
     function EditBeneficiary(Beneficiary) {
+        debugger;
         $("#txtpkiBeneficiaryID").val(Beneficiary.pkiBeneficiaryID);
         $("#ddlDependentDependencyType_Beneficiary").val(Beneficiary.DependencyType_Beneficiary);
         $("#txtFullName_Beneficiary").val(Beneficiary.FullName_Beneficiary);
         $("#txtSurname_Beneficiary").val(Beneficiary.Surname_Beneficiary);
-        $('#txtDateOfBirth_Beneficiary').datepicker({ format: 'dd MM yyyy',autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(Beneficiary.DateOfBirth_string)), "dd/mm/yyyy", false));
+        $('#txtDateOfBirth_Beneficiary').datepicker({ format: 'dd MM yyyy',autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(Beneficiary.DateOfBirth_Beneficiary)), "dd/mm/yyyy", false));
         $("#ddlRelationshipType_Beneficiary").val(Beneficiary.RelationshipType_Beneficiary);
         $("#txtPercentages_Beneficiary").val(Beneficiary.Percentages);
         $("#txtIDNumber_Beneficiary").val(Beneficiary.IDNumber_Beneficiary);
-        $("#txtCellPhoneNumber_Beneficiary").val(Beneficiary.Cellphone_Beneficiary);
         $("#txtCode_Beneficiary").val(Beneficiary.Code_Beneficiary);
+        $("#txtCellPhoneNumber_Beneficiary").val(Beneficiary.Cellphone_Beneficiary);
     }
-    function DeleteBeneficiary(product) {
+     function DeleteBeneficiary(product) {
          var DeleteAddonProductURl = $("#DeleteBeneficiary").val();
            var deleteConfirm = confirm('Are you sure you want to delete it?');
          if (deleteConfirm) {
@@ -282,5 +277,56 @@
              }).success(function (result) { BeneficiaryDataTable.fnDraw(); }).error(function (xhr, status) { alert(status); });
          }
     }
-
+    function GetIdNumberDetails_beneficiery(IdNumberControls) {
+        var idNumber = IdNumberControls.value;
+        var textLength = idNumber.length;
+        if (textLength == 13) {
+            ValidateIdNumber(idNumber);
+        }
+    }
+    function ValidateIdNumber(idNumber) {
+        var correct = true;
+        if (idNumber.length != 13 || !isNumber(idNumber)) {
+            correct = false;
+        }
+        var tempDate = new Date(idNumber.substring(0, 2), idNumber.substring(2, 4) - 1, idNumber.substring(4, 6));
+        var id_date = tempDate.getDate();
+        var id_month = tempDate.getMonth();
+        var dMonth = id_month + 1;
+        var dMonthName = tempDate.getMonthName();
+        var id_year = idNumber.substring(0, 2);
+        var cutoff = (new Date()).getFullYear() - 2000;
+        var fullDate = id_date + " " + dMonthName + " " + (id_year > cutoff ? '19' : '20') + id_year;
+        if (!((tempDate.getYear() == idNumber.substring(0, 2)) && (id_month == idNumber.substring(2, 4) - 1) && (id_date == idNumber.substring(4, 6)))) {
+            correct = false;
+        }
+        var citzenship = parseInt(idNumber.substring(10, 11)) == 0 ? "Yes" : "No";
+        var tempTotal = 0;
+        var checkSum = 0;
+        var multiplier = 1;
+        for (var i = 0; i < 13; ++i) {
+            tempTotal = parseInt(idNumber.charAt(i)) * multiplier;
+            if (tempTotal > 9) {
+                tempTotal = parseInt(tempTotal.toString().charAt(0)) + parseInt(tempTotal.toString().charAt(1));
+            }
+            checkSum = checkSum + tempTotal;
+            multiplier = (multiplier % 2 == 0) ? 1 : 2;
+        }
+        if ((checkSum % 10) != 0) {
+            correct = false;
+        };
+        if (correct) {
+            $('#txtDateOfBirth_Beneficiary').datepicker({ format: 'dd M yyyy', autoclose: true }).datepicker("setDate", dateFormat(new Date(fullDate), "dd/mm/yyyy", false));
+            var genderCode = idNumber.substring(6, 10);
+            var gender = parseInt(genderCode) < 5000 ? "Female" : "Male";
+        }
+        else {
+            if (idNumber != "") {
+                alert("Id Number invalid");
+                $("#txtIDNumber_Beneficiary").val("")
+                $("#txtDateOfBirth_Beneficiary").val("");
+            }
+        }
+        return false;
+    }
 </script>

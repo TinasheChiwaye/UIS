@@ -51,7 +51,7 @@ namespace Funeral.Model
             set;
         }
 
-        [Required(ErrorMessage = "Please enter id number")]
+        [Required(ErrorMessage = "Please enter id number OR birthdate")]
         //[ValidateId()]
         public string IDNumber
         {

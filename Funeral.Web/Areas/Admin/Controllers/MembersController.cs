@@ -1389,7 +1389,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                     var CurrenrPer = MembersBAL.SumOfBeneficiaryPercentage(objModel.pkiMemberID);
                     var NewPer = Convert.ToDouble(objModel.Percentages);
                     var TotalSum = CurrenrPer + NewPer;
-                    if (TotalSum < 100)
+                    if (TotalSum < 100 || TotalSum == 100)
                     {
                         objModel.ModifiedUser = User.Identity.Name;
                         objModel.parlourid = CurrentParlourId;
@@ -1399,7 +1399,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                         else
                             Message = "Updated";
                     }
-                    else
+                    else 
                         Message = "PercentageLimit";
                 }
                 else
