@@ -262,7 +262,7 @@
                 <h5>Members Details</h5>
                 <div class="pull-right">
                     <div class="btn-group">
-                        <input type="submit" id="btnCopy" style="margin-right: 12px; margin-top: -5px;display:none" class="btn btn-sm btn-primary" value="CopyPolicy" >
+                        <input type="submit" id="btnCopy" style="margin-right: 12px; margin-top: -5px;display:none" class="btn btn-sm btn-primary" value="CopyPolicy">
                         <input type="submit" style="display:inline" id="PolicyDoc" class="btn btn-sm btn-primary pull-right m-t-n-xs" value="Policy Doc" onclick="location.href='@Url.Action("btnPolicyDoc", "Members")'">
                     </div>
                 </div>
@@ -273,16 +273,36 @@
                         <div class="panel-heading">
                             <div class="panel-options" id="Tabs">
                                 <ul class="nav nav-tabs" id="myTab">
-                                    <li class="active" id="tab1"><a data-toggle="tab" href="#tab-1" id="atab1" aria-expanded="true">Personal Details</a></li>
-                                    <li class="" id="tab2"><a data-toggle="tab" href="#tab-2" id="atab2" aria-expanded="false">Member Address</a></li>
-                                    <li class="" id="tab3"><a data-toggle="tab" href="#tab-3" id="atab3" aria-expanded="false">Policy Details</a></li>
-                                    <li class="" id="tab9"><a data-toggle="tab" href="#tab-9" id="atab9" aria-expanded="false">Product</a></li>
-                                    <li class="" id="tab4"><a data-toggle="tab" href="#tab-4" id="atab4" aria-expanded="false">Banking Details</a></li>
-                                    <li class="" id="tab5"><a data-toggle="tab" href="#tab-5" id="atab5" aria-expanded="false">Dependent & Extended Family </a></li>
-                                    <li class="" id="tab6"><a data-toggle="tab" href="#tab-6" id="atab6" aria-expanded="false">Payment History</a></li>
-                                    <li class="" id="tab7"><a data-toggle="tab" href="#tab-7" id="atab7" aria-expanded="false">Note</a></li>
-                                    <li class="" id="tab8"><a data-toggle="tab" href="#tab-8" id="atab8" aria-expanded="false">Supporting Documents</a></li>
-                                    <li class="" id="tab10"><a data-toggle="tab" href="#tab-10" id="atab10" aria-expanded="false">Beneficiary</a></li>
+                                    <li class="active" id="tab1">
+                                        <a data-toggle="tab" href="#tab-1" id="atab1" aria-expanded="true">Personal Details</a>
+                                    </li>
+                                    <li class="" id="tab2">
+                                        <a data-toggle="tab" href="#tab-2" id="atab2" aria-expanded="false">Member Address</a>
+                                    </li>
+                                    <li class="" id="tab3">
+                                        <a data-toggle="tab" href="#tab-3" id="atab3" aria-expanded="false">Policy Details</a>
+                                    </li>
+                                    <li class="" id="tab9">
+                                        <a data-toggle="tab" href="#tab-9" id="atab9" aria-expanded="false">Product</a>
+                                    </li>
+                                    <li class="" id="tab4">
+                                        <a data-toggle="tab" href="#tab-4" id="atab4" aria-expanded="false">Banking Details</a>
+                                    </li>
+                                    <li class="" id="tab5">
+                                        <a data-toggle="tab" href="#tab-5" id="atab5" aria-expanded="false">Dependent & Extended Family </a>
+                                    </li>
+                                    <li class="" id="tab6">
+                                        <a data-toggle="tab" href="#tab-6" id="atab6" aria-expanded="false">Payment History</a>
+                                    </li>
+                                    <li class="" id="tab7">
+                                        <a data-toggle="tab" href="#tab-7" id="atab7" aria-expanded="false">Note</a>
+                                    </li>
+                                    <li class="" id="tab8">
+                                        <a data-toggle="tab" href="#tab-8" id="atab8" aria-expanded="false">Supporting Documents</a>
+                                    </li>
+                                    <li class="" id="tab10">
+                                        <a data-toggle="tab" href="#tab-10" id="atab10" aria-expanded="false">Beneficiary</a>
+                                    </li>
 
                                 </ul>
                             </div>
@@ -326,7 +346,8 @@
                                                         <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="DateComparisionJavascriptFun();">
                                                     }
                                                     else if (Model.Member.pkiMemberID > 0)
-                                                    { <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="DateComparisionJavascriptFun();" readonly="readonly">
+                                                    {
+                                                        <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="DateComparisionJavascriptFun();" readonly="readonly">
                                                     }
                                                     else
                                                     {
@@ -347,7 +368,8 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label>Gender</label><br>
+                                                <label>Gender</label>
+                                                <br>
                                                 <input type="radio" name="gender" value="0" checked> Male
                                                 <input type="radio" name="gender" value="1"> Female
                                             </div>
@@ -375,7 +397,8 @@
                                                 <input type="text" maxlength="30" id="txtPassport" name="name" class="form-control" disabled>
                                             </div>
                                             <div class="form-group">
-                                                <input type="checkbox" id="chkIdORPass">&nbsp;<label>Either Allow Passport Number Or ID Number</label>
+                                                <input type="checkbox" id="chkIdORPass">&nbsp;
+                                                <label>Either Allow Passport Number Or ID Number</label>
                                             </div>
                                             <div class="form-group">
                                                 <label>Age</label>
@@ -650,7 +673,7 @@
                                                 <label>Easy Pay</label>
                                                 <input type="text" maxlength="50" id="txtEasyToPay" name="name" class="form-control">
                                             </div>
-                                            <div class="form-group" >
+                                            <div class="form-group">
                                                 <label>Select Branch<em>*</em></label>
                                                 @Html.DropDownList("BranchList", Model.BranchList, "Select", new { Name = "BranchList", @id = "ddlMemberBranch", @style = "width:100%", @class = "form-control" })
                                             </div>
@@ -692,10 +715,10 @@
                                             </div>
 
                                             @*<div class="form-group">
-                                                <label>Policy Underwritten By</label>
-                                                @Html.DropDownList("UnderwritterList", Model.UnderwritterList, "Select", new { Name = "Underwritter", @id = "ddlUnderwritter", @style = "width:100%", @class = "form-control" })
-                                            </div>*@
-                                            
+                                                    <label>Policy Underwritten By</label>
+                                                    @Html.DropDownList("UnderwritterList", Model.UnderwritterList, "Select", new { Name = "Underwritter", @id = "ddlUnderwritter", @style = "width:100%", @class = "form-control" })
+                                                </div>*@
+
                                             <div class="form-group">
                                                 <label>Policy Agent or Broker</label>
                                                 @Html.DropDownList("AgentList", Model.AgentList, "Select", new { Name = "Agent", @id = "ddlAgent", @style = "width:100%", @class = "form-control" })
@@ -726,12 +749,14 @@
                                 </div>
                                 <!-- #endregion Tab3 -->
                                 <!-- #region Tab9 -->
-                                <div id="tab-9" class="tab-pane" >
+                                <div id="tab-9" class="tab-pane">
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <div class="input-group">
-                                                    <div id="ValidationSummary5" style="color: red;" hidden><ul></ul></div>
+                                                    <div id="ValidationSummary5" style="color: red;" hidden>
+                                                        <ul></ul>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -888,7 +913,9 @@
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
                                                             <div class="input-group">
-                                                                <div id="ValidationSummary4" style="color: red;" hidden><ul></ul></div>
+                                                                <div id="ValidationSummary4" style="color: red;" hidden>
+                                                                    <ul></ul>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -931,7 +958,8 @@
                                                                 <br />
                                                                 &nbsp; &nbsp;
                                                                 <input type="radio" name="dependentGender" value="male" id="male" checked="checked"> Male
-                                                                <input type="radio" name="dependentGender" value="female" id="female"> Female<br>
+                                                                <input type="radio" name="dependentGender" value="female" id="female"> Female
+                                                                <br>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6">
@@ -969,9 +997,9 @@
                                                                 </select>
                                                             </div>
                                                             @*<div class="form-group">
-                                                                <label>Premium<em>*</em></label>
-                                                                <input type="text" maxlength="25" id="txtDependentPremium" name="name" class="form-control" disabled>
-                                                            </div>*@
+                                                                    <label>Premium<em>*</em></label>
+                                                                    <input type="text" maxlength="25" id="txtDependentPremium" name="name" class="form-control" disabled>
+                                                                </div>*@
                                                             <div class="form-group">
                                                                 <label>Cover Amount <em>*</em></label>
                                                                 <input type="text" maxlength="25" id="txtDependentCoverAmount" name="name" class="form-control" disabled>
@@ -1261,7 +1289,9 @@
                     <div class="col-lg-12">
                         <div class="form-group">
                             <div class="input-group">
-                                <div id="ValidationSummary3" style="color: red;" hidden><ul></ul></div>
+                                <div id="ValidationSummary3" style="color: red;" hidden>
+                                    <ul></ul>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1292,7 +1322,8 @@
                             <br />
                             &nbsp &nbsp
                             <input type="radio" name="genderPopup" value="male"> Male
-                            <input type="radio" name="genderPopup" value="female"> Female<br>
+                            <input type="radio" name="genderPopup" value="female"> Female
+                            <br>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -2024,7 +2055,7 @@
                 MemeberNumber: $("#tab-3 #txtPolicyNo").val(),
                 EasyPayNo: $("#tab-3 #txtEasyToPay").val(),
                 //Branch: $("#tab-4 #txtBankBranch").val(),
-                MemberBranch: $("#tab-3 #ddlMemberBranch :selected").text(),
+                MemberBranch: $("#tab-3 #ddlMemberBranch").val(),
                 CustomId1: CustomId1,
                 CustomId2:CustomId2 ,
                 CustomId3: CustomId3,
@@ -2050,7 +2081,7 @@
                 PolicyPremium: $("#tab-3 #txtPolicyCoverAmount").val(),
                 Branch: $("#tab-4 #txtBankBranch").val(), //$("#ddlBankBranch :selected").text()
 
-               
+
 
             };
 
@@ -2073,7 +2104,7 @@
 
                         $("#validationTab4Message").show();
                         $("#validationTab4Message").empty().append(result.errors);
-                        
+
                     }
                     else {
                         if (result.pkiMemberID == 0 || result.pkiMemberID == "undefined") {
@@ -2089,7 +2120,7 @@
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     $("#validationTab4Message").show();
-                    $("#validationTab4Message").empty().append(result.errors);                    
+                    $("#validationTab4Message").empty().append(result.errors);
                 }
 
             })
@@ -4712,6 +4743,8 @@
         });
         //location.reload();
         BindGroupDropdown($('#ddlSelectCompany').val());
+        BindPlanDropdown($('#ddlSelectCompany').val());
+        BindPlanDropdown($('#ddlSelectCompany').val());
     });
     $("#txtStartDatePopup").change(function () {
         var DependencyStartdateChangeUrl = $("#DependencyStartdateChangeUrl").val();
@@ -4767,6 +4800,51 @@
             }
         });
     }
+
+        function BindPlanDropdown(ParlourId) {
+        var ddlCustomers = jQuery("#tab-3 #ddlPolicy");
+        ddlCustomers.empty().append('<option selected="selected" value="0" disabled = "disabled">Please select.....</option>');
+        jQuery.ajax({
+            url: '@Url.Action("BindPlanByCompanyId","Members")',
+            data: { CompanyId: ParlourId },
+            type: "post",
+            success: function (response) {
+                ddlCustomers.empty().append('<option selected="selected" value="0">Please select</option>');
+                jQuery.each(response, function () {
+                    ddlCustomers.append($("<option></option>").val(this['Value']).html(this['Text']));
+                });
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+    }
+
+            function BindBranchDropdown(ParlourId) {
+        var ddlCustomers = jQuery("#tab-3 #ddlMemberBranch");
+        ddlCustomers.empty().append('<option selected="selected" value="0" disabled = "disabled">Please select.....</option>');
+        jQuery.ajax({
+            url: '@Url.Action("BindBranchByCompanyId","Members")',
+            data: { CompanyId: ParlourId },
+            type: "post",
+            success: function (response) {
+                ddlCustomers.empty().append('<option selected="selected" value="0">Please select</option>');
+                jQuery.each(response, function () {
+                    ddlCustomers.append($("<option></option>").val(this['Value']).html(this['Text']));
+                });
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+    }
+
     //#region Jeenal Changes
     function CalculateDependentExtendedAge(fullDate) {
         var mdate = dateFormat(fullDate, 'mm-dd-yyyy', false)

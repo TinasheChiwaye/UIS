@@ -1445,6 +1445,17 @@ namespace Funeral.Web.Areas.Admin.Controllers
             var Company = CommonBAL.GetSocietyByParlourId(CompanyId).Select(x => new SelectListItem() { Text = x.SocietyName, Value = x.pkiSocietyID.ToString() });
             return Json(Company, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult BindPlanByCompanyId(Guid CompanyId)
+        {
+            var Company = CommonBAL.GetPlanByParlourId(CompanyId).Select(x => new SelectListItem() { Text = x.PlanName, Value = x.pkiPlanID.ToString() });
+            return Json(Company, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult BindBranchByCompanyId(Guid CompanyId)
+        {
+            var Company = CommonBAL.GetBranchByParlourId(CompanyId).Select(x => new SelectListItem() { Text = x.BranchName, Value = x.Brancheid.ToString() });
+            return Json(Company, JsonRequestBehavior.AllowGet);
+        }
         [HttpPost]
         public void ChangeParlour(Guid parlourId, int MemberId)
         {
