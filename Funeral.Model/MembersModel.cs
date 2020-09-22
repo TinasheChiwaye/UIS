@@ -136,7 +136,7 @@ namespace Funeral.Model
         public string AccountType { get; set; }
         public DateTime DebitDate { get; set; }
 
-        //[Required(ErrorMessage = "Select a Branch")]
+        [Required(ErrorMessage = "Select a Branch")]
         public string MemberBranch { get; set; }
         public DateTime? CoverDate { get; set; }
         public DateTime LastModified { get; set; }
