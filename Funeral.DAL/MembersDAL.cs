@@ -272,6 +272,13 @@ namespace Funeral.DAL
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "SocietyByparlourId", ObjParam);
         }
 
+        public static DataTable GetPlanByParlourIddt(Guid Parlourid)
+        {
+            DbParameter[] ObjParam = new DbParameter[1];
+            ObjParam[0] = new DbParameter("@parlourId", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "PlanByparlourId", ObjParam);
+        }
+
         public static SqlDataReader GetAllSociety(Guid parlourid)
         {
             DbParameter[] ObjParam = new DbParameter[1];
