@@ -78,7 +78,8 @@ namespace Funeral.Model
 
         public string Gender { get; set; }
 
-        [Required(ErrorMessage = "Please enter id number")]
+        //[Required(ErrorMessage = "Please enter id number")]
+        //[ValidateId()]
         public string IDNumber { get; set; }
 
         public double TotalPremium { get; set; }
@@ -98,7 +99,7 @@ namespace Funeral.Model
         [RegularExpression(@"^[0-9]*$", ErrorMessage = "Telephone Number Enter Only Number")]
         public string Telephone { get; set; }
 
-        [Required(ErrorMessage = "Enter Cellphone Number")]
+        //[Required(ErrorMessage = "Enter Cellphone Number")]
         //[RegularExpression(@"^[0-9]+$", ErrorMessage = "Cellphone Number Enter Only Number")]
         public string Cellphone { get; set; }
 
