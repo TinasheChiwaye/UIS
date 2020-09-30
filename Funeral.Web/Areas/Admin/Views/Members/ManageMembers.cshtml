@@ -343,15 +343,15 @@
                                                 @{
                                                     if (Model.IsAdministrator == true || Model.IsSuperUser == true)
                                                     {
-                                                        <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="DateComparisionJavascriptFun();" onblur="IdNumberBasicValidation();">
+                                                        <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="DateComparisionJavascriptFun();" onblur="IdNumberBasicValidation(txtIdNumber);">
                                                     }
                                                     else if (Model.Member.pkiMemberID > 0)
                                                     {
-                                                        <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="DateComparisionJavascriptFun();" readonly="readonly" onblur="IdNumberBasicValidation();">
+                                                        <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="DateComparisionJavascriptFun();" readonly="readonly" onblur="IdNumberBasicValidation(txtIdNumber);">
                                                     }
                                                     else
                                                     {
-                                                        <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="DateComparisionJavascriptFun();" onblur="IdNumberBasicValidation();">
+                                                        <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="DateComparisionJavascriptFun();" onblur="IdNumberBasicValidation(txtIdNumber);">
                                                     }
 
 
@@ -4151,6 +4151,13 @@
             $.each(errors, function (idx, errorMessage) {
                 $ul.append('<li>' + errorMessage + '</li>');
             });
+        }
+    }
+
+    function IdNumberBasicValidation(IdNumber) {
+        if (IdNumber.value.length != 0 && IdNumber.value.length != 6 || IdNumber.value.length != 13) {
+        alert("Id Number is not valid");
+            IdNumber.value = "";
         }
     }
 
