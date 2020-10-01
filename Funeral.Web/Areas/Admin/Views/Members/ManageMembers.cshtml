@@ -343,15 +343,15 @@
                                                 @{
                                                     if (Model.IsAdministrator == true || Model.IsSuperUser == true)
                                                     {
-                                                        <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="DateComparisionJavascriptFun();">
+                                                        <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="DateComparisionJavascriptFun();" onblur="IdNumberBasicValidation(txtIdNumber);">
                                                     }
                                                     else if (Model.Member.pkiMemberID > 0)
                                                     {
-                                                        <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="DateComparisionJavascriptFun();" readonly="readonly">
+                                                        <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="DateComparisionJavascriptFun();" readonly="readonly" onblur="IdNumberBasicValidation(txtIdNumber);">
                                                     }
                                                     else
                                                     {
-                                                        <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="DateComparisionJavascriptFun();">
+                                                        <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="DateComparisionJavascriptFun();" onblur="IdNumberBasicValidation(txtIdNumber);">
                                                     }
 
 
@@ -939,7 +939,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label>ID Number <em>*</em></label>
-                                                                <input type="text" pattern="/d*" maxlength="13" id="txtDependentIdNumber" name="name" class="form-control" onkeyup="DependentExtendedIDNumberChanges();">
+                                                                <input type="text" pattern="/d*" maxlength="13" id="txtDependentIdNumber" name="name" class="form-control" onkeyup="DependentExtendedIDNumberChanges();" onblur="IdNumberBasicValidation(txtDependentIdNumber);">
                                                             </div>
                                                             <div class="form-group">
                                                                 <label>Date Of Birth <em>*</em></label>
@@ -1915,7 +1915,9 @@
 
             $('.date2').datepicker({format: 'dd MM yyyy', autoclose: true,setDate: new Date()});
 
-            $('.birthDate').datepicker({format: 'dd MM yyyy', autoclose: true,setDate: new Date()});
+            $('.birthDate').datepicker({ format: 'dd MM yyyy', autoclose: true, setDate: new Date() });
+
+            $('.beneficiary_DOB').datepicker({ format: 'dd MM yyyy', autoclose: true, setDate: new Date() });
 
             $('.date4').datepicker({format: 'dd MM yyyy', autoclose: true,setDate: new Date()});
 
@@ -4154,10 +4156,17 @@
         }
     }
 
+    function IdNumberBasicValidation(IdNumber) {
+        if (IdNumber.value.length != 0 && IdNumber.value.length != 6 && IdNumber.value.length != 13) {
+        alert("Id Number is not valid");
+            IdNumber.value = "";
+        }
+    }
+
     function DateComparisionJavascriptFun() {
         var idNumber = $("#txtIdNumber").val();
         var textLength = idNumber.length;
-        if (textLength == 13) {
+        if (textLength == 13 || textLength == 6) {
             Validate();
         }
     }
@@ -4165,7 +4174,7 @@
     function DateComparisionJavascriptPopup(){
         var idNumber = $("#txtIdNumberPopup").val();
         var textLength = idNumber.length;
-        if (textLength == 13) {
+        if (textLength == 13 || textLength == 6) {
             ValidatePopup();
         }
     }
@@ -4173,8 +4182,8 @@
     function DependentExtendedIDNumberChanges() {
         var idNumber = $("#tab-5 #txtDependentIdNumber").val();
         var textLength = idNumber.length;
-        if (textLength == 13) {
-            ValidateDependentExtendedIDNumber();
+        if (textLength == 13 || textLength == 6) {
+            ValidateDependentID();
         }
     }
 
@@ -4201,7 +4210,9 @@
         //Ref: http://www.sadev.co.za/content/what-south-african-id-number-made
         // SA ID Number have to be 13 digits, so check the length
         if (idNumber.length != 13 || !isNumber(idNumber)) {
-            correct = false;
+            if (idNumber.length != 6) {
+                correct = false;
+            }
         }
 
         // get first 6 digits as a valid date
@@ -4221,25 +4232,27 @@
             correct = false;
         }
 
-        // get country ID for citzenship
-        var citzenship = parseInt(idNumber.substring(10, 11)) == 0 ? "Yes" : "No";
+        if (idNumber.length == 13) {
+            // get country ID for citzenship
+            var citzenship = parseInt(idNumber.substring(10, 11)) == 0 ? "Yes" : "No";
 
-        // apply Luhn formula for check-digits
-        var tempTotal = 0;
-        var checkSum = 0;
-        var multiplier = 1;
-        for (var i = 0; i < 13; ++i) {
-            tempTotal = parseInt(idNumber.charAt(i)) * multiplier;
-            if (tempTotal > 9) {
-                tempTotal = parseInt(tempTotal.toString().charAt(0)) + parseInt(tempTotal.toString().charAt(1));
+            // apply Luhn formula for check-digits
+            var tempTotal = 0;
+            var checkSum = 0;
+            var multiplier = 1;
+            for (var i = 0; i < 13; ++i) {
+                tempTotal = parseInt(idNumber.charAt(i)) * multiplier;
+                if (tempTotal > 9) {
+                    tempTotal = parseInt(tempTotal.toString().charAt(0)) + parseInt(tempTotal.toString().charAt(1));
+                }
+                checkSum = checkSum + tempTotal;
+                multiplier = (multiplier % 2 == 0) ? 1 : 2;
             }
-            checkSum = checkSum + tempTotal;
-            multiplier = (multiplier % 2 == 0) ? 1 : 2;
+            if ((checkSum % 10) != 0) {
+                //    error.append('<p>ID number does not appear to be authentic - check digit is not valid</p>');
+                correct = false;
+            };
         }
-        if ((checkSum % 10) != 0) {
-            //    error.append('<p>ID number does not appear to be authentic - check digit is not valid</p>');
-            correct = false;
-        };
 
 
         // if no error found, hide the error message
@@ -4247,6 +4260,7 @@
             $("#txtBirthDay").val(fullDate);
             $("#txtBirthDay").val(fullDate).datepicker('update');
 
+            if (idNumber.length)
             var genderCode = idNumber.substring(6, 10);
             var gender = parseInt(genderCode) < 5000 ? "Female" : "Male";
 
@@ -4254,11 +4268,11 @@
                 $("#tab-1 input[name=gender][value=1]").prop('checked', true);
             } else {
                 $("#tab-1 input[name=gender][value=0]").prop('checked', true);
-            }
+            } 
             CalculateAge(fullDate);
         }
         else {
-            if (idNumber != "") {
+            if (idNumber.length == 13) {
                 alert("Id Number invalid");
                 $("#txtIdNumber").val("")
                 $("#txtBirthDay").val("");
@@ -4343,6 +4357,85 @@
     }
     //#endregion Jeenal Changes End
 
+    function ValidateDependentID() {
+        var idNumber = $("#tab-5 #txtDependentIdNumber").val();
+        // assume everything is correct and if it later turns out not to be, just set this to false
+        var correct = true;
+
+        //Ref: http://www.sadev.co.za/content/what-south-african-id-number-made
+        // SA ID Number have to be 13 digits, so check the length
+        if (idNumber.length != 13 || !isNumber(idNumber)) {
+            if (idNumber.length != 6) {
+                correct = false;
+            }
+        }
+
+        // get first 6 digits as a valid date
+
+        var tempDate = new Date(idNumber.substring(0, 2), idNumber.substring(2, 4) - 1, idNumber.substring(4, 6));
+        var id_date = tempDate.getDate();
+        var id_month = tempDate.getMonth();
+        var dMonth = id_month + 1;
+        var dMonthName = tempDate.getMonthName();
+        //var id_year = tempDate.getFullYear();
+        var id_year = idNumber.substring(0, 2);
+
+        var cutoff = (new Date()).getFullYear() - 2000;
+        var fullDate = id_date + " " + dMonthName + " " + (id_year > cutoff ? '19' : '20') + id_year;
+        //var fullDate = id_date + " " + dMonthName + " " + id_year;
+        if (!((tempDate.getYear() == idNumber.substring(0, 2)) && (id_month == idNumber.substring(2, 4) - 1) && (id_date == idNumber.substring(4, 6)))) {
+            correct = false;
+        }
+
+        if (idNumber.length == 13) {
+            // get country ID for citzenship
+            var citzenship = parseInt(idNumber.substring(10, 11)) == 0 ? "Yes" : "No";
+
+            // apply Luhn formula for check-digits
+            var tempTotal = 0;
+            var checkSum = 0;
+            var multiplier = 1;
+            for (var i = 0; i < 13; ++i) {
+                tempTotal = parseInt(idNumber.charAt(i)) * multiplier;
+                if (tempTotal > 9) {
+                    tempTotal = parseInt(tempTotal.toString().charAt(0)) + parseInt(tempTotal.toString().charAt(1));
+                }
+                checkSum = checkSum + tempTotal;
+                multiplier = (multiplier % 2 == 0) ? 1 : 2;
+            }
+            if ((checkSum % 10) != 0) {
+                //    error.append('<p>ID number does not appear to be authentic - check digit is not valid</p>');
+                correct = false;
+            };
+        }
+
+
+        // if no error found, hide the error message
+        if (correct) {
+            $("#tab-5 #txtDependentDateOfBirth").val(fullDate);
+            $("#tab-5 #txtDependentDateOfBirth").val(fullDate).datepicker('update');
+
+            var genderCode = idNumber.substring(6, 10);
+            var gender = parseInt(genderCode) < 5000 ? "female" : "male";
+
+            if (gender == "female") {
+                $("#female").prop('checked', true);
+            } else {
+                $("#male").prop('checked', true);
+            }
+            CalculateDependentExtendedAge(fullDate);
+        }
+        else {
+            if (idNumber.length == 13) {
+                alert("Id Number invalid");
+                $("#tab-5 #txtDependentIdNumber").val("");
+                $("#tab-5 #txtDependentDateOfBirth").val("");
+                $("#tab-5 #txtDependentAge").val("");
+            }
+        }
+        return false;
+    }
+
     function ValidatePopup() {
         var idNumber = $("#txtIdNumberPopup").val();
         // assume everything is correct and if it later turns out not to be, just set this to false
@@ -4350,8 +4443,10 @@
 
         //Ref: http://www.sadev.co.za/content/what-south-african-id-number-made
         // SA ID Number have to be 13 digits, so check the length
-        if (idNumber.length != 13 || !isNumber(idNumber)) {
-            correct = false;
+        if (!idNumber.length == 13 || !isNumber(idNumber)) {
+            if (!idNumber.length == 6) {
+                correct = false;
+            }
         }
 
         // get first 6 digits as a valid date
@@ -4367,51 +4462,53 @@
         if (!((tempDate.getYear() == idNumber.substring(0, 2)) && (id_month == idNumber.substring(2, 4) - 1) && (id_date == idNumber.substring(4, 6)))) {
             correct = false;
         }
+        if (idNumber.length == 13){
+            // get country ID for citzenship
+            var citzenship = parseInt(idNumber.substring(10, 11)) == 0 ? "Yes" : "No";
 
-        // get country ID for citzenship
-        var citzenship = parseInt(idNumber.substring(10, 11)) == 0 ? "Yes" : "No";
-
-        // apply Luhn formula for check-digits
-        var tempTotal = 0;
-        var checkSum = 0;
-        var multiplier = 1;
-        for (var i = 0; i < 13; ++i) {
-            tempTotal = parseInt(idNumber.charAt(i)) * multiplier;
-            if (tempTotal > 9) {
-                tempTotal = parseInt(tempTotal.toString().charAt(0)) + parseInt(tempTotal.toString().charAt(1));
+            // apply Luhn formula for check-digits
+            var tempTotal = 0;
+            var checkSum = 0;
+            var multiplier = 1;
+            for (var i = 0; i < 13; ++i) {
+                tempTotal = parseInt(idNumber.charAt(i)) * multiplier;
+                if (tempTotal > 9) {
+                    tempTotal = parseInt(tempTotal.toString().charAt(0)) + parseInt(tempTotal.toString().charAt(1));
+                }
+                checkSum = checkSum + tempTotal;
+                multiplier = (multiplier % 2 == 0) ? 1 : 2;
             }
-            checkSum = checkSum + tempTotal;
-            multiplier = (multiplier % 2 == 0) ? 1 : 2;
-        }
-        if ((checkSum % 10) != 0) {
-            //    error.append('<p>ID number does not appear to be authentic - check digit is not valid</p>');
-            correct = false;
-        };
+            if ((checkSum % 10) != 0) {
+                //    error.append('<p>ID number does not appear to be authentic - check digit is not valid</p>');
+                correct = false;
+            };
 
 
-        // if no error found, hide the error message
-        if (correct) {
-            $("#txtDateOfBirthPopup").val(fullDate);
-            $("#txtDateOfBirthPopup").val(fullDate).datepicker('update');
+            // if no error found, hide the error message
+            if (correct) {
+                $("#txtDateOfBirthPopup").val(fullDate);
+                $("#txtDateOfBirthPopup").val(fullDate).datepicker('update');
 
-            var genderCode = idNumber.substring(6, 10);
-            var gender = parseInt(genderCode) < 5000 ? "Female" : "Male";
+                var genderCode = idNumber.substring(6, 10);
+                var gender = parseInt(genderCode) < 5000 ? "Female" : "Male";
 
-            if(gender == "Female")
-            {
-                $("input[name=genderPopup][value=female]").prop('checked',true)
+                if (gender == "Female") {
+                    $("input[name=genderPopup][value=female]").prop('checked', true)
 
-            }else{
-                $("input[name=genderPopup][value=male]").prop('checked',true)
+                } else {
+                    $("input[name=genderPopup][value=male]").prop('checked', true)
+                }
+                CalculateAgePopup(fullDate);
             }
-            CalculateAgePopup(fullDate);
-        }
-         else {
-            if (idNumber != "") {
-                alert("Id Number invalid");
-                $("#txtIdNumberPopup").val("");
-                $("#txtDateOfBirthPopup").val("");
-                $("#txtAgePopup").val("");
+
+            else {
+                if (idNumber.length == 13) {
+                    alert("Id Number invalid");
+                    $("#txtIdNumberPopup").val("");
+                    $("#txtDateOfBirthPopup").val("");
+                    $("#txtAgePopup").val("");
+                }
+                return false;
             }
         }
         return false;
