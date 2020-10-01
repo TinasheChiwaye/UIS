@@ -21,17 +21,17 @@
         </div>
         <div class="form-group">
             <label>ID Number<em>*</em></label>
-            @Html.TextBox("IDNumber_Beneficiary", "", new { @pattern = "/d*", @maxlength = "20", @id = "txtIDNumber_Beneficiary", @class = "form-control", @placeholder = "ID Number" })
+            @Html.TextBox("IDNumber_Beneficiary", "", new { @pattern = "/d*", @maxlength = "20", @id = "txtIDNumber_Beneficiary", @class = "form-control", @placeholder = "ID Number",  @onkeyup = "BeneficiaryIDNumberChanges();" })
         </div>
         <div class="form-group">
             <label>Date Of Birth<em>*</em></label>
-            @Html.TextBox("DateOfBirth_Beneficiary", "", new { @type = "text", @id = "txtDateOfBirth_Beneficiary", @class = "form-control", @placeholder = "Date Of Birth" })
+            @Html.TextBox("DateOfBirth_Beneficiary", "", new { @type = "text", @id = "txtDateOfBirth_Beneficiary", @class = "form-control beneficiary_DOB DatepickerSelection", @placeholder = "Date Of Birth" })
         </div>
     </div>
     <div class="col-lg-6">
         <div class="form-group">
             <label>Cellphone Number<em>*</em></label>
-            @Html.TextBox("Cellphone_Beneficiary", "", new { @type = "text", @id = "txtCellPhoneNumber_Beneficiary", @class = "form-control", @placeholder = "CellPhone Number" })
+            @Html.TextBox("Cellphone_Beneficiary", "", new { @type = "text", @id = "txtCellPhoneNumber_Beneficiary", @class = "form-control", @placeholder = "Cellphone Number" })
         </div>
         <div class="form-group">
             <label>Select Relationship Type</label>
@@ -281,6 +281,89 @@
                  dataType: 'html'
              }).success(function (result) { BeneficiaryDataTable.fnDraw(); }).error(function (xhr, status) { alert(status); });
          }
+    }
+
+    function BeneficiaryIDNumberChanges() {
+        var idNumber = $("#txtIDNumber_Beneficiary").val();
+        var textLength = idNumber.length;
+        if (textLength == 13 || textLength == 6) {
+            ValidateDependentID();
+        }
+    }
+
+    function ValidateDependentID() {
+        var idNumber = $("#txtIDNumber_Beneficiary").val();
+        // assume everything is correct and if it later turns out not to be, just set this to false
+        var correct = true;
+
+        //Ref: http://www.sadev.co.za/content/what-south-african-id-number-made
+        // SA ID Number have to be 13 digits, so check the length
+        if (idNumber.length != 13 || !isNumber(idNumber)) {
+            if (idNumber.length != 6) {
+                correct = false;
+            }
+        }
+
+        // get first 6 digits as a valid date
+
+        var tempDate = new Date(idNumber.substring(0, 2), idNumber.substring(2, 4) - 1, idNumber.substring(4, 6));
+        var id_date = tempDate.getDate();
+        var id_month = tempDate.getMonth();
+        var dMonth = id_month + 1;
+        var dMonthName = tempDate.getMonthName();
+        //var id_year = tempDate.getFullYear();
+        var id_year = idNumber.substring(0, 2);
+
+        var cutoff = (new Date()).getFullYear() - 2000;
+        var fullDate = id_date + " " + dMonthName + " " + (id_year > cutoff ? '19' : '20') + id_year;
+        //var fullDate = id_date + " " + dMonthName + " " + id_year;
+        if (!((tempDate.getYear() == idNumber.substring(0, 2)) && (id_month == idNumber.substring(2, 4) - 1) && (id_date == idNumber.substring(4, 6)))) {
+            correct = false;
+        }
+
+        if (idNumber.length == 13) {
+            // get country ID for citzenship
+            var citzenship = parseInt(idNumber.substring(10, 11)) == 0 ? "Yes" : "No";
+
+            // apply Luhn formula for check-digits
+            var tempTotal = 0;
+            var checkSum = 0;
+            var multiplier = 1;
+            for (var i = 0; i < 13; ++i) {
+                tempTotal = parseInt(idNumber.charAt(i)) * multiplier;
+                if (tempTotal > 9) {
+                    tempTotal = parseInt(tempTotal.toString().charAt(0)) + parseInt(tempTotal.toString().charAt(1));
+                }
+                checkSum = checkSum + tempTotal;
+                multiplier = (multiplier % 2 == 0) ? 1 : 2;
+            }
+            if ((checkSum % 10) != 0) {
+                //    error.append('<p>ID number does not appear to be authentic - check digit is not valid</p>');
+                correct = false;
+            };
+        }
+
+
+        // if no error found, hide the error message
+        if (correct) {
+            $("txtDateOfBirth_Beneficiary").val(fullDate);
+            $("txtDateOfBirth_Beneficiary").val(fullDate).datepicker('update');
+        }
+        else {
+            if (idNumber.length == 13) {
+                alert("Id Number invalid");
+                $("txtIDNumber_Beneficiary").val("");
+                $("txtDateOfBirth_Beneficiary").val("");
+            }
+        }
+        return false;
+    }
+
+    function BeneficiaryIDBasicValidation(IdNumber) {
+        if (IdNumber.value.length != 0 && IdNumber.value.length != 6 && IdNumber.value.length != 13) {
+            alert("Id Number is not valid");
+            IdNumber.value = "";
+        }
     }
 
 </script>
