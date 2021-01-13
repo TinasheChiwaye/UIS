@@ -128,6 +128,7 @@
     <Compile Include="MembersModel.cs" />
     <Compile Include="MembersPaymentModel.cs" />
     <Compile Include="MembersViewModel.cs" />
+    <Compile Include="NewBusinessModel.cs" />
     <Compile Include="NewMemberInvoiceModel.cs" />
     <Compile Include="NewRightsModel.cs" />
     <Compile Include="OtherPaymentModel.cs" />

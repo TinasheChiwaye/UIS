@@ -767,6 +767,8 @@
     <Content Include="Areas\Admin\Views\Claims\_ClaimDashboard.cshtml" />
     <Content Include="Areas\Admin\Views\MemberPayments\Index.cshtml" />
     <Content Include="Areas\Admin\Views\MemberPayments\ManageMembersPayment.cshtml" />
+    <Content Include="Areas\Admin\Views\NewBusiness\GetQuote.cshtml" />
+    <Content Include="Areas\Admin\Views\NewBusiness\Index.cshtml" />
     <None Include="DevDataDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DevDataDataSet.Designer.cs</LastGenOutput>
@@ -2004,6 +2006,7 @@
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\MemberPaymentsController.cs" />
     <Compile Include="Areas\Admin\Controllers\MembersController.cs" />
+    <Compile Include="Areas\Admin\Controllers\NewBusinessController.cs" />
     <Compile Include="Areas\Admin\Controllers\OtherPaymentController.cs" />
     <Compile Include="Areas\Admin\Controllers\ParlourController.cs" />
     <Compile Include="Areas\Admin\Controllers\PaymentsController.cs" />
@@ -2451,9 +2454,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>3863</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:3865/</IISUrl>
-          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://localhost:3865/</IISAppRootUrl>
+          <IISUrl>http://localhost:8082/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
