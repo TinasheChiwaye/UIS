@@ -73,9 +73,10 @@
                                         <tr>
                                             <th>Scheme</th>
                                             <th>Book </th>
-                                            <th>Policy Number</th>
                                             <th>ID Number</th>
+                                            <th>Policy Number</th>
                                             <th>Full Name</th>
+                                            <th>EasyPayNo</th>
                                             <th>Cover Date</th>
                                             <th>Policy Status</th>
                                             <th>Actions</th>
@@ -137,7 +138,7 @@
         var pkMemberId = null;
         function UpdateStatus(data1) {
             var drpValue = data1.PolicyStatus;
-            pkMemberId = data1.pkiMemberID
+            pkMemberId = data1.pkiMemberID            
             jQuery('select#ddlPolicyStatus option').each(function () {
                 if (jQuery(this).text() == drpValue) {
                     jQuery(this).prop('selected', 'selected');
@@ -251,7 +252,7 @@
                             { "data": "IDNumber", "name": "ID No", "autoWidth": true },
                             { "data": "MemeberNumber", "name": "Policy No", "autoWidth": true },
                             { "data": "FullNames", "title": "Full Name", "name": "Member", "autoWidth": true },
-                            //{ "data": "EasyPayNo", "name": "EasyPayNo", "autoWidth": true },
+                            { "data": "EasyPayNo", "name": "EasyPayNo", "autoWidth": true },
                             //{ "data": "Cellphone", "name": "Cellphone", "autoWidth": true },
                             {
                                 "data": "CoverDate", "name": "Coverdate", "autoWidth": true,
@@ -299,7 +300,8 @@
                                          //var ParlourId = full.parlourid;
                                          var editMemberUrl = '<div class="col-sm-4 text-center"><a class="btn btn-w-m btn-primary" href="@Html.Raw(Url.Action("ManageMembersPayment", "MemberPayments", new { id = "MemeberNumberVal", ParlourID = "ParlourId" }))"">Make payment</a></div>';//onclick="EditOtherPayment(\'' +full.IDNumber+','+full.pkiMemberID+ '\')
                                          editMemberUrl = editMemberUrl.replace("MemeberNumberVal", full.pkiMemberID);
-                                         editMemberUrl = editMemberUrl.replace("ParlourId", full.parlourid);
+                                            editMemberUrl = editMemberUrl.replace("ParlourId", full.parlourid);
+                                         //editMemberUrl = editMemberUrl.replace("ParlourId");
 
                                          dom = dom + editMemberUrl;
                                         }
@@ -309,7 +311,7 @@
                                     }
                                     else {
                                         //tableConfigs.table.DataTable().columns([8]).visible(false);
-                                        table.DataTable().columns([7]).visible(false)
+                                        table.DataTable().columns([8]).visible(false)
                                         return "";
                                     }
                                 }
@@ -324,10 +326,10 @@
 
                 var table = $('#memberDataTable');
                 if (hasEditRights == 'True' || hasDeleteRights == 'True') {
-                    table.DataTable().columns([7]).visible(true)
+                    table.DataTable().columns([8]).visible(true)
                 }
                 else {
-                    table.DataTable().columns([7]).visible(false)
+                    table.DataTable().columns([8]).visible(false)
                 }
 
                 $('#PageSize').change(function () {

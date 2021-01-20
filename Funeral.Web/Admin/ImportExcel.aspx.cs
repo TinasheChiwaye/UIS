@@ -586,7 +586,7 @@ namespace Funeral.Web.Admin
         {
             
             string ExportTypeExtensions = "xls";
-            string ReportName = "ARL Import Data Exception Report";//Copy of ARL Import Data Exception Report
+            string ReportName = "Copy of ARL Import Data Exception Report";//Copy of ARL Import Data Exception Report - ARL Import Data Exception Report
             Warning[] warnings;
             string[] streamids;
             string mimeType;

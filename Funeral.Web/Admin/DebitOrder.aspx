@@ -156,7 +156,7 @@
                                     <PagerStyle CssClass="pagination-ys" />
                                     <Columns>                         
                                         
-                                        <asp:BoundField DataField="pkiDebitBatch" HeaderText="pkiDebitBatch" SortExpression="pkiDebitBatch" ReadOnly="True" ItemStyle-CssClass="visible-lg" HeaderStyle-CssClass="visible-lg" Visible="False">
+                                        <asp:BoundField DataField="pkiDebitBatch" HeaderText="DebitBatch" SortExpression="pkiDebitBatch" ReadOnly="True" ItemStyle-CssClass="visible-lg" HeaderStyle-CssClass="visible-lg" >
                                             <HeaderStyle CssClass="visible-lg"></HeaderStyle>
 
                                            <ItemStyle CssClass="visible-lg"></ItemStyle>

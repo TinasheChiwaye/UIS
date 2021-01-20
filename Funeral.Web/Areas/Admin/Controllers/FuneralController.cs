@@ -149,6 +149,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
         [PageRightsAttribute(CurrentPageId = 10)]
         public ActionResult Save(FuneralModel funeralModel)
         {
+            var funeral = FuneralBAL.SelectFuneralBypkid(funeralModel.pkiFuneralID, ParlourId);
             try
             {
                 if (ModelState.IsValid)
@@ -156,6 +157,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
                     FormsIdentity formIdentity = (FormsIdentity)User.Identity;
                     funeralModel.LastModified = System.DateTime.Now;
                     funeralModel.ModifiedUser = formIdentity.Name;
+                    funeralModel.FkiClaimID = funeral.FkiClaimID;
+                    funeralModel.MemberType = funeral.MemberType;
                     if (funeralModel.pkiFuneralID != 0)
                     {
                         if (funeralModel.TimeOfFuneral == null)

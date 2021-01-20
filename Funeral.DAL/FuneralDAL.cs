@@ -81,7 +81,7 @@ namespace Funeral.DAL
         public static int UpdateFuneral(FuneralModel model)
         {
             string query = "SaveFuneral_New";
-            DbParameter[] ObjParam = new DbParameter[26];
+            DbParameter[] ObjParam = new DbParameter[28];
             ObjParam[0] = new DbParameter("@pkiFuneralID", DbParameter.DbType.Int, 0, model.pkiFuneralID);
             ObjParam[1] = new DbParameter("@FullNames", DbParameter.DbType.NVarChar, 0, model.FullNames);
             ObjParam[2] = new DbParameter("@Surname", DbParameter.DbType.NVarChar, 0, model.Surname);
@@ -108,6 +108,8 @@ namespace Funeral.DAL
             ObjParam[23] = new DbParameter("@ContactPersonNumber", DbParameter.DbType.NVarChar, 0, model.ContactPersonNumber);
             ObjParam[24] = new DbParameter("@BurialOrderNo", DbParameter.DbType.NVarChar, 0, model.BurialOrderNo);
             ObjParam[25] = new DbParameter("@MemeberNumber", DbParameter.DbType.NVarChar, 0, model.MemeberNumber);
+            ObjParam[26] = new DbParameter("@FkiClaimID", DbParameter.DbType.NVarChar, 0, model.FkiClaimID);            
+            ObjParam[27] = new DbParameter("@MemberType", DbParameter.DbType.NVarChar, 0, model.MemberType);
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
         }
         public static SqlDataReader SelectFuneralBypkid(int ID, Guid ParlourId)

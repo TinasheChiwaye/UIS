@@ -1,8 +1,9 @@
-﻿@{
-    ViewBag.Title = "Member Search";
+﻿@model Funeral.Model.Search.MemberSearch
+
+@{
+    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@model Funeral.Model.Search.MemberSearch
 
 @Styles.Render("~/Content/datatablecss")
 <script src="~/Scripts/plugins/dateformat/DateFormat.js"></script>  <!-- https://gist.github.com/eralston/968809 -->
@@ -21,7 +22,7 @@
                         <div class="col-lg-4" id="dvAdministrator">
                             <div class="form-group">
                                 <label>Scheme: </label>
-                                @Html.DropDownListFor(m => m.CompanyId, new SelectList(ViewBag.Companies, "parlourid", "ApplicationName"),"Choose Parlour", new { @class = "form-control" })
+                                @Html.DropDownListFor(m => m.CompanyId, new SelectList(ViewBag.Companies, "parlourid", "ApplicationName"), "Choose Parlour", new { @class = "form-control" })
                             </div>
                         </div>
                         <div class="col-sm-3">
@@ -42,7 +43,7 @@
                             </div>
                         </div>
                     </div>
-                   <div class="row">
+                    <div class="row">
                         <div class="col-lg-2">
                             <div class="form-group">
                                 <label>Status: </label>
@@ -69,12 +70,12 @@
                                 @Html.EditorFor(model => model.PageSize, new { htmlAttributes = new { @class = "hidden", id = "PageSize1" } })
                                 <table id="memberDataTable" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
                                     <thead>
-                                        <tr>                                            
+                                        <tr>
                                             <th>Scheme</th>
                                             <th>Book </th>
                                             <th>ID Number</th>
-                                            <th>Policy Number</th>                                              
-                                            <th>Full Name</th>                                            
+                                            <th>Policy Number</th>
+                                            <th>Full Name</th>
                                             <th>Cover Date</th>
                                             <th>Policy Status</th>
                                             <th>Actions</th>
@@ -132,7 +133,7 @@
     }
 
 
-        <script type="text/javascript">
+    <script type="text/javascript">
         var pkMemberId = null;
         function UpdateStatus(data1) {
             var drpValue = data1.PolicyStatus;
@@ -165,10 +166,10 @@
                 }
             })
         });
-        
+
         //$.noConflict();
         jQuery(document).ready(function ($) {
-            var hasRight = '@ViewBag.HasAccess';            
+            var hasRight = '@ViewBag.HasAccess';
             if (hasRight == 'false') {
                 var url = '@Url.Action("Error403", "Error", new { })';
                 window.location.href = url;
@@ -380,7 +381,7 @@
                 }
             });
         }
-        </script>
+    </script>
     @*</form>*@
 }
 <style>
@@ -396,3 +397,4 @@
             color: rgba(50, 50, 50, 0.5);
         }
 </style>
+
