@@ -65,18 +65,36 @@
                                             
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" Display="None" ForeColor="Red" ControlToValidate="TxtContactNumber" ErrorMessage="Please enter ContactNumber" ValidationGroup="valUnderwriterSetup" />
                                 </div>
+                                
+                                 <div class="form-group">
+                                    <label>FSPNNumber</label>
+                                    <asp:TextBox runat="server" class="form-control" ID="txtFSPNNumber"></asp:TextBox>
+                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" Display="None" ForeColor="Red" ControlToValidate="txtFSPNNumber" ErrorMessage="Please Enter FSPN Number" ValidationGroup="valUnderwriterSetup" />  
+                                      </div>
+                                 <div class="form-group">
+                                        <label>Select Underwriter Logo</label>
+                                        <asp:FileUpload ID="fuUnderwriterLogo" runat="server" class="form-control" />
+                                        <%--<asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtcompanyRules" ID="RequiredFieldValidator20" ForeColor="red" runat="server" ErrorMessage="Please enter Company Rules"></asp:RequiredFieldValidator>--%>
+                                 </div>
+                                <p class="formfield">
+                                <label for="textarea">Logo</label>
+                                <asp:Image runat="server" ID="Preview" Height="150px" Width="100%" />
+
+                                </p>
                                     <%--<asp:TextBox runat="server" class="form-control" ID="TxtCoverAgeFrom"></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ForeColor="Red" ControlToValidate="txtCoverAgeFrom" ErrorMessage="Please enter Cover Age From" ValidationGroup="valUnderwriterPremiums" />--%>
+                                <asp:Button runat="server" ID="btnUpload" CssClass="btn btn-sm btn-primary pull-right" OnClick="btnUploadLogo_Click" Text="Upload" Enabled="false" />
+
                                    
                                 </div>
+
                              <div class="col-lg-6">
 
                                   <div class="form-group">
                                     <label>Contact Person</label>
                                     <asp:TextBox runat="server" class="form-control" ID="TxtContactPerson"></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" Display="None" ForeColor="Red" ControlToValidate="TxtContactPerson" ErrorMessage="Please enter Contact Person" ValidationGroup="valUnderwriterSetup" />
-                                </div>
-                                 
+                                </div>                    
                                  
 
                                  <div class="form-group">
@@ -97,17 +115,12 @@
                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" Display="None" ForeColor="Red" ControlToValidate="TxtContactEmail" ErrorMessage="Please Enter Contact Email" ValidationGroup="valUnderwriterSetup" />
                                      </div>
 
-                                 <div class="form-group">
-                                    <label>FSPNNumber</label>
-                                    <asp:TextBox runat="server" class="form-control" ID="txtFSPNNumber"></asp:TextBox>
-                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" Display="None" ForeColor="Red" ControlToValidate="txtFSPNNumber" ErrorMessage="Please Enter FSPN Number" ValidationGroup="valUnderwriterSetup" />  
-                                      </div>
-
                                 <div class="form-group">
                                     <%--<label>FSPNNumber</label>
                                     <asp:TextBox runat="server" class="form-control" ID="TextBox1"></asp:TextBox>
                                         </div>--%>
                                  </div>
+                                 
                                </div>
                              <div class="col-lg-12">
                             <div class="form-group">

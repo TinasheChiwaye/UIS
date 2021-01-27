@@ -16,6 +16,15 @@ namespace Funeral.DAL
             //return 1;
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "UploadApplicationLogo", ObjParam));
         }
+        public static int UploadUnderwriterLogo(UnderwriterSetupModel model)
+        {
+            DbParameter[] ObjParam = new DbParameter[3];
+            ObjParam[0] = new DbParameter("@UnderwriterLogoPath", DbParameter.DbType.VarChar, 0, model.UnderwriterLogoPath);
+            ObjParam[1] = new DbParameter("@UnderwriterLogo", DbParameter.DbType.Image, 0, model.UnderwriterLogo);
+            ObjParam[2] = new DbParameter("@PkiUnderWriterSetupId", DbParameter.DbType.Int, 0, model.PkiUnderWriterSetupId);
+            //return 1;
+            return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "UploadUnderwriterLogo", ObjParam));
+        }
         public static SqlDataReader SaveApplication(ApplicationSettingsModel model)
         {
             AdditionalMemberInfoModel model1 = new AdditionalMemberInfoModel();

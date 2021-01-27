@@ -3,6 +3,7 @@ using Funeral.Model;
 using Funeral.Web.App_Start;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -119,6 +120,7 @@ namespace Funeral.Web.Tools
 
 
                     int retID = UnderwriterSetupBAL.SaveUnderwriterSetup(Setupmodel);
+                    UploadImage(Setupmodel.PkiUnderWriterSetupId);
                     PkiUnderWriterSetupId = retID;
                     if(PkiUnderWriterSetupId != 0)
                     {
@@ -137,7 +139,78 @@ namespace Funeral.Web.Tools
                // ScriptManager.RegisterStartupScript(this, this.GetType(), "goToTab512", "goToTab(5)", true);
             }
         }
+        public void UploadImage(int PkiApplicationID)
+        {
+            if (fuUnderwriterLogo.HasFile)
+            {
 
+
+                string filename = Path.GetFileName(fuUnderwriterLogo.PostedFile.FileName);
+                string contentType = fuUnderwriterLogo.PostedFile.ContentType;
+                using (Stream fs = fuUnderwriterLogo.PostedFile.InputStream)
+                {
+                    using (BinaryReader br = new BinaryReader(fs))
+                    {
+                        byte[] bytes = br.ReadBytes((Int32)fs.Length);
+
+                        System.Drawing.Image Img = System.Drawing.Image.FromStream(fuUnderwriterLogo.PostedFile.InputStream);
+
+                        int H = 100;
+                        int W = 100;
+
+
+
+                        double ratioX = (double)Img.Height / (double)H;
+                        double ratioY = (double)Img.Width / (double)W;
+                        double ratio = ratioX < ratioY ? ratioX : ratioY;
+
+                        int newH = Convert.ToInt32(H * ratio);
+                        int newW = Convert.ToInt32(W * ratio);
+
+
+                        UnderwriterSetupModel model = new UnderwriterSetupModel();
+                        model.PkiUnderWriterSetupId = PkiUnderWriterSetupId;
+                        model.UnderwriterLogo = bytes;
+                        model.UnderwriterLogoPath = filename;
+
+                        PkiUnderWriterSetupId = ToolsSetingBAL.UploadUnderwriterLogo(model);
+
+                        string base64String = Convert.ToBase64String(bytes, 0, bytes.Length);
+                        Preview.ImageUrl = "data:image/png;base64," + Convert.ToBase64String(createthumbnail(bytes, newH, newW), 0, (createthumbnail(bytes, newH, newW).Length));
+                    }
+                }
+            }
+        }
+        public static byte[] createthumbnail(byte[] image, int thumbheight, int thumbwidth)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (System.Drawing.Image thumbnail = System.Drawing.Image.FromStream(new MemoryStream(image)).GetThumbnailImage(thumbheight, thumbwidth, null, new IntPtr()))
+                {
+                    thumbnail.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                    return ms.ToArray();
+                }
+            }
+        }
+        protected void btnUploadLogo_Click(object sender, EventArgs e)
+        {
+            //if (PaymentHistory.Visible == false || PkiUnderWriterSetupId > 0)
+            //{
+            //    UploadImage(PkiUnderWriterSetupId);
+
+            //}
+            if (PkiUnderWriterSetupId > 0)
+            {
+                UploadImage(PkiUnderWriterSetupId);
+
+            }
+            else
+            {
+                ShowMessage(ref lblMessage, MessageType.Danger, "Please select Company Details after upload image..");
+                lblMessage.Visible = true;
+            }
+            //UploadImage(ApplicationID);
+        }
         public void BindUndewriterSetupToUpdate()
         {
             // UnderwriterPremiumModel model = client.EditPlanbyID(UnderwriterPremiumId, ParlourId);
@@ -156,6 +229,16 @@ namespace Funeral.Web.Tools
                 TxtAddressLine2.Text = model.AddressLine2.ToString();
                 TxtCity.Text = model.City.ToString();
 
+                if (model.UnderwriterLogo != null)
+                {
+                    string base64String = Convert.ToBase64String(model.UnderwriterLogo, 0, model.UnderwriterLogo.Length);
+                    Preview.ImageUrl = "data:image/png;base64," + base64String;
+                }
+                else
+                {
+                    Preview.ImageUrl = string.Empty;
+                }
+
                 //ddlPlanName.SelectedIndex = ddlPlanName.Items.IndexOf(ddlPlanName.Items.FindByValue(model.PlanID.ToString()));
                 //  txtDescription.Text = model.PlanDesc;
                 try
@@ -173,6 +256,7 @@ namespace Funeral.Web.Tools
 
                 btnSubmite.Text = "Update";
             }
+            btnUpload.Enabled = true;
         }
 
 
