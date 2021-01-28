@@ -730,7 +730,8 @@ namespace Funeral.DAL
             ObjParam[13] = new DbParameter("@StartDate", DbParameter.DbType.DateTime, 0, model.StartDate);
             ObjParam[14] = new DbParameter("@DependentStatus", DbParameter.DbType.NVarChar, 0, model.DependentStatus);
             ObjParam[15] = new DbParameter("@Cover", DbParameter.DbType.Decimal, 0, model.Cover);
-            ObjParam[16] = new DbParameter("@Passport", DbParameter.DbType.VarChar, 0, model.Passport);
+            ObjParam[16] = new DbParameter("@Passport", DbParameter.DbType.VarChar, 0, String.IsNullOrWhiteSpace(model.Passport) ? (object)DBNull.Value : (object)model.Passport);
+
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "SaveFamilyDependency_NEW", ObjParam));
         }
         public static DataSet CheckFamilyDependency(FamilyDependencyModel model)

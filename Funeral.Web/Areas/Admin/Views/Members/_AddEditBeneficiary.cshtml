@@ -173,6 +173,8 @@
         $("#txtIDNumber_Beneficiary").val("");
         $("#txtCode_Beneficiary").val("");
         $("#pkiBeneficiaryID").val("");
+        $("#txtCellPhoneNumber_Beneficiary").val("");
+        $("#txtPercentages_Beneficiary").val("");
     }
     function bindBeneficiaryDatatable()
     {
@@ -253,7 +255,7 @@
         });
     }
     function EditBeneficiary(Beneficiary) {
-        debugger;
+        //debugger;
         $("#txtpkiBeneficiaryID").val(Beneficiary.pkiBeneficiaryID);
         $("#ddlDependentDependencyType_Beneficiary").val(Beneficiary.DependencyType_Beneficiary);
         $("#txtFullName_Beneficiary").val(Beneficiary.FullName_Beneficiary);

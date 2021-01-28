@@ -30,7 +30,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/09/2020 13:21:57</publishTime>
     </File>
     <File Include="Admin/DebitOrder.aspx">
-      <publishTime>07/01/2020 12:57:00</publishTime>
+      <publishTime>12/02/2020 14:33:09</publishTime>
     </File>
     <File Include="Admin/Default.aspx">
       <publishTime>03/09/2020 13:21:57</publishTime>
@@ -339,7 +339,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/25/2020 13:32:03</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Claims/ClaimAddEdit.cshtml">
-      <publishTime>09/02/2020 15:17:01</publishTime>
+      <publishTime>11/19/2020 10:13:41</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Claims/ClaimDashboard.cshtml">
       <publishTime>06/30/2020 15:07:51</publishTime>
@@ -348,7 +348,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/09/2020 13:22:00</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Claims/Index.cshtml">
-      <publishTime>06/23/2020 11:19:20</publishTime>
+      <publishTime>01/11/2021 09:42:42</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Claims/_ChangeAssignedForm.cshtml">
       <publishTime>03/09/2020 13:22:00</publishTime>
@@ -393,7 +393,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/01/2020 12:26:21</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Funeral/FuneralServiceSelect.cshtml">
-      <publishTime>09/01/2020 11:20:48</publishTime>
+      <publishTime>11/25/2020 10:06:59</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Funeral/Index.cshtml">
       <publishTime>03/09/2020 13:22:01</publishTime>
@@ -420,7 +420,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/09/2020 13:22:01</publishTime>
     </File>
     <File Include="Areas/Admin/Views/GroupPayment/_GroupPaymentList.cshtml">
-      <publishTime>03/09/2020 13:22:01</publishTime>
+      <publishTime>09/23/2020 16:15:07</publishTime>
     </File>
     <File Include="Areas/Admin/Views/GroupPayment/_PaymentList.cshtml">
       <publishTime>08/24/2020 15:53:45</publishTime>
@@ -432,7 +432,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/09/2020 13:22:01</publishTime>
     </File>
     <File Include="Areas/Admin/Views/ImportData/MappedColumnList.cshtml">
-      <publishTime>03/09/2020 13:22:01</publishTime>
+      <publishTime>10/13/2020 10:37:34</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Login/ForgotPassword.cshtml">
       <publishTime>03/09/2020 13:22:01</publishTime>
@@ -441,19 +441,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/09/2020 13:22:01</publishTime>
     </File>
     <File Include="Areas/Admin/Views/MemberPayments/Index.cshtml">
-      <publishTime>09/15/2020 13:57:51</publishTime>
+      <publishTime>01/25/2021 12:18:54</publishTime>
     </File>
     <File Include="Areas/Admin/Views/MemberPayments/ManageMembersPayment.cshtml">
       <publishTime>08/24/2020 12:59:43</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Members/Index.cshtml">
-      <publishTime>09/15/2020 13:52:50</publishTime>
+      <publishTime>01/25/2021 11:33:14</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Members/ManageMembers.cshtml">
-      <publishTime>09/03/2020 09:02:21</publishTime>
+      <publishTime>01/20/2021 15:39:33</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Members/_AddEditBeneficiary.cshtml">
-      <publishTime>09/16/2020 10:26:47</publishTime>
+      <publishTime>09/21/2020 10:40:23</publishTime>
+    </File>
+    <File Include="Areas/Admin/Views/NewBusiness/Index.cshtml">
+      <publishTime>01/11/2021 11:04:37</publishTime>
     </File>
     <File Include="Areas/Admin/Views/OtherPayment/EditOtherPayment.cshtml">
       <publishTime>03/09/2020 13:22:01</publishTime>
@@ -513,7 +516,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/09/2020 13:22:01</publishTime>
     </File>
     <File Include="Areas/Admin/Views/SchemaPayment/_SchemaList.cshtml">
-      <publishTime>06/30/2020 15:07:51</publishTime>
+      <publishTime>12/01/2020 12:24:41</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Shared/_Layout.cshtml">
       <publishTime>09/15/2020 13:29:09</publishTime>
@@ -894,43 +897,43 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/02/2019 04:39:52</publishTime>
     </File>
     <File Include="bin/Funeral.BAL.dll">
-      <publishTime>09/16/2020 15:36:19</publishTime>
+      <publishTime>01/27/2021 11:59:48</publishTime>
     </File>
     <File Include="bin/Funeral.BAL.dll.config">
       <publishTime>03/09/2020 13:21:54</publishTime>
     </File>
     <File Include="bin/Funeral.BAL.pdb">
-      <publishTime>09/16/2020 15:36:19</publishTime>
+      <publishTime>01/27/2021 11:59:48</publishTime>
     </File>
     <File Include="bin/Funeral.DAL.dll">
-      <publishTime>09/16/2020 15:36:19</publishTime>
+      <publishTime>01/27/2021 11:59:48</publishTime>
     </File>
     <File Include="bin/Funeral.DAL.dll.config">
-      <publishTime>08/24/2020 11:03:02</publishTime>
+      <publishTime>12/01/2020 10:54:50</publishTime>
     </File>
     <File Include="bin/Funeral.DAL.pdb">
-      <publishTime>09/16/2020 15:36:19</publishTime>
+      <publishTime>01/27/2021 11:59:48</publishTime>
     </File>
     <File Include="bin/Funeral.Model.dll">
-      <publishTime>09/16/2020 15:36:18</publishTime>
+      <publishTime>01/27/2021 11:59:47</publishTime>
     </File>
     <File Include="bin/Funeral.Model.dll.config">
       <publishTime>03/09/2020 13:21:56</publishTime>
     </File>
     <File Include="bin/Funeral.Model.pdb">
-      <publishTime>09/16/2020 15:36:18</publishTime>
+      <publishTime>01/27/2021 11:59:47</publishTime>
     </File>
     <File Include="bin/Funeral.Validation.dll">
-      <publishTime>09/16/2020 15:36:17</publishTime>
+      <publishTime>01/27/2021 11:59:47</publishTime>
     </File>
     <File Include="bin/Funeral.Validation.pdb">
-      <publishTime>09/16/2020 15:36:17</publishTime>
+      <publishTime>01/27/2021 11:59:47</publishTime>
     </File>
     <File Include="bin/Funeral.Web.dll">
-      <publishTime>09/16/2020 15:36:23</publishTime>
+      <publishTime>01/27/2021 11:59:50</publishTime>
     </File>
     <File Include="bin/Funeral.Web.pdb">
-      <publishTime>09/16/2020 15:36:23</publishTime>
+      <publishTime>01/27/2021 11:59:50</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.Identity.Core.dll">
       <publishTime>04/03/2015 17:07:22</publishTime>
@@ -3546,7 +3549,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/09/2020 13:22:14</publishTime>
     </File>
     <File Include="Tools/UnderwriterSetup.aspx">
-      <publishTime>03/09/2020 13:22:14</publishTime>
+      <publishTime>01/26/2021 12:16:31</publishTime>
     </File>
     <File Include="Tools/UserSetup.aspx">
       <publishTime>06/19/2020 11:20:54</publishTime>
@@ -3600,7 +3603,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/09/2020 13:22:14</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/16/2020 15:36:27</publishTime>
+      <publishTime>01/27/2021 11:59:52</publishTime>
     </File>
   </ItemGroup>
 </Project>
