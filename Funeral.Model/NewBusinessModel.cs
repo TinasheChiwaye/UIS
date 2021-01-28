@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
 namespace Funeral.Model
 {
-    public class MembersModel
+    public class NewBusinessModel
     {
-        public MembersModel()
+        public NewBusinessModel()
         {
 
             CreateDate = System.DateTime.Now;

@@ -86,6 +86,11 @@ namespace Funeral.BAL
             DataTable dr = MembersDAL.GetSocietyByParlourIddt(parlourid);
             return FuneralHelper.DataTableMapToList<SocietyModel>(dr);
         }
+        public static List<PlanModel> GetPlanByParlourId(Guid parlourid)
+        {
+            DataTable dr = MembersDAL.GetPlanByParlourIddt(parlourid);
+            return FuneralHelper.DataTableMapToList<PlanModel>(dr);
+        }
         public static List<SocietyModel> GetAllSociety(Guid parlourid)
         {
             DataTable dr = MembersDAL.GetAllSocietydt(parlourid);

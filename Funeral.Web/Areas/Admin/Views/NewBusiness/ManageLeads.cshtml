@@ -273,16 +273,36 @@
                         <div class="panel-heading">
                             <div class="panel-options" id="Tabs">
                                 <ul class="nav nav-tabs" id="myTab">
-                                    <li class="active" id="tab1"><a data-toggle="tab" href="#tab-1" id="atab1" aria-expanded="true">Personal Details</a></li>
-                                    <li class="" id="tab2"><a data-toggle="tab" href="#tab-2" id="atab2" aria-expanded="false">Member Address</a></li>
-                                    <li class="" id="tab3"><a data-toggle="tab" href="#tab-3" id="atab3" aria-expanded="false">Policy Details</a></li>
-                                    <li class="" id="tab9"><a data-toggle="tab" href="#tab-9" id="atab9" aria-expanded="false" >Product</a></li>
-                                    <li class="" id="tab4"><a data-toggle="tab" href="#tab-4" id="atab4" aria-expanded="false">Banking Details</a></li>
-                                    <li class="" id="tab5"><a data-toggle="tab" href="#tab-5" id="atab5" aria-expanded="false">Dependent & Extended Family </a></li>
-                                    <li class="" id="tab6"><a data-toggle="tab" href="#tab-6" id="atab6" aria-expanded="false">Payment History</a></li>
-                                    <li class="" id="tab7"><a data-toggle="tab" href="#tab-7" id="atab7" aria-expanded="false">Note</a></li>
-                                    <li class="" id="tab8"><a data-toggle="tab" href="#tab-8" id="atab8" aria-expanded="false">Supporting Documents</a></li>
-                                    <li class="" id="tab10"><a data-toggle="tab" href="#tab-10" id="atab10" aria-expanded="false">Beneficiary</a></li>
+                                    <li class="active" id="tab1">
+                                        <a data-toggle="tab" href="#tab-1" id="atab1" aria-expanded="true">Personal Details</a>
+                                    </li>
+                                    <li class="" id="tab2">
+                                        <a data-toggle="tab" href="#tab-2" id="atab2" aria-expanded="false">Member Address</a>
+                                    </li>
+                                    <li class="" id="tab3">
+                                        <a data-toggle="tab" href="#tab-3" id="atab3" aria-expanded="false">Policy Details</a>
+                                    </li>
+                                    <li class="" id="tab9">
+                                        <a data-toggle="tab" href="#tab-9" id="atab9" aria-expanded="false">Product</a>
+                                    </li>
+                                    <li class="" id="tab4">
+                                        <a data-toggle="tab" href="#tab-4" id="atab4" aria-expanded="false">Banking Details</a>
+                                    </li>
+                                    <li class="" id="tab5">
+                                        <a data-toggle="tab" href="#tab-5" id="atab5" aria-expanded="false">Dependent & Extended Family </a>
+                                    </li>
+                                    <li class="" id="tab6">
+                                        <a data-toggle="tab" href="#tab-6" id="atab6" aria-expanded="false">Payment History</a>
+                                    </li>
+                                    <li class="" id="tab7">
+                                        <a data-toggle="tab" href="#tab-7" id="atab7" aria-expanded="false">Note</a>
+                                    </li>
+                                    <li class="" id="tab8">
+                                        <a data-toggle="tab" href="#tab-8" id="atab8" aria-expanded="false">Supporting Documents</a>
+                                    </li>
+                                    <li class="" id="tab10">
+                                        <a data-toggle="tab" href="#tab-10" id="atab10" aria-expanded="false">Beneficiary</a>
+                                    </li>
 
                                 </ul>
                             </div>
@@ -333,6 +353,13 @@
                                                     {
                                                         <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="DateComparisionJavascriptFun();" onblur="IdNumberBasicValidation(txtIdNumber);">
                                                     }
+
+
+                                                    //DataTable dr = MembersDAL.GetMemberByIDdt(ID, ParlourId);
+
+                                                    //MembersViewModel objViewModel = new MembersViewModel();
+                                                    //var membersList = FuneralHelper.DataTableMapToList<MembersModel>(dr, true);
+
                                                 }
                                             </div>
                                             <div class="form-group">
@@ -485,9 +512,7 @@
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label>Policy Agent or Broker</label>
-
-                                                                         @Html.DropDownList("AgentList", Model.AgentList, "Select", new { Name = "Agent", @id = "ddlAgent", @style = "width:100%", @class = "form-control", @disabled = "enabled" })
-
+                                                                        @Html.DropDownList("AgentList", Model.AgentList, "Select", new { Name = "Agent", @id = "ddlAgent", @style = "width:100%", @class = "form-control" })
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label>Total Premium</label>
@@ -696,39 +721,11 @@
 
                                             <div class="form-group">
                                                 <label>Policy Agent or Broker</label>
-
-                                                @{
-                                                    if (Model.IsAdministrator == true || Model.IsSuperUser == true)
-                                                    {
-                                                        @Html.DropDownList("AgentList", Model.AgentList, "Select", new { Name = "Agent", @id = "ddlAgent", @style = "width:100%", @class = "form-control" })
-                                                    }
-                                                    else if (Model.Member.pkiMemberID > 0)
-                                                    {
-                                                        @Html.DropDownList("AgentList", Model.AgentList, "Select", new { Name = "Agent", @id = "ddlAgent", @style = "width:100%", @class = "form-control", @disabled = "false" })
-                                                    }
-                                                    else
-                                                    {
-                                                        @Html.DropDownList("AgentList", Model.AgentList, "Select", new { Name = "Agent", @id = "ddlAgent", @style = "width:100%", @class = "form-control" })
-                                                    }
-                                                }
+                                                @Html.DropDownList("AgentList", Model.AgentList, "Select", new { Name = "Agent", @id = "ddlAgent", @style = "width:100%", @class = "form-control" })
                                             </div>
                                             <div class="form-group">
                                                 <label>Policy Status</label>
-                                                @{
-                                                    if (Model.IsAdministrator == true || Model.IsSuperUser == true)
-                                                    {
-                                                        @Html.DropDownList("StatusList", new SelectList(ViewBag.Statuses, "Status", "Status"), new { @class = "form-control", @id = "ddlPolicyStatus", @name = "ddlPolicyStatus" })
-                                                    }
-                                                    else if (Model.Member.pkiMemberID > 0)
-                                                    {
-                                                        @Html.DropDownList("StatusList", new SelectList(ViewBag.Statuses, "Status", "Status"), new { @class = "form-control", @id = "ddlPolicyStatus", @name = "ddlPolicyStatus", @disabled = "disabled" })
-                                                    }
-                                                    else
-                                                    {
-                                                        @Html.DropDownList("StatusList", new SelectList(ViewBag.Statuses, "Status", "Status"), new { @class = "form-control", @id = "ddlPolicyStatus", @name = "ddlPolicyStatus" })
-                                                    }
-                                                }
-
+                                                @Html.DropDownList("StatusList", new SelectList(ViewBag.Statuses, "Status", "Status"), new { @class = "form-control", @id = "ddlPolicyStatus", @name = "ddlPolicyStatus" , @selected = "Lead"})
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
@@ -983,11 +980,6 @@
                                                                        class="form-control dependantCoverDate DatepickerSelection" readonly>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label>Passport </label>
-                                                                <input type="text" maxlength="25" id="txtDependentPassport" name="txtDependentPassport"
-                                                                       class="form-control txtDependentPassport ">
-                                                            </div>
-                                                            <div class="form-group">
                                                                 <label>Relationship Type</label>
                                                                 @*<input type="text" maxlength="25" id="txtDepnduncyType" name="name" class="form-control">*@
                                                                 @Html.DropDownList("DependencyList", Model.DependencyTypeList, "Select", new { Name = "Dependency", @id = "ddlDependentDependencyType", @style = "width:100%", @class = "form-control" })
@@ -1005,9 +997,9 @@
                                                                 </select>
                                                             </div>
                                                             @*<div class="form-group">
-                                                                <label>Premium<em>*</em></label>
-                                                                <input type="text" maxlength="25" id="txtDependentPremium" name="name" class="form-control" disabled>
-                                                            </div>*@
+                                                                    <label>Premium<em>*</em></label>
+                                                                    <input type="text" maxlength="25" id="txtDependentPremium" name="name" class="form-control" disabled>
+                                                                </div>*@
                                                             <div class="form-group">
                                                                 <label>Cover Amount <em>*</em></label>
                                                                 <input type="text" maxlength="25" id="txtDependentCoverAmount" name="name" class="form-control" disabled>
@@ -1237,9 +1229,9 @@
                                 </div>
                                 <!-- #endregion Tab8 -->
                                 <!-- #region Tab10 -->
-                                <div id="tab-10" class="tab-pane">
+                                @*<div id="tab-10" class="tab-pane">
                                     @Html.Partial("_AddEditBeneficiary", Model)
-                                </div>
+                                </div>*@
                                 <!-- #endregion Tab10 -->
                             </div>
                         </div>
@@ -1593,7 +1585,7 @@
             $("#tab3NextButton").click(function () {
                 var policyName = $("#tab-3 #ddlPolicy").val();
                 var PolicyNo = $("#tab-3 #txtPolicyNo").val();
-                var BranchName = $("#tab-3 #ddlMemberBranch: selected").val();
+                var BranchName = $("#tab-3 #ddlMemberBranch").val()
                 var flag = true;
                 var policyNameFlag = true;
                 var PolicyNoFlag = true;
@@ -1912,7 +1904,7 @@
             BindNotes();
             BindDocuments();
             BindDependents();
-            bindBeneficiaryDatatable();
+            //bindBeneficiaryDatatable();
             // #endregion
 
             // #region datepickerFormat
@@ -2065,7 +2057,7 @@
                 MemeberNumber: $("#tab-3 #txtPolicyNo").val(),
                 EasyPayNo: $("#tab-3 #txtEasyToPay").val(),
                 //Branch: $("#tab-4 #txtBankBranch").val(),
-                MemberBranch: $("#tab-3 #ddlMemberBranch :selected").text(),
+                MemberBranch: $("#tab-3 #ddlMemberBranch").val(),
                 CustomId1: CustomId1,
                 CustomId2:CustomId2 ,
                 CustomId3: CustomId3,
@@ -2124,7 +2116,7 @@
                             printMemberDataUrl = printMemberDataUrl.replace("pkiMemberIDVal", result.pkiMemberID);
                             window.location.href = printMemberDataUrl;
                             $("#tab5").addClass('active');
-                            alert("Member saved successfully...!!");
+                            alert("New Lead saved successfully...!!");
                         }
                     }
                 },
@@ -2795,7 +2787,7 @@
                 PolicyPremium: $("#PolicyUpdatePopupModel .modal-body #txtPolicyPopupPremium").val(),
                 MemeberNumber: $("#PolicyUpdatePopupModel .modal-body #txtPolicyNo").val(),
                 EasyPayNo: $("#PolicyUpdatePopupModel .modal-body #txtEasyToPay").val(),
-                MemberBranch: $("#PolicyUpdatePopupModel .modal-body #ddlMemberBranch :selected").val(),
+                MemberBranch: $('#ddlMemberBranch').find(":selected").text(),
                 CustomId1: $("#PolicyUpdatePopupModel .modal-body #ddlPopupCustom1").val(),
                 CustomId2: $("#PolicyUpdatePopupModel .modal-body #ddlPopupCustom2").val(),
                 CustomId3: $("#PolicyUpdatePopupModel .modal-body #ddlPopupCustom3").val(),
@@ -2882,8 +2874,7 @@
             $("#ddlPolicyStatus").val(member.PolicyStatus)
             $("#tab-3 #txtPolicyNo").val(member.MemeberNumber);
             $("#tab-3 #txtEasyToPay").val(member.EasyPayNo);
-            $("#tab-3 #ddlMemberBranch option:selected").text(member.MemberBranch);
-            $("#tab-3 #ddlPolicyBankBranch option:selected").text(member.Branch);
+            $("#tab-3 #ddlPolicyBankBranch option:selected").text(member.Branch)
             $("#tab-3 #ddlCustom1").val(member.CustomId1);
             $("#tab-3 #ddlCustom2").val(member.CustomId2);
             $("#tab-3 #ddlCustom3").val(member.CustomId3);
@@ -3339,7 +3330,6 @@
         $("#tab-5 #ddl_DependentStatus").val(dependant.DependentStatus);
         $("#tab-5 #txtDependentFirstname").val(dependant.FullName);
         $("#tab-5 #txtDependentIdNumber").val(dependant.IDNumber);
-        $("#tab-5 #txtDependentPassport").val(dependant.Passport);
 
         $('.dependantDOB').datepicker({ format: 'dd MM yyyy',autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(dependant.DateOfBirth)), "dd/mm/yyyy", false));
         $('.dependantStartDate').datepicker({ format: 'dd MM yyyy',autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(dependant.StartDate)), "dd/mm/yyyy", false));
@@ -3379,7 +3369,6 @@
         var premium = $("#tab-5 #txtDependentPremium").val();
         var CoverAmount = $("#tab-5 #txtDependentCoverAmount").val();
         var inceptionDate = $("#tab-5 #txtDependentInceptionDate").val();
-        var passPort = $("#tab-5 #txtDependentPassport").val();
         var allFlag = true;
         var lastNameFlag = true;
         var firstNameFlag = true;
@@ -3549,8 +3538,7 @@
                 pkiDependentID: 0,
                 MemberId: pkiMemberId,
                 Relationship: $("#tab-5 #ddlDependentDependencyType :selected").val(),
-                Cover: $("#tab-5 #txtDependentCoverAmount").val(),
-                Passport: $("#tab-5 #txtDependentPassport").val()
+                Cover:$("#tab-5 #txtDependentCoverAmount").val()
             };
 
             jQuery.ajax({
@@ -3571,7 +3559,6 @@
                             $("#tab-5 #txtDependentIdNumber").val('');
                             $("#tab-5 #txtDependentAge").val('');
                             $("input[name='dependentGender']:checked").val('');
-                            $("#tab-5 #txtDependentPassport").val('');
 
                             $('.dependantInceptionDate').datepicker({ format: 'dd MM yyyy', autoclose: true }).datepicker("setDate", Date());
                             //$('.dependantInceptionDate').datepicker('setDate', null);
@@ -3640,8 +3627,7 @@
             CoverDate: dateFormat($("#tab-5 #txtDependentCoverDate").val(), 'dd-mm-yyyy', false),
             DependencyType: $("#tab-5 #ddlDependentDependencyType :selected").text(),
             Premium: $("#tab-5 #txtDependentPremium").val(),
-            Cover: $("#tab-5 #txtDependentCoverAmount").val(),
-            Passport: $("#tab-5 #txtDependentPassport").val()
+            Cover:$("#tab-5 #txtDependentCoverAmount").val()
         };
 
         $.ajax({
@@ -3660,7 +3646,6 @@
                     $("#tab-5 #txtDependentIdNumber").val('');
                     $("#tab-5 #txtDependentAge").val('');
                     $("input[name='dependentGender']:checked").val();
-                    $("#tab-5 #txtDependentPassport").val('');
 
                     $('.dependantInceptionDate').datepicker('setDate', null);
                     $('.dependantStartDate').datepicker('setDate', null);
@@ -4221,7 +4206,7 @@
         var idNumber = $("#txtIdNumber").val();
         // assume everything is correct and if it later turns out not to be, just set this to false
         var correct = true;
-        
+
         //Ref: http://www.sadev.co.za/content/what-south-african-id-number-made
         // SA ID Number have to be 13 digits, so check the length
         if (idNumber.length != 13 || !isNumber(idNumber)) {
@@ -4251,22 +4236,23 @@
             // get country ID for citzenship
             var citzenship = parseInt(idNumber.substring(10, 11)) == 0 ? "Yes" : "No";
 
-        // apply Luhn formula for check-digits
-        var tempTotal = 0;
-        var checkSum = 0;
-        var multiplier = 1;
-        for (var i = 0; i < 13; ++i) {
-            tempTotal = parseInt(idNumber.charAt(i)) * multiplier;
-            if (tempTotal > 9) {
-                tempTotal = parseInt(tempTotal.toString().charAt(0)) + parseInt(tempTotal.toString().charAt(1));
+            // apply Luhn formula for check-digits
+            var tempTotal = 0;
+            var checkSum = 0;
+            var multiplier = 1;
+            for (var i = 0; i < 13; ++i) {
+                tempTotal = parseInt(idNumber.charAt(i)) * multiplier;
+                if (tempTotal > 9) {
+                    tempTotal = parseInt(tempTotal.toString().charAt(0)) + parseInt(tempTotal.toString().charAt(1));
+                }
+                checkSum = checkSum + tempTotal;
+                multiplier = (multiplier % 2 == 0) ? 1 : 2;
             }
-            checkSum = checkSum + tempTotal;
-            multiplier = (multiplier % 2 == 0) ? 1 : 2;
+            if ((checkSum % 10) != 0) {
+                //    error.append('<p>ID number does not appear to be authentic - check digit is not valid</p>');
+                correct = false;
+            };
         }
-        if ((checkSum % 10) != 0) {
-            //    error.append('<p>ID number does not appear to be authentic - check digit is not valid</p>');
-            correct = false;
-        };
 
 
         // if no error found, hide the error message
@@ -4282,7 +4268,7 @@
                 $("#tab-1 input[name=gender][value=1]").prop('checked', true);
             } else {
                 $("#tab-1 input[name=gender][value=0]").prop('checked', true);
-            } 
+            }
             CalculateAge(fullDate);
         }
         else {
@@ -4912,7 +4898,7 @@
         });
     }
 
-    function BindPlanDropdown(ParlourId) {
+        function BindPlanDropdown(ParlourId) {
         var ddlCustomers = jQuery("#tab-3 #ddlPolicy");
         ddlCustomers.empty().append('<option selected="selected" value="0" disabled = "disabled">Please select.....</option>');
         jQuery.ajax({

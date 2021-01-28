@@ -1,9 +1,8 @@
-﻿@model Funeral.Model.Search.MemberSearch
-
-@{
-    ViewBag.Title = "Payment Search";
+﻿@{
+    ViewBag.Title = "Get Quote";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@model Funeral.Model.Search.MemberSearch
 
 @Styles.Render("~/Content/datatablecss")
 <script src="~/Scripts/plugins/dateformat/DateFormat.js"></script>  <!-- https://gist.github.com/eralston/968809 -->
@@ -22,7 +21,7 @@
                         <div class="col-lg-4" id="dvAdministrator">
                             <div class="form-group">
                                 <label>Scheme: </label>
-                                @Html.DropDownListFor(m => m.CompanyId, new SelectList(ViewBag.Companies, "parlourid", "ApplicationName"), new { @class = "form-control" })
+                                @Html.DropDownListFor(m => m.CompanyId, new SelectList(ViewBag.Companies, "parlourid", "ApplicationName"), "Choose parlour", new { @class = "form-control" })
                             </div>
                         </div>
                         <div class="col-sm-3">
@@ -76,7 +75,6 @@
                                             <th>ID Number</th>
                                             <th>Policy Number</th>
                                             <th>Full Name</th>
-                                            <th>EasyPayNo</th>
                                             <th>Cover Date</th>
                                             <th>Policy Status</th>
                                             <th>Actions</th>
@@ -138,7 +136,7 @@
         var pkMemberId = null;
         function UpdateStatus(data1) {
             var drpValue = data1.PolicyStatus;
-            pkMemberId = data1.pkiMemberID            
+            pkMemberId = data1.pkiMemberID
             jQuery('select#ddlPolicyStatus option').each(function () {
                 if (jQuery(this).text() == drpValue) {
                     jQuery(this).prop('selected', 'selected');
@@ -168,7 +166,7 @@
             })
         });
 
-        $.noConflict();
+        //$.noConflict();
         jQuery(document).ready(function ($) {
             var hasRight = '@ViewBag.HasAccess';
             if (hasRight == 'false') {
@@ -215,7 +213,7 @@
                         "bLengthChange": false,
                         'bFilter': false,
                         'scrollX': false,
-                        "ordering": true,
+                        "ordering": false,
                         "bSortable": false,
                         'ajax': {
                             "url": '@Url.Action("SearchData", "Members", null, Request.Url.Scheme)',
@@ -249,10 +247,10 @@
                             //{ "data": "pkiMemberID", "name": "MemberId", "autoWidth": true, "visible": false },
                             { "data": "ApplicationName", "name": "Scheme", "autoWidth": true },
                             { "data": "MemberSociety", "name": "Book Name", "autoWidth": true },
-                            { "data": "IDNumber", "name": "ID No", "autoWidth": true },
+                            { "data": "IDNumber", "name": "ID Number", "autoWidth": true },
                             { "data": "MemeberNumber", "name": "Policy No", "autoWidth": true },
                             { "data": "FullNames", "title": "Full Name", "name": "Member", "autoWidth": true },
-                            { "data": "EasyPayNo", "name": "EasyPayNo", "autoWidth": true },
+                            //{ "data": "EasyPayNo", "name": "EasyPayNo", "autoWidth": true },
                             //{ "data": "Cellphone", "name": "Cellphone", "autoWidth": true },
                             {
                                 "data": "CoverDate", "name": "Coverdate", "autoWidth": true,
@@ -281,13 +279,13 @@
                                 "render": function (data, type, full, meta) {
                                     var hasEditRights = '@ViewBag.HasEditRight' == "True" ? true : false;
                                     var hasDeleteRights = '@ViewBag.HasDeleteRight' == "True" ? true : false;
-                                    hasDeleteRights = 'True';
+                                    //hasDeleteRights = 'True';
 
                                     if (hasEditRights || hasDeleteRights) {
 
                                         var dom = "<div class='row'>";
 
-                                        @*if (hasEditRights) {
+                                        if (hasEditRights) {
                                             var editMemberUrl = '<div class="col-sm-4 text-center"><a href="@Url.Action("ManageMembers", "Members", null, Request.Url.Scheme)?pkiMemberID=' + full.pkiMemberID + '"><i class="fa fa-edit"></i></a></div>';
                                             dom = dom + editMemberUrl;
                                         }
@@ -295,15 +293,6 @@
                                         if (hasDeleteRights) {
                                             var deleteMemberUrl = '<div class="col-sm-4 text-center"> <a href="@Url.Action("Delete", "Members", null, Request.Url.Scheme)?pkiMemberID=' + full.pkiMemberID + '" onclick="function(){model1.PageNum = 1;return confirm(\'Are you sure you want to delete?\')}"; ><i class="fa fa-trash-o"></i></a></div>';
                                             dom = dom + deleteMemberUrl;
-                                        }*@
-                                        if (hasEditRights) {
-                                         //var ParlourId = full.parlourid;
-                                         var editMemberUrl = '<div class="col-sm-4 text-center"><a class="btn btn-w-m btn-primary" href="@Html.Raw(Url.Action("ManageMembersPayment", "MemberPayments", new { id = "MemeberNumberVal", ParlourID = "ParlourId" }))"">Make payment</a></div>';//onclick="EditOtherPayment(\'' +full.IDNumber+','+full.pkiMemberID+ '\')
-                                         editMemberUrl = editMemberUrl.replace("MemeberNumberVal", full.pkiMemberID);
-                                            editMemberUrl = editMemberUrl.replace("ParlourId", full.parlourid);
-                                         //editMemberUrl = editMemberUrl.replace("ParlourId");
-
-                                         dom = dom + editMemberUrl;
                                         }
 
                                         dom = dom + "</div>";
@@ -311,7 +300,7 @@
                                     }
                                     else {
                                         //tableConfigs.table.DataTable().columns([8]).visible(false);
-                                        table.DataTable().columns([8]).visible(false)
+                                        table.DataTable().columns([7]).visible(false)
                                         return "";
                                     }
                                 }
@@ -326,10 +315,10 @@
 
                 var table = $('#memberDataTable');
                 if (hasEditRights == 'True' || hasDeleteRights == 'True') {
-                    table.DataTable().columns([8]).visible(true)
+                    table.DataTable().columns([7]).visible(true)
                 }
                 else {
-                    table.DataTable().columns([8]).visible(false)
+                    table.DataTable().columns([7]).visible(false)
                 }
 
                 $('#PageSize').change(function () {
@@ -341,28 +330,11 @@
                     InitModel();
                     datatable.fnDraw();
                 });
-                $("#StatusId").change(function () {
-                    InitModel();
-                    datatable.fnDraw();
-                });
-                $("#ddlBookName").change(function () {
-                    InitModel();
-                    datatable.fnDraw();
-                });
-
-                //$("#Press").keydown(function (e) {
-                //    if (e.keyCode === 13)
-                //    {
-                //        $("#btnSearch").click();
-                //        InitModel();
-                //        datatable.fnDraw();
-                //    }
-                //});
-                $(document).keypress(function (envent) {
-                    var keyCode = event.keyCode || envent.which;
+                $(document).keypress(function (event) {
+                    var keyCode = event.keyCode || event.which;
                     if (keyCode == '13') {
                         $('#btnSearch').click();
-                        envent.preventDefault();
+                        event.preventDefault();
                     }
                 });
                 function InitModel() {
@@ -424,4 +396,3 @@
             color: rgba(50, 50, 50, 0.5);
         }
 </style>
-

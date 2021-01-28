@@ -150,11 +150,15 @@ namespace Funeral.Web.Areas.Admin.Controllers
         [PageRightsAttribute(CurrentPageId = 7)]
         public PartialViewResult List()
         {
+            var statusList = CommonBAL.GetStatus(FuneralEnum.StatusAssociatedTable.Members.ToString()).Select(x => new SelectListItem() { Text = x.ID.ToString(), Value = x.Status });
+            ViewBag.StatusList = statusList;
             ViewBag.HasEditRight = HasEditRight;
             ViewBag.HasDeleteRight = HasDeleteRight;
+            ViewBag.SocietyLists = CommonBAL.GetSocietyByParlourId(CurrentParlourId);
 
-            Model.Search.BaseSearch search = new Model.Search.BaseSearch();
+            Model.Search.PaymentSearchNew search = new Model.Search.PaymentSearchNew();
             search.PageNum = 1;
+            search.StatusId = new Guid(CurrentParlourId.ToString());
             search.PageSize = 10;
             search.SarchText = string.Empty;
             search.SortBy = "";
