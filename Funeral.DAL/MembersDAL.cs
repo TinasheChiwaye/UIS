@@ -75,11 +75,11 @@ namespace Funeral.DAL
                 ObjParam[49] = new DbParameter("@CustomId2", DbParameter.DbType.Int, 0, model.CustomId2);
                 ObjParam[50] = new DbParameter("@CustomId3", DbParameter.DbType.Int, 0, model.CustomId3);
                 //New data feilds [Tab 2] - Postal Address
-                ObjParam[51] = new DbParameter("@Address1_Post", DbParameter.DbType.NVarChar, 0, String.IsNullOrWhiteSpace(model.Address1) ? (object)DBNull.Value : (object)model.Address1_Post);
-                ObjParam[52] = new DbParameter("@Address2_Post", DbParameter.DbType.NVarChar, 0, String.IsNullOrWhiteSpace(model.Address2) ? (object)DBNull.Value : (object)model.Address2_Post);
-                ObjParam[53] = new DbParameter("@Address3_Post", DbParameter.DbType.NVarChar, 0, String.IsNullOrWhiteSpace(model.Address3) ? (object)DBNull.Value : (object)model.Address3_Post);
-                ObjParam[54] = new DbParameter("@Address4_Post", DbParameter.DbType.NVarChar, 0, String.IsNullOrWhiteSpace(model.Address4) ? (object)DBNull.Value : (object)model.Address4_Post);
-                ObjParam[55] = new DbParameter("@Code_Post", DbParameter.DbType.NVarChar, 0, String.IsNullOrWhiteSpace(model.Code) ? (object)DBNull.Value : (object)model.Code_Post);
+                ObjParam[51] = new DbParameter("@Address1_Post", DbParameter.DbType.NVarChar, 0, String.IsNullOrWhiteSpace(model.Address1_Post) ? (object)DBNull.Value : (object)model.Address1_Post);
+                ObjParam[52] = new DbParameter("@Address2_Post", DbParameter.DbType.NVarChar, 0, String.IsNullOrWhiteSpace(model.Address2_Post) ? (object)DBNull.Value : (object)model.Address2_Post);
+                ObjParam[53] = new DbParameter("@Address3_Post", DbParameter.DbType.NVarChar, 0, String.IsNullOrWhiteSpace(model.Address3_Post) ? (object)DBNull.Value : (object)model.Address3_Post);
+                ObjParam[54] = new DbParameter("@Address4_Post", DbParameter.DbType.NVarChar, 0, String.IsNullOrWhiteSpace(model.Address4_Post) ? (object)DBNull.Value : (object)model.Address4_Post);
+                ObjParam[55] = new DbParameter("@Code_Post", DbParameter.DbType.NVarChar, 0, String.IsNullOrWhiteSpace(model.Code_Post) ? (object)DBNull.Value : (object)model.Code_Post);
 
                 return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
             }

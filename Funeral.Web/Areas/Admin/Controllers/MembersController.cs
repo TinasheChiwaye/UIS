@@ -640,23 +640,23 @@ namespace Funeral.Web.Areas.Admin.Controllers
             else
                 return Json(new { success = false }, JsonRequestBehavior.AllowGet);
         }
-        //public JsonResult GetPremiumForPolicy(string policyId)
-        //{
-        //    var data = new List<PolicyModel>();
-        //    if (!string.IsNullOrEmpty(policyId))
-        //    {
-        //        data = CommonBAL.GetPlanSubscriptionByPlanIdNewMember(Convert.ToInt32(policyId));
-        //    }
-        //    return Json(data, JsonRequestBehavior.AllowGet);
-        //}
-        //public JsonResult GetWaitingPeriodByPlanId(int policyId, string Date)
-        //{
-        //    DateTime PolicyDate = Convert.ToDateTime(Date);
+        public JsonResult GetPremiumForPolicy(string policyId)
+        {
+            var data = new List<PolicyModel>();
+            if (!string.IsNullOrEmpty(policyId))
+            {
+                data = CommonBAL.GetPlanSubscriptionByPlanIdNewMember(Convert.ToInt32(policyId));
+            }
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetWaitingPeriodByPlanId(int policyId, string Date)
+        {
+            DateTime PolicyDate = Convert.ToDateTime(Date);
 
 
-        //    var data = CommonBAL.GetWaitingPeriodByPlanId(policyId);
-        //    return Json(data, JsonRequestBehavior.AllowGet);
-        //}
+            var data = CommonBAL.GetWaitingPeriodByPlanId(policyId);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
         [PageRightsAttribute(CurrentPageId = 4, Right = new isPageRight[] { isPageRight.HasAdd })]
         public JsonResult SaveManageMembers(MembersModel Member, int fkiMemberid, string ProductName, string ProductCost, Guid fkiProductID)
         {
@@ -673,10 +673,10 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
             //PlanModel Plan = new PlanModel();
 
-            if ( MembersBAL.GetMemberByIDNumber(Member.IDNumber, this.ParlourId, Member.fkiPlanID) != null)
+            if (MembersBAL.GetMemberByIDNumber(Member.IDNumber, this.ParlourId, Member.fkiPlanID) != null && Member.pkiMemberID == 0)
             {
                 //return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member Already Exists" + "</li>").ToList() }, JsonRequestBehavior.AllowGet);
-                return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member already exists in this plan." +  "</li>").First() }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member ID Number already exists on this Plan." + "</li>").First() }, JsonRequestBehavior.AllowGet);
             }
 
 
@@ -1447,7 +1447,10 @@ namespace Funeral.Web.Areas.Admin.Controllers
         }
         public JsonResult BindPlanByCompanyId(Guid CompanyId)
         {
+            PlanModel plan = new PlanModel();
             var Company = CommonBAL.GetPlanByParlourId(CompanyId).Select(x => new SelectListItem() { Text = x.PlanName, Value = x.pkiPlanID.ToString() });
+            plan.Cover = 0;
+            plan.PlanSubscription = 0;
             return Json(Company, JsonRequestBehavior.AllowGet);
         }
 

@@ -353,6 +353,13 @@
                                                     {
                                                         <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="DateComparisionJavascriptFun();" onblur="IdNumberBasicValidation(txtIdNumber);">
                                                     }
+
+
+                                                    //DataTable dr = MembersDAL.GetMemberByIDdt(ID, ParlourId);
+
+                                                    //MembersViewModel objViewModel = new MembersViewModel();
+                                                    //var membersList = FuneralHelper.DataTableMapToList<MembersModel>(dr, true);
+
                                                 }
                                             </div>
                                             <div class="form-group">
@@ -505,9 +512,7 @@
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label>Policy Agent or Broker</label>
-
-                                                                         @Html.DropDownList("AgentList", Model.AgentList, "Select", new { Name = "Agent", @id = "ddlAgent", @style = "width:100%", @class = "form-control", @disabled = "enabled" })
-
+                                                                        @Html.DropDownList("AgentList", Model.AgentList, "Select", new { Name = "Agent", @id = "ddlAgent", @style = "width:100%", @class = "form-control" })
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label>Total Premium</label>
@@ -716,39 +721,11 @@
 
                                             <div class="form-group">
                                                 <label>Policy Agent or Broker</label>
-
-                                                @{
-                                                    if (Model.IsAdministrator == true || Model.IsSuperUser == true)
-                                                    {
-                                                        @Html.DropDownList("AgentList", Model.AgentList, "Select", new { Name = "Agent", @id = "ddlAgent", @style = "width:100%", @class = "form-control" })
-                                                    }
-                                                    else if (Model.Member.pkiMemberID > 0)
-                                                    {
-                                                        @Html.DropDownList("AgentList", Model.AgentList, "Select", new { Name = "Agent", @id = "ddlAgent", @style = "width:100%", @class = "form-control", @disabled = "false" })
-                                                    }
-                                                    else
-                                                    {
-                                                        @Html.DropDownList("AgentList", Model.AgentList, "Select", new { Name = "Agent", @id = "ddlAgent", @style = "width:100%", @class = "form-control" })
-                                                    }
-                                                }
+                                                @Html.DropDownList("AgentList", Model.AgentList, "Select", new { Name = "Agent", @id = "ddlAgent", @style = "width:100%", @class = "form-control" })
                                             </div>
                                             <div class="form-group">
                                                 <label>Policy Status</label>
-                                                @{
-                                                    if (Model.IsAdministrator == true || Model.IsSuperUser == true)
-                                                    {
-                                                        @Html.DropDownList("StatusList", new SelectList(ViewBag.Statuses, "Status", "Status"), new { @class = "form-control", @id = "ddlPolicyStatus", @name = "ddlPolicyStatus" })
-                                                    }
-                                                    else if (Model.Member.pkiMemberID > 0)
-                                                    {
-                                                        @Html.DropDownList("StatusList", new SelectList(ViewBag.Statuses, "Status", "Status"), new { @class = "form-control", @id = "ddlPolicyStatus", @name = "ddlPolicyStatus", @disabled = "disabled" })
-                                                    }
-                                                    else
-                                                    {
-                                                        @Html.DropDownList("StatusList", new SelectList(ViewBag.Statuses, "Status", "Status"), new { @class = "form-control", @id = "ddlPolicyStatus", @name = "ddlPolicyStatus" })
-                                                    }
-                                                }
-
+                                                @Html.DropDownList("StatusList", new SelectList(ViewBag.Statuses, "Status", "Status"), new { @class = "form-control", @id = "ddlPolicyStatus", @name = "ddlPolicyStatus" , @selected = "Lead"})
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
@@ -1252,9 +1229,9 @@
                                 </div>
                                 <!-- #endregion Tab8 -->
                                 <!-- #region Tab10 -->
-                                <div id="tab-10" class="tab-pane">
+                                @*<div id="tab-10" class="tab-pane">
                                     @Html.Partial("_AddEditBeneficiary", Model)
-                                </div>
+                                </div>*@
                                 <!-- #endregion Tab10 -->
                             </div>
                         </div>
@@ -1608,7 +1585,7 @@
             $("#tab3NextButton").click(function () {
                 var policyName = $("#tab-3 #ddlPolicy").val();
                 var PolicyNo = $("#tab-3 #txtPolicyNo").val();
-                var BranchName = $("#tab-3 #ddlMemberBranch: selected").val();
+                var BranchName = $("#tab-3 #ddlMemberBranch").val()
                 var flag = true;
                 var policyNameFlag = true;
                 var PolicyNoFlag = true;
@@ -1927,7 +1904,7 @@
             BindNotes();
             BindDocuments();
             BindDependents();
-            bindBeneficiaryDatatable();
+            //bindBeneficiaryDatatable();
             // #endregion
 
             // #region datepickerFormat
@@ -2080,7 +2057,7 @@
                 MemeberNumber: $("#tab-3 #txtPolicyNo").val(),
                 EasyPayNo: $("#tab-3 #txtEasyToPay").val(),
                 //Branch: $("#tab-4 #txtBankBranch").val(),
-                MemberBranch: $("#tab-3 #ddlMemberBranch :selected").text(),
+                MemberBranch: $("#tab-3 #ddlMemberBranch").val(),
                 CustomId1: CustomId1,
                 CustomId2:CustomId2 ,
                 CustomId3: CustomId3,
@@ -2139,7 +2116,7 @@
                             printMemberDataUrl = printMemberDataUrl.replace("pkiMemberIDVal", result.pkiMemberID);
                             window.location.href = printMemberDataUrl;
                             $("#tab5").addClass('active');
-                            alert("Member saved successfully...!!");
+                            alert("New Lead saved successfully...!!");
                         }
                     }
                 },
@@ -2810,7 +2787,7 @@
                 PolicyPremium: $("#PolicyUpdatePopupModel .modal-body #txtPolicyPopupPremium").val(),
                 MemeberNumber: $("#PolicyUpdatePopupModel .modal-body #txtPolicyNo").val(),
                 EasyPayNo: $("#PolicyUpdatePopupModel .modal-body #txtEasyToPay").val(),
-                MemberBranch: $("#PolicyUpdatePopupModel .modal-body #ddlMemberBranch :selected").val(),
+                MemberBranch: $('#ddlMemberBranch').find(":selected").text(),
                 CustomId1: $("#PolicyUpdatePopupModel .modal-body #ddlPopupCustom1").val(),
                 CustomId2: $("#PolicyUpdatePopupModel .modal-body #ddlPopupCustom2").val(),
                 CustomId3: $("#PolicyUpdatePopupModel .modal-body #ddlPopupCustom3").val(),
@@ -2897,8 +2874,7 @@
             $("#ddlPolicyStatus").val(member.PolicyStatus)
             $("#tab-3 #txtPolicyNo").val(member.MemeberNumber);
             $("#tab-3 #txtEasyToPay").val(member.EasyPayNo);
-            $("#tab-3 #ddlMemberBranch option:selected").text(member.MemberBranch);
-            $("#tab-3 #ddlPolicyBankBranch option:selected").text(member.Branch);
+            $("#tab-3 #ddlPolicyBankBranch option:selected").text(member.Branch)
             $("#tab-3 #ddlCustom1").val(member.CustomId1);
             $("#tab-3 #ddlCustom2").val(member.CustomId2);
             $("#tab-3 #ddlCustom3").val(member.CustomId3);
@@ -4292,7 +4268,7 @@
                 $("#tab-1 input[name=gender][value=1]").prop('checked', true);
             } else {
                 $("#tab-1 input[name=gender][value=0]").prop('checked', true);
-            } 
+            }
             CalculateAge(fullDate);
         }
         else {
@@ -4922,7 +4898,7 @@
         });
     }
 
-    function BindPlanDropdown(ParlourId) {
+        function BindPlanDropdown(ParlourId) {
         var ddlCustomers = jQuery("#tab-3 #ddlPolicy");
         ddlCustomers.empty().append('<option selected="selected" value="0" disabled = "disabled">Please select.....</option>');
         jQuery.ajax({

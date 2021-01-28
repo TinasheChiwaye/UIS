@@ -450,7 +450,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/13/2021 16:33:34</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Members/ManageMembers.cshtml">
-      <publishTime>11/26/2020 07:44:00</publishTime>
+      <publishTime>01/28/2021 11:19:19</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Members/_AddEditBeneficiary.cshtml">
       <publishTime>11/26/2020 07:44:00</publishTime>
@@ -460,6 +460,21 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Areas/Admin/Views/NewBusiness/Index.cshtml">
       <publishTime>01/13/2021 16:31:35</publishTime>
+    </File>
+    <File Include="Areas/Admin/Views/NewBusiness/ManageLeads.cshtml">
+      <publishTime>01/25/2021 11:02:09</publishTime>
+    </File>
+    <File Include="Areas/Admin/Views/NewBusiness/NTU.cshtml">
+      <publishTime>01/14/2021 18:29:42</publishTime>
+    </File>
+    <File Include="Areas/Admin/Views/NewBusiness/Quote.cshtml">
+      <publishTime>01/14/2021 18:09:07</publishTime>
+    </File>
+    <File Include="Areas/Admin/Views/NewBusiness/Verification.cshtml">
+      <publishTime>01/14/2021 18:18:13</publishTime>
+    </File>
+    <File Include="Areas/Admin/Views/NewBusiness/_AddEditBeneficiary.cshtml">
+      <publishTime>01/20/2021 15:27:54</publishTime>
     </File>
     <File Include="Areas/Admin/Views/OtherPayment/EditOtherPayment.cshtml">
       <publishTime>07/17/2020 12:20:47</publishTime>
@@ -900,43 +915,43 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/02/2019 04:39:52</publishTime>
     </File>
     <File Include="bin/Funeral.BAL.dll">
-      <publishTime>01/11/2021 14:20:21</publishTime>
+      <publishTime>01/28/2021 12:32:35</publishTime>
     </File>
     <File Include="bin/Funeral.BAL.dll.config">
       <publishTime>07/17/2020 12:20:38</publishTime>
     </File>
     <File Include="bin/Funeral.BAL.pdb">
-      <publishTime>01/11/2021 14:20:21</publishTime>
+      <publishTime>01/28/2021 12:32:35</publishTime>
     </File>
     <File Include="bin/Funeral.DAL.dll">
-      <publishTime>01/11/2021 14:20:20</publishTime>
+      <publishTime>01/28/2021 12:32:35</publishTime>
     </File>
     <File Include="bin/Funeral.DAL.dll.config">
-      <publishTime>01/09/2021 13:45:15</publishTime>
+      <publishTime>01/25/2021 16:24:08</publishTime>
     </File>
     <File Include="bin/Funeral.DAL.pdb">
-      <publishTime>01/11/2021 14:20:20</publishTime>
+      <publishTime>01/28/2021 12:32:35</publishTime>
     </File>
     <File Include="bin/Funeral.Model.dll">
-      <publishTime>01/11/2021 14:20:19</publishTime>
+      <publishTime>01/28/2021 11:30:12</publishTime>
     </File>
     <File Include="bin/Funeral.Model.dll.config">
       <publishTime>07/17/2020 12:20:40</publishTime>
     </File>
     <File Include="bin/Funeral.Model.pdb">
-      <publishTime>01/11/2021 14:20:19</publishTime>
+      <publishTime>01/28/2021 11:30:12</publishTime>
     </File>
     <File Include="bin/Funeral.Validation.dll">
-      <publishTime>07/17/2020 14:31:22</publishTime>
+      <publishTime>01/28/2021 11:30:10</publishTime>
     </File>
     <File Include="bin/Funeral.Validation.pdb">
-      <publishTime>07/17/2020 14:31:22</publishTime>
+      <publishTime>01/28/2021 11:30:10</publishTime>
     </File>
     <File Include="bin/Funeral.Web.dll">
-      <publishTime>01/13/2021 16:39:53</publishTime>
+      <publishTime>01/28/2021 12:32:37</publishTime>
     </File>
     <File Include="bin/Funeral.Web.pdb">
-      <publishTime>01/13/2021 16:39:53</publishTime>
+      <publishTime>01/28/2021 12:32:37</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.Identity.Core.dll">
       <publishTime>04/03/2015 17:07:22</publishTime>
@@ -3606,7 +3621,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/17/2020 12:21:06</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>01/11/2021 14:20:28</publishTime>
+      <publishTime>01/26/2021 14:42:22</publishTime>
     </File>
   </ItemGroup>
 </Project>
