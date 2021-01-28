@@ -14,7 +14,7 @@ namespace Funeral.Model
         public string Surname_Beneficiary { get; set; }
         [Required(ErrorMessage = "Please enter Date of birth")]
         public DateTime DateOfBirth_Beneficiary { get; set; }
-        [Required(ErrorMessage = "Please enter ID Number")]
+        [Required(ErrorMessage = "Please enter ID Number2")]
         public string IDNumber_Beneficiary { get; set; }
         public string Code_Beneficiary { get; set; }
         [Required(ErrorMessage = "Please enter Dependency Type")]

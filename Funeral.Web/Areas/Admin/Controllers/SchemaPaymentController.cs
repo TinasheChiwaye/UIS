@@ -202,8 +202,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
         public ActionResult DownloadReconBillingReportPartial(Guid ParlourId, string ReferenceNumber)
         {
             string ExportTypeExtensions = "xls";
-            string ReportName = "ARL_Scheme_Billing Recon Report";
-            Warning[] warnings;
+            string ReportName = "ARL_Scheme_Billing Report"; //ARL_Scheme_Billing Recon Report
+             Warning[] warnings;
             string[] streamids;
             string mimeType;
             string encoding;
