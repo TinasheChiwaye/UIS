@@ -652,7 +652,7 @@
                                             </div>
                                             <div class="form-group" >
                                                 <label>Select Branch<em>*</em></label>
-                                                @Html.DropDownList("BranchList", Model.BranchList, "Select", new { Name = "BranchList", @id = "ddlBankBranch", @style = "width:100%", @class = "form-control" })
+                                                @Html.DropDownList("BranchList", Model.BranchList, "Select", new { Name = "BranchList", @id = "ddlMemberBranch", @style = "width:100%", @class = "form-control" })
                                             </div>
                                             <div class="form-group" style="display:none">
                                                 <label>Custom Payment Method</label>
@@ -1560,7 +1560,7 @@
             $("#tab3NextButton").click(function () {
                 var policyName = $("#tab-3 #ddlPolicy").val();
                 var PolicyNo = $("#tab-3 #txtPolicyNo").val();
-                var BranchName = $("#tab-3 #ddlBankBranch").val()
+                var BranchName = $("#tab-3 #ddlMemberBranch: selected").val()
                 var flag = true;
                 var policyNameFlag = true;
                 var PolicyNoFlag = true;
@@ -1671,7 +1671,7 @@
                 if($(this).is(":checked")){
 
                     $('#txtPassport').prop('disabled', false);
-                    $('#txtIdNumber').prop('disabled', true);
+                    $('#txtIdNumber').prop('disabled', false);
                 }
                 else if($(this).is(":not(:checked)")){
                     $('#txtIdNumber').prop('disabled', false);
@@ -2030,7 +2030,7 @@
                 MemeberNumber: $("#tab-3 #txtPolicyNo").val(),
                 EasyPayNo: $("#tab-3 #txtEasyToPay").val(),
                 //Branch: $("#tab-4 #txtBankBranch").val(),
-                Branch: $("#tab-3 #ddlBankBranch :selected").text(),
+                MemberBranch: $("#tab-3 #ddlMemberBranch :selected").text(),
                 CustomId1: CustomId1,
                 CustomId2:CustomId2 ,
                 CustomId3: CustomId3,
@@ -2054,9 +2054,9 @@
                 FK_MemberId: fkiMemberid,
                 PolicyPremium: $("#tab-3 #txtPolicyPremium").val(),
                 PolicyPremium: $("#tab-3 #txtPolicyCoverAmount").val(),
-                MemberBranch: $("#tab-4 #txtBankBranch").val(), //$("#ddlBankBranch :selected").text()
+                Branch: $("#tab-4 #txtBankBranch").val(), //$("#ddlBankBranch :selected").text()
 
-               
+
 
             };
 
@@ -2079,7 +2079,7 @@
 
                         $("#validationTab4Message").show();
                         $("#validationTab4Message").empty().append(result.errors);
-                        
+
                     }
                     else {
                         if (result.pkiMemberID == 0 || result.pkiMemberID == "undefined") {
@@ -2095,7 +2095,7 @@
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     $("#validationTab4Message").show();
-                    $("#validationTab4Message").empty().append(result.errors);                    
+                    $("#validationTab4Message").empty().append(result.errors);
                 }
 
             })
@@ -2113,19 +2113,32 @@
             }
         });
 
+        //$("#chkIdORPass").change(function () {
+        //    if ($("#tab-1 #chkIdORPass").prop('checked')== true)
+        //    {
+        //        $("#tab-1 #txtPassport").prop("readonly", false);
+        //        $("#tab-1 #txtIdNumber").prop("readonly", true);
+        //        $("#tab-1 #txtIdNumber").val('');
+        //    }
+        //    else
+        //    {
+        //        $("#tab-1 #txtPassport").prop("readonly", true);
+        //        $("#tab-1 #txtIdNumber").prop("readonly", false);
+        //        $("#tab-1 #txtPassport").val('');
+        //    }
+        //})
+
         $("#chkIdORPass").change(function () {
-            if ($("#tab-1 #chkIdORPass").prop('checked')== true)
-            {
+            if ($("#tab-1 #chkIdORPass").prop('checked') == true) {
                 $("#tab-1 #txtPassport").prop("readonly", false);
-                $("#tab-1 #txtIdNumber").prop("readonly", true);
-                $("#tab-1 #txtIdNumber").val('');
+                //$("#tab-1 #txtIdNumber").prop("readonly", true);
+                //$("#tab-1 #txtIdNumber").val('');
             }
-            else
-            {
-                $("#tab-1 #txtPassport").prop("readonly", true);
-                $("#tab-1 #txtIdNumber").prop("readonly", false);
-                $("#tab-1 #txtPassport").val('');
-            }
+            //else {
+            //    $("#tab-1 #txtPassport").prop("readonly", true);
+            //    $("#tab-1 #txtIdNumber").prop("readonly", false);
+            //    $("#tab-1 #txtPassport").val('');
+            //}
         })
 
         $("#btnResetTab1").click(function(){
@@ -2145,7 +2158,7 @@
            $("#tab-3 #txtPolicyCoverAmount").val('');
             $("#tab-3 #txtPolicyNo").val('');
             $("#tab-3 #txtEasyToPay").val('');
-            $("#tab-3 #ddlBankBranch").val('');
+           $("#tab-3 #ddlMemberBranch").val('');
             $("#tab-3 #ddlCustom1").val('');
             $("#tab-3 #ddlCustom2").val('');
             $("#tab-3 #ddlCustom3").val('');
@@ -2760,7 +2773,8 @@
                 PolicyPremium: $("#PolicyUpdatePopupModel .modal-body #txtPolicyPopupPremium").val(),
                 MemeberNumber: $("#PolicyUpdatePopupModel .modal-body #txtPolicyNo").val(),
                 EasyPayNo: $("#PolicyUpdatePopupModel .modal-body #txtEasyToPay").val(),
-                MemberBranch: $('#ddlPolicyBankBranch').find(":selected").text(),
+                //MemberBranch: $('#ddlPolicyBankBranch').find(":selected").text(),
+                MemberBranch: $("#PolicyUpdatePopupModel .modal-body #ddlMemberBranch :selected").val(),
                 CustomId1: $("#PolicyUpdatePopupModel .modal-body #ddlPopupCustom1").val(),
                 CustomId2: $("#PolicyUpdatePopupModel .modal-body #ddlPopupCustom2").val(),
                 CustomId3: $("#PolicyUpdatePopupModel .modal-body #ddlPopupCustom3").val(),
@@ -2852,6 +2866,7 @@
             $("#tab-3 #ddlCustom2").val(member.CustomId2);
             $("#tab-3 #ddlCustom3").val(member.CustomId3);
             $("#tab-1 #ddlMemberSociety").val(member.MemberSociety);
+            $("#tab-3 #ddlMemberBranch option:selected").text(member.MemberBranch);
 
             $("#tab-1 #ddlAgent option").each(function () {
                 if ($(this).val() == member.Agent) {
@@ -3527,41 +3542,48 @@
 
                     var isSuccessful = (result['success']);
                     var maxLenghDependancy = (result['maxLenghDependancy']);
-                    if (isSuccessful != false) {
-                        if (maxLenghDependancy == true) {
-                            dependancyDatatable.fnDraw();
-                            $("#tab-5 #txtDependentLastname").val('');
-                            $("#tab-5 #txtDependentFirstname").val('');
-                            $("#tab-5 #txtDependentIdNumber").val('');
-                            $("#tab-5 #txtDependentAge").val('');
-                            $("input[name='dependentGender']:checked").val('');
-                            $("#tab-5 #txtDependentPassport").val('');
-
-                            $('.dependantInceptionDate').datepicker({ format: 'dd MM yyyy', autoclose: true }).datepicker("setDate", Date());
-                            //$('.dependantInceptionDate').datepicker('setDate', null);
-                            $('.dependantStartDate').datepicker({ format: 'dd MM yyyy', autoclose: true }).datepicker("setDate", Date());
-                            //$('.dependantCoverDate').datepicker({ format: 'dd MM yyyy' }).datepicker("setDate", Date());
-                            $('.dependantDOB').datepicker({ format: 'dd MM yyyy', autoclose: true }).datepicker("setDate", Date());
-
-                            $("#tab-5 #ddlDependentDependencyType").val('');
-                            $("#tab-5 #txtDependentPremium").val('');
-
-                            $("#btnSaveDependent").show();
-                            $("#btnUpdateDependent").hide();
-                            //$("#btnSaveDependent").prop('disabled', false);
-                            //$("#btnUpdateDependent").prop('disabled', true);
-
-                            //$("#tab-5 #txtDepnduncyType").text('');
-                            //$("#tab-5 #txtPremium").val('');
-                        }
-                        else {
-                             var errors = "this member has already added 100 dependencies ";
-                        displayUpdateDependantValidationErrors_directMsg(errors);
-                        }
+                    if (result.success == false) {
+                        $("#ValidationSummary4").show();
+                        $("#ValidationSummary4").empty().append(result.errors);
                     }
                     else {
-                        var errors = result['errors'];
-                        displayUpdateDependantValidationErrors(errors);
+                        if (isSuccessful != false) {
+
+                            if (maxLenghDependancy == true) {
+                                dependancyDatatable.fnDraw();
+                                $("#tab-5 #txtDependentLastname").val('');
+                                $("#tab-5 #txtDependentFirstname").val('');
+                                $("#tab-5 #txtDependentIdNumber").val('');
+                                $("#tab-5 #txtDependentAge").val('');
+                                $("input[name='dependentGender']:checked").val('');
+                                $("#tab-5 #txtDependentPassport").val('');
+
+                                $('.dependantInceptionDate').datepicker({ format: 'dd MM yyyy', autoclose: true }).datepicker("setDate", Date());
+                                //$('.dependantInceptionDate').datepicker('setDate', null);
+                                $('.dependantStartDate').datepicker({ format: 'dd MM yyyy', autoclose: true }).datepicker("setDate", Date());
+                                //$('.dependantCoverDate').datepicker({ format: 'dd MM yyyy' }).datepicker("setDate", Date());
+                                $('.dependantDOB').datepicker({ format: 'dd MM yyyy', autoclose: true }).datepicker("setDate", Date());
+
+                                $("#tab-5 #ddlDependentDependencyType").val('');
+                                $("#tab-5 #txtDependentPremium").val('');
+
+                                $("#btnSaveDependent").show();
+                                $("#btnUpdateDependent").hide();
+                                //$("#btnSaveDependent").prop('disabled', false);
+                                //$("#btnUpdateDependent").prop('disabled', true);
+
+                                //$("#tab-5 #txtDepnduncyType").text('');
+                                //$("#tab-5 #txtPremium").val('');
+                            }
+                            else {
+                                var errors = "this member has already added 100 dependencies ";
+                                displayUpdateDependantValidationErrors_directMsg(errors);
+                            }
+                        }
+                        else {
+                            var errors = result['errors'];
+                            displayUpdateDependantValidationErrors(errors);
+                        }
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -4178,7 +4200,7 @@
         var idNumber = $("#txtIdNumber").val();
         // assume everything is correct and if it later turns out not to be, just set this to false
         var correct = true;
-        
+
         //Ref: http://www.sadev.co.za/content/what-south-african-id-number-made
         // SA ID Number have to be 13 digits, so check the length
         if (idNumber.length != 13 || !isNumber(idNumber)) {
@@ -4724,6 +4746,8 @@
         });
         //location.reload();
         BindGroupDropdown($('#ddlSelectCompany').val());
+        BindPlanDropdown($('#ddlSelectCompany').val());
+        BindBranchDropdown($('#ddlSelectCompany').val());
     });
     $("#txtStartDatePopup").change(function () {
         var DependencyStartdateChangeUrl = $("#DependencyStartdateChangeUrl").val();
@@ -4847,4 +4871,81 @@
             }
         });
     });
+
+    //==========================================
+
+    function BindBranchDropdown(ParlourId) {
+var ddlCustomers = jQuery("#tab-3 #ddlMemberBranch");
+ddlCustomers.empty().append('<option selected="selected" value="0" disabled = "disabled">Please select.....</option>');
+jQuery.ajax({
+url: '@Url.Action("BindBranchByCompanyId","Members")',
+data: { CompanyId: ParlourId },
+type: "post",
+success: function (response) {
+ddlCustomers.empty().append('<option selected="selected" value="0">Please select</option>');
+jQuery.each(response, function () {
+ddlCustomers.append($("<option></option>").val(this['Value']).html(this['Text']));
+});
+},
+failure: function (response) {
+alert(response.responseText);
+},
+error: function (response) {
+alert(response.responseText);
+}
+});
+    }
+
+
+function BindBranchDropdown(ParlourId) {
+var ddlCustomers = jQuery("#tab-3 #ddlMemberBranch");
+ddlCustomers.empty().append('<option selected="selected" value="0" disabled = "disabled">Please select.....</option>');
+jQuery.ajax({
+url: '@Url.Action("BindBranchByCompanyId","Members")',
+data: { CompanyId: ParlourId },
+type: "post",
+success: function (response) {
+ddlCustomers.empty().append('<option selected="selected" value="0">Please select</option>');
+jQuery.each(response, function () {
+ddlCustomers.append($("<option></option>").val(this['Value']).html(this['Text']));
+});
+},
+failure: function (response) {
+alert(response.responseText);
+},
+error: function (response) {
+alert(response.responseText);
+}
+});
+}
+
+
+
+//===========================
+
+
+    function BindPlanDropdown(ParlourId) {
+var ddlCustomers = jQuery("#tab-3 #ddlPolicy");
+ddlCustomers.empty().append('<option selected="selected" value="0" disabled = "disabled">Please select.....</option>');
+jQuery.ajax({
+url: '@Url.Action("BindPlanByCompanyId","Members")',
+data: { CompanyId: ParlourId },
+type: "post",
+success: function (response) {
+ddlCustomers.empty().append('<option selected="selected" value="0">Please select</option>');
+jQuery.each(response, function () {
+ddlCustomers.append($("<option></option>").val(this['Value']).html(this['Text']));
+});
+},
+failure: function (response) {
+alert(response.responseText);
+},
+error: function (response) {
+alert(response.responseText);
+}
+});
+}
+
+
+
 </script>
