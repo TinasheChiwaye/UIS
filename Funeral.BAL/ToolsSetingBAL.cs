@@ -425,6 +425,11 @@ namespace Funeral.BAL
             DataTable dr = ToolsSetingDAL.GetAllApplicationListdt(parlourid, param, AppID);
             return FuneralHelper.DataTableMapToList<ApplicationSettingsModel>(dr);
         }
+        public static List<ApplicationSettingsModel> GetSchemeApplicationList(Guid parlourid, int param, int AppID)
+        {
+            DataTable dr = ToolsSetingDAL.GetAllApplicationListdt(parlourid, param, AppID);
+            return FuneralHelper.DataTableMapToList<ApplicationSettingsModel>(dr);
+        }
         public static ApplicationSettingsModel GetAllApplicationList2(Guid parlourid, int param, int AppID)
         {
             DataTable dr = ToolsSetingDAL.GetAllApplicationListdt(parlourid, param, AppID);

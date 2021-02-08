@@ -51,6 +51,26 @@ namespace Funeral.Web.Areas.Admin.Controllers
             }
             ViewBag.Companies = model;
         }
+        public void BindSchemeCompanyList(string type = null)
+        {
+            List<ApplicationSettingsModel> model = new List<ApplicationSettingsModel>();
+            if (this.IsAdministrator)
+            {
+                if (!string.IsNullOrEmpty(type))
+                {
+                    model.Add(new ApplicationSettingsModel() { ApplicationName = "All", parlourid = Guid.Empty });
+                }
+                model.AddRange(ToolsSetingBAL.GetAllApplicationList(ParlourId, 1, 0).ToList());
+                if (model == null)
+                    model.Add(new ApplicationSettingsModel() { ApplicationName = ApplicationName, parlourid = ParlourId });
+            }
+            else
+            {
+                model.Add(new ApplicationSettingsModel() { ApplicationName = ApplicationName, parlourid = ParlourId });
+            }
+            ViewBag.Companies = model;
+        }
+
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             this._filterContext = filterContext;
