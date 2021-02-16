@@ -147,6 +147,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 ViewBag.MemberInvoiceList = MembersBAL.GetInvoicesByMemberID(ParlourID, id);
                 ViewBag.MemberID = model.MemeberNumber;
                 ViewBag.ParlourID = ParlourID;
+
+                //ViewBag.MonthToPay = MembersBAL.GetMonthsToPay(id);
             }
             var info = CultureInfo.InvariantCulture.Clone() as CultureInfo;
             info.NumberFormat.NumberDecimalSeparator = ".";

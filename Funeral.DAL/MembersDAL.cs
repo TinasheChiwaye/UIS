@@ -1074,5 +1074,22 @@ namespace Funeral.DAL
         }
         //=================end
 
+        public static SqlDataReader GetMonthsToPayByID(int MemberId)
+        {
+            DbParameter[] ObjParam = new DbParameter[1];
+            //ObjParam[0] = new DbParameter("@parlourId", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
+            ObjParam[0] = new DbParameter("@MemberId", DbParameter.DbType.VarChar, 0, MemberId);
+            return DbConnection.GetDataReader(CommandType.StoredProcedure, "GetMonthsToPay", ObjParam);
+        }
+
+        public static DataTable GetMonthsToPayByIDdt(int MemberId)
+        {
+            DbParameter[] ObjParam = new DbParameter[1];
+            //ObjParam[0] = new DbParameter("@parlourId", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
+            ObjParam[0] = new DbParameter("@MemberId", DbParameter.DbType.VarChar, 0, MemberId);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetMonthsToPay", ObjParam);
+        }
+
+
     }
 }

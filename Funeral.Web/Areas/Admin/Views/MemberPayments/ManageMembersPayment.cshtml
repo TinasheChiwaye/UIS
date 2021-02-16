@@ -25,6 +25,20 @@
 @Html.Hidden("CalculateAmount", Url.Action("CalculateAmount"))
 @Html.Hidden("AddPayments", Url.Action("AddPayments"))
 
+<!-- Include Twitter Bootstrap and jQuery: -->
+@*<link rel="stylesheet" href="~/Scripts/docs/css/bootstrap-4.5.2.min.css" type="text/css">*@
+
+@*<script type="text/javascript" src="~/Scripts/jquery-2.1.1.min.js"></script>
+
+
+
+<script type="text/javascript" src="~/Scripts/docs/js/bootstrap.bundle-4.5.2.min.js"></script>*@
+
+
+<!-- Include the plugin's CSS and JS: -->
+<script type="text/javascript" src="~/Scripts/dist/js/bootstrap-multiselect.js"></script>
+<link rel="stylesheet" href="~/Scripts/dist/css/bootstrap-multiselect.css" type="text/css" />
+
 <div class="row">
     <div class="col-lg-12">
 
@@ -42,7 +56,7 @@
                 <div class="col-lg-6">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5>Payment Details</h5>
+                            <h5>Payment Details 1</h5>
                         </div>
                         <div class="ibox-content">
                             <div class="form-group">
@@ -98,20 +112,21 @@
                                     <div class="form-group">
                                         <label>No of Months</label>
                                         <select id="ddlNoOfMonths" class="form-control m-b">
-                                            <option Value="0">Select</option>
-                                            <option Value="1">1</option>
-                                            <option Value="2">2</option>
-                                            <option Value="3">3</option>
-                                            <option Value="4">4</option>
-                                            <option Value="5">5</option>
-                                            <option Value="6">6</option>
-                                            <option Value="7">7</option>
-                                            <option Value="8">8</option>
-                                            <option Value="9">9</option>
-                                            <option Value="10">10</option>
-                                            <option Value="11">11</option>
-                                            <option Value="12">12</option>
-                                        </select>
+                                                <option Value="0">Select</option>
+                                                <option Value="1">1</option>
+                                                <option Value="2">2</option>
+                                                <option Value="3">3</option>
+                                                <option Value="4">4</option>
+                                                <option Value="5">5</option>
+                                                <option Value="6">6</option>
+                                                <option Value="7">7</option>
+                                                <option Value="8">8</option>
+                                                <option Value="9">9</option>
+                                                <option Value="10">10</option>
+                                                <option Value="11">11</option>
+                                                <option Value="12">12</option>
+                                            </select>
+                                        @*@Html.DropDownList("Months", new SelectList(ViewBag.MonthToPay, "DateLastPaid", "DateLastPaid"), "Select", new { @class = "form-control", multiple = "multiple", @id = "ddlMethodPayment" })*@
                                     </div>
                                 </div>
                             </div>
@@ -369,6 +384,15 @@
 
 
 <script>
+    //++++++++++++++++++++++++++++++++TEST++++++++++++++++++++++++++++++++
+    $(document).ready(function () {
+        $('#ddlMethodPayment').multiselect();
+    });
+
+
+
+    //++++++++++++++++++++++++++++++++END TEST++++++++++++++++++++++++++++++++
+
     $("#ddlNoOfMonths").change(function () {
         var GetPremiumForPolicyURl = $("#CalculateAmount").val();
         var data = {

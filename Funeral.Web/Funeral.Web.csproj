@@ -928,6 +928,8 @@
     <None Include="Properties\PublishProfiles\uispolicy - ReadOnly - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\uispolicy - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\dist\css\bootstrap-multiselect.css" />
+    <Content Include="Scripts\dist\js\bootstrap-multiselect.js" />
     <Content Include="Scripts\GridScroll\x.js" />
     <Content Include="Scripts\GridScroll\xtableheaderfixed.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

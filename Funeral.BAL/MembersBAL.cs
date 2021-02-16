@@ -390,5 +390,11 @@ namespace Funeral.BAL
             DataTable dr = MembersDAL.GetUnderwriterList(parlourid);
             return FuneralHelper.DataTableMapToList<UnderwriterSetupModel>(dr);
         }
+
+        public static List<PaymentReminderModel> GetMonthsToPay(int MemberId)
+        {
+            DataTable dr = MembersDAL.GetMonthsToPayByIDdt(MemberId);
+            return FuneralHelper.DataTableMapToList<PaymentReminderModel>(dr);
+        }
     }
 }
