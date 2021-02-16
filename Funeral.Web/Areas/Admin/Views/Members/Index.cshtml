@@ -75,7 +75,7 @@
                                             <th>ID Number</th>
                                             <th>Policy Number</th>                                              
                                             <th>Full Name</th>                                            
-                                            <th>Cover Date</th>
+                                            <th>Inception Date</th>
                                             <th>Policy Status</th>
                                             <th>Actions</th>
                                         </tr>
@@ -253,7 +253,7 @@
                             //{ "data": "EasyPayNo", "name": "EasyPayNo", "autoWidth": true },
                             //{ "data": "Cellphone", "name": "Cellphone", "autoWidth": true },
                             {
-                                "data": "CoverDate", "name": "Coverdate", "autoWidth": true,
+                                "data": "InceptionDate", "name": "InceptionDate", "autoWidth": true,
                                 "render": function (data) {
                                     var date = new Date(parseInt(data.replace('/Date(', '')));
                                     return dateFormat(date, dateFormat.masks.isoDate, true);
