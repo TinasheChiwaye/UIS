@@ -568,6 +568,10 @@ namespace Funeral.Web.Tools
 						modelS.ModifiedUser = UserName;
 						sguserID = ToolsSetingBAL.SaveSmsGroupDetails(modelS);
 					}
+                    else
+                    {
+
+                    }
 				}
 				//   ==========================[END SMS Group Insert Delete ]===================================
 

@@ -210,13 +210,26 @@ namespace Funeral.Web.Areas.Admin.Controllers
             return PartialView("~/Areas/Admin/Views/GroupPayment/_AddGroupPayment.cshtml", groupPayment);
         }
         [PageRightsAttribute(CurrentPageId = 7, Right = new isPageRight[] { isPageRight.HasDelete })]
-        public JsonResult Delete(int ID)
+        public JsonResult grouppaymentreversal(int id)
         {
-            int retID = OtherPaymentBAL.DeleteGroupPayment(ID);
-            var result = new ResponseResult() { Error = null, Message = "Deleted Successfully.", StatusCode = (int)Enum.Parse(typeof(System.Net.HttpStatusCode), System.Net.HttpStatusCode.OK.ToString()) };
-            return Json(result, JsonRequestBehavior.AllowGet);
+                int PaymentID = MemberPaymentBAL.AddReversalPayments(id, UserName, ParlourId);
+                string Message = "";
+                if (PaymentID != 0)
+                {
+                    bindInvoices(ParlourId, MemberId);
+                    Message = "Reversal added successfully.";
+                }
+                else
+                {
+                    Message = "Reversal not added successfully.";
+                }
+                return Json(Message, JsonRequestBehavior.AllowGet);
         }
 
+        public void bindInvoices(Guid ParlourId, int ReferenceNumber)
+        {
+            List<MemberInvoiceModel> objMemberInvoiceModel = MembersBAL.GetGroupInvoicesByReference(ParlourId, ReferenceNumber);
+        }
 
 
         [PageRightsAttribute(CurrentPageId = 7)]

@@ -127,7 +127,7 @@
                             dom = dom + editMemberUrl;
                         }
                         if (hasDeleteRights) {
-							var deleteMemberUrl = '<div class="col-sm-4 text-center"> <a onclick="DeleteSocietySetup(\'' + full.GroupInvoiceID + '\')"; ><i class="fa fa-trash-o"></i></a></div>';
+                            var deleteMemberUrl = '<div class="btn btn-w-m btn-primary paymentreversal text-center" onclick="reversegrouppayment()"; >Reverse Payment</div>';
                             dom = dom + deleteMemberUrl;
 						}
                         dom = dom + "</div>";
@@ -168,31 +168,27 @@
             });
         }
 
-		function DeleteSocietySetup(societyId) {
+        function reversegrouppayment() {
 
-            var isConfirmed = confirm('Are you sure you want to delete?');
-
-            if (isConfirmed) {
-
-				jQuery("#ItemId").val(societyId);
-                var deleteUrl = '@Url.Action("Delete","GroupPayment",new { ID = "GroupInvoiceID" },Request.Url.Scheme)';
-				deleteUrl = deleteUrl.replace("GroupInvoiceID", societyId);
-
-                model1.PageNum = 1;
-
+            var confirmStatus =confirm("You are about to reverse a group payment, do you want to Continue?");
+            if (confirmStatus == true) {
+                var ivnoiceId = $(this).attr("role");
                 jQuery.ajax({
-                    url: deleteUrl,
+                    url: '@Url.Action("GroupPaymentReversal", "GroupPayment", new { },Request.Url.Scheme)?id=' + groupinvoiceId,
                     type: "Get",
                     contentType: "application/html; charset=utf-8",
                     dataType: 'html'
                 })
-                .success(function (result) {
-                    InitModel();
-                    tableConfigs.table.fnDraw();
-                })
-                .error(function (xhr, status) {
-                    alert(status);
-                });
+                    .success(function (Message) {
+                        alert(Message);
+                        location.reload();
+                    })
+                    .error(function (xhr, status) {
+                        alert(status);
+                    });
+            }
+            else {
+                return false;
             }
         }
 	</script>

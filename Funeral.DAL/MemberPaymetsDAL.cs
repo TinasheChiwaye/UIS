@@ -215,6 +215,18 @@ namespace Funeral.DAL
 
         }
 
+        public static int AddGroupReversalPayment(int GroupInvoiceId, string UserId, Guid Parlourid)
+        {
+
+            DbParameter[] ObjParam = new DbParameter[3];
+            ObjParam[0] = new DbParameter("@invoiceid", DbParameter.DbType.Int, 0, GroupInvoiceId);
+            ObjParam[1] = new DbParameter("@UserID", DbParameter.DbType.NVarChar, 0, UserId);
+            ObjParam[2] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
+            int newInvoiceId = Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "GroupReversalPayment", ObjParam));
+            AddAudit(UserId, Parlourid, "Reversal  MemberNumber=('" + GroupInvoiceId + "')");
+            return newInvoiceId;
+        }
+
         public static int AddFuneralPayments(FuneralPaymentsModel model)
         {
             decimal amountPaid = model.AmountPaid.ToString().Contains(",") == true ? Convert.ToDecimal((model.AmountPaid / 100).ToString().Replace(",", ".")) : model.AmountPaid;
