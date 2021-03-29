@@ -50,11 +50,11 @@ namespace Funeral.BAL
         {
             try
             {
-                DataSet ds = MembersDAL.GetAllMembersdt(ParlourId, PageSize, PageNum, Keyword, SortBy, SortOrder, status);
+                DataSet ds = MembersDAL.GetAllMembersdt(ParlourId, PageSize, PageNum, Keyword, SortBy, SortOrder, status, BookName);
                 DataTable dr = ds.Tables[0];
                 MembersViewModel objViewModel = new MembersViewModel();
                 var membersList = FuneralHelper.DataTableMapToList<MembersModel>(dr, true);
-                objViewModel.MemberList = !string.IsNullOrEmpty(BookName) && BookName != "0" ? membersList.Where(x => x.MemberSociety.Equals(BookName)).ToList() : membersList;
+                objViewModel.MemberList = !string.IsNullOrEmpty(BookName) && BookName != "0" ? membersList.Where(x => x.MemberBranch.Equals(BookName)).ToList() : membersList;
                 //dr.NextResult();
                 //dr.Read();
                 objViewModel.TotalRecord = objViewModel.MemberList.Count;
@@ -395,6 +395,11 @@ namespace Funeral.BAL
         {
             DataTable dr = MembersDAL.GetMonthsToPayByIDdt(MemberId);
             return FuneralHelper.DataTableMapToList<PaymentReminderModel>(dr);
+        }
+        public static MembersModel GetMemberByPassport(string Passport, Guid ParlourId, int PlanId)
+        {
+            DataTable dr = MembersDAL.GetMemberByPassport(Passport, ParlourId, PlanId);
+            return FuneralHelper.DataTableMapToList<MembersModel>(dr).FirstOrDefault();
         }
     }
 }

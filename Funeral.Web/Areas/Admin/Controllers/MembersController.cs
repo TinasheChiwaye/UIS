@@ -41,7 +41,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 ViewBag.HasEditRight = HasEditRight;
                 ViewBag.HasDeleteRight = HasDeleteRight;
                 ViewBag.totalPremium = Currency;
-                ViewBag.SocietyLists = CommonBAL.GetSocietyByParlourId(CurrentParlourId);
+                ViewBag.SocietyLists = CommonBAL.GetBranchByParlourId(CurrentParlourId);
+                //ViewBag.SocietyLists = CommonBAL.GetSocietyByParlourId(CurrentParlourId);
                 LoadStatus();
                 LoadEntriesCount();
                 BindCompanyList("Search");

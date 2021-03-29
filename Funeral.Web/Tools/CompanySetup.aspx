@@ -98,7 +98,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label>Email Address  <%--<em>*</em>--%> </label>
-                                <asp:TextBox MaxLength="30" runat="server" ID="txtEmail" name="Email" type="text" class="form-control"></asp:TextBox>
+                                <asp:TextBox MaxLength="140" runat="server" ID="txtEmail" name="Email" type="text" class="form-control"></asp:TextBox>
                                 <%-- <asp:RegularExpressionValidator Display="None" runat="server" ID="revEmailValidation" ValidationGroup="CompanySetup" ControlToValidate="txtEmail" ErrorMessage="Please enter valid email address" ForeColor="Red" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"></asp:RegularExpressionValidator>--%>
                                 <%--<asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtEmail" ID="RequiredFieldValidator5" ForeColor="red" runat="server" ErrorMessage="Please enter Email Address"></asp:RequiredFieldValidator>--%>
                             </div>
@@ -134,6 +134,10 @@
                                 <asp:TextBox runat="server" ID="txtTncTombstone" name="CompanyRules" type="text" class="form-control" TextMode="MultiLine" Rows="4"></asp:TextBox>
                             </div>
                             <div class="form-group">
+                                <label>Terms And Condition For Quotation</label>
+                                <asp:TextBox runat="server" ID="txtTncQuotation" name="CompanyRules" type="text" class="form-control" TextMode="MultiLine" Rows="4"></asp:TextBox>
+                            </div>
+                            <div class="form-group">
                                 <label>Policy DECLARATION</label>
                                 <asp:TextBox runat="server" ID="txtPolicyDeclaration" name="CompanyRules" type="text" class="form-control" TextMode="MultiLine" Rows="4"></asp:TextBox>
                             </div>
@@ -165,7 +169,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Email Address  <em>*</em> </label>
-                                <asp:TextBox MaxLength="30" runat="server" ID="txtOwnersEmail" name="OwnersEmail" type="text" class="form-control"></asp:TextBox>
+                                <asp:TextBox MaxLength="140" runat="server" ID="txtOwnersEmail" name="OwnersEmail" type="text" class="form-control"></asp:TextBox>
                                 <asp:RegularExpressionValidator Display="None" runat="server" ID="RegularExpressionValidator10" ValidationGroup="CompanySetup" ControlToValidate="txtOwnersEmail" ErrorMessage="Please enter valid Owners email address" ForeColor="Red" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"></asp:RegularExpressionValidator>
                                 <asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtOwnersEmail" ID="RequiredFieldValidator100" ForeColor="red" runat="server" ErrorMessage="Please enter Owners Email Address"></asp:RequiredFieldValidator>
                             </div>
@@ -185,7 +189,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Claim Notification Email  <em>*</em> </label>
-                                <asp:TextBox MaxLength="30" runat="server" ID="txtEmailForClaimNotification" name="OwnersNotificationEmail" type="email" class="form-control"></asp:TextBox>
+                                <asp:TextBox MaxLength="140" runat="server" ID="txtEmailForClaimNotification" name="OwnersNotificationEmail" type="email" class="form-control"></asp:TextBox>
                                 <asp:RegularExpressionValidator Display="None" runat="server" ID="RegularExpressionValidator1" ValidationGroup="CompanySetup" ControlToValidate="txtEmailForClaimNotification" ErrorMessage="Please enter valid Notification email address" ForeColor="Red" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"></asp:RegularExpressionValidator>
                                 <asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtEmailForClaimNotification" ID="RequiredFieldValidator9" ForeColor="red" runat="server" ErrorMessage="Please enter Notification Email Address"></asp:RequiredFieldValidator>
                             </div>

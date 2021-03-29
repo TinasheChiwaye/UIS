@@ -321,17 +321,17 @@
                                             <div class="form-group">
                                                 <label>ID Number <em>*</em>  </label>
                                                 @{
-                                                    if (Model.IsAdministrator == true || Model.IsSuperUser == true)
-                                                    {
+//if (Model.IsAdministrator == true || Model.IsSuperUser == true )
+//{
                                                         <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="DateComparisionJavascriptFun();">
-                                                    }
+                                                    @*}
                                                     else if (Model.Member.pkiMemberID > 0)
                                                     { <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="DateComparisionJavascriptFun();" readonly="readonly">
                                                     }
                                                     else
                                                     {
                                                         <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="DateComparisionJavascriptFun();">
-                                                    }
+                                                    }*@
 
 
                                                     //DataTable dr = MembersDAL.GetMemberByIDdt(ID, ParlourId);
