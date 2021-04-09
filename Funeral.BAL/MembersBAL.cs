@@ -91,9 +91,9 @@ namespace Funeral.BAL
             return FuneralHelper.DataTableMapToList<MemberInvoiceModel>(dr);
         }
 
-        public static List<MemberInvoiceModel> GetGroupInvoicesByReference(Guid parlourid, int ReferenceNumber)
+        public static List<MemberInvoiceModel> GetGroupInvoicesByReference(Guid parlourid)
         {
-            DataTable dr = MembersDAL.GetGroupInvoiceByReference(parlourid, ReferenceNumber);
+            DataTable dr = MembersDAL.GetGroupInvoiceByReference(parlourid);
             return FuneralHelper.DataTableMapToList<MemberInvoiceModel>(dr);
         }
 

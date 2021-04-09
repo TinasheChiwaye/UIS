@@ -58,6 +58,17 @@ namespace Funeral.BAL
             DataTable dr = ToolsSetingDAL.GetAgentByIDdt(ID);
             return FuneralHelper.DataTableMapToList<AgentInfoSetupModel>(dr).FirstOrDefault();
         }
+
+        public static string GetNewReferenceNumber()
+        {
+            return ToolsSetingDAL.GetNewReferenceNumber();
+        }
+
+        //public static GroupPayment GetNewReferenceNumber()
+        //{
+        //    return ToolsSetingDAL.GetNewReferenceNumber()
+        //}
+
         public static SecureUserGroupsModel GetUserAccessByID(int ID, Guid ParlourId)
         {
             DataTable dr = ToolsSetingDAL.GetUserAccessByIDdt(ID, ParlourId);
@@ -197,6 +208,11 @@ namespace Funeral.BAL
         {
             DataTable dr = ToolsSetingDAL.GetGroupPayment_ByParlourId(ParlourId, ReferenceNumber);
             return FuneralHelper.DataTableMapToList<GroupPaymentList>(dr).FirstOrDefault();
+        }
+        public static List<GroupPaymentList> GetGroupPayment_ByScheme(Guid ParlourId)
+        {
+            DataTable dr = ToolsSetingDAL.GetGroupPayment_ByScheme(ParlourId);
+            return FuneralHelper.DataTableMapToList<GroupPaymentList>(dr);
         }
         public static List<SocietyModel> GetAllSocietye(Guid ParlourId)
         {

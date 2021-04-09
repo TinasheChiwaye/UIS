@@ -215,15 +215,16 @@ namespace Funeral.DAL
 
         }
 
-        public static int AddGroupReversalPayment(int GroupInvoiceId, string UserId, Guid Parlourid)
+        public static int AddGroupReversalPayment(int GroupInvoiceId, string UserId, Guid Parlourid, string ReferenceNumber)
         {
 
-            DbParameter[] ObjParam = new DbParameter[3];
-            ObjParam[0] = new DbParameter("@invoiceid", DbParameter.DbType.Int, 0, GroupInvoiceId);
+            DbParameter[] ObjParam = new DbParameter[4];
+            ObjParam[0] = new DbParameter("@Groupinvoiceid", DbParameter.DbType.Int, 0, GroupInvoiceId);
             ObjParam[1] = new DbParameter("@UserID", DbParameter.DbType.NVarChar, 0, UserId);
             ObjParam[2] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
+            ObjParam[3] = new DbParameter("@ReferenceNumber", DbParameter.DbType.NVarChar, 0, ReferenceNumber);
             int newInvoiceId = Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "GroupReversalPayment", ObjParam));
-            AddAudit(UserId, Parlourid, "Reversal  MemberNumber=('" + GroupInvoiceId + "')");
+            AddAudit(UserId, Parlourid, "Reversal  Number=('" + GroupInvoiceId + "')");
             return newInvoiceId;
         }
 

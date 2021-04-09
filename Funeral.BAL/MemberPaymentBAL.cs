@@ -63,9 +63,9 @@ namespace Funeral.BAL
         {
             return MemberPaymetsDAL.AddReversalPayments(InvoiceId, UserId, Parlourid);
         }
-        public static int AddGroupReversalPayments(int GroupInvoiceId, string UserId, Guid Parlourid)
+        public static int AddGroupReversalPayments(int GroupInvoiceId, string UserId, Guid Parlourid, string ReferenceNumber)
         {
-            return MemberPaymetsDAL.AddReversalPayments(GroupInvoiceId, UserId, Parlourid);
+            return MemberPaymetsDAL.AddGroupReversalPayment(GroupInvoiceId, UserId, Parlourid, ReferenceNumber);
         }
         public static int InsertSendReminder(SendReminderModel ModelPayment)
         {

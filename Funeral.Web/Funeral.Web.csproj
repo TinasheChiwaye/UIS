@@ -38,7 +38,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -774,6 +774,7 @@
     <Content Include="Areas\Admin\Views\NewBusiness\NTU.cshtml" />
     <Content Include="Areas\Admin\Views\NewBusiness\ManageLeads.cshtml" />
     <Content Include="Areas\Admin\Views\NewBusiness\_AddEditBeneficiary.cshtml" />
+    <Content Include="Areas\Admin\Views\GroupPayment\PrintForm.cshtml" />
     <None Include="DevDataDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DevDataDataSet.Designer.cs</LastGenOutput>
@@ -2024,6 +2025,7 @@
     <Compile Include="Areas\Admin\Models\ViewModel\FuneralPaymentVM.cs" />
     <Compile Include="Areas\Admin\Models\ViewModel\FuneralPrintVM.cs" />
     <Compile Include="Areas\Admin\Models\ViewModel\FuneralServiceVM.cs" />
+    <Compile Include="Areas\Admin\Models\ViewModel\GroupPaymentVM.cs" />
     <Compile Include="Areas\Admin\Models\ViewModel\ManageClaimsVM.cs" />
     <Compile Include="Areas\Admin\Models\ViewModel\MembersOtherPaymentDetailsVM.cs" />
     <Compile Include="Areas\Admin\Models\ViewModel\PrintViewModel.cs" />

@@ -44,6 +44,11 @@ namespace Funeral.BAL
             DataTable dr = OtherPaymentDAl.GetAllGroupPaymentList(ParlourId, GroupId);
             return FuneralHelper.DataTableMapToList<GroupPayment>(dr);
         }
+        public static List<GroupPayment> GetSchemePaymentList(Guid ParlourId)
+        {
+            DataTable dr = OtherPaymentDAl.GetSchemePaymentList(ParlourId);
+            return FuneralHelper.DataTableMapToList<GroupPayment>(dr);
+        }
         public static GroupPayment EditGroupPaymentByID(int ID, Guid ParlourId)
         {
             DataTable dr = OtherPaymentDAl.EditGroupPaymentByID(ID, ParlourId);
@@ -56,6 +61,12 @@ namespace Funeral.BAL
         public static int AutoallocateMemberPayments(string UserName, Guid ParlourId,string referenceNumber)
         {
             return OtherPaymentDAl.AutoallocateMemberPayments(UserName, ParlourId, referenceNumber);
+        }
+        public static GroupPayment GetGroupPaymentByID(int ID, Guid ParlourId)
+        {
+            DataTable dr = OtherPaymentDAl.GetGroupPaymentByIDdt(ID, ParlourId);
+            return FuneralHelper.DataTableMapToList<GroupPayment>(dr).FirstOrDefault();
+
         }
     }
 }

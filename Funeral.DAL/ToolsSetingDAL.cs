@@ -54,6 +54,11 @@ namespace Funeral.DAL
 
         }
 
+        public static string GetNewReferenceNumber()
+        {
+            return DbConnection.GetScalarValue(CommandType.StoredProcedure, "GetNewReferenceNumber").ToString();
+        }
+
         public static DataTable SaveApplicationdt(ApplicationSettingsModel model)
         {
             AdditionalMemberInfoModel model1 = new AdditionalMemberInfoModel();
@@ -639,6 +644,14 @@ namespace Funeral.DAL
             ObjParam[1] = new DbParameter("@ReferenceNumber", DbParameter.DbType.NVarChar, 0, ReferenceNumber);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "SchemeSummaryByParlourId", ObjParam);
         }
+
+        public static DataTable GetGroupPayment_ByScheme(Guid ParlourId)
+        {
+            DbParameter[] ObjParam = new DbParameter[1];
+            ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetGroupPaymentByScheme", ObjParam);
+        }
+
         public static DataTable GetAllSocietyesdt(Guid ParlourId)
         {
             DbParameter[] ObjParam = new DbParameter[1];

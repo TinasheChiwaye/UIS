@@ -9,6 +9,16 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Funeral.Web.Areas.Admin.Models.ViewModel;
+using Microsoft.Reporting.WebForms;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.IO;
+using System.Web.UI.WebControls;
+using System.Globalization;
+using System.Threading;
+using System.Data;
+
 
 namespace Funeral.Web.Areas.Admin.Controllers
 {
@@ -67,7 +77,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 GroupPayment.InceptionDate = GetDetails.InceptionDate;
                 GroupPayment.ReferenceNumber = GetDetails.ReferenceNumber;
             }
-            GroupPayment.DatePaid = DateTime.Now;
+            GroupPayment.DatePaid = DateTime.Now.ToString();
             GroupPayment.parlourid = getParlourId;
             GroupPayment.SocietyDropdown = CommonBAL.GetAllSocietyesList(getParlourId);
             ModelState.Clear();
@@ -130,7 +140,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                                 }
                                 else
                                 {
-                                    TempData["message"] = ShowMessage(MessageType.Danger, "ExcelSheet is not Proper Format.First Columns must be in sequence Reference Number,Amount,PolicyNumber");
+                                    TempData["message"] = ShowMessage(MessageType.Danger, "ExcelSheet is not Proper Format. First Columns must be in sequence Reference Number,Amount,PolicyNumber");
                                 }
                             }
                         }
@@ -155,6 +165,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
             ViewBag.HasEditRight = HasEditRight;
             ViewBag.HasDeleteRight = HasDeleteRight;
             ViewBag.SocietyLists = CommonBAL.GetSocietyByParlourId(CurrentParlourId);
+            ViewBag.GroupInvoiceList = OtherPaymentBAL.GetSchemePaymentList(CurrentParlourId);
+
 
             Model.Search.PaymentSearchNew search = new Model.Search.PaymentSearchNew();
             search.PageNum = 1;
@@ -178,14 +190,12 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 object value = TempData.Peek("GroupId");
                 TempData.Keep("GroupId");
 
-                string ReferenceNumber = TempData.Peek("ReferenceNumber").ToString();
-                TempData.Keep("ReferenceNumber");
-
-                var groupPayment = ToolsSetingBAL.GetGroupPayment_ByParlourId(Guid.Parse(value.ToString()), ReferenceNumber);
                 var SocietyList = new List<GroupPayment>();
+                var groupPayment = ToolsSetingBAL.GetGroupPayment_ByScheme(ParlourId);
+                //var SocietyList = new List<GroupPayment>();
                 if (groupPayment != null)
                 {
-                    SocietyList = OtherPaymentBAL.GetAllGroupPaymentList(ParlourId, groupPayment.GroupId);
+                    SocietyList = OtherPaymentBAL.GetSchemePaymentList(CurrentParlourId);
                 }
                 return Json(new SearchResult<Model.Search.BaseSearch, GroupPayment>(search, SocietyList, o => o.SocietyName.ToLower().Contains(search.SarchText.ToLower())));
             }
@@ -210,27 +220,59 @@ namespace Funeral.Web.Areas.Admin.Controllers
             return PartialView("~/Areas/Admin/Views/GroupPayment/_AddGroupPayment.cshtml", groupPayment);
         }
         [PageRightsAttribute(CurrentPageId = 7, Right = new isPageRight[] { isPageRight.HasDelete })]
-        public JsonResult grouppaymentreversal(int id)
+        public JsonResult GroupPaymentReversal(int ID)
         {
-                int PaymentID = MemberPaymentBAL.AddReversalPayments(id, UserName, ParlourId);
-                string Message = "";
-                if (PaymentID != 0)
-                {
-                    bindInvoices(ParlourId, MemberId);
-                    Message = "Reversal added successfully.";
-                }
-                else
-                {
-                    Message = "Reversal not added successfully.";
-                }
-                return Json(Message, JsonRequestBehavior.AllowGet);
+            int PaymentID = MemberPaymentBAL.AddGroupReversalPayments(ID, UserName, ParlourId, TempData.Peek("ReferenceNumber").ToString());
+            string Message = "";
+            if (PaymentID != 0)
+            {
+                bindInvoices(CurrentParlourId);
+                Message = "Reversal added successfully.";
+            }
+            else
+            {
+                Message = "Reversal not added successfully.";
+            }
+            return Json(Message, JsonRequestBehavior.AllowGet);
         }
 
-        public void bindInvoices(Guid ParlourId, int ReferenceNumber)
+        public void bindInvoices(Guid ParlourId)
         {
-            List<MemberInvoiceModel> objMemberInvoiceModel = MembersBAL.GetGroupInvoicesByReference(ParlourId, ReferenceNumber);
+
+            List<GroupPayment> objGroupInvoiceModel = OtherPaymentBAL.GetSchemePaymentList(CurrentParlourId);
         }
 
+        public ActionResult PrintForm(int GroupInvoiceID)
+        {
+            GroupPaymentVM printObj = new GroupPaymentVM();
+
+            GroupPayment groupPayment = new GroupPayment();
+            groupPayment = OtherPaymentBAL.GetGroupPaymentByID(GroupInvoiceID, ParlourId);
+
+            ApplicationSettingsModel model = new ApplicationSettingsModel();
+            model = ToolsSetingBAL.GetApplictionByParlourID(ParlourId);
+
+            printObj.BusinessAddressLine1 = model.BusinessAddressLine1;
+            printObj.BusinessAddressLine2 = model.BusinessAddressLine2;
+            printObj.BusinessAddressLine3 = model.BusinessAddressLine3;
+            printObj.BusinessPostalCode = model.BusinessPostalCode;
+            printObj.FSBNumber = "FSB Number: " + model.FSBNumber;
+            printObj.telephoneNumber = model.ManageTelNumber + " | " + model.ManageCellNumber;
+            printObj.Id = groupPayment.GroupInvoiceID;
+            printObj.PolicyNumber = groupPayment.SocietyName;
+            printObj.MonthPaid = Convert.ToDateTime(groupPayment.DatePaid).ToString("MMMM");
+            printObj.DatePaid = groupPayment.DatePaid;
+            printObj.AmountPaid = Math.Round(groupPayment.AmountPaid, 2);
+            printObj.PaidBy = groupPayment.PaidBy;
+            printObj.ReceivedBy = groupPayment.RecievedBy;
+            printObj.ParlourName = model.ApplicationName;
+            printObj.ParlourName = ApplicationName;
+            printObj.TimePrinted = Convert.ToString(System.DateTime.Now);
+            printObj.Notes = groupPayment.Notes;
+            printObj.RefernceNumer = groupPayment.ReferenceNumber;
+
+            return View(printObj);
+        }
 
         [PageRightsAttribute(CurrentPageId = 7)]
         public PartialViewResult GroupList()
