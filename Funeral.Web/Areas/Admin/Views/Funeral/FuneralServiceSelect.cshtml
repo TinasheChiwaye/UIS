@@ -171,19 +171,17 @@
                                     <tr>
                                         <td class="service" width="auto">@item.ServiceName</td>
                                         <td class="desc" width="auto">@item.ServiceDesc</td>
-                                        <td class="unit" width="auto">@item.ServiceRate</td>
+                                        <td class="unit" width="auto">@item.ServiceCost.ToString("0.00")</td>
                                         <td class="qty" width="auto">@item.Quantity</td>
-                                        <td class="total" width="auto" style="text-align: right;">@Model.Currency @(item.ServiceRate * item.Quantity)</td>
+                                        <td class="total" width="auto" style="text-align: right;">@Model.Currency @((item.ServiceCost * item.Quantity).ToString("0.00"))</td>
                                         <td width="auto">
-                                            @if (hasEditRights)
-                                            {
+                                            
                                                 <a id="lbtnEditService" title="Click here To Edit Service" onclick="GetDataEditService(@item.pkiFuneralServiceSelectionID,@item.fkiFuneralID)"><i class="fa fa-edit"></i></a>
-                                            }
+                                            
                                             &nbsp;
-                                            @if (hasDeleteRights)
-                                            {
+                                            
                                                 <a onclick="DeleteServiceById(@item.pkiFuneralServiceSelectionID)" id="lbtnDelete" title="Click here To Delete Service"><i class="fa fa-trash"></i></a>
-                                            }
+                                            
                                         </td>
                                     </tr>
                                 }
@@ -195,7 +193,7 @@
             </div>
         </div>
 
-        <div class="ibox float-e-margins">
+        @*<div class="ibox float-e-margins">
             <div class="ibox-title">
                 <h5>Payment</h5>
             </div>
@@ -239,7 +237,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>*@
 
         <div class="ibox float-e-margins">
             <div class="ibox-content">

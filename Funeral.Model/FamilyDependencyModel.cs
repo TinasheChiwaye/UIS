@@ -20,6 +20,7 @@ namespace Funeral.Model
             RelationshipType = string.Empty;
             Gender = string.Empty;
             DependentStatus = string.Empty;
+            Passport = string.Empty;
         }
 
         //public string DTCode
@@ -131,6 +132,7 @@ namespace Funeral.Model
         public string MemeberNumber { get; set; }
 
         public int ClaimExistCount { get; set; }
+        public string Passport { get; set; }
     }
 
 

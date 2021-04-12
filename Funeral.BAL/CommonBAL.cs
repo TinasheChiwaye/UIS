@@ -229,6 +229,11 @@ namespace Funeral.BAL
             keyValues.Add(new UserType { UserTypeId = 4, UserTypeName = "Child" });
             keyValues.Add(new UserType { UserTypeId = 5, UserTypeName = "Adult" });
             keyValues.Add(new UserType { UserTypeId = 6, UserTypeName = "Extended Child" });
+            keyValues.Add(new UserType { UserTypeId = 7, UserTypeName = "Extended Rider 1" });
+            keyValues.Add(new UserType { UserTypeId = 8, UserTypeName = "Extended Rider 2" });
+            keyValues.Add(new UserType { UserTypeId = 9, UserTypeName = "Extended Rider 3" });
+            keyValues.Add(new UserType { UserTypeId = 10, UserTypeName = "Extended Rider 4" });
+            keyValues.Add(new UserType { UserTypeId = 11, UserTypeName = "Extended Rider 5" });           
             return keyValues;
         }
         public static List<UnderwriterModel> GetUnderwriterList(Guid Parlourid)

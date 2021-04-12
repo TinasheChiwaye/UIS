@@ -21,7 +21,7 @@
                         <div class="col-lg-4" id="dvAdministrator">
                             <div class="form-group">
                                 <label>Scheme: </label>
-                                @Html.DropDownListFor(m => m.CompanyId, new SelectList(ViewBag.Companies, "parlourid", "ApplicationName"),"Choose parlour", new { @class = "form-control" })
+                                @Html.DropDownListFor(m => m.CompanyId, new SelectList(ViewBag.Companies, "parlourid", "ApplicationName"),"Choose Parlour", new { @class = "form-control" })
                             </div>
                         </div>
                         <div class="col-sm-3">
@@ -213,7 +213,7 @@
                         "bLengthChange": false,
                         'bFilter': false,
                         'scrollX': false,
-                        "ordering": false,
+                        "ordering": true,
                         "bSortable": false,
                         'ajax': {
                             "url": '@Url.Action("SearchData", "Members", null, Request.Url.Scheme)',

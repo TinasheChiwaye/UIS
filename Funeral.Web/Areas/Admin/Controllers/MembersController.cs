@@ -860,6 +860,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 ObjFamilyDependencyModel.DependencyType = dependency.DependencyType;
                 ObjFamilyDependencyModel.Premium = dependency.Premium;
                 ObjFamilyDependencyModel.Cover = dependency.Cover;
+                ObjFamilyDependencyModel.Passport = dependency.Passport;
 
             }
 

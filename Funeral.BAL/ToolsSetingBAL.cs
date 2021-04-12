@@ -16,6 +16,10 @@ namespace Funeral.BAL
         {
             return ToolsSetingDAL.UploadApplicationLogo(model);
         }
+        public static int UploadUnderwriterLogo(UnderwriterSetupModel model)
+        {
+            return ToolsSetingDAL.UploadUnderwriterLogo(model);
+        }
         public static ApplicationSettingsModel SaveApplication(ApplicationSettingsModel model)
         {
             DataTable dr = ToolsSetingDAL.SaveApplicationdt(model);

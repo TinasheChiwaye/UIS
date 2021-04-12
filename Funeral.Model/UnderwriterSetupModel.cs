@@ -42,7 +42,11 @@ namespace Funeral.Model
         public Guid Parlourid { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public DateTime? CreateddDate { get; set; }
-       
-      
+        public Byte[] UnderwriterLogo { get; set; }
+        public string UnderwriterLogoPath { get; set; }
+
+
+
+
     }
 }
