@@ -1169,7 +1169,7 @@ namespace Funeral.DAL
         public static int SaveTermsAndCondition(ApplicationTnCModel Model1)
         {
             string query = "SaveTermsAndCondition";
-            DbParameter[] ObjParam = new DbParameter[9];
+            DbParameter[] ObjParam = new DbParameter[10];
             ObjParam[0] = new DbParameter("@pkiAppTC", DbParameter.DbType.Int, 0, Model1.pkiAppTC);
             ObjParam[1] = new DbParameter("@fkiApplicationID", DbParameter.DbType.Int, 0, Model1.fkiApplicationID);
             ObjParam[2] = new DbParameter("@TermsAndCondition", DbParameter.DbType.NVarChar, 0, Model1.TermsAndCondition);
@@ -1178,7 +1178,8 @@ namespace Funeral.DAL
             ObjParam[5] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, Model1.parlourid);
             ObjParam[6] = new DbParameter("@TermsAndConditionFuneral", DbParameter.DbType.NVarChar, 0, Model1.TermsAndConditionFuneral);
             ObjParam[7] = new DbParameter("@TermsAndConditionTombstone", DbParameter.DbType.NVarChar, 0, Model1.TermsAndConditionTombstone);
-            ObjParam[8] = new DbParameter("@Declaration", DbParameter.DbType.NVarChar, 0, Model1.Declaration);
+            ObjParam[8] = new DbParameter("@TermsAndConditionQuotation", DbParameter.DbType.NVarChar, 0, Model1.TermsAndConditionQuotation);
+            ObjParam[9] = new DbParameter("@Declaration", DbParameter.DbType.NVarChar, 0, Model1.Declaration);
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
         }
 

@@ -135,6 +135,7 @@
     <Compile Include="PackageServiceModel.cs" />
     <Compile Include="PackageServicesSelectionModel.cs" />
     <Compile Include="PayfastRequestModel.cs" />
+    <Compile Include="PaymentReminderModel.cs" />
     <Compile Include="PaymentsViewModel.cs" />
     <Compile Include="PlanStagingList.cs" />
     <Compile Include="RegenerateBillingModal.cs" />

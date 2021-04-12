@@ -27,7 +27,7 @@
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label>Book: </label>
-                                @Html.DropDownListFor(m => m.BookID, new SelectList(ViewBag.SocietyLists, "SocietyName", "SocietyName"), "Select Group", new { @id = "ddlBookName", @class = "form-control" })
+                                @Html.DropDownListFor(m => m.BookID, new SelectList(ViewBag.SocietyLists, "BranchName", "BranchName"), "Select Group", new { @id = "ddlBookName", @class = "form-control" })
                             </div>
                         </div>
                         <div class="col-sm-5">

@@ -128,6 +128,81 @@ namespace Funeral.DAL
 
         }
 
+        //public static int AddPayments(MembersPaymentDetailsModel ModelPayment, bool IsJoiningFee)
+        //{
+        //    int returnValue = 0;
+        //    int invNumber = 0;
+        //    DataSet dsData = GetInvoiceNumberByParlourID(ModelPayment.ParlourId);
+        //    if (dsData.Tables[0].Rows.Count > 0)
+        //    {
+        //        invNumber = Convert.ToInt32(dsData.Tables[0].Rows[0][0]);
+        //    }
+        //    else
+        //    {
+        //        returnValue = 0;
+        //        return returnValue;
+        //    }
+        //    DataTable dtMember = SearchMemberIDByMemberNo(ModelPayment.MemeberNumber, "", ModelPayment.ParlourId);
+        //    if (dtMember.Rows.Count > 0 && ModelPayment.pkiMemberID != 0)
+        //    {
+
+        //        DbParameter[] ObjParam = new DbParameter[13];
+        //        ObjParam[0] = new DbParameter("@MemberID", DbParameter.DbType.Int, 0, ModelPayment.pkiMemberID);
+        //        //ObjParam[1] = new DbParameter("@AmountPaid", DbParameter.DbType.Decimal, 0, (ModelPayment.Amount / 100).ToString().Replace(",", "."));
+        //        ObjParam[1] = new DbParameter("@AmountPaid", DbParameter.DbType.Decimal, 0, ModelPayment.Amount);
+        //        ObjParam[2] = new DbParameter("@ReceivedBy", DbParameter.DbType.VarChar, 0, ModelPayment.ReceivedBy);
+        //        ObjParam[3] = new DbParameter("@Notes", DbParameter.DbType.VarChar, 0, ModelPayment.Notes);
+        //        ObjParam[4] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, ModelPayment.ParlourId);
+        //        ObjParam[5] = new DbParameter("@PaymentBranch", DbParameter.DbType.VarChar, 0, ModelPayment.Branch);
+        //        ObjParam[6] = new DbParameter("@ModifiedUser", DbParameter.DbType.VarChar, 0, ModelPayment.UserName);
+        //        ObjParam[7] = new DbParameter("@PaidUntil", DbParameter.DbType.DateTime, 0, ModelPayment.NextPaymentDate.ToString("yyyy-MM-dd"));
+        //        ObjParam[8] = new DbParameter("@InvNumber", DbParameter.DbType.Int, 0, invNumber);
+        //        if (DateTime.Now.ToString("yyyy-MM-dd") == ModelPayment.PaymentDate.ToString("yyyy-MM-dd"))
+        //        {
+        //            ObjParam[9] = new DbParameter("@DatePaid", DbParameter.DbType.DateTime, 0, DateTime.Now);
+        //        }
+        //        else
+        //        {
+        //            ObjParam[9] = new DbParameter("@DatePaid", DbParameter.DbType.DateTime, 0, ModelPayment.PaymentDate.ToString("yyyy-MM-dd"));
+        //        }
+        //        ObjParam[10] = new DbParameter("@PaidBy", DbParameter.DbType.VarChar, 0, "");
+        //        ObjParam[11] = new DbParameter("@MethodOfPayment", DbParameter.DbType.VarChar, 0, ModelPayment.MethodOfPayment);
+        //        ObjParam[12] = new DbParameter("@IsJoiningFee", DbParameter.DbType.Bit, 0, IsJoiningFee);
+        //        returnValue = Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "AddPayment", ObjParam));
+
+        //        if (ModelPayment.LatePaymentPenalty > 0)
+        //        {
+        //            DbParameter[] ObjLatePaymentParam = new DbParameter[3];
+        //            ObjLatePaymentParam[0] = new DbParameter("@pkiMemberid", DbParameter.DbType.Int, 0, ModelPayment.pkiMemberID);
+        //            ObjLatePaymentParam[1] = new DbParameter("@Amount", DbParameter.DbType.Decimal, 0, (ModelPayment.LatePaymentPenalty / 100).ToString().Replace(",", "."));
+        //            ObjLatePaymentParam[2] = new DbParameter("@Notes", DbParameter.DbType.VarChar, 0, "Penalty Payment :- RecievedBy" + ModelPayment.ReceivedBy);
+
+        //            returnValue = Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "MemberLatePaymentPenaltyPayment", ObjLatePaymentParam));
+        //        }
+
+        //        string PolicyStatus = string.Empty;
+        //        if (ModelPayment.Notes.Contains("Reinstate Policy"))
+        //        {
+        //            PolicyStatus = "Active";
+        //        }
+        //        else if (ModelPayment.Notes.Contains("Rejoin Policy"))
+        //        {
+        //            PolicyStatus = "On Trial";
+        //        }
+        //        else
+        //        {
+        //            PolicyStatus = "";
+        //        }
+        //        DbParameter[] ObjNotesParams = new DbParameter[2];
+        //        ObjNotesParams[0] = new DbParameter("@pkiMemberid", DbParameter.DbType.Int, 0, ModelPayment.pkiMemberID);
+        //        ObjNotesParams[1] = new DbParameter("@PolicyStatus", DbParameter.DbType.VarChar, 0, PolicyStatus);
+        //        Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "UpdateMemberPolicy", ObjNotesParams));
+        //        AddAudit(ModelPayment.ReceivedBy, ModelPayment.ParlourId, "AddPayments  MemberNumber=('" + ModelPayment.MemeberNumber + "')");
+        //    }
+        //    return returnValue;
+        //}
+
+            //================================test=============================
         public static int AddPayments(MembersPaymentDetailsModel ModelPayment, bool IsJoiningFee)
         {
             int returnValue = 0;
@@ -146,7 +221,7 @@ namespace Funeral.DAL
             if (dtMember.Rows.Count > 0 && ModelPayment.pkiMemberID != 0)
             {
 
-                DbParameter[] ObjParam = new DbParameter[13];
+                DbParameter[] ObjParam = new DbParameter[14];
                 ObjParam[0] = new DbParameter("@MemberID", DbParameter.DbType.Int, 0, ModelPayment.pkiMemberID);
                 //ObjParam[1] = new DbParameter("@AmountPaid", DbParameter.DbType.Decimal, 0, (ModelPayment.Amount / 100).ToString().Replace(",", "."));
                 ObjParam[1] = new DbParameter("@AmountPaid", DbParameter.DbType.Decimal, 0, ModelPayment.Amount);
@@ -168,7 +243,8 @@ namespace Funeral.DAL
                 ObjParam[10] = new DbParameter("@PaidBy", DbParameter.DbType.VarChar, 0, "");
                 ObjParam[11] = new DbParameter("@MethodOfPayment", DbParameter.DbType.VarChar, 0, ModelPayment.MethodOfPayment);
                 ObjParam[12] = new DbParameter("@IsJoiningFee", DbParameter.DbType.Bit, 0, IsJoiningFee);
-                returnValue = Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "AddPayment", ObjParam));
+                ObjParam[13] = new DbParameter("@LatePaymentMemberId", DbParameter.DbType.Int, 0, ModelPayment.LatePaymentId);
+                returnValue = Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "AddPayment_New", ObjParam));
 
                 if (ModelPayment.LatePaymentPenalty > 0)
                 {
@@ -201,6 +277,8 @@ namespace Funeral.DAL
             }
             return returnValue;
         }
+
+        //================================test end=============================
 
         public static int AddReversalPayments(int InvoiceId, string UserId, Guid Parlourid)
         {
@@ -406,6 +484,32 @@ namespace Funeral.DAL
             {
                 return 0;
             }
+        }
+
+        //public static DataSet GetMonthsToPayByMemberId(int pkiMemberId)
+        //{
+        //    DbParameter[] ObjParam = new DbParameter[1];
+        //    ObjParam[0] = new DbParameter("@MemberId", DbParameter.DbType.UniqueIdentifier, 0, pkiMemberId);
+        //    return DbConnection.GetDataSet(CommandType.StoredProcedure, "GetMonthsToPayByMemberId", ObjParam);
+        //}
+
+
+
+
+        public static SqlDataReader GetMonthsToPayByMemberId(int pkiMemberId)
+        {
+            DbParameter[] ObjParam = new DbParameter[1];
+            ObjParam[0] = new DbParameter("@MemberId", DbParameter.DbType.VarChar, 0, pkiMemberId);//pIntFnrlID
+            //ObjParam[1] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, parlourid);//pIntFnrlID
+            return DbConnection.GetDataReader(CommandType.StoredProcedure, "GetMonthsToPayByMemberId", ObjParam);
+        }
+
+        public static DataTable GetMonthsToPayByMemberIddt(int pkiMemberId)
+        {
+            DbParameter[] ObjParam = new DbParameter[1];
+            ObjParam[0] = new DbParameter("@MemberId", DbParameter.DbType.VarChar, 0, pkiMemberId);//pIntFnrlID
+            //ObjParam[1] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, parlourid);//pIntFnrlID
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetMonthsToPayByMemberId", ObjParam);
         }
     }
 }

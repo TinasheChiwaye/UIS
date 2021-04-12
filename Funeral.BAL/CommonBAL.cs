@@ -511,5 +511,22 @@ namespace Funeral.BAL
         {
             return CommonDAL.AddAudit(Username, ParlourId, AuditDesc);
         }
+
+        //=================TEST
+
+        public static List<PlanModel> GetPlanByParlourId(Guid parlourid)
+        {
+            DataTable dr = MembersDAL.GetPlanByParlourIddt(parlourid);
+            return FuneralHelper.DataTableMapToList<PlanModel>(dr);
+        }
+
+        //public static List<BranchModel> GetBranchByParlourId(Guid parlourid)
+        //{
+        //    DataTable dr = MembersDAL.GetBranchByParlourIddt(parlourid);
+        //    return FuneralHelper.DataTableMapToList<BranchModel>(dr);
+        //}
+
+        //=================END
+
     }
 }

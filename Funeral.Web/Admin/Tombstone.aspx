@@ -38,13 +38,13 @@
                             <div class="form-group">
 
 
-                                <label>Surname <em>*</em> </label>
+                                <label>Last Name <em>*</em> </label>
                                 <asp:TextBox MaxLength="25" runat="server" ID="txtLastName" name="name" type="text" class="form-control"></asp:TextBox>
                                 <asp:RequiredFieldValidator Display="None" ValidationGroup="tomb" ControlToValidate="txtLastName" ID="RequiredFieldValidator4" ForeColor="red" runat="server" ErrorMessage="Please enter Surname"></asp:RequiredFieldValidator>
                                 <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator2" ValidationGroup="tab1" runat="server" ErrorMessage="Surname Enter Only characters" ControlToValidate="txtLastName" ValidationExpression="[a-zA-Z ]*$" />
                             </div>
                             <div class="form-group">
-                                <label>full name <em>*</em>  </label>
+                                <label>First Name <em>*</em>  </label>
                                 <asp:TextBox MaxLength="25" runat="server" ID="txtFirstName" name="name" type="text" class="form-control"></asp:TextBox>
                                 <asp:RequiredFieldValidator Display="None" ValidationGroup="tomb" ControlToValidate="txtFirstName" ID="RequiredFieldValidator6" ForeColor="red" runat="server" ErrorMessage="Please enter full name"></asp:RequiredFieldValidator>
                                 <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator3" ValidationGroup="tab1" runat="server" ControlToValidate="txtFirstname" ErrorMessage="full name Enter Only characters" ValidationExpression="[a-zA-Z ]*$" />
@@ -109,13 +109,13 @@
                                         <div class="form-group">
 
 
-                                            <label>Surname <em>*</em> </label>
+                                            <label>Last Name <em>*</em> </label>
                                             <asp:TextBox MaxLength="25" runat="server" ID="txtDLastName" name="name" type="text" class="form-control"></asp:TextBox>
                                             <asp:RequiredFieldValidator Display="None" ValidationGroup="tomb" ControlToValidate="txtDLastName" ID="RequiredFieldValidator1" ForeColor="red" runat="server" ErrorMessage="Please enter Surname"></asp:RequiredFieldValidator>
                                             <asp:RegularExpressionValidator Display="None" ID="RegExp1" ValidationGroup="tomb" runat="server" ErrorMessage="Surname Enter Only characters" ControlToValidate="txtDLastName" ValidationExpression="[a-zA-Z ]*$" />
                                         </div>
                                         <div class="form-group">
-                                            <label>full name <em>*</em>  </label>
+                                            <label>First Name <em>*</em>  </label>
                                             <asp:TextBox MaxLength="25" runat="server" ID="txtDFirstname" name="name" type="text" class="form-control"></asp:TextBox>
                                             <asp:RequiredFieldValidator Display="None" ValidationGroup="tomb" ControlToValidate="txtDFirstName" ID="RequiredFieldValidator2" ForeColor="red" runat="server" ErrorMessage="Please enter full name"></asp:RequiredFieldValidator>
                                             <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator1" ValidationGroup="tomb" runat="server" ControlToValidate="txtDFirstname" ErrorMessage="full name Enter Only characters" ValidationExpression="[a-zA-Z ]*$" />

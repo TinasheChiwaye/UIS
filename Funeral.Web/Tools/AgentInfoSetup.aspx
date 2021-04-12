@@ -31,18 +31,18 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label>Surname<em>*</em> </label>
+                                <label>Full Name<em>*</em> </label>
                                 <asp:TextBox MaxLength="25" runat="server" ID="txtsurname" name="surname" type="text" class="form-control"></asp:TextBox>
                                 <asp:RequiredFieldValidator Display="None" ValidationGroup="AgentSetup" ControlToValidate="txtsurname" ID="RequiredFieldValidator1" ForeColor="red" runat="server" ErrorMessage="Please enter surname"></asp:RequiredFieldValidator>
                             </div>
                             <div class="form-group">
-                                <label>Fullname <em>*</em>  </label>
+                                <label>Surname <em>*</em>  </label>
                                 <asp:TextBox MaxLength="50" runat="server" ID="txtfullname" name="fullname" type="text" class="form-control"></asp:TextBox>
                                 <asp:RequiredFieldValidator Display="None" ValidationGroup="AgentSetup" ControlToValidate="txtfullname" ID="RequiredFieldValidator2" ForeColor="red" runat="server" ErrorMessage="Please enter fullname"></asp:RequiredFieldValidator>
                             </div>
                             <div class="form-group">
-                                <label>percentage <em>*</em></label>
-                                <asp:TextBox MaxLength="4" runat="server" ID="txtpercentage" name="percentage" type="text" class="form-control"></asp:TextBox>
+                                <label>Percentage <em>*</em></label>
+                                <asp:TextBox MaxLength="4" runat="server" ID="txtpercentage" name="P    ercentage" type="text" class="form-control"></asp:TextBox>
                                 <asp:RequiredFieldValidator Display="None" ValidationGroup="AgentSetup" ControlToValidate="txtpercentage" ID="RequiredFieldValidator6" ForeColor="red" runat="server" ErrorMessage="Please enter Percentage"></asp:RequiredFieldValidator>
                                 <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator1" ValidationGroup="AgentSetup" runat="server" ControlToValidate="txtpercentage" ErrorMessage="Percentage Enter Only Number With 2 Desimal" ValidationExpression="((\d+)((\.\d{1,2})?))$" />
                             </div>

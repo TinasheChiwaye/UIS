@@ -1,0 +1,90 @@
+[33m66ce6eb[m[33m ([m[1;36mHEAD -> [m[1;32mCharles-UIS[m[33m, [m[1;31morigin/Charles-UIS[m[33m)[m MErged
+[33m380ec3f[m Shoes to merge
+[33me84e536[m[33m ([m[1;31morigin/Mo-UIS[m[33m)[m Member Changes
+[33mee572e5[m New changes
+[33m1ddfe15[m New changes
+[33m38f7998[m New Business Changes
+[33m5e4a8e6[m Merge branch 'Mo-UIS' of https://github.com/unpluggit/UIS into Mo-UIS
+[33m1316949[m Beneficiary ID Number
+[33m4054e10[m Id Number Valdation
+[33me6447fd[m Id number changes
+[33me331bff[m Revert "Id Number Validation"
+[33m7148875[m Id Number Validation
+[33m374039f[m Id Number Validation
+[33m4274cd8[m Merge branch 'Mo-UIS' of https://github.com/unpluggit/UIS into Mo-UIS
+[33m6ac2565[m Branch Validation
+[33maba1c98[m Merge branch 'Mo-UIS' of https://github.com/unpluggit/UIS into Mo-UIS
+[33m6fbabeb[m Branch Name to be populated from Scheme Change
+[33me4e2355[m Merge branch 'Mo-UIS' of https://github.com/unpluggit/UIS into Mo-UIS
+[33mae1a8d4[m PLanname to be populated from scheme change
+[33m134d796[m ID Number Check
+[33m875abb3[m Cosmetics
+[33m499ca10[m Charles Merge changes
+[33mbdef744[m Cosmetics
+[33mbb21529[m Shoes Changes
+[33m675979b[m Small Changes
+[33m1abe1f5[m Merge Changes
+[33m1e23b8a[m Menu bugs issue is fixed and also fixed favicon
+[33ma9d2b50[m New Changes - UAT
+[33m0e237ab[m 1. SMS Placeholders descriptors added 2. Report disable date sorted for all
+[33m181fd3f[m Sms Placeholders descriptors added Report Disable date sorted
+[33mca10b48[m Bulk sms fixed
+[33ma5c5e8d[m Bulk sms fixed
+[33m298bcaa[m New Changes
+[33m6070c93[m Merging Changes
+[33m028a118[m Members
+[33m0e6e53e[m New Changes
+[33mf82c0a7[m Validation of Id Number
+[33mc8258d6[m Merge remote-tracking branch 'origin/Mo-UIS' into Charles-UIS
+[33m3d798a7[m UAT Doc changes
+[33m40ecd06[m 1. Policy Doc Pointing
+[33m7626e6b[m Cosmetics
+[33md95ecb2[m Cosmetics
+[33mb85aa19[m Cosmetics
+[33m1f13dca[m[33m ([m[1;31morigin/Develop[m[33m)[m UIS Bugs
+[33m59c1c09[m UIS Bugs
+[33me3c22a4[m Merge pull request #5 from unpluggit/Charles-UIS
+[33mac59fee[m 1) Policy Doc Enabled 2) Delete for SuperUsers 3)Cosmetic Changes
+[33m1e5ac63[m Cosmetics
+[33mf522ae5[m 1. Enabled disable date function for all reports 2. Inserted new userId parameter for cash up reports
+[33mf04d052[m Merge branch 'Develop' of https://github.com/unpluggit/UIS into Develop
+[33mbbc0441[m UIS Bugs Resolved
+[33m7f07d7e[m Merge pull request #4 from unpluggit/Charles-UIS
+[33m59cac84[m Merge branch 'Develop' into Charles-UIS
+[33mf0c8dcd[m UIS Bugs
+[33md9da5ab[m 1. Include ClientPortal
+[33m43e730d[m Merged branched
+[33mb34b837[m UAT Policy Doc changes
+[33m85e3871[m Changes
+[33m4efde90[m Comestic Changes and Button enabling
+[33m90db15f[m 1. Changing name texts of data Import mapping columns
+[33macb243e[m 1) Added payment filter 2)Claims report printing 3)Sending email of claims report
+[33m93be105[m Payfast Integration completed
+[33m80eab0b[m Payfast integration
+[33ma5aaf0b[m Cosmetic Changes 1.2
+[33m156401a[m Debit Order
+[33m578c3de[m Revert "ForMerging"
+[33mdccf7b1[m ForMerging
+[33mf8c8e4b[m Add client user detail for list of policy user hold
+[33m1231bf9[m Cosmetic Changes 1.1
+[33me237619[m Commit change on 21 March 2020
+[33m075dc54[m claim dashboard and find member issue bugs solved
+[33m3d6ea6e[m Merge pull request #3 from unpluggit/Develop
+[33m4d14db6[m Merge branch 'Charles-UIS' into Develop
+[33m698c901[m Project commit on 16 March 2020
+[33mc984a6b[m Cosmetic Changes 1.1
+[33m57e1cbb[m Cosmetics
+[33m496b2af[m Cosmetic Changes
+[33m295f381[m Merge pull request #1 from unpluggit/Develop
+[33m67fbfbb[m Merge branch 'Charles-UIS' into Develop
+[33m50ea537[m Commit on 9th march 2020
+[33md01ca4e[m Recent changes 27 Feb 2020
+[33m80c55ea[m latest change
+[33mf44a69c[m latest changes pushed to development branch
+[33m40b1390[m Added 2 columns to AddonProducts : Underwriter premuim and Uderwriter Cover
+[33mbb23696[m Added a textbox (Claim Email Address)  uder : Tools >Scheme setup > Owners Details Section
+[33mf0ba972[m Azure have been created on this Branch
+[33m0fa3748[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m Commit to git
+[33m1053ba2[m First main commit of the project.
+[33md0cd396[m First commit code by hemant
+[33m046ab45[m Initial commit

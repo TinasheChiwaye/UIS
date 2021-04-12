@@ -41,7 +41,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 ViewBag.HasEditRight = HasEditRight;
                 ViewBag.HasDeleteRight = HasDeleteRight;
                 ViewBag.totalPremium = Currency;
-                ViewBag.SocietyLists = CommonBAL.GetSocietyByParlourId(CurrentParlourId);
+                ViewBag.SocietyLists = CommonBAL.GetBranchByParlourId(CurrentParlourId);
+                //ViewBag.SocietyLists = CommonBAL.GetSocietyByParlourId(CurrentParlourId);
                 LoadStatus();
                 LoadEntriesCount();
                 BindCompanyList("Search");
@@ -802,6 +803,87 @@ namespace Funeral.Web.Areas.Admin.Controllers
         [HttpPost]
         public JsonResult SaveDependancy([System.Web.Http.FromBody]FamilyDependencyModel dependency)
         {
+            //if (!ModelState.IsValid)
+            //{
+            //    return Json(new { success = false, errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList() }, JsonRequestBehavior.AllowGet);
+            //}
+
+            //if (dependency.IDNumber == "" || dependency.IDNumber == string.Empty)
+            //    dependency.IDNumber = "0";
+
+            //FamilyDependencyModel ObjFamilyDependencyModel;
+            //ObjFamilyDependencyModel = MembersBAL.GetDependencByIDNum(dependency.IDNumber, CurrentParlourId, MemberId);
+
+            //if (ObjFamilyDependencyModel == null)
+            //{
+            //    ObjFamilyDependencyModel = new FamilyDependencyModel();
+            //    ObjFamilyDependencyModel.Age = AgeFromDOB(Convert.ToDateTime(dependency.DateOfBirth));
+            //    ObjFamilyDependencyModel.parlourid = CurrentParlourId;
+            //    ObjFamilyDependencyModel.DependentStatus = dependency.DependentStatus;
+            //    ObjFamilyDependencyModel.MemberId = this.MemberId;
+            //    if (dependency.StartDate == null || dependency.StartDate == DateTime.MinValue)
+            //    {
+            //        ObjFamilyDependencyModel.StartDate = DateTime.Now;
+            //    }
+            //    else
+            //    {
+            //        ObjFamilyDependencyModel.StartDate = dependency.StartDate;
+            //    }
+            //    if (dependency.CoverDate == null || dependency.CoverDate == DateTime.MinValue)
+            //    {
+            //        ObjFamilyDependencyModel.CoverDate = DateTime.Now;
+            //    }
+            //    else
+            //    {
+            //        ObjFamilyDependencyModel.CoverDate = dependency.CoverDate;
+            //    }
+            //    if (dependency.InceptionDate == null || dependency.InceptionDate == DateTime.MinValue)
+            //    {
+            //        ObjFamilyDependencyModel.InceptionDate = DateTime.Now;
+            //    }
+            //    else
+            //    {
+            //        ObjFamilyDependencyModel.InceptionDate = dependency.InceptionDate;
+            //    }
+            //    if (dependency.DateOfBirth == null || dependency.DateOfBirth == DateTime.MinValue)
+            //    {
+            //        ObjFamilyDependencyModel.DateOfBirth = DateTime.Now;
+            //    }
+            //    else
+            //    {
+            //        ObjFamilyDependencyModel.DateOfBirth = dependency.DateOfBirth;
+            //    }
+            //    ObjFamilyDependencyModel.FullName = dependency.FullName;
+            //    ObjFamilyDependencyModel.Surname = dependency.Surname;
+            //    ObjFamilyDependencyModel.IDNumber = dependency.IDNumber;
+            //    ObjFamilyDependencyModel.Gender = dependency.Gender == null ? "male" : dependency.Gender;
+            //    ObjFamilyDependencyModel.Relationship = Convert.ToInt32(dependency.Relationship);
+            //    ObjFamilyDependencyModel.DependencyType = dependency.DependencyType;
+            //    ObjFamilyDependencyModel.Premium = dependency.Premium;
+            //    ObjFamilyDependencyModel.Cover = dependency.Cover;
+            //    ObjFamilyDependencyModel.Passport = dependency.Passport;
+
+            //}
+            //else
+            //{
+            //    return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Dependent already exists." + "</li>").First() }, JsonRequestBehavior.AllowGet);
+            //}
+
+
+            //if (MembersBAL.CheckDependencyCount(ObjFamilyDependencyModel) < 100)
+            //{
+            //    int documentId = MembersBAL.SaveFamilyDependency(ObjFamilyDependencyModel);
+            //    return Json(new { success = true, maxLenghDependancy = true, Dependency = dependency }, JsonRequestBehavior.AllowGet);
+            //}
+            //else
+            //{
+            //    return Json(new { success = true, maxLenghDependancy = false, Dependency = dependency }, JsonRequestBehavior.AllowGet);
+            //}
+            if (MembersBAL.GetDependencByIDNum(dependency.IDNumber, CurrentParlourId, MemberId) != null && dependency.pkiDependentID == 0)
+            {
+                return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Dependent already exists." + "</li>").First() }, JsonRequestBehavior.AllowGet);
+            }
+
             if (!ModelState.IsValid)
             {
                 return Json(new { success = false, errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList() }, JsonRequestBehavior.AllowGet);
@@ -812,6 +894,20 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
             FamilyDependencyModel ObjFamilyDependencyModel;
             ObjFamilyDependencyModel = MembersBAL.GetDependencByIDNum(dependency.IDNumber, CurrentParlourId, MemberId);
+
+            try
+            {
+                if (ObjFamilyDependencyModel != null)
+                {
+                    return Json(new { success = false, errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList() }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (System.Exception ex)
+            {
+
+                throw new System.Exception(ex.Message.ToString());
+            }
+
 
             if (ObjFamilyDependencyModel == null)
             {
@@ -840,7 +936,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 {
                     ObjFamilyDependencyModel.InceptionDate = DateTime.Now;
                 }
-                else
+                else 
                 {
                     ObjFamilyDependencyModel.InceptionDate = dependency.InceptionDate;
                 }
@@ -863,6 +959,13 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 ObjFamilyDependencyModel.Passport = dependency.Passport;
 
             }
+            
+                
+            
+
+            //MembersModel Member = new MembersModel();
+
+
 
 
             if (MembersBAL.CheckDependencyCount(ObjFamilyDependencyModel) < 100)
@@ -1465,5 +1568,24 @@ namespace Funeral.Web.Areas.Admin.Controllers
         {
             CurrentParlourId = parlourId;
         }
+
+
+        //=================TEST
+        public JsonResult BindPlanByCompanyId(Guid CompanyId)
+        {
+            PlanModel plan = new PlanModel();
+            var Company = CommonBAL.GetPlanByParlourId(CompanyId).Select(x => new SelectListItem() { Text = x.PlanName, Value = x.pkiPlanID.ToString() });
+            plan.Cover = 0;
+            plan.PlanSubscription = 0;
+            return Json(Company, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult BindBranchByCompanyId(Guid CompanyId)
+        {
+            var Company = CommonBAL.GetBranchByParlourId(CompanyId).Select(x => new SelectListItem() { Text = x.BranchName, Value = x.Brancheid.ToString() });
+            return Json(Company, JsonRequestBehavior.AllowGet);
+        }
+        //=================END
+
     }
 }

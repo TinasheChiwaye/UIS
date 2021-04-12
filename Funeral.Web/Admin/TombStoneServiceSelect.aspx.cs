@@ -245,7 +245,7 @@ namespace Funeral.Web.Admin
             ModelTnc = ToolsSetingBAL.SelectApplicationTermsAndCondition(ParlourId);
             if (ModelTnc != null)
             {
-                txtTnc.Text = ModelTnc.TermsAndCondition;
+                txtTnc.Text = ModelTnc.TermsAndConditionTombstone;
             }
         }
         public void GetTombStoneData()

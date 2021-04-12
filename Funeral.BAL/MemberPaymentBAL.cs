@@ -104,5 +104,11 @@ namespace Funeral.BAL
         {
             return MemberPaymetsDAL.RecreateBillingMemberPayments(ModelPayment);
         }
+
+        public static PaymentReminderModel GetOustandingPaymentByMemberId(int ID)
+        {
+            DataTable dr = MemberPaymetsDAL.GetMonthsToPayByMemberIddt(ID);
+            return FuneralHelper.DataTableMapToList<PaymentReminderModel>(dr).FirstOrDefault();
+        }
     }
 }
