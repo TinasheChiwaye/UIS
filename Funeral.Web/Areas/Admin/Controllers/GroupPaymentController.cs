@@ -131,7 +131,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                                         if (Convert.ToString(workSheet.Cells[rowIterator, 1].Value) != "")
                                             excelData.ReferenceNumber = Convert.ToString(workSheet.Cells[rowIterator, 1].Value);
                                         if (Convert.ToString(workSheet.Cells[rowIterator, 2].Value) != "")
-                                            excelData.AmountPaid = Convert.ToInt32(workSheet.Cells[rowIterator, 2].Value);
+                                            excelData.AmountPaid = Convert.ToDecimal(workSheet.Cells[rowIterator, 2].Value);
                                         if (Convert.ToString(workSheet.Cells[rowIterator, 3].Value) != "")
                                             excelData.Notes = Convert.ToString(workSheet.Cells[rowIterator, 3].Value);
                                         if (excelData.ReferenceNumber != null || excelData.AmountPaid != 0 || excelData.Notes != "")
@@ -288,7 +288,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             search.SortBy = "";
             search.SortOrder = "Asc";
             search.TotalRecord = 0;
-            //search.StatusId = CurrentParlourId;
+            search.StatusId = CurrentParlourId;
 
             var searchResult = new SearchResult<Model.Search.BaseSearch, SocietyModel>(search, new List<SocietyModel>(), o => o.SocietyName.Contains(search.SarchText));
 

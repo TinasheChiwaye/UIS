@@ -249,7 +249,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
         {
             List<MemberInvoiceModel> objMemberInvoiceModel = MembersBAL.GetInvoicesByMemberID(ParlourId, MemberId);
         }
-        public JsonResult CalculateAmount(int noOfMonths, int TotalPremieum, int LatePanelty, string NextDate)
+        public JsonResult CalculateAmount(int noOfMonths, decimal TotalPremieum, int LatePanelty, string NextDate)
         {
             var info = CultureInfo.InvariantCulture.Clone() as CultureInfo;
             info.NumberFormat.NumberDecimalSeparator = ".";
@@ -277,7 +277,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             else
                 monthPaid = string.Format("{0}-{1}", NextDate1.AddMonths(noOfMonths - 1).ToString("MMM"), NextDate1.AddMonths(noOfMonths - 1).ToString("yyyy"));
 
-            double TotalPremium = Convert.ToDouble(TotalPremieum * Convert.ToInt32(noOfMonths) + LatePanelty);
+            decimal TotalPremium = Convert.ToDecimal(TotalPremieum * Convert.ToInt32(noOfMonths) + LatePanelty);
 
 
 

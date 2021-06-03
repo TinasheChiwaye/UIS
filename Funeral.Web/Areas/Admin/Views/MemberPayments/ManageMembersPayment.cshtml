@@ -373,7 +373,7 @@
         var GetPremiumForPolicyURl = $("#CalculateAmount").val();
         var data = {
             noOfMonths: $("#ddlNoOfMonths").val(),
-			TotalPremieum: parseInt($("#txtTotalPremium").val().replace("@Model.Currency ", "")),
+			TotalPremieum: parseFloat($("#txtTotalPremium").val().replace("@Model.Currency ", "")),
 			LatePanelty: parseInt(0),
             NextDate: $("#NextPaymentDate").val()
         };
@@ -387,7 +387,7 @@
                     var newResult = result.split('~');
                     $("#txtAmount").val('');
 					//$("#txtAmount").val('USD ' + newResult[0]);
-					var a = parseInt(newResult[0]);
+					var a = parseFloat(newResult[0]);
 					$("#txtAmount").val("@Model.Currency" + " " + a.toFixed(2));
                     if ($("#ddlNoOfMonths").val() == "1") {
                         $("#txtMonthPaid").val('');
