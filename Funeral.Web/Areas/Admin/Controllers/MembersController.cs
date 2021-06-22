@@ -1245,6 +1245,54 @@ namespace Funeral.Web.Areas.Admin.Controllers
             //return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        public void btnParticipationCertificate()
+        {
+            Warning[] warnings;
+            string[] streamids;
+            string mimeType;
+            string encoding;
+            //string filenameExtension;
+            string filename;
+            string result;
+
+            try
+            {
+                ReportViewer rpw = new ReportViewer();
+                rpw.ProcessingMode = ProcessingMode.Remote;
+                IReportServerCredentials irsc = new MyReportServerCredentials();
+                rpw.ServerReport.ReportServerCredentials = irsc;
+
+                rpw.ProcessingMode = ProcessingMode.Remote;
+                rpw.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
+                rpw.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/Participation Certificate";
+                ReportParameterCollection reportParameters = new ReportParameterCollection();
+
+                reportParameters.Add(new ReportParameter("MemberID", MemburNumber.ToString()));
+                reportParameters.Add(new ReportParameter("Parlourid", CurrentParlourId.ToString()));
+                rpw.ServerReport.SetParameters(reportParameters);
+                string ExportTypeExtensions = "pdf";
+                byte[] bytes = rpw.ServerReport.Render(ExportTypeExtensions, null, out mimeType, out encoding, out ExportTypeExtensions, out streamids, out warnings);
+                filename = string.Format("{0}.{1}", "Policy Doc", ExportTypeExtensions);
+
+                Response.ClearHeaders();
+                Response.Clear();
+                Response.AddHeader("Content-Disposition", "attachment;filename=" + filename);
+                Response.ContentType = mimeType;
+                Response.BinaryWrite(bytes);
+                Response.Flush();
+                Response.End();
+                result = "true";
+
+            }
+            catch (Exception ex)
+            {
+                result = ex.Message;
+                //result = "The attempt to connect to the report server failed.  Check your connection information and that the report server is a compatible version.    ";
+                //ShowMessage(ref lblMessage, MessageType.Danger, exc.Message);
+            }
+            //return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         [PageRightsAttribute(CurrentPageId = 4)]
         public JsonResult DependentForDuplicatePolicy(FamilyDependencyModel dependency)
