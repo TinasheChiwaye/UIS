@@ -11,8 +11,8 @@ namespace Funeral.Model
             GroupInvoiceID = 0;
             GroupID = 0;
             SocietyId = 0;
-            DatePaid = DateTime.MinValue;
-            AmountPaid = 0;
+            DatePaid = string.Empty;
+            AmountPaid =0;
             RecievedBy = string.Empty;
             PaymentMethod = string.Empty;
             PaidBy = string.Empty;
@@ -29,11 +29,16 @@ namespace Funeral.Model
         public decimal Balance { get; set; }
         public decimal AmountAtRisk { get; set; }
         public Guid CompanyGroupId { get; set; }
+        public decimal AmountPaid { get; set; }
+        public decimal AmountPaidNumeric { get; set; }
+        public bool IsReversal { get; set; }
+        public int ReversalInvoiceID { get; set; }
+        public string InvNumber { get; set; }
+
 
         [Required(ErrorMessage = "Please enter Payment Date")]
-        public DateTime DatePaid { get; set; }
+        public string DatePaid { get; set; }
         [Required(ErrorMessage = "Please enter Amount")]
-        public decimal AmountPaid { get; set; }
         public string ReferenceNumber { get; set; }
         public string RecievedBy { get; set; }
         [Required(ErrorMessage = "Please select Payment Method")]
@@ -44,6 +49,9 @@ namespace Funeral.Model
         public DateTime LastModified { get; set; }
         public string ModifiedUser { get; set; }
         public List<SocietyModel> SocietyDropdown { get; set; }
+        public string PaymentBranch { get; set; }
+        public string ApplicationName { get; set; }
+
 
         public string SocietyName { get; set; }
         public DateTime InceptionDate { get; set; }

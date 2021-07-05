@@ -287,6 +287,14 @@ namespace Funeral.DAL
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetInvoices_new", ObjParam);
         }
 
+        public static DataTable GetGroupInvoiceByReference(Guid Parlourid)
+        {
+            DbParameter[] ObjParam = new DbParameter[1];
+            ObjParam[0] = new DbParameter("@parlourId", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
+            //ObjParam[1] = new DbParameter("@ReferenceNumber", DbParameter.DbType.VarChar, 0, ReferenceNumber);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetGroupInvoices", ObjParam);
+        }
+
         public static SqlDataReader GetSocietyByParlourId(Guid Parlourid)
         {
             DbParameter[] ObjParam = new DbParameter[1];

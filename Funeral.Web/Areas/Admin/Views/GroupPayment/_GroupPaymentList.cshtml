@@ -9,62 +9,106 @@
 				<div class="ibox-title">
 					<h5>Group Payment List</h5>
 				</div>
-				<div class="ibox-content">
-					<div class="row">
-						<div class="col-lg-3" id="dvAdministrator">
-							<div class="form-group">
-								<label>Show entries</label>
-								@Html.DropDownListFor(m => m.PageSize, new SelectList(ViewBag.EntriesCount, "Value", "Key"), new { @class = "form-control" })
-							</div>
-						</div>
-						<div class="col-sm-5 col-sm-offset-4">
-							<div class="form-group">
-								@Html.Label("Search Society:", new { @class = "control-label" })
-								<div class="input-group">
-									@Html.TextBoxFor(m => m.SarchText, null, new { @class = "form-control", @maxlength = "50", placeholder = "Search by keyword" })
-									<span class="input-group-btn">
-										<input type="button" id="btnSearch" value="Search" class="btn btn-w-m btn-primary" />
-									</span>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-9">
-							<asp:Label ID="lblRecords" runat="server" Text=""></asp:Label>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-lg-12 ">
-							<div class="table-responsive">
-								@Html.EditorFor(model => model.PageNum, new { htmlAttributes = new { @class = "hidden", id = "PageNum1" } })
-								@Html.EditorFor(model => model.PageSize, new { htmlAttributes = new { @class = "hidden", id = "PageSize1" } })
-								@Html.Hidden("ItemId")
-								<table id="societySetupDataTable" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
-									<thead>
-										<tr>
-											<th class="hidden"></th>
-											<th>Group Name</th>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-3" id="dvAdministrator">
+                            <div class="form-group">
+                                <label>Show entries</label>
+                                @Html.DropDownListFor(m => m.PageSize, new SelectList(ViewBag.EntriesCount, "Value", "Key"), new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-sm-5 col-sm-offset-4">
+                            <div class="form-group">
+                                @Html.Label("Search Society:", new { @class = "control-label" })
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.SarchText, null, new { @class = "form-control", @maxlength = "50", placeholder = "Search by keyword" })
+                                    <span class="input-group-btn">
+                                        <input type="button" id="btnSearch" value="Search" class="btn btn-w-m btn-primary" />
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <asp:Label ID="lblRecords" runat="server" Text=""></asp:Label>
+                        </div>
+                    </div>
+                    @{
+                        var reversalModel = ViewBag.GroupInvoiceList;
+                    }
+
+                    <div class="row">
+                        <div class="col-lg-12 ">
+                            <div class="table-responsive">
+                                @Html.EditorFor(model => model.PageNum, new { htmlAttributes = new { @class = "hidden", id = "PageNum1" } })
+                                @Html.EditorFor(model => model.PageSize, new { htmlAttributes = new { @class = "hidden", id = "PageSize1" } })
+                                @Html.Hidden("ItemId")
+                                <table id="societySetupDataTable" class="table table-striped table-bordered table-hover" width="100%" cellspacing="0">
+                                    <thead></thead>
+                                    <tbody>
+                                        <tr>
+                                            <th class="hidden"></th>
+                                            <th>Scheme Name</th>
+                                            <th>Reference Number</th>
                                             <th>Amount</th>
                                             <th>Received By</th>
-											<th>Payment Type</th>
-											<th>Modified date</th>											
-											<th>Action</th>
-										</tr>
-									</thead>
-									<tbody></tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-				</div>
+                                            @*<th>Payment Type</th>*@
+                                            <th>Notes</th>
+                                            <th>Date Paid</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        @if (reversalModel != null && reversalModel.Count > 0)
+                                        {
+                                            foreach (var item in reversalModel)
+                                            {
+                                        <tr>
+                                            <td>@item.ApplicationName</td>
+                                            <td>@item.ReferenceNumber</td>
+                                            <td>@item.AmountPaid</td>
+                                            <td>@item.RecievedBy</td>
+                                            @*<td>@item.PaymentMethod</td>*@
+                                            <td>@item.Notes</td>
+                                            <td>@item.DatePaid</td>
+                                            <td>
+                                                @*<a href="@Url.Action("PrintForm", "GroupPayment", new { id = item.InvoiceID})">
+        <i class="glyphicon glyphicon-print"></i>*@
+                                                @*</a>&nbsp;&nbsp;<a href="@Url.Action("PrintPaymentReceipt", "Payments", new { id = item.InvoiceID, Type = 2, PolicyNumber = Model.MemeberNumber, DatePaid = item.DatePaid, AmountPaid = item.AmountPaid, PaidBy = item.PaidBy, ReceivedBy = item.RecievedBy, MonthPaid = item.Notes,MemberId=Model.pkiMemberID, parlourId=Model.ParlourId })">
+        <i class="glyphicon glyphicon-export"></i>*@
+                                                @*</a>*@
+
+                                                @*<a href="@Url.Action("PrintForm", "GroupPayment", new{ GroupInvoiceID= item.GroupInvoiceID})"><i class="glyphicon glyphicon-print"></i></a>*@
+                                                <div class="col-sm-4 text-center"><a href="@Url.Action("PrintForm", "GroupPayment", null, Request.Url.Scheme)?GroupInvoiceID=@item.GroupInvoiceID"><i class="glyphicon glyphicon-print"></i></a></div>
+
+                                            </td>
+                                            <td>
+
+                                            @if (ViewBag.HasReversalPayment)
+                                            {
+                                                if (item.IsReversal == false && item.AmountPaid > 0)
+                                                {
+                                                    <a class="btn btn-w-m btn-primary grouppaymentreversal" role="@item.GroupInvoiceID" id="btnGroupReversalPayment" onclick="ReverseGroupPayment(@item.GroupInvoiceID)">Reversal Payment</a>
+                                                }
+                                            }
+                                            </td>
+                                        </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 			</div>
 		</div>
 	</div>
 
+
+
 	<script type="text/javascript">
         $(document).ready(function () {
-            ConfigureDatatable();
+            //ConfigureDatatable();
             InitDataTable();
             eventConfigs.pageChange.eventName = 'btnPageChanged';
             eventConfigs.pageChange.domElement = jQuery('#PageSize')[0];
@@ -84,7 +128,9 @@
             });
         });
 
-        function ConfigureDatatable(){
+
+
+        @*function ConfigureDatatable(){
 
             var sortOrder = @Html.Raw(Json.Encode(@Model.SortOrder));
             var sortBy =@Html.Raw(Json.Encode(@Model.SortBy));
@@ -99,13 +145,13 @@
 
             columnsArray =
 				[{ "data": "GroupInvoiceID", "name": "GroupInvoiceID", "autoWidth": true, "visible": false },
-                { "data": "SocietyName", "name": "Society Name", "autoWidth": true },
-
+                { "data": "ApplicationName", "name": "ApplicationName", "autoWidth": true },
+                { "data": "ReferenceNumber", "name": "ReferenceNumber", "autoWidth": true },
                 { "data": "AmountPaid", "name": "AmountPaid", "autoWidth": true },
                 { "data": "RecievedBy", "name": "RecievedBy", "autoWidth": true },
                 { "data": "PaymentMethod", "name": "PaymentMethod", "autoWidth": true },
 				{
-					"data": "LastModified", "name": "Modified Date", "autoWidth": true,
+					"data": "DatePaid", "name": "DatePaid", "autoWidth": true,
 					"render": function (data) {
 						var date = new Date(parseInt(data.replace('/Date(', '')));
 						return dateFormat(date, dateFormat.masks.isoDate, true);
@@ -113,34 +159,47 @@
                 },
                 
 				{
-					"render": function (data, type, full, meta) {
+                    "render": function (data, type, full, meta) {*@
 
-                    var hasEditRights = '@ViewBag.HasEditRight' == "True" ? true : false;
-					var hasDeleteRights = '@ViewBag.HasDeleteRight' == "True" ? true : false;
 
-					if (hasEditRights || hasDeleteRights) {
+                    
+                        @*var hasEditRights = '@ViewBag.HasEditRight' == "True" ? true : false;
 
-                        tableConfigs.table.DataTable().columns([4]).visible(true)
-                        var dom = "<div class='row'>";
+                        var reverseModel = '@ViewBag.GroupInvoiceList';
 
-                        if (hasEditRights) {
-							var editMemberUrl = '<div class="col-sm-4 text-center"><a  onclick="EditGroupPayment(\'' + full.GroupInvoiceID + '\')"><i class="fa fa-edit"></i></a></div>';
-                            dom = dom + editMemberUrl;
-                        }
-                        if (hasDeleteRights) {
-							var deleteMemberUrl = '<div class="col-sm-4 text-center"> <a onclick="DeleteSocietySetup(\'' + full.GroupInvoiceID + '\')"; ><i class="fa fa-trash-o"></i></a></div>';
-                            dom = dom + deleteMemberUrl;
-						}
-                        dom = dom + "</div>";
-                        return dom;
-                    }
-					else {
-						tableConfigs.table.DataTable().columns([4]).visible(false);
-                        return "";
-                    }
-                }
-            }];
-        }
+
+                    
+                            if (hasEditRights || hasDeleteRights) {
+
+                                tableConfigs.table.DataTable().columns([4]).visible(true)
+                                var dom = "<div class='row'>";
+
+                                if (hasEditRights) {
+                                    var editMemberUrl = '<div class="col-sm-4 text-center"><a  onclick="EditGroupPayment(\'' + full.GroupInvoiceID + '\')"><i class="fa fa-edit"></i></a></div>';
+                                    dom = dom + editMemberUrl;
+                                }
+
+                                reverseModel.items.forEach(function (item) {
+                                    if (item.isReversal == true)
+                                        var reverseInvoiceUrl = '<div class="btn btn-w-m btn-primary  text-center" onclick="ReverseGroupPayment()"; >Reverse Payment</div>';
+                                    dom = dom + reverseInvoiceUrl;
+                                })
+                                dom = dom + "</div>";
+                                return dom;
+                            }
+                            else {
+                                tableConfigs.table.DataTable().columns([5]).visible(false);
+                                return "";
+                            }*@
+        //        }
+        //    }];
+        //}
+
+        //function getReversalModel() {
+        //    var reverseInvoiceUrl = '<div class="btn btn-w-m btn-primary  text-center" onclick="ReverseGroupPayment()"; >Reverse Payment</div>';
+        //    dom = dom + reverseInvoiceUrl;
+
+        //}
 
         function InitModel() {
             model1.PageNum = 1;
@@ -162,21 +221,23 @@
             })
             .success(function (result) {
 				jQuery("#" + DOMIDs.AddEdit).html(result);
-				window.scrollTo(0, 100);
+                window.scrollTo(0, 100);
+                location.reload();
             })
             .error(function (xhr, status) {
                 alert(status);
             });
+            location.reload();
         }
 
-		function DeleteSocietySetup(societyId) {
+        function ReverseGroupPayment(societyId) {
 
-            var isConfirmed = confirm('Are you sure you want to delete?');
+            var isConfirmed = confirm('You are about to reverse a Group Payment. Continue?');
 
             if (isConfirmed) {
 
 				jQuery("#ItemId").val(societyId);
-                var deleteUrl = '@Url.Action("Delete","GroupPayment",new { ID = "GroupInvoiceID" },Request.Url.Scheme)';
+                var deleteUrl = '@Url.Action("GroupPaymentReversal","GroupPayment",new { ID = "GroupInvoiceID" },Request.Url.Scheme)';
 				deleteUrl = deleteUrl.replace("GroupInvoiceID", societyId);
 
                 model1.PageNum = 1;
@@ -190,6 +251,7 @@
                 .success(function (result) {
                     InitModel();
                     tableConfigs.table.fnDraw();
+                    location.reload();
                 })
                 .error(function (xhr, status) {
                     alert(status);

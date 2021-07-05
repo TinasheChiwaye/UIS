@@ -1,0 +1,163 @@
+﻿@model Funeral.Web.Areas.Admin.Models.ViewModel.GroupPaymentVM
+
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>UIS Policy Administration</title>
+    <style>
+
+        .dash {
+            border: 1px dashed #cccccc;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+    @if (Model != null)
+    {
+
+        <div id="HideArea">
+            <table border="0" style="width: 100%; font-family: 'Times New Roman';font-size:10px;" cellpadding="2" cellspacing="0">
+                <tbody>
+                    @if (Model.Type == 2)
+                    {
+                        <tr>
+                            <th>
+                                <h4 align="center">
+                                    Duplicate
+                                </h4>
+                            </th>
+                        </tr>
+                    }
+                    <tr>
+                        <th>
+                            <h5 align="center" style="font-weight:bold;">
+                                @Model.ParlourName
+                            </h5>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="dash"></th>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold">
+                            <span id="lblReceiptNumber">Receipt Number : @Model.Id</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold">
+                            <span id="lbladd1">@Model.BusinessAddressLine1</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold">
+                            <span id="lbladd2">@Model.BusinessAddressLine2</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold">
+                            <span id="lbladd3">@Model.BusinessAddressLine3</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold">
+                            <span id="lbladd4">@Model.BusinessPostalCode</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold">
+                            <span id="lblfpsnub">@Model.FSBNumber</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold">
+                            <span id="lblTelCell">@Model.telephoneNumber</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="dash"></td>
+                    </tr>
+                    <tr>
+                        <td class="dash"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="PrintDiv">
+            <table border="0" style="width: 100%; font-family: 'Times New Roman';font-size:10px;" cellpadding="1" cellspacing="0">
+                <thead></thead>
+                <tbody>
+                    <tr>
+                        <th>
+                            <h4 align="center"></h4>
+                        </th>
+                    </tr>
+                    @*@if (Model.Type == 1)
+        {
+            <tr>
+                <th>
+                    <h5 align="center" style="font-weight:bold;">
+                        @Model.ParlourName
+                    </h5>
+                </th>
+            </tr>
+        }*@
+                    <tr>
+                        <td><label>Receipt Number.....</label></td>
+                        <td>@Model.Id</td>
+                    </tr>
+                    <tr>
+                        <td><label>Reference Number.....</label></td>
+                        <td>@Model.RefernceNumer</td>
+                    </tr>
+                    <tr>
+                        <td><label>Date Paid.....</label></td>
+                        <td>@Model.DatePaid</td>
+                    </tr>
+                    <tr>
+                        <td><label>Amount Paid.....</label></td>
+                        <td>@Model.AmountPaid</td>
+                    </tr>
+                    <tr>
+                        <td><label>Received By.....</label></td>
+                        <td>@Model.ReceivedBy</td>
+                    </tr>
+                    <tr>
+                        <td><label>Time Printed.....</label></td>
+                        <td>@Model.TimePrinted</td>
+                    </tr>
+                    @*<tr>
+            <td><label>Underwriter.....</label></td>
+            <td>@Model.Underwriter</td>
+        </tr>*@
+                    <tr>
+                        <td><label>Month Paid.....</label></td>
+                        <td>@Model.MonthPaid</td>
+                    </tr>
+                    <tr>
+                        <td><label>Notes.....</label></td>
+                        <td>@Model.Notes</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+</body>
+</html>
+<script>
+    function printDiv() {
+        var printContents = document.getElementById('PrintDiv').innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+    }
+    window.onload = printDiv;</script>
+

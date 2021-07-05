@@ -147,6 +147,13 @@ namespace Funeral.DAL
             ObjParam[1] = new DbParameter("@GroupId", DbParameter.DbType.Int, 0, GroupId);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetAllGroupPaymentList", ObjParam);
         }
+        public static DataTable GetSchemePaymentList(Guid ParlourId)
+        {
+            DbParameter[] ObjParam = new DbParameter[1];
+            ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+            //ObjParam[1] = new DbParameter("@GroupId", DbParameter.DbType.Int, 0, GroupId);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetSchemePaymentList", ObjParam);
+        }
         public static DataTable EditGroupPaymentByID(int ID, Guid ParlourId)
         {
             DbParameter[] ObjParam = new DbParameter[2];
@@ -159,6 +166,13 @@ namespace Funeral.DAL
             DbParameter[] ObjParam = new DbParameter[1];
             ObjParam[0] = new DbParameter("@GroupInvoiceID", DbParameter.DbType.Int, 0, id);
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "DeleteGroupPayment", ObjParam));
+        }
+        public static DataTable GetGroupPaymentByIDdt(int ID, Guid ParlourId)
+        {
+            DbParameter[] ObjParam = new DbParameter[2];
+            ObjParam[0] = new DbParameter("@ID", DbParameter.DbType.Int, 0, ID);
+            ObjParam[1] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GroupSelect", ObjParam);
         }
     }
 }

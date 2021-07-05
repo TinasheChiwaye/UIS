@@ -1,9 +1,8 @@
-﻿@model Funeral.Model.Search.MemberSearch
-
-@{
-    ViewBag.Title = "Index";
+﻿@{
+    ViewBag.Title = "Member Search";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@model Funeral.Model.Search.MemberSearch
 
 @Styles.Render("~/Content/datatablecss")
 <script src="~/Scripts/plugins/dateformat/DateFormat.js"></script>  <!-- https://gist.github.com/eralston/968809 -->
@@ -22,7 +21,7 @@
                         <div class="col-lg-4" id="dvAdministrator">
                             <div class="form-group">
                                 <label>Scheme: </label>
-                                @Html.DropDownListFor(m => m.CompanyId, new SelectList(ViewBag.Companies, "parlourid", "ApplicationName"), "Choose Parlour", new { @class = "form-control" })
+                                @Html.DropDownListFor(m => m.CompanyId, new SelectList(ViewBag.Companies, "parlourid", "ApplicationName"), "Choose parlour", new { @class = "form-control" })
                             </div>
                         </div>
                         <div class="col-sm-3">
@@ -331,6 +330,14 @@
                     InitModel();
                     datatable.fnDraw();
                 });
+                $("#StatusId").change(function () {
+                    InitModel();
+                    datatable.fnDraw();
+                });
+                $("#ddlBookName").change(function () {
+                    InitModel();
+                    datatable.fnDraw();
+                });
                 $(document).keypress(function (event) {
                     var keyCode = event.keyCode || event.which;
                     if (keyCode == '13') {
@@ -397,4 +404,3 @@
             color: rgba(50, 50, 50, 0.5);
         }
 </style>
-

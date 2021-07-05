@@ -219,7 +219,7 @@
                         </div>
                         <ul class="nav navbar-top-links navbar-right">
                             <li>
-                                <strong>Scheme name:</strong>&nbsp;<asp:Label runat="server" ID="ltrCompany"></asp:Label>
+                                <strong>Scheme Name:</strong>&nbsp;<asp:Label runat="server" ID="ltrCompany"></asp:Label>
                             </li>
                             <li>
                                 <asp:HyperLink NavigateUrl="~/Admin/Login.aspx" runat="server"> <i class="fa fa-fw fa-power-off"></i> Log Out</asp:HyperLink>
