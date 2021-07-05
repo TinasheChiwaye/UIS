@@ -81,6 +81,7 @@ namespace Funeral.Model
         public decimal Cover41to59year { get; set; }
         public decimal Cover60to65year { get; set; }
         public decimal Cover66to75year { get; set; }
+
         public int? UnderwriterId { get; set; }
         public decimal CashPayout { get; set; }
         public List<UserType> GetUserTypes { get; set; }

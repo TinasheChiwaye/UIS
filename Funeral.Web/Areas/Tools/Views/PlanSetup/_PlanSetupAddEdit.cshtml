@@ -151,73 +151,7 @@
                         </div>
                     </div>
                 </div>
-                <table class="table table-hover table-responsive table-striped  ">
-                    <thead>
-                        <tr>
-                            <th>User Type</th>
-                            @*<th>Age From</th>
-                            <th>Age To</th>*@
-                            @*<th>Cover <b>(R)</b></th>*@
-                            @*<th>Premium <b>(R)</b></th>*@
-                            @*<th>Underwriter Cover <b>(R)</b></th>
-                            <th>Underwriter Premium <b>(R)</b></th>*@
-                            <th>Reinsurance Premium<b>(R)</b></th>
-                            <th>Office Premium <b>(R)</b></th>
-                            @*<th>Action</th>*@
-                        </tr>
-                    </thead>
-                    <tbody id="tblDynamicRowBodyId">
-                        @{
-                            if (Model.planCreators.Count > 0)
-                            {
-                                for (int i = 0; i < Model.planCreators.Count; i++)
-                                {
-                                    <tr>
-                                        <td>
-                                            @Html.HiddenFor(m => m.planCreators[i].PlanCreatorId, new Dictionary<string, object> { { "data-val", false } })
-                                            @Html.HiddenFor(m => m.planCreators[i].TableRawStatus, new { @class = "TableRawStatus" })
-                                            @Html.DropDownListFor(m => m.planCreators[i].UserTypeId, new SelectList(Funeral.BAL.CommonBAL.GetUserTypes(), "UserTypeId", "UserTypeName", Model.planCreators[i].UserTypeId), new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(m => m.planCreators[i].UserTypeId, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
-                                        </td>
-                                        @*<td>
-                                            @Html.DropDownListFor(m => m.planCreators[i].FromAge, new SelectList(NumericDropdownList, "Text", "Value", Model.planCreators[i].FromAge), new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(m => m.planCreators[i].FromAge, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
-                                        </td>
-                                        <td>
-                                            @Html.DropDownListFor(m => m.planCreators[i].ToAge, new SelectList(NumericDropdownList, "Text", "Value", Model.planCreators[i].ToAge), new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(m => m.planCreators[i].ToAge, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
-                                        </td>*@
-                                        @*<td>
-                                            @Html.TextBoxFor(m => m.planCreators[i].Cover, null, new { @class = "form-control", @type = "number", placeholder = "Enter Cover Amount" })
-                                            @Html.ValidationMessageFor(m => m.planCreators[i].Cover, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(m => m.planCreators[i].Premium, null, new { @class = "form-control", @type = "number", placeholder = "Enter Premium Amount" })
-                                            @Html.ValidationMessageFor(m => m.planCreators[i].Premium, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(m => m.planCreators[i].UnderwriterCover, null, new { @class = "form-control", @type = "number", placeholder = "Enter Underwriter Cover Amount" })
-                                            @Html.ValidationMessageFor(m => m.planCreators[i].UnderwriterCover, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(m => m.planCreators[i].UnderwriterPremium, null, new { @class = "form-control", @type = "number", placeholder = "Enter Underwriter Premium Amount" })
-                                            @Html.ValidationMessageFor(m => m.planCreators[i].UnderwriterPremium, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
-                                        </td>*@
-                                        <td>
-                                            @Html.TextBoxFor(m => m.planCreators[i].ReinsurancePremium, null, new { @class = "form-control", @type = "number", placeholder = "Enter Reinsurance Premium Amount" })
-                                            @Html.ValidationMessageFor(m => m.planCreators[i].ReinsurancePremium, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
-                                        </td>
-                                        <td>
-                                            @Html.TextBoxFor(m => m.planCreators[i].OfficePremium, null, new { @class = "form-control", @type = "number", placeholder = "Enter Office Premium Amount" })
-                                            @Html.ValidationMessageFor(m => m.planCreators[i].OfficePremium, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
-                                        </td>
-                                        @*<td><input type="button" placeholder="Header" value="Delete" class="btn btn-danger DeleteDynamicRow" /></td>*@
-                                    </tr>
-                                }
-                            }
-                        }
-                    </tbody>
-                </table>
+                
 
             </div>
         </div>

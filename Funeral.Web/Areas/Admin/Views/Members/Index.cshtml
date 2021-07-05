@@ -354,7 +354,7 @@
                     model1.BookID = $('#ddlBookName').val();
                     $("#PageNum1").val(model1.PageNum);
                 }
-                $('#CompanyId').change(function () {
+                $('#CompanyId').change(function ()  {
                     //debugger;
                     jQuery.ajax({
                         url: '@Url.Action("ChangeParlour", "Parlour", null, Request.Url.Scheme)',

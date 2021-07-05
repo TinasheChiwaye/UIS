@@ -514,11 +514,11 @@ namespace Funeral.BAL
 
         //=================TEST
 
-        public static List<PlanModel> GetPlanByParlourId(Guid parlourid)
-        {
-            DataTable dr = MembersDAL.GetPlanByParlourIddt(parlourid);
-            return FuneralHelper.DataTableMapToList<PlanModel>(dr);
-        }
+        //public static List<PlanModel> GetPlanByParlourId(Guid parlourid)
+        //{
+        //    DataTable dr = MembersDAL.GetPlanByParlourIddt(parlourid);
+        //    return FuneralHelper.DataTableMapToList<PlanModel>(dr);
+        //}
 
         //public static List<BranchModel> GetBranchByParlourId(Guid parlourid)
         //{
