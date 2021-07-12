@@ -32,7 +32,7 @@ namespace Funeral.BAL
             keyValues.Add(new KeyValue { Key = "Address4", Value = "Address4", NameText = "Address4" });
             keyValues.Add(new KeyValue { Key = "Code", Value = "Code", NameText = "Code" });
             keyValues.Add(new KeyValue { Key = "MemeberNumber", Value = "MemeberNumber", NameText = "Policy Number" });
-            keyValues.Add(new KeyValue { Key = "MemberSociety", Value = "MemberSociety", NameText = "Book Name" });
+            keyValues.Add(new KeyValue { Key = "MemberSociety", Value = "MemberSociety", NameText = "Group Name" });
             keyValues.Add(new KeyValue { Key = "InceptionDate", Value = "InceptionDate", NameText = "InceptionDate" });
             keyValues.Add(new KeyValue { Key = "Claimnumber", Value = "Claimnumber", NameText = "Claimnumber" });
             keyValues.Add(new KeyValue { Key = "PolicyStatus", Value = "PolicyStatus", NameText = "PolicyStatus" });

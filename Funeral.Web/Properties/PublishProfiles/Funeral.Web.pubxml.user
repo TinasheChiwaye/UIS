@@ -18,7 +18,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/17/2020 12:20:41</publishTime>
     </File>
     <File Include="Admin/Admin.Master">
-      <publishTime>11/26/2020 07:43:59</publishTime>
+      <publishTime>06/22/2021 11:23:37</publishTime>
     </File>
     <File Include="Admin/CarTrack.aspx">
       <publishTime>07/17/2020 12:20:41</publishTime>
@@ -474,7 +474,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/26/2020 07:43:59</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Dashboard/Index.cshtml">
-      <publishTime>11/26/2020 07:43:59</publishTime>
+      <publishTime>06/22/2021 11:21:43</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Dashboard/_DashboardCharts.cshtml">
       <publishTime>11/26/2020 07:43:59</publishTime>
@@ -519,7 +519,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/07/2021 22:32:46</publishTime>
     </File>
     <File Include="Areas/Admin/Views/GroupPayment/_AddGroupPayment.cshtml">
-      <publishTime>03/19/2021 10:16:30</publishTime>
+      <publishTime>06/21/2021 09:48:17</publishTime>
     </File>
     <File Include="Areas/Admin/Views/GroupPayment/_GroupPaymentList.cshtml">
       <publishTime>04/12/2021 15:19:28</publishTime>
@@ -552,7 +552,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/12/2021 15:19:28</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Members/ManageMembers.cshtml">
-      <publishTime>04/12/2021 15:46:02</publishTime>
+      <publishTime>06/21/2021 09:51:58</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Members/_AddEditBeneficiary.cshtml">
       <publishTime>04/12/2021 15:19:27</publishTime>
@@ -639,7 +639,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/12/2021 15:19:27</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Shared/_Layout.cshtml">
-      <publishTime>11/26/2020 07:44:00</publishTime>
+      <publishTime>06/22/2021 11:50:22</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Tombstone/Index.cshtml">
       <publishTime>07/17/2020 12:20:47</publishTime>
@@ -765,7 +765,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/26/2020 07:44:00</publishTime>
     </File>
     <File Include="Areas/Tools/Views/Shared/_Layout.cshtml">
-      <publishTime>11/26/2020 07:44:00</publishTime>
+      <publishTime>06/22/2021 11:51:26</publishTime>
     </File>
     <File Include="Areas/Tools/Views/SocietySetup/Index.cshtml">
       <publishTime>07/17/2020 12:20:48</publishTime>
@@ -1050,10 +1050,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/18/2021 16:31:20</publishTime>
     </File>
     <File Include="bin/Funeral.Web.dll">
-      <publishTime>06/03/2021 09:34:19</publishTime>
+      <publishTime>06/24/2021 15:26:47</publishTime>
     </File>
     <File Include="bin/Funeral.Web.pdb">
-      <publishTime>06/03/2021 09:34:19</publishTime>
+      <publishTime>06/24/2021 15:26:47</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.Identity.Core.dll">
       <publishTime>04/03/2015 17:07:22</publishTime>
@@ -3714,7 +3714,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/17/2020 12:21:06</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>11/26/2020 07:44:05</publishTime>
+      <publishTime>06/22/2021 12:38:32</publishTime>
     </File>
     <File Include="Views/web.config">
       <publishTime>07/17/2020 12:21:06</publishTime>
@@ -3723,7 +3723,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/17/2020 12:21:06</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>06/03/2021 09:55:22</publishTime>
+      <publishTime>06/25/2021 14:36:28</publishTime>
     </File>
   </ItemGroup>
 </Project>
