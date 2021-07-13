@@ -31,7 +31,7 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
-                                                            <label class="">Book </label>
+                                                            <label class="">Group </label>
                                                             <asp:DropDownList ID="ddlSociety" runat="server" DataTextField="SocietyName" DataValueField="pkiSocietyID" CssClass="form-control"></asp:DropDownList>
                                                         </div>
                                                     </div>

@@ -21,13 +21,13 @@
                         <div class="col-lg-4" id="dvAdministrator">
                             <div class="form-group">
                                 <label>Scheme: </label>
-                                @Html.DropDownListFor(m => m.CompanyId, new SelectList(ViewBag.Companies, "parlourid", "ApplicationName"),"Choose Parlour", new { @class = "form-control" })
+                                @Html.DropDownListFor(m => m.CompanyId, new SelectList(ViewBag.Companies, "parlourid", "ApplicationName"),"Select Scheme", new { @class = "form-control" })
                             </div>
                         </div>
                         <div class="col-sm-3">
                             <div class="form-group">
-                                <label>Book: </label>
-                                @Html.DropDownListFor(m => m.BookID, new SelectList(ViewBag.SocietyLists, "BranchName", "BranchName"), "Select Group", new { @id = "ddlBookName", @class = "form-control" })
+                                <label>Group Name: </label>
+                                @Html.DropDownListFor(m => m.BookID, new SelectList(ViewBag.SocietyLists, "SocietyName", "SocietyName"), "Select Group", new { @id = "ddlBookName", @class = "form-control" })
                             </div>
                         </div>
                         <div class="col-sm-5">
@@ -71,7 +71,7 @@
                                     <thead>
                                         <tr>                                            
                                             <th>Scheme</th>
-                                            <th>Book </th>
+                                            <th>Group Name </th>
                                             <th>ID Number</th>
                                             <th>Policy Number</th>                                              
                                             <th>Full Name</th>                                            
@@ -354,7 +354,7 @@
                     model1.BookID = $('#ddlBookName').val();
                     $("#PageNum1").val(model1.PageNum);
                 }
-                $('#CompanyId').change(function ()  {
+                $('#CompanyId').change(function () {
                     //debugger;
                     jQuery.ajax({
                         url: '@Url.Action("ChangeParlour", "Parlour", null, Request.Url.Scheme)',
