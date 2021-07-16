@@ -27,7 +27,7 @@
                         </div>
                         <div class="col-sm-3">
                             <div class="form-group">
-                                <label>Book: </label>
+                                <label>Group Name: </label>
                                 @Html.DropDownListFor(m => m.BookID, new SelectList(ViewBag.SocietyLists, "SocietyName", "SocietyName"), "Select Group", new { @id = "ddlBookName", @class = "form-control" })
                             </div>
                         </div>
@@ -72,7 +72,7 @@
                                     <thead>
                                         <tr>
                                             <th>Scheme</th>
-                                            <th>Book </th>
+                                            <th>Group Name </th>
                                             <th>ID Number</th>
                                             <th>Policy Number</th>
                                             <th>Full Name</th>

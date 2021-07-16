@@ -28,7 +28,7 @@
                             <div class="col-lg-6">
 
                                 <div class="form-group">
-                                    <label>UnderWriter Name</label>
+                                    <label>Underwriter Name</label>
                                     <asp:TextBox runat="server" class="form-control" ID="TxtUnderwriterName"></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" Display="None" ForeColor="Red" ControlToValidate="TxtUnderwriterName" ErrorMessage="Please Enter Underwriter Name" ValidationGroup="valUnderwriterSetup" />
                                 </div>
@@ -67,7 +67,7 @@
                                 </div>
                                 
                                  <div class="form-group">
-                                    <label>FSPNNumber</label>
+                                    <label>FSP Number</label>
                                     <asp:TextBox runat="server" class="form-control" ID="txtFSPNNumber"></asp:TextBox>
                                      <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" Display="None" ForeColor="Red" ControlToValidate="txtFSPNNumber" ErrorMessage="Please Enter FSPN Number" ValidationGroup="valUnderwriterSetup" />  
                                       </div>
