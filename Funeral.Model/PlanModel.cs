@@ -36,6 +36,8 @@ namespace Funeral.Model
             MainMember = 0;
             CompanySplit = 0;
             UnderwriterId = 0;
+            OtherPartiesCommision = 0;
+            LoyaltyProgramme = 0;
             //Cover0to5year = 0;
             //Cover6to13year = 0;
             //Cover14to21year = 0;
@@ -87,6 +89,8 @@ namespace Funeral.Model
         public List<ApplicationSettingsModel> CompanyList { get; set; }
         public List<PlanCreator> planCreators { get; set; }
         public List<UnderwriterModel> UnderwriterList { get; set; }
+        public decimal OtherPartiesCommision { get; set; }
+        public decimal LoyaltyProgramme { get; set; }
     }
     public class UserType
     {

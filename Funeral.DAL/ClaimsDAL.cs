@@ -78,11 +78,15 @@ namespace Funeral.DAL
         public static DataTable SelectAllClaims(Guid ParlourId)
         {
 
-            if (ParlourId.Equals(Guid.Empty))
-            {
-                return (DbConnection.GetDataTable(CommandType.StoredProcedure, "SelectAllClaimsWithouthParlourId"));
-            }
-            else
+            ////if (ParlourId.Equals(Guid.Empty))
+            ////{
+            ////    string SP = "SelectAllClaimsWithouthParlourId";
+            ////    DbParameter[] ObjParam = new DbParameter[1];
+            ////    ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+            ////    return (DbConnection.GetDataTable(CommandType.StoredProcedure, SP, ObjParam));
+            ////    //return (DbConnection.GetDataTable(CommandType.StoredProcedure, "SelectAllClaimsWithouthParlourId"));
+            ////}
+            ////else
             {
                 string SP = "SelectAllClaims";
                 DbParameter[] ObjParam = new DbParameter[1];

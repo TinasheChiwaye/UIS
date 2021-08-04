@@ -136,6 +136,8 @@ namespace Funeral.Web.Areas.Tools.Controllers
             planSetup.OfficeSplit = Convert.ToDecimal(planSetup.OfficeSplit.ToString("0.00"));
             planSetup.planCreators = ToolsSetingBAL.EditPlanCreatorbyID(planSetup.pkiPlanID);
             planSetup.UnderwriterList = CommonBAL.GetUnderwriterList(ParlourId).ToList();
+            planSetup.LoyaltyProgramme = Convert.ToDecimal(planSetup.LoyaltyProgramme.ToString("0.00"));
+            planSetup.OtherPartiesCommision = Convert.ToDecimal(planSetup.OtherPartiesCommision.ToString("0.00"));
             BindCompanyList();
             return PartialView("~/Areas/Tools/Views/PlanSetup/_PlanSetupAddEdit.cshtml", planSetup);
         }
