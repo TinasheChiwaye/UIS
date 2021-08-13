@@ -1084,6 +1084,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                     item.PolicyPremium = objPolicyModel.PlanSubscription;
                     item.TotalPremium = totalPremium;
                     item.EasyPayNo = model.EasyPayNo;
+                    item.RefNumber = model.RefNumber;
                 }
                 search.TotalRecord = policies.Count;
                 return Json(new Funeral.Model.SearchResult<Model.Search.BaseSearch, MembersModel>(search, policies, o => o.Surname.Contains(search.SarchText)));
@@ -1105,6 +1106,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             model.fkiPlanID = policy.fkiPlanID;
             model.MemeberNumber = policy.MemeberNumber;
             model.EasyPayNo = policy.EasyPayNo;
+            model.RefNumber = policy.RefNumber;
             model.Email = policy.Email;
             model.MemberBranch = policy.MemberBranch;
             //model.

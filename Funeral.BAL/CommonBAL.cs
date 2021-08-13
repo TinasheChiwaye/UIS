@@ -74,7 +74,7 @@ namespace Funeral.BAL
             keyValues.Add(new KeyValue { Key = "OfficePremium", Value = "OfficePremium", NameText = "OfficePremium" });
             keyValues.Add(new KeyValue { Key = "EffectiveDate", Value = "EffectiveDate", NameText = "Effective Date" });
             keyValues.Add(new KeyValue { Key = "StartDate", Value = "StartDate", NameText = "Start Date" });
-            //keyValues.Add(new KeyValue { Key = "RefNumber", Value = "RefNumber", NameText = "Employee Number" });
+            keyValues.Add(new KeyValue { Key = "RefNumber", Value = "RefNumber", NameText = "Employee Number" });
             return keyValues;
         }
         public static List<PolicyModel> GetPolicyByParlourId(Guid parlourid)
