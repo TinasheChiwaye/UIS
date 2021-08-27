@@ -99,7 +99,15 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 return Json(WebApiResult<Model.Search.MemberSearch, MembersModel>.Error(searchResult, ex));
             }
         }
-        [HttpPost]
+
+        //public ActionResult BindAuditTrail(m)
+        //{
+
+        //        var memberAudits = MembersBAL.GetMemberAudits();
+        //        return Json(new Funeral.Model.AuditTrail<Model.AuditTrail;
+
+        //}
+        //[HttpPost]
         public ActionResult GetAllData(Model.Search.MemberSearch search)
         {
             return null;
@@ -163,6 +171,9 @@ namespace Funeral.Web.Areas.Admin.Controllers
             else
                 member.parlourid = CurrentParlourId;
             var Managemembers = new ManageMembersVM();
+
+            ViewBag.AuditList = MembersBAL.GetAuditList(pkiMemberID, CurrentParlourId);
+
 
 
             var statusList = CommonBAL.GetStatus(FuneralEnum.StatusAssociatedTable.Members.ToString()).Select(status => new { status.Status, status.ID }).Distinct();

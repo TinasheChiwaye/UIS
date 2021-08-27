@@ -90,6 +90,16 @@ namespace Funeral.DAL
             }
 
         }
+
+
+        public static DataTable GetAuditList(int PkiMemberId, Guid ParlourId)
+        {
+            DbParameter[] ObjParam = new DbParameter[2];
+            ObjParam[0] = new DbParameter("@PkiMemberId", DbParameter.DbType.Int, 0, PkiMemberId);
+            ObjParam[1] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetMemberAudit", ObjParam);
+        }
+
         public static int DeleteMember(int id)
         {
             //model.InceptionDate = System.DateTime.Now;
