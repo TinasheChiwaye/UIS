@@ -52,7 +52,7 @@
                                 <%--<asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator1" ValidationGroup="CompanySetup" runat="server" ControlToValidate="txtRegistrationNumber" ErrorMessage="Registration Number Enter Only characters" ValidationExpression="[a-zA-Z ]*$" />--%>
                             </div>
                             <div class="form-group">
-                                <label>Fsb Number </label>
+                                <label>FSP Number </label>
                                 <asp:TextBox MaxLength="50" runat="server" ID="txtFsbNumber" name="FsbNumber" type="text" class="form-control"></asp:TextBox>
                                 <%--<asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtFsbNumber" ID="RequiredFieldValidator3" ForeColor="red" runat="server" ErrorMessage="Please enter Fsb Number"></asp:RequiredFieldValidator>--%>
                             </div>

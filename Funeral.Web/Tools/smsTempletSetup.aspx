@@ -57,7 +57,7 @@
                                     </asp:DropDownList>
                                 </div>
                                 <div class="col-lg-4">
-                                    <asp:Label ID="Label1" runat="server" Text="Characters left: 135"></asp:Label>
+                                    <asp:Label ID="Label1" runat="server" Text="Characters left: 160"></asp:Label>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -96,10 +96,10 @@
         $(document).ready(function () {
             var input = document.getElementById('<%=txtMessage.ClientID%>');
             var TextLength = input.value.length;
-            $(document.getElementById('<%=Label1.ClientID%>')).text("Characters left: " + (135 - TextLength));
+            $(document.getElementById('<%=Label1.ClientID%>')).text("Characters left: " + (160 - TextLength));
         });
         $(document.getElementById('<%=txtMessage.ClientID%>')).keyup(function () {
-            $(document.getElementById('<%=Label1.ClientID%>')).text("Characters left: " + (135 - $(this).val().length));
+            $(document.getElementById('<%=Label1.ClientID%>')).text("Characters left: " + (160 - $(this).val().length));
             
         });
 
@@ -113,7 +113,7 @@
             var key = event.keyCode || event.charCode;
 
             
-            if ((135 - TextLength) <= 0) {
+            if ((160 - TextLength) <= 0) {
                 if (key >= 37 && key <= 40) {
                     return true; // arrow keys
                 }

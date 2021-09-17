@@ -50,6 +50,8 @@ namespace Funeral.Web.Tools
             lblMessage.Visible = false;
             RequiredFieldValidator10.Enabled = true;
             RegularExpressionValidator4.Enabled = true;
+            //BindTempletList();
+            bindgvSmsPlaceholder();
         }
 
         #endregion
@@ -96,19 +98,36 @@ namespace Funeral.Web.Tools
         {
             RequiredFieldValidator10.Enabled = false;
             RegularExpressionValidator4.Enabled = false;
-                if (chkAllMember.Checked)
-                {
-                    SendBulkMessge();
-                    ShowMessage(ref lblMessage, MessageType.Success, "SMS Sent Successfully to All");
-                }
-                else
-                {
-                    SendMassge(txtCellphoneNumber.Text);
-                    ShowMessage(ref lblMessage, MessageType.Success, txtCellphoneNumber.Text + " SMS Sent Successfully");
-                }
-                ClearControl();
-                lblMessage.Visible = true;
-            
+            if (chkAllMember.Checked)
+            {
+                SendBulkMessge();
+                ShowMessage(ref lblMessage, MessageType.Success, "SMS Sent Successfully to all Members");
+            }
+            else
+            {
+                SendMassge(txtCellphoneNumber.Text);
+                ShowMessage(ref lblMessage, MessageType.Success, txtCellphoneNumber.Text + " SMS Sent Successfully");
+            }
+            ClearControl();
+            lblMessage.Visible = true;
+
+        }
+
+        //public void BindTempletList()
+        //{
+        //    List<smsTempletModel> ModelTemplet = ToolsSetingBAL.GetTemplateList(ParlourId);
+        //    ddlTemplate.DataSource = ModelTemplet;
+        //    ddlTemplate.DataValueField = "ID";
+        //    ddlTemplate.DataTextField = "Name";
+        //    ddlTemplate.DataBind();
+        //    ddlTemplate.Items.Insert(0, new ListItem("Select Template", "0"));
+        //}
+
+        private void bindgvSmsPlaceholder()
+        {
+            List<SMSPlaceholderModel> placeholder = ToolsSetingBAL.GetPlaceholder();
+            gvTemplate.DataSource = placeholder;
+            gvTemplate.DataBind();
         }
 
         #endregion

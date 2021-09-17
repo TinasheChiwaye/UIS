@@ -303,6 +303,9 @@
                                     </li>
                                     <li class="" id="tab10">
                                         <a data-toggle="tab" href="#tab-10" id="atab10" aria-expanded="false">Beneficiary</a>
+                                    </li>                                    
+                                    <li class="" id="tab11">
+                                        <a data-toggle="tab" href="#tab-11" id="atab11" aria-expanded="false">Audit Trail</a>
                                     </li>
 
                                 </ul>
@@ -463,7 +466,7 @@
                                                                         <input type="text" maxlength="20" id="txtPolicyNo" name="name" class="form-control">
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <label>Easy Pay</label>
+                                                                        <label>EasyPay</label>
                                                                         <input type="text" maxlength="50" id="txtEasyToPay" name="name" class="form-control">
                                                                     </div>
                                                                     <div class="form-group">
@@ -507,7 +510,7 @@
                                                                     <div class="form-group">
                                                                         <label>Policy Agent or Broker</label>
 
-                                                                         @Html.DropDownList("AgentList", Model.AgentList, "Select", new { Name = "Agent", @id = "ddlAgent", @style = "width:100%", @class = "form-control", @disabled = "enabled" })
+                                                                        @Html.DropDownList("AgentList", Model.AgentList, "Select", new { Name = "Agent", @id = "ddlAgent", @style = "width:100%", @class = "form-control", @disabled = "enabled" })
 
                                                                     </div>
                                                                     <div class="form-group">
@@ -527,11 +530,11 @@
                                                                         </div>
 
                                                                         @*<div class="btn-group">
-                                                                                <button class="btn btn-sm btn-primary pull-right m-t-n-xs">Reset</button>
-                                                                            </div>
-                                                                            <div class="btn-group">
-                                                                                <button class="btn btn-sm btn-primary pull-right m-t-n-xs" id="policyNextButton" onclick="return goToTab(3,9);">Next</button>
-                                                                            </div>*@
+                                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs">Reset</button>
+                                                </div>
+                                                <div class="btn-group">
+                                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs" id="policyNextButton" onclick="return goToTab(3,9);">Next</button>
+                                                </div>*@
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -613,16 +616,16 @@
                                                 <input type="text" maxlength="50" id="txtCode_Post" onkeypress="return isDecimalNumber(event,this);" name="name" class="form-control">
                                             </div>
                                             @*<div class="form-group">
-                                                    <div class="btn-group">
-                                                        <a data-toggle="tab" href="#tab-1" id="tab2BackButton" class="btn btn-sm btn-primary pull-right m-t-n-xs" aria-expanded="true">Back</a>
-                                                    </div>
-                                                    <div class="btn-group" style="display:none">
-                                                        <button class="btn btn-sm btn-primary pull-right m-t-n-xs" id="btnPhysicalAddressReset">Reset</button>
-                                                    </div>
-                                                    <div class="btn-group">
-                                                        <a data-toggle="tab" href="#tab-3" id="tab2NextButton" class="btn btn-sm btn-primary pull-right m-t-n-xs" aria-expanded="true">Next</a>
-                                                    </div>
-                                                </div>*@
+                        <div class="btn-group">
+                            <a data-toggle="tab" href="#tab-1" id="tab2BackButton" class="btn btn-sm btn-primary pull-right m-t-n-xs" aria-expanded="true">Back</a>
+                        </div>
+                        <div class="btn-group" style="display:none">
+                            <button class="btn btn-sm btn-primary pull-right m-t-n-xs" id="btnPhysicalAddressReset">Reset</button>
+                        </div>
+                        <div class="btn-group">
+                            <a data-toggle="tab" href="#tab-3" id="tab2NextButton" class="btn btn-sm btn-primary pull-right m-t-n-xs" aria-expanded="true">Next</a>
+                        </div>
+                    </div>*@
                                         </div>
                                     </div>
                                 </div>
@@ -666,7 +669,7 @@
                                                 @*<input type="text" maxlength="20" id="txtPolicyNo" name="name" class="form-control">*@
                                             </div>
                                             <div class="form-group">
-                                                <label>Easy Pay</label>
+                                                <label>EasyPay</label>
                                                 <input type="text" maxlength="50" id="txtEasyToPay" name="name" class="form-control">
                                             </div>
                                             <div class="form-group">
@@ -711,9 +714,9 @@
                                             </div>
 
                                             @*<div class="form-group">
-                                                    <label>Policy Underwritten By</label>
-                                                    @Html.DropDownList("UnderwritterList", Model.UnderwritterList, "Select", new { Name = "Underwritter", @id = "ddlUnderwritter", @style = "width:100%", @class = "form-control" })
-                                                </div>*@
+                        <label>Policy Underwritten By</label>
+                        @Html.DropDownList("UnderwritterList", Model.UnderwritterList, "Select", new { Name = "Underwritter", @id = "ddlUnderwritter", @style = "width:100%", @class = "form-control" })
+                    </div>*@
 
                                             <div class="form-group">
                                                 <label>Policy Agent or Broker</label>
@@ -750,6 +753,10 @@
                                                     }
                                                 }
 
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Employee Number</label>
+                                                <input type="text" maxlength="50" id="txtReferenceNumber" name="name" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
@@ -1021,9 +1028,9 @@
                                                                 </select>
                                                             </div>
                                                             @*<div class="form-group">
-                                                                    <label>Premium<em>*</em></label>
-                                                                    <input type="text" maxlength="25" id="txtDependentPremium" name="name" class="form-control" disabled>
-                                                                </div>*@
+                                        <label>Premium<em>*</em></label>
+                                        <input type="text" maxlength="25" id="txtDependentPremium" name="name" class="form-control" disabled>
+                                    </div>*@
                                                             <div class="form-group">
                                                                 <label>Cover Amount <em>*</em></label>
                                                                 <input type="text" maxlength="25" id="txtDependentCoverAmount" name="name" class="form-control" disabled>
@@ -1256,7 +1263,49 @@
                                 <div id="tab-10" class="tab-pane">
                                     @Html.Partial("_AddEditBeneficiary", Model)
                                 </div>
-                                <!-- #endregion Tab10 -->
+                                <div id="tab-11" class="tab-pane">
+                                    @{
+                                        var auditModel = ViewBag.AuditList;
+                                    }
+
+                                    <div class="row">
+                                        <div class="col-lg-12 ">
+                                            <div class="table-responsive">
+                                                @*@Html.EditorFor(model => model.PageNum, new { htmlAttributes = new { @class = "hidden", id = "PageNum1" } })*@
+                                                @*@Html.EditorFor(model => model.PageSize, new { htmlAttributes = new { @class = "hidden", id = "PageSize1" } })*@
+                                                @Html.Hidden("ItemId")
+                                                <table id="auditTrailDataTable" class="table table-striped table-bordered table-hover" width="100%" cellspacing="0">
+                                                    <thead></thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th class="hidden"></th>
+                                                            <th>User</th>
+                                                            <th>Action</th>
+                                                            <th>Action Description</th>
+                                                            <th>Date</th>
+                                                        </tr>
+                                                        @if (auditModel != null && auditModel.Count > 0)
+                                                        {
+                                                            foreach (var item in auditModel)
+                                                            {
+                                                                <tr>
+                                                                    <td>@item.User</td>
+                                                                    <td>@item.Action</td>
+                                                                    <td>@item.ActionDesc</td>
+                                                                    <td>@item.ActionDate</td>
+                                                                    @*<td>
+                                                                        <a href="@url.action("printform", "grouppayment", new{ groupinvoiceid= item.groupinvoiceid})"><i class="glyphicon glyphicon-print"></i></a>
+                                                                        <div class="col-sm-4 text-center"><a href="@url.action("printform", "grouppayment", null, request.url.scheme)?groupinvoiceid=@item.groupinvoiceid"><i class="glyphicon glyphicon-print"></i></a></div>
+                                                                    </td>*@
+                                                                </tr>
+                                                            }
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1415,8 +1464,7 @@
             var dependancyDatatable;
             var memberPolicyDatatable;
 
-            $("#txtBirthDay").datepicker({ format: 'dd MM yyyy',autoclose: true,setDate: new Date() , onSelect: function (dateText) { $(this).change(); } }).on("change", function ()
-            {
+            $("#txtBirthDay").datepicker({ format: 'dd MM yyyy', autoclose: true, setDate: new Date(), onSelect: function (dateText) { $(this).change(); } }).on("change", function () {
                 Validate();
             });
 
@@ -1426,43 +1474,43 @@
                 }
             });
 
-            if (@memberId==0) {
+            if (@memberId== 0) {
                 $("#productDataTable").parent().hide();
             }
 
-            $("#tab2NextButton").click(function(){
+            $("#tab2NextButton").click(function () {
                 $("#tab2").removeClass('active')
                 $("#tab3").addClass("active");
             })
-            $("#tab3NextButton").click(function(){
+            $("#tab3NextButton").click(function () {
                 $("#tab3").removeClass('active')
                 $("#tab9").addClass("active");
             })
-            $("#tab9NextButton").click(function(){
+            $("#tab9NextButton").click(function () {
                 $("#tab9").removeClass('active')
                 $("#tab4").addClass("active");
             })
 
             //Back Button click event to active tab
-            $("#tab2BackButton").click(function(){
+            $("#tab2BackButton").click(function () {
                 $("#tab2").removeClass("active");
                 $("#tab1").addClass('active');
             })
-            $("#tab3BackButton").click(function(){
+            $("#tab3BackButton").click(function () {
                 $("#tab3").removeClass("active");
                 $("#tab2").addClass('active');
             })
-            $("#tab9BackButton").click(function(){
+            $("#tab9BackButton").click(function () {
                 $("#tab9").removeClass("active");
                 $("#tab3").addClass('active');
             })
-            $("#tab4BackButton").click(function(){
+            $("#tab4BackButton").click(function () {
                 $("#tab4").removeClass("active");
                 $("#tab9").addClass('active');
             })
 
             //Tab1 validation
-            $("#tab1NextButton").click(function(){
+            $("#tab1NextButton").click(function () {
                 var lastName = $("#txtLastName").val();
                 var SelectedCompanyId = $("#ddlSelectCompany").val();
                 var FirstName = $("#txtFirstname").val();
@@ -1477,8 +1525,7 @@
                 var teleNumberFlag = true;
                 var Agent = $("#ddlAgent").text();
                 //all fields are blank
-                if (lastName == "" && FirstName == "" && IdNumber == "" && CellNumber == "" && TellNumber == "" && (SelectedCompanyId == "" || SelectedCompanyId == null))
-                {
+                if (lastName == "" && FirstName == "" && IdNumber == "" && CellNumber == "" && TellNumber == "" && (SelectedCompanyId == "" || SelectedCompanyId == null)) {
                     $("#validationMessage").show();
                     $("#validationMessage").append('<li id="EnterLastNameid">Please Enter Surename.</li>');
                     $("#validationMessage").append('<li id="EnterFirstName">Please Enter Full Name.</li>');
@@ -1489,7 +1536,7 @@
                     flag = false;
                 }
 
-                if(lastName != ""){
+                if (lastName != "") {
                     lastNameFlag = true;
                     //var regex = new RegExp("^[a-zA-Z]+$");
                     //if (regex.test(lastName)) {
@@ -1509,14 +1556,14 @@
                     //    $("#validationMessage").append('<li id="txtLastNameid">Surname Enter Only characters.</li>');
                     //    lastNameFlag = false;
                     //}
-                }else{
+                } else {
                     $("li#txtLastNameid").hide();
                     $("li#txtLastNameid").html('');
                     $("li#EnterLastNameid").hide();
                     $("li#EnterLastNameid").html('');
                     $("#validationMessage").show();
                     $("#validationMessage").append('<li id="EnterLastNameid">Please Enter Surname.</li>');
-                    lastNameFlag= false;
+                    lastNameFlag = false;
                 }
                 if (FirstName != "") {
                     firstNameFlag = true;
@@ -1536,7 +1583,7 @@
                     //    $("#validationMessage").append('<li id="txtFirstNameid">Full name Enter Only characters</li>');
                     //    firstNameFlag = false;
                     //}
-                }else{
+                } else {
                     $("li#txtFirstNameid").hide();
                     $("li#txtFirstNameid").html('');
                     $("li#EnterFirstName").hide();
@@ -1545,7 +1592,7 @@
                     $("#validationMessage").append('<li id="EnterFirstName">Please Enter Full name.</li>');
                     firstNameFlag = false;
                 }
-                if(IdNumber != ""){
+                if (IdNumber != "") {
                     var numericReg = /^\d*[0-9](|.\d*[0-9]|,\d*[0-9])?$/;
                     if (numericReg.test(IdNumber)) {
                         $("li#txtIdNumberid").hide();
@@ -1554,8 +1601,7 @@
                         $("li#enterIdNumber").html('');
                         idNumberFlag = true;
                     }
-                    else
-                    {
+                    else {
                         $("li#txtIdNumberid").hide();
                         $("li#txtIdNumberid").html('');
                         $("li#enterIdNumber").hide();
@@ -1564,7 +1610,7 @@
                         $("#validationMessage").append('<li id="txtIdNumberid">Invalid Id Number</li>');
                         idNumberFlag = false;
                     }
-                }else{
+                } else {
                     $("li#txtIdNumberid").hide();
                     $("li#txtIdNumberid").html('');
                     $("li#enterIdNumber").hide();
@@ -1574,11 +1620,11 @@
                     idNumberFlag = false;
                 }
 
-                if(CellNumber != ""){
+                if (CellNumber != "") {
                     $("li#txtCellphonevalId").html('');
                     $("li#txtCellphonevalId").hide('');
                     cellNumberFlag = true;
-                }else{
+                } else {
                     $("li#txtCellphonevalId").html('');
                     $("li#txtCellphonevalId").hide('');
                     $("#validationMessage").show();
@@ -1586,18 +1632,16 @@
                     cellNumberFlag = false;
                 }
 
-                if($("#txtPassport").val() != "")
-                {
+                if ($("#txtPassport").val() != "") {
                     $("li#txtIdNumberid").hide();
                     $("li#txtIdNumberid").html('');
                     $("li#enterIdNumber").hide();
                     $("li#enterIdNumber").html('');
                     idNumberFlag = true;
                 }
-                if(flag == false || firstNameFlag == false || lastNameFlag == false || idNumberFlag == false || cellNumberFlag == false || teleNumberFlag == false)
+                if (flag == false || firstNameFlag == false || lastNameFlag == false || idNumberFlag == false || cellNumberFlag == false || teleNumberFlag == false)
                     return false;
-                else
-                {
+                else {
                     $("#tab1").removeClass('active')
                     $("#tab2").addClass("active");
                     return true;
@@ -1618,34 +1662,34 @@
                 if (policyName == "" && PolicyNo == "" && BranchName == "") {
                     if ($("#tab-3 #txtPolicyNo").attr('disabled') || $("#tab-3 #txtPolicyNo").prop('disabled')) {
                         $("li#SelectPolicyId").html('');
-                    $("li#SelectPolicyId").hide();
-                    $("li#SelectBranch").html('');
-                    $("li#SelectBranch").hide();
-                    $("#validationTabMessage").show();
-                    $("#validationTabMessage").append('<li id="SelectPolicyId">Select Policy.</li>');
-                    $("#validationTabMessage").append('<li id="SelectBranch">Select a Branch.</li>');
-                    flag =false;
+                        $("li#SelectPolicyId").hide();
+                        $("li#SelectBranch").html('');
+                        $("li#SelectBranch").hide();
+                        $("#validationTabMessage").show();
+                        $("#validationTabMessage").append('<li id="SelectPolicyId">Select Policy.</li>');
+                        $("#validationTabMessage").append('<li id="SelectBranch">Select a Branch.</li>');
+                        flag = false;
                     }
                     else {
                         $("li#SelectPolicyId").html('');
-                    $("li#SelectPolicyId").hide();
-                    $("li#EnterPolicyNo").html('');
-                    $("li#EnterPolicyNo").hide();
-                    $("li#SelectBranch").html('');
-                    $("li#SelectBranch").hide();
-                    $("#validationTabMessage").show();
-                    $("#validationTabMessage").append('<li id="SelectPolicyId">Select Policy.</li>');
-                    $("#validationTabMessage").append('<li id="EnterPolicyNo">Please enter policy no.</li>');
-                    $("#validationTabMessage").append('<li id="SelectBranch">Select a Branch.</li>');
-                    flag =false;
+                        $("li#SelectPolicyId").hide();
+                        $("li#EnterPolicyNo").html('');
+                        $("li#EnterPolicyNo").hide();
+                        $("li#SelectBranch").html('');
+                        $("li#SelectBranch").hide();
+                        $("#validationTabMessage").show();
+                        $("#validationTabMessage").append('<li id="SelectPolicyId">Select Policy.</li>');
+                        $("#validationTabMessage").append('<li id="EnterPolicyNo">Please enter policy no.</li>');
+                        $("#validationTabMessage").append('<li id="SelectBranch">Select a Branch.</li>');
+                        flag = false;
                     }
 
-                }else{
-                    if(policyName != ""){
+                } else {
+                    if (policyName != "") {
                         $("li#SelectPolicyId").html('');
                         $("li#SelectPolicyId").hide();
                         policyNameFlag = true;
-                    }else{
+                    } else {
                         $("li#SelectPolicyId").hide();
                         $("li#SelectPolicyId").html('');
                         $("#validationTabMessage").show();
@@ -1658,7 +1702,7 @@
                         PolicyNoFlag = true;
                     } else {
 
-                            $("li#EnterPolicyNo").hide();
+                        $("li#EnterPolicyNo").hide();
                         $("li#EnterPolicyNo").html('');
                         $("#validationTabMessage").show();
                         $("#validationTabMessage").append('<li id="EnterPolicyNo">Please enter policy no.</li>');
@@ -1680,9 +1724,9 @@
 
 
                     }
-                    if(flag == false || policyNameFlag == false || PolicyNoFlag == false || BranchNameFlag == false)
+                    if (flag == false || policyNameFlag == false || PolicyNoFlag == false || BranchNameFlag == false)
                         return false;
-                    else{
+                    else {
                         $("#tab3").removeClass('active')
                         $("#tab9").addClass("active");
                         return true;
@@ -1694,35 +1738,35 @@
 
             $('#btnNextStepPersonalDetails').prop('disabled', true);
             var id = @memberId;
-            if(id == 0)
-            {
+            if (id == 0) {
                 $("#tab5").hide();
                 $("#tab6").hide();
                 $("#tab7").hide();
                 $("#tab8").hide();
                 $("#tab10").hide();
+                $("#tab11").hide();
                 $("#btnUpdateProduct").hide();
             }
-            else
-            {
+            else {
                 $("#tab5").show();
                 $("#tab6").show();
                 $("#tab7").show();
                 $("#tab8").show();
                 $("#tab10").show();
+                $("#tab11").show();
                 $('#btnCopy').prop("disabled", false);
                 $('#PolicyDoc').prop("disabled", false);
                 $('#tab1NextButton').removeClass('disabled');
                 $("#btnUpdateProduct").show();
             }
 
-            $('input[type="checkbox"]').click(function(){
-                if($(this).is(":checked")){
+            $('input[type="checkbox"]').click(function () {
+                if ($(this).is(":checked")) {
 
                     $('#txtPassport').prop('disabled', false);
                     $('#txtIdNumber').prop('disabled', true);
                 }
-                else if($(this).is(":not(:checked)")){
+                else if ($(this).is(":not(:checked)")) {
                     $('#txtIdNumber').prop('disabled', false);
                     $('#txtPassport').prop('disabled', true);
                 }
@@ -1753,6 +1797,26 @@
                                 $('#tab-3 #txtCoverDate').val(result[2]);
                                 $('#tab-3 #txtTotalPremium').val(result[0]);
 
+                                //window.location.hash = 'tab-3';
+                                //location.reload();
+
+                                //if (window.performance.navigation.type != 1) {
+                                //    location.reload();
+                                //    activeTab = "tab-3";
+                                //}
+
+                                // Set current tab
+                                localStorage.setItem("Tab-3", 1); // 1 for tab index
+
+                                // Retrieve active tab after reload
+                                var activeTab = localStorage.getItem("activeTab"); // activeTab will be "1"
+
+
+                                //var urlParser = document.createElement('tab3');
+                                //urlParser.href = redirectToURL;
+                                //if (urlParser.origin + urlParser.pathname === location.origin + location.pathname) {
+                                //    window.location.reload();
+                                //}
                             },
                             error: function (xhr, ajaxOptions, thrownError) {
                                 alert(thrownError);
@@ -1763,7 +1827,7 @@
                     }
                 }
                 else {
-                     alert("Age not found in first tab");
+                    alert("Age not found in first tab");
                 }
             });
             $("#ddlDependentDependencyType").change(function () {
@@ -1802,7 +1866,7 @@
                     }
                 }
                 else {
-                     alert("Please select dependent Age");
+                    alert("Please select dependent Age");
                 }
             });
 
@@ -1831,7 +1895,7 @@
                 var policyId = $("#tab-3 #ddlPolicy").val();
                 OnStartChangeFillPolicy(policyId, policyStartDate);
                 //display("Change event");
-                });
+            });
 
             $("#PolicyUpdatePopupModel .modal-body #txtPolicyStartDate").datepicker({
                 onSelect: function (dateText) {
@@ -1882,7 +1946,7 @@
             // #endregion Jeenal Changes End
 
             // #region ddlBankChange
-            $("#ddlBank").change(function(){
+            $("#ddlBank").change(function () {
                 var bankVal = $("#ddlBank").val();
                 $("#txtBranchCode").val('');
                 $("#txtBranchCode").val(bankVal);
@@ -1891,7 +1955,7 @@
 
             // #region ControlValidation
 
-            var isInceptionEnabled = '@((bool)ViewBag.IsInceptionEnabled)' == 'True'?true:false;
+            var isInceptionEnabled = '@((bool)ViewBag.IsInceptionEnabled)' == 'True' ? true : false;
             if (isInceptionEnabled) {
                 $("#tab-3 #txtInception").prop('disabled', false);
             }
@@ -1900,7 +1964,7 @@
             }
 
 
-            var isPolicyDocEnabled = '@((bool)ViewBag.IsPolicyDocEnabled)' == 'True'?true:false;
+            var isPolicyDocEnabled = '@((bool)ViewBag.IsPolicyDocEnabled)' == 'True' ? true : false;
             if (isPolicyDocEnabled) {
                 $("#PolicyDoc").prop('disabled', false);
             }
@@ -1908,7 +1972,7 @@
                 $("#PolicyDoc").prop('disabled', true);
             }
 
-            var hasCreateRight = '@((bool)ViewBag.HasCreateRight)' == 'True'?true:false;
+            var hasCreateRight = '@((bool)ViewBag.HasCreateRight)' == 'True' ? true : false;
             if (hasCreateRight) {
                 $("#txtSaveBtn").prop('disabled', false);
             }
@@ -1933,42 +1997,43 @@
 
             // #region datepickerFormat
 
-            $('.date1').datepicker({format: 'dd MM yyyy', autoclose: true,setDate: new Date()});
+            $('.date1').datepicker({ format: 'dd MM yyyy', autoclose: true, setDate: new Date() });
 
-            $('.policyPopupDate').datepicker({format: 'dd MM yyyy', autoclose: true,setDate: new Date()});
+            $('.policyPopupDate').datepicker({ format: 'dd MM yyyy', autoclose: true, setDate: new Date() });
 
-            $('.date2').datepicker({format: 'dd MM yyyy', autoclose: true,setDate: new Date()});
+            $('.date2').datepicker({ format: 'dd MM yyyy', autoclose: true, setDate: new Date() });
 
             $('.birthDate').datepicker({ format: 'dd MM yyyy', autoclose: true, setDate: new Date() });
 
             $('.beneficiary_DOB').datepicker({ format: 'dd MM yyyy', autoclose: true, setDate: new Date() });
 
-            $('.date4').datepicker({format: 'dd MM yyyy', autoclose: true,setDate: new Date()});
+            $('.date4').datepicker({ format: 'dd MM yyyy', autoclose: true, setDate: new Date() });
 
 
-            $('.dependantStartDate').datepicker({format: 'dd MM yyyy',autoclose: true,setDate: new Date()});
+            $('.dependantStartDate').datepicker({ format: 'dd MM yyyy', autoclose: true, setDate: new Date() });
             $('.dependantStartDate').datepicker('setDate', new Date())
 
-            $('.dependantDOB').datepicker({format: 'dd MM yyyy', autoclose: true});
+            $('.dependantDOB').datepicker({ format: 'dd MM yyyy', autoclose: true });
             $('.dependantDOB').datepicker('setDate', new Date());
 
-            $('.dependantInceptionDate').datepicker({format: 'dd MM yyyy', autoclose: true});
+            $('.dependantInceptionDate').datepicker({ format: 'dd MM yyyy', autoclose: true });
             $('.dependantInceptionDate').datepicker('setDate', new Date())
 
-            $('.dependantCoverDate').datepicker({format: 'dd MM yyyy', autoclose: true});
-            $('.dependantCoverDate').datepicker('setDate', new Date())});
+            $('.dependantCoverDate').datepicker({ format: 'dd MM yyyy', autoclose: true });
+            $('.dependantCoverDate').datepicker('setDate', new Date())
+        });
 
         // #endregion
 
 
         $("#txtDependentDateOfBirth").blur(function () {
             var mdate = dateFormat($('#txtDependentDateOfBirth').val(), 'mm-dd-yyyy', false)
-            var yearThen = parseInt(mdate.substring(6,10), 10);
-            var monthThen = parseInt(mdate.substring(0,2), 10);
-            var dayThen = parseInt(mdate.substring(3,5), 10);
+            var yearThen = parseInt(mdate.substring(6, 10), 10);
+            var monthThen = parseInt(mdate.substring(0, 2), 10);
+            var dayThen = parseInt(mdate.substring(3, 5), 10);
 
             var today = new Date();
-            var birthday = new Date(yearThen, monthThen-1, dayThen);
+            var birthday = new Date(yearThen, monthThen - 1, dayThen);
 
             var differenceInMilisecond = today.valueOf() - birthday.valueOf();
 
@@ -2003,11 +2068,11 @@
 
         // #region SaveUpdate Manage Member
 
-        $("#txtSaveBtn").click(function(){
+        $("#txtSaveBtn").click(function () {
             var SaveManageMembersURl = $("#SaveManageMembers").val();
-            var idNumber=0;
-            var CustomId1= 0;
-            var CustomId2=0;
+            var idNumber = 0;
+            var CustomId1 = 0;
+            var CustomId2 = 0;
             var CustomId3 = 0;
             var Agent = 0;
             var productName = null;
@@ -2015,34 +2080,34 @@
             var fkiMemberid = 0;
             var PlanName = null;
             var fkiProductID = "00000000-0000-0000-0000-000000000000";
-            if($("#tab-3 #ddlCustom1").val()!=null){
-                CustomId1=$("#tab-3 #ddlCustom1").val();
+            if ($("#tab-3 #ddlCustom1").val() != null) {
+                CustomId1 = $("#tab-3 #ddlCustom1").val();
             }
-            if($("#tab-3 #ddlCustom2").val()!=null){
-                CustomId2=$("#tab-3 #ddlCustom2").val();
+            if ($("#tab-3 #ddlCustom2").val() != null) {
+                CustomId2 = $("#tab-3 #ddlCustom2").val();
             }
-            if($("#tab-3 #ddlCustom3").val()!=null){
-                CustomId3=$("#tab-3 #ddlCustom3").val();
+            if ($("#tab-3 #ddlCustom3").val() != null) {
+                CustomId3 = $("#tab-3 #ddlCustom3").val();
             }
 
-            if($("#tab-1 #txtIdNumber").val()!=""){
-                idNumber=$("#tab-1 #txtIdNumber").val();
+            if ($("#tab-1 #txtIdNumber").val() != "") {
+                idNumber = $("#tab-1 #txtIdNumber").val();
             }
 
             if ($("#tab-1 #ddlAgent").val() != null) {
                 Agent = $("#tab-1 #ddlAgent").val();
             }
 
-            if($("#drpProductName option:selected").text() != ""){
-                productName=$("#drpProductName option:selected").text()
+            if ($("#drpProductName option:selected").text() != "") {
+                productName = $("#drpProductName option:selected").text()
             }
-			if ($("#hdnPremium").val() != "") {
-                productCost=$("#hdnPremium").val()
+            if ($("#hdnPremium").val() != "") {
+                productCost = $("#hdnPremium").val()
             }
-            if($("#hdnPremium").val()!= ""){
-                fkiMemberid=$("#hdnPremium").val()
+            if ($("#hdnPremium").val() != "") {
+                fkiMemberid = $("#hdnPremium").val()
             }
-            if($("#drpProductName option:selected").val() != ""){
+            if ($("#drpProductName option:selected").val() != "") {
                 fkiProductID = $("#drpProductName option:selected").val();
             }
             //if ($("#ddlPolicyPopupPolicy option:selected").val() != "") {
@@ -2050,21 +2115,21 @@
             //}
 
 
-            fkiMemberid=$("#pkiMemberID").val();
+            fkiMemberid = $("#pkiMemberID").val();
             var data = {
-                pkiMemberID :$("#pkiMemberID").val(),
-                MemberType:"Main",
+                pkiMemberID: $("#pkiMemberID").val(),
+                MemberType: "Main",
                 Title: "",
-                FullNames:$("#tab-1 #txtFirstname").val(),
+                FullNames: $("#tab-1 #txtFirstname").val(),
                 Surname: $("#tab-1 #txtLastName").val(),
                 Gender: $("#tab-1 input[name='Gender']:checked").val(),
                 IDNumber: idNumber,
                 DateOfBirth: dateFormat($("#tab-1 #txtBirthDay").val(), 'dd-mm-yyyy', false),
-                Telephone:$("#txtTelePhone").val(),
-                Cellphone:$("#txtCellphone").val(),
-                Email:$("#txtEmail").val(),
-                Citizenship:$("#ddlCitizenship :selected").text(),
-                Passport:$("#txtPassport").val(),
+                Telephone: $("#txtTelePhone").val(),
+                Cellphone: $("#txtCellphone").val(),
+                Email: $("#txtEmail").val(),
+                Citizenship: $("#ddlCitizenship :selected").text(),
+                Passport: $("#txtPassport").val(),
                 Address1: $("#txtStreetPostalAddress").val(),
                 Address1_Post: $("#txtStreetPostalAddress_Post").val(),
                 parlourid: $("#ddlSelectCompany").val(),
@@ -2080,10 +2145,11 @@
                 PlanName: $("#tab-3 #ddlPolicy").val(),
                 MemeberNumber: $("#tab-3 #txtPolicyNo").val(),
                 EasyPayNo: $("#tab-3 #txtEasyToPay").val(),
+                RefNumber: $("#tab-3 #txtReferenceNumber").val(),
                 //Branch: $("#tab-4 #txtBankBranch").val(),
                 MemberBranch: $("#tab-3 #ddlMemberBranch :selected").text(),
                 CustomId1: CustomId1,
-                CustomId2:CustomId2 ,
+                CustomId2: CustomId2,
                 CustomId3: CustomId3,
                 MemberSociety: $("#tab-1 #ddlMemberSociety").val(),
                 StartDate: dateFormat($("#tab-3 #txtPolicyStartDate").val(), 'dd-mm-yyyy', false),
@@ -2092,15 +2158,15 @@
                 Agent: $("#tab-3 #ddlAgent :selected").text(),
                 //Agent: $("#tab-1 #ddlAgent").val(),
                 //Claimnumber:$("#txtTelePhone").val(),
-                PolicyStatus:$("#ddlPolicyStatus :selected").val(),
+                PolicyStatus: $("#ddlPolicyStatus :selected").val(),
                 //PolicyStatus:$("#txtTelePhone").val(),
                 //parlourid:$("#txtTelePhone").val(),
-                AccountHolder:$("#txtAccountholder").val(),
-                Bank:$("#ddlBank :selected").text(),
+                AccountHolder: $("#txtAccountholder").val(),
+                Bank: $("#ddlBank :selected").text(),
                 BranchCode: $("#txtBranchCode").val(),
                 PolicyNumber: $("#tab-3 #txtPolicyNo").val(),
-                AccountNumber:$("#txtAccountNumber").val(),
-                AccountType:$("#ddlAccountType :selected").text(),
+                AccountNumber: $("#txtAccountNumber").val(),
+                AccountType: $("#ddlAccountType :selected").text(),
                 DebitDate: dateFormat($("#txtDebitDate").val(), 'dd-mm-yyyy', false),
                 FK_MemberId: fkiMemberid,
                 PolicyPremium: $("#tab-3 #txtPolicyPremium").val(),
@@ -2115,17 +2181,17 @@
             $.ajax({
                 url: SaveManageMembersURl,
                 data: {
-                    Member : data,
-                    fkiMemberid:fkiMemberid,
-                    ProductName:productName,
-                    ProductCost:productCost,
+                    Member: data,
+                    fkiMemberid: fkiMemberid,
+                    ProductName: productName,
+                    ProductCost: productCost,
                     fkiProductID: fkiProductID,
                     //PlanName: PlanName
                 },
                 type: "post",
                 cache: false,
-				success: function (result) {
-					console.log(result);
+                success: function (result) {
+                    console.log(result);
                     if (result.success == false) {
 
                         $("#validationTab4Message").show();
@@ -2165,62 +2231,61 @@
         });
 
         $("#chkIdORPass").change(function () {
-            if ($("#tab-1 #chkIdORPass").prop('checked')== true)
-            {
+            if ($("#tab-1 #chkIdORPass").prop('checked') == true) {
                 $("#tab-1 #txtPassport").prop("readonly", false);
                 $("#tab-1 #txtIdNumber").prop("readonly", true);
                 $("#tab-1 #txtIdNumber").val('');
             }
-            else
-            {
+            else {
                 $("#tab-1 #txtPassport").prop("readonly", true);
                 $("#tab-1 #txtIdNumber").prop("readonly", false);
                 $("#tab-1 #txtPassport").val('');
             }
         })
 
-        $("#btnResetTab1").click(function(){
+        $("#btnResetTab1").click(function () {
             $("#tab-1 #txtLastName").val('');
             $("#tab-1 #txtFirstname").val('');
             $("#tab-1 #txtIdNumber").val('');
             $("#tab-1 #txtBirthDay").val('');
-			$("#tab-1 #txtAge").val('');
-			$("#tab-1 #ddlCitizenship").val('');
+            $("#tab-1 #txtAge").val('');
+            $("#tab-1 #ddlCitizenship").val('');
             $("#txtCellphone").val('');
             $("#txtTelePhone").val('');
             $("#txtEmail").val('');
         })
-	   $("#btnResetTab3").click(function(){
+        $("#btnResetTab3").click(function () {
             $("#tab-3 #ddlPolicy").val('');
-           $("#tab-3 #txtPolicyPremium").val('');
-           $("#tab-3 #txtPolicyCoverAmount").val('');
+            $("#tab-3 #txtPolicyPremium").val('');
+            $("#tab-3 #txtPolicyCoverAmount").val('');
             $("#tab-3 #txtPolicyNo").val('');
             $("#tab-3 #txtEasyToPay").val('');
+            $("#tab-3 #txtReferenceNumber").val('');
             $("#tab-3 #ddlMemberBranch").val('');
             $("#tab-3 #ddlCustom1").val('');
             $("#tab-3 #ddlCustom2").val('');
             $("#tab-3 #ddlCustom3").val('');
-			$("#tab-3 #txtCoverDate").val('');
-			$("#tab-1 #ddlMemberSociety").val('');
-		    $("#tab-3 #txtPolicyStartDate").val('');
-		    $("#tab-3 #ddlAgent").val('');
-			$("#tab-3 #txtInception").val('');
-			$("#tab-3 #txtUnderwriter").val('');
-			$("#tab-3 #txtTotalPremium").val('');
-			$("#tab-3 #ddlPolicyStatus").val('');
+            $("#tab-3 #txtCoverDate").val('');
+            $("#tab-1 #ddlMemberSociety").val('');
+            $("#tab-3 #txtPolicyStartDate").val('');
+            $("#tab-3 #ddlAgent").val('');
+            $("#tab-3 #txtInception").val('');
+            $("#tab-3 #txtUnderwriter").val('');
+            $("#tab-3 #txtTotalPremium").val('');
+            $("#tab-3 #ddlPolicyStatus").val('');
         })
         $("#btnResetTab9").click(function () {
             $("#tab-9 #ddlDependentDependencyType_Product").val('');
             $("#tab-9 #drpProductName").val('');
             $("#tab-9 #txtPremium").val('0.00');
         })
-	$("#btnResetTab4").click(function(){
+        $("#btnResetTab4").click(function () {
             $("#tab-4 #txtAccountholder").val('');
             $("#tab-4 #ddlBank").val('');
-			$("#tab-4 #txtBankBranch").val('');
+            $("#tab-4 #txtBankBranch").val('');
             $("#tab-4 #txtBranchCode").val('');
             $("#tab-4 #txtAccountNumber").val('');
-			$("#tab-4 #ddlAccountType").val('');
+            $("#tab-4 #ddlAccountType").val('');
             $("#tab-4 #txtDebitDate").val('');
         })
 
@@ -2253,8 +2318,7 @@
         // #endregion
 
         // #region BindPolicies
-        function BindPolicies()
-        {
+        function BindPolicies() {
             var sortOrder = @Html.Raw(Json.Encode(@Model.PolicySearch.SortOrder));
             var sortBy =@Html.Raw(Json.Encode(@Model.PolicySearch.SortBy));
             var totalRecord =@Html.Raw(Json.Encode(@Model.PolicySearch.TotalRecord));
@@ -2279,14 +2343,14 @@
                 if (idNumber == '')
                     idNumber = 0;
 
-                bindMemberUrl = bindMemberUrl.replace("IdNumberVal", idNumber).replace("passportNumber", passportNumber).replace('&amp;','&');
+                bindMemberUrl = bindMemberUrl.replace("IdNumberVal", idNumber).replace("passportNumber", passportNumber).replace('&amp;', '&');
 
                 memberPolicyDatatable = $($('#memberPolicyDataTable')[0])
-                .on('page.dt', function () {
-                    var table = $('#memberPolicyDataTable').DataTable();
-                    var page = table.page.info();
-                    model1.PageNum = page.page + 1;
-                })
+                    .on('page.dt', function () {
+                        var table = $('#memberPolicyDataTable').DataTable();
+                        var page = table.page.info();
+                        model1.PageNum = page.page + 1;
+                    })
                     .dataTable({
                         'bProcessing': true,
                         'bServerSide': true,
@@ -2367,8 +2431,8 @@
                                     return dom;
                                 }
                             }
-                    ]
-                });
+                        ]
+                    });
             });
         }
         // #endregion
@@ -2435,7 +2499,7 @@
                         },
                         "columns": [
                             { "data": "InvoiceID", "name": "InvoiceID", "autoWidth": true, "visible": false },
-                            { "data": "AmountPaid", "name": "Amount", "autoWidth": true},
+                            { "data": "AmountPaid", "name": "Amount", "autoWidth": true },
                             {
                                 "data": "DatePaid", "name": "Date Paid", "autoWidth": true
                             },
@@ -2450,8 +2514,7 @@
         //#endregion
 
         //#region BindNotes
-        function BindNotes()
-        {
+        function BindNotes() {
             var sortOrder = @Html.Raw(Json.Encode(@Model.NoteSearch.SortOrder));
             var sortBy =@Html.Raw(Json.Encode(@Model.NoteSearch.SortBy));
             var totalRecord =@Html.Raw(Json.Encode(@Model.NoteSearch.TotalRecord));
@@ -2633,8 +2696,7 @@
         //#endregion
 
         //#region BindAddOnProduct
-        function BindAddOnProducts()
-        {
+        function BindAddOnProducts() {
             var sortOrder = @Html.Raw(Json.Encode(@Model.ProductSearch.SortOrder));
             var sortBy =@Html.Raw(Json.Encode(@Model.ProductSearch.SortBy));
             var totalRecord =@Html.Raw(Json.Encode(@Model.ProductSearch.TotalRecord));
@@ -2656,83 +2718,84 @@
                 $("#btnUpdateProduct").prop('disabled', true);
                 jQuery.noConflict();
                 productDatatable = $($('#productDataTable')[0]).on('page.dt', function () {
-                        var table = $('#productDataTable').DataTable();
-                        var page = table.page.info();
-                        model1.PageNum = page.page + 1;
-                    }).dataTable({
-                        'bProcessing': true,
-                        'bServerSide': true,
-                        "bLengthChange": false,
-                        'bFilter': false,
-                        'ordering': false,
-                        'ajax': {
-                            "url": '@Url.Action("SearchProductData", "Members", null, Request.Url.Scheme)',
-                            "type": "POST",
-                            "contentType": "application/json",
-                            "data": function (d) {
-                                d['order'].forEach(function (item, index) {
-                                    if (model1.SortBy != d['columns'][item.column]['data']) {
-                                        model1.PageNum = 1;
-                                        model1.SortOrder = "asc";
-                                    }
-                                    if (model1.SortBy == d['columns'][item.column]['data'] && model1.SortOrder != d['order'][index]['dir']) {
-                                        model1.PageNum = 1;
-                                        model1.SortOrder = d['order'][index]['dir'];
-                                    }
-                                    model1.SortBy = d['columns'][item.column]['data'];
+                    var table = $('#productDataTable').DataTable();
+                    var page = table.page.info();
+                    model1.PageNum = page.page + 1;
+                }).dataTable({
+                    'bProcessing': true,
+                    'bServerSide': true,
+                    "bLengthChange": false,
+                    'bFilter': false,
+                    'ordering': false,
+                    'ajax': {
+                        "url": '@Url.Action("SearchProductData", "Members", null, Request.Url.Scheme)',
+                        "type": "POST",
+                        "contentType": "application/json",
+                        "data": function (d) {
+                            d['order'].forEach(function (item, index) {
+                                if (model1.SortBy != d['columns'][item.column]['data']) {
+                                    model1.PageNum = 1;
+                                    model1.SortOrder = "asc";
+                                }
+                                if (model1.SortBy == d['columns'][item.column]['data'] && model1.SortOrder != d['order'][index]['dir']) {
+                                    model1.PageNum = 1;
                                     model1.SortOrder = d['order'][index]['dir'];
-                                });
-                                return JSON.stringify(model1);
-                            },
-                            dataFilter: function (data) {
-                                var json = jQuery.parseJSON(data);
-                                json.recordsTotal = json.TotalCount;
-                                json.recordsFiltered = json.TotalCount;
-                                currencySymbol = json.SearchParameters.Currency
-                                json.data = json.Result;
-                                return JSON.stringify(json);
+                                }
+                                model1.SortBy = d['columns'][item.column]['data'];
+                                model1.SortOrder = d['order'][index]['dir'];
+                            });
+                            return JSON.stringify(model1);
+                        },
+                        dataFilter: function (data) {
+                            var json = jQuery.parseJSON(data);
+                            json.recordsTotal = json.TotalCount;
+                            json.recordsFiltered = json.TotalCount;
+                            currencySymbol = json.SearchParameters.Currency
+                            json.data = json.Result;
+                            return JSON.stringify(json);
+                        }
+                    },
+                    "columns": [
+                        { "data": "pkiMemberProductID", "name": "pkiMemberProductID", "autoWidth": true, "visible": false },
+                        { "data": "fkiProductID", "name": "Product ID", "autoWidth": true, "visible": false },
+                        { "data": "ProductName", "name": "ProductName", "autoWidth": true },
+                        { "data": "DependencyName", "name": "DependencyName", "autoWidth": true },
+                        {
+                            "data": "DateCreated", "name": "DateCreated", "autoWidth": true,
+                            "render": function (data) {
+                                return dateFormat(new Date(ConvertDate(data)), "dd-mmm-yyyy", false)
                             }
                         },
-                        "columns": [
-                            { "data": "pkiMemberProductID", "name": "pkiMemberProductID", "autoWidth": true, "visible": false },
-                            { "data": "fkiProductID", "name": "Product ID", "autoWidth": true, "visible": false },
-                            {"data": "ProductName", "name": "ProductName", "autoWidth": true},
-                            {"data": "DependencyName", "name": "DependencyName", "autoWidth": true},
-                            {
-                                "data": "DateCreated", "name": "DateCreated", "autoWidth": true,
-                                "render": function (data) {
-                                    return dateFormat(new Date(ConvertDate(data)), "dd-mmm-yyyy", false)
-                                }
-                            },
-                            { "data": "ProductCost", "name": "ProductCost", "autoWidth": true,
-                                "render": function (data) {
-                                    var productCost =  data + ".00";
-                                    return productCost;
-                                }
-                            },
-                            {
-                                "render": function (data, type, full, meta) {
-                                    var hasEditRights = '@ViewBag.HasEditRight' == "True" ? true : false;
-                                    var hasDeleteRights = '@ViewBag.HasDeleteRight' == "True" ? true : false;
-                                    var dom = "<div class='row'>";
-                                    var data1 = JSON.stringify(full);
-                                    data1 = data1.replace(/"/g, "\'")
-                                    if (hasEditRights) {
-                                        var editProductUrl = '<div class="col-sm-4 text-center"><a  onclick="EditProduct(' + data1 + ')"><i class="fa fa-edit"></i></a></div>';
-                                        dom = dom + editProductUrl;
-                                    }
-                                    if (hasDeleteRights) {
-                                        var deleteProductUrl = '<div class="col-sm-4 text-center"> <a onclick="DeleteProduct(' + data1 + ')"; ><i class="fa fa-trash-o"></i></a></div>';
-                                        dom = dom + deleteProductUrl;
-                                    }
-
-                                    dom = dom + "</div>";
-                                    return dom;
-
-                                }
+                        {
+                            "data": "ProductCost", "name": "ProductCost", "autoWidth": true,
+                            "render": function (data) {
+                                var productCost = data + ".00";
+                                return productCost;
                             }
-                        ]
-                    });
+                        },
+                        {
+                            "render": function (data, type, full, meta) {
+                                var hasEditRights = '@ViewBag.HasEditRight' == "True" ? true : false;
+                                var hasDeleteRights = '@ViewBag.HasDeleteRight' == "True" ? true : false;
+                                var dom = "<div class='row'>";
+                                var data1 = JSON.stringify(full);
+                                data1 = data1.replace(/"/g, "\'")
+                                if (hasEditRights) {
+                                    var editProductUrl = '<div class="col-sm-4 text-center"><a  onclick="EditProduct(' + data1 + ')"><i class="fa fa-edit"></i></a></div>';
+                                    dom = dom + editProductUrl;
+                                }
+                                if (hasDeleteRights) {
+                                    var deleteProductUrl = '<div class="col-sm-4 text-center"> <a onclick="DeleteProduct(' + data1 + ')"; ><i class="fa fa-trash-o"></i></a></div>';
+                                    dom = dom + deleteProductUrl;
+                                }
+
+                                dom = dom + "</div>";
+                                return dom;
+
+                            }
+                        }
+                    ]
+                });
             });
         }
         //#endregion
@@ -2792,15 +2855,15 @@
                     $("#ValidationSummary5").append('<li id="txtPremiumAmountId">Please enter premium amount.</li>');
                     return false;
                 }
-        }
-           else {
-                    $("li#txtPremiumAmountId").hide();
-                    $("li#txtPremiumAmountId").html('');
-                    $("#ValidationSummary5").show();
-                    $("#ValidationSummary5").append('<li id="txtPremiumAmountId">Please select Product Name.</li>');
-                    return false;
-                }
-            });
+            }
+            else {
+                $("li#txtPremiumAmountId").hide();
+                $("li#txtPremiumAmountId").html('');
+                $("#ValidationSummary5").show();
+                $("#ValidationSummary5").append('<li id="txtPremiumAmountId">Please select Product Name.</li>');
+                return false;
+            }
+        });
         //#endregion
 
         //#region UpdatePolicyPopup
@@ -2811,13 +2874,14 @@
                 PolicyPremium: $("#PolicyUpdatePopupModel .modal-body #txtPolicyPopupPremium").val(),
                 MemeberNumber: $("#PolicyUpdatePopupModel .modal-body #txtPolicyNo").val(),
                 EasyPayNo: $("#PolicyUpdatePopupModel .modal-body #txtEasyToPay").val(),
+                RefNumber: $("#PolicyUpdatePopupModel .modal-body #txtReferenceNumber").val(),
                 MemberBranch: $("#PolicyUpdatePopupModel .modal-body #ddlMemberBranch :selected").val(),
                 CustomId1: $("#PolicyUpdatePopupModel .modal-body #ddlPopupCustom1").val(),
                 CustomId2: $("#PolicyUpdatePopupModel .modal-body #ddlPopupCustom2").val(),
                 CustomId3: $("#PolicyUpdatePopupModel .modal-body #ddlPopupCustom3").val(),
                 MemberSociety: $("#PolicyUpdatePopupModel .modal-body #ddlMemberSociety").val(),
                 StartDate: $("#PolicyUpdatePopupModel .modal-body #txtPolicyStartDate").val(),
-               // StartDate: dateFormat($(".policystartdate1").val(), 'dd-mm-yyyy', false),
+                // StartDate: dateFormat($(".policystartdate1").val(), 'dd-mm-yyyy', false),
                 InceptionDate: dateFormat($("#txtPolicyPopupInception").val(), 'dd-mm-yyyy', false),
                 CoverDate: dateFormat($("#txtPolicyPopupCoverDate").val(), 'dd-mm-yyyy', false),
                 Agent: $("#PolicyUpdatePopupModel .modal-body #ddlAgent :selected").val()
@@ -2898,6 +2962,7 @@
             $("#ddlPolicyStatus").val(member.PolicyStatus)
             $("#tab-3 #txtPolicyNo").val(member.MemeberNumber);
             $("#tab-3 #txtEasyToPay").val(member.EasyPayNo);
+            $("#tab-3 #txtReferenceNumber").val(member.RefNumber);
             $("#tab-3 #ddlMemberBranch option:selected").text(member.MemberBranch);
             $("#tab-3 #ddlPolicyBankBranch option:selected").text(member.Branch);
             $("#tab-3 #ddlCustom1").val(member.CustomId1);
@@ -2912,11 +2977,11 @@
             });
             $.noConflict();
             jQuery(document).ready(function () {
-                $('#tab-1 #txtBirthDay').datepicker({ format: 'dd MM yyyy',autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(member.DateOfBirth)), "dd/mm/yyyy", false));
-                $('#tab-3 #txtPolicyStartDate').datepicker({ format: 'dd MM yyyy',autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(member.StartDate)), "dd/mm/yyyy", false));
-                $('#tab-3 #txtInception').datepicker({ format: 'dd MM yyyy',autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(member.InceptionDate)), "dd/mm/yyyy", false));
-                $('#tab-3 #txtCoverDate').datepicker({ format: 'dd MM yyyy' ,autoclose: true}).datepicker("setDate", dateFormat(new Date(ConvertDate(member.CoverDate)), "dd/mm/yyyy", false));
-                $('#txtDebitDate').datepicker({ format: 'dd MM yyyy',autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(member.DebitDate)), "dd/mm/yyyy", false));
+                $('#tab-1 #txtBirthDay').datepicker({ format: 'dd MM yyyy', autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(member.DateOfBirth)), "dd/mm/yyyy", false));
+                $('#tab-3 #txtPolicyStartDate').datepicker({ format: 'dd MM yyyy', autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(member.StartDate)), "dd/mm/yyyy", false));
+                $('#tab-3 #txtInception').datepicker({ format: 'dd MM yyyy', autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(member.InceptionDate)), "dd/mm/yyyy", false));
+                $('#tab-3 #txtCoverDate').datepicker({ format: 'dd MM yyyy', autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(member.CoverDate)), "dd/mm/yyyy", false));
+                $('#txtDebitDate').datepicker({ format: 'dd MM yyyy', autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(member.DebitDate)), "dd/mm/yyyy", false));
             });
 
             $("#tab-3 #ddlAgent option:selected").text(member.Agent)
@@ -2960,7 +3025,7 @@
             };
 
 
-			$(document).ready(function () {
+            $(document).ready(function () {
                 jQuery.noConflict();
                 documentDatatable = $($('#documentsDataTable')[0])
                     .on('page.dt', function () {
@@ -3003,7 +3068,7 @@
                         },
                         "columns": [
                             { "data": "pkiPictureID", "name": "pkiPictureID", "autoWidth": true, "visible": false },
-                            { "data": "ImageName", "name": "Document", "autoWidth": true},
+                            { "data": "ImageName", "name": "Document", "autoWidth": true },
                             {
                                 "data": "DocType", "name": "Document Type", "autoWidth": true,
                                 "render": function (data, type, full, meta) {
@@ -3012,12 +3077,12 @@
 
                                     var documentTypeId = full.DocType;
                                     var documentType = $("input[name='supportedDocuments']").filter(function () {
-                                        return parseInt(this.value)== documentTypeId;
+                                        return parseInt(this.value) == documentTypeId;
                                     });
 
                                     var text = documentType.parent().text();
 
-                                    dom = dom + $.trim(text)+ "</div>";
+                                    dom = dom + $.trim(text) + "</div>";
                                     return dom;
                                 }
                             },
@@ -3039,10 +3104,10 @@
                                     var data1 = JSON.stringify(full);
                                     data1 = data1.replace(/"/g, "\'");
 
-                                    var downloadActionUrl ='@Html.ActionLink(" ", "DownloadFile", new { pkiPictureID = "pkiPictureIDValue" },new { @class = "glyphicon glyphicon-download" })';
+                                    var downloadActionUrl = '@Html.ActionLink(" ", "DownloadFile", new { pkiPictureID = "pkiPictureIDValue" },new { @class = "glyphicon glyphicon-download" })';
                                     downloadActionUrl = downloadActionUrl.replace("pkiPictureIDValue", full.pkiPictureID);
 
-                                    var downloadDocumentUrl = '<div class="col-sm-4 text-center">' + downloadActionUrl+'</div>';
+                                    var downloadDocumentUrl = '<div class="col-sm-4 text-center">' + downloadActionUrl + '</div>';
                                     dom = dom + downloadDocumentUrl;
 
                                     var viewDocumentURl = '@string.Format("{0}://{1}{2}/{3}", Request.Url.Scheme, Request.Url.Authority, Url.Content("~").Remove(Url.Content("~").Length - 1), "/Handler/DocumentHandler.ashx?DocID=DocIdValue" )'
@@ -3065,7 +3130,115 @@
                     });
             });
         }
-        //#endregion
+
+             @*var datatable = $('#auditTrailDataTable')
+                    .on('page.dt', function () {
+                        var table = $('#auditTrailDataTable').DataTable();
+                        var page = table.page.info();
+                        model1.PageNum = page.page + 1;
+                    })
+                    .dataTable({
+                        'bProcessing': true,
+                        'bServerSide': true,
+                        "bLengthChange": false,
+                        'bFilter': false,
+                        'scrollX': false,
+                        "ordering": true,
+                        "bSortable": false,
+                        'ajax': {
+                            "url": '@Url.Action("BindAudit", "Members", null, Request.Url.Scheme)',
+                            "type": "POST",
+                            "contentType": "application/json",
+                            "data": function (d) {
+                                d['order'].forEach(function (item, index) {
+                                    if (model1.SortBy != d['columns'][item.column]['data']) {
+                                        model1.PageNum = 1;
+                                        model1.SortOrder = "asc";
+                                    }
+                                    if (model1.SortBy == d['columns'][item.column]['data'] && model1.SortOrder != d['order'][index]['dir']) {
+                                        model1.PageNum = 1;
+                                        model1.SortOrder = d['order'][index]['dir'];
+                                    }
+                                    model1.SortBy = d['columns'][item.column]['data'];
+                                    model1.SortOrder = d['order'][index]['dir'];
+                                });
+                                return JSON.stringify(model1);
+                            },
+                            "dataSrc": function (json) {
+
+                                json.recordsTotal = json.TotalCount;
+                                json.recordsFiltered = json.TotalCount;
+                                json.data = json.Result;
+                                var return_data = json;
+                                return return_data.data;
+                            }
+                        },
+                        "columns": [
+                            //{ "data": "pkiMemberID", "name": "MemberId", "autoWidth": true, "visible": false },
+                            { "data": "UserName", "name": "UserName", "autoWidth": true },
+                            { "data": "Action", "name": "Action", "autoWidth": true },
+                            { "data": "ActionDescription", "name": "Action Description", "autoWidth": true },
+                            { "data": "MemeberNumber", "name": "Policy No", "autoWidth": true },
+                            { "data": "FullNames", "title": "Full Name", "name": "Member", "autoWidth": true },
+                            //{ "data": "EasyPayNo", "name": "EasyPayNo", "autoWidth": true },
+                            //{ "data": "Cellphone", "name": "Cellphone", "autoWidth": true },
+                            {
+                                "data": "InceptionDate", "name": "InceptionDate", "autoWidth": true,
+                                "render": function (data) {
+                                    var date = new Date(parseInt(data.replace('/Date(', '')));
+                                    return dateFormat(date, dateFormat.masks.isoDate, true);
+                                }
+                            },
+                            {
+                                "data": "PolicyStatus", "name": "Policy Status", "autoWidth": true,
+                                "render": function (data, type, full, meta) {
+                                    jQuery('.btn[href^=#]').click(function () {
+                                        var href = jQuery(this).attr('href');
+                                        jQuery(href).modal('toggle');
+                                    })
+                                    var data1 = JSON.stringify(full);
+                                    data1 = data1.replace(/"/g, "\'")
+                                    if ('@ViewBag.AdministratorOrSuperUser' == "True")
+                                        return '<a onclick = "UpdateStatus(' + data1 + ')">' + data + '</a>';
+                                    else
+                                        return data;
+
+                                }
+                            },
+                            {
+                                "render": function (data, type, full, meta) {
+                                    var hasEditRights = '@ViewBag.HasEditRight' == "True" ? true : false;
+                                    var hasDeleteRights = '@ViewBag.HasDeleteRight' == "True" ? true : false;
+                                    //hasDeleteRights = 'True';
+
+                                    if (hasEditRights || hasDeleteRights) {
+
+                                        var dom = "<div class='row'>";
+
+                                        if (hasEditRights) {
+                                            var editMemberUrl = '<div class="col-sm-4 text-center"><a href="@Url.Action("ManageMembers", "Members", null, Request.Url.Scheme)?pkiMemberID=' + full.pkiMemberID + '"><i class="fa fa-edit"></i></a></div>';
+                                            dom = dom + editMemberUrl;
+                                        }
+
+                                        if (hasDeleteRights) {
+                                            var deleteMemberUrl = '<div class="col-sm-4 text-center"> <a href="@Url.Action("Delete", "Members", null, Request.Url.Scheme)?pkiMemberID=' + full.pkiMemberID + '" onclick="function(){model1.PageNum = 1;return confirm(\'Are you sure you want to delete?\')}"; ><i class="fa fa-trash-o"></i></a></div>';
+                                            dom = dom + deleteMemberUrl;
+                                        }
+
+                                        dom = dom + "</div>";
+                                        return dom;
+                                    }
+                                    else {
+                                        //tableConfigs.table.DataTable().columns([8]).visible(false);
+                                        table.DataTable().columns([7]).visible(false)
+                                        return "";
+                                    }
+                                }
+                            }
+                        ]
+                    });*@
+
+
 
 		$("#drpProductName").change(function () {
 
@@ -3965,6 +4138,7 @@
         $("#PolicyUpdatePopupModel .modal-body #txtPolicyPopupPremium").val(data.PolicyPremium);
         $("#PolicyUpdatePopupModel .modal-body #txtPolicyNo").val(data.MemeberNumber);
         $("#PolicyUpdatePopupModel .modal-body #txtEasyToPay").val(data.EasyPayNo);
+        $("#PolicyUpdatePopupModel .modal-body #txtReferenceNumber").val(data.RefNumber);
         //$("#PolicyUpdatePopupModel .modal-body #txtUnderwriter").val(data.);
 
         jQuery('select#ddlPolicyBankBranch option').each(function () {
@@ -4896,6 +5070,12 @@
 
 
     });
+
+    function gototab(reload) {
+        window.location.hash = '#tab-3';
+        window.location.reload(true);
+    }
+
     //$("#txtStreetPostalAddress").on('keyup', function () {
     //    $("#txtStreetAddress").val($(this).val())
     //});

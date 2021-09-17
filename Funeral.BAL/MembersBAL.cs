@@ -179,6 +179,14 @@ namespace Funeral.BAL
             DataTable dr = MembersDAL.SelectMembarAddonProductBypkiMemberProductIDdt(PkInoteID);
             return FuneralHelper.DataTableMapToList<MemberAddonProductsModel>(dr);
         }
+
+        public static List<AuditTrail> GetAuditList(int PkiMemberId, Guid ParlourId)
+        {
+            DataTable dr = MembersDAL.GetAuditList(PkiMemberId, ParlourId);
+
+            return FuneralHelper.DataTableMapToList<AuditTrail>(dr);
+        }
+
         public static int AddonProductUpdateMember(MemberAddonProductsModel AddonProduct)
         {
             return MembersDAL.AddonProductUpdateMember(AddonProduct);

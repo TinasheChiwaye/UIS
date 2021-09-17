@@ -135,7 +135,7 @@ namespace Funeral.Web.Tools
         protected void ddlTemplate_SelectedIndexChanged(object sender, EventArgs e)
         {
             ID = Convert.ToInt32(ddlTemplate.SelectedItem.Value);
-            smsTempletModel ObjList = ToolsSetingBAL.GetEmailTemplateByID(ID,ParlourId);
+            smsTempletModel ObjList = ToolsSetingBAL.GetEmailTemplateByID(ID, ParlourId);
             ID = 0;
             txtMessage.Text = string.Empty;
             if (ObjList != null)
