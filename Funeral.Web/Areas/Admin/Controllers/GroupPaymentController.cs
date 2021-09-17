@@ -314,21 +314,21 @@ namespace Funeral.Web.Areas.Admin.Controllers
         }
 
         //+++++++++++++++++++++TEST++++++++++++++++++++
-        public JsonResult GroupPaymentReversal(int GroupInvoiceID)
-        {
-            int PaymentID = MemberPaymentBAL.AddReversalPayments(GroupInvoiceID, UserName, ParlourId);
-            string Message = "";
-            if (PaymentID != 0)
-            {
-                bindInvoices(ParlourId, GroupInvoiceID);
-                Message = "Reversal added successfully.";
-            }
-            else
-            {
-                Message = "Reversal not added successfully.";
-            }
-            return Json(Message, JsonRequestBehavior.AllowGet);
-        }
+        //public JsonResult GroupPaymentReversal(int GroupInvoiceID)
+        //{
+        //    int PaymentID = MemberPaymentBAL.AddReversalPayments(GroupInvoiceID, UserName, ParlourId);
+        //    string Message = "";
+        //    if (PaymentID != 0)
+        //    {
+        //        bindInvoices(ParlourId, GroupInvoiceID);
+        //        Message = "Reversal added successfully.";
+        //    }
+        //    else
+        //    {
+        //        Message = "Reversal not added successfully.";
+        //    }
+        //    return Json(Message, JsonRequestBehavior.AllowGet);
+        //}
         public void bindInvoices(Guid ParlourId, int ReferenceNumber)
         {
             //List<MemberInvoiceModel> objMemberInvoiceModel = MembersBAL.GetGroupInvoicesByReference(ParlourId, ReferenceNumber);
