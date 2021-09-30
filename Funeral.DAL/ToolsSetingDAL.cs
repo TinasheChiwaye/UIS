@@ -1101,7 +1101,7 @@ namespace Funeral.DAL
             ObjParam[4] = new DbParameter("@CoverAmount", DbParameter.DbType.Decimal, 0, model.Cover);
             ObjParam[5] = new DbParameter("@PremiumAmount", DbParameter.DbType.Decimal, 0, model.Premium);
             ObjParam[6] = new DbParameter("@UnderwriterCover", DbParameter.DbType.Decimal, 0, model.UnderwriterCover);
-            ObjParam[7] = new DbParameter("@UnderwriterPremium", DbParameter.DbType.Int, 0, model.UnderwriterPremium);
+            ObjParam[7] = new DbParameter("@UnderwriterPremium", DbParameter.DbType.Decimal, 0, model.UnderwriterPremium);
             ObjParam[8] = new DbParameter("@IsActive", DbParameter.DbType.Bit, 0, model.IsActive);
             ObjParam[9] = new DbParameter("@CreatedBy", DbParameter.DbType.NVarChar, 0, model.CreatedBy);
             ObjParam[10] = new DbParameter("@CreatedDate", DbParameter.DbType.DateTime, 0, model.CreatedDate);

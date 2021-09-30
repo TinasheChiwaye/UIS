@@ -412,7 +412,7 @@ namespace Funeral.DAL
                 ObjParam[0] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, ModelPayment.parlourId);
                 ObjParam[1] = new DbParameter("@Date", DbParameter.DbType.DateTime, 0, ModelPayment.PremiumDueDate);
                 ObjParam[2] = new DbParameter("@ReferenceNumber", DbParameter.DbType.NVarChar, 0, ModelPayment.ReferenceNumber);
-                DbConnection.GetScalarValue(CommandType.StoredProcedure, "sp_RecreateBillingMemberPayments", ObjParam);
+                DbConnection.GetScalarValue(CommandType.StoredProcedure, "sp_CreateBillingMemberPayments", ObjParam);
                 return 1;
             }
             catch (Exception ex)

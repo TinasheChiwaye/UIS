@@ -175,7 +175,8 @@
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-sm-12">
-                                                                @*<input type="button" name="tab2btnPrintClaim" id="tab2btnPrintClaim" class="btn btn-sm btn-primary" value="Print Claim" disabled />*@
+                                                                @*<input type="submit" style="display:inline; margin-left:11px; font-size:12px" id="PrintClaim" class="btn btn-sm btn-primary pull-right m-t-n-xs" value="Print Claim" onclick="location.href='@Url.Action("btnPrintClaim", "Claims")'">
+                                                                <input type="button" na*@me="tab2btnPrintClaim" id="tab2btnPrintClaim" class="btn btn-sm btn-primary" value="Print Claim" />
                                                                 @*<input type="button" name="tab2btnPaymentHistory" id="tab2btnPaymentHistory" class="btn btn-sm btn-primary" value="Payment History" disabled />*@
                                                                 @*<input type="button" name="tab2btnClaimPayment" id="tab2btnClaimPayment" class="btn btn-sm btn-primary" value="Claim Payment" disabled />*@
 
@@ -640,9 +641,18 @@
     var SaveClaimsDocumentURl = "@Url.Action("SaveClaimsDocument","Claims")";
     var currentDate = "@System.DateTime.Now.ToString("dd MMM yyyy")";
 
+
     $.validator.setDefaults({
         ignore: ""
     });
+
+            @*var isPrintClaimEnabled = '@((bool)ViewBag.IsPrintClaimEnabled)' == 'True' ? true : false;
+            if (isPrintClaimEnabled) {
+                $("#PrintClaim").prop('disabled', false);
+            }
+            else {
+                $("#PrintClaim").prop('disabled', true);
+            }*@
 
     jQuery(window).load(function () {
         jQuery("#tab1").addClass("active");

@@ -738,7 +738,7 @@ namespace Funeral.DAL
         #region Familydependencty
         public static int SaveFamilyDependency(FamilyDependencyModel model)
         {
-            DbParameter[] ObjParam = new DbParameter[17];
+            DbParameter[] ObjParam = new DbParameter[18];
             ObjParam[0] = new DbParameter("@FullName", DbParameter.DbType.VarChar, 0, model.FullName);
             // ObjParam[1] = new DbParameter("@ImageFile", SqlDbType.Binary , 1000, model.ImageFile);
             ObjParam[1] = new DbParameter("@Surname", DbParameter.DbType.VarChar, 0, model.Surname);
@@ -757,6 +757,8 @@ namespace Funeral.DAL
             ObjParam[14] = new DbParameter("@DependentStatus", DbParameter.DbType.NVarChar, 0, model.DependentStatus);
             ObjParam[15] = new DbParameter("@Cover", DbParameter.DbType.Decimal, 0, model.Cover);
             ObjParam[16] = new DbParameter("@Passport", DbParameter.DbType.VarChar, 0, String.IsNullOrWhiteSpace(model.Passport) ? (object)DBNull.Value : (object)model.Passport);
+            ObjParam[17] = new DbParameter("@ModifiedUser", DbParameter.DbType.VarChar, 0, model.ModifiedUser);
+
 
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "SaveFamilyDependency_NEW", ObjParam));
         }
@@ -772,7 +774,7 @@ namespace Funeral.DAL
         }
         public static int UpdateFamilyDependency(FamilyDependencyModel model)
         {
-            DbParameter[] ObjParam = new DbParameter[18];
+            DbParameter[] ObjParam = new DbParameter[19];
             ObjParam[0] = new DbParameter("@FullName", DbParameter.DbType.VarChar, 0, model.FullName);
             ObjParam[1] = new DbParameter("@Surname", DbParameter.DbType.VarChar, 0, model.Surname);
             ObjParam[2] = new DbParameter("@IDNumber", DbParameter.DbType.VarChar, 0, model.IDNumber);
@@ -791,6 +793,7 @@ namespace Funeral.DAL
             ObjParam[15] = new DbParameter("@DependentStatus", DbParameter.DbType.NVarChar, 0, model.DependentStatus);
             ObjParam[16] = new DbParameter("@Cover", DbParameter.DbType.Decimal, 0, model.Cover);
             ObjParam[17] = new DbParameter("@Passport", DbParameter.DbType.VarChar, 0, model.Passport);
+            ObjParam[18] = new DbParameter("@ModifiedUser", DbParameter.DbType.VarChar, 0, model.ModifiedUser);
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "UpdateFamilyDependency", ObjParam));
         }
 

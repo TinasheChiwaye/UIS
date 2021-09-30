@@ -684,11 +684,11 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
             //PlanModel Plan = new PlanModel();
 
-            if (MembersBAL.GetMemberByIDNumber(Member.IDNumber, this.ParlourId, Member.fkiPlanID) != null && Member.pkiMemberID == 0)
-            {
-                //return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member Already Exists" + "</li>").ToList() }, JsonRequestBehavior.AllowGet);
-                return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member ID Number already exists on this Plan." + "</li>").First() }, JsonRequestBehavior.AllowGet);
-            }
+            //if (MembersBAL.GetMemberByIDNumber(Member.IDNumber, this.ParlourId, Member.fkiPlanID) != null && Member.pkiMemberID == 0)
+            //{
+            //    //return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member Already Exists" + "</li>").ToList() }, JsonRequestBehavior.AllowGet);
+            //    return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member ID Number already exists on this Plan." + "</li>").First() }, JsonRequestBehavior.AllowGet);
+            //}
 
 
 
@@ -726,7 +726,10 @@ namespace Funeral.Web.Areas.Admin.Controllers
                     Member.CoverDate = DateTime.Now;
                 }
 
-                Member.ModifiedUser = UserName;
+            SocietyModel society = new SocietyModel();
+            Member.MemberSociety = society.pkiSocietyID.ToString();
+
+            Member.ModifiedUser = UserID.ToString();
                 Member.Active = false;
                 int retId = MembersBAL.SaveMembers(Member);
                 Member.pkiMemberID = retId;
@@ -872,7 +875,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 ObjFamilyDependencyModel.Premium = dependency.Premium;
                 ObjFamilyDependencyModel.Cover = dependency.Cover;
                 ObjFamilyDependencyModel.Passport = dependency.Passport;
-
+                ObjFamilyDependencyModel.ModifiedUser = UserID.ToString();
             }
 
 
@@ -920,7 +923,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 dependency.DateOfBirth = DateTime.Now;
             }
 
-
+            dependency.ModifiedUser = UserID.ToString();
 
             dependency.Relationship = Convert.ToInt32("1");
 
@@ -1120,6 +1123,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             model.RefNumber = policy.RefNumber;
             model.Email = policy.Email;
             model.MemberBranch = policy.MemberBranch;
+            model.ModifiedUser = UserName;
             //model.
 
             if (model.StartDate == null || model.StartDate == DateTime.MinValue)

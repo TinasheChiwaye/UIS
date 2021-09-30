@@ -2151,7 +2151,7 @@
                 CustomId1: CustomId1,
                 CustomId2: CustomId2,
                 CustomId3: CustomId3,
-                MemberSociety: $("#tab-1 #ddlMemberSociety").val(),
+                MemberSociety: $("#tab-1 #ddlMemberSociety :selected").text(),
                 StartDate: dateFormat($("#tab-3 #txtPolicyStartDate").val(), 'dd-mm-yyyy', false),
                 InceptionDate: dateFormat($("#tab-3 #txtInception").val(), 'dd-mm-yyyy', false),
                 CoverDate: dateFormat($("#tab-3 #txtCoverDate").val(), 'dd-mm-yyyy', false),
@@ -2879,7 +2879,7 @@
                 CustomId1: $("#PolicyUpdatePopupModel .modal-body #ddlPopupCustom1").val(),
                 CustomId2: $("#PolicyUpdatePopupModel .modal-body #ddlPopupCustom2").val(),
                 CustomId3: $("#PolicyUpdatePopupModel .modal-body #ddlPopupCustom3").val(),
-                MemberSociety: $("#PolicyUpdatePopupModel .modal-body #ddlMemberSociety").val(),
+                MemberSociety: $("#PolicyUpdatePopupModel .modal-body #ddlMemberSociety :selected").val(),
                 StartDate: $("#PolicyUpdatePopupModel .modal-body #txtPolicyStartDate").val(),
                 // StartDate: dateFormat($(".policystartdate1").val(), 'dd-mm-yyyy', false),
                 InceptionDate: dateFormat($("#txtPolicyPopupInception").val(), 'dd-mm-yyyy', false),
@@ -2968,7 +2968,7 @@
             $("#tab-3 #ddlCustom1").val(member.CustomId1);
             $("#tab-3 #ddlCustom2").val(member.CustomId2);
             $("#tab-3 #ddlCustom3").val(member.CustomId3);
-            $("#tab-1 #ddlMemberSociety").val(member.MemberSociety);
+            $("#tab-1 #ddlMemberSociety option:selected").text(member.MemberSociety);
 
             $("#tab-1 #ddlAgent option").each(function () {
                 if ($(this).val() == member.Agent) {

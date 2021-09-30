@@ -14,10 +14,19 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using static Funeral.Model.FuneralEnum;
+using Funeral.Web.App_Start;
+using Funeral.Web.Areas.Admin.Models.ViewModel;
+using System.Data;
+using System.Data.SqlClient;
+using System.Globalization;
+using System.Web.UI.WebControls;
+
 namespace Funeral.Web.Areas.Admin.Controllers
 {
     public class ClaimsController : BaseAdminController
     {
+        private readonly ISiteSettings _siteConfig = new SiteSettings();
+
         // GET: Admin/Claims
         #region Claim Main View
         public ActionResult Index(string Status)
@@ -474,6 +483,64 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 return RedirectToAction("ClaimAddEdit", "Claims", new { pkiClaimID = claimandFuneral.claimsModel.pkiClaimID });
             }
         }
+
+        public void btnPrintClaim()
+        {
+            Warning[] warnings;
+            string[] streamids;
+            string mimeType;
+            string encoding;
+            //string filenameExtension;
+            string filename;
+            string result;
+
+            try
+            {
+                ReportViewer rpw = new ReportViewer();
+                rpw.ProcessingMode = ProcessingMode.Remote;
+                IReportServerCredentials irsc = new MyReportServerCredentials();
+                rpw.ServerReport.ReportServerCredentials = irsc;
+
+                rpw.ProcessingMode = ProcessingMode.Remote;
+                rpw.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
+                rpw.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/Policy Doc";
+                ReportParameterCollection reportParameters = new ReportParameterCollection();
+
+                reportParameters.Add(new ReportParameter("MemberID", MemburNumber.ToString()));
+                reportParameters.Add(new ReportParameter("Parlourid", CurrentParlourId.ToString()));
+                rpw.ServerReport.SetParameters(reportParameters);
+                string ExportTypeExtensions = "pdf";
+                byte[] bytes = rpw.ServerReport.Render(ExportTypeExtensions, null, out mimeType, out encoding, out ExportTypeExtensions, out streamids, out warnings);
+                filename = string.Format("{0}.{1}", "Policy Doc", ExportTypeExtensions);
+
+                Response.ClearHeaders();
+                Response.Clear();
+                Response.AddHeader("Content-Disposition", "attachment;filename=" + filename);
+                Response.ContentType = mimeType;
+                Response.BinaryWrite(bytes);
+                Response.Flush();
+                Response.End();
+                result = "true";
+
+            }
+            catch (Exception ex)
+            {
+                result = ex.Message;
+                //result = "The attempt to connect to the report server failed.  Check your connection information and that the report server is a compatible version.    ";
+                //ShowMessage(ref lblMessage, MessageType.Danger, exc.Message);
+            }
+            //return Json(result, JsonRequestBehavior.AllowGet);
+
+        }
+
+        private void ValidatePrintClaim(int pkiMemberId)
+        {
+            if (pkiMemberId == 0)
+                ViewBag.IsPrintClaimEnabled = false;
+            else
+                ViewBag.IsPrintClaimEnabled = true;
+        }
+
         #endregion
         #region Claim Dashboard
         public ActionResult ClaimDashboard()
@@ -699,6 +766,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 flag = true;
             return Json(new { FamilyDependencyModel = objmodel, MembersModel = obj, flag = flag }, JsonRequestBehavior.AllowGet);
         }
+
+
         #endregion
         #region BindMainMemberUpdate
         [HttpPost]
