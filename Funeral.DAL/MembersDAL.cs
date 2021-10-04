@@ -668,6 +668,13 @@ namespace Funeral.DAL
             ObjParam[0] = new DbParameter("@pkiMemberProductID", DbParameter.DbType.UniqueIdentifier, 0, pkiMemberProductID);
             DbConnection.GetDataReader(CommandType.StoredProcedure, "MemberAddonProductDelete", ObjParam);
         }
+        public static void DeleteAddonProduct(Guid pkiMemberProductID, string ModifiedUser)
+        {
+            DbParameter[] ObjParam = new DbParameter[2];
+            ObjParam[0] = new DbParameter("@pkiMemberProductID", DbParameter.DbType.UniqueIdentifier, 0, pkiMemberProductID);
+            ObjParam[1] = new DbParameter("@ModifiedUser", DbParameter.DbType.VarChar, 0, ModifiedUser);
+            DbConnection.GetDataReader(CommandType.StoredProcedure, "MemberAddonProductDeleteNew", ObjParam);
+        }
 
         public static void DeleteAddonProductdt(Guid pkiMemberProductID)
         {
@@ -851,6 +858,25 @@ namespace Funeral.DAL
             DbConnection.ExecuteNonQuery(CommandType.Text, "Delete from MemberDocuments Where pkiPictureID=@pkiPictureID", ObjParam);
             return true;
         }
+
+        public static bool DeleteDependentById(int pkiDependentID, string ModifiedUser)
+        {
+            DbParameter[] ObjParam = new DbParameter[2];
+            ObjParam[0] = new DbParameter("@pkiDependentID", DbParameter.DbType.Int, 0, pkiDependentID);
+            ObjParam[1] = new DbParameter("@ModifiedUser", DbParameter.DbType.VarChar, 0, ModifiedUser);
+            DbConnection.ExecuteNonQuery(CommandType.StoredProcedure, "DeleteDependent", ObjParam);
+            return true;
+        }
+
+        public static bool DeleteSUpportdocumentById(int pkiPictureID, string ModifiedUser)
+        {
+            DbParameter[] ObjParam = new DbParameter[2];
+            ObjParam[0] = new DbParameter("@pkiPictureID", DbParameter.DbType.Int, 0, pkiPictureID);
+            ObjParam[1] = new DbParameter("@ModifiedUser", DbParameter.DbType.VarChar, 0, ModifiedUser);
+            DbConnection.ExecuteNonQuery(CommandType.StoredProcedure, "DeleteSupportingDocument", ObjParam);
+            return true;
+        }
+
         #endregion
         public static SqlDataReader SelectAllAgent(Guid ParlourId)
         {
@@ -1071,6 +1097,15 @@ namespace Funeral.DAL
             ObjParam[0] = new DbParameter("@pkiBeneficiaryID", DbParameter.DbType.Int, 0, pkiBeneficiaryID);
             DbConnection.GetDataReader(CommandType.StoredProcedure, "DeleteBeneficiary", ObjParam);
         }
+
+        public static void DeleteBeneficiary(int pkiBeneficiaryID, string ModifiedUser)
+        {
+            DbParameter[] ObjParam = new DbParameter[2];
+            ObjParam[0] = new DbParameter("@pkiBeneficiaryID", DbParameter.DbType.Int, 0, pkiBeneficiaryID);
+            ObjParam[1] = new DbParameter("@ModifiedUser", DbParameter.DbType.VarChar, 0, ModifiedUser);
+            DbConnection.GetDataReader(CommandType.StoredProcedure, "DeleteBeneficiaryNew", ObjParam);
+        }
+
         public static DataTable GetExtendedFamilyList(Guid Parlourid, int MemberId)
         {
             DbParameter[] ObjParam = new DbParameter[2];

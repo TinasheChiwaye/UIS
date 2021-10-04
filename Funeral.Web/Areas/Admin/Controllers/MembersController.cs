@@ -443,7 +443,10 @@ namespace Funeral.Web.Areas.Admin.Controllers
         }
         public ActionResult DeleteAddOnProduct(Guid pkiProductId)
         {
-            MembersBAL.MemberAddonProductsRemove(pkiProductId);
+            AddonProductsModal ADDON = new AddonProductsModal();
+            ADDON.ModifiedUser = UserID.ToString();
+            string ModifiedUser = ADDON.ModifiedUser;
+            MembersBAL.MemberAddonProductsRemove(pkiProductId, ModifiedUser);
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult SearchProductData(Model.Search.BaseSearch search)
@@ -645,7 +648,11 @@ namespace Funeral.Web.Areas.Admin.Controllers
         }
         public ActionResult DeleteDocument(int pkiPictureID)
         {
-            bool isdocumentDeleted = MembersBAL.DeleteSUpportdocumentById(pkiPictureID);
+            SupportedDocumentModel supportedDocument = new SupportedDocumentModel();
+            supportedDocument.ModifiedUser = UserID.ToString();
+            string ModifiedUser = supportedDocument.ModifiedUser;
+
+            bool isdocumentDeleted = MembersBAL.DeleteSUpportdocumentById(pkiPictureID, ModifiedUser);
             if (isdocumentDeleted)
                 return Json(new { success = true }, JsonRequestBehavior.AllowGet);
             else
@@ -726,10 +733,10 @@ namespace Funeral.Web.Areas.Admin.Controllers
                     Member.CoverDate = DateTime.Now;
                 }
 
-            SocietyModel society = new SocietyModel();
-            Member.MemberSociety = society.pkiSocietyID.ToString();
+            //SocietyModel society = new SocietyModel();
+            //Member.MemberSociety = society.pkiSocietyID.ToString();
 
-            Member.ModifiedUser = UserID.ToString();
+                Member.ModifiedUser = UserID.ToString();
                 Member.Active = false;
                 int retId = MembersBAL.SaveMembers(Member);
                 Member.pkiMemberID = retId;
@@ -953,7 +960,10 @@ namespace Funeral.Web.Areas.Admin.Controllers
         [PageRightsAttribute(CurrentPageId = 4)]
         public ActionResult DeleteDependency(int pkiDependantId)
         {
-            bool isDependencyDeleted = MembersBAL.GetFamilyDependencyTypes(pkiDependantId);
+            FamilyDependencyModel dependency = new FamilyDependencyModel();
+            dependency.ModifiedUser = UserID.ToString();
+            string ModifiedUser = dependency.ModifiedUser;
+            bool isDependencyDeleted = MembersBAL.GetFamilyDependencyTypes(pkiDependantId, ModifiedUser);
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
         private int AgeFromDOB(DateTime bday)
@@ -1502,7 +1512,10 @@ namespace Funeral.Web.Areas.Admin.Controllers
         }
         public ActionResult DeleteBeneficiary(int pkiBeneficiaryID)
         {
-            MembersBAL.DeleteBeneficiary(pkiBeneficiaryID);
+            Beneficiary_model beneficiary = new Beneficiary_model();
+            beneficiary.ModifiedUser = UserID.ToString();
+            string ModifiedUser = beneficiary.ModifiedUser;
+            MembersBAL.DeleteBeneficiary(pkiBeneficiaryID, ModifiedUser);
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]

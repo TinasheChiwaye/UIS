@@ -41,13 +41,13 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label>Scheme Name <em>*</em> </label>
-                                <asp:TextBox MaxLength="100" runat="server" ID="txtCompanyName" name="CompanyName" type="text" class="form-control"></asp:TextBox>
+                                <asp:TextBox MaxLength="500" runat="server" ID="txtCompanyName" name="CompanyName" type="text" class="form-control"></asp:TextBox>
                                 <asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtCompanyName" ID="RequiredFieldValidator1" ForeColor="red" runat="server" ErrorMessage="Please enter Scheme Name"></asp:RequiredFieldValidator>
                                 <%--<asp:RegularExpressionValidator Display="None" ID="RegExp1" ValidationGroup="CompanySetup" runat="server" ErrorMessage="Company Name Enter Only characters" ControlToValidate="txtCompanyName" ValidationExpression="[a-zA-Z ]*$" />--%>
                             </div>
                             <div class="form-group">
                                 <label>Registration Number <%--<em>*</em>--%>  </label>
-                                <asp:TextBox MaxLength="25" runat="server" ID="txtRegistrationNumber" name="RegistrationNumber" type="text" class="form-control"></asp:TextBox>
+                                <asp:TextBox MaxLength="250" runat="server" ID="txtRegistrationNumber" name="RegistrationNumber" type="text" class="form-control"></asp:TextBox>
                                 <%--<asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtRegistrationNumber" ID="RequiredFieldValidator2" ForeColor="red" runat="server" ErrorMessage="Please enter Registration Number"></asp:RequiredFieldValidator>--%>
                                 <%--<asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator1" ValidationGroup="CompanySetup" runat="server" ControlToValidate="txtRegistrationNumber" ErrorMessage="Registration Number Enter Only characters" ValidationExpression="[a-zA-Z ]*$" />--%>
                             </div>
@@ -98,7 +98,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label>Email Address  <%--<em>*</em>--%> </label>
-                                <asp:TextBox MaxLength="30" runat="server" ID="txtEmail" name="Email" type="text" class="form-control"></asp:TextBox>
+                                <asp:TextBox MaxLength="300" runat="server" ID="txtEmail" name="Email" type="text" class="form-control"></asp:TextBox>
                                 <%-- <asp:RegularExpressionValidator Display="None" runat="server" ID="revEmailValidation" ValidationGroup="CompanySetup" ControlToValidate="txtEmail" ErrorMessage="Please enter valid email address" ForeColor="Red" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"></asp:RegularExpressionValidator>--%>
                                 <%--<asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtEmail" ID="RequiredFieldValidator5" ForeColor="red" runat="server" ErrorMessage="Please enter Email Address"></asp:RequiredFieldValidator>--%>
                             </div>
@@ -153,19 +153,19 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label>full name<em>*</em> </label>
-                                <asp:TextBox MaxLength="25" runat="server" ID="txtownFirstName" name="ownFirstName" type="text" class="form-control"></asp:TextBox>
+                                <asp:TextBox MaxLength="250" runat="server" ID="txtownFirstName" name="ownFirstName" type="text" class="form-control"></asp:TextBox>
                                 <asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtownFirstName" ID="RequiredFieldValidator3" ForeColor="red" runat="server" ErrorMessage="Please enter Owner full name"></asp:RequiredFieldValidator>
                                 <%--<asp:RegularExpressionValidator Display="None" ID="RegExp1" ValidationGroup="CompanySetup" runat="server" ErrorMessage="Company Name Enter Only characters" ControlToValidate="txtCompanyName" ValidationExpression="[a-zA-Z ]*$" />--%>
                             </div>
                             <div class="form-group">
                                 <label>Surname <em>*</em> </label>
-                                <asp:TextBox MaxLength="25" runat="server" ID="txtownLastName" name="ownLastName" type="text" class="form-control"></asp:TextBox>
+                                <asp:TextBox MaxLength="250" runat="server" ID="txtownLastName" name="ownLastName" type="text" class="form-control"></asp:TextBox>
                                 <asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtownLastName" ID="RequiredFieldValidator6" ForeColor="red" runat="server" ErrorMessage="Please enter Owner Surname"></asp:RequiredFieldValidator>
                                 <%--<asp:RegularExpressionValidator Display="None" ID="RegExp1" ValidationGroup="CompanySetup" runat="server" ErrorMessage="Company Name Enter Only characters" ControlToValidate="txtCompanyName" ValidationExpression="[a-zA-Z ]*$" />--%>
                             </div>
                             <div class="form-group">
                                 <label>Email Address  <em>*</em> </label>
-                                <asp:TextBox MaxLength="30" runat="server" ID="txtOwnersEmail" name="OwnersEmail" type="text" class="form-control"></asp:TextBox>
+                                <asp:TextBox MaxLength="300" runat="server" ID="txtOwnersEmail" name="OwnersEmail" type="text" class="form-control"></asp:TextBox>
                                 <asp:RegularExpressionValidator Display="None" runat="server" ID="RegularExpressionValidator10" ValidationGroup="CompanySetup" ControlToValidate="txtOwnersEmail" ErrorMessage="Please enter valid Owners email address" ForeColor="Red" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"></asp:RegularExpressionValidator>
                                 <asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtOwnersEmail" ID="RequiredFieldValidator100" ForeColor="red" runat="server" ErrorMessage="Please enter Owners Email Address"></asp:RequiredFieldValidator>
                             </div>
@@ -185,7 +185,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Claim Notification Email  <em>*</em> </label>
-                                <asp:TextBox MaxLength="30" runat="server" ID="txtEmailForClaimNotification" name="OwnersNotificationEmail" type="email" class="form-control"></asp:TextBox>
+                                <asp:TextBox MaxLength="300" runat="server" ID="txtEmailForClaimNotification" name="OwnersNotificationEmail" type="email" class="form-control"></asp:TextBox>
                                 <asp:RegularExpressionValidator Display="None" runat="server" ID="RegularExpressionValidator1" ValidationGroup="CompanySetup" ControlToValidate="txtEmailForClaimNotification" ErrorMessage="Please enter valid Notification email address" ForeColor="Red" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"></asp:RegularExpressionValidator>
                                 <asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtEmailForClaimNotification" ID="RequiredFieldValidator9" ForeColor="red" runat="server" ErrorMessage="Please enter Notification Email Address"></asp:RequiredFieldValidator>
                             </div>

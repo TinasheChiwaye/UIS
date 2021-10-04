@@ -552,7 +552,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/12/2021 10:09:33</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Members/ManageMembers.cshtml">
-      <publishTime>09/29/2021 00:39:44</publishTime>
+      <publishTime>10/01/2021 13:08:46</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Members/_AddEditBeneficiary.cshtml">
       <publishTime>04/12/2021 15:19:27</publishTime>
@@ -1053,10 +1053,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/28/2021 11:57:52</publishTime>
     </File>
     <File Include="bin/Funeral.Web.dll">
-      <publishTime>09/29/2021 00:23:28</publishTime>
+      <publishTime>10/01/2021 13:08:58</publishTime>
     </File>
     <File Include="bin/Funeral.Web.pdb">
-      <publishTime>09/29/2021 00:23:28</publishTime>
+      <publishTime>10/01/2021 13:08:58</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.Identity.Core.dll">
       <publishTime>04/03/2015 17:07:22</publishTime>
@@ -3627,7 +3627,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/17/2020 12:21:02</publishTime>
     </File>
     <File Include="Tools/CompanySetup.aspx">
-      <publishTime>07/15/2021 15:53:08</publishTime>
+      <publishTime>10/01/2021 11:53:19</publishTime>
     </File>
     <File Include="Tools/CustomManagement.aspx">
       <publishTime>07/17/2020 12:21:02</publishTime>

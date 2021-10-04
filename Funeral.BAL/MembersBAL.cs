@@ -167,6 +167,10 @@ namespace Funeral.BAL
         {
             MembersDAL.DeleteAddonProduct(pkiMemberProductID);
         }
+        public static void MemberAddonProductsRemove(Guid pkiMemberProductID, string ModifiedUser)
+        {
+            MembersDAL.DeleteAddonProduct(pkiMemberProductID, ModifiedUser);
+        }
         public static List<AddonProductsModal> MemberListBindAddonProduct(Guid pkiProductID)
         {
             DataTable dr = MembersDAL.MemberListBinddt(pkiProductID);
@@ -291,6 +295,16 @@ namespace Funeral.BAL
         {
             return MembersDAL.DeleteSUpportdocumentById(DocumentId);
         }
+
+        public static bool GetFamilyDependencyTypes(int dependencyId, string ModifiedUser)
+        {
+            return MembersDAL.DeleteDependentById(dependencyId, ModifiedUser);
+        }
+        public static bool DeleteSUpportdocumentById(int DocumentId, string ModifiedUser)
+        {
+            return MembersDAL.DeleteSUpportdocumentById(DocumentId, ModifiedUser);
+        }
+
         #endregion
         public static List<AgentModel> SelectAllAgent(Guid ParlourId)
         {
@@ -388,6 +402,10 @@ namespace Funeral.BAL
         public static void DeleteBeneficiary(int pkiBeneficiaryID)
         {
             MembersDAL.DeleteBeneficiary(pkiBeneficiaryID);
+        }
+        public static void DeleteBeneficiary(int pkiBeneficiaryID, string ModifiedUser)
+        {
+            MembersDAL.DeleteBeneficiary(pkiBeneficiaryID, ModifiedUser);
         }
         public static List<FamilyDependencyModel> GetExtendedFamilyList(Guid parlourid, int MemberId)
         {
