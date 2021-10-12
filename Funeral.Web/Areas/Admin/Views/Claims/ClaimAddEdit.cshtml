@@ -171,14 +171,17 @@
                                                                         @Html.TextBoxFor(x => x.claimsModel.PayoutValue, new { @id = "txtAddPayout", @class = "form-control", @placeholder = "Payout amount", })
                                                                     </div>
                                                                 </div>
-                                                            </div>*@
+                                                            </div>*@a
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-sm-12">
-                                                                @*<input type="submit" style="display:inline; margin-left:11px; font-size:12px" id="PrintClaim" class="btn btn-sm btn-primary pull-right m-t-n-xs" value="Print Claim" onclick="location.href='@Url.Action("btnPrintClaim", "Claims")'">
-                                                                <input type="button" na*@me="tab2btnPrintClaim" id="tab2btnPrintClaim" class="btn btn-sm btn-primary" value="Print Claim" />
-                                                                @*<input type="button" name="tab2btnPaymentHistory" id="tab2btnPaymentHistory" class="btn btn-sm btn-primary" value="Payment History" disabled />*@
-                                                                @*<input type="button" name="tab2btnClaimPayment" id="tab2btnClaimPayment" class="btn btn-sm btn-primary" value="Claim Payment" disabled />*@
+                                                                @if (Model.claimsModel.pkiClaimID > 0)
+                                                                {
+                                                                    @*<input type="button" name="tab2btnPaymentHistory" id="tab2btnPaymentHistory" class="btn btn-sm btn-primary" value="Payment History" disabled />*@
+                                                                    @*<input type="button" name="tab2btnClaimPayment" id="tab2btnClaimPayment" class="btn btn-sm btn-primary" value="Claim Payment" disabled />*@
+                                                                    //int PkiClaimId = Model.claimsModel.pkiClaimID;
+                                                                    <input type="button" style="display:inline; margin-left:11px; font-size:12px" id="ClaimsDoc" class="btn btn-sm btn-primary pull-right m-t-n-xs" value="Claim Document" onclick="location.href='@Url.Action("btnClaimsDoc", "Claims")'">
+                                                                }
 
                                                                 @if (Model.claimsModel.pkiClaimID < 0)
                                                                 {
@@ -646,12 +649,12 @@
         ignore: ""
     });
 
-            @*var isPrintClaimEnabled = '@((bool)ViewBag.IsPrintClaimEnabled)' == 'True' ? true : false;
-            if (isPrintClaimEnabled) {
-                $("#PrintClaim").prop('disabled', false);
+            @*var isClaimsDocEnabled = '@((bool)ViewBag.isClaimsDocEnabled)' == 'True' ? true : false;
+            if (isClaimsDocEnabled) {
+                $("#CllaimsDoc").prop('disabled', false);
             }
             else {
-                $("#PrintClaim").prop('disabled', true);
+                $("#CllaimsDoc").prop('disabled', true);
             }*@
 
     jQuery(window).load(function () {

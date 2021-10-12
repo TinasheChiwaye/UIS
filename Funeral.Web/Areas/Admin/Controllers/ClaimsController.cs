@@ -406,6 +406,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                     claimandFuneral.ClaimDocumentList = ClaimsBAL.GetClaimDocumentsByClaimId(pkiClaimID, CurrentParlourId, claimandFuneral.funeralModel.MemberType);
                 else
                     claimandFuneral.ClaimDocumentList = ClaimsBAL.GetClaimDocumentsByClaimId(pkiClaimID, CurrentParlourId, "Main Member");
+                ViewBag.GetClaimID = pkiClaimID;
             }
 
             var BankDetails = CommonBAL.GetBankDetails_ByParlourId(CurrentParlourId);
@@ -484,61 +485,14 @@ namespace Funeral.Web.Areas.Admin.Controllers
             }
         }
 
-        public void btnPrintClaim()
+
+
+        private void ValidateClaimsDoc(int pkiClaimId)
         {
-            Warning[] warnings;
-            string[] streamids;
-            string mimeType;
-            string encoding;
-            //string filenameExtension;
-            string filename;
-            string result;
-
-            try
-            {
-                ReportViewer rpw = new ReportViewer();
-                rpw.ProcessingMode = ProcessingMode.Remote;
-                IReportServerCredentials irsc = new MyReportServerCredentials();
-                rpw.ServerReport.ReportServerCredentials = irsc;
-
-                rpw.ProcessingMode = ProcessingMode.Remote;
-                rpw.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
-                rpw.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/Policy Doc";
-                ReportParameterCollection reportParameters = new ReportParameterCollection();
-
-                reportParameters.Add(new ReportParameter("MemberID", MemburNumber.ToString()));
-                reportParameters.Add(new ReportParameter("Parlourid", CurrentParlourId.ToString()));
-                rpw.ServerReport.SetParameters(reportParameters);
-                string ExportTypeExtensions = "pdf";
-                byte[] bytes = rpw.ServerReport.Render(ExportTypeExtensions, null, out mimeType, out encoding, out ExportTypeExtensions, out streamids, out warnings);
-                filename = string.Format("{0}.{1}", "Policy Doc", ExportTypeExtensions);
-
-                Response.ClearHeaders();
-                Response.Clear();
-                Response.AddHeader("Content-Disposition", "attachment;filename=" + filename);
-                Response.ContentType = mimeType;
-                Response.BinaryWrite(bytes);
-                Response.Flush();
-                Response.End();
-                result = "true";
-
-            }
-            catch (Exception ex)
-            {
-                result = ex.Message;
-                //result = "The attempt to connect to the report server failed.  Check your connection information and that the report server is a compatible version.    ";
-                //ShowMessage(ref lblMessage, MessageType.Danger, exc.Message);
-            }
-            //return Json(result, JsonRequestBehavior.AllowGet);
-
-        }
-
-        private void ValidatePrintClaim(int pkiMemberId)
-        {
-            if (pkiMemberId == 0)
-                ViewBag.IsPrintClaimEnabled = false;
+            if (pkiClaimId == 0)
+                ViewBag.isClaimsDocEnabled = false;
             else
-                ViewBag.IsPrintClaimEnabled = true;
+                ViewBag.isClaimsDocEnabled = true;
         }
 
         #endregion
@@ -800,5 +754,54 @@ namespace Funeral.Web.Areas.Admin.Controllers
             return Json(Company, JsonRequestBehavior.AllowGet);
         }
         #endregion
+
+        public void btnClaimsDoc()
+        {
+            Warning[] warnings;
+            string[] streamids;
+            string mimeType;
+            string encoding;
+            //string filenameExtension;
+            string filename;
+            string result;
+
+            try
+            {
+                ReportViewer rpw = new ReportViewer();
+                rpw.ProcessingMode = ProcessingMode.Remote;
+                IReportServerCredentials irsc = new MyReportServerCredentials();
+                rpw.ServerReport.ReportServerCredentials = irsc;
+
+                rpw.ProcessingMode = ProcessingMode.Remote;
+                rpw.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
+                rpw.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/Claims Status doc";
+                ReportParameterCollection reportParameters = new ReportParameterCollection();
+                var ClaimId = 54;
+                reportParameters.Add(new ReportParameter("PkiClaimID", ClaimId.ToString()));
+                reportParameters.Add(new ReportParameter("Parlourid", CurrentParlourId.ToString()));
+                rpw.ServerReport.SetParameters(reportParameters);
+                string ExportTypeExtensions = "pdf";
+                byte[] bytes = rpw.ServerReport.Render(ExportTypeExtensions, null, out mimeType, out encoding, out ExportTypeExtensions, out streamids, out warnings);
+                filename = string.Format("{0}.{1}", "Claims Status doc", ExportTypeExtensions);
+
+                Response.ClearHeaders();
+                Response.Clear();
+                Response.AddHeader("Content-Disposition", "attachment;filename=" + filename);
+                Response.ContentType = mimeType;
+                Response.BinaryWrite(bytes);
+                Response.Flush();
+                Response.End();
+                result = "true";
+
+            }
+            catch (Exception ex)
+            {
+                result = ex.Message;
+                //result = "The attempt to connect to the report server failed.  Check your connection information and that the report server is a compatible version.    ";
+                //ShowMessage(ref lblMessage, MessageType.Danger, exc.Message);
+            }
+            //return Json(result, JsonRequestBehavior.AllowGet);
+
+        }
     }
 }
