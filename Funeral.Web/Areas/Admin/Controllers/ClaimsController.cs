@@ -143,7 +143,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 members = ClaimsBAL.SelectAllClaims(search.CompanyId).Where(x => x.Status.Contains(search.StatusId == "0" ? "" : search.StatusId)).ToList();
                 if (!string.IsNullOrEmpty(search.SocietyID) && search.SocietyID != "0")
                     members = members.Where(x => x.SocietyID.ToString() == search.SocietyID).ToList();
-                members = IsAdministrator == true || IsSuperUser == true ? members : members = members.Where(m => (expectedStatus.Contains(m.Status))).ToList();
+                //members = IsAdministrator == true || IsSuperUser == true ? members : members = members.Where(m => (expectedStatus.Contains(m.Status))).ToList();
+                //members = IsAdministrator == true || HasAccess == true ? members : members = members.Where(m => (expectedStatus.Contains(m.Status))).ToList();
 
                 if (search.SearchType != null && search.SearchType != "Normal")
                 {
@@ -755,7 +756,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
         }
         #endregion
 
-        public void btnClaimsDoc()
+        public void btnClaimsDoc(int Id)
         {
             Warning[] warnings;
             string[] streamids;
@@ -777,7 +778,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 rpw.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/Claims Status doc";
                 ReportParameterCollection reportParameters = new ReportParameterCollection();
                 var ClaimId = 54;
-                reportParameters.Add(new ReportParameter("PkiClaimID", ClaimId.ToString()));
+                reportParameters.Add(new ReportParameter("PkiClaimID", Id.ToString()));
                 reportParameters.Add(new ReportParameter("Parlourid", CurrentParlourId.ToString()));
                 rpw.ServerReport.SetParameters(reportParameters);
                 string ExportTypeExtensions = "pdf";

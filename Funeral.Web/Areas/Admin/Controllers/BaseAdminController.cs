@@ -285,20 +285,20 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 System.Web.HttpContext.Current.Session["_MemburNumber"] = value;
             }
         }
-        public string ClaimId
-        {
-            get
-            {
-                if (System.Web.HttpContext.Current.Session["_ClaimId"] == null)
-                    return string.Empty;
-                else
-                    return System.Web.HttpContext.Current.Session["_ClaimId"].ToString();
-            }
-            set
-            {
-                System.Web.HttpContext.Current.Session["_ClaimId"] = value;
-            }
-        }
+        //public string ClaimId
+        //{
+        //    get
+        //    {
+        //        if (System.Web.HttpContext.Current.Session["_ClaimId"] == null)
+        //            return string.Empty;
+        //        else
+        //            return System.Web.HttpContext.Current.Session["_ClaimId"].ToString();
+        //    }
+        //    set
+        //    {
+        //        System.Web.HttpContext.Current.Session["_ClaimId"] = value;
+        //    }
+        //}
         public DataTable LocalQoute
         {
             get

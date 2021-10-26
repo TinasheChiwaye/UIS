@@ -179,11 +179,13 @@
                                                                 {
                                                                     @*<input type="button" name="tab2btnPaymentHistory" id="tab2btnPaymentHistory" class="btn btn-sm btn-primary" value="Payment History" disabled />*@
                                                                     @*<input type="button" name="tab2btnClaimPayment" id="tab2btnClaimPayment" class="btn btn-sm btn-primary" value="Claim Payment" disabled />*@
-                                                                    //int PkiClaimId = Model.claimsModel.pkiClaimID;
-                                                                    <input type="button" style="display:inline; margin-left:11px; font-size:12px" id="ClaimsDoc" class="btn btn-sm btn-primary pull-right m-t-n-xs" value="Claim Document" onclick="location.href='@Url.Action("btnClaimsDoc", "Claims")'">
+
+                                                                int PkiClaimId = Model.claimsModel.pkiClaimID;
+                                                                    <input type="button" style="display:inline; margin-left:11px; font-size:12px" id="ClaimsDoc" class="btn btn-sm btn-primary pull-right m-t-n-xs" value="Claim Document" onclick="location.href='@Url.Action("btnClaimsDoc", "Claims", new { id = Model.claimsModel.pkiClaimID })'">
                                                                 }
 
                                                                 @if (Model.claimsModel.pkiClaimID < 0)
+
                                                                 {
                                                                     <input type="button" name="tab2btnClear" id="tab2btnClear" class="btn btn-sm btn-primary" value="Clear" />
                                                                 }

@@ -522,7 +522,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 //Product = product.FirstOrDefault().ProductCost.ToString();
                 Product = Currency + (Decimal.Round(Convert.ToDecimal(product.FirstOrDefault().ProductCost), 2)).ToString();
             //Product += " "+product.FirstOrDefault().ProductCost;
-            return Json(new { Product, ProductCost = product.FirstOrDefault().ProductCost }, JsonRequestBehavior.AllowGet); //new { ProductPrice = Currency.Trim() + " " + product.FirstOrDefault().ProductCost, ProductCost = product.FirstOrDefault().ProductCost }
+            return Json(new { Product, ProductCost = product.FirstOrDefault().ProductCost, ProductCover = product.FirstOrDefault().ProductCover }, JsonRequestBehavior.AllowGet); //new { ProductPrice = Currency.Trim() + " " + product.FirstOrDefault().ProductCost, ProductCost = product.FirstOrDefault().ProductCost }
         }
         public ActionResult SubmitDocuments(int documentType)
         {
