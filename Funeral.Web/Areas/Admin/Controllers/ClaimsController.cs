@@ -21,6 +21,7 @@ using System.Data.SqlClient;
 using System.Globalization;
 using System.Web.UI.WebControls;
 
+
 namespace Funeral.Web.Areas.Admin.Controllers
 {
     public class ClaimsController : BaseAdminController
@@ -502,8 +503,19 @@ namespace Funeral.Web.Areas.Admin.Controllers
         {
             BindCompanyList("Search");
             ViewBag.SocietyLists = CommonBAL.GetSocietyByParlourId(CurrentParlourId);
-            return View();
+            //return View();
+
+            Dashboard ds = new Dashboard();
+            ds = CommonBAL.GetClaimDashboardLableDetails(this.ParlourId, this.IsAdministrator, this.IsSuperUser, this.UserName, this.Currency);
+            ds.dashboardChart = CommonBAL.GetClaimsDashboardChart(ParlourId, IsAdministrator, UserName, IsSuperUser);
+            ds.dashboardChart.Currency = this.Currency;
+            if (IsAdministrator == true || IsSuperUser == true)
+            {
+                ds.IsDisplayDashboarTable = true;
+            }
+            return View(ds);
         }
+
         [HttpGet]
         public ActionResult RenderClaimDashboard(Guid CompanyId, int BookId)
         {
@@ -775,7 +787,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
                 rpw.ProcessingMode = ProcessingMode.Remote;
                 rpw.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
-                rpw.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/Claims Status doc";
+                rpw.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/Claims Document";
                 ReportParameterCollection reportParameters = new ReportParameterCollection();
                 var ClaimId = 54;
                 reportParameters.Add(new ReportParameter("PkiClaimID", Id.ToString()));
@@ -783,7 +795,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 rpw.ServerReport.SetParameters(reportParameters);
                 string ExportTypeExtensions = "pdf";
                 byte[] bytes = rpw.ServerReport.Render(ExportTypeExtensions, null, out mimeType, out encoding, out ExportTypeExtensions, out streamids, out warnings);
-                filename = string.Format("{0}.{1}", "Claims Status doc", ExportTypeExtensions);
+                filename = string.Format("{0}.{1}", "Claims Document", ExportTypeExtensions);
 
                 Response.ClearHeaders();
                 Response.Clear();

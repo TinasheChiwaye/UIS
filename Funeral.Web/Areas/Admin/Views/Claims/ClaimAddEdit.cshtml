@@ -171,169 +171,174 @@
                                                                         @Html.TextBoxFor(x => x.claimsModel.PayoutValue, new { @id = "txtAddPayout", @class = "form-control", @placeholder = "Payout amount", })
                                                                     </div>
                                                                 </div>
-                                                            </div>*@a
+                                                            </div>*@
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-sm-12">
+
+
+
                                                                 @if (Model.claimsModel.pkiClaimID > 0)
                                                                 {
-                                                                    @*<input type="button" name="tab2btnPaymentHistory" id="tab2btnPaymentHistory" class="btn btn-sm btn-primary" value="Payment History" disabled />*@
-                                                                    @*<input type="button" name="tab2btnClaimPayment" id="tab2btnClaimPayment" class="btn btn-sm btn-primary" value="Claim Payment" disabled />*@
-
-                                                                int PkiClaimId = Model.claimsModel.pkiClaimID;
-                                                                    <input type="button" style="display:inline; margin-left:11px; font-size:12px" id="ClaimsDoc" class="btn btn-sm btn-primary pull-right m-t-n-xs" value="Claim Document" onclick="location.href='@Url.Action("btnClaimsDoc", "Claims", new { id = Model.claimsModel.pkiClaimID })'">
+                                                                    int PkiClaimId = Model.claimsModel.pkiClaimID;
+                                                                    <input type="button" style="display:inline; font-size:12px" id="ClaimsDoc" class="btn btn-sm btn-primary" value="Claims Document" onclick="location.href='@Url.Action("btnClaimsDoc", "Claims", new { id = Model.claimsModel.pkiClaimID })'">
                                                                 }
 
-                                                                @if (Model.claimsModel.pkiClaimID < 0)
+                                                                    @*<div style="margin-top:5px">*@
+                                                                        <input type="button" style="display:inline; margin-left:3px; font-size:12px" onclick="BackNextButtonProcess(1,2)" class="btn btn-sm btn-primary" value="Next" />
 
-                                                                {
-                                                                    <input type="button" name="tab2btnClear" id="tab2btnClear" class="btn btn-sm btn-primary" value="Clear" />
-                                                                }
-                                                                <input type="button" onclick="BackNextButtonProcess(1,2)" class="btn btn-sm btn-primary" value="Next" />
+
+                                                                        @if (Model.claimsModel.pkiClaimID < 0)
+
+                                                                        {
+                                                                            <input type="button" name="tab2btnClear" id="tab2btnClear" class="btn btn-sm btn-primary" value="Clear" />
+                                                                        }
+                                                                    @*</div>*@
+
                                                             </div>
-                                                            <div class="col-sm-12">
-                                                                @if (Model.claimsModel.pkiClaimID > 0)
-                                                                {
-                                                                    <div class="form-group">
-                                                                        <h3>Supporting documents</h3>
-                                                                        <label id="lblDataMsg" hidden>There is no document uploaded.</label>
-                                                                        <div class="table-responsive">
-                                                                            <table id="documentDataTable" class="table table-bordered table-hover table-striped" cellspacing="0">
-                                                                                <thead>
-                                                                                    <tr>
-                                                                                        <th>Document Type</th>
-                                                                                        <th>Document Name</th>
-                                                                                        <th>Status</th>
-                                                                                        <th>Created Date</th>
-                                                                                        <th>Action</th>
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                <tbody>
-                                                                                    @{
-                                                                                        if (Model.ClaimDocumentList != null)
-                                                                                        {
-                                                                                            foreach (var item in Model.ClaimDocumentList)
+                                                                <div class="col-sm-12">
+                                                                    @if (Model.claimsModel.pkiClaimID > 0)
+                                                                    {
+                                                                        <div class="form-group">
+                                                                            <h3>Supporting documents</h3>
+                                                                            <label id="lblDataMsg" hidden>There is no document uploaded.</label>
+                                                                            <div class="table-responsive">
+                                                                                <table id="documentDataTable" class="table table-bordered table-hover table-striped" cellspacing="0">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th>Document Type</th>
+                                                                                            <th>Document Name</th>
+                                                                                            <th>Status</th>
+                                                                                            <th>Created Date</th>
+                                                                                            <th>Action</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        @{
+                                                                                            if (Model.ClaimDocumentList != null)
+                                                                                            {
+                                                                                                foreach (var item in Model.ClaimDocumentList)
+                                                                                                {
+                                                                                                    <tr>
+                                                                                                        <td>@item.DocumentName</td>
+                                                                                                        <td>@item.ImageName</td>
+
+                                                                                                        <td>
+                                                                                                            @if (item.pkiClaimPictureID > 0)
+                                                                                                            {
+                                                                                                                <span class="label label-primary" style="cursor:pointer;" title="Click to Change Status" onclick="OpenDocumentStatusPopUp(@item.pkiClaimPictureID)">@item.Status</span>
+                                                                                                            }
+                                                                                                            else
+                                                                                                            {
+                                                                                                                <span>@item.Status</span>
+                                                                                                            }
+                                                                                                        </td>
+                                                                                                        <td>
+                                                                                                            @if (item.pkiClaimPictureID > 0)
+                                                                                                            {
+                                                                                                                @item.CreateDate.ToString("dd MMM yyyy hh:mm tt")
+                                                                                                            }
+                                                                                                            else
+                                                                                                            {
+                                                                                                                <span>-----</span>
+                                                                                                            }
+                                                                                                        </td>
+                                                                                                        <td>
+                                                                                                            @{
+                                                                                                                if (item.pkiClaimPictureID > 0)
+                                                                                                                {
+                                                                                                                    <a title="Download this claim document" href="~/Handler/DocumentHandler.ashx?DocClaimID=@item.pkiClaimPictureID"><i class="glyphicon glyphicon-download"></i></a>
+                                                                                                                    <a title="Delete this claim document" href="@Url.Action("DeleteClaimDocument", "Claims", new { pkiClaimPictureID = item.pkiClaimPictureID, PkiClaimID = Model.claimsModel.pkiClaimID })"><i class="glyphicon glyphicon-trash"></i></a>
+                                                                                                                }
+                                                                                                                if (!item.IsUploaded)
+                                                                                                                {
+                                                                                                                    <span class="label label-danger" accesskey="@Model.claimsModel.parlourid" style="cursor:pointer;" title="Click to Upload Document" onclick="OpenClaimDocumentPopUp(@Model.claimsModel.pkiClaimID,this,@item.DocumentId)">Add Document</span>
+                                                                                                                }
+                                                                                                            }
+
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <div class="col-sm-6">
+                                                                                <h3>Payment history</h3>
+                                                                                <table id="memberDataTable" class="fixed_header fixed_header-bordered" cellspacing="0">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th>Date paid</th>
+                                                                                            <th>Amount</th>
+                                                                                            <th>Recieved by</th>
+                                                                                            <th>Notes</th>
+                                                                                            <th>Actions</th>
+
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        @{
+                                                                                            if (Model.PaymentHistoryList != null && Model.PaymentHistoryList.Count > 0)
+                                                                                            {
+                                                                                                foreach (var item in Model.PaymentHistoryList)
+                                                                                                {
+                                                                                                    <tr>
+                                                                                                        <td>@item.DatePaid</td>
+                                                                                                        <td>@item.AmountPaid</td>
+                                                                                                        <td>@item.RecievedBy</td>
+                                                                                                        <td>@item.Notes</td>
+                                                                                                        <td>
+                                                                                                            <a href="@Url.Action("PrintPaymentReceipt", "Payments", new { id = item.InvoiceID, Type = 1, PolicyNumber = Model.claimsModel.MemberNumber, DatePaid = item.DatePaid, AmountPaid = item.AmountPaid, PaidBy = item.PaidBy, ReceivedBy = item.RecievedBy, MonthPaid = item.Notes ,memberId=Model.claimsModel.fkiMemberID, parlourId=Model.claimsModel.parlourid})">
+                                                                                                                <i class="glyphicon glyphicon-print"></i>
+                                                                                                            </a>&nbsp;&nbsp;<a href="@Url.Action("PrintPaymentReceipt", "Payments", new { id = item.InvoiceID, Type = 2, PolicyNumber = Model.claimsModel.MemberNumber, DatePaid = item.DatePaid, AmountPaid = item.AmountPaid, PaidBy = item.PaidBy, ReceivedBy = item.RecievedBy, MonthPaid = item.Notes,MemberId=Model.claimsModel.fkiMemberID, parlourId=Model.claimsModel.parlourid })">
+                                                                                                                <i class="glyphicon glyphicon-export"></i>
+                                                                                                            </a>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                            <div class="col-sm-6">
+                                                                                <h3>Claim history</h3>
+                                                                                <table id="memberDataTable" class="fixed_header fixed_header-bordered" cellspacing="0">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th>Status</th>
+                                                                                            <th>Changed To Status</th>
+                                                                                            <th>Reason</th>
+                                                                                            <th>Changed By</th>
+                                                                                            <th>Changed Date</th>
+                                                                                            <th>Comment</th>
+
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        @{
+                                                                                            foreach (var item in Model.claimStatusHistory)
                                                                                             {
                                                                                                 <tr>
-                                                                                                    <td>@item.DocumentName</td>
-                                                                                                    <td>@item.ImageName</td>
-
-                                                                                                    <td>
-                                                                                                        @if (item.pkiClaimPictureID > 0)
-                                                                                                        {
-                                                                                                            <span class="label label-primary" style="cursor:pointer;" title="Click to Change Status" onclick="OpenDocumentStatusPopUp(@item.pkiClaimPictureID)">@item.Status</span>
-                                                                                                        }
-                                                                                                        else
-                                                                                                        {
-                                                                                                            <span>@item.Status</span>
-                                                                                                        }
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                        @if (item.pkiClaimPictureID > 0)
-                                                                                                        {
-                                                                                                            @item.CreateDate.ToString("dd MMM yyyy hh:mm tt")
-                                                                                                        }
-                                                                                                        else
-                                                                                                        {
-                                                                                                            <span>-----</span>
-                                                                                                        }
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                        @{
-                                                                                                            if (item.pkiClaimPictureID > 0)
-                                                                                                            {
-                                                                                                                <a title="Download this claim document" href="~/Handler/DocumentHandler.ashx?DocClaimID=@item.pkiClaimPictureID"><i class="glyphicon glyphicon-download"></i></a>
-                                                                                                                <a title="Delete this claim document" href="@Url.Action("DeleteClaimDocument", "Claims", new { pkiClaimPictureID = item.pkiClaimPictureID, PkiClaimID = Model.claimsModel.pkiClaimID })"><i class="glyphicon glyphicon-trash"></i></a>
-                                                                                                            }
-                                                                                                            if (!item.IsUploaded)
-                                                                                                            {
-                                                                                                                <span class="label label-danger" accesskey="@Model.claimsModel.parlourid" style="cursor:pointer;" title="Click to Upload Document" onclick="OpenClaimDocumentPopUp(@Model.claimsModel.pkiClaimID,this,@item.DocumentId)">Add Document</span>
-                                                                                                            }
-                                                                                                        }
-
-                                                                                                    </td>
+                                                                                                    <td>@item.CurrentStatus</td>
+                                                                                                    <td>@item.NewStatus</td>
+                                                                                                    <td>@item.ChangeReason</td>
+                                                                                                    <td>@item.ChangedByName</td>
+                                                                                                    <td>@item.CreatedDate.ToString("dd MMM yyyy hh:mm tt")</td>
+                                                                                                    <td>@item.Comment</td>
                                                                                                 </tr>
                                                                                             }
                                                                                         }
-                                                                                    }
-                                                                                </tbody>
-                                                                            </table>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <div class="col-sm-6">
-                                                                            <h3>Payment history</h3>
-                                                                            <table id="memberDataTable" class="fixed_header fixed_header-bordered" cellspacing="0">
-                                                                                <thead>
-                                                                                    <tr>
-                                                                                        <th>Date paid</th>
-                                                                                        <th>Amount</th>
-                                                                                        <th>Recieved by</th>
-                                                                                        <th>Notes</th>
-                                                                                        <th>Actions</th>
-
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                <tbody>
-                                                                                    @{
-                                                                                        if (Model.PaymentHistoryList != null && Model.PaymentHistoryList.Count > 0)
-                                                                                        {
-                                                                                            foreach (var item in Model.PaymentHistoryList)
-                                                                                            {
-                                                                                                <tr>
-                                                                                                    <td>@item.DatePaid</td>
-                                                                                                    <td>@item.AmountPaid</td>
-                                                                                                    <td>@item.RecievedBy</td>
-                                                                                                    <td>@item.Notes</td>
-                                                                                                    <td>
-                                                                                                        <a href="@Url.Action("PrintPaymentReceipt", "Payments", new { id = item.InvoiceID, Type = 1, PolicyNumber = Model.claimsModel.MemberNumber, DatePaid = item.DatePaid, AmountPaid = item.AmountPaid, PaidBy = item.PaidBy, ReceivedBy = item.RecievedBy, MonthPaid = item.Notes ,memberId=Model.claimsModel.fkiMemberID, parlourId=Model.claimsModel.parlourid})">
-                                                                                                            <i class="glyphicon glyphicon-print"></i>
-                                                                                                        </a>&nbsp;&nbsp;<a href="@Url.Action("PrintPaymentReceipt", "Payments", new { id = item.InvoiceID, Type = 2, PolicyNumber = Model.claimsModel.MemberNumber, DatePaid = item.DatePaid, AmountPaid = item.AmountPaid, PaidBy = item.PaidBy, ReceivedBy = item.RecievedBy, MonthPaid = item.Notes,MemberId=Model.claimsModel.fkiMemberID, parlourId=Model.claimsModel.parlourid })">
-                                                                                                            <i class="glyphicon glyphicon-export"></i>
-                                                                                                        </a>
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                            }
-                                                                                        }
-                                                                                    }
-                                                                                </tbody>
-                                                                            </table>
-                                                                        </div>
-                                                                        <div class="col-sm-6">
-                                                                            <h3>Claim history</h3>
-                                                                            <table id="memberDataTable" class="fixed_header fixed_header-bordered" cellspacing="0">
-                                                                                <thead>
-                                                                                    <tr>
-                                                                                        <th>Status</th>
-                                                                                        <th>Changed To Status</th>
-                                                                                        <th>Reason</th>
-                                                                                        <th>Changed By</th>
-                                                                                        <th>Changed Date</th>
-                                                                                        <th>Comment</th>
-
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                <tbody>
-                                                                                    @{
-                                                                                        foreach (var item in Model.claimStatusHistory)
-                                                                                        {
-                                                                                            <tr>
-                                                                                                <td>@item.CurrentStatus</td>
-                                                                                                <td>@item.NewStatus</td>
-                                                                                                <td>@item.ChangeReason</td>
-                                                                                                <td>@item.ChangedByName</td>
-                                                                                                <td>@item.CreatedDate.ToString("dd MMM yyyy hh:mm tt")</td>
-                                                                                                <td>@item.Comment</td>
-                                                                                            </tr>
-                                                                                        }
-                                                                                    }
-                                                                                </tbody>
-                                                                            </table>
-                                                                        </div>
-                                                                    </div>
-                                                                }
+                                                                    }
+                                                                </div>
                                                             </div>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

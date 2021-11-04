@@ -269,6 +269,23 @@ namespace Funeral.BAL
             }
             return dashboard;
         }
+
+        public static Dashboard GetClaimDashboardLableDetails(Guid ParlourId, bool IsAdministrator, bool IsSuperUser, string UserName, string Currency)
+        {
+            Dashboard Claimdashboard = new Dashboard();
+            DataTable dr = ToolsSetingDAL.GetDashboardLableDetails(ParlourId, IsAdministrator, IsSuperUser, UserName);
+            DataSet ds = new DataSet();
+            ds.Tables.Add(dr);
+
+            if (ds.Tables.Count > 0)
+            {
+                Claimdashboard.TodayTotalPayment = Currency + " " + ds.Tables[0].Rows[0]["TodayPayment"].ToString();
+                Claimdashboard.OutstandingPaymentsCount = Currency + " " + ds.Tables[0].Rows[0]["OutstandingCollection"].ToString();
+                Claimdashboard.TotalSMSCreditsCount = ds.Tables[0].Rows[0]["SMSBalalnce"].ToString();
+            }
+            return Claimdashboard;
+        }
+
         public static int SMSTopup_save(ConsumableOrders Model)
         {
             return CommonDAL.SMSTopup_save(Model);
@@ -285,6 +302,32 @@ namespace Funeral.BAL
             var barCharts = GetDashboardBarChart(ParlourId, IsAdministrator, UserName, IsSuperUser);
             var PolicyCHart = PolicyPichart(ParlourId, IsAdministrator, UserName, IsSuperUser);
             var premiumChart = PremiumCollectionChart(ParlourId, IsAdministrator, UserName, IsSuperUser);
+            DashboardChart dashboardChart = new DashboardChart();
+            #region Bar Chart 
+            dashboardChart.ChartTotalCount = barCharts.ChartTotalCount == "" ? "0" : barCharts.ChartTotalCount;
+            dashboardChart.ChartLabels = barCharts.ChartLabels == "" ? "0" : barCharts.ChartLabels;
+            dashboardChart.ChartData1 = barCharts.ChartData1 == "" ? "0" : barCharts.ChartData1;
+            dashboardChart.ChartData2 = barCharts.ChartData2 == "" ? "0" : barCharts.ChartData2;
+            dashboardChart.dataCollection = barCharts.dataCollection;
+            #endregion
+            #region Plolicy Chart 
+            dashboardChart.PolicyPieChartTotalCount = PolicyCHart.PolicyPieChartTotalCount == "" ? "0" : PolicyCHart.PolicyPieChartTotalCount;
+            dashboardChart.PolicyPieChartLabels = PolicyCHart.PolicyPieChartLabels == "" ? "0" : PolicyCHart.PolicyPieChartLabels;
+            dashboardChart.PolicyPieChartData1 = PolicyCHart.PolicyPieChartData1 == "" ? "0" : PolicyCHart.PolicyPieChartData1;
+            #endregion
+            #region Pie Chart
+            dashboardChart.PolicyPremiumPieChartTotalCount = premiumChart.PolicyPremiumPieChartTotalCount == "" ? "0" : premiumChart.PolicyPremiumPieChartTotalCount;
+            dashboardChart.PolicyPremiumPieChartLabels = premiumChart.PolicyPremiumPieChartLabels == "" ? "0" : premiumChart.PolicyPremiumPieChartLabels;
+            dashboardChart.PolicyPremiumPieChartData = premiumChart.PolicyPremiumPieChartData == "" ? "0" : premiumChart.PolicyPremiumPieChartData;
+            #endregion
+            return dashboardChart;
+        }
+
+        public static DashboardChart GetClaimsDashboardChart(Guid ParlourId, bool IsAdministrator, string UserName, bool IsSuperUser)
+        {
+            var barCharts = GetClaimsDashboardBarChart(ParlourId, IsAdministrator, UserName, IsSuperUser);
+            var PolicyCHart = ClaimPolicyPichart(ParlourId, IsAdministrator, UserName, IsSuperUser);
+            var premiumChart = ClaimPremiumCollectionChart(ParlourId, IsAdministrator, UserName, IsSuperUser);
             DashboardChart dashboardChart = new DashboardChart();
             #region Bar Chart 
             dashboardChart.ChartTotalCount = barCharts.ChartTotalCount == "" ? "0" : barCharts.ChartTotalCount;
@@ -344,6 +387,47 @@ namespace Funeral.BAL
             }
             return dashboardChart;
         }
+
+        public static DashboardChart GetClaimsDashboardBarChart(Guid ParlourId, bool IsAdministrator, string UserName, bool IsSuperUser)
+        {
+            DashboardChart dashboardChart = new DashboardChart();
+            try
+            {
+                DataTable dt = new DataTable();
+                SqlCommand com1 = new SqlCommand();
+                com1.CommandType = CommandType.StoredProcedure;
+                com1.Connection = new SqlConnection(ConfigurationManager.ConnectionStrings["FuneralConnection"].ConnectionString);
+                com1.CommandText = "GetUserDetailsByClaimsChart";
+                com1.Parameters.Add(new SqlParameter("@ParlourId", ParlourId));
+                com1.Parameters.Add(new SqlParameter("@IsAdmin", IsAdministrator));
+                com1.Parameters.Add(new SqlParameter("@UserName", UserName));
+                com1.Parameters.Add(new SqlParameter("@IsSuperUser", IsSuperUser));
+                SqlDataAdapter adp1 = new SqlDataAdapter(com1);
+                adp1.Fill(dt);
+                string[] x = new string[dt.Rows.Count];
+                decimal[] y = new decimal[dt.Rows.Count];
+                Int32 TotalUserCount = 0;
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    x[i] = Convert.ToString(dt.Rows[i]["CreateDate1"]);
+                    y[i] = Convert.ToInt32(dt.Rows[i]["CountUser"]);
+                    TotalUserCount = TotalUserCount + Convert.ToInt32(dt.Rows[i]["CountUser"]);
+                }
+                dashboardChart.ChartTotalCount = Convert.ToString(TotalUserCount);
+                string YAxis = string.Join(",", y);
+                string XAxis = string.Join(",", x);
+                dashboardChart.ChartLabels = XAxis;
+                dashboardChart.ChartData1 = YAxis;
+                dashboardChart.ChartData2 = YAxis;
+                dashboardChart.dataCollection = dt;
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex.ToString());
+            }
+            return dashboardChart;
+        }
+
         public static DashboardChart PolicyPichart(Guid ParlourId, bool IsAdministrator, string UserName, bool IsSuperUser)
         {
             DashboardChart dashboardChart = new DashboardChart();
@@ -389,6 +473,53 @@ namespace Funeral.BAL
 
             return dashboardChart;
         }
+
+        public static DashboardChart ClaimPolicyPichart(Guid ParlourId, bool IsAdministrator, string UserName, bool IsSuperUser)
+        {
+            DashboardChart dashboardChart = new DashboardChart();
+            try
+            {
+                DataTable dt = new DataTable();
+                SqlCommand com1 = new SqlCommand();
+                com1.CommandType = CommandType.StoredProcedure;
+                com1.Connection = new SqlConnection(ConfigurationManager.ConnectionStrings["FuneralConnection"].ConnectionString);
+                com1.CommandText = "PolicyStatusPieClaimsChart";
+                com1.Parameters.Add(new SqlParameter("@parlourid", ParlourId));
+                com1.Parameters.Add(new SqlParameter("@IsAdmin", IsAdministrator));
+                com1.Parameters.Add(new SqlParameter("@UserName", UserName));
+                com1.Parameters.Add(new SqlParameter("@IsSuperUser", IsSuperUser));
+                SqlDataAdapter adp1 = new SqlDataAdapter(com1);
+                adp1.Fill(dt);
+                string[] x = new string[dt.Rows.Count];
+                decimal[] y = new decimal[dt.Rows.Count];
+                Int32 TotalPolicy = 0;
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    if (Convert.ToString(dt.Rows[i]["PolicyStatus"]) == "")
+                    {
+                        x[i] = "'Not Defined'";
+                    }
+                    else
+                    {
+                        x[i] = "'" + Convert.ToString(dt.Rows[i]["PolicyStatus"]) + "'";
+                    }
+                    y[i] = Convert.ToInt32(dt.Rows[i]["PolicyStatusCount"]);
+                    TotalPolicy = TotalPolicy + Convert.ToInt32(dt.Rows[i]["PolicyStatusCount"]);
+                }
+                dashboardChart.PolicyPieChartTotalCount = TotalPolicy.ToString();
+                string YAxis = string.Join(",", y);
+                string XAxis = string.Join(",", x);
+                dashboardChart.PolicyPieChartLabels = XAxis;
+                dashboardChart.PolicyPieChartData1 = YAxis;
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex.ToString());
+            }
+
+            return dashboardChart;
+        }
+
         public static DashboardChart PremiumCollectionChart(Guid ParlourId, bool IsAdministrator, string UserName, bool IsSuperUser)
         {
             DashboardChart dashboardChart = new DashboardChart();
@@ -399,6 +530,44 @@ namespace Funeral.BAL
                 com1.CommandType = CommandType.StoredProcedure;
                 com1.Connection = new SqlConnection(ConfigurationManager.ConnectionStrings["FuneralConnection"].ConnectionString);
                 com1.CommandText = "PremiumCollectionChart";
+                com1.Parameters.Add(new SqlParameter("@parlourid", ParlourId));
+                com1.Parameters.Add(new SqlParameter("@IsAdmin", IsAdministrator));
+                com1.Parameters.Add(new SqlParameter("@UserName", UserName));
+                com1.Parameters.Add(new SqlParameter("@IsSuperUser", IsSuperUser));
+                SqlDataAdapter adp1 = new SqlDataAdapter(com1);
+                adp1.Fill(dt);
+                string[] x = new string[dt.Rows.Count];
+                decimal[] y = new decimal[dt.Rows.Count];
+                Int32 TotalPremiumCount = 0;
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    x[i] = Convert.ToString(dt.Rows[i]["DatePaid1"]);
+                    y[i] = Convert.ToInt32(dt.Rows[i]["CountUser"]);
+                    TotalPremiumCount = TotalPremiumCount + Convert.ToInt32(dt.Rows[i]["CountUser"]);
+                }
+                dashboardChart.PolicyPremiumPieChartTotalCount = TotalPremiumCount.ToString();
+                string YAxis = string.Join(",", y);
+                string XAxis = string.Join(",", x);
+                dashboardChart.PolicyPremiumPieChartLabels = XAxis;
+                dashboardChart.PolicyPremiumPieChartData = YAxis;
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex.ToString());
+            }
+            return dashboardChart;
+        }
+
+        public static DashboardChart ClaimPremiumCollectionChart(Guid ParlourId, bool IsAdministrator, string UserName, bool IsSuperUser)
+        {
+            DashboardChart dashboardChart = new DashboardChart();
+            try
+            {
+                DataTable dt = new DataTable();
+                SqlCommand com1 = new SqlCommand();
+                com1.CommandType = CommandType.StoredProcedure;
+                com1.Connection = new SqlConnection(ConfigurationManager.ConnectionStrings["FuneralConnection"].ConnectionString);
+                com1.CommandText = "PremiumCollectionClaimsChart";
                 com1.Parameters.Add(new SqlParameter("@parlourid", ParlourId));
                 com1.Parameters.Add(new SqlParameter("@IsAdmin", IsAdministrator));
                 com1.Parameters.Add(new SqlParameter("@UserName", UserName));
