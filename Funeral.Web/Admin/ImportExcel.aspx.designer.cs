@@ -157,6 +157,42 @@ namespace Funeral.Web.Admin {
         protected global::System.Web.UI.WebControls.GridView ImportedDataGriview;
         
         /// <summary>
+        /// btnExceptionReport control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnExceptionReport;
+        
+        /// <summary>
+        /// btnPremiumReport control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnPremiumReport;
+        
+        /// <summary>
+        /// btnConfirmAndSubmit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnConfirmAndSubmit;
+        
+        /// <summary>
+        /// lblImportStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblImportStatus;
+        
+        /// <summary>
         /// hdnnewImportedId control.
         /// </summary>
         /// <remarks>
@@ -173,24 +209,6 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnSelectedGridColumn;
-        
-        /// <summary>
-        /// btnConfirmAndSubmit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnConfirmAndSubmit;
-        
-        /// <summary>
-        /// btnExceptionReport control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnExceptionReport;
         
         /// <summary>
         /// hdnColumCount control.

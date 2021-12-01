@@ -1452,7 +1452,7 @@ namespace Funeral.DAL
             ObjParam[1] = new DbParameter("@IsAdmin", DbParameter.DbType.Bit, 0, IsAdministrator);
             ObjParam[2] = new DbParameter("@IsSuperUser", DbParameter.DbType.Bit, 0, IsSuperUser);
             ObjParam[3] = new DbParameter("@UserName", DbParameter.DbType.NVarChar, 0, UserName);
-            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetDashboardTodayPayment", ObjParam);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetClaimsDashboardTodayPayment", ObjParam);
         }
         public static DataTable GetClaimRightsCollectionByRoleId(int RoleId)
         {
