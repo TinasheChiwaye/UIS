@@ -1829,7 +1829,69 @@
                 else {
                     alert("Age not found in first tab");
                 }
+                BindDependencyDropdown($("#tab-3 #ddlPolicy").val());
             });
+
+            function BindDependencyDropdown(PlanId) {
+                var ddlCustomers = jQuery("#ddlDependentDependencyType");
+            ddlCustomers.empty().append('<option selected="selected" value="">Select Group.....</option>');
+            jQuery.ajax({
+                url: '@Url.Action("BindPolicyByPlanId", "Members")',
+                data: { Id: PlanId },
+                type: "post",
+                success: function (response) {
+                    ddlCustomers.empty().append('<option selected="selected" value="0">Please select</option>');
+                    jQuery.each(response, function () {
+                        ddlCustomers.append(jQuery("<option></option>").val(this['Text']).html(this['Text']));
+                    });
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        }
+            //$("#ddlDependentDependencyType").change(function () {
+            //    var GetPremiumForPolicyURl = $("#GetPolicyDetailsBetweenAge").val();
+            //    var UserTypeId = $(this).val();
+            //    var Control = $(this);
+            //    var DependentAge = $("#txtDependentAge").val();
+            //    if (DependentAge != "" && DependentAge != null) {
+            //        Control.after('<img id="ddlDependentDependencyType_loader" src="../../Content/images/ajax-loader.gif"/>');
+            //        var policyStartDate = dateFormat($("#tab-3 #txtPolicyStartDate").val(), 'mm/dd/yyyy', false);
+            //        var id = $("#tab-3 #ddlPolicy").val();
+            //        $('#tab-5 #txtDependentPremium').val(0);
+            //        $('#tab-5 #txtDependentCoverAmount').val(0);
+            //        if ($("#tab-3 #ddlPolicy :selected").val() != "") {
+            //            $.ajax({
+            //                url: GetPremiumForPolicyURl + "?id=" + id + "&date=" + policyStartDate + "&UserType=" + UserTypeId + "&Age=" + DependentAge,
+            //                type: "get",
+            //                cache: false,
+            //                success: function (result) {
+            //                    var DependentPremium = result[0] == null || result[0] == "" ? "0" : result[0];
+            //                    var DependentCoverAmount = result[4] == null || result[4] == "" ? "0" : result[4];
+            //                    $('#tab-5 #txtDependentPremium').val(DependentPremium);
+            //                    $('#tab-5 #txtDependentCoverAmount').val(DependentCoverAmount);
+            //                    var GetTotalPremium = parseFloat($('#tab-3 #txtTotalPremium').val()) + parseFloat(DependentPremium);
+            //                    $('#tab-3 #txtTotalPremium').val(currencySymbol + " " + GetTotalPremium);
+            //                    $("#ddlDependentDependencyType_loader").remove();
+            //                },
+            //                error: function (xhr, ajaxOptions, thrownError) {
+            //                    alert(thrownError);
+            //                    $("#ddlDependentDependencyType_loader").remove();
+            //                }
+            //            })
+            //        } else {
+            //            alert("Please select policy..!");
+            //            $("#ddlDependentDependencyType_loader").remove();
+            //        }
+            //    }
+            //    else {
+            //        alert("Please select dependent Age");
+            //    }
+            //});
             $("#ddlDependentDependencyType").change(function () {
                 var GetPremiumForPolicyURl = $("#GetPolicyDetailsBetweenAge").val();
                 var UserTypeId = $(this).val();
@@ -1869,7 +1931,6 @@
                     alert("Please select dependent Age");
                 }
             });
-
             // #endregion
 
             // #region ddlPolicyChange Jeenal Changes
@@ -3556,6 +3617,244 @@
     //#endregion
 
     //#region SaveUpdateDelete Dependants
+    //function SaveDependants() {
+    //    var SaveDependantURl = $("#SaveDependancy").val();
+
+    //    var lastName = $("#tab-5 #txtDependentLastname").val();
+    //    var DependentStatus = $("#tab-5 #ddl_DependentStatus").val();
+    //    var firstName = $("#tab-5 #txtDependentFirstname").val();
+    //    var birthDate = $("#tab-5 #txtDependentDateOfBirth").val();
+    //    var startDate = $("#tab-5 #txtDependentStartDate").val();
+    //    var premium = $("#tab-5 #txtDependentPremium").val();
+    //    var CoverAmount = $("#tab-5 #txtDependentCoverAmount").val();
+    //    var inceptionDate = $("#tab-5 #txtDependentInceptionDate").val();
+    //    var allFlag = true;
+    //    var lastNameFlag = true;
+    //    var firstNameFlag = true;
+    //    var birthDateFlag = true;
+    //    var startDateFlag = true;
+    //    var premiumFlag = false;
+    //    var inceptionDateFlag = true;
+    //    if(lastName == "" && firstName == "" && birthDate == "" && startDate == "" && premium == "" && inceptionDate == "")
+    //    {
+    //        $("#ValidationSummary4").hide();
+    //        $("#ValidationSummary4").html('');
+    //        $("#ValidationSummary4").show();
+    //        $("#ValidationSummary4").append('<li id="txtLastNameId">Please enter dependency Surname.</li>');
+    //        $("#ValidationSummary4").append('<li id="txtFirstNameId">Please enter dependency Full name.</li>');
+    //        $("#ValidationSummary4").append('<li id="txtBirthDateId">Please enter date of birth.</li>');
+    //        $("#ValidationSummary4").append('<li id="txtStartDateId">Please enter Start date.</li>');
+    //        $("#ValidationSummary4").append('<li id="txtPremiumId">Please enter premium.</li>');
+    //        $("#ValidationSummary4").append('<li id="txtInceptionDate">Please enter inception date.</li>');
+    //        allFlag = false;
+    //    }else{
+
+    //        if(lastName != ""){
+    //            //var regex = new RegExp("^[a-zA-Z]+$");
+    //             lastNameFlag = true;
+    //            //if (regex.test(lastName)) {
+    //            //    $("li#txtLastNameId").hide();
+    //            //    $("li#txtLastNameId").html('');
+    //            //    $("li#EnterLastNameid").hide();
+    //            //    $("li#EnterLastNameid").html('');
+
+    //            //}
+    //            //else
+    //            //{
+    //            //    $("li#txtLastNameid").hide();
+    //            //    $("li#txtLastNameid").html('');
+    //            //    $("li#EnterLastNameid").hide();
+    //            //    $("li#EnterLastNameid").html('');
+    //            //    $("#ValidationSummary4").show();
+    //            //    $("#ValidationSummary4").append('<li id="EnterLastNameid">Surname Enter Only characters.</li>');
+    //            //    lastNameFlag = false;
+    //            //}
+    //        }else{
+    //            $("li#txtLastNameid").hide();
+    //            $("li#txtLastNameid").html('');
+    //            $("li#EnterLastNameid").hide();
+    //            $("li#EnterLastNameid").html('');
+    //            $("#ValidationSummary4").show();
+    //            $("#ValidationSummary4").append('<li id="EnterLastNameid">Please enter dependency Surname.</li>');
+    //            lastNameFlag= false;
+    //        }
+
+
+    //        if(firstName != ""){
+    //            //var regex = new RegExp("^[a-zA-Z]+$");
+    //             firstNameFlag = true;
+    //            //if (regex.test(firstName)) {
+    //            //    $("li#txtFirstNameId").hide();
+    //            //    $("li#txtFirstNameId").html('');
+    //            //    $("li#EnterFirstNameid").hide();
+    //            //    $("li#EnterFirstNameid").html('');
+    //            //    firstNameFlag = true;
+    //            //}
+    //            //else
+    //            //{
+    //            //    $("li#txtFirstNameId").hide();
+    //            //    $("li#txtFirstNameId").html('');
+    //            //    $("li#EnterFirstNameid").hide();
+    //            //    $("li#EnterFirstNameid").html('');
+    //            //    $("#ValidationSummary4").show();
+    //            //    $("#ValidationSummary4").append('<li id="txtFirstNameId">Full name Enter Only Characters.</li>');
+    //            //    firstNameFlag = false;
+    //            //}
+    //        }else{
+    //            $("li#txtFirstNameId").hide();
+    //            $("li#txtFirstNameId").html('');
+    //            $("li#EnterFirstNameid").hide();
+    //            $("li#EnterFirstNameid").html('');
+    //            $("#ValidationSummary4").show();
+    //            $("#ValidationSummary4").append('<li id="EnterFirstNameid">Please enter dependency Full name.</li>');
+    //            firstNameFlag = false;
+    //        }
+
+
+    //        if(birthDate != ""){
+    //            $("li#txtBirthDateId").hide();
+    //            $("li#txtBirthDateId").html('');
+    //            $("li#EnterBirthDateid").hide();
+    //            $("li#EnterBirthDateid").html('');
+    //            birthDateFlag = true;
+    //        }else{
+    //            $("li#txtBirthDateId").hide();
+    //            $("li#txtBirthDateId").html('');
+    //            $("li#EnterBirthDateid").hide();
+    //            $("li#EnterBirthDateid").html('');
+    //            $("#ValidationSummary4").show();
+    //            $("#ValidationSummary4").append('<li id="EnterBirthDateid">Please enter date of birth.</li>');
+    //            birthDateFlag = false;
+    //        }
+
+    //        if(inceptionDate != ""){
+    //            $("li#txtInceptionDate").hide();
+    //            $("li#txtInceptionDate").html('');
+    //            $("li#EnterInceptionDateid").hide();
+    //            $("li#EnterInceptionDateid").html('');
+    //            inceptionDateFlag = true;
+    //        }else{
+    //            $("li#txtInceptionDate").hide();
+    //            $("li#txtInceptionDate").html('');
+    //            $("li#EnterInceptionDateid").hide();
+    //            $("li#EnterInceptionDateid").html('');
+    //            $("#ValidationSummary4").show();
+    //            $("#ValidationSummary4").append('<li id="EnterInceptionDateid">Please enter inception date.</li>');
+    //            inceptionDateFlag = false;
+    //        }
+
+    //        if(startDate != ""){
+    //            $("li#txtStartDateId").hide();
+    //            $("li#txtStartDateId").html('');
+    //            $("li#EnterStartDateid").hide();
+    //            $("li#EnterStartDateid").html('');
+    //            startDateFlag = true;
+    //        }else{
+    //            $("li#txtStartDateId").hide();
+    //            $("li#txtStartDateId").html('');
+    //            $("li#EnterStartDateid").hide();
+    //            $("li#EnterStartDateid").html('');
+    //            $("#ValidationSummary4").show();
+    //            $("#ValidationSummary4").append('<li id="EnterStartDateid">Please enter Start date.</li>');
+    //            startDateFlag = false;
+    //        }
+
+    //        if(premium != ""){
+    //            $("li#txtPremiumId").hide();
+    //            $("li#txtPremiumId").html('');
+    //            $("li#EnterPremiumid").hide();
+    //            $("li#EnterPremiumid").html('');
+    //            premiumFlag = true;
+    //        }else{
+    //            $("li#txtPremiumId").hide();
+    //            $("li#txtPremiumId").html('');
+    //            $("li#EnterPremiumid").hide();
+    //            $("li#EnterPremiumid").html('');
+    //            $("#ValidationSummary4").show();
+    //            $("#ValidationSummary4").append('<li id="EnterPremiumid">Please enter premium.</li>');
+    //            premiumFlag = false;
+    //        }
+    //    }
+
+    //    if(allFlag == false || lastNameFlag == false || firstNameFlag == false || birthDateFlag == false || startDateFlag == false || premiumFlag == false || inceptionDateFlag == false)
+    //    {
+    //        return false;
+    //    }else{
+
+    //        var data = {
+    //            Surname: $("#tab-5 #txtDependentLastname").val(),
+    //            DependentStatus: $("#tab-5 #ddl_DependentStatus").val(),
+    //            FullName: $("#tab-5 #txtDependentFirstname").val(),
+    //            IDNumber: $("#tab-5 #txtDependentIdNumber").val(),
+    //            DateOfBirth: dateFormat($("#tab-5 #txtDependentDateOfBirth").val(), 'dd-mm-yyyy', false),
+    //            Age: $("#tab-5 #txtDependentAge").val(),
+    //            Gender: $("input[name='dependentGender']:checked").val(),
+    //            StartDate: dateFormat($("#tab-5 #txtDependentStartDate").val(), 'dd-mm-yyyy', false),
+    //            InceptionDate: dateFormat($("#tab-5 #txtDependentInceptionDate").val(), 'dd-mm-yyyy', false),
+    //            CoverDate: dateFormat($("#tab-5 #txtDependentCoverDate").val(), 'dd-mm-yyyy', false),
+    //            DependencyType: $("#tab-5 #ddlDependentDependencyType :selected").text(),
+    //            Premium: $("#tab-5 #txtDependentPremium").val(),
+    //            pkiDependentID: 0,
+    //            MemberId: pkiMemberId,
+    //            Relationship: $("#tab-5 #ddlDependentDependencyType :selected").val(),
+    //            Cover:$("#tab-5 #txtDependentCoverAmount").val()
+    //        };
+
+    //        jQuery.ajax({
+    //            url: SaveDependantURl,
+    //            data: JSON.stringify(data),
+    //            type: 'post',
+    //            contentType: 'application/json; charset=utf-8',
+    //            dataType: 'json',
+    //            success: function (result) {
+
+    //                var isSuccessful = (result['success']);
+    //                var maxLenghDependancy = (result['maxLenghDependancy']);
+    //                if (isSuccessful != false) {
+    //                    if (maxLenghDependancy == true) {
+    //                        dependancyDatatable.fnDraw();
+    //                        $("#tab-5 #txtDependentLastname").val('');
+    //                        $("#tab-5 #txtDependentFirstname").val('');
+    //                        $("#tab-5 #txtDependentIdNumber").val('');
+    //                        $("#tab-5 #txtDependentAge").val('');
+    //                        $("input[name='dependentGender']:checked").val('');
+
+    //                        $('.dependantInceptionDate').datepicker({ format: 'dd MM yyyy', autoclose: true }).datepicker("setDate", Date());
+    //                        //$('.dependantInceptionDate').datepicker('setDate', null);
+    //                        $('.dependantStartDate').datepicker({ format: 'dd MM yyyy', autoclose: true }).datepicker("setDate", Date());
+    //                        //$('.dependantCoverDate').datepicker({ format: 'dd MM yyyy' }).datepicker("setDate", Date());
+    //                        $('.dependantDOB').datepicker({ format: 'dd MM yyyy', autoclose: true }).datepicker("setDate", Date());
+
+    //                        $("#tab-5 #ddlDependentDependencyType").val('');
+    //                        $("#tab-5 #txtDependentPremium").val('');
+
+    //                        $("#btnSaveDependent").show();
+    //                        $("#btnUpdateDependent").hide();
+    //                        //$("#btnSaveDependent").prop('disabled', false);
+    //                        //$("#btnUpdateDependent").prop('disabled', true);
+
+    //                        //$("#tab-5 #txtDepnduncyType").text('');
+    //                        //$("#tab-5 #txtPremium").val('');
+    //                    }
+    //                    else {
+    //                         var errors = "this member has already added 100 dependencies ";
+    //                    displayUpdateDependantValidationErrors_directMsg(errors);
+    //                    }
+    //                }
+    //                else {
+    //                    var errors = result['errors'];
+    //                    displayUpdateDependantValidationErrors(errors);
+    //                }
+    //            },
+    //            error: function (xhr, ajaxOptions, thrownError) {
+    //                alert(thrownError);
+    //            }
+    //        })
+
+    //        return true;
+    //    }
+    //}
+
     function SaveDependants() {
         var SaveDependantURl = $("#SaveDependancy").val();
 
@@ -3574,23 +3873,22 @@
         var startDateFlag = true;
         var premiumFlag = false;
         var inceptionDateFlag = true;
-        if(lastName == "" && firstName == "" && birthDate == "" && startDate == "" && premium == "" && inceptionDate == "")
-        {
+        if (lastName == "" && firstName == "" && birthDate == "" && startDate == "" && premium == "" && inceptionDate == "") {
             $("#ValidationSummary4").hide();
             $("#ValidationSummary4").html('');
             $("#ValidationSummary4").show();
-            $("#ValidationSummary4").append('<li id="txtLastNameId">Please enter dependency Surname.</li>');
-            $("#ValidationSummary4").append('<li id="txtFirstNameId">Please enter dependency Full name.</li>');
-            $("#ValidationSummary4").append('<li id="txtBirthDateId">Please enter date of birth.</li>');
-            $("#ValidationSummary4").append('<li id="txtStartDateId">Please enter Start date.</li>');
-            $("#ValidationSummary4").append('<li id="txtPremiumId">Please enter premium.</li>');
-            $("#ValidationSummary4").append('<li id="txtInceptionDate">Please enter inception date.</li>');
+            $("#ValidationSummary4").append('<li id="txtLastNameId">Please enter Dependency Surname.</li>');
+            $("#ValidationSummary4").append('<li id="txtFirstNameId">Please enter Dependency Full Name.</li>');
+            $("#ValidationSummary4").append('<li id="txtBirthDateId">Please enter Date Of Birth.</li>');
+            $("#ValidationSummary4").append('<li id="txtStartDateId">Please enter Start Date.</li>');
+            $("#ValidationSummary4").append('<li id="txtPremiumId">Please enter Premium.</li>');
+            $("#ValidationSummary4").append('<li id="txtInceptionDate">Please enter Inception Date.</li>');
             allFlag = false;
-        }else{
+        } else {
 
-            if(lastName != ""){
+            if (lastName != "") {
                 //var regex = new RegExp("^[a-zA-Z]+$");
-                 lastNameFlag = true;
+                lastNameFlag = true;
                 //if (regex.test(lastName)) {
                 //    $("li#txtLastNameId").hide();
                 //    $("li#txtLastNameId").html('');
@@ -3608,20 +3906,20 @@
                 //    $("#ValidationSummary4").append('<li id="EnterLastNameid">Surname Enter Only characters.</li>');
                 //    lastNameFlag = false;
                 //}
-            }else{
+            } else {
                 $("li#txtLastNameid").hide();
                 $("li#txtLastNameid").html('');
                 $("li#EnterLastNameid").hide();
                 $("li#EnterLastNameid").html('');
                 $("#ValidationSummary4").show();
                 $("#ValidationSummary4").append('<li id="EnterLastNameid">Please enter dependency Surname.</li>');
-                lastNameFlag= false;
+                lastNameFlag = false;
             }
 
 
-            if(firstName != ""){
+            if (firstName != "") {
                 //var regex = new RegExp("^[a-zA-Z]+$");
-                 firstNameFlag = true;
+                firstNameFlag = true;
                 //if (regex.test(firstName)) {
                 //    $("li#txtFirstNameId").hide();
                 //    $("li#txtFirstNameId").html('');
@@ -3639,7 +3937,7 @@
                 //    $("#ValidationSummary4").append('<li id="txtFirstNameId">Full name Enter Only Characters.</li>');
                 //    firstNameFlag = false;
                 //}
-            }else{
+            } else {
                 $("li#txtFirstNameId").hide();
                 $("li#txtFirstNameId").html('');
                 $("li#EnterFirstNameid").hide();
@@ -3650,13 +3948,13 @@
             }
 
 
-            if(birthDate != ""){
+            if (birthDate != "") {
                 $("li#txtBirthDateId").hide();
                 $("li#txtBirthDateId").html('');
                 $("li#EnterBirthDateid").hide();
                 $("li#EnterBirthDateid").html('');
                 birthDateFlag = true;
-            }else{
+            } else {
                 $("li#txtBirthDateId").hide();
                 $("li#txtBirthDateId").html('');
                 $("li#EnterBirthDateid").hide();
@@ -3666,13 +3964,13 @@
                 birthDateFlag = false;
             }
 
-            if(inceptionDate != ""){
+            if (inceptionDate != "") {
                 $("li#txtInceptionDate").hide();
                 $("li#txtInceptionDate").html('');
                 $("li#EnterInceptionDateid").hide();
                 $("li#EnterInceptionDateid").html('');
                 inceptionDateFlag = true;
-            }else{
+            } else {
                 $("li#txtInceptionDate").hide();
                 $("li#txtInceptionDate").html('');
                 $("li#EnterInceptionDateid").hide();
@@ -3682,13 +3980,13 @@
                 inceptionDateFlag = false;
             }
 
-            if(startDate != ""){
+            if (startDate != "") {
                 $("li#txtStartDateId").hide();
                 $("li#txtStartDateId").html('');
                 $("li#EnterStartDateid").hide();
                 $("li#EnterStartDateid").html('');
                 startDateFlag = true;
-            }else{
+            } else {
                 $("li#txtStartDateId").hide();
                 $("li#txtStartDateId").html('');
                 $("li#EnterStartDateid").hide();
@@ -3698,13 +3996,13 @@
                 startDateFlag = false;
             }
 
-            if(premium != ""){
+            if (premium != "") {
                 $("li#txtPremiumId").hide();
                 $("li#txtPremiumId").html('');
                 $("li#EnterPremiumid").hide();
                 $("li#EnterPremiumid").html('');
                 premiumFlag = true;
-            }else{
+            } else {
                 $("li#txtPremiumId").hide();
                 $("li#txtPremiumId").html('');
                 $("li#EnterPremiumid").hide();
@@ -3715,10 +4013,9 @@
             }
         }
 
-        if(allFlag == false || lastNameFlag == false || firstNameFlag == false || birthDateFlag == false || startDateFlag == false || premiumFlag == false || inceptionDateFlag == false)
-        {
+        if (allFlag == false || lastNameFlag == false || firstNameFlag == false || birthDateFlag == false || startDateFlag == false || premiumFlag == false || inceptionDateFlag == false) {
             return false;
-        }else{
+        } else {
 
             var data = {
                 Surname: $("#tab-5 #txtDependentLastname").val(),
@@ -3736,7 +4033,7 @@
                 pkiDependentID: 0,
                 MemberId: pkiMemberId,
                 Relationship: $("#tab-5 #ddlDependentDependencyType :selected").val(),
-                Cover:$("#tab-5 #txtDependentCoverAmount").val()
+                Cover: $("#tab-5 #txtDependentCoverAmount").val()
             };
 
             jQuery.ajax({
@@ -3746,7 +4043,7 @@
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 success: function (result) {
-
+                    var ageLimit = (result['ageLimit']);
                     var isSuccessful = (result['success']);
                     var maxLenghDependancy = (result['maxLenghDependancy']);
                     if (isSuccessful != false) {
@@ -3769,15 +4066,36 @@
 
                             $("#btnSaveDependent").show();
                             $("#btnUpdateDependent").hide();
+
+
+                            var $ul = $('#AddUpdateDependantValidationSummary > ul');
+                            $ul.empty();
+                            //var errors = "";
+                            //displayUpdateDependantValidationErrors_directMsg(errors).empty();
                             //$("#btnSaveDependent").prop('disabled', false);
                             //$("#btnUpdateDependent").prop('disabled', true);
 
                             //$("#tab-5 #txtDepnduncyType").text('');
-                            //$("#tab-5 #txtPremium").val('');
+                            //$("#tab-5 #txtPremium").val('')
                         }
-                        else {
-                             var errors = "this member has already added 100 dependencies ";
-                        displayUpdateDependantValidationErrors_directMsg(errors);
+                        //else if (ageLimit == false) {
+                        //    var errors = "The age of this dependent is not supported under this plan";
+                        //    displayUpdateDependantValidationErrors_directMsg(errors);
+
+                        //}
+                        //else if (maxLenghDependancy == false) {
+                        //    var errors = "This member has reached limit for this dependent type under this plan";
+                        //displayUpdateDependantValidationErrors_directMsg(errors);
+                        //}
+                    }
+                    else if (isSuccessful == false) {
+                        if (ageLimit == false) {
+                            var errors = "The age of this dependent is not supported under this plan"
+                            displayUpdateDependantValidationErrors_directMsg(errors);
+                        }
+                        else if (maxLenghDependancy == false) {
+                            var errors = "This member has reached limit for this dependent type under this plan"
+                            displayUpdateDependantValidationErrors_directMsg(errors);
                         }
                     }
                     else {
@@ -3788,6 +4106,7 @@
                 error: function (xhr, ajaxOptions, thrownError) {
                     alert(thrownError);
                 }
+
             })
 
             return true;

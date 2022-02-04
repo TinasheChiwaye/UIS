@@ -113,13 +113,13 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     @Html.Label("Age From", new { @class = "control-label" })
-                                    @Html.DropDownListFor(m => m.WaitingPeriod, new SelectList(NumericDropdownList.Take(19).ToList(), "Text", "Value", Model.WaitingPeriod), new { @class = "form-control" })
+                                    @Html.DropDownListFor(m => m.AgeFrom, new SelectList(NumericDropdownList.Take(101).ToList(), "Text", "Value", Model.WaitingPeriod), new { @class = "form-control" })
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     @Html.Label("Age To", new { @class = "control-label" })
-                                    @Html.DropDownListFor(m => m.PolicyLaps, new SelectList(NumericDropdownList.Take(13).ToList(), "Text", "Value", Model.PolicyLaps), new { @class = "form-control" })
+                                    @Html.DropDownListFor(m => m.AgeTo, new SelectList(NumericDropdownList.Take(101).ToList(), "Text", "Value", Model.PolicyLaps), new { @class = "form-control" })
                                 </div>
                             </div>
                         </div>
@@ -145,9 +145,19 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            @Html.Label("Select Underwriter", new { @class = "control-label" })
-                            @Html.DropDownListFor(m => m.UnderwriterId, new SelectList(Model.UnderwriterList, "PkiUnderwriterId", "UnderwriterName", Model.UnderwriterId), "Select Underwriter", new { @class = "form-control", @id = "ddlUnderwriterList" })
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    @Html.Label("Select Underwriter", new { @class = "control-label" })
+                                    @Html.DropDownListFor(m => m.UnderwriterId, new SelectList(Model.UnderwriterList, "PkiUnderwriterId", "UnderwriterName", Model.UnderwriterId), "Select Underwriter", new { @class = "form-control", @id = "ddlUnderwriterList" })
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    @Html.Label("Number of Dependents", new { @class = "control-label" })
+                                    @Html.DropDownListFor(m => m.NumberOfDependents, new SelectList(NumericDropdownList.Take(50).ToList(), "Text", "Value", Model.PolicyLaps), new { @class = "form-control" })
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -198,12 +208,12 @@
                                                 @Html.ValidationMessageFor(m => m.planCreators[i].UserTypeId, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                                             </td>
                                             <td>
-                                                @Html.DropDownListFor(m => m.planCreators[i].FromAge, new SelectList(NumericDropdownList, "Text", "Value", Model.planCreators[i].FromAge), new { @class = "form-control" })
-                                                @Html.ValidationMessageFor(m => m.planCreators[i].FromAge, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                                @Html.DropDownListFor(m => m.planCreators[i].AgeFrom, new SelectList(NumericDropdownList, "Text", "Value", Model.planCreators[i].AgeFrom), new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(m => m.planCreators[i].AgeFrom, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                                             </td>
                                             <td>
-                                                @Html.DropDownListFor(m => m.planCreators[i].ToAge, new SelectList(NumericDropdownList, "Text", "Value", Model.planCreators[i].ToAge), new { @class = "form-control" })
-                                                @Html.ValidationMessageFor(m => m.planCreators[i].ToAge, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                                @Html.DropDownListFor(m => m.planCreators[i].AgeTo, new SelectList(NumericDropdownList, "Text", "Value", Model.planCreators[i].AgeFrom), new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(m => m.planCreators[i].AgeTo, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                                             </td>
                                             <td>
                                                 @Html.TextBoxFor(m => m.planCreators[i].Cover, null, new { @class = "form-control", @type = "number", placeholder = "Enter Cover Amount" })
@@ -319,8 +329,8 @@
         msg += '<tr><td>';
         msg += '<input data-val="false" name="planCreators['+rowCount+'].PlanCreatorId" type="hidden" value="0">';
         msg += '<select class="form-control usertypeDropdown"   name="planCreators['+rowCount+'].UserTypeId"><span class="field-validation-valid text-danger" data-valmsg-for="planCreators['+rowCount+'].UserTypeId" data-valmsg-replace="true" style="font-weight:bold"></span></select></td>';
-        msg += ' <td><select class="form-control AgeDropdown"  name="planCreators['+rowCount+'].FromAge"><span class="field-validation-valid text-danger" data-valmsg-for="planCreators['+rowCount+'].FromAge" data-valmsg-replace="true" style="font-weight:bold"></span></select></td>';
-        msg += '<td><select class="form-control AgeDropdown"  name="planCreators['+rowCount+'].ToAge"><span class="field-validation-valid text-danger" data-valmsg-for="planCreators['+rowCount+'].ToAge" data-valmsg-replace="true" style="font-weight:bold"></span></select></td>';
+        msg += ' <td><select class="form-control AgeDropdown"  name="planCreators['+rowCount+'].FromAge"><span class="field-validation-valid text-danger" data-valmsg-for="planCreators['+rowCount+'].AgeFrom" data-valmsg-replace="true" style="font-weight:bold"></span></select></td>';
+        msg += '<td><select class="form-control AgeDropdown"  name="planCreators['+rowCount+'].ToAge"><span class="field-validation-valid text-danger" data-valmsg-for="planCreators['+rowCount+'].AgeTo" data-valmsg-replace="true" style="font-weight:bold"></span></select></td>';
         msg += '<td><input type="number" class="form-control" type="number" placeholder="Enter Cover Amount"  value="0"  name="planCreators['+rowCount+'].Cover" required/><span class="field-validation-valid text-danger" data-valmsg-for="planCreators['+rowCount+'].Cover" data-valmsg-replace="true" style="font-weight:bold"></span></td>';
         msg += '<td><input type="number" class="form-control" type="number" placeholder="Enter Premium Amount" value="0"  name="planCreators['+rowCount+'].Premium" required/><span class="field-validation-valid text-danger" data-valmsg-for="planCreators['+rowCount+'].Premium" data-valmsg-replace="true" style="font-weight:bold"></span></td>';
         msg += '<td><input type="number" class="form-control" type="number" placeholder="Enter Underwriter Cover Amount" value="0"  name="planCreators['+rowCount+'].UnderwriterCover" required/><span class="field-validation-valid text-danger" data-valmsg-for="planCreators['+rowCount+'].UnderwriterCover" data-valmsg-replace="true" style="font-weight:bold"></span></td>';

@@ -766,7 +766,7 @@ namespace Funeral.DAL
         #region Familydependencty
         public static int SaveFamilyDependency(FamilyDependencyModel model)
         {
-            DbParameter[] ObjParam = new DbParameter[17];
+            DbParameter[] ObjParam = new DbParameter[18];
             ObjParam[0] = new DbParameter("@FullName", DbParameter.DbType.VarChar, 0, model.FullName);
             // ObjParam[1] = new DbParameter("@ImageFile", SqlDbType.Binary , 1000, model.ImageFile);
             ObjParam[1] = new DbParameter("@Surname", DbParameter.DbType.VarChar, 0, model.Surname);
@@ -785,6 +785,7 @@ namespace Funeral.DAL
             ObjParam[14] = new DbParameter("@DependentStatus", DbParameter.DbType.NVarChar, 0, model.DependentStatus);
             ObjParam[15] = new DbParameter("@Cover", DbParameter.DbType.Decimal, 0, model.Cover);
             ObjParam[16] = new DbParameter("@Passport", DbParameter.DbType.VarChar, 0, String.IsNullOrWhiteSpace(model.Passport) ? (object)DBNull.Value : (object)model.Passport);
+            ObjParam[17] = new DbParameter("@ModifiedUser", DbParameter.DbType.VarChar, 0, model.ModifiedUser);
 
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "SaveFamilyDependency_NEW", ObjParam));
         }
@@ -1157,6 +1158,44 @@ namespace Funeral.DAL
 
 
         //============TEST END=============
+
+        public static DataTable GetPlanCreatorByIDdt(int ID, Guid ParlourId, int UserId)
+        {
+            DbParameter[] ObjParam = new DbParameter[3];
+            ObjParam[0] = new DbParameter("@ID", DbParameter.DbType.Int, 0, ID);
+            ObjParam[1] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+            ObjParam[2] = new DbParameter("@UserId", DbParameter.DbType.Int, 0, UserId);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetPlanByIDdt_New", ObjParam);
+        }
+        public static DataTable GetPlanByIDdt(int ID, Guid ParlourId)
+        {
+            DbParameter[] ObjParam = new DbParameter[2];
+            ObjParam[0] = new DbParameter("@ID", DbParameter.DbType.Int, 0, ID);
+            ObjParam[1] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetPlanByIDdt", ObjParam);
+        }
+        public static DataTable GetUserTypesByPlanID(Guid Parlourid, int Id)
+        {
+            DbParameter[] ObjParam = new DbParameter[2];
+            ObjParam[0] = new DbParameter("@parlourId", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
+            ObjParam[1] = new DbParameter("@planID", DbParameter.DbType.Int, 0, Id);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetUserTypesByPlanID", ObjParam);
+        }
+        public static DataTable GetUserTypesByMemberID(int MemberId, Guid Parlourid, int Id)
+        {
+            DbParameter[] ObjParam = new DbParameter[3];
+            ObjParam[0] = new DbParameter("@parlourId", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
+            ObjParam[1] = new DbParameter("@MemberId", DbParameter.DbType.Int, 0, MemberId);
+            ObjParam[2] = new DbParameter("@planID", DbParameter.DbType.Int, 0, Id);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetUserTypesByMemberID", ObjParam);
+        }
+        public static DataTable GetPlanByPlanID(int ID, Guid ParlourId)
+        {
+            DbParameter[] ObjParam = new DbParameter[2];
+            ObjParam[0] = new DbParameter("@ID", DbParameter.DbType.Int, 0, ID);
+            ObjParam[1] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetPlanByPlanID", ObjParam);
+        }
 
 
     }

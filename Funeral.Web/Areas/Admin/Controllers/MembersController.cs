@@ -41,8 +41,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 ViewBag.HasEditRight = HasEditRight;
                 ViewBag.HasDeleteRight = HasDeleteRight;
                 ViewBag.totalPremium = Currency;
-                ViewBag.SocietyLists = CommonBAL.GetBranchByParlourId(CurrentParlourId);
-                //ViewBag.SocietyLists = CommonBAL.GetSocietyByParlourId(CurrentParlourId);
+                //ViewBag.SocietyLists = CommonBAL.GetBranchByParlourId(CurrentParlourId);
+                ViewBag.SocietyLists = CommonBAL.GetSocietyByParlourId(CurrentParlourId);
                 LoadStatus();
                 LoadEntriesCount();
                 BindCompanyList("Search");
@@ -213,7 +213,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
             Managemembers.CustomGrouping2 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom2)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
             Managemembers.CustomGrouping3 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom3)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
             Managemembers.Member = member;
-            Managemembers.DependencyTypeList = CommonBAL.GetUserTypes().Select(x => new SelectListItem() { Text = x.UserTypeName, Value = x.UserTypeId.ToString() });
+            //Managemembers.DependencyTypeList = CommonBAL.GetUserTypes().Select(x => new SelectListItem() { Text = x.UserTypeName, Value = x.UserTypeId.ToString() });
+            Managemembers.DependencyTypeList = CommonBAL.GetUserTypesByMemberID(MemberId, CurrentParlourId, member.fkiPlanID).Select(x => new SelectListItem() { Text = x.UserTypeName, Value = x.CreatorID.ToString() });
             ViewBag.Provinces = CommonBAL.GetProvinces();
             Managemembers.ExtendedFamily = MembersBAL.GetExtendedFamilyList(CurrentParlourId, MemberId).Select(x => new SelectListItem() { Text = x.FullName, Value = x.pkiDependentID.ToString() });
 
@@ -684,11 +685,17 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 ModelState["FK_MemberId"].Errors.Clear();
 
             //PlanModel Plan = new PlanModel();
+            PlanModel objPlans = MembersBAL.GetPlanByPlanID(Member.fkiPlanID, CurrentParlourId);
 
             if (MembersBAL.GetMemberByIDNumber(Member.IDNumber, this.ParlourId, Member.fkiPlanID) != null && Member.pkiMemberID == 0)
             {
                 //return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member Already Exists" + "</li>").ToList() }, JsonRequestBehavior.AllowGet);
                 return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member ID Number already exists on this Plan." + "</li>").First() }, JsonRequestBehavior.AllowGet);
+            }
+            else if (Member.Age < objPlans.AgeFrom || Member.Age > objPlans.AgeTo)
+            {
+                return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Memeber age is not supported under this Plan." + "</li>").First() }, JsonRequestBehavior.AllowGet);
+
             }
 
 
@@ -811,90 +818,207 @@ namespace Funeral.Web.Areas.Admin.Controllers
             return Json(Member, JsonRequestBehavior.AllowGet);
         }
 
+        //[HttpPost]
+        //public JsonResult SaveDependancy([System.Web.Http.FromBody]FamilyDependencyModel dependency)
+        //{
+        //    //if (!ModelState.IsValid)
+        //    //{
+        //    //    return Json(new { success = false, errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList() }, JsonRequestBehavior.AllowGet);
+        //    //}
+
+        //    //if (dependency.IDNumber == "" || dependency.IDNumber == string.Empty)
+        //    //    dependency.IDNumber = "0";
+
+        //    //FamilyDependencyModel ObjFamilyDependencyModel;
+        //    //ObjFamilyDependencyModel = MembersBAL.GetDependencByIDNum(dependency.IDNumber, CurrentParlourId, MemberId);
+
+        //    //if (ObjFamilyDependencyModel == null)
+        //    //{
+        //    //    ObjFamilyDependencyModel = new FamilyDependencyModel();
+        //    //    ObjFamilyDependencyModel.Age = AgeFromDOB(Convert.ToDateTime(dependency.DateOfBirth));
+        //    //    ObjFamilyDependencyModel.parlourid = CurrentParlourId;
+        //    //    ObjFamilyDependencyModel.DependentStatus = dependency.DependentStatus;
+        //    //    ObjFamilyDependencyModel.MemberId = this.MemberId;
+        //    //    if (dependency.StartDate == null || dependency.StartDate == DateTime.MinValue)
+        //    //    {
+        //    //        ObjFamilyDependencyModel.StartDate = DateTime.Now;
+        //    //    }
+        //    //    else
+        //    //    {
+        //    //        ObjFamilyDependencyModel.StartDate = dependency.StartDate;
+        //    //    }
+        //    //    if (dependency.CoverDate == null || dependency.CoverDate == DateTime.MinValue)
+        //    //    {
+        //    //        ObjFamilyDependencyModel.CoverDate = DateTime.Now;
+        //    //    }
+        //    //    else
+        //    //    {
+        //    //        ObjFamilyDependencyModel.CoverDate = dependency.CoverDate;
+        //    //    }
+        //    //    if (dependency.InceptionDate == null || dependency.InceptionDate == DateTime.MinValue)
+        //    //    {
+        //    //        ObjFamilyDependencyModel.InceptionDate = DateTime.Now;
+        //    //    }
+        //    //    else
+        //    //    {
+        //    //        ObjFamilyDependencyModel.InceptionDate = dependency.InceptionDate;
+        //    //    }
+        //    //    if (dependency.DateOfBirth == null || dependency.DateOfBirth == DateTime.MinValue)
+        //    //    {
+        //    //        ObjFamilyDependencyModel.DateOfBirth = DateTime.Now;
+        //    //    }
+        //    //    else
+        //    //    {
+        //    //        ObjFamilyDependencyModel.DateOfBirth = dependency.DateOfBirth;
+        //    //    }
+        //    //    ObjFamilyDependencyModel.FullName = dependency.FullName;
+        //    //    ObjFamilyDependencyModel.Surname = dependency.Surname;
+        //    //    ObjFamilyDependencyModel.IDNumber = dependency.IDNumber;
+        //    //    ObjFamilyDependencyModel.Gender = dependency.Gender == null ? "male" : dependency.Gender;
+        //    //    ObjFamilyDependencyModel.Relationship = Convert.ToInt32(dependency.Relationship);
+        //    //    ObjFamilyDependencyModel.DependencyType = dependency.DependencyType;
+        //    //    ObjFamilyDependencyModel.Premium = dependency.Premium;
+        //    //    ObjFamilyDependencyModel.Cover = dependency.Cover;
+        //    //    ObjFamilyDependencyModel.Passport = dependency.Passport;
+
+        //    //}
+        //    //else
+        //    //{
+        //    //    return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Dependent already exists." + "</li>").First() }, JsonRequestBehavior.AllowGet);
+        //    //}
+
+
+        //    //if (MembersBAL.CheckDependencyCount(ObjFamilyDependencyModel) < 100)
+        //    //{
+        //    //    int documentId = MembersBAL.SaveFamilyDependency(ObjFamilyDependencyModel);
+        //    //    return Json(new { success = true, maxLenghDependancy = true, Dependency = dependency }, JsonRequestBehavior.AllowGet);
+        //    //}
+        //    //else
+        //    //{
+        //    //    return Json(new { success = true, maxLenghDependancy = false, Dependency = dependency }, JsonRequestBehavior.AllowGet);
+        //    //}
+        //    if (MembersBAL.GetDependencByIDNum(dependency.IDNumber, CurrentParlourId, MemberId) != null && dependency.pkiDependentID == 0)
+        //    {
+        //        return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Dependent already exists." + "</li>").First() }, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return Json(new { success = false, errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList() }, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    if (dependency.IDNumber == "" || dependency.IDNumber == string.Empty)
+        //        dependency.IDNumber = "0";
+
+        //    FamilyDependencyModel ObjFamilyDependencyModel;
+        //    ObjFamilyDependencyModel = MembersBAL.GetDependencByIDNum(dependency.IDNumber, CurrentParlourId, MemberId);
+        //    PlanCreator ObjPlanModel = MembersBAL.GetPlanCreatorByID(MemberId, CurrentParlourId, dependency.Relationship);
+        //    PlanModel ObjMemberPlanModel = MembersBAL.GetPlanByID(MemberId, CurrentParlourId);
+
+        //    try
+        //    {
+        //        if (ObjFamilyDependencyModel != null)
+        //        {
+        //            return Json(new { success = false, errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList() }, JsonRequestBehavior.AllowGet);
+        //        }
+        //    }
+        //    catch (System.Exception ex)
+        //    {
+
+        //        throw new System.Exception(ex.Message.ToString());
+        //    }
+
+
+        //    if (ObjFamilyDependencyModel == null)
+        //    {
+        //        ObjFamilyDependencyModel = new FamilyDependencyModel();
+        //        ObjFamilyDependencyModel.Age = AgeFromDOB(Convert.ToDateTime(dependency.DateOfBirth));
+        //        ObjFamilyDependencyModel.parlourid = CurrentParlourId;
+        //        ObjFamilyDependencyModel.DependentStatus = dependency.DependentStatus;
+        //        ObjFamilyDependencyModel.MemberId = this.MemberId;
+        //        if (dependency.StartDate == null || dependency.StartDate == DateTime.MinValue)
+        //        {
+        //            ObjFamilyDependencyModel.StartDate = DateTime.Now;
+        //        }
+        //        else
+        //        {
+        //            ObjFamilyDependencyModel.StartDate = dependency.StartDate;
+        //        }
+        //        if (dependency.CoverDate == null || dependency.CoverDate == DateTime.MinValue)
+        //        {
+        //            ObjFamilyDependencyModel.CoverDate = DateTime.Now;
+        //        }
+        //        else
+        //        {
+        //            ObjFamilyDependencyModel.CoverDate = dependency.CoverDate;
+        //        }
+        //        if (dependency.InceptionDate == null || dependency.InceptionDate == DateTime.MinValue)
+        //        {
+        //            ObjFamilyDependencyModel.InceptionDate = DateTime.Now;
+        //        }
+        //        else 
+        //        {
+        //            ObjFamilyDependencyModel.InceptionDate = dependency.InceptionDate;
+        //        }
+        //        if (dependency.DateOfBirth == null || dependency.DateOfBirth == DateTime.MinValue)
+        //        {
+        //            ObjFamilyDependencyModel.DateOfBirth = DateTime.Now;
+        //        }
+        //        else
+        //        {
+        //            ObjFamilyDependencyModel.DateOfBirth = dependency.DateOfBirth;
+        //        }
+        //        ObjFamilyDependencyModel.FullName = dependency.FullName;
+        //        ObjFamilyDependencyModel.Surname = dependency.Surname;
+        //        ObjFamilyDependencyModel.IDNumber = dependency.IDNumber;
+        //        ObjFamilyDependencyModel.Gender = dependency.Gender == null ? "male" : dependency.Gender;
+        //        ObjFamilyDependencyModel.Relationship = Convert.ToInt32(dependency.Relationship);
+        //        ObjFamilyDependencyModel.DependencyType = dependency.DependencyType;
+        //        ObjFamilyDependencyModel.Premium = dependency.Premium;
+        //        ObjFamilyDependencyModel.Cover = dependency.Cover;
+        //        ObjFamilyDependencyModel.Passport = dependency.Passport;
+
+        //    }
+
+
+
+
+        //    //MembersModel Member = new MembersModel();
+
+
+
+        //    //---------------charles Edit-----------------------------------------
+        //    //if (MembersBAL.CheckDependencyCount(ObjFamilyDependencyModel) < 100)
+        //    //{
+        //    //    int documentId = MembersBAL.SaveFamilyDependency(ObjFamilyDependencyModel);
+        //    //    return Json(new { success = true, maxLenghDependancy = true, Dependency = dependency }, JsonRequestBehavior.AllowGet);
+        //    //}
+        //    //else
+        //    //{
+        //    //    return Json(new { success = true, maxLenghDependancy = false, Dependency = dependency }, JsonRequestBehavior.AllowGet);
+        //    //}
+
+        //    if (dependency.Age < ObjPlanModel.AgeFrom || dependency.Age > ObjPlanModel.AgeTo)
+        //    {
+        //        return Json(new { success = false, ageLimit = false, Dependency = dependency }, JsonRequestBehavior.AllowGet);
+        //    }
+        //    else if (MembersBAL.CheckDependencyCount(ObjFamilyDependencyModel) < ObjMemberPlanModel.NumberOfDependents)
+        //    {
+        //        int documentId = MembersBAL.SaveFamilyDependency(ObjFamilyDependencyModel);
+        //        return Json(new { success = true, maxLenghDependancy = true, Dependency = dependency }, JsonRequestBehavior.AllowGet);
+        //    }
+        //    else
+        //    {
+        //        return Json(new { success = false, maxLenghDependancy = false, Dependency = dependency }, JsonRequestBehavior.AllowGet);
+        //    }
+        //    //--------------------END-----------------------------------------------
+        //}
+
+
+
         [HttpPost]
         public JsonResult SaveDependancy([System.Web.Http.FromBody]FamilyDependencyModel dependency)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return Json(new { success = false, errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList() }, JsonRequestBehavior.AllowGet);
-            //}
-
-            //if (dependency.IDNumber == "" || dependency.IDNumber == string.Empty)
-            //    dependency.IDNumber = "0";
-
-            //FamilyDependencyModel ObjFamilyDependencyModel;
-            //ObjFamilyDependencyModel = MembersBAL.GetDependencByIDNum(dependency.IDNumber, CurrentParlourId, MemberId);
-
-            //if (ObjFamilyDependencyModel == null)
-            //{
-            //    ObjFamilyDependencyModel = new FamilyDependencyModel();
-            //    ObjFamilyDependencyModel.Age = AgeFromDOB(Convert.ToDateTime(dependency.DateOfBirth));
-            //    ObjFamilyDependencyModel.parlourid = CurrentParlourId;
-            //    ObjFamilyDependencyModel.DependentStatus = dependency.DependentStatus;
-            //    ObjFamilyDependencyModel.MemberId = this.MemberId;
-            //    if (dependency.StartDate == null || dependency.StartDate == DateTime.MinValue)
-            //    {
-            //        ObjFamilyDependencyModel.StartDate = DateTime.Now;
-            //    }
-            //    else
-            //    {
-            //        ObjFamilyDependencyModel.StartDate = dependency.StartDate;
-            //    }
-            //    if (dependency.CoverDate == null || dependency.CoverDate == DateTime.MinValue)
-            //    {
-            //        ObjFamilyDependencyModel.CoverDate = DateTime.Now;
-            //    }
-            //    else
-            //    {
-            //        ObjFamilyDependencyModel.CoverDate = dependency.CoverDate;
-            //    }
-            //    if (dependency.InceptionDate == null || dependency.InceptionDate == DateTime.MinValue)
-            //    {
-            //        ObjFamilyDependencyModel.InceptionDate = DateTime.Now;
-            //    }
-            //    else
-            //    {
-            //        ObjFamilyDependencyModel.InceptionDate = dependency.InceptionDate;
-            //    }
-            //    if (dependency.DateOfBirth == null || dependency.DateOfBirth == DateTime.MinValue)
-            //    {
-            //        ObjFamilyDependencyModel.DateOfBirth = DateTime.Now;
-            //    }
-            //    else
-            //    {
-            //        ObjFamilyDependencyModel.DateOfBirth = dependency.DateOfBirth;
-            //    }
-            //    ObjFamilyDependencyModel.FullName = dependency.FullName;
-            //    ObjFamilyDependencyModel.Surname = dependency.Surname;
-            //    ObjFamilyDependencyModel.IDNumber = dependency.IDNumber;
-            //    ObjFamilyDependencyModel.Gender = dependency.Gender == null ? "male" : dependency.Gender;
-            //    ObjFamilyDependencyModel.Relationship = Convert.ToInt32(dependency.Relationship);
-            //    ObjFamilyDependencyModel.DependencyType = dependency.DependencyType;
-            //    ObjFamilyDependencyModel.Premium = dependency.Premium;
-            //    ObjFamilyDependencyModel.Cover = dependency.Cover;
-            //    ObjFamilyDependencyModel.Passport = dependency.Passport;
-
-            //}
-            //else
-            //{
-            //    return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Dependent already exists." + "</li>").First() }, JsonRequestBehavior.AllowGet);
-            //}
-
-
-            //if (MembersBAL.CheckDependencyCount(ObjFamilyDependencyModel) < 100)
-            //{
-            //    int documentId = MembersBAL.SaveFamilyDependency(ObjFamilyDependencyModel);
-            //    return Json(new { success = true, maxLenghDependancy = true, Dependency = dependency }, JsonRequestBehavior.AllowGet);
-            //}
-            //else
-            //{
-            //    return Json(new { success = true, maxLenghDependancy = false, Dependency = dependency }, JsonRequestBehavior.AllowGet);
-            //}
-            if (MembersBAL.GetDependencByIDNum(dependency.IDNumber, CurrentParlourId, MemberId) != null && dependency.pkiDependentID == 0)
-            {
-                return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Dependent already exists." + "</li>").First() }, JsonRequestBehavior.AllowGet);
-            }
-
             if (!ModelState.IsValid)
             {
                 return Json(new { success = false, errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList() }, JsonRequestBehavior.AllowGet);
@@ -905,12 +1029,16 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
             FamilyDependencyModel ObjFamilyDependencyModel;
             ObjFamilyDependencyModel = MembersBAL.GetDependencByIDNum(dependency.IDNumber, CurrentParlourId, MemberId);
+            PlanCreator ObjPlanModel = MembersBAL.GetPlanCreatorByID(MemberId, CurrentParlourId, dependency.Relationship);
+            PlanModel ObjMemberPlanModel = MembersBAL.GetPlanByID(MemberId, CurrentParlourId);
 
             try
             {
                 if (ObjFamilyDependencyModel != null)
                 {
                     return Json(new { success = false, errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList() }, JsonRequestBehavior.AllowGet);
+                    //return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Dependent ID Number Already Exists." + "</li>").FirstOrDefault() }, JsonRequestBehavior.AllowGet);
+
                 }
             }
             catch (System.Exception ex)
@@ -947,7 +1075,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 {
                     ObjFamilyDependencyModel.InceptionDate = DateTime.Now;
                 }
-                else 
+                else
                 {
                     ObjFamilyDependencyModel.InceptionDate = dependency.InceptionDate;
                 }
@@ -967,26 +1095,48 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 ObjFamilyDependencyModel.DependencyType = dependency.DependencyType;
                 ObjFamilyDependencyModel.Premium = dependency.Premium;
                 ObjFamilyDependencyModel.Cover = dependency.Cover;
-                ObjFamilyDependencyModel.Passport = dependency.Passport;
+                ObjFamilyDependencyModel.ModifiedUser = UserName;
+                ObjFamilyDependencyModel.CreatedBy = UserName;
 
             }
-            
-                
-            
+            else
+            {
+                return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Dependent already exists." + "</li>").First() }, JsonRequestBehavior.AllowGet);
+            }
 
-            //MembersModel Member = new MembersModel();
+            MembersModel Member = new MembersModel();
 
 
 
 
-            if (MembersBAL.CheckDependencyCount(ObjFamilyDependencyModel) < 100)
+            //if (MembersBAL.CheckDependencyCount(ObjFamilyDependencyModel) < ObjPlanModel.NumberOfDependents)
+            //if (MembersBAL.CheckDependencyCount(ObjFamilyDependencyModel) < ObjPlanModel.NumberOfDependents)
+            //    {
+            //    int documentId = MembersBAL.SaveFamilyDependency(ObjFamilyDependencyModel);
+            //    return Json(new { success = true, maxLenghDependancy = true, Dependency = dependency }, JsonRequestBehavior.AllowGet);
+            //}
+            //else if (dependency.Age > ObjPlanModel.AgeFrom || dependency.Age < ObjPlanModel.AgeTo)
+            //{
+            //    return Json(new { success = true, ageLimit = false, Dependency = dependency }, JsonRequestBehavior.AllowGet);
+            //}
+            //else
+            //{
+            //    return Json(new { success = true, maxLenghDependancy = false, Dependency = dependency }, JsonRequestBehavior.AllowGet);
+            //}
+
+
+            if (dependency.Age < ObjPlanModel.AgeFrom || dependency.Age > ObjPlanModel.AgeTo)
+            {
+                return Json(new { success = false, ageLimit = false, Dependency = dependency }, JsonRequestBehavior.AllowGet);
+            }
+            else if (MembersBAL.CheckDependencyCount(ObjFamilyDependencyModel) < ObjMemberPlanModel.NumberOfDependents)
             {
                 int documentId = MembersBAL.SaveFamilyDependency(ObjFamilyDependencyModel);
                 return Json(new { success = true, maxLenghDependancy = true, Dependency = dependency }, JsonRequestBehavior.AllowGet);
             }
             else
             {
-                return Json(new { success = true, maxLenghDependancy = false, Dependency = dependency }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, maxLenghDependancy = false, Dependency = dependency }, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -1628,6 +1778,13 @@ namespace Funeral.Web.Areas.Admin.Controllers
         public void ChangeParlour(Guid parlourId, int MemberId)
         {
             CurrentParlourId = parlourId;
+        }
+        public JsonResult BindPolicyByPlanId(int Id)
+        {
+            //var Members = new ManageMembersVM();
+            //ManageMembersVM Managemembers = new ManageMembersVM();
+            var DependencyTypeList = CommonBAL.GetUserTypesByPlanID(CurrentParlourId, Id).Select(x => new SelectListItem() { Text = x.UserTypeName, Value = x.UserTypeId.ToString() });
+            return Json(DependencyTypeList, JsonRequestBehavior.AllowGet);
         }
 
 

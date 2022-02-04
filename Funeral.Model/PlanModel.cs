@@ -84,6 +84,12 @@ namespace Funeral.Model
         public decimal Cover60to65year { get; set; }
         public decimal Cover66to75year { get; set; }
 
+        public int NumberOfDependents { get; set; }
+        public int AgeFrom { get; set; }
+        public int AgeTo { get; set; }
+        public decimal UnderwriterCover { get; set; }
+        public decimal UnderwriterPremium { get; set; }
+
         public int? UnderwriterId { get; set; }
         public decimal CashPayout { get; set; }
         public List<UserType> GetUserTypes { get; set; }
@@ -97,6 +103,7 @@ namespace Funeral.Model
     {
         public int UserTypeId { get; set; }
         public string UserTypeName { get; set; }
+        public long CreatorID { get; set; }
     }
     public class PlanCreator
     {
@@ -105,9 +112,9 @@ namespace Funeral.Model
 
         public int UserTypeId { get; set; }
 
-        public int FromAge { get; set; }
+        //public int FromAge { get; set; }
 
-        public int ToAge { get; set; }
+        //public int ToAge { get; set; }
 
 
         public decimal Premium { get; set; }
@@ -132,6 +139,10 @@ namespace Funeral.Model
 
         public string PlanName { get; set; }
         public string PlanDesc { get; set; }
+
+        public int AgeFrom { get; set; }
+
+        public int AgeTo { get; set; }
     }
 }
 
