@@ -115,6 +115,10 @@
                             @Html.Label("Select Underwriter", new { @class = "control-label" })
                             @Html.DropDownListFor(m => m.UnderwriterId, new SelectList(Model.UnderwriterList, "PkiUnderwriterId", "UnderwriterName", Model.UnderwriterId), "Select Underwriter", new { @class = "form-control", @id = "ddlUnderwriterList" })
                         </div>
+                        <div class="form-group">
+                            @Html.Label("Number of Dependents", new { @class = "control-label" })
+                            @Html.DropDownListFor(m => m.NumberOfDependents, new SelectList(NumericDropdownList.Take(50).ToList(), "Text", "Value", Model.PolicyLaps), new { @class = "form-control" })
+                        </div>
                     </div>
                 </div>
             </div>

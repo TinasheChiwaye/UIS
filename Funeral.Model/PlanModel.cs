@@ -91,11 +91,13 @@ namespace Funeral.Model
         public List<UnderwriterModel> UnderwriterList { get; set; }
         public decimal OtherPartiesCommision { get; set; }
         public decimal LoyaltyProgramme { get; set; }
+        public int NumberOfDependents { get; set; }
     }
     public class UserType
     {
-        public int UserTypeId { get; set; }
+        public int CreatorID { get; set; }
         public string UserTypeName { get; set; }
+        public int UserTypeId { get; set; }
     }
     public class PlanCreator
     {

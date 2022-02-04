@@ -290,10 +290,10 @@
                                             dom = dom + editMemberUrl;
                                         }
 
-                                        if (hasDeleteRights) {
+                                        @*if (hasDeleteRights) {
                                             var deleteMemberUrl = '<div class="col-sm-4 text-center"> <a href="@Url.Action("Delete", "Members", null, Request.Url.Scheme)?pkiMemberID=' + full.pkiMemberID + '" onclick="function(){model1.PageNum = 1;return confirm(\'Are you sure you want to delete?\')}"; ><i class="fa fa-trash-o"></i></a></div>';
                                             dom = dom + deleteMemberUrl;
-                                        }
+                                        }*@
 
                                         dom = dom + "</div>";
                                         return dom;

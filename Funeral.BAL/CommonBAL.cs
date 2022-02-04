@@ -163,6 +163,8 @@ namespace Funeral.BAL
             else return string.Empty;
         }
 
+
+
         public static void UpdatePlanUnderwriterByPlanId(int pkiPlanID, string planUnderwriter)
         {
             MembersDAL.UpdatePlanUnderwriterByPlanIddt(pkiPlanID, planUnderwriter);
@@ -680,6 +682,18 @@ namespace Funeral.BAL
         public static int SaveAudit(string Username, Guid ParlourId, string AuditDesc)
         {
             return CommonDAL.AddAudit(Username, ParlourId, AuditDesc);
+        }
+
+        public static List<UserType> GetUserTypesByMemberID(int MemberId)
+        {
+            DataTable dr = MembersDAL.GetUserTypesByMemberID( MemberId );
+            return FuneralHelper.DataTableMapToList<UserType>(dr);
+        }
+
+        public static List<UserType> GetUserTypesByPlanID(Guid parlourid, int Id)
+        {
+            DataTable dr = MembersDAL.GetUserTypesByPlanID(parlourid, Id);
+            return FuneralHelper.DataTableMapToList<UserType>(dr);
         }
     }
 }

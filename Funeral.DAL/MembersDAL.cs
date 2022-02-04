@@ -125,6 +125,8 @@ namespace Funeral.DAL
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.Text, query, ObjParam));
         }
 
+
+
         public static SqlDataReader GetMemberByID(int ID, Guid ParlourId)
         {
             DbParameter[] ObjParam = new DbParameter[2];
@@ -203,7 +205,8 @@ namespace Funeral.DAL
             {
                 ObjParam[0] = new DbParameter("@pagesize", DbParameter.DbType.Int, 0, PageSize);
                 ObjParam[1] = new DbParameter("@pagenum", DbParameter.DbType.Int, 0, PageNum);
-                ObjParam[2] = new DbParameter("@Keyword", DbParameter.DbType.NVarChar, 0, (Keyword == null) ? string.Empty : Keyword);
+                //ObjParam[2] = new DbParameter("@Keyword", DbParameter.DbType.NVarChar, 0, (Keyword == null) ? string.Empty : Keyword);
+                ObjParam[2] = new DbParameter("@Keyword", DbParameter.DbType.NVarChar, 0, Keyword);
                 ObjParam[3] = new DbParameter("@field", DbParameter.DbType.NVarChar, 0, SortBy);
                 ObjParam[4] = new DbParameter("@orderby", DbParameter.DbType.NVarChar, 0, SortOrder);
                 ObjParam[5] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
@@ -237,6 +240,18 @@ namespace Funeral.DAL
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetpolicyNamesListByParlourId", ObjParam);
         }
 
+        public static DataTable GetPlanByIDdt(int ID, Guid ParlourId)
+        {
+            DbParameter[] ObjParam = new DbParameter[2];
+            ObjParam[0] = new DbParameter("@ID", DbParameter.DbType.Int, 0, ID);
+            ObjParam[1] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetPlanByIDdt", ObjParam);
+        }
+
+        public static DataTable GetPlanCreatorByIDdt(int iD, Guid parlourId, int userId)
+        {
+            throw new NotImplementedException();
+        }
 
         public static SqlDataReader GetFamilyDependencyByMemberID(Guid Parlourid, int MemberId)
         {
@@ -566,6 +581,26 @@ namespace Funeral.DAL
             ObjParam[0] = new DbParameter("@Parlourid", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
             return (DbConnection.GetDataTable(CommandType.StoredProcedure, "SelectProductName", ObjParam));
         }
+
+        public static DataTable GetUserTypesByMemberID(int MemberId)
+        {
+            DbParameter[] ObjParam = new DbParameter[1];
+            ObjParam[0] = new DbParameter("@MemberID",DbParameter.DbType.Int,0, MemberId);
+            //ObjParam[1] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
+            //ObjParam[2] = new DbParameter("@planID", DbParameter.DbType.Int, 0, Id);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetUserTypesByMemberID", ObjParam);
+
+
+        }
+
+        public static DataTable GetUserTypesByPlanID(Guid Parlourid, int Id)
+        {
+            DbParameter[] ObjParam = new DbParameter[2];
+            ObjParam[0] = new DbParameter("@parlourId", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
+            ObjParam[1] = new DbParameter("@planID", DbParameter.DbType.Int, 0, Id);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetUserTypesByPlanID", ObjParam);
+        }
+
         public static SqlDataReader MemberListBind(Guid pkiProductID)
         {
             DbParameter[] ObjParam = new DbParameter[1];
@@ -774,7 +809,7 @@ namespace Funeral.DAL
             DbParameter[] ObjParam = new DbParameter[2];
             ObjParam[0] = new DbParameter("@fkiMemberID", DbParameter.DbType.Int, 0, model.MemberId);
             ObjParam[1] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, model.parlourid);
-            var dt = (DbConnection.GetDataTable(CommandType.StoredProcedure, "GetDependenciesCount_ByMemberId", ObjParam));
+            var dt = (DbConnection.GetDataTable(CommandType.StoredProcedure, "GetDependenciesCount_ByMemberId_New", ObjParam));
             DataSet ds = new DataSet();
             ds.Tables.Add(dt);
             return ds;

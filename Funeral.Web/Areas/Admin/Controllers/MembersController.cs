@@ -213,6 +213,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             Managemembers.CustomGrouping3 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom3)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
             Managemembers.Member = member;
             Managemembers.DependencyTypeList = CommonBAL.GetUserTypes().Select(x => new SelectListItem() { Text = x.UserTypeName, Value = x.UserTypeId.ToString() });
+            //Managemembers.DependencyTypeList = CommonBAL.GetUserTypesByMemberID(MemberId).Select(x => new SelectListItem() { Text = x.UserTypeName, Value = x.CreatorID.ToString() });
             ViewBag.Provinces = CommonBAL.GetProvinces();
             Managemembers.ExtendedFamily = MembersBAL.GetExtendedFamilyList(CurrentParlourId, MemberId).Select(x => new SelectListItem() { Text = x.FullName, Value = x.pkiDependentID.ToString() });
 
@@ -833,6 +834,9 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
             FamilyDependencyModel ObjFamilyDependencyModel;
             ObjFamilyDependencyModel = MembersBAL.GetDependencByIDNum(dependency.IDNumber, CurrentParlourId, MemberId);
+            //PlanCreator ObjPlanModel = MembersBAL.GetPlanCreatorByID(MemberId, CurrentParlourId, dependency.Relationship);
+            PlanModel ObjMemberPlanModel = MembersBAL.GetPlanByID(MemberId, CurrentParlourId);
+
 
             if (ObjFamilyDependencyModel == null)
             {
@@ -886,7 +890,18 @@ namespace Funeral.Web.Areas.Admin.Controllers
             }
 
 
-            if (MembersBAL.CheckDependencyCount(ObjFamilyDependencyModel) < 100)
+            //if (MembersBAL.CheckDependencyCount(ObjFamilyDependencyModel) < 100)
+            //{
+            //    int documentId = MembersBAL.SaveFamilyDependency(ObjFamilyDependencyModel);
+            //    return Json(new { success = true, maxLenghDependancy = true, Dependency = dependency }, JsonRequestBehavior.AllowGet);
+            //}
+
+            //if (dependency.Age < ObjPlanModel.AgeFrom || dependency.Age > ObjPlanModel.AgeTo)
+            //{
+            //    return Json(new { success = false, ageLimit = false, Dependency = dependency }, JsonRequestBehavior.AllowGet);
+            //}
+
+            if (MembersBAL.CheckDependencyCount(ObjFamilyDependencyModel) < ObjMemberPlanModel.NumberOfDependents)
             {
                 int documentId = MembersBAL.SaveFamilyDependency(ObjFamilyDependencyModel);
                 return Json(new { success = true, maxLenghDependancy = true, Dependency = dependency }, JsonRequestBehavior.AllowGet);
@@ -1542,6 +1557,12 @@ namespace Funeral.Web.Areas.Admin.Controllers
         public void ChangeParlour(Guid parlourId, int MemberId)
         {
             CurrentParlourId = parlourId;
+        }
+
+        public JsonResult BindPolicyByPlanId(int Id)
+        {
+            var DependencyTypeList = CommonBAL.GetUserTypesByPlanID(CurrentParlourId, Id).Select(x => new SelectListItem() { Text = x.UserTypeName, Value = x.UserTypeId.ToString() });
+            return Json(DependencyTypeList, JsonRequestBehavior.AllowGet);
         }
     }
 }

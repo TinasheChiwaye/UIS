@@ -422,5 +422,17 @@ namespace Funeral.BAL
             DataTable dr = MembersDAL.GetUnderwriterList(parlourid);
             return FuneralHelper.DataTableMapToList<UnderwriterSetupModel>(dr);
         }
+
+        public static PlanCreator GetPlanCreatorByID(int ID, Guid ParlourId, int UserId)
+        {
+            DataTable dr = MembersDAL.GetPlanCreatorByIDdt(ID, ParlourId, UserId);
+            return FuneralHelper.DataTableMapToList<PlanCreator>(dr).FirstOrDefault();
+        }
+
+        public static PlanModel GetPlanByID(int ID, Guid ParlourId)
+        {
+            DataTable dr = MembersDAL.GetPlanByIDdt(ID, ParlourId);
+            return FuneralHelper.DataTableMapToList<PlanModel>(dr).FirstOrDefault();
+        }
     }
 }

@@ -497,11 +497,11 @@
 
                                                                     <div class="form-group">
                                                                         <label>Policy Inception Date</label>
-                                                                        <input type="text" maxlength="25" id="txtPolicyPopupInception" name="name" class="form-control DatepickerSelection">
+                                                                        <input type="text" maxlength="25" id="txtPolicyPopupInception" name="name" class="form-control DatepickerSelection" disabled>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label>Policy Cover Date</label>
-                                                                        <input type="text" maxlength="30" id="txtPolicyPopupCoverDate" name="name" class="form-control DatepickerSelection" disabled>
+                                                                        <input type="text" maxlength="30" id="txtPolicyPopupCoverDate" name="name" class="form-control DatepickerSelection">
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label>Policy Underwritten By</label>
@@ -695,16 +695,44 @@
 
                                         </div>
                                         <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Policy Start Date</label>
-                                                <input type="text" id="txtPolicyStartDate" name="txtPolicyStartDate" class="form-control date1 DatepickerSelection">
-                                            </div>
+                                            @{
+                                                if (Model.IsAdministrator == true || Model.IsSuperUser == true)
+                                                {
+                                                    <div class="form-group">
+                                                        <label>Policy Start Date</label>
+                                                        <input type="text" id="txtPolicyStartDate" name="txtPolicyStartDate" class="form-control date1 DatepickerSelection">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Policy Inception Date</label>
+                                                        <input type="text" id="txtInception" name="name" class="form-control date2 DatepickerSelection">
+                                                    </div>
+                                                }
+                                                else if (Model.Member.pkiMemberID > 0)
+                                                {
+                                                    <div class="form-group">
+                                                        <label>Policy Start Date</label>
+                                                        <input type="text" id="txtPolicyStartDate" name="txtPolicyStartDate" class="form-control date1 DatepickerSelection" disabled>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Policy Inception Date</label>
+                                                        <input type="text" id="txtInception" name="name" class="form-control date2 DatepickerSelection" disabled>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="form-group">
+                                                        <label>Policy Start Date</label>
+                                                        <input type="text" id="txtPolicyStartDate" name="txtPolicyStartDate" class="form-control date1 DatepickerSelection" >
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Policy Inception Date</label>
+                                                        <input type="text" id="txtInception" name="name" class="form-control date2 DatepickerSelection" >
+                                                    </div>
+                                                }
+                                            }
+
 
                                             <div class="form-group">
-                                                <label>Policy Inception Date</label>
-                                                <input type="text" maxlength="25" id="txtInception" name="name" class="form-control date2 datepicker DatepickerSelection">
-                                            </div>
-                                            <div class="form-group" style="display:none;">
                                                 <label>Policy Cover Date</label>
                                                 <input type="text" maxlength="30" id="txtCoverDate" name="name" class="form-control DatepickerSelection" disabled>
                                             </div>
@@ -714,9 +742,9 @@
                                             </div>
 
                                             @*<div class="form-group">
-                        <label>Policy Underwritten By</label>
-                        @Html.DropDownList("UnderwritterList", Model.UnderwritterList, "Select", new { Name = "Underwritter", @id = "ddlUnderwritter", @style = "width:100%", @class = "form-control" })
-                    </div>*@
+            <label>Policy Underwritten By</label>
+            @Html.DropDownList("UnderwritterList", Model.UnderwritterList, "Select", new { Name = "Underwritter", @id = "ddlUnderwritter", @style = "width:100%", @class = "form-control" })
+        </div>*@
 
                                             <div class="form-group">
                                                 <label>Policy Agent or Broker</label>
@@ -1001,16 +1029,36 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6">
-                                                            <div class="form-group">
-                                                                <label>Start Date <em>*</em></label>
-                                                                <input type="text" maxlength="30" id="txtDependentStartDate" name="txtDependentStartDate"
-                                                                       class="form-control dependantStartDate DatepickerSelection">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label>Inception Date <em>*</em></label>
-                                                                <input type="text" maxlength="25" id="txtDependentInceptionDate" name="txtDependentInceptionDate"
-                                                                       class="form-control dependantInceptionDate DatepickerSelection">
-                                                            </div>
+                                                            @{
+                                                                if (Model.IsAdministrator == true || Model.IsSuperUser == true)
+                                                                {
+
+                                                                    <div class="form-group">
+                                                                        <label>Start Date <em>*</em></label>
+                                                                        <input type="text" maxlength="30" id="txtDependentStartDate" name="txtDependentStartDate"
+                                                                               class="form-control dependantStartDate DatepickerSelection" >
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label>Inception Date <em>*</em></label>
+                                                                        <input type="text" maxlength="25" id="txtDependentInceptionDate" name="txtDependentInceptionDate"
+                                                                               class="form-control dependantInceptionDate DatepickerSelection" >
+                                                                    </div>
+                                                                }
+                                                                else
+                                                                {
+
+                                                                    <div class="form-group">
+                                                                        <label>Start Date <em>*</em></label>
+                                                                        <input type="text" maxlength="30" id="txtDependentStartDate" name="txtDependentStartDate"
+                                                                               class="form-control dependantStartDate DatepickerSelection" disabled>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label>Inception Date <em>*</em></label>
+                                                                        <input type="text" maxlength="25" id="txtDependentInceptionDate" name="txtDependentInceptionDate"
+                                                                               class="form-control dependantInceptionDate DatepickerSelection" disabled>
+                                                                    </div>
+                                                                }
+                                                            }
 
                                                             <div class="form-group">
                                                                 <label>Cover Date <em>*</em></label>
@@ -1035,9 +1083,9 @@
                                                                 </select>
                                                             </div>
                                                             @*<div class="form-group">
-                                        <label>Premium<em>*</em></label>
-                                        <input type="text" maxlength="25" id="txtDependentPremium" name="name" class="form-control" disabled>
-                                    </div>*@
+            <label>Premium<em>*</em></label>
+            <input type="text" maxlength="25" id="txtDependentPremium" name="name" class="form-control" disabled>
+        </div>*@
                                                             <div class="form-group">
                                                                 <label>Cover Amount <em>*</em></label>
                                                                 <input type="text" maxlength="25" id="txtDependentCoverAmount" name="name" class="form-control" disabled>
@@ -1064,28 +1112,30 @@
                                         <div class="table-responsive">
                                             @Html.EditorFor(model => model.DependancySearch.PageNum, new { htmlAttributes = new { @class = "hidden", id = "PageNum1" } })
                                             @Html.EditorFor(model => model.DependancySearch.PageSize, new { htmlAttributes = new { @class = "hidden", id = "PageSize1" } })
-                                            <table id="dependantExtendedFamilyDataTable" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
-                                                <thead>
-                                                    <tr>
-                                                        <th>pkiDependentID</th>
-                                                        <th>Name</th>
-                                                        <th>IDNumber</th>
-                                                        <th>Start Date</th>
-                                                        <th>InceptionDate</th>
-                                                        <th>CoverDate</th>
-                                                        <th>Premium</th>
-                                                        <th>Cover</th>
-                                                        <th>DependencyType</th>
-                                                        <th>Gender</th>
-                                                        <th>Status</th>
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody></tbody>
-                                            </table>
-                                        </div>
+                                            <div style="overflow-y:scroll">
+                                                <table id="dependantExtendedFamilyDataTable" class="table table-striped table-bordered dt-responsive" width="100%" cellspacing="0" style="overflow-y:scroll">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>pkiDependentID</th>
+                                                            <th>Name</th>
+                                                            <th>IDNumber</th>
+                                                            <th>Start Date</th>
+                                                            <th>InceptionDate</th>
+                                                            <th>CoverDate</th>
+                                                            <th>Premium</th>
+                                                            <th>Cover</th>
+                                                            <th>DependencyType</th>
+                                                            <th>Gender</th>
+                                                            <th>Status</th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                                </div>
+                                            </div>
 
-                                    </div>
+                                        </div>
                                 </div>
                                 <!-- #endregion Tab5 -->                              <!-- #region Tab9 -->
                                 <div id="tab-9" class="tab-pane">
@@ -2052,13 +2102,13 @@
 
             // #region ControlValidation
 
-            var isInceptionEnabled = '@((bool)ViewBag.IsInceptionEnabled)' == 'True' ? true : false;
+            @*var isInceptionEnabled = '@((bool)ViewBag.IsInceptionEnabled)' == 'True' ? true : false;
             if (isInceptionEnabled) {
                 $("#tab-3 #txtInception").prop('disabled', false);
             }
             else {
                 $("#tab-3 #txtInception").prop('disabled', true);
-            }
+            }*@
 
 
             var isPolicyDocEnabled = '@((bool)ViewBag.IsPolicyDocEnabled)' == 'True' ? true : false;
@@ -2693,14 +2743,14 @@
                                 var dom = "<div class='row'>";
                                 var data1 = JSON.stringify(full);
                                 data1 = data1.replace(/"/g, "\'")
-                                if (hasEditRights) {
-                                    var editNoteUrl = '<div class="col-sm-4 text-center"><a  onclick="EditNote(' + data1 + ')"><i class="fa fa-edit"></i></a></div>';
-                                    dom = dom + editNoteUrl;
-                                }
-                                if (hasDeleteRights) {
-                                    var deleteNoteUrl = '<div class="col-sm-4 text-center"> <a onclick="DeleteNote(' + data1 + ')"; ><i class="fa fa-trash-o"></i></a></div>';
-                                    dom = dom + deleteNoteUrl;
-                                }
+                                //if (hasEditRights) {
+                                //    var editNoteUrl = '<div class="col-sm-4 text-center"><a  onclick="EditNote(' + data1 + ')"><i class="fa fa-edit"></i></a></div>';
+                                //    dom = dom + editNoteUrl;
+                                //}
+                                //if (hasDeleteRights) {
+                                //    var deleteNoteUrl = '<div class="col-sm-4 text-center"> <a onclick="DeleteNote(' + data1 + ')"; ><i class="fa fa-trash-o"></i></a></div>';
+                                //    dom = dom + deleteNoteUrl;
+                                //}
 
                                 var viewNoteUrl = '<div class="col-sm-4 text-center"> <a onclick="ViewNote(' + data1 + ')"; ><i class="fa fa-search"></i></a></div>';
                                 dom = dom + viewNoteUrl;
@@ -3567,7 +3617,7 @@
                                     return premium;
                                 }
                             },
-                            { "data": "DependencyType", "name": "Dependency", "autoWidth": true },
+                            { "data": "DependencyType", "name": "DependencyType", "autoWidth": true },
 
                             { "data": "Gender", "name": "Gender", "autoWidth": true },
                             { "data": "DependentStatus", "name": "DependentStatus", "autoWidth": true },
@@ -3640,7 +3690,9 @@
         $("#tab-5 #ddlDependentDependencyType option").filter(function () {
             return this.text == dependant.DependencyType;
         }).attr('selected', true);
-        //$('#ddlDependentDependencyType').find('option:selected').text(dependant.DependencyType);
+        //$("#tab-5 #ddlDependentDependencyType").val(dependant.DependencyType);
+
+        $('#ddlDependentDependencyType').find('option:selected').text(dependant.DependencyType);
         //$("input[name='dependentGender']:checked").val(dependant.Gender);
         if (dependant.Gender == "female") {
             $("#female").prop('checked', true);
@@ -3958,6 +4010,7 @@
 
                     $("#tab-5 #ddlDependentDependencyType").val("");
                     $("#tab-5 #txtDependentPremium").val('');
+                    $("#tab-5 #txtDependentCoverAmount").val('');
 
                     $("#btnSaveDependent").show();
                     $("#btnUpdateDependent").hide();
