@@ -238,7 +238,7 @@ namespace Funeral.DAL
 
                 if (ParlourId == Guid.Empty)
                 {
-                    return DbConnection.GetDataSet(CommandType.StoredProcedure, "MemberSelectAll_WithoutParlour", ObjParam);
+                    return DbConnection.GetDataSet(CommandType.StoredProcedure, "MemberSelectAll_WithoutParlourdt", ObjParam);
                 }
                 else
                 {
