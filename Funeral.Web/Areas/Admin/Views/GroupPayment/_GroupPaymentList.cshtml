@@ -258,6 +258,38 @@
                 });
             }
         }
+
+
+
+        //+++++++++++++++++++++++++++++Test+++++++++++++++++++++++
+
+        function ReverseGroupPayment(societyId) {
+
+            var isConfirmed = confirm('Are you sure you want to Reverse?');
+
+            if (isConfirmed) {
+
+				jQuery("#ItemId").val(societyId);
+                var ReverseUrl = '@Url.Action("GroupPaymentReversal", "GroupPayment",new { ID = "GroupInvoiceID" },Request.Url.Scheme)';
+                ReverseUrl = ReverseUrl.replace("GroupInvoiceID", societyId);
+
+                model1.PageNum = 1;
+
+                jQuery.ajax({
+                    url: ReverseUrl,
+                    type: "Get",
+                    contentType: "application/html; charset=utf-8",
+                    dataType: 'html'
+                })
+                .success(function (result) {
+                    InitModel();
+                    tableConfigs.table.fnDraw();
+                })
+                .error(function (xhr, status) {
+                    alert(status);
+                });
+            }
+        }
 	</script>
 }
 

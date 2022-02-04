@@ -147,6 +147,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 ViewBag.MemberInvoiceList = MembersBAL.GetInvoicesByMemberID(ParlourID, id);
                 ViewBag.MemberID = model.MemeberNumber;
                 ViewBag.ParlourID = ParlourID;
+
+                ViewBag.MonthToPay = MembersBAL.GetMonthsToPay(id);
             }
             var info = CultureInfo.InvariantCulture.Clone() as CultureInfo;
             info.NumberFormat.NumberDecimalSeparator = ".";
@@ -157,16 +159,20 @@ namespace Funeral.Web.Areas.Admin.Controllers
             Thread.CurrentThread.CurrentCulture = cInfo;
             return View(model);
         }
+
+        //=============================TEST[AddPayments] - Charles.M =======================================
         [HttpPost]
         [PageRightsAttribute(CurrentPageId = 72, Right = new isPageRight[] { isPageRight.HasAdd })]
         public JsonResult AddPayments(MembersPaymentDetailsModel data)
         {
             //add Joining fee boolean in method
             MembersModel objmember = MembersBAL.GetMemberByID(data.pkiMemberID, ParlourId);
+            PaymentReminderModel outstandingPayment = MemberPaymentBAL.GetOustandingPaymentByMemberId(data.LatePaymentId);
             if (objmember.MemberBranch != "")
             {
                 data.Branch = objmember.MemberBranch;
             }
+            data.Notes = outstandingPayment.MemberNotes;
             data.ParlourId = ParlourId;
             data.NextPaymentDate = Convert.ToDateTime(data.PaymentDate).AddMonths(Convert.ToInt32(data.MonthOwing));
             var paymentId = MemberPaymentBAL.AddPayments(data, true);
@@ -181,6 +187,33 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 return Json("Payment not added successfully.", JsonRequestBehavior.AllowGet);
             }
         }
+
+        //=============================TEST END=======================================
+
+        //[HttpPost]
+        //[PageRightsAttribute(CurrentPageId = 72, Right = new isPageRight[] { isPageRight.HasAdd })]
+        //public JsonResult AddPayments(MembersPaymentDetailsModel data)
+        //{
+        //    //add Joining fee boolean in method
+        //    MembersModel objmember = MembersBAL.GetMemberByID(data.pkiMemberID, ParlourId);
+        //    if (objmember.MemberBranch != "")
+        //    {
+        //        data.Branch = objmember.MemberBranch;
+        //    }
+        //    data.ParlourId = ParlourId;
+        //    data.NextPaymentDate = Convert.ToDateTime(data.PaymentDate).AddMonths(Convert.ToInt32(data.MonthOwing));
+        //    var paymentId = MemberPaymentBAL.AddPayments(data, true);
+        //    if (paymentId > 0)
+        //    {
+        //        TempData["message"] = ShowMessage(MessageType.Success, "Payment added successfully");
+        //        return Json("Payment added successfully.", JsonRequestBehavior.AllowGet);
+        //    }
+        //    else
+        //    {
+        //        TempData["message"] = ShowMessage(MessageType.Danger, "Payment not added successfully");
+        //        return Json("Payment not added successfully.", JsonRequestBehavior.AllowGet);
+        //    }
+        //}
         public ActionResult PrintPaymentReceipt(int id, int Type, string PolicyNumber, string DatePaid, string AmountPaid, string PaidBy, string ReceivedBy, string MonthPaid, int memberId, Guid parlourId)
         {
 
@@ -249,7 +282,44 @@ namespace Funeral.Web.Areas.Admin.Controllers
         {
             List<MemberInvoiceModel> objMemberInvoiceModel = MembersBAL.GetInvoicesByMemberID(ParlourId, MemberId);
         }
-        public JsonResult CalculateAmount(int noOfMonths, decimal TotalPremieum, int LatePanelty, string NextDate)
+        //public JsonResult CalculateAmount(int noOfMonths, int TotalPremieum, int LatePanelty, int NextDate)
+        //{
+        //    var info = CultureInfo.InvariantCulture.Clone() as CultureInfo;
+        //    info.NumberFormat.NumberDecimalSeparator = ".";
+
+        //    CultureInfo cInfo = new CultureInfo(info.ToString());
+        //    cInfo.NumberFormat.NumberDecimalSeparator = ".";
+
+        //    Thread.CurrentThread.CurrentCulture = cInfo;
+
+        //    decimal Amount = 0;
+        //    DateTime NextDate1 = Convert.ToDateTime(NextDate);
+        //    string monthPaid = string.Empty;
+        //    string currency = Currency;
+
+        //    Amount = (TotalPremieum * noOfMonths) + LatePanelty;
+
+        //    if (noOfMonths > 1)
+        //    {
+        //        if (NextDate1.Year == NextDate1.AddMonths(noOfMonths - 1).Year)
+        //            monthPaid = string.Format("{0}-{1} {2}", NextDate1.ToString("MMM"), NextDate1.AddMonths(noOfMonths - 1).ToString("MMM"), NextDate1.AddMonths(noOfMonths - 1).ToString("yyyy"));
+        //        else
+        //            monthPaid = string.Format("{0} {1}-{2} {3}", NextDate1.ToString("MMM"), NextDate1.ToString("yyyy"), NextDate1.AddMonths(noOfMonths - 1).ToString("MMM"), NextDate1.AddMonths(noOfMonths - 1).ToString("yyyy"));
+
+        //    }
+        //    else
+        //        monthPaid = string.Format("{0}-{1}", NextDate1.AddMonths(noOfMonths - 1).ToString("MMM"), NextDate1.AddMonths(noOfMonths - 1).ToString("yyyy"));
+
+        //    double TotalPremium = Convert.ToDouble(TotalPremieum * Convert.ToInt32(noOfMonths) + LatePanelty);
+
+
+
+        //    return Json(Amount + "~" + monthPaid + "~" + TotalPremium + "~" + currency, JsonRequestBehavior.AllowGet);
+        //}
+
+
+        //=========================test===============================
+        public JsonResult CalculateAmount(int noOfMonths, int TotalPremieum, int LatePanelty)
         {
             var info = CultureInfo.InvariantCulture.Clone() as CultureInfo;
             info.NumberFormat.NumberDecimalSeparator = ".";
@@ -260,29 +330,31 @@ namespace Funeral.Web.Areas.Admin.Controllers
             Thread.CurrentThread.CurrentCulture = cInfo;
 
             decimal Amount = 0;
-            DateTime NextDate1 = Convert.ToDateTime(NextDate);
+            //DateTime NextDate1 = Convert.ToDateTime(NextDate);
             string monthPaid = string.Empty;
             string currency = Currency;
 
             Amount = (TotalPremieum * noOfMonths) + LatePanelty;
 
-            if (noOfMonths > 1)
-            {
-                if (NextDate1.Year == NextDate1.AddMonths(noOfMonths - 1).Year)
-                    monthPaid = string.Format("{0}-{1} {2}", NextDate1.ToString("MMM"), NextDate1.AddMonths(noOfMonths - 1).ToString("MMM"), NextDate1.AddMonths(noOfMonths - 1).ToString("yyyy"));
-                else
-                    monthPaid = string.Format("{0} {1}-{2} {3}", NextDate1.ToString("MMM"), NextDate1.ToString("yyyy"), NextDate1.AddMonths(noOfMonths - 1).ToString("MMM"), NextDate1.AddMonths(noOfMonths - 1).ToString("yyyy"));
+            //if (noOfMonths > 1)
+            //{
+            //    if (NextDate1.Year == NextDate1.AddMonths(noOfMonths - 1).Year)
+            //        monthPaid = string.Format("{0}-{1} {2}", NextDate1.ToString("MMM"), NextDate1.AddMonths(noOfMonths - 1).ToString("MMM"), NextDate1.AddMonths(noOfMonths - 1).ToString("yyyy"));
+            //    else
+            //        monthPaid = string.Format("{0} {1}-{2} {3}", NextDate1.ToString("MMM"), NextDate1.ToString("yyyy"), NextDate1.AddMonths(noOfMonths - 1).ToString("MMM"), NextDate1.AddMonths(noOfMonths - 1).ToString("yyyy"));
 
-            }
-            else
-                monthPaid = string.Format("{0}-{1}", NextDate1.AddMonths(noOfMonths - 1).ToString("MMM"), NextDate1.AddMonths(noOfMonths - 1).ToString("yyyy"));
+            //}
+            //else
+            //    monthPaid = string.Format("{0}-{1}", NextDate1.AddMonths(noOfMonths - 1).ToString("MMM"), NextDate1.AddMonths(noOfMonths - 1).ToString("yyyy"));
 
-            decimal TotalPremium = Convert.ToDecimal(TotalPremieum * Convert.ToInt32(noOfMonths) + LatePanelty);
+            double TotalPremium = Convert.ToDouble(TotalPremieum * Convert.ToInt32(noOfMonths) + LatePanelty);
 
 
 
-            return Json(Amount + "~" + monthPaid + "~" + TotalPremium + "~" + currency, JsonRequestBehavior.AllowGet);
+            return Json(Amount  + "~" + TotalPremium + "~" + currency, JsonRequestBehavior.AllowGet);
         }
+        //=========================test end===============================
+
         [PageRightsAttribute(CurrentPageId = 72, Right = new isPageRight[] { isPageRight.HasReversalPayment })]
         public ActionResult PaymentReversal(int id)
         {

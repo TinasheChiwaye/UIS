@@ -50,11 +50,11 @@ namespace Funeral.BAL
         {
             try
             {
-                DataSet ds = MembersDAL.GetAllMembersdt(ParlourId, PageSize, PageNum, Keyword, SortBy, SortOrder, status);
+                DataSet ds = MembersDAL.GetAllMembersdt(ParlourId, PageSize, PageNum, Keyword, SortBy, SortOrder, status, BookName);
                 DataTable dr = ds.Tables[0];
                 MembersViewModel objViewModel = new MembersViewModel();
                 var membersList = FuneralHelper.DataTableMapToList<MembersModel>(dr, true);
-                objViewModel.MemberList = !string.IsNullOrEmpty(BookName) && BookName != "0" ? membersList.Where(x => x.MemberSociety.Equals(BookName)).ToList() : membersList;
+                objViewModel.MemberList = !string.IsNullOrEmpty(BookName) && BookName != "0" ? membersList.Where(x => x.MemberBranch.Equals(BookName)).ToList() : membersList;
                 //dr.NextResult();
                 //dr.Read();
                 objViewModel.TotalRecord = objViewModel.MemberList.Count;
@@ -423,15 +423,30 @@ namespace Funeral.BAL
             return FuneralHelper.DataTableMapToList<UnderwriterSetupModel>(dr);
         }
 
+        public static List<PaymentReminderModel> GetMonthsToPay(int MemberId)
+        {
+            DataTable dr = MembersDAL.GetMonthsToPayByIDdt(MemberId);
+            return FuneralHelper.DataTableMapToList<PaymentReminderModel>(dr);
+        }
+        public static MembersModel GetMemberByPassport(string Passport, Guid ParlourId, int PlanId)
+        {
+            DataTable dr = MembersDAL.GetMemberByPassport(Passport, ParlourId, PlanId);
+            return FuneralHelper.DataTableMapToList<MembersModel>(dr).FirstOrDefault();
+        }
+
         public static PlanCreator GetPlanCreatorByID(int ID, Guid ParlourId, int UserId)
         {
             DataTable dr = MembersDAL.GetPlanCreatorByIDdt(ID, ParlourId, UserId);
             return FuneralHelper.DataTableMapToList<PlanCreator>(dr).FirstOrDefault();
         }
-
         public static PlanModel GetPlanByID(int ID, Guid ParlourId)
         {
             DataTable dr = MembersDAL.GetPlanByIDdt(ID, ParlourId);
+            return FuneralHelper.DataTableMapToList<PlanModel>(dr).FirstOrDefault();
+        }
+        public static PlanModel GetPlanByPlanID(int ID, Guid ParlourId)
+        {
+            DataTable dr = MembersDAL.GetPlanByPlanID(ID, ParlourId);
             return FuneralHelper.DataTableMapToList<PlanModel>(dr).FirstOrDefault();
         }
     }

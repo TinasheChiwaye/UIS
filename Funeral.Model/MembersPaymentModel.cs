@@ -87,12 +87,14 @@ namespace Funeral.Model
             Notes = string.Empty;
             PaymentDate = DateTime.Now;
             Branch = string.Empty;
-            UserName = string.Empty;            
+            UserName = string.Empty;
+            LatePaymentId = 0;
         }
 
         public int pkiMemberID { get; set; }
         public string FullNames { get; set; }
         public string IDNumber { get; set; }
+        public int LatePaymentId { get; set; }
 
         public string MemeberNumber { get; set; }
         public bool Active { get; set; }

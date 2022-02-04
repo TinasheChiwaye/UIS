@@ -445,7 +445,7 @@
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
                                                                     <label>Email * </label>
-                                                                    @Html.TextBoxFor(x => x.claimsModel.Email, new { @type = "email", @id = "txtEmailAddress", @class = "form-control", @required = true })
+                                                                    @Html.TextBoxFor(x => x.claimsModel.Email, new { @type = "email", @id = "txtEmailAddress", @class = "form-control", @maxlength = "140", @required = true })
                                                                     @Html.ValidationMessageFor(x => x.claimsModel.Email, "", new { @class = "text-danger" })
                                                                 </div>
                                                             </div>

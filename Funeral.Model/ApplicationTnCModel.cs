@@ -22,6 +22,7 @@ namespace Funeral.Model
             this.ModifiedUser = string.Empty;
             this.TermsAndConditionFuneral = string.Empty;
             this.TermsAndConditionTombstone = string.Empty;
+            this.TermsAndConditionQuotation = string.Empty;
             this.Declaration = string.Empty;
         }
         #region Properties
@@ -34,6 +35,7 @@ namespace Funeral.Model
         public Guid parlourid { get; set; }
         public string TermsAndConditionFuneral { get; set; }
         public string TermsAndConditionTombstone { get; set; }
+        public string TermsAndConditionQuotation { get; set; }
         public string  Declaration { get; set; }
         #endregion
 

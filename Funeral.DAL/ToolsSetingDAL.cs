@@ -1059,8 +1059,8 @@ namespace Funeral.DAL
         public static int NewSavePlanDetails(PlanModel model)
         {
             AdditionalMemberInfoModel model1 = new AdditionalMemberInfoModel();
-            string query = "SaveNewPlanDetails_New";
-            DbParameter[] ObjParam = new DbParameter[26];
+            string query = "SaveNewPlanDetails";
+            DbParameter[] ObjParam = new DbParameter[28];
             ObjParam[0] = new DbParameter("@pkiPlanID", DbParameter.DbType.Int, 0, model.pkiPlanID);
             ObjParam[1] = new DbParameter("@PlanName", DbParameter.DbType.NVarChar, 0, model.PlanName);
             ObjParam[2] = new DbParameter("@PlanSubscription", DbParameter.DbType.Decimal, 0, model.PlanSubscription);
@@ -1086,7 +1086,9 @@ namespace Funeral.DAL
             ObjParam[22] = new DbParameter("@PolicyLaps", DbParameter.DbType.Int, 0, model.PolicyLaps);
             ObjParam[23] = new DbParameter("@OtherPartiesCommision", DbParameter.DbType.Decimal, 0, model.OtherPartiesCommision);
             ObjParam[24] = new DbParameter("@LoyaltyProgramme", DbParameter.DbType.Decimal, 0, model.LoyaltyProgramme);
-            ObjParam[25] = new DbParameter("@NUmberOfDependents", DbParameter.DbType.Int, 0, model.NumberOfDependents);
+            ObjParam[25] = new DbParameter("@NumberOfDependents", DbParameter.DbType.Decimal, 0, model.NumberOfDependents);
+            ObjParam[26] = new DbParameter("@AgeFrom", DbParameter.DbType.Decimal, 0, model.AgeFrom);
+            ObjParam[27] = new DbParameter("@AgeTo", DbParameter.DbType.Decimal, 0, model.AgeTo);
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
 
         }
@@ -1097,8 +1099,8 @@ namespace Funeral.DAL
             DbParameter[] ObjParam = new DbParameter[14];
             ObjParam[0] = new DbParameter("@PlanID", DbParameter.DbType.Int, 0, model.PlanID);
             ObjParam[1] = new DbParameter("@UserTypeId", DbParameter.DbType.Int, 0, model.UserTypeId);
-            ObjParam[2] = new DbParameter("@AgeFrom", DbParameter.DbType.Int, 0, model.FromAge);
-            ObjParam[3] = new DbParameter("@AgeTo", DbParameter.DbType.Int, 0, model.ToAge);
+            ObjParam[2] = new DbParameter("@AgeFrom", DbParameter.DbType.Int, 0, model.AgeFrom);
+            ObjParam[3] = new DbParameter("@AgeTo", DbParameter.DbType.Int, 0, model.AgeTo);
             ObjParam[4] = new DbParameter("@CoverAmount", DbParameter.DbType.Decimal, 0, model.Cover);
             ObjParam[5] = new DbParameter("@PremiumAmount", DbParameter.DbType.Decimal, 0, model.Premium);
             ObjParam[6] = new DbParameter("@UnderwriterCover", DbParameter.DbType.Decimal, 0, model.UnderwriterCover);
@@ -1185,7 +1187,7 @@ namespace Funeral.DAL
         public static int SaveTermsAndCondition(ApplicationTnCModel Model1)
         {
             string query = "SaveTermsAndCondition";
-            DbParameter[] ObjParam = new DbParameter[9];
+            DbParameter[] ObjParam = new DbParameter[10];
             ObjParam[0] = new DbParameter("@pkiAppTC", DbParameter.DbType.Int, 0, Model1.pkiAppTC);
             ObjParam[1] = new DbParameter("@fkiApplicationID", DbParameter.DbType.Int, 0, Model1.fkiApplicationID);
             ObjParam[2] = new DbParameter("@TermsAndCondition", DbParameter.DbType.NVarChar, 0, Model1.TermsAndCondition);
@@ -1194,7 +1196,8 @@ namespace Funeral.DAL
             ObjParam[5] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, Model1.parlourid);
             ObjParam[6] = new DbParameter("@TermsAndConditionFuneral", DbParameter.DbType.NVarChar, 0, Model1.TermsAndConditionFuneral);
             ObjParam[7] = new DbParameter("@TermsAndConditionTombstone", DbParameter.DbType.NVarChar, 0, Model1.TermsAndConditionTombstone);
-            ObjParam[8] = new DbParameter("@Declaration", DbParameter.DbType.NVarChar, 0, Model1.Declaration);
+            ObjParam[8] = new DbParameter("@TermsAndConditionQuotation", DbParameter.DbType.NVarChar, 0, Model1.TermsAndConditionQuotation);
+            ObjParam[9] = new DbParameter("@Declaration", DbParameter.DbType.NVarChar, 0, Model1.Declaration);
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
         }
 

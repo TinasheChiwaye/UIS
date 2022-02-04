@@ -244,6 +244,11 @@ namespace Funeral.BAL
             DataTable dr = MembersDAL.GetUnderwriterList(Parlourid);
             return FuneralHelper.DataTableMapToList<UnderwriterModel>(dr);
         }
+        public static List<UserType> GetUserTypesByPlanID(Guid parlourid, int Id)
+        {
+            DataTable dr = MembersDAL.GetUserTypesByPlanID(parlourid, Id);
+            return FuneralHelper.DataTableMapToList<UserType>(dr);
+        }
         public static List<SocietyModel> GetAllSocietyesList(Guid ParlourId)
         {
             DataTable dr = ToolsSetingDAL.GetAllSocietyesList(ParlourId);
@@ -683,17 +688,26 @@ namespace Funeral.BAL
         {
             return CommonDAL.AddAudit(Username, ParlourId, AuditDesc);
         }
-
-        public static List<UserType> GetUserTypesByMemberID(int MemberId)
+        public static List<UserType> GetUserTypesByMemberID(int MemberId, Guid parlourid, int Id)
         {
-            DataTable dr = MembersDAL.GetUserTypesByMemberID( MemberId );
+            DataTable dr = MembersDAL.GetUserTypesByMemberID(MemberId, parlourid, Id);
             return FuneralHelper.DataTableMapToList<UserType>(dr);
         }
+        //=================TEST
 
-        public static List<UserType> GetUserTypesByPlanID(Guid parlourid, int Id)
-        {
-            DataTable dr = MembersDAL.GetUserTypesByPlanID(parlourid, Id);
-            return FuneralHelper.DataTableMapToList<UserType>(dr);
-        }
+        //public static List<PlanModel> GetPlanByParlourId(Guid parlourid)
+        //{
+        //    DataTable dr = MembersDAL.GetPlanByParlourIddt(parlourid);
+        //    return FuneralHelper.DataTableMapToList<PlanModel>(dr);
+        //}
+
+        //public static List<BranchModel> GetBranchByParlourId(Guid parlourid)
+        //{
+        //    DataTable dr = MembersDAL.GetBranchByParlourIddt(parlourid);
+        //    return FuneralHelper.DataTableMapToList<BranchModel>(dr);
+        //}
+
+        //=================END
+
     }
 }

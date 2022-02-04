@@ -134,8 +134,9 @@ namespace Funeral.Model
 
         public int ClaimExistCount { get; set; }
         public string Passport { get; set; }
-
         public string ModifiedUser { get; set; }
+        public DateTime LastModified { get; set; }
+        public string CreatedBy { get; set; }
     }
 
 

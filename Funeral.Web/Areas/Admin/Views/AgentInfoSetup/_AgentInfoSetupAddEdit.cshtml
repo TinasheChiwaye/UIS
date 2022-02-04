@@ -24,7 +24,7 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.Surname, new { @class = "control-label" })
                             <span class="text-danger"><em>*</em></span>
-                            @Html.TextBoxFor(m => m.Surname, null, new { @class = "form-control", @maxlength = "50", placeholder = "SurName" })
+                            @Html.TextBoxFor(m => m.Surname, null, new { @class = "form-control", @maxlength = "50", placeholder = "Surname" })
                             @Html.ValidationMessageFor(m => m.Surname, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                         </div>
                         <div class="form-group">
@@ -48,7 +48,7 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.Email, new { @class = "control-label" })
                             <span class="text-danger"><em>*</em></span>
-                            @Html.TextBoxFor(m => m.Email, null, new { @class = "form-control", @maxlength = "50", placeholder = "EMail" })
+                            @Html.TextBoxFor(m => m.Email, null, new { @class = "form-control", @maxlength = "140", placeholder = "Email" })
                             @Html.ValidationMessageFor(m => m.Email, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                         </div>
                     </div>
