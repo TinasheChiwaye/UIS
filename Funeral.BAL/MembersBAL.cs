@@ -50,11 +50,11 @@ namespace Funeral.BAL
         {
             try
             {
-                DataSet ds = MembersDAL.GetAllMembersdt(ParlourId, PageSize, PageNum, Keyword, SortBy, SortOrder, status, BookName);
+                DataSet ds = MembersDAL.GetAllMembersdt(ParlourId, PageSize, PageNum, Keyword, SortBy, SortOrder, status);
                 DataTable dr = ds.Tables[0];
                 MembersViewModel objViewModel = new MembersViewModel();
                 var membersList = FuneralHelper.DataTableMapToList<MembersModel>(dr, true);
-                objViewModel.MemberList = !string.IsNullOrEmpty(BookName) && BookName != "0" ? membersList.Where(x => x.MemberBranch.Equals(BookName)).ToList() : membersList;
+                objViewModel.MemberList = !string.IsNullOrEmpty(BookName) && BookName != "0" ? membersList.Where(x => x.MemberSociety.Equals(BookName)).ToList() : membersList;
                 //dr.NextResult();
                 //dr.Read();
                 objViewModel.TotalRecord = objViewModel.MemberList.Count;

@@ -431,7 +431,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             {
                 return Json(new { success = false, errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList() }, JsonRequestBehavior.AllowGet);
             }
-
+            
             MemberId = pkiMemberId;
             addOnProduct.fkiMemberid = Convert.ToInt32(MemberId);
             addOnProduct.LastModified = DateTime.Now;
@@ -1107,8 +1107,6 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 ObjFamilyDependencyModel.Cover = dependency.Cover;
                 ObjFamilyDependencyModel.Passport = dependency.Passport;
                 ObjFamilyDependencyModel.ModifiedUser = UserID.ToString();
-            }
-
                 ObjFamilyDependencyModel.ModifiedUser = UserName;
                 ObjFamilyDependencyModel.CreatedBy = UserName;
 
@@ -1139,7 +1137,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             //}
 
 
-            if (dependency.Age < ObjPlanModel.AgeFrom || dependency.Age > ObjPlanModel.AgeTo)
+            if (dependency.Age<ObjPlanModel.AgeFrom || dependency.Age> ObjPlanModel.AgeTo)
             {
                 return Json(new { success = false, ageLimit = false, Dependency = dependency }, JsonRequestBehavior.AllowGet);
             }

@@ -1060,7 +1060,7 @@ namespace Funeral.DAL
         {
             AdditionalMemberInfoModel model1 = new AdditionalMemberInfoModel();
             string query = "SaveNewPlanDetails";
-            DbParameter[] ObjParam = new DbParameter[28];
+            DbParameter[] ObjParam = new DbParameter[30];
             ObjParam[0] = new DbParameter("@pkiPlanID", DbParameter.DbType.Int, 0, model.pkiPlanID);
             ObjParam[1] = new DbParameter("@PlanName", DbParameter.DbType.NVarChar, 0, model.PlanName);
             ObjParam[2] = new DbParameter("@PlanSubscription", DbParameter.DbType.Decimal, 0, model.PlanSubscription);
@@ -1089,6 +1089,10 @@ namespace Funeral.DAL
             ObjParam[25] = new DbParameter("@NumberOfDependents", DbParameter.DbType.Decimal, 0, model.NumberOfDependents);
             ObjParam[26] = new DbParameter("@AgeFrom", DbParameter.DbType.Decimal, 0, model.AgeFrom);
             ObjParam[27] = new DbParameter("@AgeTo", DbParameter.DbType.Decimal, 0, model.AgeTo);
+            ObjParam[28] = new DbParameter("@UnderwriterCover", DbParameter.DbType.Decimal, 0, model.UnderwriterCover);
+            ObjParam[29] = new DbParameter("@UnderwriterPremium", DbParameter.DbType.Decimal, 0, model.UnderwriterPremium);
+
+
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
 
         }
