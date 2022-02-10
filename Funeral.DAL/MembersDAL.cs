@@ -1252,12 +1252,12 @@ namespace Funeral.DAL
         //    ObjParam[1] = new DbParameter("@planID", DbParameter.DbType.Int, 0, Id);
         //    return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetUserTypesByPlanID", ObjParam);
         //}
-        public static DataTable GetUserTypesByMemberID(int MemberId, Guid Parlourid, int Id)
+        public static DataTable GetUserTypesByMemberID(long MemberId, Guid Parlourid)
         {
-            DbParameter[] ObjParam = new DbParameter[3];
+            DbParameter[] ObjParam = new DbParameter[2];
             ObjParam[0] = new DbParameter("@parlourId", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
-            ObjParam[1] = new DbParameter("@MemberId", DbParameter.DbType.Int, 0, MemberId);
-            ObjParam[2] = new DbParameter("@planID", DbParameter.DbType.Int, 0, Id);
+            ObjParam[1] = new DbParameter("@MemberId", DbParameter.DbType.Money, 0, MemberId);
+            //ObjParam[2] = new DbParameter("@planID", DbParameter.DbType.Int, 0, Id);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetUserTypesByMemberID", ObjParam);
         }
         public static DataTable GetPlanByPlanID(int ID, Guid ParlourId)
