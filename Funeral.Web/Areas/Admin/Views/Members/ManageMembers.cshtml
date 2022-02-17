@@ -2048,8 +2048,8 @@
                     Control.after('<img id="ddlDependentDependencyType_loader" src="../../Content/images/ajax-loader.gif"/>');
                     var policyStartDate = dateFormat($("#tab-3 #txtPolicyStartDate").val(), 'mm/dd/yyyy', false);
                     var id = $("#tab-3 #ddlPolicy").val();
-                    $('#tab-5 #txtDependentPremium').val(0);
-                    $('#tab-5 #txtDependentCoverAmount').val(0);
+                    $('#tab-5 #txtDependentPremium').val();
+                    $('#tab-5 #txtDependentCoverAmount').val();
                     if ($("#tab-3 #ddlPolicy :selected").val() != "") {
                         $.ajax({
                             url: GetPremiumForPolicyURl + "?id=" + id + "&date=" + policyStartDate + "&UserType=" + UserTypeId + "&Age=" + DependentAge,
@@ -2334,6 +2334,7 @@
                 IDNumber: idNumber,
                 DateOfBirth: dateFormat($("#tab-1 #txtBirthDay").val(), 'dd-mm-yyyy', false),
                 Telephone: $("#txtTelePhone").val(),
+                Age: $("#txtAge").val(),
                 Cellphone: $("#txtCellphone").val(),
                 Email: $("#txtEmail").val(),
                 Citizenship: $("#ddlCitizenship :selected").text(),
@@ -2380,7 +2381,7 @@
                 PolicyPremium: $("#tab-3 #txtPolicyPremium").val(),
                 PolicyPremium: $("#tab-3 #txtPolicyCoverAmount").val(),
                 Branch: $("#tab-4 #txtBankBranch").val(), //$("#ddlBankBranch :selected").text()
-
+                
 
 
             };

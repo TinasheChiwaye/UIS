@@ -14,7 +14,7 @@ namespace Funeral.DAL
             try
             {
                 AdditionalMemberInfoModel model1 = new AdditionalMemberInfoModel();
-                string query = "SaveMembers";
+                string query = "SaveMembers_dt";
                 DbParameter[] ObjParam = new DbParameter[57];
                 ObjParam[0] = new DbParameter("@pkiMemberID", DbParameter.DbType.Int, 0, model.pkiMemberID);
                 ObjParam[1] = new DbParameter("@CreateDate", DbParameter.DbType.DateTime, 0, System.DateTime.Now);
@@ -610,12 +610,12 @@ namespace Funeral.DAL
             return (DbConnection.GetDataTable(CommandType.StoredProcedure, "SelectProductName", ObjParam));
         }
 
-        public static DataTable GetUserTypesByMemberID(int MemberId)
+        public static DataTable GetUserTypesByMemberID(int MemberId, int Id, Guid Parlourid)
         {
-            DbParameter[] ObjParam = new DbParameter[1];
+            DbParameter[] ObjParam = new DbParameter[3];
             ObjParam[0] = new DbParameter("@MemberID",DbParameter.DbType.Int,0, MemberId);
-            //ObjParam[1] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
-            //ObjParam[2] = new DbParameter("@planID", DbParameter.DbType.Int, 0, Id);
+            ObjParam[1] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
+            ObjParam[2] = new DbParameter("@planID", DbParameter.DbType.Int, 0, Id);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetUserTypesByMemberID", ObjParam);
 
 

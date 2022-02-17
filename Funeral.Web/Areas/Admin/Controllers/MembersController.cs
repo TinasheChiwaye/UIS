@@ -214,7 +214,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             Managemembers.CustomGrouping3 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom3)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
             Managemembers.Member = member;
             //Managemembers.DependencyTypeList = CommonBAL.GetUserTypes().Select(x => new SelectListItem() { Text = x.UserTypeName, Value = x.UserTypeId.ToString() });
-            Managemembers.DependencyTypeList = CommonBAL.GetUserTypesByMemberID(MemberId, CurrentParlourId).Select(x => new SelectListItem() { Text = x.UserTypeName, Value = x.CreatorID.ToString() });
+            Managemembers.DependencyTypeList = CommonBAL.GetUserTypesByMemberID(MemberId, member.fkiPlanID, CurrentParlourId).Select(x => new SelectListItem() { Text = x.UserTypeName, Value = x.CreatorID.ToString() });
             ViewBag.Provinces = CommonBAL.GetProvinces();
             Managemembers.ExtendedFamily = MembersBAL.GetExtendedFamilyList(CurrentParlourId, MemberId).Select(x => new SelectListItem() { Text = x.FullName, Value = x.pkiDependentID.ToString() });
 
@@ -1107,7 +1107,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 ObjFamilyDependencyModel.Cover = dependency.Cover;
                 ObjFamilyDependencyModel.Passport = dependency.Passport;
                 ObjFamilyDependencyModel.ModifiedUser = UserID.ToString();
-                ObjFamilyDependencyModel.ModifiedUser = UserName;
+                //ObjFamilyDependencyModel.ModifiedUser = UserName;
                 ObjFamilyDependencyModel.CreatedBy = UserName;
 
             }

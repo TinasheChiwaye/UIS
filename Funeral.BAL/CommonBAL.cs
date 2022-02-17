@@ -688,9 +688,9 @@ namespace Funeral.BAL
         {
             return CommonDAL.AddAudit(Username, ParlourId, AuditDesc);
         }
-        public static List<UserType> GetUserTypesByMemberID(int MemberId, Guid parlourid)
+        public static List<UserType> GetUserTypesByMemberID(int MemberId, int planID, Guid parlourid)
         {
-            DataTable dr = MembersDAL.GetUserTypesByMemberID(MemberId, parlourid);
+            DataTable dr = MembersDAL.GetUserTypesByMemberID(MemberId, planID, parlourid);
             return FuneralHelper.DataTableMapToList<UserType>(dr);
         }
         //=================TEST
