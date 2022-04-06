@@ -167,12 +167,12 @@ namespace Funeral.Web.Areas.Admin.Controllers
         {
             //add Joining fee boolean in method
             MembersModel objmember = MembersBAL.GetMemberByID(data.pkiMemberID, ParlourId);
-            PaymentReminderModel outstandingPayment = MemberPaymentBAL.GetOustandingPaymentByMemberId(data.LatePaymentId);
+            //PaymentReminderModel outstandingPayment = MemberPaymentBAL.GetOustandingPaymentByMemberId(data.LatePaymentId);
             if (objmember.MemberBranch != "")
             {
                 data.Branch = objmember.MemberBranch;
             }
-            data.Notes = outstandingPayment.MemberNotes;
+            //data.Notes = outstandingPayment.MemberNotes;
             data.ParlourId = ParlourId;
             data.NextPaymentDate = Convert.ToDateTime(data.PaymentDate).AddMonths(Convert.ToInt32(data.MonthOwing));
             var paymentId = MemberPaymentBAL.AddPayments(data, true);
