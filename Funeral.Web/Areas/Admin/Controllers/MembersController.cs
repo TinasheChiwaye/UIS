@@ -796,14 +796,45 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 Response.Add(string.IsNullOrEmpty(CommonBAL.GetPlanUnderwriterByPlanId(id)) ? string.Empty : CommonBAL.GetPlanUnderwriterByPlanId(id));
                 int WaitingPeriod = CommonBAL.GetWaitingPeriodByPlanId(id);
 
-                if (objPolicyModel.WaitingPeriod != 0 && objPolicyModel.WaitingPeriod == null)
+                if (objPolicyModel.WaitingPeriod == 0 || objPolicyModel.WaitingPeriod == null)
                 {
                     Response.Add(DateTime.Now.AddMonths(CommonBAL.GetWaitingPeriodByPlanId(id)).ToString("dd MMM yyyy"));
                 }
                 else if (date != null)
                 {
-                    DateTime PolicystartDate = Convert.ToDateTime(date);
-                    Response.Add(PolicystartDate.AddMonths(CommonBAL.GetWaitingPeriodByPlanId(id)).ToString("dd MMM yyyy"));
+                    //DateTime PolicystartDate = Convert.ToDateTime(date);
+                    Response.Add(date.AddMonths(CommonBAL.GetWaitingPeriodByPlanId(id)).ToString("dd MMM yyyy"));
+                    //date = PolicystartDate;
+                }
+                if (objPolicyModel != null)
+                    Response.Add(objPolicyModel.totalPremium);
+                else
+                    Response.Add(string.Empty);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return Json(Response, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult BindDependentCoverDate(int id, DateTime date)
+        {
+            PolicyModel objPolicyModel = CommonBAL.GetPlanSubscriptionByPlanIdNewMember(id).ToList().FirstOrDefault();
+            List<string> Response = new List<string>();
+            try
+            {
+                int WaitingPeriod = CommonBAL.GetWaitingPeriodByPlanId(id);
+
+                if (objPolicyModel.WaitingPeriod == 0 || objPolicyModel.WaitingPeriod == null)
+                {
+                    Response.Add(DateTime.Now.AddMonths(CommonBAL.GetWaitingPeriodByPlanId(id)).ToString("dd MMM yyyy"));
+                }
+                else if (date != null)
+                {
+                    //DateTime PolicystartDate = Convert.ToDateTime(date);
+                    Response.Add(date.AddMonths(CommonBAL.GetWaitingPeriodByPlanId(id)).ToString("dd MMM yyyy"));
+                    //date = PolicystartDate;
                 }
                 if (objPolicyModel != null)
                     Response.Add(objPolicyModel.totalPremium);
@@ -1705,7 +1736,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
         public void UpdatePolicyStatus(string policyStatus, int memberId)
 
         {
-            MembersBAL.UpdateMemberPolicyStatus(policyStatus, memberId);
+            MembersBAL.UpdateMemberPolicyStatus(policyStatus, memberId, UserName);
             CommonBAL.SaveAudit(UserName, CurrentParlourId, "Policy Status Changed");
         }
         [HttpPost]

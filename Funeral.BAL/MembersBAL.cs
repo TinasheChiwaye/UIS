@@ -380,9 +380,9 @@ namespace Funeral.BAL
         {
             return MembersDAL.GetLastCopiedMemberForDependency();
         }
-        public static void UpdateMemberPolicyStatus(string policyStatus, int memberId)
+        public static void UpdateMemberPolicyStatus(string policyStatus, int memberId, string UserName)
         {
-            MembersDAL.UpdateMemberPolicyStatus(policyStatus, memberId);
+            MembersDAL.UpdateMemberPolicyStatus(policyStatus, memberId, UserName);
         }
 
         public static int SaveBeneficiary(Beneficiary_model Model)

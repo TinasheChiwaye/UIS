@@ -148,7 +148,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 ViewBag.MemberID = model.MemeberNumber;
                 ViewBag.ParlourID = ParlourID;
 
-                ViewBag.MonthToPay = MembersBAL.GetMonthsToPay(id);
+                //ViewBag.MonthToPay = MembersBAL.GetMonthsToPay(id);
             }
             var info = CultureInfo.InvariantCulture.Clone() as CultureInfo;
             info.NumberFormat.NumberDecimalSeparator = ".";
@@ -467,7 +467,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
         public void UpdatePolicyStatus(string policyStatus, int memberId)
 
         {
-            MembersBAL.UpdateMemberPolicyStatus(policyStatus, memberId);
+            MembersBAL.UpdateMemberPolicyStatus(policyStatus, memberId, UserName);
             CommonBAL.SaveAudit(UserName, CurrentParlourId, "Policy Status Changed");
         }
 

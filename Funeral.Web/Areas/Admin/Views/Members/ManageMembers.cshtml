@@ -222,6 +222,7 @@
         @Html.Hidden("Members", Url.Action("GetPremiumForPolicy"))
         @Html.Hidden("SaveManageMembers", Url.Action("SaveManageMembers"))
         @Html.Hidden("BindPolicyCoverDateUrl", Url.Action("BindPolicyCoverDate"))
+        @Html.Hidden("BindDependentCoverDateUrl", Url.Action("BindDependentCoverDate"))
         @Html.Hidden("GetMemberToUpdate", Url.Action("GetMember"))
         @Html.Hidden("GetPolicyDetails", Url.Action("GetPolicyDetails"))
         @Html.Hidden("GetPolicyDetailsBetweenAge", Url.Action("GetPolicyDetailsBetweenAge"))
@@ -347,21 +348,21 @@
                                                 @{
                                                     if (Model.IsAdministrator == true || Model.IsSuperUser == true)
                                                     {
-                                                        <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="DateComparisionJavascriptFun();" onblur="IdNumberBasicValidation(txtIdNumber);">
+                                                        <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="Validate();" onblur="IdNumberValidation(txtIdNumber);">
                                                     }
                                                     else if (Model.Member.pkiMemberID > 0)
                                                     {
-                                                        <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="DateComparisionJavascriptFun();" readonly="readonly" onblur="IdNumberBasicValidation(txtIdNumber);">
+                                                        <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="Validate();" readonly="readonly" onblur="IdNumberValidation(txtIdNumber);">
                                                     }
                                                     else
                                                     {
-                                                        <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="DateComparisionJavascriptFun();" onblur="IdNumberBasicValidation(txtIdNumber);">
+                                                        <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="Validate();" onblur="IdNumberValidation(txtIdNumber);">
                                                     }
                                                 }
                                             </div>
                                             <div class="form-group">
                                                 <label>Date of Birth </label>
-                                                <input type="text" id="txtBirthDay" name="txtBirthDay" class="form-control birthDate DatepickerSelection" readonly="readonly">
+                                                <input type="text" id="txtBirthDay" name="txtBirthDay" class="form-control birthDate DatepickerSelection" readonly="readonly" disabled>
                                             </div>
 
                                             <div class="form-group">
@@ -695,13 +696,14 @@
 
                                         </div>
                                         <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Policy Start Date</label>
+                                                <input type="text" id="txtPolicyStartDate" name="txtPolicyStartDate" class="form-control date1 DatepickerSelection">
+                                            </div>
                                             @{
                                                 if (Model.IsAdministrator == true || Model.IsSuperUser == true)
                                                 {
-                                                    <div class="form-group">
-                                                        <label>Policy Start Date</label>
-                                                        <input type="text" id="txtPolicyStartDate" name="txtPolicyStartDate" class="form-control date1 DatepickerSelection">
-                                                    </div>
+
                                                     <div class="form-group">
                                                         <label>Policy Inception Date</label>
                                                         <input type="text" id="txtInception" name="name" class="form-control date2 DatepickerSelection">
@@ -709,10 +711,6 @@
                                                 }
                                                 else if (Model.Member.pkiMemberID > 0)
                                                 {
-                                                    <div class="form-group">
-                                                        <label>Policy Start Date</label>
-                                                        <input type="text" id="txtPolicyStartDate" name="txtPolicyStartDate" class="form-control date1 DatepickerSelection" disabled>
-                                                    </div>
                                                     <div class="form-group">
                                                         <label>Policy Inception Date</label>
                                                         <input type="text" id="txtInception" name="name" class="form-control date2 DatepickerSelection" disabled>
@@ -722,11 +720,11 @@
                                                 {
                                                     <div class="form-group">
                                                         <label>Policy Start Date</label>
-                                                        <input type="text" id="txtPolicyStartDate" name="txtPolicyStartDate" class="form-control date1 DatepickerSelection" >
+                                                        <input type="text" id="txtPolicyStartDate" name="txtPolicyStartDate" class="form-control date1 DatepickerSelection">
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Policy Inception Date</label>
-                                                        <input type="text" id="txtInception" name="name" class="form-control date2 DatepickerSelection" >
+                                                        <input type="text" id="txtInception" name="name" class="form-control date2 DatepickerSelection">
                                                     </div>
                                                 }
                                             }
@@ -1029,44 +1027,27 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6">
-                                                            @{
-                                                                if (Model.IsAdministrator == true || Model.IsSuperUser == true)
-                                                                {
+                                                            <div class="form-group">
+                                                                <label>Start Date <em>*</em></label>
+                                                                <input type="text" maxlength="30" id="txtDependentStartDate" name="txtDependentStartDate"
+                                                                       class="form-control dependantStartDate DatepickerSelection">
+                                                            </div>
 
-                                                                    <div class="form-group">
-                                                                        <label>Start Date <em>*</em></label>
-                                                                        <input type="text" maxlength="30" id="txtDependentStartDate" name="txtDependentStartDate"
-                                                                               class="form-control dependantStartDate DatepickerSelection" >
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label>Inception Date <em>*</em></label>
-                                                                        <input type="text" maxlength="25" id="txtDependentInceptionDate" name="txtDependentInceptionDate"
-                                                                               class="form-control dependantInceptionDate DatepickerSelection" >
-                                                                    </div>
-                                                                }
-                                                                else
-                                                                {
+                                                            <div class="form-group">
+                                                                <label>Inception Date <em>*</em></label>
+                                                                <input type="text" maxlength="25" id="txtDependentInceptionDate" name="txtDependentInceptionDate"
+                                                                        class="form-control dependantInceptionDate DatepickerSelection" >
+                                                            </div>
 
-                                                                    <div class="form-group">
-                                                                        <label>Start Date <em>*</em></label>
-                                                                        <input type="text" maxlength="30" id="txtDependentStartDate" name="txtDependentStartDate"
-                                                                               class="form-control dependantStartDate DatepickerSelection" disabled>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label>Inception Date <em>*</em></label>
-                                                                        <input type="text" maxlength="25" id="txtDependentInceptionDate" name="txtDependentInceptionDate"
-                                                                               class="form-control dependantInceptionDate DatepickerSelection" disabled>
-                                                                    </div>
-                                                                }
-                                                            }
+
 
                                                             <div class="form-group">
                                                                 <label>Cover Date <em>*</em></label>
                                                                 <input type="text" maxlength="25" id="txtDependentCoverDate" name="txtDependentCoverDate"
-                                                                       class="form-control dependantCoverDate DatepickerSelection" readonly>
+                                                                       class="form-control dependantCoverDate DatepickerSelection" disabled>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label>Relationship Type</label>
+                                                                <label>Relationship Type<em>*</em></label>
                                                                 @*<input type="text" maxlength="25" id="txtDepnduncyType" name="name" class="form-control">*@
                                                                 @Html.DropDownList("DependencyList", Model.DependencyTypeList, "Select", new { Name = "Dependency", @id = "ddlDependentDependencyType", @style = "width:100%", @class = "form-control" })
                                                             </div>
@@ -1964,6 +1945,44 @@
                                 //if (urlParser.origin + urlParser.pathname === location.origin + location.pathname) {
                                 //    window.location.reload();
                                 //}
+                            },
+                            error: function (xhr, ajaxOptions, thrownError) {
+                                alert(thrownError);
+                            }
+                        })
+                    } else {
+                        alert("Please select policy..!");
+                    }
+                }
+                else {
+                    alert("Age not found in first tab");
+                }
+                BindDependencyDropdown($("#tab-3 #ddlPolicy").val());
+            });
+
+            $("#tab-3 #ddlPolicy").change(function () {
+                var GetPremiumForPolicyURl = $("#ChangePremiumIfCancelled").val();
+                var getAge = $("#txtAge").val();
+                if (getAge != "" && getAge != null) {
+                    var id = $("#tab-3 #ddlPolicy").val();
+                    var date = $("#tab-3 #txtPolicyStartDate").val();
+                    var date = new Date(parseInt($("#tab-3 #txtPolicyStartDate").val().replace('/Date(', '')));
+                    var policyStartDate = dateFormat($("#tab-3 #txtPolicyStartDate").val(), 'mm/dd/yyyy', false);
+
+                    if ($("#tab-3 #ddlPolicy :selected").val() != "") {
+                        $.ajax({
+                            url: GetPremiumForPolicyURl + "?id=" + id + "&date=" + policyStartDate + "&UserType=1&Age=" + getAge,
+                            type: "get",
+                            cache: false,
+                            success: function (result) {
+                                $('#tab-3 #txtPolicyPremium').val(result[0]);
+                                $('#tab-3 #txtTotalPremium').val(result[0]);
+
+
+                                localStorage.setItem("Tab-3", 1); // 1 for tab index
+
+                                // Retrieve active tab after reload
+                                var activeTab = localStorage.getItem("activeTab"); // activeTab will be "1"
                             },
                             error: function (xhr, ajaxOptions, thrownError) {
                                 alert(thrownError);
@@ -4785,17 +4804,15 @@
     }
 
     function OnStartChangeFillDependentFamilyDetails(policyId, policyStartDate) {
-        var bindPolicyCoverDateUrl = $("#BindPolicyCoverDateUrl").val();
+        var bindDependentCoverDateUrl = $("#BindDependentCoverDateUrl").val();
 
         if (policyId != '' && policyStartDate != undefined) {
             $.ajax({
-                url: bindPolicyCoverDateUrl + "?id=" + policyId + "&date=" + policyStartDate,
+                url: bindDependentCoverDateUrl + "?id=" + policyId + "&date=" + policyStartDate,
                 type: "get",
                 cache: false,
                 success: function (result) {
-                    $('#tab-5 #txtDependentPremium').val(result[0]|0);
-                    $('#tab-5 #txtDependentCoverDate').val(result[2]);
-                    $('#tab-5 #txtDependentPremium').val(result[0]|0);
+                    $('#tab-5 #txtDependentCoverDate').val(result[0]);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     alert(thrownError);
@@ -4838,6 +4855,13 @@
     function IdNumberBasicValidation(IdNumber) {
         if (IdNumber.value.length != 0 && IdNumber.value.length != 6 && IdNumber.value.length != 13) {
         alert("Id Number is not valid");
+            IdNumber.value = "";
+        }
+    }
+
+    function IdNumberValidation(IdNumber) {
+        if (IdNumber.value.length != 0 && IdNumber.value.length != 13) {
+            alert("Id Number is not valid");
             IdNumber.value = "";
         }
     }

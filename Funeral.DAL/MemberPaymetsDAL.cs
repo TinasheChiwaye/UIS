@@ -221,7 +221,7 @@ namespace Funeral.DAL
             if (dtMember.Rows.Count > 0 && ModelPayment.pkiMemberID != 0)
             {
 
-                DbParameter[] ObjParam = new DbParameter[14];
+                DbParameter[] ObjParam = new DbParameter[13];
                 ObjParam[0] = new DbParameter("@MemberID", DbParameter.DbType.Int, 0, ModelPayment.pkiMemberID);
                 //ObjParam[1] = new DbParameter("@AmountPaid", DbParameter.DbType.Decimal, 0, (ModelPayment.Amount / 100).ToString().Replace(",", "."));
                 ObjParam[1] = new DbParameter("@AmountPaid", DbParameter.DbType.Decimal, 0, ModelPayment.Amount);
@@ -243,8 +243,8 @@ namespace Funeral.DAL
                 ObjParam[10] = new DbParameter("@PaidBy", DbParameter.DbType.VarChar, 0, "");
                 ObjParam[11] = new DbParameter("@MethodOfPayment", DbParameter.DbType.VarChar, 0, ModelPayment.MethodOfPayment);
                 ObjParam[12] = new DbParameter("@IsJoiningFee", DbParameter.DbType.Bit, 0, IsJoiningFee);
-                ObjParam[13] = new DbParameter("@LatePaymentMemberId", DbParameter.DbType.Int, 0, ModelPayment.LatePaymentId);
-                returnValue = Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "AddPayment_New", ObjParam));
+                //ObjParam[13] = new DbParameter("@LatePaymentMemberId", DbParameter.DbType.Int, 0, ModelPayment.LatePaymentId);
+                returnValue = Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "AddPayment", ObjParam));
 
                 if (ModelPayment.LatePaymentPenalty > 0)
                 {

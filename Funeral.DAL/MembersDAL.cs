@@ -310,7 +310,7 @@ namespace Funeral.DAL
             DbParameter[] ObjParam = new DbParameter[2];
             ObjParam[0] = new DbParameter("@parlourId", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
             ObjParam[1] = new DbParameter("@MemberId", DbParameter.DbType.VarChar, 0, MemberId);
-            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetInvoices_new", ObjParam);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetInvoices_dt", ObjParam);
         }
 
         public static DataTable GetGroupInvoiceByReference(Guid Parlourid)
@@ -413,7 +413,7 @@ namespace Funeral.DAL
             ObjParam[0] = new DbParameter("@pkiPlanID", DbParameter.DbType.Int, 0, pkiPlanID);
             ObjParam[1] = new DbParameter("@Age", DbParameter.DbType.Int, 0, Age);
             ObjParam[2] = new DbParameter("@UserTypeId", DbParameter.DbType.Int, 0, UserTypeId);
-            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetPolicyDetailsBetweenAge_NEW", ObjParam);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetPolicyDetailsBetweenAge_TEST", ObjParam);
         }
         public static DataTable GetPlanSubscriptionByPlanIddt(int pkiPlanID, Guid parlorId)
         {
@@ -1123,12 +1123,13 @@ namespace Funeral.DAL
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "GetLastCopiedMemberForDependency"));
         }
 
-        public static void UpdateMemberPolicyStatus(string policyStatus, int memberId)
+        public static void UpdateMemberPolicyStatus(string policyStatus, int memberId, string UserName)
         {
-            string query = "UpdateMemberPolicyStatus";
-            DbParameter[] ObjParam = new DbParameter[2];
+            string query = "UpdateMemberPolicyStatusNew";
+            DbParameter[] ObjParam = new DbParameter[3];
             ObjParam[0] = new DbParameter("@PolicyStatus", DbParameter.DbType.NVarChar, 0, policyStatus);
-            ObjParam[1] = new DbParameter("@MemberId", DbParameter.DbType.Int, 1, memberId);
+            ObjParam[1] = new DbParameter("@UserName", DbParameter.DbType.NVarChar, 0, UserName);
+            ObjParam[2] = new DbParameter("@MemberId", DbParameter.DbType.Int, 1, memberId);
             DbConnection.ExecuteNonQuery(CommandType.StoredProcedure, query, ObjParam);
         }
         public static int SaveBeneficiary(Beneficiary_model ModalProduct)
