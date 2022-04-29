@@ -93,7 +93,6 @@ namespace Funeral.Web.Areas.Admin.Controllers
                     groupPayment.LastModified = System.DateTime.Now;
                     groupPayment.PaidBy = formIdentity.Name;
                     groupPayment.RecievedBy = formIdentity.Name;
-                    int invoiceGroupId = OtherPaymentBAL.AddEditGroupPayment(groupPayment);
                     TempData["IsSocietySetupSaved"] = true;
                     TempData.Keep("IsSocietySetupSaved");
 
@@ -137,6 +136,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
                                         if (excelData.ReferenceNumber != null || excelData.AmountPaid != 0 || excelData.Notes != "")
                                             groupPaymentList.Add(excelData);
                                     }
+                                    int invoiceGroupId = OtherPaymentBAL.AddEditGroupPayment(groupPayment);
+                                    TempData["message"] = ShowMessage(MessageType.Success, "Group Payment Successful");
                                 }
                                 else
                                 {
@@ -151,7 +152,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-                throw ex;
+                TempData["message"] = ShowMessage(MessageType.Danger, ex.Message);
             }
             TempData["IsSocietySetupSaved"] = false;
             TempData.Keep("IsSocietySetupSaved");

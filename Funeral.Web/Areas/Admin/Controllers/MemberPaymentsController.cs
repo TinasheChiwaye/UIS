@@ -82,9 +82,11 @@ namespace Funeral.Web.Areas.Admin.Controllers
             keyValues.Add(new KeyValue { Key = "25", Value = "25" });
             keyValues.Add(new KeyValue { Key = "50", Value = "50" });
             keyValues.Add(new KeyValue { Key = "100", Value = "100" });
+             
             keyValues.Add(new KeyValue { Key = "200", Value = "200" });
             keyValues.Add(new KeyValue { Key = "250", Value = "250" });
             keyValues.Add(new KeyValue { Key = "500", Value = "500" });
+            keyValues.Add(new KeyValue { Key = "1000", Value = "1000" });
             ViewBag.EntriesCount = keyValues;
         }
         public void LoadStatus()
@@ -319,7 +321,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
 
         //=========================test===============================
-        public JsonResult CalculateAmount(int noOfMonths, int TotalPremieum, int LatePanelty)
+        public JsonResult CalculateAmount(int noOfMonths, decimal TotalPremieum, int LatePanelty)
         {
             var info = CultureInfo.InvariantCulture.Clone() as CultureInfo;
             info.NumberFormat.NumberDecimalSeparator = ".";
@@ -351,7 +353,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
 
 
-            return Json(Amount  + "~" + TotalPremium + "~" + currency, JsonRequestBehavior.AllowGet);
+            return Json(Amount + "~" + TotalPremium + "~" + currency, JsonRequestBehavior.AllowGet);
         }
         //=========================test end===============================
 

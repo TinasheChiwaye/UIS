@@ -453,7 +453,7 @@
                                                                 <div class="col-lg-6">
 
                                                                     <div class="form-group">
-                                                                        <label>Plan Name<em>*</em> </label>
+                                                                        <label>Plan/Product Name<em>*</em> </label>
                                                                         @Html.DropDownList("PolicyList", Model.PolicyList, "Select", new { Name = "CitizenShip", @id = "ddlPolicyPopupPolicy", @style = "width:100%", @class = "form-control" })
                                                                     </div>
                                                                     <div class="form-group">
@@ -467,26 +467,26 @@
                                                                         <input type="text" maxlength="20" id="txtPolicyNo" name="name" class="form-control">
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <label>EasyPay</label>
+                                                                        <label>EasyPay Number</label>
                                                                         <input type="text" maxlength="50" id="txtEasyToPay" name="name" class="form-control">
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <label>Select Branch</label>
+                                                                        <label>Branch Name</label>
                                                                         <label>
                                                                             <em>*</em>
                                                                         </label>
                                                                         @Html.DropDownList("BranchList", Model.BranchList, "Select", new { Name = "BranchList", @id = "ddlMemberBranch", @style = "width:100%", @class = "form-control" })
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <label>Custom Payment Method</label>
+                                                                        <label>Payment Method</label>
                                                                         @Html.DropDownList("CustomPaymentMethod", Model.CustomPaymentMethod, "Select", new { Name = "CustomPayment", @id = "ddlPopupCustom1", @style = "width:100%", @class = "form-control" })
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <label>Custom Grouping 2</label>
+                                                                        <label>Type of Income</label>
                                                                         @Html.DropDownList("CustomGrouping2", Model.CustomGrouping2, "Select", new { Name = "CustomGrouping2", @id = "ddlPopupCustom2", @style = "width:100%", @class = "form-control" })
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <label>Custom Grouping 3</label>
+                                                                        <label>Source</label>
                                                                         @Html.DropDownList("CustomGrouping3", Model.CustomGrouping3, "Select", new { Name = "CustomGrouping3", @id = "ddlPopupCustom3", @style = "width:100%", @class = "form-control" })
                                                                     </div>
                                                                 </div>
@@ -652,6 +652,10 @@
                                                 <input type="text" maxlength="25" id="txtPolicyPremium" name="name" class="form-control" disabled>
                                             </div>
                                             <div class="form-group">
+                                                <label>Total Premium</label>
+                                                <input type="text" maxlength="20" id="txtTotalPremium" value="@Model.Currency @Model.TotalPremium" name="name" class="form-control" disabled>
+                                            </div>
+                                            <div class="form-group">
                                                 <label> Cover Amount</label>
                                                 <input type="text" maxlength="25" id="txtPolicyCoverAmount" name="name" class="form-control" disabled>
                                             </div>
@@ -669,30 +673,24 @@
                                                 }
                                                 @*<input type="text" maxlength="20" id="txtPolicyNo" name="name" class="form-control">*@
                                             </div>
+
                                             <div class="form-group">
-                                                <label>EasyPay</label>
-                                                <input type="text" maxlength="50" id="txtEasyToPay" name="name" class="form-control">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Select Branch<em>*</em></label>
+                                                <label>Branch Name<em>*</em></label>
                                                 @Html.DropDownList("BranchList", Model.BranchList, "Select", new { Name = "BranchList", @id = "ddlMemberBranch", @style = "width:100%", @class = "form-control" })
                                             </div>
-                                            <div class="form-group" style="display:none">
-                                                <label>Custom Payment Method</label>
+                                            <div class="form-group">
+                                                <label>Payment Method</label>
                                                 @Html.DropDownList("CustomPaymentMethod", Model.CustomPaymentMethod, "Select", new { Name = "CustomPayment", @id = "ddlCustom1", @style = "width:100%", @class = "form-control" })
                                             </div>
-                                            <div class="form-group" style="display:none">
-                                                <label>Custom Grouping 2</label>
+                                            <div class="form-group">
+                                                <label>Type of Income</label>
                                                 @Html.DropDownList("CustomGrouping2", Model.CustomGrouping2, "Select", new { Name = "CustomGrouping2", @id = "ddlCustom2", @style = "width:100%", @class = "form-control" })
                                             </div>
-                                            <div class="form-group" style="display:none">
-                                                <label>Custom Grouping 3</label>
+                                            <div class="form-group">
+                                                <label>Source</label>
                                                 @Html.DropDownList("CustomGrouping3", Model.CustomGrouping3, "Select", new { Name = "CustomGrouping3", @id = "ddlCustom3", @style = "width:100%", @class = "form-control" })
                                             </div>
-                                            <div class="form-group">
-                                                <label>Total Premium</label>
-                                                <input type="text" maxlength="20" id="txtTotalPremium" value="@Model.Currency @Model.TotalPremium" name="name" class="form-control" disabled>
-                                            </div>
+
 
                                         </div>
                                         <div class="col-lg-6">
@@ -727,6 +725,7 @@
                                                         <input type="text" id="txtInception" name="name" class="form-control date2 DatepickerSelection">
                                                     </div>
                                                 }
+
                                             }
 
 
@@ -738,7 +737,10 @@
                                                 <label>Policy Underwritten By</label>
                                                 <input type="text" maxlength="50" id="txtUnderwriter" name="name" class="form-control" disabled>
                                             </div>
-
+                                            <div class="form-group">
+                                                <label>EasyPay</label>
+                                                <input type="text" maxlength="50" id="txtEasyToPay" name="name" class="form-control">
+                                            </div>
                                             @*<div class="form-group">
             <label>Policy Underwritten By</label>
             @Html.DropDownList("UnderwritterList", Model.UnderwritterList, "Select", new { Name = "Underwritter", @id = "ddlUnderwritter", @style = "width:100%", @class = "form-control" })
@@ -1960,43 +1962,43 @@
                 BindDependencyDropdown($("#tab-3 #ddlPolicy").val());
             });
 
-            $("#tab-3 #ddlPolicy").change(function () {
-                var GetPremiumForPolicyURl = $("#ChangePremiumIfCancelled").val();
-                var getAge = $("#txtAge").val();
-                if (getAge != "" && getAge != null) {
-                    var id = $("#tab-3 #ddlPolicy").val();
-                    var date = $("#tab-3 #txtPolicyStartDate").val();
-                    var date = new Date(parseInt($("#tab-3 #txtPolicyStartDate").val().replace('/Date(', '')));
-                    var policyStartDate = dateFormat($("#tab-3 #txtPolicyStartDate").val(), 'mm/dd/yyyy', false);
+            //$("#tab-3 #ddlPolicy").change(function () {
+            //    var GetPremiumForPolicyURl = $("#ChangePremiumIfCancelled").val();
+            //    var getAge = $("#txtAge").val();
+            //    if (getAge != "" && getAge != null) {
+            //        var id = $("#tab-3 #ddlPolicy").val();
+            //        var date = $("#tab-3 #txtPolicyStartDate").val();
+            //        var date = new Date(parseInt($("#tab-3 #txtPolicyStartDate").val().replace('/Date(', '')));
+            //        var policyStartDate = dateFormat($("#tab-3 #txtPolicyStartDate").val(), 'mm/dd/yyyy', false);
 
-                    if ($("#tab-3 #ddlPolicy :selected").val() != "") {
-                        $.ajax({
-                            url: GetPremiumForPolicyURl + "?id=" + id + "&date=" + policyStartDate + "&UserType=1&Age=" + getAge,
-                            type: "get",
-                            cache: false,
-                            success: function (result) {
-                                $('#tab-3 #txtPolicyPremium').val(result[0]);
-                                $('#tab-3 #txtTotalPremium').val(result[0]);
+            //        if ($("#tab-3 #ddlPolicy :selected").val() != "") {
+            //            $.ajax({
+            //                url: GetPremiumForPolicyURl + "?id=" + id + "&date=" + policyStartDate + "&UserType=1&Age=" + getAge,
+            //                type: "get",
+            //                cache: false,
+            //                success: function (result) {
+            //                    $('#tab-3 #txtPolicyPremium').val(result[0]);
+            //                    $('#tab-3 #txtTotalPremium').val(result[0]);
 
 
-                                localStorage.setItem("Tab-3", 1); // 1 for tab index
+            //                    localStorage.setItem("Tab-3", 1); // 1 for tab index
 
-                                // Retrieve active tab after reload
-                                var activeTab = localStorage.getItem("activeTab"); // activeTab will be "1"
-                            },
-                            error: function (xhr, ajaxOptions, thrownError) {
-                                alert(thrownError);
-                            }
-                        })
-                    } else {
-                        alert("Please select policy..!");
-                    }
-                }
-                else {
-                    alert("Age not found in first tab");
-                }
-                BindDependencyDropdown($("#tab-3 #ddlPolicy").val());
-            });
+            //                    // Retrieve active tab after reload
+            //                    var activeTab = localStorage.getItem("activeTab"); // activeTab will be "1"
+            //                },
+            //                error: function (xhr, ajaxOptions, thrownError) {
+            //                    alert(thrownError);
+            //                }
+            //            })
+            //        } else {
+            //            alert("Please select policy..!");
+            //        }
+            //    }
+            //    else {
+            //        alert("Age not found in first tab");
+            //    }
+            //    BindDependencyDropdown($("#tab-3 #ddlPolicy").val());
+            //});
 
             function BindDependencyDropdown(PlanId) {
                 var ddlCustomers = jQuery("#ddlDependentDependencyType");

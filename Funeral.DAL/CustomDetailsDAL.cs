@@ -35,10 +35,11 @@ namespace Funeral.DAL
                 ObjParam[5] = new DbParameter("@CustomType", DbParameter.DbType.Int, 0, (int)model.CustomType);
                 DbConnection.ExecuteNonQuery(CommandType.StoredProcedure, "CustomDetailsUpdate", ObjParam);
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 throw ex;
             }
-        }        
+        }
 
         public static void CustomDetailsDelete(CustomDetails model)
         {
@@ -72,7 +73,7 @@ namespace Funeral.DAL
 
         public static SqlDataReader GetAllCustomDetailsByParlourId(Guid ParlourId, int CustomType)
         {
-            DbParameter[] ObjParam = new DbParameter[2];           
+            DbParameter[] ObjParam = new DbParameter[2];
             ObjParam[0] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
             ObjParam[1] = new DbParameter("@CustomType", DbParameter.DbType.Int, 0, CustomType);
 

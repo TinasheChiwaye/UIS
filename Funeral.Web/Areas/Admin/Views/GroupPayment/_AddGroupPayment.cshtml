@@ -18,7 +18,7 @@ new SelectListItem() {Text = "Other", Value="Other"}
     if (TempData.Peek("IsSocietySetupSaved") != null && (bool)TempData.Peek("IsSocietySetupSaved") == true)
     {
         <script>
-            ShowSaveMessage('#alert_container', 'Group Payment successfully!');
+            //ShowSaveMessage('#alert_container', 'Group Payment successfully!');
         </script>
         TempData.Remove("IsSocietySetupSaved");
     }
@@ -52,10 +52,10 @@ new SelectListItem() {Text = "Other", Value="Other"}
                             @Html.TextBoxFor(x => x.DatePaid, "{0:dd MMMM yyyy}", new { @id = "txtPaymentDate", @class = "form-control", @autocomplete = false })
                             @Html.ValidationMessageFor(x => x.DatePaid, "", new { @class = "text-danger" })
                         </div>
-                        <div class="form-group">
+                        @*<div class="form-group">
                             @Html.CheckBoxFor(x => x.AutoAllocatePremiumToMember, new { @id = "chk_AutoAllocatePremiumToMember", @onclick = "AutoAllocatePremium(this);" })
                             <label>Auto Allocate Premium To Member</label>
-                        </div>
+                        </div>*@
                         <div class="form-group" id="dvExcelFileSelection">
                             <label>Select Excel File</label>
                             <input type="file" id="fnSelectedFile" name="fnSelectedFile" />

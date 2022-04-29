@@ -471,9 +471,9 @@ namespace Funeral.Web.Tools
         #region Custom field changes
         private void BindCustomDetails(Guid selectedParlourId)
         {
-            var custom1 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(selectedParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom1));
-            var custom2 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(selectedParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom2));
-            var custom3 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(selectedParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom3));
+            var custom1 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(selectedParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.EmploymentType));
+            var custom2 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(selectedParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.PaymentType));
+            var custom3 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(selectedParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Source));
             //ddlCustom1.DataSource = custom1;
             //ddlCustom1.DataTextField = "Name";
             //ddlCustom1.DataValueField = "Id";

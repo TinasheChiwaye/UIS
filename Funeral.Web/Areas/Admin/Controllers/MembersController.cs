@@ -209,9 +209,9 @@ namespace Funeral.Web.Areas.Admin.Controllers
             Managemembers.BranchList = CommonBAL.GetBranchByParlourId(CurrentParlourId).Select(x => new SelectListItem() { Text = x.BranchName, Value = x.Brancheid.ToString() });
             Managemembers.ProductAddOnList = MembersBAL.SelectProductName(CurrentParlourId).Select(x => new SelectListItem() { Text = x.ProductName, Value = x.pkiProductID.ToString() });
             Managemembers.SocietyList = CommonBAL.GetSocietyByParlourId(CurrentParlourId).Select(x => new SelectListItem() { Text = x.SocietyName, Value = x.pkiSocietyID.ToString() });
-            Managemembers.CustomPaymentMethod = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom1)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
-            Managemembers.CustomGrouping2 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom2)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
-            Managemembers.CustomGrouping3 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom3)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
+            Managemembers.CustomPaymentMethod = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.EmploymentType)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
+            Managemembers.CustomGrouping2 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.PaymentType)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
+            Managemembers.CustomGrouping3 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Source)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
             Managemembers.Member = member;
             //Managemembers.DependencyTypeList = CommonBAL.GetUserTypes().Select(x => new SelectListItem() { Text = x.UserTypeName, Value = x.UserTypeId.ToString() });
             Managemembers.DependencyTypeList = CommonBAL.GetUserTypesByMemberID(MemberId, member.fkiPlanID, CurrentParlourId).Select(x => new SelectListItem() { Text = x.UserTypeName, Value = x.CreatorID.ToString() });
@@ -694,12 +694,12 @@ namespace Funeral.Web.Areas.Admin.Controllers
             //PlanModel Plan = new PlanModel();
             PlanModel objPlans = MembersBAL.GetPlanByPlanID(Member.fkiPlanID, CurrentParlourId);
 
-            if (MembersBAL.GetMemberByIDNumber(Member.IDNumber, this.ParlourId, Member.fkiPlanID) != null && Member.pkiMemberID == 0)
-            {
-                //return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member Already Exists" + "</li>").ToList() }, JsonRequestBehavior.AllowGet);
-                return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member ID Number already exists on this Plan." + "</li>").First() }, JsonRequestBehavior.AllowGet);
-            }
-            else if (Member.Age < objPlans.AgeFrom || Member.Age > objPlans.AgeTo)
+            //if (MembersBAL.GetMemberByIDNumber(Member.IDNumber, this.ParlourId, Member.fkiPlanID) != null && Member.pkiMemberID == 0)
+            //{
+            //    //return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member Already Exists" + "</li>").ToList() }, JsonRequestBehavior.AllowGet);
+            //    return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member ID Number already exists on this Plan." + "</li>").First() }, JsonRequestBehavior.AllowGet);
+            //}
+            if (Member.Age < objPlans.AgeFrom || Member.Age > objPlans.AgeTo)
             {
                 return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Memeber age is not supported under this Plan." + "</li>").First() }, JsonRequestBehavior.AllowGet);
 

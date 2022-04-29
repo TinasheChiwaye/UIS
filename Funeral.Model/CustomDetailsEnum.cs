@@ -14,10 +14,10 @@ namespace Funeral.Model
         }
         public enum CustomDetailsType
         {
-            Custom1 = 1,
-            Custom2 = 2,
-            Custom3 = 3,
-    PaymentType= 4
+            EmploymentType = 1,
+            PaymentType = 2,
+            Source = 3,
+            //PaymentType= 4
         }
     }
 }
