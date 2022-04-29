@@ -65,6 +65,8 @@ namespace Funeral.Web.Admin
                 DivImportedDataList.Visible = false;
                 btnConfirmAndSubmit.Visible = false;
                 btnExceptionReport.Visible = false;
+                btnPremiumReport.Visible = false;
+                lblImportStatus.Visible = false;
             }
         }
         public void ValidateExcelColumns(string filePath)
@@ -218,6 +220,7 @@ namespace Funeral.Web.Admin
                     }
                     else
                         ShowMessage(ref lblMessage, MessageType.Danger, "No record found to import please correct the sheet.");
+
                 }
             }
             catch (Exception ex)
@@ -229,6 +232,8 @@ namespace Funeral.Web.Admin
                 DivImportedDataList.Visible = false;
                 btnConfirmAndSubmit.Visible = false;
                 btnExceptionReport.Visible = false;
+                btnPremiumReport.Visible = false;
+                lblImportStatus.Visible = false;
             }
         }
         private void CopyMemberTableData(DataTable dt, Guid newImportedId)
@@ -274,6 +279,7 @@ namespace Funeral.Web.Admin
                     bulkCopy.ColumnMappings.Add("Email", "Email");
                     bulkCopy.ColumnMappings.Add("Citizenship", "Citizenship");
                     bulkCopy.ColumnMappings.Add("Passport", "Passport");
+                    bulkCopy.ColumnMappings.Add("RefNumber", "RefNumber");
                     bulkCopy.ColumnMappings.Add("StartDate", "StartDate");
                     bulkCopy.ColumnMappings.Add("CustomId1", "CustomId1");
                     bulkCopy.ColumnMappings.Add("CustomId2", "CustomId2");
@@ -319,17 +325,27 @@ namespace Funeral.Web.Admin
             GridviewData.Visible = false;
             btnSubmit.Visible = false;
             DivImportedDataList.Visible = true;
-            btnConfirmAndSubmit.Visible = IsImported == null ? true : (IsImported.IsImported == true ? false : true);
+            //btnConfirmAndSubmit.Visible = IsImported == null ? true : (IsImported.IsImported == true ? false : true);
             btnConfirmAndSubmit.Visible = true;
             btnExceptionReport.Visible = true;
+            btnPremiumReport.Visible = true;
+            lblImportStatus.Visible = true;
+            lblImportStatus.Text = IsImported.Status;
+
+            if (IsImported.Status.StartsWith("Data Staging Imported"))
+                btnConfirmAndSubmit.Enabled = true;
+            else
+                btnConfirmAndSubmit.Enabled = false;
         }
         protected void btnConfirmAndSubmit_Click(object sender, EventArgs e)
         {
             try
             {
+                btnConfirmAndSubmit.Enabled = false;
                 if (!string.IsNullOrEmpty(hdnnewImportedId.Value))
                 {
                     MembersBAL.MakeReadyForImportMember(Guid.Parse(hdnnewImportedId.Value));
+                    var ImportStatus = ToolsSetingBAL.GetImportedHistory_ByNewImportedId(Guid.Parse(hdnnewImportedId.Value));
 
                     //SavePlanCreatorStaging(Guid.Parse(hdnnewImportedId.Value));
                     //DataTable dt = GetDataTable_FromGridView(ImportedDataGriview);
@@ -351,6 +367,8 @@ namespace Funeral.Web.Admin
                     //    ShowMessage(ref lblMessage, MessageType.Danger, "Record could not imported");
                     //}
                     ShowMessage(ref lblMessage, MessageType.Success, "Data is ready for import");
+                    
+                    lblImportStatus.Text = ImportStatus.Status;
                 }
                 else
                 {
@@ -364,8 +382,11 @@ namespace Funeral.Web.Admin
                 btnSubmit.Visible = false;
                 GridviewData.Visible = false;
                 DivImportedDataList.Visible = true;
-                btnConfirmAndSubmit.Visible = true;
+                btnConfirmAndSubmit.Visible = false;
                 btnExceptionReport.Visible = true;
+                btnPremiumReport.Visible = true;
+                lblImportStatus.Visible = true;
+                
             }
         }
         public void SavePlanCreatorStaging(Guid hdnnewImportedId)
@@ -533,7 +554,11 @@ namespace Funeral.Web.Admin
                     hdnMemberName.Value = getHistory.MemberType;
                     txtMainMemberName.Text = getHistory.MemberType;
                     BindImportedMembers(getHistory.NewImportedId);
-                    btnConfirmAndSubmit.Enabled = getHistory.ReadyToImport = true ? false : true;
+                    //btnConfirmAndSubmit.Enabled = getHistory.ReadyToImport = true ? true : false;
+                    if (getHistory.Status.StartsWith("Data Staging Imported"))
+                        btnConfirmAndSubmit.Enabled = true;
+                    else
+                        btnConfirmAndSubmit.Enabled = false;
                 }
             }
             catch (Exception e)
@@ -587,6 +612,46 @@ namespace Funeral.Web.Admin
             
             string ExportTypeExtensions = "xls";
             string ReportName = "Copy of ARL Import Data Exception Report";//Copy of ARL Import Data Exception Report - ARL Import Data Exception Report
+            Warning[] warnings;
+            string[] streamids;
+            string mimeType;
+            string encoding;
+            string extension;
+            string filename;
+
+            ReportViewer rpw = new ReportViewer();
+            rpw.ProcessingMode = ProcessingMode.Remote;
+            IReportServerCredentials irsc = new MyReportServerCredentials();
+            rpw.ServerReport.ReportServerCredentials = irsc;
+
+
+            rpw.ProcessingMode = ProcessingMode.Remote;
+            rpw.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
+            rpw.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/" + ReportName;
+            ReportParameterCollection reportParameters = new ReportParameterCollection();
+            reportParameters.Add(new ReportParameter("DateFrom", DateTime.Now.ToString("yyyy/MM/dd")));
+            reportParameters.Add(new ReportParameter("DateTo", DateTime.Now.ToString("yyyy/MM/dd")));
+            reportParameters.Add(new ReportParameter("Parlourid", ddlSchemeList.SelectedValue));
+            reportParameters.Add(new ReportParameter("Importid", hdnnewImportedId.Value));
+            rpw.ServerReport.SetParameters(reportParameters);
+            byte[] bytes = rpw.ServerReport.Render("Excel", null, out mimeType, out encoding, out extension, out streamids, out warnings);
+            filename = string.Format("{0}.{1}", ReportName, ExportTypeExtensions);
+
+            Response.ClearHeaders();
+            Response.Clear();
+            Response.AddHeader("Content-Disposition", "attachment;filename=" + filename);
+            Response.ContentType = mimeType;
+            Response.BinaryWrite(bytes);
+            Response.Flush();
+            Response.End();
+
+        }
+
+        protected void btnPremiumReport_Click(object sender, EventArgs e)
+        {
+
+            string ExportTypeExtensions = "xls";
+            string ReportName = "UIS Import Premium Report";//Copy of ARL Import Data Exception Report - ARL Import Data Exception Report
             Warning[] warnings;
             string[] streamids;
             string mimeType;

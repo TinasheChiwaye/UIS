@@ -1573,9 +1573,9 @@ namespace Funeral.Web.Admin
         #region Bind Custom Detailss
         private void BindCustomDetails()
         {
-            var custom1 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(this.ParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom1));
-            var custom2 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(this.ParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom2));
-            var custom3 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(this.ParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom3));
+            var custom1 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(this.ParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.EmploymentType));
+            var custom2 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(this.ParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.PaymentType));
+            var custom3 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(this.ParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Source));
             ddlCustom1.DataSource = custom1;
             ddlCustom1.DataTextField = "Name";
             ddlCustom1.DataValueField = "Id";

@@ -50,11 +50,11 @@ namespace Funeral.BAL
         {
             try
             {
-                DataSet ds = MembersDAL.GetAllMembersdt(ParlourId, PageSize, PageNum, Keyword, SortBy, SortOrder, status, BookName);
+                DataSet ds = MembersDAL.GetAllMembersdt(ParlourId, PageSize, PageNum, Keyword, SortBy, SortOrder, status);
                 DataTable dr = ds.Tables[0];
                 MembersViewModel objViewModel = new MembersViewModel();
                 var membersList = FuneralHelper.DataTableMapToList<MembersModel>(dr, true);
-                objViewModel.MemberList = !string.IsNullOrEmpty(BookName) && BookName != "0" ? membersList.Where(x => x.MemberBranch.Equals(BookName)).ToList() : membersList;
+                objViewModel.MemberList = !string.IsNullOrEmpty(BookName) && BookName != "0" ? membersList.Where(x => x.MemberSociety.Equals(BookName)).ToList() : membersList;
                 //dr.NextResult();
                 //dr.Read();
                 objViewModel.TotalRecord = objViewModel.MemberList.Count;
@@ -166,6 +166,10 @@ namespace Funeral.BAL
         public static void MemberAddonProductsRemove(Guid pkiMemberProductID)
         {
             MembersDAL.DeleteAddonProduct(pkiMemberProductID);
+        }
+        public static void MemberAddonProductsRemove(Guid pkiMemberProductID, string ModifiedUser)
+        {
+            MembersDAL.DeleteAddonProduct(pkiMemberProductID, ModifiedUser);
         }
         public static List<AddonProductsModal> MemberListBindAddonProduct(Guid pkiProductID)
         {
@@ -291,6 +295,16 @@ namespace Funeral.BAL
         {
             return MembersDAL.DeleteSUpportdocumentById(DocumentId);
         }
+
+        public static bool GetFamilyDependencyTypes(int dependencyId, string ModifiedUser)
+        {
+            return MembersDAL.DeleteDependentById(dependencyId, ModifiedUser);
+        }
+        public static bool DeleteSUpportdocumentById(int DocumentId, string ModifiedUser)
+        {
+            return MembersDAL.DeleteSUpportdocumentById(DocumentId, ModifiedUser);
+        }
+
         #endregion
         public static List<AgentModel> SelectAllAgent(Guid ParlourId)
         {
@@ -366,9 +380,9 @@ namespace Funeral.BAL
         {
             return MembersDAL.GetLastCopiedMemberForDependency();
         }
-        public static void UpdateMemberPolicyStatus(string policyStatus, int memberId)
+        public static void UpdateMemberPolicyStatus(string policyStatus, int memberId, string UserName)
         {
-            MembersDAL.UpdateMemberPolicyStatus(policyStatus, memberId);
+            MembersDAL.UpdateMemberPolicyStatus(policyStatus, memberId, UserName);
         }
 
         public static int SaveBeneficiary(Beneficiary_model Model)
@@ -388,6 +402,10 @@ namespace Funeral.BAL
         public static void DeleteBeneficiary(int pkiBeneficiaryID)
         {
             MembersDAL.DeleteBeneficiary(pkiBeneficiaryID);
+        }
+        public static void DeleteBeneficiary(int pkiBeneficiaryID, string ModifiedUser)
+        {
+            MembersDAL.DeleteBeneficiary(pkiBeneficiaryID, ModifiedUser);
         }
         public static List<FamilyDependencyModel> GetExtendedFamilyList(Guid parlourid, int MemberId)
         {

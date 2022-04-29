@@ -72,6 +72,13 @@ namespace Funeral.DAL
                 case DbType.Int:
                     return SqlDbType.Int;
 
+                case DbType.Long:
+                    return SqlDbType.BigInt;
+
+                case DbType.BigInt:
+                    return SqlDbType.BigInt;
+
+
                 case DbType.Money:
                     return SqlDbType.Money;
 
@@ -135,6 +142,8 @@ namespace Funeral.DAL
             Decimal,
             Float,
             Int,
+            BigInt,
+            Long,
             Money,
             NText,
             NVarChar,

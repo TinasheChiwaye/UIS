@@ -82,9 +82,11 @@ namespace Funeral.Web.Areas.Admin.Controllers
             keyValues.Add(new KeyValue { Key = "25", Value = "25" });
             keyValues.Add(new KeyValue { Key = "50", Value = "50" });
             keyValues.Add(new KeyValue { Key = "100", Value = "100" });
+             
             keyValues.Add(new KeyValue { Key = "200", Value = "200" });
             keyValues.Add(new KeyValue { Key = "250", Value = "250" });
             keyValues.Add(new KeyValue { Key = "500", Value = "500" });
+            keyValues.Add(new KeyValue { Key = "1000", Value = "1000" });
             ViewBag.EntriesCount = keyValues;
         }
         public void LoadStatus()
@@ -98,7 +100,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             var searchResult = new Funeral.Model.SearchResult<Model.Search.MemberSearch, MembersModel>(search, new List<MembersModel>(), o => o.IDNumber.ToLower().Contains(search.SarchText.ToLower()));
             try
             {
-                var members = MembersBAL.GetAllMembers(search.CompanyId, search.PageSize, search.PageNum, search.SarchText, search.SortBy, search.SortOrder, search.StatusId.ToString(), search.BookID);
+                var members = MembersBAL.GetAllMembers(search.CompanyId, search.PageSize, search.PageNum, search.SarchText, search.SortBy, search.SortOrder, search.StatusId.ToString(), "");
                 return Json(new Funeral.Model.SearchResult<Model.Search.MemberSearch, MembersModel>(search, members.MemberList, o => o.IDNumber.ToLower().Contains(search.SarchText.ToLower()) || o.MemeberNumber.ToLower().Contains(search.SarchText.ToLower()) || o.Surname.ToLower().Contains(search.SarchText.ToLower()) || o.FullNames.ToLower().Contains(search.SarchText.ToLower()) || o.Cellphone.ToLower().Contains(search.SarchText.ToLower()) || o.EasyPayNo.ToLower().Contains(search.SarchText.ToLower())));
             }
             catch (Exception ex)
@@ -148,7 +150,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 ViewBag.MemberID = model.MemeberNumber;
                 ViewBag.ParlourID = ParlourID;
 
-                ViewBag.MonthToPay = MembersBAL.GetMonthsToPay(id);
+                //ViewBag.MonthToPay = MembersBAL.GetMonthsToPay(id);
             }
             var info = CultureInfo.InvariantCulture.Clone() as CultureInfo;
             info.NumberFormat.NumberDecimalSeparator = ".";
@@ -167,12 +169,12 @@ namespace Funeral.Web.Areas.Admin.Controllers
         {
             //add Joining fee boolean in method
             MembersModel objmember = MembersBAL.GetMemberByID(data.pkiMemberID, ParlourId);
-            PaymentReminderModel outstandingPayment = MemberPaymentBAL.GetOustandingPaymentByMemberId(data.LatePaymentId);
+            //PaymentReminderModel outstandingPayment = MemberPaymentBAL.GetOustandingPaymentByMemberId(data.LatePaymentId);
             if (objmember.MemberBranch != "")
             {
                 data.Branch = objmember.MemberBranch;
             }
-            data.Notes = outstandingPayment.MemberNotes;
+            //data.Notes = outstandingPayment.MemberNotes;
             data.ParlourId = ParlourId;
             data.NextPaymentDate = Convert.ToDateTime(data.PaymentDate).AddMonths(Convert.ToInt32(data.MonthOwing));
             var paymentId = MemberPaymentBAL.AddPayments(data, true);
@@ -319,7 +321,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
 
         //=========================test===============================
-        public JsonResult CalculateAmount(int noOfMonths, int TotalPremieum, int LatePanelty)
+        public JsonResult CalculateAmount(int noOfMonths, decimal TotalPremieum, int LatePanelty)
         {
             var info = CultureInfo.InvariantCulture.Clone() as CultureInfo;
             info.NumberFormat.NumberDecimalSeparator = ".";
@@ -351,7 +353,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
 
 
-            return Json(Amount  + "~" + TotalPremium + "~" + currency, JsonRequestBehavior.AllowGet);
+            return Json(Amount + "~" + TotalPremium + "~" + currency, JsonRequestBehavior.AllowGet);
         }
         //=========================test end===============================
 
@@ -467,7 +469,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
         public void UpdatePolicyStatus(string policyStatus, int memberId)
 
         {
-            MembersBAL.UpdateMemberPolicyStatus(policyStatus, memberId);
+            MembersBAL.UpdateMemberPolicyStatus(policyStatus, memberId, UserName);
             CommonBAL.SaveAudit(UserName, CurrentParlourId, "Policy Status Changed");
         }
 

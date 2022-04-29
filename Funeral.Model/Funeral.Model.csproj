@@ -85,6 +85,7 @@
     <Compile Include="ChangeStatusReason.cs" />
     <Compile Include="ClaimandFuneralModel.cs" />
     <Compile Include="ClaimAssigned.cs" />
+    <Compile Include="ClaimDashboardModel.cs" />
     <Compile Include="ClaimDocument.cs" />
     <Compile Include="ClaimFollowUp.cs" />
     <Compile Include="ClaimHistory.cs" />

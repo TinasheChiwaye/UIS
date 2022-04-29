@@ -14,7 +14,7 @@ namespace Funeral.DAL
             try
             {
                 AdditionalMemberInfoModel model1 = new AdditionalMemberInfoModel();
-                string query = "SaveMembers";
+                string query = "SaveMembers_dt";
                 DbParameter[] ObjParam = new DbParameter[57];
                 ObjParam[0] = new DbParameter("@pkiMemberID", DbParameter.DbType.Int, 0, model.pkiMemberID);
                 ObjParam[1] = new DbParameter("@CreateDate", DbParameter.DbType.DateTime, 0, System.DateTime.Now);
@@ -125,6 +125,8 @@ namespace Funeral.DAL
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.Text, query, ObjParam));
         }
 
+
+
         public static SqlDataReader GetMemberByID(int ID, Guid ParlourId)
         {
             DbParameter[] ObjParam = new DbParameter[2];
@@ -196,6 +198,32 @@ namespace Funeral.DAL
             ObjParam[5] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
             return DbConnection.GetDataReader(CommandType.StoredProcedure, "MemberSelectAllByPage", ObjParam);
         }
+        public static DataSet GetAllMembersdt(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder, string status)
+        {
+            DbParameter[] ObjParam = new DbParameter[7];
+            try
+            {
+                ObjParam[0] = new DbParameter("@pagesize", DbParameter.DbType.Int, 0, PageSize);
+                ObjParam[1] = new DbParameter("@pagenum", DbParameter.DbType.Int, 0, PageNum);
+                ObjParam[2] = new DbParameter("@Keyword", DbParameter.DbType.NVarChar, 0, (Keyword == null) ? string.Empty : Keyword);
+                ObjParam[3] = new DbParameter("@field", DbParameter.DbType.NVarChar, 0, SortBy);
+                ObjParam[4] = new DbParameter("@orderby", DbParameter.DbType.NVarChar, 0, SortOrder);
+                ObjParam[5] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+                ObjParam[6] = new DbParameter("@Status", DbParameter.DbType.VarChar, 0, status);
+                if (ParlourId == Guid.Empty)
+                {
+                    return DbConnection.GetDataSet(CommandType.StoredProcedure, "MemberSelectAll_WithoutParlour", ObjParam);
+                }
+                else
+                {
+                    return DbConnection.GetDataSet(CommandType.StoredProcedure, "MemberSelectAllByPage", ObjParam);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         //public static DataSet GetAllMembersdt(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder, string status)
         //{
         //    DbParameter[] ObjParam = new DbParameter[7];
@@ -203,11 +231,14 @@ namespace Funeral.DAL
         //    {
         //        ObjParam[0] = new DbParameter("@pagesize", DbParameter.DbType.Int, 0, PageSize);
         //        ObjParam[1] = new DbParameter("@pagenum", DbParameter.DbType.Int, 0, PageNum);
-        //        ObjParam[2] = new DbParameter("@Keyword", DbParameter.DbType.NVarChar, 0, (Keyword == null) ? string.Empty : Keyword);
+        //        //ObjParam[2] = new DbParameter("@Keyword", DbParameter.DbType.NVarChar, 0, (Keyword == null) ? string.Empty : Keyword);
+        //        ObjParam[2] = new DbParameter("@Keyword", DbParameter.DbType.NVarChar, 0, Keyword);
         //        ObjParam[3] = new DbParameter("@field", DbParameter.DbType.NVarChar, 0, SortBy);
         //        ObjParam[4] = new DbParameter("@orderby", DbParameter.DbType.NVarChar, 0, SortOrder);
         //        ObjParam[5] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
         //        ObjParam[6] = new DbParameter("@Status", DbParameter.DbType.VarChar, 0, status);
+        //        //ObjParam[7] = new DbParameter("@BookName", DbParameter.DbType.NVarChar, 0, BookName);
+
         //        if (ParlourId == Guid.Empty)
         //        {
         //            return DbConnection.GetDataSet(CommandType.StoredProcedure, "MemberSelectAll_WithoutParlour", ObjParam);
@@ -222,34 +253,6 @@ namespace Funeral.DAL
         //        throw ex;
         //    }
         //}
-        public static DataSet GetAllMembersdt(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder, string status, string BookName)
-        {
-            DbParameter[] ObjParam = new DbParameter[8];
-            try
-            {
-                ObjParam[0] = new DbParameter("@pagesize", DbParameter.DbType.Int, 0, PageSize);
-                ObjParam[1] = new DbParameter("@pagenum", DbParameter.DbType.Int, 0, PageNum);
-                ObjParam[2] = new DbParameter("@Keyword", DbParameter.DbType.NVarChar, 0, (Keyword == null) ? string.Empty : Keyword);
-                ObjParam[3] = new DbParameter("@field", DbParameter.DbType.NVarChar, 0, SortBy);
-                ObjParam[4] = new DbParameter("@orderby", DbParameter.DbType.NVarChar, 0, SortOrder);
-                ObjParam[5] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
-                ObjParam[6] = new DbParameter("@Status", DbParameter.DbType.VarChar, 0, status);
-                ObjParam[7] = new DbParameter("@BookName", DbParameter.DbType.NVarChar, 0, BookName);
-
-                if (ParlourId == Guid.Empty)
-                {
-                    return DbConnection.GetDataSet(CommandType.StoredProcedure, "MemberSelectAll_WithoutParlourdt", ObjParam);
-                }
-                else
-                {
-                    return DbConnection.GetDataSet(CommandType.StoredProcedure, "MemberSelectAllByPagedt_Test", ObjParam);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
 
 
         public static SqlDataReader GetPolicyByParlourId(Guid Parlourid)
@@ -265,6 +268,18 @@ namespace Funeral.DAL
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetpolicyNamesListByParlourId", ObjParam);
         }
 
+        public static DataTable GetPlanByIDdt(int ID, Guid ParlourId)
+        {
+            DbParameter[] ObjParam = new DbParameter[2];
+            ObjParam[0] = new DbParameter("@ID", DbParameter.DbType.Int, 0, ID);
+            ObjParam[1] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetPlanByIDdt", ObjParam);
+        }
+
+        //public static DataTable GetPlanCreatorByIDdt(int iD, Guid parlourId, int userId)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public static SqlDataReader GetFamilyDependencyByMemberID(Guid Parlourid, int MemberId)
         {
@@ -295,7 +310,7 @@ namespace Funeral.DAL
             DbParameter[] ObjParam = new DbParameter[2];
             ObjParam[0] = new DbParameter("@parlourId", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
             ObjParam[1] = new DbParameter("@MemberId", DbParameter.DbType.VarChar, 0, MemberId);
-            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetInvoices_new", ObjParam);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetInvoices_dt", ObjParam);
         }
 
         public static DataTable GetGroupInvoiceByReference(Guid Parlourid)
@@ -398,7 +413,7 @@ namespace Funeral.DAL
             ObjParam[0] = new DbParameter("@pkiPlanID", DbParameter.DbType.Int, 0, pkiPlanID);
             ObjParam[1] = new DbParameter("@Age", DbParameter.DbType.Int, 0, Age);
             ObjParam[2] = new DbParameter("@UserTypeId", DbParameter.DbType.Int, 0, UserTypeId);
-            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetPolicyDetailsBetweenAge_NEW", ObjParam);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetPolicyDetailsBetweenAge_TEST", ObjParam);
         }
         public static DataTable GetPlanSubscriptionByPlanIddt(int pkiPlanID, Guid parlorId)
         {
@@ -594,6 +609,26 @@ namespace Funeral.DAL
             ObjParam[0] = new DbParameter("@Parlourid", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
             return (DbConnection.GetDataTable(CommandType.StoredProcedure, "SelectProductName", ObjParam));
         }
+
+        public static DataTable GetUserTypesByMemberID(int MemberId, int Id, Guid Parlourid)
+        {
+            DbParameter[] ObjParam = new DbParameter[3];
+            ObjParam[0] = new DbParameter("@MemberID",DbParameter.DbType.Int,0, MemberId);
+            ObjParam[1] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
+            ObjParam[2] = new DbParameter("@planID", DbParameter.DbType.Int, 0, Id);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetUserTypesByMemberID", ObjParam);
+
+
+        }
+
+        public static DataTable GetUserTypesByPlanID(Guid Parlourid, int Id)
+        {
+            DbParameter[] ObjParam = new DbParameter[2];
+            ObjParam[0] = new DbParameter("@parlourId", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
+            ObjParam[1] = new DbParameter("@planID", DbParameter.DbType.Int, 0, Id);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetUserTypesByPlanID", ObjParam);
+        }
+
         public static SqlDataReader MemberListBind(Guid pkiProductID)
         {
             DbParameter[] ObjParam = new DbParameter[1];
@@ -696,6 +731,13 @@ namespace Funeral.DAL
             ObjParam[0] = new DbParameter("@pkiMemberProductID", DbParameter.DbType.UniqueIdentifier, 0, pkiMemberProductID);
             DbConnection.GetDataReader(CommandType.StoredProcedure, "MemberAddonProductDelete", ObjParam);
         }
+        public static void DeleteAddonProduct(Guid pkiMemberProductID, string ModifiedUser)
+        {
+            DbParameter[] ObjParam = new DbParameter[2];
+            ObjParam[0] = new DbParameter("@pkiMemberProductID", DbParameter.DbType.UniqueIdentifier, 0, pkiMemberProductID);
+            ObjParam[1] = new DbParameter("@ModifiedUser", DbParameter.DbType.VarChar, 0, ModifiedUser);
+            DbConnection.GetDataReader(CommandType.StoredProcedure, "MemberAddonProductDeleteNew", ObjParam);
+        }
 
         public static void DeleteAddonProductdt(Guid pkiMemberProductID)
         {
@@ -787,6 +829,7 @@ namespace Funeral.DAL
             ObjParam[16] = new DbParameter("@Passport", DbParameter.DbType.VarChar, 0, String.IsNullOrWhiteSpace(model.Passport) ? (object)DBNull.Value : (object)model.Passport);
             ObjParam[17] = new DbParameter("@ModifiedUser", DbParameter.DbType.VarChar, 0, model.ModifiedUser);
 
+
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "SaveFamilyDependency_NEW", ObjParam));
         }
         public static DataSet CheckFamilyDependency(FamilyDependencyModel model)
@@ -794,14 +837,14 @@ namespace Funeral.DAL
             DbParameter[] ObjParam = new DbParameter[2];
             ObjParam[0] = new DbParameter("@fkiMemberID", DbParameter.DbType.Int, 0, model.MemberId);
             ObjParam[1] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, model.parlourid);
-            var dt = (DbConnection.GetDataTable(CommandType.StoredProcedure, "GetDependenciesCount_ByMemberId", ObjParam));
+            var dt = (DbConnection.GetDataTable(CommandType.StoredProcedure, "GetDependenciesCount_ByMemberId_New", ObjParam));
             DataSet ds = new DataSet();
             ds.Tables.Add(dt);
             return ds;
         }
         public static int UpdateFamilyDependency(FamilyDependencyModel model)
         {
-            DbParameter[] ObjParam = new DbParameter[18];
+            DbParameter[] ObjParam = new DbParameter[19];
             ObjParam[0] = new DbParameter("@FullName", DbParameter.DbType.VarChar, 0, model.FullName);
             ObjParam[1] = new DbParameter("@Surname", DbParameter.DbType.VarChar, 0, model.Surname);
             ObjParam[2] = new DbParameter("@IDNumber", DbParameter.DbType.VarChar, 0, model.IDNumber);
@@ -819,8 +862,8 @@ namespace Funeral.DAL
             ObjParam[14] = new DbParameter("@StartDate", DbParameter.DbType.DateTime, 0, model.StartDate);
             ObjParam[15] = new DbParameter("@DependentStatus", DbParameter.DbType.NVarChar, 0, model.DependentStatus);
             ObjParam[16] = new DbParameter("@Cover", DbParameter.DbType.Decimal, 0, model.Cover);
-            ObjParam[17] = new DbParameter("@Passport", DbParameter.DbType.VarChar, 0, String.IsNullOrWhiteSpace(model.Passport) ? (object)DBNull.Value : (object)model.Passport);
-
+            ObjParam[17] = new DbParameter("@Passport", DbParameter.DbType.VarChar, 0, model.Passport);
+            ObjParam[18] = new DbParameter("@ModifiedUser", DbParameter.DbType.VarChar, 0, model.ModifiedUser);
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "UpdateFamilyDependency", ObjParam));
         }
 
@@ -878,6 +921,25 @@ namespace Funeral.DAL
             DbConnection.ExecuteNonQuery(CommandType.Text, "Delete from MemberDocuments Where pkiPictureID=@pkiPictureID", ObjParam);
             return true;
         }
+
+        public static bool DeleteDependentById(int pkiDependentID, string ModifiedUser)
+        {
+            DbParameter[] ObjParam = new DbParameter[2];
+            ObjParam[0] = new DbParameter("@pkiDependentID", DbParameter.DbType.Int, 0, pkiDependentID);
+            ObjParam[1] = new DbParameter("@ModifiedUser", DbParameter.DbType.VarChar, 0, ModifiedUser);
+            DbConnection.ExecuteNonQuery(CommandType.StoredProcedure, "DeleteDependent", ObjParam);
+            return true;
+        }
+
+        public static bool DeleteSUpportdocumentById(int pkiPictureID, string ModifiedUser)
+        {
+            DbParameter[] ObjParam = new DbParameter[2];
+            ObjParam[0] = new DbParameter("@pkiPictureID", DbParameter.DbType.Int, 0, pkiPictureID);
+            ObjParam[1] = new DbParameter("@ModifiedUser", DbParameter.DbType.VarChar, 0, ModifiedUser);
+            DbConnection.ExecuteNonQuery(CommandType.StoredProcedure, "DeleteSupportingDocument", ObjParam);
+            return true;
+        }
+
         #endregion
         public static SqlDataReader SelectAllAgent(Guid ParlourId)
         {
@@ -1061,12 +1123,13 @@ namespace Funeral.DAL
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "GetLastCopiedMemberForDependency"));
         }
 
-        public static void UpdateMemberPolicyStatus(string policyStatus, int memberId)
+        public static void UpdateMemberPolicyStatus(string policyStatus, int memberId, string UserName)
         {
-            string query = "UpdateMemberPolicyStatus";
-            DbParameter[] ObjParam = new DbParameter[2];
+            string query = "UpdateMemberPolicyStatusNew";
+            DbParameter[] ObjParam = new DbParameter[3];
             ObjParam[0] = new DbParameter("@PolicyStatus", DbParameter.DbType.NVarChar, 0, policyStatus);
-            ObjParam[1] = new DbParameter("@MemberId", DbParameter.DbType.Int, 1, memberId);
+            ObjParam[1] = new DbParameter("@UserName", DbParameter.DbType.NVarChar, 0, UserName);
+            ObjParam[2] = new DbParameter("@MemberId", DbParameter.DbType.Int, 1, memberId);
             DbConnection.ExecuteNonQuery(CommandType.StoredProcedure, query, ObjParam);
         }
         public static int SaveBeneficiary(Beneficiary_model ModalProduct)
@@ -1098,6 +1161,15 @@ namespace Funeral.DAL
             ObjParam[0] = new DbParameter("@pkiBeneficiaryID", DbParameter.DbType.Int, 0, pkiBeneficiaryID);
             DbConnection.GetDataReader(CommandType.StoredProcedure, "DeleteBeneficiary", ObjParam);
         }
+
+        public static void DeleteBeneficiary(int pkiBeneficiaryID, string ModifiedUser)
+        {
+            DbParameter[] ObjParam = new DbParameter[2];
+            ObjParam[0] = new DbParameter("@pkiBeneficiaryID", DbParameter.DbType.Int, 0, pkiBeneficiaryID);
+            ObjParam[1] = new DbParameter("@ModifiedUser", DbParameter.DbType.VarChar, 0, ModifiedUser);
+            DbConnection.GetDataReader(CommandType.StoredProcedure, "DeleteBeneficiaryNew", ObjParam);
+        }
+
         public static DataTable GetExtendedFamilyList(Guid Parlourid, int MemberId)
         {
             DbParameter[] ObjParam = new DbParameter[2];
@@ -1167,26 +1239,26 @@ namespace Funeral.DAL
             ObjParam[2] = new DbParameter("@UserId", DbParameter.DbType.Int, 0, UserId);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetPlanByIDdt_New", ObjParam);
         }
-        public static DataTable GetPlanByIDdt(int ID, Guid ParlourId)
-        {
-            DbParameter[] ObjParam = new DbParameter[2];
-            ObjParam[0] = new DbParameter("@ID", DbParameter.DbType.Int, 0, ID);
-            ObjParam[1] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
-            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetPlanByIDdt", ObjParam);
-        }
-        public static DataTable GetUserTypesByPlanID(Guid Parlourid, int Id)
+        //public static DataTable GetPlanByIDdt(int ID, Guid ParlourId)
+        //{
+        //    DbParameter[] ObjParam = new DbParameter[2];
+        //    ObjParam[0] = new DbParameter("@ID", DbParameter.DbType.Int, 0, ID);
+        //    ObjParam[1] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+        //    return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetPlanByIDdt", ObjParam);
+        //}
+        //public static DataTable GetUserTypesByPlanID(Guid Parlourid, int Id)
+        //{
+        //    DbParameter[] ObjParam = new DbParameter[2];
+        //    ObjParam[0] = new DbParameter("@parlourId", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
+        //    ObjParam[1] = new DbParameter("@planID", DbParameter.DbType.Int, 0, Id);
+        //    return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetUserTypesByPlanID", ObjParam);
+        //}
+        public static DataTable GetUserTypesByMemberID(long MemberId, Guid Parlourid)
         {
             DbParameter[] ObjParam = new DbParameter[2];
             ObjParam[0] = new DbParameter("@parlourId", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
-            ObjParam[1] = new DbParameter("@planID", DbParameter.DbType.Int, 0, Id);
-            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetUserTypesByPlanID", ObjParam);
-        }
-        public static DataTable GetUserTypesByMemberID(int MemberId, Guid Parlourid, int Id)
-        {
-            DbParameter[] ObjParam = new DbParameter[3];
-            ObjParam[0] = new DbParameter("@parlourId", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
-            ObjParam[1] = new DbParameter("@MemberId", DbParameter.DbType.Int, 0, MemberId);
-            ObjParam[2] = new DbParameter("@planID", DbParameter.DbType.Int, 0, Id);
+            ObjParam[1] = new DbParameter("@MemberId", DbParameter.DbType.Money, 0, MemberId);
+            //ObjParam[2] = new DbParameter("@planID", DbParameter.DbType.Int, 0, Id);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetUserTypesByMemberID", ObjParam);
         }
         public static DataTable GetPlanByPlanID(int ID, Guid ParlourId)

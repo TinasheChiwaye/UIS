@@ -21,6 +21,7 @@ namespace Funeral.Model
             Gender = string.Empty;
             DependentStatus = string.Empty;
             Passport = string.Empty;
+            ModifiedUser = string.Empty;
         }
 
         //public string DTCode

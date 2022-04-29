@@ -14,10 +14,20 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using static Funeral.Model.FuneralEnum;
+using Funeral.Web.App_Start;
+using Funeral.Web.Areas.Admin.Models.ViewModel;
+using System.Data;
+using System.Data.SqlClient;
+using System.Globalization;
+using System.Web.UI.WebControls;
+
+
 namespace Funeral.Web.Areas.Admin.Controllers
 {
     public class ClaimsController : BaseAdminController
     {
+        private readonly ISiteSettings _siteConfig = new SiteSettings();
+
         // GET: Admin/Claims
         #region Claim Main View
         public ActionResult Index(string Status)
@@ -134,7 +144,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 members = ClaimsBAL.SelectAllClaims(search.CompanyId).Where(x => x.Status.Contains(search.StatusId == "0" ? "" : search.StatusId)).ToList();
                 if (!string.IsNullOrEmpty(search.SocietyID) && search.SocietyID != "0")
                     members = members.Where(x => x.SocietyID.ToString() == search.SocietyID).ToList();
-                members = IsAdministrator == true || IsSuperUser == true ? members : members = members.Where(m => (expectedStatus.Contains(m.Status))).ToList();
+                //members = IsAdministrator == true || IsSuperUser == true ? members : members = members.Where(m => (expectedStatus.Contains(m.Status))).ToList();
+                //members = IsAdministrator == true || HasAccess == true ? members : members = members.Where(m => (expectedStatus.Contains(m.Status))).ToList();
 
                 if (search.SearchType != null && search.SearchType != "Normal")
                 {
@@ -397,6 +408,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                     claimandFuneral.ClaimDocumentList = ClaimsBAL.GetClaimDocumentsByClaimId(pkiClaimID, CurrentParlourId, claimandFuneral.funeralModel.MemberType);
                 else
                     claimandFuneral.ClaimDocumentList = ClaimsBAL.GetClaimDocumentsByClaimId(pkiClaimID, CurrentParlourId, "Main Member");
+                ViewBag.GetClaimID = pkiClaimID;
             }
 
             var BankDetails = CommonBAL.GetBankDetails_ByParlourId(CurrentParlourId);
@@ -474,14 +486,36 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 return RedirectToAction("ClaimAddEdit", "Claims", new { pkiClaimID = claimandFuneral.claimsModel.pkiClaimID });
             }
         }
+
+
+
+        private void ValidateClaimsDoc(int pkiClaimId)
+        {
+            if (pkiClaimId == 0)
+                ViewBag.isClaimsDocEnabled = false;
+            else
+                ViewBag.isClaimsDocEnabled = true;
+        }
+
         #endregion
         #region Claim Dashboard
         public ActionResult ClaimDashboard()
         {
             BindCompanyList("Search");
             ViewBag.SocietyLists = CommonBAL.GetSocietyByParlourId(CurrentParlourId);
-            return View();
+            //return View();
+
+            Dashboard ds = new Dashboard();
+            ds = CommonBAL.GetClaimDashboardLableDetails(this.ParlourId, this.IsAdministrator, this.IsSuperUser, this.UserName, this.Currency);
+            ds.dashboardChart = CommonBAL.GetClaimsDashboardChart(ParlourId, IsAdministrator, UserName, IsSuperUser);
+            ds.dashboardChart.Currency = this.Currency;
+            if (IsAdministrator == true || IsSuperUser == true)
+            {
+                ds.IsDisplayDashboarTable = true;
+            }
+            return View(ds);
         }
+
         [HttpGet]
         public ActionResult RenderClaimDashboard(Guid CompanyId, int BookId)
         {
@@ -699,6 +733,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 flag = true;
             return Json(new { FamilyDependencyModel = objmodel, MembersModel = obj, flag = flag }, JsonRequestBehavior.AllowGet);
         }
+
+
         #endregion
         #region BindMainMemberUpdate
         [HttpPost]
@@ -731,5 +767,54 @@ namespace Funeral.Web.Areas.Admin.Controllers
             return Json(Company, JsonRequestBehavior.AllowGet);
         }
         #endregion
+
+        public void btnClaimsDoc(int Id)
+        {
+            Warning[] warnings;
+            string[] streamids;
+            string mimeType;
+            string encoding;
+            //string filenameExtension;
+            string filename;
+            string result;
+
+            try
+            {
+                ReportViewer rpw = new ReportViewer();
+                rpw.ProcessingMode = ProcessingMode.Remote;
+                IReportServerCredentials irsc = new MyReportServerCredentials();
+                rpw.ServerReport.ReportServerCredentials = irsc;
+
+                rpw.ProcessingMode = ProcessingMode.Remote;
+                rpw.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
+                rpw.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/Claims Document";
+                ReportParameterCollection reportParameters = new ReportParameterCollection();
+                var ClaimId = 54;
+                reportParameters.Add(new ReportParameter("PkiClaimID", Id.ToString()));
+                reportParameters.Add(new ReportParameter("Parlourid", CurrentParlourId.ToString()));
+                rpw.ServerReport.SetParameters(reportParameters);
+                string ExportTypeExtensions = "pdf";
+                byte[] bytes = rpw.ServerReport.Render(ExportTypeExtensions, null, out mimeType, out encoding, out ExportTypeExtensions, out streamids, out warnings);
+                filename = string.Format("{0}.{1}", "Claims Document", ExportTypeExtensions);
+
+                Response.ClearHeaders();
+                Response.Clear();
+                Response.AddHeader("Content-Disposition", "attachment;filename=" + filename);
+                Response.ContentType = mimeType;
+                Response.BinaryWrite(bytes);
+                Response.Flush();
+                Response.End();
+                result = "true";
+
+            }
+            catch (Exception ex)
+            {
+                result = ex.Message;
+                //result = "The attempt to connect to the report server failed.  Check your connection information and that the report server is a compatible version.    ";
+                //ShowMessage(ref lblMessage, MessageType.Danger, exc.Message);
+            }
+            //return Json(result, JsonRequestBehavior.AllowGet);
+
+        }
     }
 }

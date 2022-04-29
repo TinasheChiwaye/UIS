@@ -322,6 +322,7 @@
                             <tbody>
                                 <tr>
                                     <th class="visible-lg" scope="col">Date paid</th>
+                                    @*<th class="visible-lg" scope="col">Date paid For</th>*@
                                     <th scope="col">Amount</th>
                                     <th class="visible-lg" scope="col">Recieved by</th>
                                     <th class="visible-lg" scope="col">Months Paid &amp; Notes</th>
@@ -334,16 +335,17 @@
                                     {
                                         <tr>
                                             <td>@item.DatePaid</td>
+                                            @*<td>@item.DatePaidFor</td>*@
                                             <td>@item.AmountPaid</td>
                                             <td>@item.RecievedBy</td>
                                             <td>@item.Notes</td>
-                                            <td>
-                                                <a href="@Url.Action("PrintPaymentReceipt", "Payments", new { id = item.InvoiceID, Type = 1, PolicyNumber = model.MemeberNumber, DatePaid = item.DatePaid, AmountPaid = item.AmountPaid, PaidBy = item.PaidBy, ReceivedBy = item.RecievedBy, MonthPaid = item.Notes ,memberId=Model.pkiMemberID, parlourId=Model.ParlourId})">
+                                            @*<td>
+                                                <a href="@Url.Action("PrintPaymentReceipt", "Payments", new { id = item.InvoiceID, Type = 1, PolicyNumber = model.MemberID, DatePaid = item.DatePaid, AmountPaid = item.AmountPaid, PaidBy = item.PaidBy, ReceivedBy = item.RecievedBy, MonthPaid = item.Notes ,memberId=Model.pkiMemberID, parlourId=Model.ParlourId})">
                                                     <i class="glyphicon glyphicon-print"></i>
-                                                </a>&nbsp;&nbsp;<a href="@Url.Action("PrintPaymentReceipt", "Payments", new { id = item.InvoiceID, Type = 2, PolicyNumber = Model.MemeberNumber, DatePaid = item.DatePaid, AmountPaid = item.AmountPaid, PaidBy = item.PaidBy, ReceivedBy = item.RecievedBy, MonthPaid = item.Notes,MemberId=Model.pkiMemberID, parlourId=Model.ParlourId })">
+                                                </a>&nbsp;&nbsp;<a href="@Url.Action("PrintPaymentReceipt", "Payments", new { id = item.InvoiceID, Type = 2, PolicyNumber = Model.MemberID, DatePaid = item.DatePaid, AmountPaid = item.AmountPaid, PaidBy = item.PaidBy, ReceivedBy = item.RecievedBy, MonthPaid = item.Notes,MemberId=Model.pkiMemberID, parlourId=Model.ParlourId })">
                                                     <i class="glyphicon glyphicon-export"></i>
                                                 </a>
-                                            </td>
+                                            </td>*@
                                             <td>
                                                 
                                                 @if (ViewBag.HasReversalPayment)
@@ -373,7 +375,8 @@
         var GetPremiumForPolicyURl = $("#CalculateAmount").val();
         var data = {
             noOfMonths: $("#ddlNoOfMonths").val(),
-			TotalPremieum: parseInt($("#txtTotalPremium").val().replace("@Model.Currency ", "")),
+			TotalPremieum: parseInt($("#txtTotalPremium").val()),
+			@*TotalPremieum: parseInt($("#txtTotalPremium").val().replace("@Model.Currency ", "")),*@
 			LatePanelty: parseInt(0),
             NextDate: $("#NextPaymentDate").val()
         };
@@ -388,7 +391,8 @@
                     $("#txtAmount").val('');
 					//$("#txtAmount").val('USD ' + newResult[0]);
 					var a = parseInt(newResult[0]);
-					$("#txtAmount").val("@Model.Currency" + " " + a.toFixed(2));
+					@*$("#txtAmount").val("@Model.Currency" + " " + a.toFixed(2));*@
+					$("#txtAmount").val(a.toFixed(2));
                     if ($("#ddlNoOfMonths").val() == "1") {
                         $("#txtMonthPaid").val('');
                         $("#txtMonthPaid").val('@ViewBag.PaymentDate');
@@ -414,7 +418,8 @@
         var data = {
             pkiMemberID: $("#pkiMemberID").val(),
             //Amount: $("#txtAmount").val().replace("USD ", ""),
-            Amount: $("#txtAmount").val().replace("@Model.Currency", ""),
+            @*Amount: $("#txtAmount").val().replace("@Model.Currency", ""),*@
+            Amount: $("#txtAmount").val(),
             LatePaymentPenalty: 0,
             ReceivedBy: $("#txtReceivedBy").val(),
             Notes: $("#ddlMethod :selected").text() + ' - ' + $("#txtMonthPaid").val(),

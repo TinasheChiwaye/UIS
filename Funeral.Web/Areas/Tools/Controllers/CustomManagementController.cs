@@ -13,9 +13,10 @@ using static Funeral.Web.Areas.Admin.Controllers.MembersController;
 
 namespace Funeral.Web.Areas.Tools.Controllers
 {
-    public class CustomManagementController : BaseToolController
+    public class CustomManagementController : BaseAdminController
     {
-        public CustomManagementController() :base(28){
+        public CustomManagementController() : base(28)
+        {
             this.dbPageId = 28;
         }
 
@@ -42,11 +43,11 @@ namespace Funeral.Web.Areas.Tools.Controllers
 
         [HttpPost]
         [PageRightsAttribute(CurrentPageId = 28)]
-        public PartialViewResult List([System.Web.Http.FromUri]int customType,[System.Web.Http.FromBody] Model.Search.CustomManagementSearch search)
+        public PartialViewResult List([System.Web.Http.FromUri]int customType, [System.Web.Http.FromBody] Model.Search.CustomManagementSearch search)
         {
             //ViewBag.HasEditRight = HasEditRight;
             //ViewBag.HasDeleteRight = HasDeleteRight;
-            
+
             var searchResult = new SearchResult<Model.Search.CustomManagementSearch, CustomDetails>(search, new List<CustomDetails>(), o => o.Name.Contains(search.SarchText));
 
             ViewBag.CustomType = customType;
@@ -75,7 +76,7 @@ namespace Funeral.Web.Areas.Tools.Controllers
 
         [PageRightsAttribute(CurrentPageId = 28, Right = new isPageRight[] { isPageRight.HasAdd })]
         public PartialViewResult Add(CustomDetails customManagement)
-        {   
+        {
             customManagement.ParlourId = ParlourId;
             ModelState.Clear();
             return PartialView("~/Areas/Tools/Views/CustomManagement/_CustomManagementAddEdit.cshtml", customManagement);
@@ -105,14 +106,15 @@ namespace Funeral.Web.Areas.Tools.Controllers
                     customManagement.CreatedBy = UserID;
                     customManagement.ParlourId = this.ParlourId;
 
-                    if (customManagement.Id <= 0) {
+                    if (customManagement.Id <= 0)
+                    {
                         CustomDetailsBAL.CustomDetailsSave(customManagement);
                     }
                     else
                     {
                         CustomDetailsBAL.CustomDetailsUpdate(customManagement);
                     }
-                    
+
                     TempData["IsCustomManagementSaved"] = true;
                     TempData.Keep("IsCustomManagementSaved");
 

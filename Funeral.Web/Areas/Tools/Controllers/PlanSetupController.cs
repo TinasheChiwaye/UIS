@@ -138,6 +138,8 @@ namespace Funeral.Web.Areas.Tools.Controllers
             planSetup.UnderwriterList = CommonBAL.GetUnderwriterList(ParlourId).ToList();
             planSetup.LoyaltyProgramme = Convert.ToDecimal(planSetup.LoyaltyProgramme.ToString("0.00"));
             planSetup.OtherPartiesCommision = Convert.ToDecimal(planSetup.OtherPartiesCommision.ToString("0.00"));
+            planSetup.UnderwriterPremium = Convert.ToDecimal(planSetup.UnderwriterPremium.ToString("0.00"));
+            planSetup.UnderwriterCover = Convert.ToDecimal(planSetup.UnderwriterCover.ToString("0.00"));
             BindCompanyList();
             return PartialView("~/Areas/Tools/Views/PlanSetup/_PlanSetupAddEdit.cshtml", planSetup);
         }

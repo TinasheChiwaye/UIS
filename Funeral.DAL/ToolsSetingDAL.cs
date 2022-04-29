@@ -986,13 +986,13 @@ namespace Funeral.DAL
             DbParameter[] ObjParam = new DbParameter[2];
             ObjParam[0] = new DbParameter("@ID", DbParameter.DbType.Int, 0, ID);
             ObjParam[1] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
-            return DbConnection.GetDataTable(CommandType.StoredProcedure, "EditPlanbyID", ObjParam);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "EditPlanbyID_NEW", ObjParam);
         }
         public static DataTable EditPlanCreatorbyID(int PlanId)
         {
             DbParameter[] ObjParam = new DbParameter[1];
             ObjParam[0] = new DbParameter("@ID", DbParameter.DbType.Int, 0, PlanId);
-            return DbConnection.GetDataTable(CommandType.StoredProcedure, "EditPlanCreatorbyID", ObjParam);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "EditPlanCreatorbyID_New", ObjParam);
         }
         public static SqlDataReader GetPlanByID(string ID, Guid ParlourId)
         {
@@ -1059,7 +1059,7 @@ namespace Funeral.DAL
         public static int NewSavePlanDetails(PlanModel model)
         {
             AdditionalMemberInfoModel model1 = new AdditionalMemberInfoModel();
-            string query = "SaveNewPlanDetails";
+            string query = "SaveNewPlanDetails_dt";
             DbParameter[] ObjParam = new DbParameter[30];
             ObjParam[0] = new DbParameter("@pkiPlanID", DbParameter.DbType.Int, 0, model.pkiPlanID);
             ObjParam[1] = new DbParameter("@PlanName", DbParameter.DbType.NVarChar, 0, model.PlanName);
@@ -1087,10 +1087,12 @@ namespace Funeral.DAL
             ObjParam[23] = new DbParameter("@OtherPartiesCommision", DbParameter.DbType.Decimal, 0, model.OtherPartiesCommision);
             ObjParam[24] = new DbParameter("@LoyaltyProgramme", DbParameter.DbType.Decimal, 0, model.LoyaltyProgramme);
             ObjParam[25] = new DbParameter("@NumberOfDependents", DbParameter.DbType.Decimal, 0, model.NumberOfDependents);
-            ObjParam[26] = new DbParameter("@AgeFrom", DbParameter.DbType.Decimal, 0, model.AgeFrom);
-            ObjParam[27] = new DbParameter("@AgeTo", DbParameter.DbType.Decimal, 0, model.AgeTo);
+            ObjParam[26] = new DbParameter("@AgeFrom", DbParameter.DbType.Int, 0, model.AgeFrom);
+            ObjParam[27] = new DbParameter("@AgeTo", DbParameter.DbType.Int, 0, model.AgeTo);
             ObjParam[28] = new DbParameter("@UnderwriterCover", DbParameter.DbType.Decimal, 0, model.UnderwriterCover);
             ObjParam[29] = new DbParameter("@UnderwriterPremium", DbParameter.DbType.Decimal, 0, model.UnderwriterPremium);
+
+
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
 
         }
@@ -1106,7 +1108,7 @@ namespace Funeral.DAL
             ObjParam[4] = new DbParameter("@CoverAmount", DbParameter.DbType.Decimal, 0, model.Cover);
             ObjParam[5] = new DbParameter("@PremiumAmount", DbParameter.DbType.Decimal, 0, model.Premium);
             ObjParam[6] = new DbParameter("@UnderwriterCover", DbParameter.DbType.Decimal, 0, model.UnderwriterCover);
-            ObjParam[7] = new DbParameter("@UnderwriterPremium", DbParameter.DbType.Int, 0, model.UnderwriterPremium);
+            ObjParam[7] = new DbParameter("@UnderwriterPremium", DbParameter.DbType.Decimal, 0, model.UnderwriterPremium);
             ObjParam[8] = new DbParameter("@IsActive", DbParameter.DbType.Bit, 0, model.IsActive);
             ObjParam[9] = new DbParameter("@CreatedBy", DbParameter.DbType.NVarChar, 0, model.CreatedBy);
             ObjParam[10] = new DbParameter("@CreatedDate", DbParameter.DbType.DateTime, 0, model.CreatedDate);
@@ -1458,7 +1460,7 @@ namespace Funeral.DAL
             ObjParam[1] = new DbParameter("@IsAdmin", DbParameter.DbType.Bit, 0, IsAdministrator);
             ObjParam[2] = new DbParameter("@IsSuperUser", DbParameter.DbType.Bit, 0, IsSuperUser);
             ObjParam[3] = new DbParameter("@UserName", DbParameter.DbType.NVarChar, 0, UserName);
-            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetDashboardTodayPayment", ObjParam);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetClaimsDashboardTodayPayment", ObjParam);
         }
         public static DataTable GetClaimRightsCollectionByRoleId(int RoleId)
         {

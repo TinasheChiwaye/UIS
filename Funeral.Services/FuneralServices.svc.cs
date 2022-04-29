@@ -53,11 +53,11 @@ namespace Funeral.Services
         public MembersModel GetMemberByID(int ID, Guid ParlourId)
         {
             return MembersBAL.GetMemberByID(ID, ParlourId);
-        }     
+        }
 
         public MembersViewModel GetAllMembers(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder, string status)
         {
-            return MembersBAL.GetAllMembers(ParlourId, PageSize, PageNum, Keyword, SortBy, SortOrder, status,"");
+            return MembersBAL.GetAllMembers(ParlourId, PageSize, PageNum, Keyword, SortBy, SortOrder, status, "");
         }
         public List<PolicyModel> GetPolicyByParlourId(Guid parlourid)
         {
@@ -71,7 +71,7 @@ namespace Funeral.Services
         {
             return MembersBAL.SelectRelationship();
         }
-        public List<PolicyModel> GetPlanSubscriptionByPlanId(int pkiPlanID,Guid parlorId)
+        public List<PolicyModel> GetPlanSubscriptionByPlanId(int pkiPlanID, Guid parlorId)
         {
             return CommonBAL.GetPlanSubscriptionByPlanId(pkiPlanID, parlorId);
         }
@@ -1099,9 +1099,9 @@ namespace Funeral.Services
         #endregion
         #region UnderwriterPremium
 
-        public int DeleteUnderwriterPremium(int ID,string UserName)
+        public int DeleteUnderwriterPremium(int ID, string UserName)
         {
-            return UnderwriterPremiumBAL.DeleteUnderwriterPremium(ID,UserName);
+            return UnderwriterPremiumBAL.DeleteUnderwriterPremium(ID, UserName);
         }
 
         public int DeleteUnderwriterSetupByID(int ID, string UserName)
@@ -1111,7 +1111,7 @@ namespace Funeral.Services
 
 
 
-        
+
         public List<UnderwriterPremiumModel> GetAllUnderwriterPlansByParlourID(Guid ParlourID, int UnderwriterPlanSelection)
         {
             return ToolsSetingBAL.GetAllUnderwriterPlansByParlourID(ParlourID, UnderwriterPlanSelection);
@@ -1236,7 +1236,7 @@ namespace Funeral.Services
         public int SaveScheduleEmailReport(ScheduleEmailReportModel model)
         {
             return ScheduleEmailReportBAL.SaveScheduleEmailReport(model);
-           
+
         }
 
         public List<ScheduleEmailReportModel> GetScheduleEmailReportByParlourId(Guid ParlourId)
@@ -1257,11 +1257,11 @@ namespace Funeral.Services
         public int DeleteScheduleEmailReport(int ID)
         {
             return ScheduleEmailReportBAL.DeleteScheduleEmailReport(ID);
-           
+
         }
-        public double SumPremiumByPlanId(int planId,int fkiMemberid, Guid ParlourId)
+        public double SumPremiumByPlanId(int planId, int fkiMemberid, Guid ParlourId)
         {
-            return MembersBAL.SumOfPremium(planId,fkiMemberid, ParlourId);
+            return MembersBAL.SumOfPremium(planId, fkiMemberid, ParlourId);
         }
 
         public int DeleteMemberNote(int ID)
@@ -1277,16 +1277,16 @@ namespace Funeral.Services
         {
             TombstonePackageBAL.DeleteTombstonePackage(Id);
         }
-        public ProgressStatus CheckProgressStatus(int ID,Guid ParlourId)
+        public ProgressStatus CheckProgressStatus(int ID, Guid ParlourId)
         {
-            return ToolsSetingBAL.CheckProgressStatus(ID,ParlourId);
+            return ToolsSetingBAL.CheckProgressStatus(ID, ParlourId);
         }
         public List<VendorModel> GetVendorNameByParlourId(Guid parlourid)
         {
             return ToolsSetingBAL.GetVendorNameByParlourId(parlourid);
         }
 
-        public void MemberRowImportToMember(string memberType,Guid importId)
+        public void MemberRowImportToMember(string memberType, Guid importId)
         {
             MembersBAL.MemberRowImportToMember(memberType, importId);
             //return MembersBAL.MemberRowImportToMember(MemberType);

@@ -78,7 +78,7 @@
             });
 
             $("#btnSearch").click(function () {
-                InitModel();                
+                InitModel();
                 eventConfigs.searchClick.attachEvent();
                 eventConfigs.searchClick.dispatchEvent();
                 tableConfigs.table.fnDraw();
@@ -145,7 +145,7 @@
             $("#PageNum1").val(model1.PageNum);
         }
 
-        function EditCustomManagement(id, customType) {            
+        function EditCustomManagement(id, customType) {
 
             $("#ItemId").val(id);
 
@@ -170,7 +170,7 @@
             });
         }
 
-        function DeleteCustomManagement(customTypeId,customType) {            
+        function DeleteCustomManagement(customTypeId,customType) {
 
             var isConfirmed = confirm('Are you sure you want to delete?');
 
@@ -199,10 +199,10 @@
             }
         }
 
-        function LoadCustomManagementData(customType) {            
+        function LoadCustomManagementData(customType) {
 
             var listUrl = '@Url.Action("SearchData", "CustomManagement", new { customType = "CustomTypeVal" },Request.Url.Scheme)';
-            listUrl = listUrl.replace("CustomTypeVal", customType);            
+            listUrl = listUrl.replace("CustomTypeVal", customType);
 
             tableConfigs.SearchUrls = listUrl;
             tableConfigs.table.DataTable().ajax.url(listUrl).load();

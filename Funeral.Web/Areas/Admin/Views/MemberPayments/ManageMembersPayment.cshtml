@@ -25,30 +25,6 @@
 @Html.Hidden("CalculateAmount", Url.Action("CalculateAmount"))
 @Html.Hidden("AddPayments", Url.Action("AddPayments"))
 
-@*<link rel="stylesheet" href="~/Scripts/docs/css/bootstrap-4.5.2.min.css" type="text/css">
-
-<script type="text/javascript" src="~/Scripts/docs/js/jquery-2.1.3.min.js"></script>
-
-
-<script type="text/javascript" src="~/Scripts/docs/js/bootstrap.bundle-4.5.2.min.js"></script>*@
-
-
-
-
-<!-- Include Twitter Bootstrap and jQuery: -->
-@*<link rel="stylesheet" href="~/Scripts/docs/css/bootstrap-4.5.2.min.css" type="text/css">*@
-
-@*<script type="text/javascript" src="~/Scripts/jquery-2.1.1.min.js"></script>
-
-
-
-    <script type="text/javascript" src="~/Scripts/docs/js/bootstrap.bundle-4.5.2.min.js"></script>*@
-
-
-<!-- Include the plugin's CSS and JS: -->
-<script type="text/javascript" src="~/Scripts/dist/js/bootstrap-multiselect.js"></script>
-<link rel="stylesheet" href="~/Scripts/dist/css/bootstrap-multiselect.css" type="text/css" />
-
 <div class="row">
     <div class="col-lg-12">
 
@@ -66,7 +42,7 @@
                 <div class="col-lg-6">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5>Payment Details </h5>
+                            <h5>Payment Details</h5>
                         </div>
                         <div class="ibox-content">
                             <div class="form-group">
@@ -121,7 +97,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>No of Months</label>
-                                        @*<select id="ddlNoOfMonths" class="form-control m-b">
+                                        <select id="ddlNoOfMonths" class="form-control m-b">
                                             <option Value="0">Select</option>
                                             <option Value="1">1</option>
                                             <option Value="2">2</option>
@@ -135,15 +111,7 @@
                                             <option Value="10">10</option>
                                             <option Value="11">11</option>
                                             <option Value="12">12</option>
-                                        </select>*@
-                                        @Html.DropDownList("Months", new SelectList(ViewBag.MonthToPay, "pkiMemberId", "DateLastPaid"), new { @class = "form-control", multiple = "multiple", @id = "ddlMethodPayment" })
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-3">
-                                        <div class="form-group">
-                                            <button id="example" class="btn btn-outline-secondary ml-1">Confirm</button>
-                                        </div>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -380,10 +348,10 @@
 
                                                 @if (ViewBag.HasReversalPayment)
                                                 {
-                                                       if (item.IsReversal == false && item.AmountPaidNumeric > 0)
-                                                       {
+                                                    if (item.IsReversal == false && item.AmountPaidNumeric > 0)
+                                                    {
                                                         <a class="btn btn-w-m btn-primary paymentreversal" role="@item.InvoiceID" id="btnReversalPayment">Reversal Payment</a>
-                                                       }
+                                                    }
                                                 }
                                             </td>
                                         </tr>
@@ -401,188 +369,7 @@
 
 
 <script>
-    //++++++++++++++++++++++++++++++++TEST++++++++++++++++++++++++++++++++
-    //$(document).ready(function () {
-    //    $('#ddlMethodPayment').multiselect();
-    //});
-
-    $(document).ready(function () {
-        $('#ddlMethodPayment').multiselect({
-            onChange: function (option, checked) {
-                // Get selected options.
-                var selectedOptions = $('#ddlMethodPayment option:selected');
-
-                if (selectedOptions.length >= 1) {
-                    // Disable all other checkboxes.
-                    var nonSelectedOptions = $('#ddlMethodPayment option').filter(function () {
-                        return !$(this).is(':selected');
-                    });
-
-                    nonSelectedOptions.each(function () {
-                        var input = $('input[value="' + $(this).val() + '"]');
-                        input.prop('disabled', true);
-                        input.closest('.multiselect-option').addClass('disabled');
-                    });
-                }
-                else {
-                    // Enable all checkboxes.
-                    $('#ddlMethodPayment option').each(function () {
-                        var input = $('input[value="' + $(this).val() + '"]');
-                        input.prop('disabled', false);
-                        input.closest('.multiselect-option').addClass('disabled');
-                    });
-                }
-            }
-        });
-    });
-
-    //$(document).ready(function () {
-    //    $('#ddlMethodPayment').multiselect({
-    //        enableClickableOptGroups: false,
-    //        includeSelectAllOption: false,
-    //        //enableFiltering : true,
-    //        onChange: function (option, checked, select) {
-    //            alert('Changed option ' + $(option).val() + '.');
-    //        }
-    //    });
-    //});
-
-
-    //$(document).ready(function () {
-    //    $('#ddlMethodPayment').multiselect({
-    //        enableClickableOptGroups: false,
-    //        includeSelectAllOption: false,
-    //        //enableFiltering : true,
-    //        onChange: function (option, checked, select) {
-    //            alert('Changed option ' + $(option).val() + '.');
-    //        }
-    //    });
-    //});
-
-    //$(document).ready(function () {
-    //    $('#example').click(function () {
-    //        var selected = $('#ddlMethodPayment').val();
-    //        alert( selected);
-    //    })
-    //});
-
-        //$('#ddlMethodPayment').change(function () {
-        //    var selectedValues = $(this).val();
-        //    alert(selectedValues);
-        //});
-
-
-    //$("#example").click(function () {
-    //    var selected = $("#ddlMethodPayment option:selected");    /*Current Selected Value*/
-    //    var message = "";
-    //    var arrSelected = [];      /*Array to store multiple values in stack*/
-    //    selected.each(function () {
-    //        arrSelected.push($(this).val());    /*Stack the Value*/
-    //        message += $(this).text() + " " + $(this).val() + "\n";
-    //    });
-    //    alert(message);
-    //});
-
-
-
-
-    $("#ddlMethodPayment").change(function () {
-        const selectedA = document.querySelectorAll('#ddlMethodPayment option:checked');
-        const valuesA = Array.from(selectedA).map(el => el.textContent);
-        //$("#txtMonthPaid").val('');
-        //var selected = $(this).val();
-        var GetPremiumForPolicyURl = $("#CalculateAmount").val();
-        var selected = $("#ddlMethodPayment option:selected");
-        var arrSelected = [];      /*Array where we store the values*/
-        selected.each(function () {
-            arrSelected.push($(this).val());  /*Stack the value*/
-        });
-        var data = {
-            noOfMonths: parseInt(arrSelected.length),
-			TotalPremieum: parseInt($("#txtTotalPremium").val().replace("@Model.Currency ", "")),
-			LatePanelty: parseInt(0)
-            //NextDate: $(selected)
-        };
-        if ($("#ddlPolicy :selected").val() != "") {
-            $.ajax({
-                url: GetPremiumForPolicyURl,
-                data: data,
-                type: "get",
-                cache: false,
-                success: function (result) {
-                    //const selectedA = document.querySelectorAll('#ddlMethodPayment option:checked');
-                    //const valuesA = Array.from(selectedA).map(el => el.textContent);
-
-                    var newResult = result.split('~');
-                    $("#txtAmount").val('');
-					//$("#txtAmount").val('USD ' + newResult[0]);
-					var a = parseInt(newResult[0]);
-                    $("#txtAmount").val("@Model.Currency" + " " + a.toFixed(2));
-
-                    $("#txtMonthPaid").val('');
-                    $("#txtMonthPaid").val(valuesA);
-
-                    @*if ($("#ddlNoOfMonths").val() == "1") {
-                        $("#txtMonthPaid").val('');
-                        $("#txtMonthPaid").val('@ViewBag.PaymentDate');
-                    } else if ($("#ddlNoOfMonths").val() == "0") {
-                        $("#txtMonthPaid").val('');
-                        $("#txtMonthPaid").val('@ViewBag.PaymentDate');
-                    } else {
-                        $("#txtMonthPaid").val('');
-                        $("#txtMonthPaid").val(newResult[1]);
-                    }*@
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    alert(thrownError);
-                }
-            })
-        } else {
-            alert("Please select policy..!");
-        }
-    });
-
-    $("#btnPay").click(function () {
-        var ManageMembersPaymentURL = $("#AddPayments").val();
-        var data = {
-            pkiMemberID: $("#pkiMemberID").val(),
-            //Amount: $("#txtAmount").val().replace("USD ", ""),
-            Amount: $("#txtAmount").val().replace("@Model.Currency", ""),
-            LatePaymentPenalty: 0,
-            ReceivedBy: $("#txtReceivedBy").val(),
-            Notes: $("#ddlMethod :selected").text() + ' - ' + $("#txtMonthPaid").val(),
-            MethodOfPayment: $("#ddlMethod :selected").text(),
-            MemeberNumber: $("#txtMemberNo").val(),
-            PaymentDate: $("#txtNextPaymentDate").val(),
-            NextPaymentDate: $("#NextPaymentDate").val(),
-            Branch: "test",
-            parlourid: $("#parlourid").val(),
-            FullNames: $("#txtMember").val(),
-            LatePaymentId: $("#ddlMethodPayment option:selected").val()
-        };
-
-
-        $.ajax({
-            url: ManageMembersPaymentURL,
-            data: data,
-            type: "post",
-            cache: false,
-            success: function (result) {
-                location.reload();
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
-            }
-        })
-        //} else {
-        //    alert("Please select policy..!");
-        //}
-    });
-
-
-    //++++++++++++++++++++++++++++++++END TEST++++++++++++++++++++++++++++++++
-
-    @*$("#ddlNoOfMonths").change(function () {
+    $("#ddlNoOfMonths").change(function () {
         var GetPremiumForPolicyURl = $("#CalculateAmount").val();
         var data = {
             noOfMonths: $("#ddlNoOfMonths").val(),
@@ -656,7 +443,7 @@
         //} else {
         //    alert("Please select policy..!");
         //}
-    });*@
+    });
 
     $(".paymentreversal").click(function () {
         var confirmStatus =confirm("You are about to make a REVERSAL PAYMENT.Continue?");

@@ -56,14 +56,14 @@
                                             <th>Group Name</th>
                                             <th>Premium</th>
                                             <th>Balance</th>
-                                            <th>Duplicate Ids with Covers > 100k</th>
-                                            <th>Amount At Risk</th>
+                                            @*<th>Duplicate Ids with Covers > 100k</th>
+                                            <th>Amount At Risk</th>*@
                                             <th>Total Risk Covered</th>
                                             <th>Billing Month</th>
                                             <th>Reference Number</th>
                                             <th>Regenerate</th>
                                             <th>Recon</th>
-                                            <th>Action</th>
+                                            <th>Action &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</th>
                                         </tr>
                                     </thead>
                                     <tbody></tbody>
@@ -120,8 +120,8 @@
                 [{ "data": "GroupName", "name": "Group Name", "autoWidth": true },
                 { "data": "Premium", "name": "Premium", "autoWidth": true },
                 { "data": "Balance", "name": "Balance", "autoWidth": true },
-                { "data": "DuplicateIDsWithCovers100K", "name": "DuplicateIDsWithCovers100K", "autoWidth": true },
-                { "data": "AmountAtRisk", "name": "Amount At Risk", "autoWidth": true },
+                //{ "data": "DuplicateIDsWithCovers100K", "name": "DuplicateIDsWithCovers100K", "autoWidth": true },
+                //{ "data": "AmountAtRisk", "name": "Amount At Risk", "autoWidth": true },
                 { "data": "TotalRiskCovered", "name": "Total Risk Covered", "autoWidth": true },
                 {
                     "data": "BillingMonth", "name": "Inception Date", "autoWidth": true,
@@ -169,6 +169,9 @@
 
                         var Download = '<div class="col-sm-3"><a class="btn btn-primary btn-sm" placeholder="Download" onclick="DownloadReport(\'' + full.parlourid + '\',\'' + full.ReferenceNumber + '\')"><i class="fa fa-download"></i></a></div>';
                         dom = dom + Download;
+
+                        //var Refresh = '<div class="col-sm-3"><a class="btn btn-primary btn-sm" placeholder="Refresh" onclick="RefreshBilling(\'' + full.parlourid + '\',\'' + full.ReferenceNumber + '\')"><i class="fa fa-refresh"></i></a></div>';
+                        //dom = dom + Refresh;
 
 
 

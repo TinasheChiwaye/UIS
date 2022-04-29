@@ -199,7 +199,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             var searchResult = new Funeral.Model.SearchResult<Model.Search.MemberSearch, MembersModel>(search, new List<MembersModel>(), o => o.IDNumber.ToLower().Contains(search.SarchText.ToLower()));
             try
             {
-                var members = MembersBAL.GetAllMembers(search.CompanyId, search.PageSize, search.PageNum, search.SarchText, search.SortBy, search.SortOrder, search.StatusId.ToString(), search.BookID);
+                var members = MembersBAL.GetAllMembers(search.CompanyId, search.PageSize, search.PageNum, search.SarchText, search.SortBy, search.SortOrder, search.StatusId.ToString(), "");
                 return Json(new Funeral.Model.SearchResult<Model.Search.MemberSearch, MembersModel>(search, members.MemberList, o => o.IDNumber.ToLower().Contains(search.SarchText.ToLower()) || o.MemeberNumber.ToLower().Contains(search.SarchText.ToLower()) || o.Surname.ToLower().Contains(search.SarchText.ToLower()) || o.FullNames.ToLower().Contains(search.SarchText.ToLower()) || o.Cellphone.ToLower().Contains(search.SarchText.ToLower()) || o.EasyPayNo.ToLower().Contains(search.SarchText.ToLower())));
             }
             catch (Exception ex)
@@ -288,9 +288,9 @@ namespace Funeral.Web.Areas.Admin.Controllers
             Managemembers.BranchList = CommonBAL.GetBranchByParlourId(CurrentParlourId).Select(x => new SelectListItem() { Text = x.BranchName, Value = x.Brancheid.ToString() });
             Managemembers.ProductAddOnList = MembersBAL.SelectProductName(CurrentParlourId).Select(x => new SelectListItem() { Text = x.ProductName, Value = x.pkiProductID.ToString() });
             Managemembers.SocietyList = CommonBAL.GetSocietyByParlourId(CurrentParlourId).Select(x => new SelectListItem() { Text = x.SocietyName, Value = x.pkiSocietyID.ToString() });
-            Managemembers.CustomPaymentMethod = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom1)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
-            Managemembers.CustomGrouping2 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom2)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
-            Managemembers.CustomGrouping3 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom3)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
+            Managemembers.CustomPaymentMethod = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.EmploymentType)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
+            Managemembers.CustomGrouping2 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.PaymentType)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
+            Managemembers.CustomGrouping3 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Source)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
             Managemembers.Member = member;
             Managemembers.DependencyTypeList = CommonBAL.GetUserTypes().Select(x => new SelectListItem() { Text = x.UserTypeName, Value = x.UserTypeId.ToString() });
             ViewBag.Provinces = CommonBAL.GetProvinces();
@@ -1467,7 +1467,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
         public void UpdatePolicyStatus(string policyStatus, int memberId)
 
         {
-            MembersBAL.UpdateMemberPolicyStatus(policyStatus, memberId);
+            MembersBAL.UpdateMemberPolicyStatus(policyStatus, memberId, UserName);
             CommonBAL.SaveAudit(UserName, CurrentParlourId, "Policy Status Changed");
         }
         [HttpPost]

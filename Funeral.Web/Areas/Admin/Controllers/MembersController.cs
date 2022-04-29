@@ -209,12 +209,12 @@ namespace Funeral.Web.Areas.Admin.Controllers
             Managemembers.BranchList = CommonBAL.GetBranchByParlourId(CurrentParlourId).Select(x => new SelectListItem() { Text = x.BranchName, Value = x.Brancheid.ToString() });
             Managemembers.ProductAddOnList = MembersBAL.SelectProductName(CurrentParlourId).Select(x => new SelectListItem() { Text = x.ProductName, Value = x.pkiProductID.ToString() });
             Managemembers.SocietyList = CommonBAL.GetSocietyByParlourId(CurrentParlourId).Select(x => new SelectListItem() { Text = x.SocietyName, Value = x.pkiSocietyID.ToString() });
-            Managemembers.CustomPaymentMethod = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom1)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
-            Managemembers.CustomGrouping2 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom2)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
-            Managemembers.CustomGrouping3 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Custom3)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
+            Managemembers.CustomPaymentMethod = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.EmploymentType)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
+            Managemembers.CustomGrouping2 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.PaymentType)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
+            Managemembers.CustomGrouping3 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Source)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
             Managemembers.Member = member;
             //Managemembers.DependencyTypeList = CommonBAL.GetUserTypes().Select(x => new SelectListItem() { Text = x.UserTypeName, Value = x.UserTypeId.ToString() });
-            Managemembers.DependencyTypeList = CommonBAL.GetUserTypesByMemberID(MemberId, CurrentParlourId, member.fkiPlanID).Select(x => new SelectListItem() { Text = x.UserTypeName, Value = x.CreatorID.ToString() });
+            Managemembers.DependencyTypeList = CommonBAL.GetUserTypesByMemberID(MemberId, member.fkiPlanID, CurrentParlourId).Select(x => new SelectListItem() { Text = x.UserTypeName, Value = x.CreatorID.ToString() });
             ViewBag.Provinces = CommonBAL.GetProvinces();
             Managemembers.ExtendedFamily = MembersBAL.GetExtendedFamilyList(CurrentParlourId, MemberId).Select(x => new SelectListItem() { Text = x.FullName, Value = x.pkiDependentID.ToString() });
 
@@ -431,7 +431,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             {
                 return Json(new { success = false, errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList() }, JsonRequestBehavior.AllowGet);
             }
-
+            
             MemberId = pkiMemberId;
             addOnProduct.fkiMemberid = Convert.ToInt32(MemberId);
             addOnProduct.LastModified = DateTime.Now;
@@ -445,7 +445,10 @@ namespace Funeral.Web.Areas.Admin.Controllers
         }
         public ActionResult DeleteAddOnProduct(Guid pkiProductId)
         {
-            MembersBAL.MemberAddonProductsRemove(pkiProductId);
+            AddonProductsModal ADDON = new AddonProductsModal();
+            ADDON.ModifiedUser = UserID.ToString();
+            string ModifiedUser = ADDON.ModifiedUser;
+            MembersBAL.MemberAddonProductsRemove(pkiProductId, ModifiedUser);
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult SearchProductData(Model.Search.BaseSearch search)
@@ -521,7 +524,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 //Product = product.FirstOrDefault().ProductCost.ToString();
                 Product = Currency + (Decimal.Round(Convert.ToDecimal(product.FirstOrDefault().ProductCost), 2)).ToString();
             //Product += " "+product.FirstOrDefault().ProductCost;
-            return Json(new { Product, ProductCost = product.FirstOrDefault().ProductCost }, JsonRequestBehavior.AllowGet); //new { ProductPrice = Currency.Trim() + " " + product.FirstOrDefault().ProductCost, ProductCost = product.FirstOrDefault().ProductCost }
+            return Json(new { Product, ProductCost = product.FirstOrDefault().ProductCost, ProductCover = product.FirstOrDefault().ProductCover }, JsonRequestBehavior.AllowGet); //new { ProductPrice = Currency.Trim() + " " + product.FirstOrDefault().ProductCost, ProductCost = product.FirstOrDefault().ProductCost }
         }
         public ActionResult SubmitDocuments(int documentType)
         {
@@ -647,7 +650,11 @@ namespace Funeral.Web.Areas.Admin.Controllers
         }
         public ActionResult DeleteDocument(int pkiPictureID)
         {
-            bool isdocumentDeleted = MembersBAL.DeleteSUpportdocumentById(pkiPictureID);
+            SupportedDocumentModel supportedDocument = new SupportedDocumentModel();
+            supportedDocument.ModifiedUser = UserID.ToString();
+            string ModifiedUser = supportedDocument.ModifiedUser;
+
+            bool isdocumentDeleted = MembersBAL.DeleteSUpportdocumentById(pkiPictureID, ModifiedUser);
             if (isdocumentDeleted)
                 return Json(new { success = true }, JsonRequestBehavior.AllowGet);
             else
@@ -687,12 +694,12 @@ namespace Funeral.Web.Areas.Admin.Controllers
             //PlanModel Plan = new PlanModel();
             PlanModel objPlans = MembersBAL.GetPlanByPlanID(Member.fkiPlanID, CurrentParlourId);
 
-            if (MembersBAL.GetMemberByIDNumber(Member.IDNumber, this.ParlourId, Member.fkiPlanID) != null && Member.pkiMemberID == 0)
-            {
-                //return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member Already Exists" + "</li>").ToList() }, JsonRequestBehavior.AllowGet);
-                return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member ID Number already exists on this Plan." + "</li>").First() }, JsonRequestBehavior.AllowGet);
-            }
-            else if (Member.Age < objPlans.AgeFrom || Member.Age > objPlans.AgeTo)
+            //if (MembersBAL.GetMemberByIDNumber(Member.IDNumber, this.ParlourId, Member.fkiPlanID) != null && Member.pkiMemberID == 0)
+            //{
+            //    //return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member Already Exists" + "</li>").ToList() }, JsonRequestBehavior.AllowGet);
+            //    return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member ID Number already exists on this Plan." + "</li>").First() }, JsonRequestBehavior.AllowGet);
+            //}
+            if (Member.Age < objPlans.AgeFrom || Member.Age > objPlans.AgeTo)
             {
                 return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Memeber age is not supported under this Plan." + "</li>").First() }, JsonRequestBehavior.AllowGet);
 
@@ -734,7 +741,10 @@ namespace Funeral.Web.Areas.Admin.Controllers
                     Member.CoverDate = DateTime.Now;
                 }
 
-                Member.ModifiedUser = UserName;
+            //SocietyModel society = new SocietyModel();
+            //Member.MemberSociety = society.pkiSocietyID.ToString();
+
+                Member.ModifiedUser = UserID.ToString();
                 Member.Active = false;
                 int retId = MembersBAL.SaveMembers(Member);
                 Member.pkiMemberID = retId;
@@ -786,14 +796,45 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 Response.Add(string.IsNullOrEmpty(CommonBAL.GetPlanUnderwriterByPlanId(id)) ? string.Empty : CommonBAL.GetPlanUnderwriterByPlanId(id));
                 int WaitingPeriod = CommonBAL.GetWaitingPeriodByPlanId(id);
 
-                if (objPolicyModel.WaitingPeriod != 0 && objPolicyModel.WaitingPeriod == null)
+                if (objPolicyModel.WaitingPeriod == 0 || objPolicyModel.WaitingPeriod == null)
                 {
                     Response.Add(DateTime.Now.AddMonths(CommonBAL.GetWaitingPeriodByPlanId(id)).ToString("dd MMM yyyy"));
                 }
                 else if (date != null)
                 {
-                    DateTime PolicystartDate = Convert.ToDateTime(date);
-                    Response.Add(PolicystartDate.AddMonths(CommonBAL.GetWaitingPeriodByPlanId(id)).ToString("dd MMM yyyy"));
+                    //DateTime PolicystartDate = Convert.ToDateTime(date);
+                    Response.Add(date.AddMonths(CommonBAL.GetWaitingPeriodByPlanId(id)).ToString("dd MMM yyyy"));
+                    //date = PolicystartDate;
+                }
+                if (objPolicyModel != null)
+                    Response.Add(objPolicyModel.totalPremium);
+                else
+                    Response.Add(string.Empty);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return Json(Response, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult BindDependentCoverDate(int id, DateTime date)
+        {
+            PolicyModel objPolicyModel = CommonBAL.GetPlanSubscriptionByPlanIdNewMember(id).ToList().FirstOrDefault();
+            List<string> Response = new List<string>();
+            try
+            {
+                int WaitingPeriod = CommonBAL.GetWaitingPeriodByPlanId(id);
+
+                if (objPolicyModel.WaitingPeriod == 0 || objPolicyModel.WaitingPeriod == null)
+                {
+                    Response.Add(DateTime.Now.AddMonths(CommonBAL.GetWaitingPeriodByPlanId(id)).ToString("dd MMM yyyy"));
+                }
+                else if (date != null)
+                {
+                    //DateTime PolicystartDate = Convert.ToDateTime(date);
+                    Response.Add(date.AddMonths(CommonBAL.GetWaitingPeriodByPlanId(id)).ToString("dd MMM yyyy"));
+                    //date = PolicystartDate;
                 }
                 if (objPolicyModel != null)
                     Response.Add(objPolicyModel.totalPremium);
@@ -1095,7 +1136,9 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 ObjFamilyDependencyModel.DependencyType = dependency.DependencyType;
                 ObjFamilyDependencyModel.Premium = dependency.Premium;
                 ObjFamilyDependencyModel.Cover = dependency.Cover;
-                ObjFamilyDependencyModel.ModifiedUser = UserName;
+                ObjFamilyDependencyModel.Passport = dependency.Passport;
+                ObjFamilyDependencyModel.ModifiedUser = UserID.ToString();
+                //ObjFamilyDependencyModel.ModifiedUser = UserName;
                 ObjFamilyDependencyModel.CreatedBy = UserName;
 
             }
@@ -1125,7 +1168,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             //}
 
 
-            if (dependency.Age < ObjPlanModel.AgeFrom || dependency.Age > ObjPlanModel.AgeTo)
+            if (dependency.Age<ObjPlanModel.AgeFrom || dependency.Age> ObjPlanModel.AgeTo)
             {
                 return Json(new { success = false, ageLimit = false, Dependency = dependency }, JsonRequestBehavior.AllowGet);
             }
@@ -1173,7 +1216,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 dependency.DateOfBirth = DateTime.Now;
             }
 
-
+            dependency.ModifiedUser = UserID.ToString();
 
             dependency.Relationship = Convert.ToInt32("1");
 
@@ -1203,7 +1246,10 @@ namespace Funeral.Web.Areas.Admin.Controllers
         [PageRightsAttribute(CurrentPageId = 4)]
         public ActionResult DeleteDependency(int pkiDependantId)
         {
-            bool isDependencyDeleted = MembersBAL.GetFamilyDependencyTypes(pkiDependantId);
+            FamilyDependencyModel dependency = new FamilyDependencyModel();
+            dependency.ModifiedUser = UserID.ToString();
+            string ModifiedUser = dependency.ModifiedUser;
+            bool isDependencyDeleted = MembersBAL.GetFamilyDependencyTypes(pkiDependantId, ModifiedUser);
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
         private int AgeFromDOB(DateTime bday)
@@ -1373,6 +1419,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             model.RefNumber = policy.RefNumber;
             model.Email = policy.Email;
             model.MemberBranch = policy.MemberBranch;
+            model.ModifiedUser = UserName;
             //model.
 
             if (model.StartDate == null || model.StartDate == DateTime.MinValue)
@@ -1689,7 +1736,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
         public void UpdatePolicyStatus(string policyStatus, int memberId)
 
         {
-            MembersBAL.UpdateMemberPolicyStatus(policyStatus, memberId);
+            MembersBAL.UpdateMemberPolicyStatus(policyStatus, memberId, UserName);
             CommonBAL.SaveAudit(UserName, CurrentParlourId, "Policy Status Changed");
         }
         [HttpPost]
@@ -1751,7 +1798,10 @@ namespace Funeral.Web.Areas.Admin.Controllers
         }
         public ActionResult DeleteBeneficiary(int pkiBeneficiaryID)
         {
-            MembersBAL.DeleteBeneficiary(pkiBeneficiaryID);
+            Beneficiary_model beneficiary = new Beneficiary_model();
+            beneficiary.ModifiedUser = UserID.ToString();
+            string ModifiedUser = beneficiary.ModifiedUser;
+            MembersBAL.DeleteBeneficiary(pkiBeneficiaryID, ModifiedUser);
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]

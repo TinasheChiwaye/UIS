@@ -41,13 +41,22 @@
             <label>Select Relationship Type</label>
             @Html.DropDownList("RelationshipType_Beneficiary", new List<SelectListItem>
                 {
-                    new SelectListItem{ Text="Parents", Value = "Parents" },
-                    new SelectListItem{ Text="Child", Value = "Child" },
+                    new SelectListItem{ Text="Spouse", Value = "Spouse" },
+                    new SelectListItem{ Text="Son", Value = "Son" },
+                    new SelectListItem{ Text="Daughter", Value = "Daughter" },
                     new SelectListItem{ Text="Sister", Value = "Sister" },
-                    new SelectListItem{ Text="Father", Value = "Father" },
                     new SelectListItem{ Text="Brother", Value = "Brother" },
                     new SelectListItem{ Text="Mother", Value = "Mother" },
-                    new SelectListItem{ Text="Spouse", Value = "Spouse" },
+                    new SelectListItem{ Text="Father", Value = "Father" },
+                    new SelectListItem{ Text="Aunt", Value = "Aunt" },
+                    new SelectListItem{ Text="Uncle", Value = "Uncle" },
+                    new SelectListItem{ Text="Niece", Value = "Niece" },
+                    new SelectListItem{ Text="Nephew", Value = "Nephew" },
+                    new SelectListItem{ Text="Grandmother", Value = "Grandmother" },
+                    new SelectListItem{ Text="Grandfather", Value = "Grandfather" },
+                    new SelectListItem{ Text="Granddaughter", Value = "Granddaughter" },
+                    new SelectListItem{ Text="Grandson", Value = "Grandson" },
+                    new SelectListItem{ Text="Gaurdian", Value = "Gaurdian" },
                 },new { @id = "ddlRelationshipType_Beneficiary", @style = "width:100%", @class = "form-control" })
         </div>
         <div class="form-group">

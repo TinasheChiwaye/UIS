@@ -52,7 +52,7 @@
                     <input id="btnSubmit" type="submit" value="Save" class="btn btn-w-m btn-primary" />
                 </div>
             }
-            </div>
+        </div>
     </div>
 
     if (TempData.Peek("IsCustomManagementSaved") != null && (bool)TempData.Peek("IsCustomManagementSaved") == true)
@@ -114,7 +114,7 @@
             jQuery("#Name").val('');
             jQuery("#Description").val('');
 
-            model1.SarchText = '';            
+            model1.SarchText = '';
             LoadCustomManagementList(customType);
         }
 

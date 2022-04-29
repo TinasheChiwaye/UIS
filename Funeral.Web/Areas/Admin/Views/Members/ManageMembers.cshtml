@@ -222,6 +222,7 @@
         @Html.Hidden("Members", Url.Action("GetPremiumForPolicy"))
         @Html.Hidden("SaveManageMembers", Url.Action("SaveManageMembers"))
         @Html.Hidden("BindPolicyCoverDateUrl", Url.Action("BindPolicyCoverDate"))
+        @Html.Hidden("BindDependentCoverDateUrl", Url.Action("BindDependentCoverDate"))
         @Html.Hidden("GetMemberToUpdate", Url.Action("GetMember"))
         @Html.Hidden("GetPolicyDetails", Url.Action("GetPolicyDetails"))
         @Html.Hidden("GetPolicyDetailsBetweenAge", Url.Action("GetPolicyDetailsBetweenAge"))
@@ -283,14 +284,14 @@
                                     <li class="" id="tab3">
                                         <a data-toggle="tab" href="#tab-3" id="atab3" aria-expanded="false">Policy Details</a>
                                     </li>
-                                    <li class="" id="tab9">
-                                        <a data-toggle="tab" href="#tab-9" id="atab9" aria-expanded="false">Product</a>
-                                    </li>
                                     <li class="" id="tab4">
                                         <a data-toggle="tab" href="#tab-4" id="atab4" aria-expanded="false">Banking Details</a>
                                     </li>
                                     <li class="" id="tab5">
                                         <a data-toggle="tab" href="#tab-5" id="atab5" aria-expanded="false">Dependent & Extended Family </a>
+                                    </li>
+                                    <li class="" id="tab9">
+                                        <a data-toggle="tab" href="#tab-9" id="atab9" aria-expanded="false">Supplementary Benefits</a>
                                     </li>
                                     <li class="" id="tab6">
                                         <a data-toggle="tab" href="#tab-6" id="atab6" aria-expanded="false">Payment History</a>
@@ -303,7 +304,7 @@
                                     </li>
                                     <li class="" id="tab10">
                                         <a data-toggle="tab" href="#tab-10" id="atab10" aria-expanded="false">Beneficiary</a>
-                                    </li>                                    
+                                    </li>
                                     <li class="" id="tab11">
                                         <a data-toggle="tab" href="#tab-11" id="atab11" aria-expanded="false">Audit Trail</a>
                                     </li>
@@ -347,21 +348,21 @@
                                                 @{
                                                     if (Model.IsAdministrator == true || Model.IsSuperUser == true)
                                                     {
-                                                        <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="DateComparisionJavascriptFun();" onblur="IdNumberBasicValidation(txtIdNumber);">
+                                                        <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="Validate();" onblur="IdNumberValidation(txtIdNumber);">
                                                     }
                                                     else if (Model.Member.pkiMemberID > 0)
                                                     {
-                                                        <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="DateComparisionJavascriptFun();" readonly="readonly" onblur="IdNumberBasicValidation(txtIdNumber);">
+                                                        <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="Validate();" readonly="readonly" onblur="IdNumberValidation(txtIdNumber);">
                                                     }
                                                     else
                                                     {
-                                                        <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="DateComparisionJavascriptFun();" onblur="IdNumberBasicValidation(txtIdNumber);">
+                                                        <input type="text" pattern="/d*" maxlength="13" id="txtIdNumber" name="txtIdNumber" class="form-control" onkeyup="Validate();" onblur="IdNumberValidation(txtIdNumber);">
                                                     }
                                                 }
                                             </div>
                                             <div class="form-group">
                                                 <label>Date of Birth </label>
-                                                <input type="text" id="txtBirthDay" name="txtBirthDay" class="form-control birthDate DatepickerSelection" readonly="readonly">
+                                                <input type="text" id="txtBirthDay" name="txtBirthDay" class="form-control birthDate DatepickerSelection" readonly="readonly" disabled>
                                             </div>
 
                                             <div class="form-group">
@@ -452,7 +453,7 @@
                                                                 <div class="col-lg-6">
 
                                                                     <div class="form-group">
-                                                                        <label>Plan Name<em>*</em> </label>
+                                                                        <label>Plan/Product Name<em>*</em> </label>
                                                                         @Html.DropDownList("PolicyList", Model.PolicyList, "Select", new { Name = "CitizenShip", @id = "ddlPolicyPopupPolicy", @style = "width:100%", @class = "form-control" })
                                                                     </div>
                                                                     <div class="form-group">
@@ -466,26 +467,26 @@
                                                                         <input type="text" maxlength="20" id="txtPolicyNo" name="name" class="form-control">
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <label>EasyPay</label>
+                                                                        <label>EasyPay Number</label>
                                                                         <input type="text" maxlength="50" id="txtEasyToPay" name="name" class="form-control">
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <label>Select Branch</label>
+                                                                        <label>Branch Name</label>
                                                                         <label>
                                                                             <em>*</em>
                                                                         </label>
                                                                         @Html.DropDownList("BranchList", Model.BranchList, "Select", new { Name = "BranchList", @id = "ddlMemberBranch", @style = "width:100%", @class = "form-control" })
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <label>Custom Payment Method</label>
+                                                                        <label>Payment Method</label>
                                                                         @Html.DropDownList("CustomPaymentMethod", Model.CustomPaymentMethod, "Select", new { Name = "CustomPayment", @id = "ddlPopupCustom1", @style = "width:100%", @class = "form-control" })
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <label>Custom Grouping 2</label>
+                                                                        <label>Type of Income</label>
                                                                         @Html.DropDownList("CustomGrouping2", Model.CustomGrouping2, "Select", new { Name = "CustomGrouping2", @id = "ddlPopupCustom2", @style = "width:100%", @class = "form-control" })
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <label>Custom Grouping 3</label>
+                                                                        <label>Source</label>
                                                                         @Html.DropDownList("CustomGrouping3", Model.CustomGrouping3, "Select", new { Name = "CustomGrouping3", @id = "ddlPopupCustom3", @style = "width:100%", @class = "form-control" })
                                                                     </div>
                                                                 </div>
@@ -497,15 +498,15 @@
 
                                                                     <div class="form-group">
                                                                         <label>Policy Inception Date</label>
-                                                                        <input type="text" maxlength="25" id="txtPolicyPopupInception" name="name" class="form-control DatepickerSelection">
+                                                                        <input type="text" maxlength="25" id="txtPolicyPopupInception" name="name" class="form-control DatepickerSelection" disabled>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label>Policy Cover Date</label>
-                                                                        <input type="text" maxlength="30" id="txtPolicyPopupCoverDate" name="name" class="form-control DatepickerSelection" disabled>
+                                                                        <input type="text" maxlength="30" id="txtPolicyPopupCoverDate" name="name" class="form-control DatepickerSelection">
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label>Policy Underwritten By</label>
-                                                                        <input type="text" maxlength="50" id="txtPolicyPopupUnderwriter" name="name" class="form-control">
+                                                                        <input type="text" maxlength="50" id="txtPolicyPopupUnderwriter" name="name" class="form-control" disabled ="disabled">
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label>Policy Agent or Broker</label>
@@ -651,6 +652,10 @@
                                                 <input type="text" maxlength="25" id="txtPolicyPremium" name="name" class="form-control" disabled>
                                             </div>
                                             <div class="form-group">
+                                                <label>Total Premium</label>
+                                                <input type="text" maxlength="20" id="txtTotalPremium" value="@Model.Currency @Model.TotalPremium" name="name" class="form-control" disabled>
+                                            </div>
+                                            <div class="form-group">
                                                 <label> Cover Amount</label>
                                                 <input type="text" maxlength="25" id="txtPolicyCoverAmount" name="name" class="form-control" disabled>
                                             </div>
@@ -668,30 +673,24 @@
                                                 }
                                                 @*<input type="text" maxlength="20" id="txtPolicyNo" name="name" class="form-control">*@
                                             </div>
+
                                             <div class="form-group">
-                                                <label>EasyPay</label>
-                                                <input type="text" maxlength="50" id="txtEasyToPay" name="name" class="form-control">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Select Branch<em>*</em></label>
+                                                <label>Branch Name<em>*</em></label>
                                                 @Html.DropDownList("BranchList", Model.BranchList, "Select", new { Name = "BranchList", @id = "ddlMemberBranch", @style = "width:100%", @class = "form-control" })
                                             </div>
-                                            <div class="form-group" style="display:none">
-                                                <label>Custom Payment Method</label>
+                                            <div class="form-group">
+                                                <label>Payment Method</label>
                                                 @Html.DropDownList("CustomPaymentMethod", Model.CustomPaymentMethod, "Select", new { Name = "CustomPayment", @id = "ddlCustom1", @style = "width:100%", @class = "form-control" })
                                             </div>
-                                            <div class="form-group" style="display:none">
-                                                <label>Custom Grouping 2</label>
+                                            <div class="form-group">
+                                                <label>Type of Income</label>
                                                 @Html.DropDownList("CustomGrouping2", Model.CustomGrouping2, "Select", new { Name = "CustomGrouping2", @id = "ddlCustom2", @style = "width:100%", @class = "form-control" })
                                             </div>
-                                            <div class="form-group" style="display:none">
-                                                <label>Custom Grouping 3</label>
+                                            <div class="form-group">
+                                                <label>Source</label>
                                                 @Html.DropDownList("CustomGrouping3", Model.CustomGrouping3, "Select", new { Name = "CustomGrouping3", @id = "ddlCustom3", @style = "width:100%", @class = "form-control" })
                                             </div>
-                                            <div class="form-group">
-                                                <label>Total Premium</label>
-                                                <input type="text" maxlength="20" id="txtTotalPremium" value="@Model.Currency @Model.TotalPremium" name="name" class="form-control" disabled>
-                                            </div>
+
 
                                         </div>
                                         <div class="col-lg-6">
@@ -699,24 +698,53 @@
                                                 <label>Policy Start Date</label>
                                                 <input type="text" id="txtPolicyStartDate" name="txtPolicyStartDate" class="form-control date1 DatepickerSelection">
                                             </div>
+                                            @{
+                                                if (Model.IsAdministrator == true || Model.IsSuperUser == true)
+                                                {
+
+                                                    <div class="form-group">
+                                                        <label>Policy Inception Date</label>
+                                                        <input type="text" id="txtInception" name="name" class="form-control date2 DatepickerSelection">
+                                                    </div>
+                                                }
+                                                else if (Model.Member.pkiMemberID > 0)
+                                                {
+                                                    <div class="form-group">
+                                                        <label>Policy Inception Date</label>
+                                                        <input type="text" id="txtInception" name="name" class="form-control date2 DatepickerSelection" disabled>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="form-group">
+                                                        <label>Policy Start Date</label>
+                                                        <input type="text" id="txtPolicyStartDate" name="txtPolicyStartDate" class="form-control date1 DatepickerSelection">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Policy Inception Date</label>
+                                                        <input type="text" id="txtInception" name="name" class="form-control date2 DatepickerSelection">
+                                                    </div>
+                                                }
+
+                                            }
+
 
                                             <div class="form-group">
-                                                <label>Policy Inception Date</label>
-                                                <input type="text" maxlength="25" id="txtInception" name="name" class="form-control date2 datepicker DatepickerSelection">
-                                            </div>
-                                            <div class="form-group" style="display:none;">
                                                 <label>Policy Cover Date</label>
                                                 <input type="text" maxlength="30" id="txtCoverDate" name="name" class="form-control DatepickerSelection" disabled>
                                             </div>
                                             <div class="form-group">
                                                 <label>Policy Underwritten By</label>
-                                                <input type="text" maxlength="50" id="txtUnderwriter" name="name" class="form-control">
+                                                <input type="text" maxlength="50" id="txtUnderwriter" name="name" class="form-control" disabled>
                                             </div>
-
+                                            <div class="form-group">
+                                                <label>EasyPay</label>
+                                                <input type="text" maxlength="50" id="txtEasyToPay" name="name" class="form-control">
+                                            </div>
                                             @*<div class="form-group">
-                        <label>Policy Underwritten By</label>
-                        @Html.DropDownList("UnderwritterList", Model.UnderwritterList, "Select", new { Name = "Underwritter", @id = "ddlUnderwritter", @style = "width:100%", @class = "form-control" })
-                    </div>*@
+            <label>Policy Underwritten By</label>
+            @Html.DropDownList("UnderwritterList", Model.UnderwritterList, "Select", new { Name = "Underwritter", @id = "ddlUnderwritter", @style = "width:100%", @class = "form-control" })
+        </div>*@
 
                                             <div class="form-group">
                                                 <label>Policy Agent or Broker</label>
@@ -770,7 +798,7 @@
                                                     <button class="btn btn-sm btn-primary pull-right m-t-n-xs" id="btnResetTab3">Reset</button>
                                                 </div>
                                                 <div class="btn-group">
-                                                    <a data-toggle="tab" href="#tab-9" id="tab3NextButton" class="btn btn-sm btn-primary pull-right m-t-n-xs" aria-expanded="true">Next</a>
+                                                    <a data-toggle="tab" href="#tab-4" id="tab3NextButton" class="btn btn-sm btn-primary pull-right m-t-n-xs" aria-expanded="true">Next</a>
                                                     @*<button class="btn btn-sm btn-primary pull-right m-t-n-xs" id="policyNextButton" onclick="return goToTab(3,9);">Next</button>*@
                                                 </div>
                                             </div>
@@ -802,17 +830,12 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Dependent Type</label>
+                                                <label>Member Type</label>
                                                 @Html.DropDownList("DependencyList_Product", Model.ExtendedFamily, "Main Member", new { Name = "Dependency", @id = "ddlDependentDependencyType_Product", @style = "width:100%", @class = "form-control" })
                                             </div>
                                             <div class="form-group">
                                                 <label>Product Name</label>
                                                 @Html.DropDownList("ProductAddOnList", Model.ProductAddOnList, "Select", new { Name = "ProductAddOn", @id = "drpProductName", @style = "width:100%", @class = "form-control" })
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Premium</label>
-                                                <input type="hidden" id="hdnPremium" name="hdnPremium" value="">
-                                                <input type="text" maxlength="20" id="txtPremium" name="name" class="form-control" placeholder="Premium" step="0.01" value="0.00">
                                             </div>
                                             <div class="form-group">
                                                 <button class="btn btn-sm btn-primary" id="btnSaveProduct">Save AddonProducts</button> @*onclick="SaveAddOnProduct()"*@
@@ -821,17 +844,29 @@
                                                 <br />
                                             </div>
                                         </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>Premium</label>
+                                                <input type="hidden" id="hdnPremium" name="hdnPremium" value="">
+                                                <input type="text" maxlength="20" id="txtPremium" name="name" class="form-control" placeholder="Premium" step="0.01" value="0.00">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Cover</label>
+                                                <input type="hidden" id="hdnSupCover" name="hdnSupCover" value="">
+                                                <input type="text" maxlength="20" id="txtSupCover" name="name" class="form-control" placeholder="Cover" step="0.01" value="0.00" disabled>
+                                            </div>
+                                        </div>
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <div class="btn-group">
-                                                    <a data-toggle="tab" href="#tab-3" id="tab9BackButton" class="btn btn-sm btn-primary pull-right m-t-n-xs" aria-expanded="true">Back</a>
-                                                </div>
+                                                @*<div class="btn-group">
+                    <a data-toggle="tab" href="#tab-3" id="tab9BackButton" class="btn btn-sm btn-primary pull-right m-t-n-xs" aria-expanded="true">Back</a>
+                </div>*@
                                                 <div class="btn-group" style="display:none">
                                                     <button class="btn btn-sm btn-primary pull-right m-t-n-xs" id="btnResetTab9">Reset</button>
                                                 </div>
-                                                <div class="btn-group">
-                                                    <a data-toggle="tab" href="#tab-4" id="tab9NextButton" class="btn btn-sm btn-primary pull-right m-t-n-xs" aria-expanded="true">Next</a>
-                                                </div>
+                                                @*<div class="btn-group">
+                    <a data-toggle="tab" href="#tab-4" id="tab9NextButton" class="btn btn-sm btn-primary pull-right m-t-n-xs" aria-expanded="true">Next</a>
+                </div>*@
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
@@ -910,7 +945,7 @@
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <div class="btn-group">
-                                                    <a data-toggle="tab" href="#tab-9" id="tab4BackButton" class="btn btn-sm btn-primary pull-right m-t-n-xs" aria-expanded="true">Back</a>
+                                                    <a data-toggle="tab" href="#tab-3" id="tab4BackButton" class="btn btn-sm btn-primary pull-right m-t-n-xs" aria-expanded="true">Back</a>
                                                     @*<button class="btn btn-sm btn-primary pull-right m-t-n-xs" onclick="return goToTab(4,9);">Back</button>*@
                                                 </div>
                                                 <div class="btn-group" style="display:none">
@@ -999,19 +1034,22 @@
                                                                 <input type="text" maxlength="30" id="txtDependentStartDate" name="txtDependentStartDate"
                                                                        class="form-control dependantStartDate DatepickerSelection">
                                                             </div>
+
                                                             <div class="form-group">
                                                                 <label>Inception Date <em>*</em></label>
                                                                 <input type="text" maxlength="25" id="txtDependentInceptionDate" name="txtDependentInceptionDate"
-                                                                       class="form-control dependantInceptionDate DatepickerSelection">
+                                                                        class="form-control dependantInceptionDate DatepickerSelection" >
                                                             </div>
+
+
 
                                                             <div class="form-group">
                                                                 <label>Cover Date <em>*</em></label>
                                                                 <input type="text" maxlength="25" id="txtDependentCoverDate" name="txtDependentCoverDate"
-                                                                       class="form-control dependantCoverDate DatepickerSelection" readonly>
+                                                                       class="form-control dependantCoverDate DatepickerSelection" disabled>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label>Relationship Type</label>
+                                                                <label>Relationship Type<em>*</em></label>
                                                                 @*<input type="text" maxlength="25" id="txtDepnduncyType" name="name" class="form-control">*@
                                                                 @Html.DropDownList("DependencyList", Model.DependencyTypeList, "Select", new { Name = "Dependency", @id = "ddlDependentDependencyType", @style = "width:100%", @class = "form-control" })
                                                             </div>
@@ -1028,9 +1066,9 @@
                                                                 </select>
                                                             </div>
                                                             @*<div class="form-group">
-                                        <label>Premium<em>*</em></label>
-                                        <input type="text" maxlength="25" id="txtDependentPremium" name="name" class="form-control" disabled>
-                                    </div>*@
+            <label>Premium<em>*</em></label>
+            <input type="text" maxlength="25" id="txtDependentPremium" name="name" class="form-control" disabled>
+        </div>*@
                                                             <div class="form-group">
                                                                 <label>Cover Amount <em>*</em></label>
                                                                 <input type="text" maxlength="25" id="txtDependentCoverAmount" name="name" class="form-control" disabled>
@@ -1057,30 +1095,123 @@
                                         <div class="table-responsive">
                                             @Html.EditorFor(model => model.DependancySearch.PageNum, new { htmlAttributes = new { @class = "hidden", id = "PageNum1" } })
                                             @Html.EditorFor(model => model.DependancySearch.PageSize, new { htmlAttributes = new { @class = "hidden", id = "PageSize1" } })
-                                            <table id="dependantExtendedFamilyDataTable" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
-                                                <thead>
-                                                    <tr>
-                                                        <th>pkiDependentID</th>
-                                                        <th>Name</th>
-                                                        <th>IDNumber</th>
-                                                        <th>Start Date</th>
-                                                        <th>InceptionDate</th>
-                                                        <th>CoverDate</th>
-                                                        <th>Premium</th>
-                                                        <th>Cover</th>
-                                                        <th>DependencyType</th>
-                                                        <th>Gender</th>
-                                                        <th>Status</th>
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody></tbody>
-                                            </table>
+                                            <div style="overflow-y:scroll">
+                                                <table id="dependantExtendedFamilyDataTable" class="table table-striped table-bordered dt-responsive" width="100%" cellspacing="0" style="overflow-y:scroll">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>pkiDependentID</th>
+                                                            <th>Name</th>
+                                                            <th>IDNumber</th>
+                                                            <th>Start Date</th>
+                                                            <th>InceptionDate</th>
+                                                            <th>CoverDate</th>
+                                                            <th>Premium</th>
+                                                            <th>Cover</th>
+                                                            <th>DependencyType</th>
+                                                            <th>Gender</th>
+                                                            <th>Status</th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                </div>
+                                <!-- #endregion Tab5 -->                              <!-- #region Tab9 -->
+                                <div id="tab-9" class="tab-pane">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div id="ValidationSummary5" style="color: red;" hidden>
+                                                        <ul></ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.ValidationSummary(false, "", new { @id = "AddUpdateAddOnProductValidationSummary", @style = "color: red;" })
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <input type="hidden" id="fkiMemberid" name="fkiMemberid" value="">
+                                                    <input type="hidden" id="pkiMemberProductID" name="pkiMemberProductID" value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>Member Type</label>
+                                                @Html.DropDownList("DependencyList_Product", Model.ExtendedFamily, "Main Member", new { Name = "Dependency", @id = "ddlDependentDependencyType_Product", @style = "width:100%", @class = "form-control" })
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Product Name</label>
+                                                @Html.DropDownList("ProductAddOnList", Model.ProductAddOnList, "Select", new { Name = "ProductAddOn", @id = "drpProductName", @style = "width:100%", @class = "form-control" })
+                                            </div>
+                                            <div class="form-group">
+                                                <button class="btn btn-sm btn-primary" id="btnSaveProduct">Save AddonProducts</button> @*onclick="SaveAddOnProduct()"*@
+                                                <button class="btn btn-sm btn-primary" id="btnUpdateProduct" onclick="UpdateAddOnProduct()">Update AddonProducts</button>
+                                                <br />
+                                                <br />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>Premium</label>
+                                                <input type="hidden" id="hdnPremium" name="hdnPremium" value="">
+                                                <input type="text" maxlength="20" id="txtPremium" name="name" class="form-control" placeholder="Premium" step="0.01" value="0.00">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Cover</label>
+                                                <input type="hidden" id="hdnSupCover" name="hdnSupCover" value="">
+                                                <input type="text" maxlength="20" id="txtSupCover" name="name" class="form-control" placeholder="Cover" step="0.01" value="0.00" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                @*<div class="btn-group">
+                    <a data-toggle="tab" href="#tab-3" id="tab9BackButton" class="btn btn-sm btn-primary pull-right m-t-n-xs" aria-expanded="true">Back</a>
+                </div>*@
+                                                <div class="btn-group" style="display:none">
+                                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs" id="btnResetTab9">Reset</button>
+                                                </div>
+                                                @*<div class="btn-group">
+                    <a data-toggle="tab" href="#tab-4" id="tab9NextButton" class="btn btn-sm btn-primary pull-right m-t-n-xs" aria-expanded="true">Next</a>
+                </div>*@
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="table-responsive">
+                                            </div>
                                         </div>
 
                                     </div>
+                                    <div class="row">
+                                        <div class="col-lg-12 ">
+                                            <div class="table-responsive">
+                                                @Html.EditorFor(model => model.ProductSearch.PageNum, new { htmlAttributes = new { @class = "hidden", id = "PageNum1" } })
+                                                @Html.EditorFor(model => model.ProductSearch.PageSize, new { htmlAttributes = new { @class = "hidden", id = "PageSize1" } })
+                                                <table id="productDataTable" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>pkiMemberProductID</th>
+                                                            <th>Product ID</th>
+                                                            <th>Product Name</th>
+                                                            <th>Dependency Name</th>
+                                                            <th>Date Created</th>
+                                                            <th>Product Cost</th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <!-- #endregion Tab5 -->
+
                                 <!-- #region Tab6 -->
                                 <div id="tab-6" class="tab-pane">
                                     <br />
@@ -1484,12 +1615,9 @@
             })
             $("#tab3NextButton").click(function () {
                 $("#tab3").removeClass('active')
-                $("#tab9").addClass("active");
-            })
-            $("#tab9NextButton").click(function () {
-                $("#tab9").removeClass('active')
                 $("#tab4").addClass("active");
             })
+
 
             //Back Button click event to active tab
             $("#tab2BackButton").click(function () {
@@ -1500,13 +1628,13 @@
                 $("#tab3").removeClass("active");
                 $("#tab2").addClass('active');
             })
-            $("#tab9BackButton").click(function () {
-                $("#tab9").removeClass("active");
-                $("#tab3").addClass('active');
-            })
+            //$("#tab9BackButton").click(function () {
+            //    $("#tab9").removeClass("active");
+            //    $("#tab3").addClass('active');
+            //})
             $("#tab4BackButton").click(function () {
                 $("#tab4").removeClass("active");
-                $("#tab9").addClass('active');
+                $("#tab3").addClass('active');
             })
 
             //Tab1 validation
@@ -1743,6 +1871,7 @@
                 $("#tab6").hide();
                 $("#tab7").hide();
                 $("#tab8").hide();
+                $("#tab9").hide();
                 $("#tab10").hide();
                 $("#tab11").hide();
                 $("#btnUpdateProduct").hide();
@@ -1752,6 +1881,7 @@
                 $("#tab6").show();
                 $("#tab7").show();
                 $("#tab8").show();
+                $("#tab9").show();
                 $("#tab10").show();
                 $("#tab11").show();
                 $('#btnCopy').prop("disabled", false);
@@ -1832,6 +1962,44 @@
                 BindDependencyDropdown($("#tab-3 #ddlPolicy").val());
             });
 
+            //$("#tab-3 #ddlPolicy").change(function () {
+            //    var GetPremiumForPolicyURl = $("#ChangePremiumIfCancelled").val();
+            //    var getAge = $("#txtAge").val();
+            //    if (getAge != "" && getAge != null) {
+            //        var id = $("#tab-3 #ddlPolicy").val();
+            //        var date = $("#tab-3 #txtPolicyStartDate").val();
+            //        var date = new Date(parseInt($("#tab-3 #txtPolicyStartDate").val().replace('/Date(', '')));
+            //        var policyStartDate = dateFormat($("#tab-3 #txtPolicyStartDate").val(), 'mm/dd/yyyy', false);
+
+            //        if ($("#tab-3 #ddlPolicy :selected").val() != "") {
+            //            $.ajax({
+            //                url: GetPremiumForPolicyURl + "?id=" + id + "&date=" + policyStartDate + "&UserType=1&Age=" + getAge,
+            //                type: "get",
+            //                cache: false,
+            //                success: function (result) {
+            //                    $('#tab-3 #txtPolicyPremium').val(result[0]);
+            //                    $('#tab-3 #txtTotalPremium').val(result[0]);
+
+
+            //                    localStorage.setItem("Tab-3", 1); // 1 for tab index
+
+            //                    // Retrieve active tab after reload
+            //                    var activeTab = localStorage.getItem("activeTab"); // activeTab will be "1"
+            //                },
+            //                error: function (xhr, ajaxOptions, thrownError) {
+            //                    alert(thrownError);
+            //                }
+            //            })
+            //        } else {
+            //            alert("Please select policy..!");
+            //        }
+            //    }
+            //    else {
+            //        alert("Age not found in first tab");
+            //    }
+            //    BindDependencyDropdown($("#tab-3 #ddlPolicy").val());
+            //});
+
             function BindDependencyDropdown(PlanId) {
                 var ddlCustomers = jQuery("#ddlDependentDependencyType");
             ddlCustomers.empty().append('<option selected="selected" value="">Select Group.....</option>');
@@ -1901,8 +2069,8 @@
                     Control.after('<img id="ddlDependentDependencyType_loader" src="../../Content/images/ajax-loader.gif"/>');
                     var policyStartDate = dateFormat($("#tab-3 #txtPolicyStartDate").val(), 'mm/dd/yyyy', false);
                     var id = $("#tab-3 #ddlPolicy").val();
-                    $('#tab-5 #txtDependentPremium').val(0);
-                    $('#tab-5 #txtDependentCoverAmount').val(0);
+                    $('#tab-5 #txtDependentPremium').val();
+                    $('#tab-5 #txtDependentCoverAmount').val();
                     if ($("#tab-3 #ddlPolicy :selected").val() != "") {
                         $.ajax({
                             url: GetPremiumForPolicyURl + "?id=" + id + "&date=" + policyStartDate + "&UserType=" + UserTypeId + "&Age=" + DependentAge,
@@ -2016,13 +2184,13 @@
 
             // #region ControlValidation
 
-            var isInceptionEnabled = '@((bool)ViewBag.IsInceptionEnabled)' == 'True' ? true : false;
+            @*var isInceptionEnabled = '@((bool)ViewBag.IsInceptionEnabled)' == 'True' ? true : false;
             if (isInceptionEnabled) {
                 $("#tab-3 #txtInception").prop('disabled', false);
             }
             else {
                 $("#tab-3 #txtInception").prop('disabled', true);
-            }
+            }*@
 
 
             var isPolicyDocEnabled = '@((bool)ViewBag.IsPolicyDocEnabled)' == 'True' ? true : false;
@@ -2188,6 +2356,7 @@
                 Age: $("#txtAge").val(),
                 DateOfBirth: dateFormat($("#tab-1 #txtBirthDay").val(), 'dd-mm-yyyy', false),
                 Telephone: $("#txtTelePhone").val(),
+                Age: $("#txtAge").val(),
                 Cellphone: $("#txtCellphone").val(),
                 Email: $("#txtEmail").val(),
                 Citizenship: $("#ddlCitizenship :selected").text(),
@@ -2213,7 +2382,7 @@
                 CustomId1: CustomId1,
                 CustomId2: CustomId2,
                 CustomId3: CustomId3,
-                MemberSociety: $("#tab-1 #ddlMemberSociety").val(),
+                MemberSociety: $("#tab-1 #ddlMemberSociety :selected").text(),
                 StartDate: dateFormat($("#tab-3 #txtPolicyStartDate").val(), 'dd-mm-yyyy', false),
                 InceptionDate: dateFormat($("#tab-3 #txtInception").val(), 'dd-mm-yyyy', false),
                 CoverDate: dateFormat($("#tab-3 #txtCoverDate").val(), 'dd-mm-yyyy', false),
@@ -2234,7 +2403,7 @@
                 PolicyPremium: $("#tab-3 #txtPolicyPremium").val(),
                 PolicyPremium: $("#tab-3 #txtPolicyCoverAmount").val(),
                 Branch: $("#tab-4 #txtBankBranch").val(), //$("#ddlBankBranch :selected").text()
-
+                
 
 
             };
@@ -2340,6 +2509,7 @@
             $("#tab-9 #ddlDependentDependencyType_Product").val('');
             $("#tab-9 #drpProductName").val('');
             $("#tab-9 #txtPremium").val('0.00');
+            //$("#tab-9 #txtSupCover").val('0.00');
         })
         $("#btnResetTab4").click(function () {
             $("#tab-4 #txtAccountholder").val('');
@@ -2657,14 +2827,14 @@
                                 var dom = "<div class='row'>";
                                 var data1 = JSON.stringify(full);
                                 data1 = data1.replace(/"/g, "\'")
-                                if (hasEditRights) {
-                                    var editNoteUrl = '<div class="col-sm-4 text-center"><a  onclick="EditNote(' + data1 + ')"><i class="fa fa-edit"></i></a></div>';
-                                    dom = dom + editNoteUrl;
-                                }
-                                if (hasDeleteRights) {
-                                    var deleteNoteUrl = '<div class="col-sm-4 text-center"> <a onclick="DeleteNote(' + data1 + ')"; ><i class="fa fa-trash-o"></i></a></div>';
-                                    dom = dom + deleteNoteUrl;
-                                }
+                                //if (hasEditRights) {
+                                //    var editNoteUrl = '<div class="col-sm-4 text-center"><a  onclick="EditNote(' + data1 + ')"><i class="fa fa-edit"></i></a></div>';
+                                //    dom = dom + editNoteUrl;
+                                //}
+                                //if (hasDeleteRights) {
+                                //    var deleteNoteUrl = '<div class="col-sm-4 text-center"> <a onclick="DeleteNote(' + data1 + ')"; ><i class="fa fa-trash-o"></i></a></div>';
+                                //    dom = dom + deleteNoteUrl;
+                                //}
 
                                 var viewNoteUrl = '<div class="col-sm-4 text-center"> <a onclick="ViewNote(' + data1 + ')"; ><i class="fa fa-search"></i></a></div>';
                                 dom = dom + viewNoteUrl;
@@ -2941,7 +3111,7 @@
                 CustomId1: $("#PolicyUpdatePopupModel .modal-body #ddlPopupCustom1").val(),
                 CustomId2: $("#PolicyUpdatePopupModel .modal-body #ddlPopupCustom2").val(),
                 CustomId3: $("#PolicyUpdatePopupModel .modal-body #ddlPopupCustom3").val(),
-                MemberSociety: $("#PolicyUpdatePopupModel .modal-body #ddlMemberSociety").val(),
+                MemberSociety: $("#PolicyUpdatePopupModel .modal-body #ddlMemberSociety :selected").val(),
                 StartDate: $("#PolicyUpdatePopupModel .modal-body #txtPolicyStartDate").val(),
                 // StartDate: dateFormat($(".policystartdate1").val(), 'dd-mm-yyyy', false),
                 InceptionDate: dateFormat($("#txtPolicyPopupInception").val(), 'dd-mm-yyyy', false),
@@ -3030,7 +3200,7 @@
             $("#tab-3 #ddlCustom1").val(member.CustomId1);
             $("#tab-3 #ddlCustom2").val(member.CustomId2);
             $("#tab-3 #ddlCustom3").val(member.CustomId3);
-            $("#tab-1 #ddlMemberSociety").val(member.MemberSociety);
+            $("#tab-1 #ddlMemberSociety option:selected").text(member.MemberSociety);
 
             $("#tab-1 #ddlAgent option").each(function () {
                 if ($(this).val() == member.Agent) {
@@ -3317,8 +3487,12 @@
                 var productPriceData;
                 var productCurrency;
                 var productPrice;
-                if (result != undefined) {$("#txtPremium").val(result.ProductCost.toFixed(2));}
-                $("#hdnPremium").val(result.ProductCost);
+                if (result != undefined)
+                {
+                    $("#txtPremium").val(result.ProductCost.toFixed(2));
+                    $("#txtSupCover").val(result.ProductCover.toFixed(2));
+                }
+                $("#hdnPremium").val(result.product);
             })
             .error(function (xhr, status) {
                 alert(status);
@@ -3527,7 +3701,7 @@
                                     return premium;
                                 }
                             },
-                            { "data": "DependencyType", "name": "Dependency", "autoWidth": true },
+                            { "data": "DependencyType", "name": "DependencyType", "autoWidth": true },
 
                             { "data": "Gender", "name": "Gender", "autoWidth": true },
                             { "data": "DependentStatus", "name": "DependentStatus", "autoWidth": true },
@@ -3600,7 +3774,9 @@
         $("#tab-5 #ddlDependentDependencyType option").filter(function () {
             return this.text == dependant.DependencyType;
         }).attr('selected', true);
-        //$('#ddlDependentDependencyType').find('option:selected').text(dependant.DependencyType);
+        //$("#tab-5 #ddlDependentDependencyType").val(dependant.DependencyType);
+
+        $('#ddlDependentDependencyType').find('option:selected').text(dependant.DependencyType);
         //$("input[name='dependentGender']:checked").val(dependant.Gender);
         if (dependant.Gender == "female") {
             $("#female").prop('checked', true);
@@ -4176,6 +4352,7 @@
 
                     $("#tab-5 #ddlDependentDependencyType").val("");
                     $("#tab-5 #txtDependentPremium").val('');
+                    $("#tab-5 #txtDependentCoverAmount").val('');
 
                     $("#btnSaveDependent").show();
                     $("#btnUpdateDependent").hide();
@@ -4326,6 +4503,7 @@
 
     function UpdateAddOnProduct() {
         $("#hdnPremium").val($("#txtPremium").val().split(" ")[$("#txtPremium").val().split(" ").length - 1]);
+        //$("#hdnSupCover").val($("#txtSupCover").val().split(" ")[$("#txtSupCover").val().split(" ").length - 1]);
         var premiumLength = $("#txtPremium").val().split(" ").length;
         var premiumVal = $("#txtPremium").val().split(" ")[premiumLength-1];
 
@@ -4355,6 +4533,8 @@
                     $("#drpProductName option:selected").text("Select");
                     $("#txtPremium").val('');
                     $("#hdnPremium").val('');
+                    //$("#txtSupCover").val('');
+                    $("#hdnSupCover").val('');
                     $("#pkiMemberProductID").val('');
                     $("#btnSaveProduct").prop('disabled', false);
                     $("#btnUpdateProduct").prop('disabled', true);
@@ -4386,8 +4566,10 @@
         $("#btnSaveProduct").prop('disabled', true);
 		$("#btnUpdateProduct").prop('disabled', false);
         $("#hdnPremium").val(product.ProductCost);
+        $("#hdnSupCover").val(product.ProductCost);
 		var premiumPrice = product.ProductPrice.split(" ");
         $("#txtPremium").val(premiumPrice[1]);//product.ProductPrice
+        //$("#txtSupCover").val(premiumPrice[1]);//product.ProductPrice
         $("#pkiMemberProductID").val(product.pkiMemberProductID);
         $("#fkiMemberid").val(product.fkiMemberid);
         $("#pkiMemberID").val(product.fkiMemberid);
@@ -4625,17 +4807,15 @@
     }
 
     function OnStartChangeFillDependentFamilyDetails(policyId, policyStartDate) {
-        var bindPolicyCoverDateUrl = $("#BindPolicyCoverDateUrl").val();
+        var bindDependentCoverDateUrl = $("#BindDependentCoverDateUrl").val();
 
         if (policyId != '' && policyStartDate != undefined) {
             $.ajax({
-                url: bindPolicyCoverDateUrl + "?id=" + policyId + "&date=" + policyStartDate,
+                url: bindDependentCoverDateUrl + "?id=" + policyId + "&date=" + policyStartDate,
                 type: "get",
                 cache: false,
                 success: function (result) {
-                    $('#tab-5 #txtDependentPremium').val(result[0]|0);
-                    $('#tab-5 #txtDependentCoverDate').val(result[2]);
-                    $('#tab-5 #txtDependentPremium').val(result[0]|0);
+                    $('#tab-5 #txtDependentCoverDate').val(result[0]);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     alert(thrownError);
@@ -4678,6 +4858,13 @@
     function IdNumberBasicValidation(IdNumber) {
         if (IdNumber.value.length != 0 && IdNumber.value.length != 6 && IdNumber.value.length != 13) {
         alert("Id Number is not valid");
+            IdNumber.value = "";
+        }
+    }
+
+    function IdNumberValidation(IdNumber) {
+        if (IdNumber.value.length != 0 && IdNumber.value.length != 13) {
+            alert("Id Number is not valid");
             IdNumber.value = "";
         }
     }

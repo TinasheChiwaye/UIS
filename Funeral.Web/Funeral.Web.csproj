@@ -776,6 +776,7 @@
     <Content Include="Areas\Admin\Views\NewBusiness\_AddEditBeneficiary.cshtml" />
     <Content Include="Areas\Admin\Views\GroupPayment\PrintForm.cshtml" />
     <Content Include="Areas\Admin\Views\View.cshtml" />
+    <Content Include="Areas\Admin\Views\Claims\ClaimDashboardChart.cshtml" />
     <None Include="DevDataDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DevDataDataSet.Designer.cs</LastGenOutput>
@@ -2462,7 +2463,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>3863</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:4030/</IISUrl>
+          <IISUrl>http://localhost:4892/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

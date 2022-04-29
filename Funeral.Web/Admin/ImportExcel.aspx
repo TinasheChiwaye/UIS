@@ -157,7 +157,7 @@
                             </div>
                         </div>
                         <div class="col-lg-12">
-                            <asp:Button runat="server" ID="btnSubmit" Width="95%" CssClass="btn btn-md btn-primary" Visible="false" OnClick="btnSubmit_Click" Text="Submit" />
+                            <asp:Button runat="server" ID="btnSubmit" Width="95%" CssClass="btn btn-md btn-primary" Visible="false" OnClick="btnSubmit_Click" Text="Submit to Staging Area" />
                         </div>
                     </div>
                     <div runat="server" class="row" id="DivImportedDataList">
@@ -173,19 +173,25 @@
                         </div>
                         <div class="col-sm-12">
                             <br />
+                            <div class="col-sm-3">
+                                <asp:Button runat="server" ID="btnExceptionReport" Width="100%" CssClass="btn btn-md btn-primary" Visible="false" OnClick="btnExceptionReport_Click" Text="Exception Report" />
+                            </div>
+                            
+
+                            <div class="col-sm-3">
+                                <asp:Button runat="server" ID="btnPremiumReport" Width="100%" CssClass="btn btn-md btn-primary" Visible="false" OnClick="btnPremiumReport_Click" Text="Members Premium Report" />
+                            </div>
+                            <div class="col-sm-3" style="float: right;">
+                                
+                                <asp:Button runat="server" ID="btnConfirmAndSubmit" Width="100%" CssClass="btn btn-md btn-primary"  Visible="false" OnClick="btnConfirmAndSubmit_Click" Text="Confirm and Import to Live"/>
+                                <b>Import Status:</b> <asp:Label ID="lblImportStatus" runat="server"/>
+                            </div>
                             <div class="col-sm-6">
                                 <asp:HiddenField ID="hdnnewImportedId" runat="server" />
                                 <asp:HiddenField ID="hdnSelectedGridColumn" runat="server" />
                             </div>
-                            <div class="col-sm-3">
-                                <asp:Button runat="server" ID="btnConfirmAndSubmit" Width="100%" CssClass="btn btn-md btn-primary" Visible="false" OnClick="btnConfirmAndSubmit_Click" Text="Confirm and Import to Member" />
-                            </div>
-                            <div class="col-sm-3">
-                                <asp:Button runat="server" ID="btnExceptionReport" Width="100%" CssClass="btn btn-md btn-primary" Visible="false" OnClick="btnExceptionReport_Click" Text="Exception Report" />
-                            </div>
                         </div>
                     </div>
-                </div>
             </div>
         </div>
 
