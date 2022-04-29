@@ -49,7 +49,7 @@
                                                                 <asp:DropDownList ID="ddlAdminReort" class="form-control" runat="server" onchange="GetSelectedPanel(this)">
                                                                     <asp:ListItem Text="Select Report" Value="0"></asp:ListItem>
                                                                 </asp:DropDownList>
-                                                                <div id="chk_dateDisabledDiv" style="display: none">
+                                                                <div id="chk_dateDisabledDiv" >
                                                                     <asp:CheckBox ID="chk_dateDisabled" runat="server" onclick="DisableDateSelection(this)" Text="Disabled date" />
                                                                 </div>
                                                             </div>

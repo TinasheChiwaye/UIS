@@ -215,7 +215,8 @@
 </div>
 @*<div id="LoadPartialView_ManageClaims"></div>*@
 <script type="text/javascript">
-    function OpenClaimStatusPopUp(GetClaimId,control) {
+    function OpenClaimStatusPopUp(GetClaimId, control) {
+        //alert("mes");
         var ClaimStatusPartial = "@Url.Action("ClaimStatusPartial","Claims",new {ClaimId="GetClaimId",ParlourId="GetParlourId"})".replace("GetClaimId", GetClaimId).replace("GetParlourId", control.accessKey).replace("amp;", "");
         $.ajax({
             url: ClaimStatusPartial,
