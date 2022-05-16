@@ -75,8 +75,8 @@ namespace Funeral.Model
             Children = 0;
             Adults = 0;
             WaitingPeriod = 0;
-            JoiningFee = 0;
-            Cover = 0;
+            JoiningFee = string.Empty;
+            Cover = string.Empty;
             ParlourId = System.Guid.NewGuid();
             NextPaymentDate = System.DateTime.Now;
             LatePaymentPenalty = 0;
@@ -110,8 +110,10 @@ namespace Funeral.Model
         public int Children { get; set; }
         public int Adults { get; set; }
         public int WaitingPeriod { get; set; }
-        public decimal JoiningFee { get; set; }
-        public decimal Cover { get; set; }
+        public string JoiningFee { get; set; }
+        //public decimal JoiningFee { get; set; }
+        public string Cover { get; set; }
+        //public decimal Cover { get; set; }
 
         //public Guid ParlourId { get; set; }
 

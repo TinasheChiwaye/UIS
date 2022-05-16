@@ -15,11 +15,11 @@ namespace Funeral.DAL
         {
             DbParameter[] ObjParam = new DbParameter[5];
             ObjParam[0] = new DbParameter("@Name", DbParameter.DbType.VarChar, 0, model.Name);
-            ObjParam[1] = new DbParameter("@Description", DbParameter.DbType.VarChar, 0, model.Description);
+            ObjParam[1] = new DbParameter("@Description", DbParameter.DbType.VarChar, 0, String.IsNullOrWhiteSpace(model.Description) ? (object)DBNull.Value : (object)model.Description);
             ObjParam[2] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, model.ParlourId);
             ObjParam[3] = new DbParameter("@CreatedBy", DbParameter.DbType.Int, 0, model.CreatedBy);
             ObjParam[4] = new DbParameter("@CustomType", DbParameter.DbType.Int, 0, (int)model.CustomType);
-            return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "CustomDetailsSave", ObjParam));
+            return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "CustomDetailsSave_New", ObjParam));
         }
 
         public static void CustomDetailsUpdate(CustomDetails model)
@@ -29,11 +29,11 @@ namespace Funeral.DAL
                 DbParameter[] ObjParam = new DbParameter[6];
                 ObjParam[0] = new DbParameter("@Id", DbParameter.DbType.Int, 0, model.Id);
                 ObjParam[1] = new DbParameter("@Name", DbParameter.DbType.VarChar, 0, model.Name);
-                ObjParam[2] = new DbParameter("@Description", DbParameter.DbType.VarChar, 0, model.Description);
+                ObjParam[2] = new DbParameter("@Description", DbParameter.DbType.VarChar, 0, String.IsNullOrWhiteSpace(model.Description) ? (object)DBNull.Value : (object)model.Description);
                 ObjParam[3] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, model.ParlourId);
                 ObjParam[4] = new DbParameter("@CreatedBy", DbParameter.DbType.Int, 0, model.CreatedBy);
                 ObjParam[5] = new DbParameter("@CustomType", DbParameter.DbType.Int, 0, (int)model.CustomType);
-                DbConnection.ExecuteNonQuery(CommandType.StoredProcedure, "CustomDetailsUpdate", ObjParam);
+                DbConnection.ExecuteNonQuery(CommandType.StoredProcedure, "CustomDetailsUpdate_New", ObjParam);
             }
             catch (Exception ex)
             {
@@ -48,7 +48,7 @@ namespace Funeral.DAL
             ObjParam[1] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, model.ParlourId);
             ObjParam[2] = new DbParameter("@CustomType", DbParameter.DbType.Int, 0, (int)model.CustomType);
 
-            DbConnection.ExecuteNonQuery(CommandType.StoredProcedure, "CustomDetailsDelete", ObjParam);
+            DbConnection.ExecuteNonQuery(CommandType.StoredProcedure, "CustomDetailsDelete_New", ObjParam);
         }
 
         public static SqlDataReader GetCustomDetails(int Id, Guid ParlourId, int CustomType)
@@ -68,7 +68,7 @@ namespace Funeral.DAL
             ObjParam[1] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
             ObjParam[2] = new DbParameter("@CustomType", DbParameter.DbType.Int, 0, CustomType);
 
-            return DbConnection.GetDataTable(CommandType.StoredProcedure, "CustomDetailsSelect", ObjParam);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "CustomDetailsSelect_New", ObjParam);
         }
 
         public static SqlDataReader GetAllCustomDetailsByParlourId(Guid ParlourId, int CustomType)

@@ -78,6 +78,13 @@
                                         <%--<asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtcompanyRules" ID="RequiredFieldValidator20" ForeColor="red" runat="server" ErrorMessage="Please enter Company Rules"></asp:RequiredFieldValidator>--%>
                                     </div>
                                     <div class="form-group">
+                                    
+                                    <asp:Button runat="server" ID="btnUpload" CssClass="btn btn-sm btn-primary" OnClick="btnUpload_Click" Text="Upload" Enabled="false" />
+                                    <asp:Button runat="server" ID="btnRemove" CssClass="btn btn-sm btn-primary" OnClick="btnRemove_Click" Text="Remove" Enabled="true" />
+
+
+                                    </div>
+                                    <div class="form-group">
                                         <label>Terms And Condition <em>*</em></label>
                                         <asp:TextBox runat="server" ID="txtTnC" name="CompanyRules" type="text" class="form-control" TextMode="MultiLine" Rows="4"></asp:TextBox>
 
@@ -87,11 +94,19 @@
                                         <asp:CheckBox ID="cbAutoGeneratePolicy" runat="server" />
                                     </div>
                                     <div class="form-group">
+                                        <label>Allow Auto Generate EasyPay Number </label>
+                                       <asp:CheckBox ID="cbAutoGernerateEasyPayNo" runat="server" />
+                                     </div>
+                                    <div class="form-group">
                                         <label>VAT Number: </label>
                                         <asp:TextBox MaxLength="25" runat="server" ID="txtVatNo" name="txtVatNo" type="text" class="form-control"></asp:TextBox>
                                     </div>
+                                    <div class="form-group">
+                                        <label>Currency </label>
+                                        <asp:TextBox MaxLength="25" runat="server" ID="txtCurrency" name="txtCurrency" type="text" class="form-control"></asp:TextBox>
+                                    </div>
                                 </div>
-                                <asp:Button runat="server" ID="btnUpload" CssClass="btn btn-sm btn-primary pull-right" OnClick="btnUpload_Click" Text="Upload" Enabled="false" />
+                                <%--<asp:Button runat="server" ID="btnUpload" CssClass="btn btn-sm btn-primary pull-right" OnClick="btnUpload_Click" Text="Upload" Enabled="false" />--%>
                             </div>
 
                         </div>
@@ -132,6 +147,10 @@
                             <div class="form-group">
                                 <label>Terms And Condition For TombStones</label>
                                 <asp:TextBox runat="server" ID="txtTncTombstone" name="CompanyRules" type="text" class="form-control" TextMode="MultiLine" Rows="4"></asp:TextBox>
+                            </div>
+                            <div class="form-group">
+                                <label>Terms And Condition For Quotation</label>
+                                <asp:TextBox runat="server" ID="txtTncQuotation" name="CompanyRules" type="text" class="form-control" TextMode="MultiLine" Rows="4"></asp:TextBox>
                             </div>
                             <div class="form-group">
                                 <label>Policy DECLARATION</label>
@@ -301,6 +320,89 @@
                                 <asp:TextBox MaxLength="25" runat="server" ID="txtbranchcode" name="Cellphone" type="text" class="form-control"></asp:TextBox>
                                 <asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtbranchcode" ID="RequiredFieldValidator19" ForeColor="red" runat="server" ErrorMessage="Please enter Branch code"></asp:RequiredFieldValidator>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>Netcash Debit Order Settings</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-6">
+                             <div class="form-group">
+                                <label>Account Number  </label>
+                                <asp:TextBox MaxLength="50" runat="server" ID="txtNetcashAccountNumber" name="sNetcashAccountNumber" type="text" class="form-control"></asp:TextBox>
+                                <%--<asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtbranch" ID="RequiredFieldValidator8" ForeColor="red" runat="server" ErrorMessage="Please enter Branch"></asp:RequiredFieldValidator>--%>
+                            </div>
+                            <asp:Label ID="spNetcashAccountNumberMessage" runat="server" Text="message"></asp:Label>
+                            <p></p>                           
+                            <p></p>                           
+                            <div class="form-group">
+                                <label>DebitOrder Service Key </label>
+                                <asp:TextBox MaxLength="50" runat="server" ID="txtDebitOrderServicekey" name="DebitOrderServicekey" type="text" class="form-control"></asp:TextBox>
+                                <%--<asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtbankname" ID="RequiredFieldValidator4" ForeColor="red" runat="server" ErrorMessage="Please enter Bank name"></asp:RequiredFieldValidator>--%>
+                            </div>
+                            <asp:Label ID="spDebitOrderServikeyMessage" runat="server" Text="message"></asp:Label>
+                            <p></p>
+                            <div class="form-group">
+                                <label>Software Vendor Key </label>
+                                <asp:TextBox MaxLength="50" runat="server" ID="txtSoftwareVendorKey" name="SoftwareVendorKey" type="text" class="form-control"></asp:TextBox>
+                                <%--<asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtbankname" ID="RequiredFieldValidator4" ForeColor="red" runat="server" ErrorMessage="Please enter Bank name"></asp:RequiredFieldValidator>--%>
+                            </div>
+                            <asp:Label ID="spSoftwareVendorMessage" runat="server" Text=""></asp:Label>
+
+                           <%-- <div class="form-group">
+                                <label>Account Number <em>*</em> </label>
+                                <asp:TextBox MaxLength="25" runat="server" ID="TextBox3" name="FsbNumber" type="text" class="form-control"></asp:TextBox>
+                                <asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtaccountnumber" ID="RequiredFieldValidator5" ForeColor="red" runat="server" ErrorMessage="Please enter Account Number"></asp:RequiredFieldValidator>
+                            </div>--%>
+                        </div>
+                        <div class="col-lg-6">
+                             <div class="form-group">
+                                <label>Account Service Key  </label>
+                                <asp:TextBox MaxLength="50" runat="server" ID="txtAccountServiceKey" name="AccountServiceKey" type="text" class="form-control"></asp:TextBox>
+                                <%--<asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtaccountholder" ID="RequiredFieldValidator2" ForeColor="red" runat="server" ErrorMessage="Please enter Account Holder"></asp:RequiredFieldValidator>--%>
+                            </div>
+                            <asp:Label ID="spAccountServiceKeyMessage" runat="server"  Text="message"></asp:Label>
+                            <p></p>
+                            <div class="form-group">
+                                <label>PayNow Service Key  </label>
+                                <asp:TextBox MaxLength="50" runat="server" ID="txtPaynowServiveKey" name="Email" type="text" class="form-control"></asp:TextBox>
+                                <%--<asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtaccounttype" ID="RequiredFieldValidator7" ForeColor="red" runat="server" ErrorMessage="Please enter Account type"></asp:RequiredFieldValidator>--%>
+                            </div>
+                            <asp:Label ID="spPaynowServiveKeyMessage" runat="server" Text="message"></asp:Label>
+                            <p></p>
+                           
+                            <p ></p>
+                            <p></p>
+                            <p></p>
+
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <asp:Label ID="txtLastModified" runat="server" Font-Bold="true"  Text="Last Modified :"></asp:Label>
+                                </div>
+                                <div class="form-group">
+                                    <asp:Label ID="txtModifiedUser" runat="server" Text="Modified User :" Font-Bold="true"></asp:Label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <asp:Label ID="txtLastModifiedMessage" runat="server" Text=""></asp:Label>
+                                </div>
+                                <div class="form-group">
+                                    <asp:Label ID="txtModifiedUserMessage" runat="server" Text="" ></asp:Label>
+                                </div>
+                            </div>
+
+                            <%--<div class="form-group">
+                                <label>Branch code <em>*</em> </label>
+                                <asp:TextBox MaxLength="25" runat="server" ID="TextBox6" name="Cellphone" type="text" class="form-control"></asp:TextBox>
+                                <asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtbranchcode" ID="RequiredFieldValidator20" ForeColor="red" runat="server" ErrorMessage="Please enter Branch code"></asp:RequiredFieldValidator>
+                            </div>--%>
                         </div>
                     </div>
                 </div>

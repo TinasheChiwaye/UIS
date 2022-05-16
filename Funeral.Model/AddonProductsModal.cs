@@ -14,7 +14,7 @@ namespace Funeral.Model
             ProductCover = 0;
             IsProductOngoing = 0;
             IsProductLaybye = 0;
-            Parlourid = new Guid("00000000-0000-0000-0000-000000000000");
+            parlourid = new Guid("00000000-0000-0000-0000-000000000000");
             LastModified = System.DateTime.Now;
             ModifiedUser = string.Empty;
             ProductName = string.Empty;
@@ -29,11 +29,11 @@ namespace Funeral.Model
         public decimal UnderwriterPremium { get; set; }
         public int IsProductOngoing { get; set; }
         public int IsProductLaybye { get; set; }
-        public Guid Parlourid { get; set; }
+        //public Guid Parlourid { get; set; }
         public DateTime LastModified { get; set; }
         public string ModifiedUser { get; set; }
         public string ProductName { get; set; }
-
+        public Guid parlourid { get; set; }
 
     }
 }

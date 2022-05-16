@@ -163,7 +163,7 @@ namespace Funeral.Web.Admin
                 txtChildren.Text = model.Children.ToString();
                 txtAdults.Text = model.Adults.ToString();
                 txtWaitingPeriod.Text = model.WaitingPeriod.ToString();
-                txtCover.Text = model.Cover.ToString(Currency.Trim() + " 0.00");
+                txtCover.Text = model.Cover;
                 txtPolicyLaps.Text = model.PolicyLaps.ToString();
                 txtMemberStauts.Text = model.PolicyStatus;
                 hdnOldStatus.Value = model.PolicyStatus;
@@ -171,7 +171,8 @@ namespace Funeral.Web.Admin
                     txtMemberStauts.Text = "Active";
                 if (model.PolicyStatus == "0" || model.PolicyStatus == "waiting")
                     txtMemberStauts.Text = "waiting";
-                txtJoiningFee.Text = model.JoiningFee.ToString("0.00");
+                //txtJoiningFee.Text = model.JoiningFee.ToString("0.00");
+                txtJoiningFee.Text = model.JoiningFee;
                 //txtNextPaymentDate.Text = model.NextPaymentDate.ToString();
                 txtPolicyBalance.Text = model.Balance.ToString(Currency.Trim() + " 0.00");
                 txtMonthOwing.Text = model.MonthOwing.ToString();
@@ -556,10 +557,11 @@ namespace Funeral.Web.Admin
                 txtChildren.Text = model.Children.ToString();
                 txtAdults.Text = model.Adults.ToString();
                 txtWaitingPeriod.Text = model.WaitingPeriod.ToString();
-                txtCover.Text = model.Cover.ToString(Currency.Trim() + " 0.00");
+                txtCover.Text = model.Cover;
                 txtPolicyLaps.Text = model.PolicyLaps.ToString();
                 txtMemberStauts.Text = model.PolicyStatus;
-                txtJoiningFee.Text = model.JoiningFee.ToString("0.00");
+                txtJoiningFee.Text = model.JoiningFee;
+                //txtJoiningFee.Text = model.JoiningFee.ToString("0.00");
                 //txtNextPaymentDate.Text = model.NextPaymentDate.ToString();
                 txtPolicyBalance.Text = model.Balance.ToString(Currency.Trim() + " 0.00");
                 txtMonthOwing.Text = model.MonthOwing.ToString();

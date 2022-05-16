@@ -12,9 +12,23 @@ namespace Funeral.BAL
 {
     public class ToolsSetingBAL
     {
+        public static AdditionalApplicationSettingsModel GetAdditionalApplicationSettings(int ApplicationID)
+        {
+            DataTable dr = ToolsSetingDAL.GetAdditionalApplicationSettingsdt(ApplicationID);
+            return FuneralHelper.DataTableMapToList<AdditionalApplicationSettingsModel>(dr).FirstOrDefault();
+        }
+        public static AdditionalApplicationSettingsModel GetAdditionalApplicationSettingsByParlourID(Guid ApplicationID)
+        {
+            DataTable dr = ToolsSetingDAL.GetAdditionalApplicationSettingsByParlourID(ApplicationID);
+            return FuneralHelper.DataTableMapToList<AdditionalApplicationSettingsModel>(dr).FirstOrDefault();
+        }
         public static int UploadApplicationLogo(ApplicationSettingsModel model)
         {
             return ToolsSetingDAL.UploadApplicationLogo(model);
+        }
+        public static int RemoveApplicationLogo(int ApplicationID)
+        {
+            return ToolsSetingDAL.RemoveApplicationLogo(ApplicationID);
         }
         public static int UploadUnderwriterLogo(UnderwriterSetupModel model)
         {
@@ -336,9 +350,9 @@ namespace Funeral.BAL
             DataTable dr = ToolsSetingDAL.GetAllRolePlayerdt(ParlourId);
             return FuneralHelper.DataTableMapToList<RolePlayerModel>(dr);
         }
-        public static PlanModel EditPlanbyID(int ID, Guid ParlourId)
+        public static PlanModel EditPlanbyID(int ID)
         {
-            DataTable dr = ToolsSetingDAL.EditPlanbyIDdt(ID, ParlourId);
+            DataTable dr = ToolsSetingDAL.EditPlanbyIDdt(ID);
             return FuneralHelper.DataTableMapToList<PlanModel>(dr).FirstOrDefault();
         }
         public static List<PlanCreator> EditPlanCreatorbyID(int PlanID)

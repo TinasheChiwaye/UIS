@@ -21,6 +21,8 @@ namespace Funeral.Web.Areas.Admin.Models.ViewModel
         public IEnumerable<SelectListItem> CustomPaymentMethod { get; set; }
         public IEnumerable<SelectListItem> CustomGrouping2 { get; set; }
         public IEnumerable<SelectListItem> CustomGrouping3 { get; set; }
+        public IEnumerable<SelectListItem> CustomGrouping4 { get; set; }
+
         public IEnumerable<SelectListItem> ProductAddOnList { get; set; }
         public IEnumerable<SelectListItem> DependencyTypeList { get; set; }
         public IEnumerable<SelectListItem> ExtendedFamily { get; set; }

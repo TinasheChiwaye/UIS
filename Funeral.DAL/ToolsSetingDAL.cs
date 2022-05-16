@@ -2,11 +2,221 @@
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using Funeral.DAL.niws_partner;
+using System.Text;
 
 namespace Funeral.DAL
 {
     public class ToolsSetingDAL
     {
+
+        public static AdditionalApplicationSettingsModel ValidateServiceKey(AdditionalApplicationSettingsModel model)
+        {
+            //initialise all operations needed
+            //---------------------------------------
+            NIWS_PartnerClient client = new niws_partner.NIWS_PartnerClient();
+            ValidateServiceKeyRequest ValidateServiceKeyRequest = new niws_partner.ValidateServiceKeyRequest();
+            ServiceInfoList sil = new ServiceInfoList();
+            StringBuilder Return_Result = new StringBuilder();
+
+            //---------------------------------------
+
+            //Populating request to validate
+            //---------------------------------------
+
+            //Add account number to MerchantAccount
+            ValidateServiceKeyRequest.MerchantAccount = model.spNetcashAccountNumber;
+
+            string SoftwareVendorKey = model.spSoftwareVendorKey;
+            //string SoftwareVendorKey = "24ade73c-98cf-47b3-99be-cc7b867b3080";
+
+            //Add Vendor key issued by Netcash
+            ValidateServiceKeyRequest.SoftwareVendorKey = SoftwareVendorKey;
+
+
+
+            //checks if field was populated
+            if (model.spAccountServiceKey != String.Empty)
+            {
+                ServiceInfo si = new ServiceInfo();
+                si.ServiceId = "5";
+                si.ServiceKey = model.spAccountServiceKey;
+
+                sil.Add(si);
+            }
+
+            if (model.spPaynowServiveKey != String.Empty)
+            {
+                ServiceInfo si = new ServiceInfo();
+
+                si.ServiceId = "14";
+                si.ServiceKey = model.spPaynowServiveKey;
+                sil.Add(si);
+            }
+
+            if (model.spDebitOrderServicekey != String.Empty)
+            {
+                ServiceInfo si = new ServiceInfo();
+
+                si.ServiceId = "1";
+                si.ServiceKey = model.spDebitOrderServicekey;
+                sil.Add(si);
+            }
+
+
+
+
+            //Add service info list to request
+            ValidateServiceKeyRequest.ServiceInfoList = sil;
+
+            //---------------------------------------
+            //Calling the ValidateServiceKey method validating account number with the service keys added
+            var Request = client.ValidateServiceKey(ValidateServiceKeyRequest);
+
+            //Do a check on the response for Account Status
+            //001 = valid
+            if (Request.AccountStatus == "001")
+            /*
+             * 
+            001	    Authenticated
+            103	    No active partner found for this Software vendor key
+            104	    No active client found for this Account number
+            200	    General service error – contact Netcash support
+            201	    Account locked out
+             */
+
+            {
+                model.spNetcashAccountNumberMessage = "AccountStatus, Validated";
+                //  Return_Result.Append("AccountStatus, Validated");
+                //do something, eg. output if account active
+                //then add service info to list to check on each service status
+                ServiceInfoResponseList ServiceInfoResponseList = Request.ServiceInfo;
+                foreach (var s in ServiceInfoResponseList)
+                {
+                    Return_Result.Append("");
+                    string service = s.ServiceId;
+                    switch (service)
+                    /*
+               001	    Validated
+               105	    No active service found for this Account number/ServiceId combination
+               106	    No active service key found for this Account number/ServiceId /Servicekey combination    
+                 */
+                    {
+
+
+                        case "1": //do something //Debit orders
+                            if (s.ServiceStatus == "011")
+                                model.spDebitOrderServikeyMessage = ("Debit orders Service Key, Validated");
+
+                            if (s.ServiceStatus == "105")
+                                model.spDebitOrderServikeyMessage = ("Debit orders Service Key, No active service found for this Account number/ServiceId combination");
+                            if (s.ServiceStatus == "106")
+                                model.spDebitOrderServikeyMessage = ("Debit orders Service Key, No active service key found for this Account number/ServiceId /Servicekey combination");
+
+                            break;
+                        case "5": //do something //Account service
+                            if (s.ServiceStatus == "011")
+                                model.spAccountServiceKeyMessage = ("Account service Key, Validated");
+                            if (s.ServiceStatus == "105")
+                                model.spAccountServiceKeyMessage = ("Account service Key, No active service found for this Account number/ServiceId combination");
+                            if (s.ServiceStatus == "106")
+                                model.spAccountServiceKeyMessage = ("Account service Key, No active service key found for this Account number/ServiceId /Servicekey combination");
+                            break;
+                        case "14": //do something //Pay Now
+                            if (s.ServiceStatus == "011")
+                                model.spPaynowServiveKeyMessage = ("Pay Now service Key, Validated");
+                            if (s.ServiceStatus == "105")
+                                model.spPaynowServiveKeyMessage = ("Pay Now service Key, No active service found for this Account number/ServiceId combination");
+                            if (s.ServiceStatus == "106")
+                                model.spPaynowServiveKeyMessage = ("Pay Now service Key, No active service key found for this Account number/ServiceId /Servicekey combination");
+                            break;
+
+                    }
+                }
+            }
+            else
+            {
+                /*
+
+                   001	    Authenticated
+                   103	    No active partner found for this Software vendor key
+                   104	    No active client found for this Account number
+                   200	    General service error – contact Netcash support
+                   201	    Account locked out
+                    */
+                if (Request.AccountStatus == "103")
+                {
+                    model.spNetcashAccountNumberMessage = ("No active partner found for this Software vendor key");
+                    model.spDebitOrderServikeyMessage = ("No active partner found for this Software vendor key");
+                    model.spPaynowServiveKeyMessage = ("No active partner found for this Software vendor key");
+                    model.spAccountServiceKeyMessage = ("No active partner found for this Software vendor key");
+                    model.spSoftwareVendorKeyMessage = ("No active partner found for this Software vendor key");
+                }
+
+                if (Request.AccountStatus == "104")
+                {
+
+                    model.spNetcashAccountNumberMessage = ("No active client found for this Account number");
+                    model.spDebitOrderServikeyMessage = ("No active client found for this Account number");
+                    model.spPaynowServiveKeyMessage = ("No active client found for this Account number");
+                    model.spAccountServiceKeyMessage = ("No active client found for this Account number");
+                    model.spSoftwareVendorKeyMessage = ("No active client found for this Account number");
+                }
+                if (Request.AccountStatus == "200")
+                {
+                    model.spNetcashAccountNumberMessage = ("General service error – contact Netcash support");
+                    model.spDebitOrderServikeyMessage = ("General service error – contact Netcash support");
+                    model.spPaynowServiveKeyMessage = ("General service error – contact Netcash support");
+                    model.spAccountServiceKeyMessage = ("General service error – contact Netcash support");
+                    model.spSoftwareVendorKeyMessage = ("General service error – contact Netcash support");
+
+                }
+                if (Request.AccountStatus == "201")
+                {
+                    model.spNetcashAccountNumberMessage = ("Account locked out");
+                    model.spDebitOrderServikeyMessage = ("Account locked out");
+                    model.spPaynowServiveKeyMessage = ("Account locked out");
+                    model.spAccountServiceKeyMessage = ("Account locked out");
+                    model.spSoftwareVendorKeyMessage = ("Account locked out");
+                }
+
+
+                if (model.spAccountServiceKey == String.Empty)
+                    model.spAccountServiceKeyMessage = ("");
+
+
+                if (model.spDebitOrderServicekey == String.Empty)
+                    model.spDebitOrderServikeyMessage = "";
+
+
+                if (model.spPaynowServiveKey == String.Empty)
+                    model.spPaynowServiveKeyMessage = "";
+
+                if (model.spPaynowServiveKey == String.Empty)
+                    model.spSoftwareVendorKeyMessage = "";
+
+
+
+
+                //output if account not active
+            }
+            //Close client
+            client.Close();
+
+            return model;
+        }
+        public static DataTable GetAdditionalApplicationSettingsdt(int ApplicationID)
+        {
+            DbParameter[] ObjParam = new DbParameter[1];
+            ObjParam[0] = new DbParameter("@ApplicationID", DbParameter.DbType.Int, 0, ApplicationID);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetAdditionalApplicationSettings_New", ObjParam);
+        }
+        public static DataTable GetAdditionalApplicationSettingsByParlourID(Guid ApplicationID)
+        {
+            DbParameter[] ObjParam = new DbParameter[1];
+            ObjParam[0] = new DbParameter("@ApplicationID", DbParameter.DbType.UniqueIdentifier, 0, ApplicationID);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetAdditionalApplicationSettingsByParlourID_New", ObjParam);
+        }
         public static int UploadApplicationLogo(ApplicationSettingsModel model)
         {
             DbParameter[] ObjParam = new DbParameter[3];
@@ -15,6 +225,13 @@ namespace Funeral.DAL
             ObjParam[2] = new DbParameter("@pkiApplicationID", DbParameter.DbType.Int, 0, model.pkiApplicationID);
             //return 1;
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "UploadApplicationLogo", ObjParam));
+        }
+        public static int RemoveApplicationLogo(int ApplicationID)
+        {
+            DbParameter[] ObjParam = new DbParameter[1];            
+            ObjParam[0] = new DbParameter("@pkiApplicationID", DbParameter.DbType.Int, 0, ApplicationID);
+            //return 1;
+            return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "RemoveApplicationLogo", ObjParam));
         }
         public static int UploadUnderwriterLogo(UnderwriterSetupModel model)
         {
@@ -114,8 +331,12 @@ namespace Funeral.DAL
 
         public static SqlDataReader SaveAdditionalApplication(AdditionalApplicationSettingsModel model)
         {
-            string query = "AddUpdateAdditionalApplicationSettings";
-            DbParameter[] ObjParam = new DbParameter[11];
+            //call vaslifsation 
+            ValidateServiceKey(model);
+
+
+            string query = "AddUpdateAdditionalApplicationSettings_New";
+            DbParameter[] ObjParam = new DbParameter[24];
             ObjParam[0] = new DbParameter("@pkiParlourid", DbParameter.DbType.UniqueIdentifier, 0, model.pkiParlourid);
             ObjParam[1] = new DbParameter("@spUPuser", DbParameter.DbType.NVarChar, 0, model.spUPuser);
             ObjParam[2] = new DbParameter("@spUPpass", DbParameter.DbType.NVarChar, 0, model.spUPpass);
@@ -127,13 +348,30 @@ namespace Funeral.DAL
             ObjParam[8] = new DbParameter("@spCCpass", DbParameter.DbType.NVarChar, 0, model.spCCpass);
             ObjParam[9] = new DbParameter("@spCCpinpad", DbParameter.DbType.NVarChar, 0, model.spCCpinpad);
             ObjParam[10] = new DbParameter("@GenerateMember", DbParameter.DbType.NVarChar, 0, model.GenerateMember);
+
+            ObjParam[11] = new DbParameter("@spNetcashAccountNumber", DbParameter.DbType.NVarChar, 0, String.IsNullOrEmpty(model.spNetcashAccountNumber) ? (object)DBNull.Value : (object)model.spNetcashAccountNumber);
+            ObjParam[12] = new DbParameter("@spAccountServiceKey", DbParameter.DbType.NVarChar, 0, String.IsNullOrEmpty(model.spAccountServiceKey) ? (object)DBNull.Value : (object)model.spAccountServiceKey);
+            ObjParam[13] = new DbParameter("@spDebitOrderServicekey", DbParameter.DbType.NVarChar, 0, String.IsNullOrEmpty(model.spDebitOrderServicekey) ? (object)DBNull.Value : (object)model.spDebitOrderServicekey);
+            ObjParam[14] = new DbParameter("@spPaynowServiveKey", DbParameter.DbType.NVarChar, 0, String.IsNullOrEmpty(model.spPaynowServiveKey) ? (object)DBNull.Value : (object)model.spPaynowServiveKey);
+            ObjParam[15] = new DbParameter("@spAccountServiceKeyMessage", DbParameter.DbType.NVarChar, 0, String.IsNullOrEmpty(model.spAccountServiceKeyMessage) ? (object)DBNull.Value : (object)model.spAccountServiceKeyMessage);
+            ObjParam[16] = new DbParameter("@spDebitOrderServikeyMessage", DbParameter.DbType.NVarChar, 0, String.IsNullOrEmpty(model.spDebitOrderServikeyMessage) ? (object)DBNull.Value : (object)model.spDebitOrderServikeyMessage);
+            ObjParam[17] = new DbParameter("@spPaynowServiveKeyMessage", DbParameter.DbType.NVarChar, 0, String.IsNullOrEmpty(model.spPaynowServiveKeyMessage) ? (object)DBNull.Value : (object)model.spPaynowServiveKeyMessage);
+            ObjParam[18] = new DbParameter("@spNetcashAccountNumberMessage", DbParameter.DbType.NVarChar, 0, String.IsNullOrEmpty(model.spNetcashAccountNumberMessage) ? (object)DBNull.Value : (object)model.spNetcashAccountNumberMessage);
+            ObjParam[19] = new DbParameter("@LastModified", DbParameter.DbType.DateTime, 0, model.LastModified);
+            ObjParam[20] = new DbParameter("@ModifiedUser", DbParameter.DbType.NVarChar, 0, model.ModifiedUser);
+            ObjParam[21] = new DbParameter("@spSoftwareVendorKey", DbParameter.DbType.NVarChar, 0, model.spSoftwareVendorKey);
+            ObjParam[22] = new DbParameter("@spSoftwareVendorKeyMessage", DbParameter.DbType.NVarChar, 0, model.spSoftwareVendorKeyMessage);
+            ObjParam[23] = new DbParameter("@IsAutoGeneratedEasyPayNo", DbParameter.DbType.Bit, 0, model.GenerateEasyPay);
             return DbConnection.GetDataReader(CommandType.StoredProcedure, query, ObjParam);
 
         }
         public static DataTable SaveAdditionalApplicationdt(AdditionalApplicationSettingsModel model)
         {
-            string query = "AddUpdateAdditionalApplicationSettings";
-            DbParameter[] ObjParam = new DbParameter[11];
+            //call vaslifsation 
+            ValidateServiceKey(model);
+
+            string query = "AddUpdateAdditionalApplicationSettings_New";
+            DbParameter[] ObjParam = new DbParameter[25];
             ObjParam[0] = new DbParameter("@pkiParlourid", DbParameter.DbType.UniqueIdentifier, 0, model.pkiParlourid);
             ObjParam[1] = new DbParameter("@spUPuser", DbParameter.DbType.NVarChar, 0, model.spUPuser);
             ObjParam[2] = new DbParameter("@spUPpass", DbParameter.DbType.NVarChar, 0, model.spUPpass);
@@ -145,6 +383,22 @@ namespace Funeral.DAL
             ObjParam[8] = new DbParameter("@spCCpass", DbParameter.DbType.NVarChar, 0, model.spCCpass);
             ObjParam[9] = new DbParameter("@spCCpinpad", DbParameter.DbType.NVarChar, 0, model.spCCpinpad);
             ObjParam[10] = new DbParameter("@GenerateMember", DbParameter.DbType.NVarChar, 0, model.GenerateMember);
+
+            ObjParam[11] = new DbParameter("@spNetcashAccountNumber", DbParameter.DbType.NVarChar, 0, String.IsNullOrEmpty(model.spNetcashAccountNumber) ? (object)DBNull.Value : (object)model.spNetcashAccountNumber);
+            ObjParam[12] = new DbParameter("@spAccountServiceKey", DbParameter.DbType.NVarChar, 0, String.IsNullOrEmpty(model.spAccountServiceKey) ? (object)DBNull.Value : (object)model.spAccountServiceKey);
+            ObjParam[13] = new DbParameter("@spDebitOrderServicekey", DbParameter.DbType.NVarChar, 0, String.IsNullOrEmpty(model.spDebitOrderServicekey) ? (object)DBNull.Value : (object)model.spDebitOrderServicekey);
+            ObjParam[14] = new DbParameter("@spPaynowServiveKey", DbParameter.DbType.NVarChar, 0, String.IsNullOrEmpty(model.spPaynowServiveKey) ? (object)DBNull.Value : (object)model.spPaynowServiveKey);
+            ObjParam[15] = new DbParameter("@spAccountServiceKeyMessage", DbParameter.DbType.NVarChar, 0, String.IsNullOrEmpty(model.spAccountServiceKeyMessage) ? (object)DBNull.Value : (object)model.spAccountServiceKeyMessage);
+            ObjParam[16] = new DbParameter("@spDebitOrderServikeyMessage", DbParameter.DbType.NVarChar, 0, String.IsNullOrEmpty(model.spDebitOrderServikeyMessage) ? (object)DBNull.Value : (object)model.spDebitOrderServikeyMessage);
+            ObjParam[17] = new DbParameter("@spPaynowServiveKeyMessage", DbParameter.DbType.NVarChar, 0, String.IsNullOrEmpty(model.spPaynowServiveKeyMessage) ? (object)DBNull.Value : (object)model.spPaynowServiveKeyMessage);
+            ObjParam[18] = new DbParameter("@spNetcashAccountNumberMessage", DbParameter.DbType.NVarChar, 0, String.IsNullOrEmpty(model.spNetcashAccountNumberMessage) ? (object)DBNull.Value : (object)model.spNetcashAccountNumberMessage);
+            ObjParam[19] = new DbParameter("@LastModified", DbParameter.DbType.DateTime, 0, model.LastModified);
+            ObjParam[20] = new DbParameter("@ModifiedUser", DbParameter.DbType.NVarChar, 0, model.ModifiedUser);
+            ObjParam[21] = new DbParameter("@spSoftwareVendorKey", DbParameter.DbType.NVarChar, 0, model.spSoftwareVendorKey);
+            ObjParam[22] = new DbParameter("@spSoftwareVendorKeyMessage", DbParameter.DbType.NVarChar, 0, model.spSoftwareVendorKeyMessage);
+            ObjParam[23] = new DbParameter("@IsAutoGeneratedEasyPayNo", DbParameter.DbType.Bit, 0, model.GenerateEasyPay);
+            ObjParam[24] = new DbParameter("@Currency", DbParameter.DbType.NVarChar, 0, String.IsNullOrEmpty(model.Currency) ? (object)DBNull.Value : (object)model.Currency);
+
             return DbConnection.GetDataTable(CommandType.StoredProcedure, query, ObjParam);
 
         }
@@ -901,7 +1155,7 @@ namespace Funeral.DAL
             DbParameter[] ObjParam = new DbParameter[13];
             ObjParam[0] = new DbParameter("@pkiProductID", DbParameter.DbType.UniqueIdentifier, 0, model.pkiProductID);
             ObjParam[1] = new DbParameter("@ProductName", DbParameter.DbType.NVarChar, 0, model.ProductName);
-            ObjParam[2] = new DbParameter("@Parlourid", DbParameter.DbType.UniqueIdentifier, 0, model.Parlourid);
+            ObjParam[2] = new DbParameter("@Parlourid", DbParameter.DbType.UniqueIdentifier, 0, model.parlourid);
             ObjParam[3] = new DbParameter("@LastModified", DbParameter.DbType.DateTime, 0, model.LastModified);
             ObjParam[4] = new DbParameter("@ModifiedUser", DbParameter.DbType.NVarChar, 0, model.ModifiedUser);
             ObjParam[5] = new DbParameter("@DateCreated", DbParameter.DbType.DateTime, 0, model.DateCreated);
@@ -981,11 +1235,11 @@ namespace Funeral.DAL
             ObjParam[1] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
             return DbConnection.GetDataReader(CommandType.StoredProcedure, "EditPlanbyID", ObjParam);
         }
-        public static DataTable EditPlanbyIDdt(int ID, Guid ParlourId)
+        public static DataTable EditPlanbyIDdt(int ID)
         {
-            DbParameter[] ObjParam = new DbParameter[2];
+            DbParameter[] ObjParam = new DbParameter[1];
             ObjParam[0] = new DbParameter("@ID", DbParameter.DbType.Int, 0, ID);
-            ObjParam[1] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+            //ObjParam[1] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "EditPlanbyID_NEW", ObjParam);
         }
         public static DataTable EditPlanCreatorbyID(int PlanId)
@@ -1190,7 +1444,7 @@ namespace Funeral.DAL
         }
         public static int SaveTermsAndCondition(ApplicationTnCModel Model1)
         {
-            string query = "SaveTermsAndCondition";
+            string query = "SaveTermsAndCondition_New";
             DbParameter[] ObjParam = new DbParameter[10];
             ObjParam[0] = new DbParameter("@pkiAppTC", DbParameter.DbType.Int, 0, Model1.pkiAppTC);
             ObjParam[1] = new DbParameter("@fkiApplicationID", DbParameter.DbType.Int, 0, Model1.fkiApplicationID);
@@ -1200,7 +1454,7 @@ namespace Funeral.DAL
             ObjParam[5] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, Model1.parlourid);
             ObjParam[6] = new DbParameter("@TermsAndConditionFuneral", DbParameter.DbType.NVarChar, 0, Model1.TermsAndConditionFuneral);
             ObjParam[7] = new DbParameter("@TermsAndConditionTombstone", DbParameter.DbType.NVarChar, 0, Model1.TermsAndConditionTombstone);
-            ObjParam[8] = new DbParameter("@TermsAndConditionQuotation", DbParameter.DbType.NVarChar, 0, Model1.TermsAndConditionQuotation);
+            ObjParam[8] = new DbParameter("@TermsAndConditionQuotation", DbParameter.DbType.NVarChar, 0, Model1.QuotationTermsAndCondition);
             ObjParam[9] = new DbParameter("@Declaration", DbParameter.DbType.NVarChar, 0, Model1.Declaration);
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
         }

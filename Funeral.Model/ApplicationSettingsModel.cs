@@ -124,7 +124,7 @@ namespace Funeral.Model
         public BankingDetailSending BankDetails { get; set; }
         public string EmailForClaimNotification { get; set; }
 
-
+        
     }
     
 }

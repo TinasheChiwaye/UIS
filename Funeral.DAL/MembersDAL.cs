@@ -14,8 +14,8 @@ namespace Funeral.DAL
             try
             {
                 AdditionalMemberInfoModel model1 = new AdditionalMemberInfoModel();
-                string query = "SaveMembers_dt";
-                DbParameter[] ObjParam = new DbParameter[57];
+                string query = "SaveMembers_New";
+                DbParameter[] ObjParam = new DbParameter[60];
                 ObjParam[0] = new DbParameter("@pkiMemberID", DbParameter.DbType.Int, 0, model.pkiMemberID);
                 ObjParam[1] = new DbParameter("@CreateDate", DbParameter.DbType.DateTime, 0, System.DateTime.Now);
                 ObjParam[2] = new DbParameter("@MemberType", DbParameter.DbType.NVarChar, 0, model.MemberType);
@@ -81,6 +81,9 @@ namespace Funeral.DAL
                 ObjParam[54] = new DbParameter("@Address4_Post", DbParameter.DbType.NVarChar, 0, String.IsNullOrWhiteSpace(model.Address4_Post) ? (object)DBNull.Value : (object)model.Address4_Post);
                 ObjParam[55] = new DbParameter("@Code_Post", DbParameter.DbType.NVarChar, 0, String.IsNullOrWhiteSpace(model.Code_Post) ? (object)DBNull.Value : (object)model.Code_Post);
                 ObjParam[56] = new DbParameter("@RefNumber", DbParameter.DbType.NVarChar, 0, String.IsNullOrWhiteSpace(model.RefNumber) ? (object)DBNull.Value : (object)model.RefNumber);
+                ObjParam[57] = new DbParameter("@CustomId4", DbParameter.DbType.Int, 0, model.CustomId4);
+                ObjParam[58] = new DbParameter("@AutogenerateEasyPay", DbParameter.DbType.Bit, 0, model.AutogenerateEasyPay);
+                ObjParam[59] = new DbParameter("@ValidateBankAccount", DbParameter.DbType.Bit, 0, model.AccountNumberVerified);
 
                 return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
             }
@@ -1268,7 +1271,19 @@ namespace Funeral.DAL
             ObjParam[1] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetPlanByPlanID", ObjParam);
         }
-
-
+        public static DataTable GetBeneficiaryByIDNodt(string IDNumber, Guid ParlourId)
+        {
+            DbParameter[] ObjParam = new DbParameter[2];
+            ObjParam[0] = new DbParameter("@ID", DbParameter.DbType.VarChar, 0, IDNumber);
+            ObjParam[1] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "BeneficiarySelectByIDNodt", ObjParam);
+        }
+        public static DataTable GetBeneficiaryByIDdt(int ID, Guid ParlourId)
+        {
+            DbParameter[] ObjParam = new DbParameter[2];
+            ObjParam[0] = new DbParameter("@ID", DbParameter.DbType.Int, 0, ID);
+            ObjParam[1] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "BeneficiarySelectdt", ObjParam);
+        }
     }
 }

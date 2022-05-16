@@ -158,10 +158,15 @@
                     $("#lblMessage").html('');
                     $("#lblMessage").append('<div class="alert alert-success">Beneficiary ' + result + ' Successfully</div>');
                     $("#txtPremium").val('');
+                    //location.reload();
                 }
                 else if (result == "PercentageLimit"){
                     $("#lblMessage").html('');
                     $("#lblMessage").append('<div class="alert alert-danger">Total percentage limit of 100%  bas been completed</div>');
+                }
+                else if (result == "exist") {
+                    $("#lblMessage").html('');
+                    $("#lblMessage").append('<div class="alert alert-danger">This beneficiary already exist</div>');
                 }
                 else {
                     $("#ValidationSummary_Beneficiary").show();

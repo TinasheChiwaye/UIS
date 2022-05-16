@@ -16,6 +16,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
+using Funeral.Web.niws_validation;
+
 //using Funeral.Model.Search;
 
 namespace Funeral.Web.Areas.Admin.Controllers
@@ -175,6 +177,18 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
             ViewBag.AuditList = MembersBAL.GetAuditList(pkiMemberID, CurrentParlourId);
 
+            string message = "";
+
+            if (member.AccountNumberVerified == true)
+            {
+                message = "Valid,Bank Account";
+                @ViewBag.BankValidation = message;
+            }
+            else
+            {
+                message = "Bank Account Invalid Or Empty";
+                @ViewBag.BankValidation = message;
+            }
 
 
             var statusList = CommonBAL.GetStatus(FuneralEnum.StatusAssociatedTable.Members.ToString()).Select(status => new { status.Status, status.ID }).Distinct();
@@ -212,6 +226,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             Managemembers.CustomPaymentMethod = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.EmploymentType)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
             Managemembers.CustomGrouping2 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.PaymentType)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
             Managemembers.CustomGrouping3 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Source)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
+            Managemembers.CustomGrouping4 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.MaritalStatus)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
             Managemembers.Member = member;
             //Managemembers.DependencyTypeList = CommonBAL.GetUserTypes().Select(x => new SelectListItem() { Text = x.UserTypeName, Value = x.UserTypeId.ToString() });
             Managemembers.DependencyTypeList = CommonBAL.GetUserTypesByMemberID(MemberId, member.fkiPlanID, CurrentParlourId).Select(x => new SelectListItem() { Text = x.UserTypeName, Value = x.CreatorID.ToString() });
@@ -376,16 +391,16 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 member.CoverAmount = objPolicyModel != null ? (objPolicyModel.CoverAmount == "" || objPolicyModel.CoverAmount == null ? "0" : objPolicyModel.CoverAmount) : "0";
                 member.TotalPremium = float.Parse(BindTotalPremium(pkiMemberId), CultureInfo.InvariantCulture.NumberFormat);
             }
-            var BankDetails = CommonBAL.GetBankDetails_ByParlourId(CurrentParlourId);
-            if (BankDetails != null)
-            {
-                member.AccountHolder = BankDetails.AccountHolder;
-                member.Bank = BankDetails.Bank;
-                member.Branch = BankDetails.Branch;
-                member.BranchCode = BankDetails.BranchCode;
-                member.AccountNumber = BankDetails.AccountNumber;
-                member.AccountType = BankDetails.AccountType;
-            }
+            //var BankDetails = CommonBAL.GetBankDetails_ByParlourId(CurrentParlourId);
+            //if (BankDetails != null)
+            //{
+            //    member.AccountHolder = BankDetails.AccountHolder;
+            //    member.Bank = BankDetails.Bank;
+            //    member.Branch = BankDetails.Branch;
+            //    member.BranchCode = BankDetails.BranchCode;
+            //    member.AccountNumber = BankDetails.AccountNumber;
+            //    member.AccountType = BankDetails.AccountType;
+            //}
             return Json(new { success = true, Member = member }, JsonRequestBehavior.AllowGet);
         }
         public int GetDifferenceInYears(DateTime startDate, DateTime endDate)
@@ -612,6 +627,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 var familyDependancies = MembersBAL.GetFamilyDependencyByMemberID(CurrentParlourId, MemberId);
                 search.Currency = Currency;
                 search.TotalRecord = familyDependancies.Count;
+                
                 return Json(new Funeral.Model.SearchResult<Model.Search.BaseSearch, FamilyDependencyModel>(search, familyDependancies, o => o.FullName.Contains(search.SarchText)));
             }
             catch (Exception ex)
@@ -743,10 +759,15 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
             //SocietyModel society = new SocietyModel();
             //Member.MemberSociety = society.pkiSocietyID.ToString();
+            AdditionalApplicationSettingsModel additionalApplicationSettingsModel;
+            additionalApplicationSettingsModel = ToolsSetingBAL.GetAdditionalApplicationSettingsByParlourID(ParlourId);
+            Member.ModifiedUser = UserID.ToString();
+            Member.Active = false;
+            Member.ServiceKey = additionalApplicationSettingsModel.spAccountServiceKey;
+            Member.AutogenerateEasyPay = additionalApplicationSettingsModel.GenerateEasyPay;
+            Member.AccountNumberVerified = ValidateBankAccount(Member.ServiceKey, Member.AccountNumber, Member.BranchCode, Member.AccountType); //"d2fbc8dc-b9e3-4722-8555-c1ec8505be16", "1577844775", "470010","2");
 
-                Member.ModifiedUser = UserID.ToString();
-                Member.Active = false;
-                int retId = MembersBAL.SaveMembers(Member);
+            int retId = MembersBAL.SaveMembers(Member);
                 Member.pkiMemberID = retId;
 
 
@@ -781,6 +802,42 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 return Json(Member, JsonRequestBehavior.AllowGet);
             
         }
+        //public JsonResult BindPolicyCoverDate(int id, DateTime date)
+        //{
+        //    PolicyModel objPolicyModel = CommonBAL.GetPlanSubscriptionByPlanIdNewMember(id).ToList().FirstOrDefault();
+        //    List<string> Response = new List<string>();
+        //    try
+        //    {
+        //        GetdataPremium = Currency + " " + objPolicyModel.PlanSubscription;
+
+        //        if (objPolicyModel != null)
+        //            Response.Add(Currency + " " + objPolicyModel.PlanSubscription);
+        //        else
+        //            Response.Add(string.Empty);
+        //        Response.Add(string.IsNullOrEmpty(CommonBAL.GetPlanUnderwriterByPlanId(id)) ? string.Empty : CommonBAL.GetPlanUnderwriterByPlanId(id));
+        //        int WaitingPeriod = CommonBAL.GetWaitingPeriodByPlanId(id);
+
+        //        if (objPolicyModel.WaitingPeriod == 0 || objPolicyModel.WaitingPeriod == null)
+        //        {
+        //            Response.Add(DateTime.Now.AddMonths(CommonBAL.GetWaitingPeriodByPlanId(id)).ToString("dd MMM yyyy"));
+        //        }
+        //        else if (date != null)
+        //        {
+        //            //DateTime PolicystartDate = Convert.ToDateTime(date);
+        //            Response.Add(date.AddMonths(CommonBAL.GetWaitingPeriodByPlanId(id)).ToString("dd MMM yyyy"));
+        //            //date = PolicystartDate;
+        //        }
+        //        if (objPolicyModel != null)
+        //            Response.Add(objPolicyModel.totalPremium);
+        //        else
+        //            Response.Add(string.Empty);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        throw e;
+        //    }
+        //    return Json(Response, JsonRequestBehavior.AllowGet);
+        //}
         public JsonResult BindPolicyCoverDate(int id, DateTime date)
         {
             PolicyModel objPolicyModel = CommonBAL.GetPlanSubscriptionByPlanIdNewMember(id).ToList().FirstOrDefault();
@@ -796,7 +853,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 Response.Add(string.IsNullOrEmpty(CommonBAL.GetPlanUnderwriterByPlanId(id)) ? string.Empty : CommonBAL.GetPlanUnderwriterByPlanId(id));
                 int WaitingPeriod = CommonBAL.GetWaitingPeriodByPlanId(id);
 
-                if (objPolicyModel.WaitingPeriod == 0 || objPolicyModel.WaitingPeriod == null)
+                if (objPolicyModel != null)
                 {
                     Response.Add(DateTime.Now.AddMonths(CommonBAL.GetWaitingPeriodByPlanId(id)).ToString("dd MMM yyyy"));
                 }
@@ -810,6 +867,15 @@ namespace Funeral.Web.Areas.Admin.Controllers
                     Response.Add(objPolicyModel.totalPremium);
                 else
                     Response.Add(string.Empty);
+
+                if (objPolicyModel != null)
+                {
+                    Response.Add(Currency + " " + objPolicyModel.CoverAmount);
+                }
+                else
+                {
+                    Response.Add(string.Empty);
+                }
             }
             catch (Exception e)
             {
@@ -1739,30 +1805,103 @@ namespace Funeral.Web.Areas.Admin.Controllers
             MembersBAL.UpdateMemberPolicyStatus(policyStatus, memberId, UserName);
             CommonBAL.SaveAudit(UserName, CurrentParlourId, "Policy Status Changed");
         }
+        //[HttpPost]
+        //[PageRightsAttribute(CurrentPageId = 4)]
+        //public JsonResult SaveBeneficiary(Beneficiary_model objModel)
+        //{
+        //    var Message = string.Empty;
+        //    try
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            var CurrenrPer = MembersBAL.SumOfBeneficiaryPercentage(objModel.pkiMemberID);
+        //            var NewPer = Convert.ToDouble(objModel.Percentages);
+        //            var TotalSum = CurrenrPer + NewPer;
+        //            if (TotalSum < 100 || TotalSum == 100)
+        //            {
+        //                objModel.ModifiedUser = User.Identity.Name;
+        //                objModel.parlourid = CurrentParlourId;
+        //                var AddOnProductID = MembersBAL.SaveBeneficiary(objModel);
+        //                if (objModel.pkiBeneficiaryID == 0)
+        //                    Message = "Inserted";
+        //                else
+        //                    Message = "Updated";
+        //            }
+        //            else 
+        //                Message = "PercentageLimit";
+        //        }
+        //        else
+        //        {
+        //            foreach (ModelState modelState in ViewData.ModelState.Values)
+        //            {
+        //                foreach (ModelError error in modelState.Errors)
+        //                    Message += "<li>" + error.ErrorMessage + "</li>";
+        //            }
+        //            if (objModel.DateOfBirth_Beneficiary == DateTime.Now)
+        //                Message += "<li>Please enter Birth Date</li>";
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Message = ex.Message;
+        //    }
+        //    return Json(Message, JsonRequestBehavior.AllowGet);
+        //}
         [HttpPost]
         [PageRightsAttribute(CurrentPageId = 4)]
         public JsonResult SaveBeneficiary(Beneficiary_model objModel)
         {
+            //var ObjBeneficiary = MembersBAL.GetBeneficiaryByIDNo(objModel.IDNumber_Beneficiary,ParlourId);
             var Message = string.Empty;
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var CurrenrPer = MembersBAL.SumOfBeneficiaryPercentage(objModel.pkiMemberID);
-                    var NewPer = Convert.ToDouble(objModel.Percentages);
-                    var TotalSum = CurrenrPer + NewPer;
-                    if (TotalSum < 100 || TotalSum == 100)
+                    if (objModel.pkiBeneficiaryID == 0 && MembersBAL.GetBeneficiaryByIDNo(objModel.IDNumber_Beneficiary, ParlourId) != null)
                     {
-                        objModel.ModifiedUser = User.Identity.Name;
-                        objModel.parlourid = CurrentParlourId;
-                        var AddOnProductID = MembersBAL.SaveBeneficiary(objModel);
-                        if (objModel.pkiBeneficiaryID == 0)
-                            Message = "Inserted";
-                        else
-                            Message = "Updated";
+                        Message = "exist";
                     }
-                    else 
-                        Message = "PercentageLimit";
+                    else
+                    {
+                        var CurrenrPer = MembersBAL.SumOfBeneficiaryPercentage(objModel.pkiMemberID);
+                        var NewPer = Convert.ToDouble(objModel.Percentages);
+                        //var newSum = 0.0;
+                        var NewCurrent = 0.0;
+
+                        var TotalSum = 0.0;
+                        if (objModel.pkiBeneficiaryID > 0)
+                        {
+
+                            objModel.ModifiedUser = User.Identity.Name;
+                            objModel.parlourid = CurrentParlourId;
+                            //var Beneficiary = MembersBAL.SaveBeneficiary(objModel);
+                            Beneficiary_model beneficiaryDetails = MembersBAL.GetBeneficiaryByID(objModel.pkiBeneficiaryID, CurrentParlourId);
+                            NewCurrent = CurrenrPer - Convert.ToDouble(beneficiaryDetails.Percentages);
+                            //Beneficiary_model beneficiary = new Beneficiary_model();
+                            //beneficiary.Percentages = beneficiaryDetails.Percentages;
+                            NewPer = Convert.ToDouble(objModel.Percentages);
+                            //var sum = Convert.ToDouble(OnChange) + CurrenrPer;Convert.ToDouble(NewDetails.Percentages)
+                            TotalSum = NewCurrent + NewPer;
+                        }
+                        else if (objModel.pkiBeneficiaryID == 0)
+                        {
+                            TotalSum = CurrenrPer + NewPer;
+                        }
+                        //NewPer = newSum ;
+
+                        if (TotalSum < 100 || TotalSum == 100)
+                        {
+                            objModel.ModifiedUser = User.Identity.Name;
+                            objModel.parlourid = CurrentParlourId;
+                            var AddOnProductID = MembersBAL.SaveBeneficiary(objModel);
+                            if (objModel.pkiBeneficiaryID == 0)
+                                Message = "Inserted";
+                            else
+                                Message = "Updated";
+                        }
+                        else
+                            Message = "PercentageLimit";
+                    }
                 }
                 else
                 {
@@ -1836,7 +1975,115 @@ namespace Funeral.Web.Areas.Admin.Controllers
             var DependencyTypeList = CommonBAL.GetUserTypesByPlanID(CurrentParlourId, Id).Select(x => new SelectListItem() { Text = x.UserTypeName, Value = x.UserTypeId.ToString() });
             return Json(DependencyTypeList, JsonRequestBehavior.AllowGet);
         }
+        public bool ValidateBankAccount(string ServiceKey, string AccountNumber, string BranchCode, string AccountType)
+        {
+            if (AccountType == "Current" || AccountType == "Cheque")
+            {
+                AccountType = "1";
+            }
+            else
+            {
+                AccountType = "2";
+            }
+            if (AccountNumber == null)
+            {
+                AccountNumber = "";
+            }
+            if (BranchCode == null)
+            {
+                BranchCode = "";
+            }
 
+
+            bool outcome;
+            //initialise client 
+            niws_validation.NIWS_ValidationClient client = new niws_validation.NIWS_ValidationClient();
+
+            //call the ValidateBankAccount method equal to a string variable
+            string Request = client.ValidateBankAccount(ServiceKey, AccountNumber, BranchCode.TrimStart().TrimEnd(), AccountType);
+
+            //close client after response is received
+            client.Close();
+
+            //convert response received for request
+            int response = Convert.ToInt32(Request);
+
+            //if 0 save to system or do something else
+            switch (response)
+            {
+                case 0: //do something
+                    outcome = true;
+                    break;
+                case 1: //do something
+                    outcome = false;
+                    break;
+                case 2: //do something
+                    outcome = false;
+                    break;
+                case 3: //do something
+                    outcome = false;
+                    break;
+                case 4: //do something
+                    outcome = false;
+                    break;
+                case 100: //do something
+                    outcome = false;
+                    break;
+                default:
+                    outcome = false;
+                    break;
+            }
+
+            return outcome;
+        }
+
+        public void AuditTrail()
+        {
+            Warning[] warnings;
+            string[] streamids;
+            string mimeType;
+            string encoding;
+            //string filenameExtension;
+            string filename;
+            string result;
+
+            try
+            {
+                ReportViewer rpw = new ReportViewer();
+                rpw.ProcessingMode = ProcessingMode.Remote;
+                IReportServerCredentials irsc = new MyReportServerCredentials();
+                rpw.ServerReport.ReportServerCredentials = irsc;
+
+                rpw.ProcessingMode = ProcessingMode.Remote;
+                rpw.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
+                rpw.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/AuditTrail_Report";
+                ReportParameterCollection reportParameters = new ReportParameterCollection();
+
+                reportParameters.Add(new ReportParameter("MemberID", MemberId.ToString()));
+                reportParameters.Add(new ReportParameter("Parlourid", CurrentParlourId.ToString()));
+                rpw.ServerReport.SetParameters(reportParameters);
+                string ExportTypeExtensions = "pdf";
+                byte[] bytes = rpw.ServerReport.Render(ExportTypeExtensions, null, out mimeType, out encoding, out ExportTypeExtensions, out streamids, out warnings);
+                filename = string.Format("{0}.{1}", "AuditTrail_Report", ExportTypeExtensions);
+
+                Response.ClearHeaders();
+                Response.Clear();
+                Response.AddHeader("Content-Disposition", "attachment;filename=" + filename);
+                Response.ContentType = mimeType;
+                Response.BinaryWrite(bytes);
+                Response.Flush();
+                Response.End();
+                result = "true";
+
+            }
+            catch (Exception ex)
+            {
+                result = ex.Message;
+                //result = "The attempt to connect to the report server failed.  Check your connection information and that the report server is a compatible version.    ";
+                //ShowMessage(ref lblMessage, MessageType.Danger, exc.Message);
+            }
+            //return Json(result, JsonRequestBehavior.AllowGet);
+        }
 
         //=================TEST
         //public JsonResult BindPlanByCompanyId(Guid CompanyId)
@@ -1856,4 +2103,5 @@ namespace Funeral.Web.Areas.Admin.Controllers
         //=================END
 
     }
+
 }

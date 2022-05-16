@@ -386,9 +386,19 @@
                                                 <label>Email Address</label>
                                                 <input type="email" maxlength="200" id="txtEmail" name="name" class="form-control">
                                             </div>
-                                            <div class="form-group">
-                                                <label>Citizenship</label>
-                                                @Html.DropDownList("CitizenShipList", Model.countryList, "Select", new { Name = "CitizenShip", @id = "ddlCitizenship", @style = "width:100%", @class = "form-control" })
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Marital Status</label>
+                                                        @Html.DropDownList("CustomGrouping4", Model.CustomGrouping4, "Select", new { Name = "CustomGrouping3", @id = "ddlCustom4", @style = "width:100%", @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Citizenship</label>
+                                                        @Html.DropDownList("CitizenShipList", Model.countryList, "Select", new { Name = "CitizenShip", @id = "ddlCitizenship", @style = "width:100%", @class = "form-control" })
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="form-group">
                                                 <label>Passport</label>
@@ -648,7 +658,7 @@
                                                 @Html.DropDownList("PolicyList", Model.PolicyList, "Select", new { Name = "CitizenShip", @id = "ddlPolicy", @style = "width:100%", @class = "form-control" })
                                             </div>
                                             <div class="form-group">
-                                                <label>Premium </label>
+                                                <label>Premium</label>
                                                 <input type="text" maxlength="25" id="txtPolicyPremium" name="name" class="form-control" disabled>
                                             </div>
                                             <div class="form-group">
@@ -656,7 +666,7 @@
                                                 <input type="text" maxlength="20" id="txtTotalPremium" value="@Model.Currency @Model.TotalPremium" name="name" class="form-control" disabled>
                                             </div>
                                             <div class="form-group">
-                                                <label> Cover Amount</label>
+                                                <label>Cover Amount</label>
                                                 <input type="text" maxlength="25" id="txtPolicyCoverAmount" name="name" class="form-control" disabled>
                                             </div>
                                             <div class="form-group">
@@ -931,6 +941,14 @@
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>Account Number</label>
+                                                @if (@ViewBag.BankValidation == "Valid,Bank Account")
+                                                {
+                                                    <label style="color:greenyellow;font-style:italic">@ViewBag.BankValidation</label>
+                                                }
+                                                else
+                                                {
+                                                    <label style="color:red;font-style:italic">@ViewBag.BankValidation</label>
+                                                }
                                                 <input type="text" maxlength="25" id="txtAccountNumber" name="name" class="form-control">
                                             </div>
                                             <div class="form-group">
@@ -1405,6 +1423,8 @@
                                                 @*@Html.EditorFor(model => model.PageNum, new { htmlAttributes = new { @class = "hidden", id = "PageNum1" } })*@
                                                 @*@Html.EditorFor(model => model.PageSize, new { htmlAttributes = new { @class = "hidden", id = "PageSize1" } })*@
                                                 @Html.Hidden("ItemId")
+                                                <input type="submit" style="display:inline ;margin-left :12px;margin-bottom:12px " id="AuditDoc" class="btn btn-sm btn-primary pull-left m-t-n-xs" value="Audit Report" onclick="location.href='@Url.Action("AuditTrail", "Members")'">
+
                                                 <table id="auditTrailDataTable" class="table table-striped table-bordered table-hover" width="100%" cellspacing="0">
                                                     <thead></thead>
                                                     <tbody>
@@ -1425,9 +1445,9 @@
                                                                     <td>@item.ActionDesc</td>
                                                                     <td>@item.ActionDate</td>
                                                                     @*<td>
-                                                                        <a href="@url.action("printform", "grouppayment", new{ groupinvoiceid= item.groupinvoiceid})"><i class="glyphicon glyphicon-print"></i></a>
-                                                                        <div class="col-sm-4 text-center"><a href="@url.action("printform", "grouppayment", null, request.url.scheme)?groupinvoiceid=@item.groupinvoiceid"><i class="glyphicon glyphicon-print"></i></a></div>
-                                                                    </td>*@
+                                <a href="@url.action("printform", "grouppayment", new{ groupinvoiceid= item.groupinvoiceid})"><i class="glyphicon glyphicon-print"></i></a>
+                                <div class="col-sm-4 text-center"><a href="@url.action("printform", "grouppayment", null, request.url.scheme)?groupinvoiceid=@item.groupinvoiceid"><i class="glyphicon glyphicon-print"></i></a></div>
+                            </td>*@
                                                                 </tr>
                                                             }
                                                         }
@@ -2303,6 +2323,8 @@
             var CustomId1 = 0;
             var CustomId2 = 0;
             var CustomId3 = 0;
+            var CustomId4 = 0;
+
             var Agent = 0;
             var productName = null;
             var productCost = 0;
@@ -2321,6 +2343,9 @@
 
             if ($("#tab-1 #txtIdNumber").val() != "") {
                 idNumber = $("#tab-1 #txtIdNumber").val();
+            }
+            if ($("#tab-1 #ddlCustom4").val() != null) {
+                CustomId4 = $("#tab-1 #ddlCustom4").val();
             }
 
             if ($("#tab-1 #ddlAgent").val() != null) {
@@ -2382,6 +2407,7 @@
                 CustomId1: CustomId1,
                 CustomId2: CustomId2,
                 CustomId3: CustomId3,
+                CustomId4: CustomId4,
                 MemberSociety: $("#tab-1 #ddlMemberSociety :selected").text(),
                 StartDate: dateFormat($("#tab-3 #txtPolicyStartDate").val(), 'dd-mm-yyyy', false),
                 InceptionDate: dateFormat($("#tab-3 #txtInception").val(), 'dd-mm-yyyy', false),
@@ -2484,6 +2510,8 @@
             $("#txtCellphone").val('');
             $("#txtTelePhone").val('');
             $("#txtEmail").val('');
+            $("#tab-1 #ddlCustom4").val('');
+
         })
         $("#btnResetTab3").click(function () {
             $("#tab-3 #ddlPolicy").val('');
@@ -3200,6 +3228,8 @@
             $("#tab-3 #ddlCustom1").val(member.CustomId1);
             $("#tab-3 #ddlCustom2").val(member.CustomId2);
             $("#tab-3 #ddlCustom3").val(member.CustomId3);
+            $("#tab-1 #ddlCustom4").val(member.CustomId4);
+
             $("#tab-1 #ddlMemberSociety option:selected").text(member.MemberSociety);
 
             $("#tab-1 #ddlAgent option").each(function () {
@@ -3785,6 +3815,11 @@
         }
 
         $("#tab-5 #txtDependentPremium").val(dependant.Premium);
+
+
+        //$("#tab-5 #txtDependentPremium").val(dependant.Currency +" "+  dependant.Premium);
+
+
         $('#tab-5 #txtDependentCoverAmount').val(dependant.Cover);
         $('html, body').animate({
             scrollTop: $("#tab5Dependent").offset().top
@@ -4040,7 +4075,7 @@
         var firstName = $("#tab-5 #txtDependentFirstname").val();
         var birthDate = $("#tab-5 #txtDependentDateOfBirth").val();
         var startDate = $("#tab-5 #txtDependentStartDate").val();
-        var premium = $("#tab-5 #txtDependentPremium").val();
+        var premium = $("#tab-5 #txtDependentPremium").val().split(" ").pop();
         var CoverAmount = $("#tab-5 #txtDependentCoverAmount").val();
         var inceptionDate = $("#tab-5 #txtDependentInceptionDate").val();
         var allFlag = true;
@@ -4206,7 +4241,7 @@
                 InceptionDate: dateFormat($("#tab-5 #txtDependentInceptionDate").val(), 'dd-mm-yyyy', false),
                 CoverDate: dateFormat($("#tab-5 #txtDependentCoverDate").val(), 'dd-mm-yyyy', false),
                 DependencyType: $("#tab-5 #ddlDependentDependencyType :selected").text(),
-                Premium: $("#tab-5 #txtDependentPremium").val(),
+                Premium: $("#tab-5 #txtDependentPremium").val().split(" ").pop(),
                 pkiDependentID: 0,
                 MemberId: pkiMemberId,
                 Relationship: $("#tab-5 #ddlDependentDependencyType :selected").val(),
@@ -4796,7 +4831,8 @@
                     $('#txtDependencyCovertDate').val(result[2]);
                     $('#tab-3 #txtCoverDate').val(result[2]);
                     //$('#tab-3 #txtTotalPremium').val(result[0]);
-                    $('#txtUnderwriter').val(result[1])
+                    $('#txtUnderwriter').val(result[1]);
+                    $('#tab-3 #txtPolicyCoverAmount').val(result[4]);
                     //$("#tab-3 #txtPolicyStartDate").datepicker("hide");
                 },
                 error: function (xhr, ajaxOptions, thrownError) {

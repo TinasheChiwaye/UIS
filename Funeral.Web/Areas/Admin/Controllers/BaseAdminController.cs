@@ -544,5 +544,14 @@ namespace Funeral.Web.Areas.Admin.Controllers
         {
             this._filterContext.HttpContext.Response.Redirect(string.Format("{0}://{1}{2}/{3}", this._filterContext.HttpContext.Request.Url.Scheme, this._filterContext.HttpContext.Request.Url.Authority, this._filterContext.HttpContext.Request.ApplicationPath, "Admin/Error/Error403"));
         }
+
+        //public string GetCurrency(Guid parlourId)
+        //{
+        //    string Currency = "";
+        //    AdditionalApplicationSettingsModel model = new AdditionalApplicationSettingsModel();
+        //    model.Currency = ToolsSetingBAL.GetCurrency(parlourId);
+        //    Currency model.
+        //    return "";
+        //}
     }
 }

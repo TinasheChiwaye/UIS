@@ -294,9 +294,9 @@ namespace Funeral.Services
         {
             return ToolsSetingBAL.GetAllPlans(ParlourId, PageSize, PageNum, Keyword, SortBy, SortOrder);
         }
-        public PlanModel EditPlanbyID(int ID, Guid ParlourId)
+        public PlanModel EditPlanbyID(int ID)
         {
-            return ToolsSetingBAL.EditPlanbyID(ID, ParlourId);
+            return ToolsSetingBAL.EditPlanbyID(ID);
         }
         public PlanModel GetPlanByID(string ID, Guid ParlourId)
         {

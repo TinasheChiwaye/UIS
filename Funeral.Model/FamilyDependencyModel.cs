@@ -137,6 +137,7 @@ namespace Funeral.Model
         public string ModifiedUser { get; set; }
         public DateTime LastModified { get; set; }
         public string CreatedBy { get; set; }
+        //public string Currency { get; set; }
     }
 
 

@@ -15,6 +15,7 @@ namespace Funeral.Model.Search
         public int PageNum { get; set; }
         public int PageSize { get; set; }
         public string SarchText { get; set; }
+        public Guid CompanyId { get; set; }
 
     }
 }

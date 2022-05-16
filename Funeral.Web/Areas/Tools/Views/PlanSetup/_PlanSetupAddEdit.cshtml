@@ -115,12 +115,30 @@
                             @Html.Label("Number of Dependents", new { @class = "control-label" })
                             @Html.DropDownListFor(m => m.NumberOfDependents, new SelectList(NumericDropdownList.Take(50).ToList(), "Text", "Value", Model.PolicyLaps), new { @class = "form-control" })
                         </div>
-                        <div class="form-group">
+                        @*<div class="form-group">
                             @Html.Label("Select Scheme ", new { @class = "control-label" })
                             <strong><span class="text-danger"><em>*</em></span></strong>
                             @Html.DropDownListFor(m => m.parlourid, new SelectList(ViewBag.Companies, "parlourid", "ApplicationName"), new { @class = "form-control" })
                             @Html.ValidationMessageFor(m => m.parlourid, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
-                        </div>
+                        </div>*@
+                        @if (Model.pkiPlanID > 0)
+                        {
+                            <div class="form-group">
+                                @Html.Label("Select Scheme ", new { @class = "control-label" })
+                                <strong><span class="text-danger"><em>*</em></span></strong>
+                                @Html.DropDownListFor(m => m.parlourid, new SelectList(ViewBag.Companies, "parlourid", "ApplicationName"), new { @class = "form-control", @disabled = "disabled" })
+                                @Html.ValidationMessageFor(m => m.parlourid, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                            </div>
+                        }
+                        else if (Model.pkiPlanID == 0)
+                        {
+                            <div class="form-group">
+                                @Html.Label("Select Scheme ", new { @class = "control-label" })
+                                <strong><span class="text-danger"><em>*</em></span></strong>
+                                @Html.DropDownListFor(m => m.parlourid, new SelectList(ViewBag.Companies, "parlourid", "ApplicationName"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.parlourid, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                            </div>
+                        }
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">

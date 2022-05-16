@@ -12,25 +12,34 @@
 					<h5>Plan List</h5>
 				</div>
 				<div class="ibox-content">
-					<div class="row">
-						<div class="col-lg-3" id="dvAdministrator">
-							<div class="form-group">
-								<label>Show entries</label>
-								@Html.DropDownListFor(m => m.PageSize, new SelectList(ViewBag.EntriesCount, "Value", "Key"), new { @class = "form-control" })
-							</div>
-						</div>
-						<div class="col-sm-5 col-sm-offset-4">
-							<div class="form-group">
-								@Html.Label("Search Plan:", new { @class = "control-label" })
-								<div class="input-group">
-									@Html.TextBoxFor(m => m.SarchText, null, new { @class = "form-control", @maxlength = "50", placeholder = "Search by keyword" })
-									<span class="input-group-btn">
-										<input type="button" id="btnSearch" value="Search" class="btn btn-w-m btn-primary" />
-									</span>
-								</div>
-							</div>
-						</div>
-					</div>
+                    <div class="row">
+                        <div class="col-lg-4" id="dvAdministrator">
+                            <div class="form-group">
+                                <label>Scheme: </label>
+                                @Html.DropDownListFor(m => m.CompanyId, new SelectList(ViewBag.Companies, "parlourid", "ApplicationName"), "Select Scheme", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        
+                        <div class="col-sm-6 col-sm-offset-2">
+                            <div class="form-group">
+                                @Html.Label("Search Plan:", new { @class = "control-label" })
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.SarchText, null, new { @class = "form-control", @maxlength = "50", placeholder = "Search by keyword" })
+                                    <span class="input-group-btn">
+                                        <input type="button" id="btnSearch" value="Search" class="btn btn-w-m btn-primary" />
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4" id="dvAdministrator">
+                            <div class="form-group">
+                                <label>Show entries</label>
+                                @Html.DropDownListFor(m => m.PageSize, new SelectList(ViewBag.EntriesCount, "Value", "Key"), new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
 					<div class="row">
 						<div class="col-sm-9">
 							<asp:Label ID="lblRecords" runat="server" Text=""></asp:Label>
@@ -97,6 +106,8 @@
             var pageNum =@Html.Raw(Json.Encode(@Model.PageNum));
             var pageSize =@Html.Raw(Json.Encode(@Model.PageSize));
             var searchText =@Html.Raw(Json.Encode(@Model.SarchText));
+            var companyId = @Html.Raw(Json.Encode(@Model.CompanyId));
+
 			
             DOMIDs.Datatable = "planSetupDataTable";
             tableConfigs.SearchUrls = '@Url.Action("SearchData", "PlanSetup", new { }, Request.Url.Scheme)';
@@ -153,6 +164,7 @@
             model1.PageNum = 1;
             model1.PageSize = jQuery('#PageSize').val();
             model1.SarchText = jQuery("#SarchText").val();
+            model1.CompanyId = jQuery('#CompanyId').val();
             jQuery("#PageNum1").val(model1.PageNum);
         }
 
@@ -203,5 +215,6 @@
                 });
             }
         }
+
 	</script>
 }

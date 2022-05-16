@@ -94,6 +94,24 @@ namespace Funeral.Web.Tools {
         protected global::System.Web.UI.WebControls.FileUpload fucompanyLogo;
         
         /// <summary>
+        /// btnUpload control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnUpload;
+        
+        /// <summary>
+        /// btnRemove control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnRemove;
+        
+        /// <summary>
         /// txtTnC control.
         /// </summary>
         /// <remarks>
@@ -112,6 +130,15 @@ namespace Funeral.Web.Tools {
         protected global::System.Web.UI.WebControls.CheckBox cbAutoGeneratePolicy;
         
         /// <summary>
+        /// cbAutoGernerateEasyPayNo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbAutoGernerateEasyPayNo;
+        
+        /// <summary>
         /// txtVatNo control.
         /// </summary>
         /// <remarks>
@@ -121,13 +148,13 @@ namespace Funeral.Web.Tools {
         protected global::System.Web.UI.WebControls.TextBox txtVatNo;
         
         /// <summary>
-        /// btnUpload control.
+        /// txtCurrency control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnUpload;
+        protected global::System.Web.UI.WebControls.TextBox txtCurrency;
         
         /// <summary>
         /// txtEmail control.
@@ -560,6 +587,132 @@ namespace Funeral.Web.Tools {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator19;
+        
+        /// <summary>
+        /// txtNetcashAccountNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNetcashAccountNumber;
+        
+        /// <summary>
+        /// spNetcashAccountNumberMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label spNetcashAccountNumberMessage;
+        
+        /// <summary>
+        /// txtDebitOrderServicekey control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtDebitOrderServicekey;
+        
+        /// <summary>
+        /// spDebitOrderServikeyMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label spDebitOrderServikeyMessage;
+        
+        /// <summary>
+        /// txtSoftwareVendorKey control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtSoftwareVendorKey;
+        
+        /// <summary>
+        /// spSoftwareVendorMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label spSoftwareVendorMessage;
+        
+        /// <summary>
+        /// txtAccountServiceKey control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtAccountServiceKey;
+        
+        /// <summary>
+        /// spAccountServiceKeyMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label spAccountServiceKeyMessage;
+        
+        /// <summary>
+        /// txtPaynowServiveKey control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtPaynowServiveKey;
+        
+        /// <summary>
+        /// spPaynowServiveKeyMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label spPaynowServiveKeyMessage;
+        
+        /// <summary>
+        /// txtLastModified control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtLastModified;
+        
+        /// <summary>
+        /// txtModifiedUser control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtModifiedUser;
+        
+        /// <summary>
+        /// txtLastModifiedMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtLastModifiedMessage;
+        
+        /// <summary>
+        /// txtModifiedUserMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtModifiedUserMessage;
         
         /// <summary>
         /// btnCancel control.

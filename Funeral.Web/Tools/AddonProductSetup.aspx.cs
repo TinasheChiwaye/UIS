@@ -149,7 +149,7 @@ namespace Funeral.Web.Tools
                     model.IsProductLaybye = 0;
                     if (chkLaybye.Checked)
                         model.IsProductLaybye = 1;
-                    model.Parlourid = ParlourId;
+                    model.parlourid = ParlourId;
                     model.LastModified = System.DateTime.Now;
                     model.ModifiedUser = UserName;
                     model.ProductName = txtAddonName.Text;

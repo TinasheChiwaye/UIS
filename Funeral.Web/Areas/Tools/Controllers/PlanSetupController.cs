@@ -41,12 +41,14 @@ namespace Funeral.Web.Areas.Tools.Controllers
             ViewBag.HasDeleteRight = HasDeleteRight;
 
             Model.Search.BaseSearch search = new Model.Search.BaseSearch();
+            BindCompanyList("Search");
             search.PageNum = 1;
             search.PageSize = 10;
             search.SarchText = string.Empty;
             search.SortBy = "";
             search.SortOrder = "Asc";
             search.TotalRecord = 0;
+            search.CompanyId = new Guid(CurrentParlourId.ToString());
 
             var searchResult = new SearchResult<Model.Search.BaseSearch, PlanModel>(search, new List<PlanModel>(), o => o.PlanName.Contains(search.SarchText));
 
@@ -61,7 +63,7 @@ namespace Funeral.Web.Areas.Tools.Controllers
 
             try
             {
-                var PlanList = ToolsSetingBAL.GetAllPlans(ParlourId, search.PageSize, search.PageNum, "", search.SortBy, search.SortOrder);
+                var PlanList = ToolsSetingBAL.GetAllPlans(search.CompanyId, search.PageSize, search.PageNum, "", search.SortBy, search.SortOrder);
                 return Json(new SearchResult<Model.Search.BaseSearch, PlanModel>(search, PlanList, o => o.PlanName.Contains(search.SarchText)));
             }
             catch (Exception ex)
@@ -112,7 +114,7 @@ namespace Funeral.Web.Areas.Tools.Controllers
      //   [FuneralAuth(PageId = 15, Right = new Rights[] { Rights.HasEdit })]
         public PartialViewResult Edit(int ID)
         {
-            var planSetup = ToolsSetingBAL.EditPlanbyID(ID, ParlourId);
+            var planSetup = ToolsSetingBAL.EditPlanbyID(ID);
             planSetup.AdminSplit = Convert.ToDecimal(planSetup.AdminSplit.ToString("0.00"));
             planSetup.AdultCover = Convert.ToDecimal(planSetup.AdultCover.ToString("0.00"));
             planSetup.AgentSplit = Convert.ToDecimal(planSetup.AgentSplit.ToString("0.00"));

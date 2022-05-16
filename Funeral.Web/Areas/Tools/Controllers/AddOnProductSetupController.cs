@@ -70,7 +70,17 @@ namespace Funeral.Web.Areas.Tools.Controllers
         [FuneralAuth(PageId = 14, Right = new Rights[] { Rights.HasAdd})]
         public PartialViewResult Add(AddonProductsModal addOnProductSetup)
         {
-            addOnProductSetup.Parlourid = ParlourId;
+            //addOnProductSetup.parlourid = ParlourId;
+            BindCompanyList();
+
+            FormsIdentity id = (FormsIdentity)System.Web.HttpContext.Current.User.Identity;
+            FormsAuthenticationTicket ticket = id.Ticket;
+            string[] strData = ticket.UserData.Split('|');
+            if (strData.Count() > 0)
+                addOnProductSetup.parlourid = new Guid(string.IsNullOrEmpty(strData[0]) ? "00000000-0000-0000-0000-000000000000" : strData[0]);
+            else
+                addOnProductSetup.parlourid = new Guid("00000000-0000-0000-0000-000000000000");
+
             ModelState.Clear();
             return PartialView("~/Areas/Tools/Views/AddOnProductSetup/_AddOnProductSetupAddEdit.cshtml", addOnProductSetup);
         }
@@ -101,7 +111,7 @@ namespace Funeral.Web.Areas.Tools.Controllers
                     addOnProductSetup.ModifiedUser = formIdentity.Name;
                     addOnProductSetup.DateCreated = System.DateTime.Now;
                     addOnProductSetup.UserID = UserID.ToString();
-                    addOnProductSetup.Parlourid = ParlourId;
+                    //addOnProductSetup.Parlourid = ParlourId;
                     addOnProductSetup.LastModified = System.DateTime.Now;
                     addOnProductSetup.ModifiedUser = UserName;
 
@@ -130,6 +140,27 @@ namespace Funeral.Web.Areas.Tools.Controllers
             int retID = ToolsSetingBAL.DeleteAddonProduct(productId);
             var result = new ResponseResult() { Error = null, Message = "Deleted Successfully.", StatusCode = (int)Enum.Parse(typeof(System.Net.HttpStatusCode), System.Net.HttpStatusCode.OK.ToString()) };
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        public void BindCompanyList()
+        {
+            List<SelectListItem> companyListItems = new List<SelectListItem>();
+            List<ApplicationSettingsModel> model = new List<ApplicationSettingsModel>();
+
+            if (this.IsAdministrator)
+            {
+                model = ToolsSetingBAL.GetAllApplicationList(ParlourId, 1, 0).ToList();
+
+                if (model == null)
+                {
+                    model.Add(new ApplicationSettingsModel() { ApplicationName = ApplicationName, parlourid = ParlourId });
+                }
+            }
+            else
+            {
+                model.Add(new ApplicationSettingsModel() { ApplicationName = ApplicationName, parlourid = ParlourId });
+            }
+
+            ViewBag.Companies = model;
         }
     }
 }

@@ -183,7 +183,7 @@
                             <tr>
                                 <td class="service" width="auto">@item.ServiceName</td>
                                 <td class="desc" width="auto">@item.ServiceDesc</td>
-                                <td class="unit" width="auto">@item.ServiceRate</td>
+                                <td class="unit" width="auto">@Model.Currency @item.ServiceRate</td>
                                 <td class="qty" width="auto">@item.Quantity</td>
                                 <td class="total" width="auto" style="text-align: right;">@Model.Currency @(item.ServiceRate * item.Quantity)</td>
                                 <td width="auto">
@@ -215,7 +215,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Terms and Condition </label>
                                 <div class="col-sm-10">
-                                    @Html.TextAreaFor(m => m.ModelTermsAndCondition.TermsAndConditionQuotation, new { name = "txtNotes", rows = "4", cols = "20", id = "txtTnc", @class = "form-control", @readOnly = "readonly" })
+                                    @Html.TextAreaFor(m => m.ModelTermsAndCondition.QuotationTermsAndCondition, new { name = "txtNotes", rows = "4", cols = "20", id = "txtTnc", @class = "form-control", @readOnly = "readonly" })
                                     @*<textarea name="txtTnc" rows="4" cols="20" readonly="readonly" id="txtTnc" type="text" class="form-control">New Terms And Conditions</textarea>*@
                                 </div>
                             </div>

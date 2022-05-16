@@ -17,7 +17,7 @@ namespace Funeral.Model
             EmploymentType = 1,
             PaymentType = 2,
             Source = 3,
-            //PaymentType= 4
+            MaritalStatus = 4
         }
     }
 }

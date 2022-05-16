@@ -16,6 +16,7 @@ var model1 = {
     PageNum: 1,
     PageSize: 10,
     SarchText: '',
+    CompanyId:'',
     BookName: ''
 };
 function setsearchmodel (statusid, sortorder, sortby, totalrecord, pagenum, pagesize, searchtext, bookName = "") {

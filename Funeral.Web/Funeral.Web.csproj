@@ -1476,6 +1476,26 @@
     <Content Include="packages.config" />
     <None Include="Service References\FuneralServiceReference\FuneralServices1.disco" />
     <None Include="Service References\FuneralServiceReference\FuneralServices11.disco" />
+    <Content Include="Service References\niws_partner\Funeral.Web.niws_partner.ValidateComplianceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\niws_partner\Funeral.Web.niws_partner.ValidateServiceKeyResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Service References\niws_partner\NIWS_Partner.disco" />
+    <None Include="Service References\niws_partner\configuration91.svcinfo" />
+    <None Include="Service References\niws_partner\configuration.svcinfo" />
+    <None Include="Service References\niws_partner\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\niws_validation\NIWS_Validation.disco" />
+    <None Include="Service References\niws_validation\configuration91.svcinfo" />
+    <None Include="Service References\niws_validation\configuration.svcinfo" />
+    <None Include="Service References\niws_validation\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Upload\CompanyImage\CreditProtection_1.png" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -1525,6 +1545,23 @@
     <Content Include="Views\ExternalUser\_ClaimStatusHistoryDetails.cshtml" />
     <Content Include="Views\ExternalUser\ExternalLinkError.cshtml" />
     <Content Include="Views\ExternalUser\_UploadClaimDocumentForm.cshtml" />
+    <None Include="Service References\niws_partner\NIWS_Partner.wsdl" />
+    <None Include="Service References\niws_partner\NIWS_Partner.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\niws_partner\NIWS_Partner1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\niws_partner\NIWS_Partner2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\niws_validation\NIWS_Validation.wsdl" />
+    <None Include="Service References\niws_validation\NIWS_Validation.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\niws_validation\NIWS_Validation1.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2132,6 +2169,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\niws_partner\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\niws_validation\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="SSRSReport.aspx.cs">
       <DependentUpon>SSRSReport.aspx</DependentUpon>
@@ -2347,6 +2394,8 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\FuneralServiceReference\" />
+    <WCFMetadataStorage Include="Service References\niws_partner\" />
+    <WCFMetadataStorage Include="Service References\niws_validation\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Admin\Reports\FINANCIAL_REPORTS\ReportLayouts\rdlcAgentCommision.rdlc">
@@ -2463,7 +2512,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>3863</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:4892/</IISUrl>
+          <IISUrl>http://localhost:4092/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

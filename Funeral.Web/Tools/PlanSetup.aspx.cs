@@ -154,7 +154,7 @@ namespace Funeral.Web.Tools
         }
         public void BindPlanToUpdate()
         {
-            PlanModel model = ToolsSetingBAL.EditPlanbyID(PlanID, ParlourId);
+            PlanModel model = ToolsSetingBAL.EditPlanbyID(PlanID);
             if ((model == null) || (model.parlourid != ParlourId))
             {
                 Response.Write("<script>alert('Sorry!you are not authorized to perform edit on this Plan.');</script>");

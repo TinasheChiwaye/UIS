@@ -22,7 +22,23 @@ namespace Funeral.Model
         public string spCCuser { get; set; }
         public string spCCpass { get; set; }
         public string spCCpinpad { get; set; }
-        public string GenerateMember { get; set; }       
-	
+        public string GenerateMember { get; set; }
+        public Boolean GenerateEasyPay { get; set; }
+        public string Currency { get; set; }
+
+
+        public string spNetcashAccountNumber { get; set; }
+        public string spAccountServiceKey { get; set; }
+        public string spDebitOrderServicekey { get; set; }
+        public string spPaynowServiveKey { get; set; }
+        public string spSoftwareVendorKey { get; set; }
+        public string spAccountServiceKeyMessage { get; set; }
+        public string spDebitOrderServikeyMessage { get; set; }
+        public string spPaynowServiveKeyMessage { get; set; }
+        public string spNetcashAccountNumberMessage { get; set; }
+        public string spSoftwareVendorKeyMessage { get; set; }
+        public DateTime LastModified { get; set; }
+        public string ModifiedUser { get; set; }
+
     }
 }
