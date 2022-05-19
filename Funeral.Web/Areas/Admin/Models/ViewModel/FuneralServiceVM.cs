@@ -43,5 +43,7 @@ namespace Funeral.Web.Areas.Admin.Models.ViewModel
         public string Tax { get; set; }
         public string DisCount { get; set; }
         public string InvoiceNumber { get; set; }
+        public string Notes { get; set; }
+
     }
 }

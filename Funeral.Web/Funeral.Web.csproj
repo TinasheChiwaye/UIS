@@ -2061,6 +2061,7 @@
     <Compile Include="Areas\Admin\Controllers\TombstoneController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserRightController.cs" />
     <Compile Include="Areas\Admin\Models\StaticMessages.cs" />
+    <Compile Include="Areas\Admin\Models\ViewModel\FuneralListVM.cs" />
     <Compile Include="Areas\Admin\Models\ViewModel\FuneralPaymentVM.cs" />
     <Compile Include="Areas\Admin\Models\ViewModel\FuneralPrintVM.cs" />
     <Compile Include="Areas\Admin\Models\ViewModel\FuneralServiceVM.cs" />

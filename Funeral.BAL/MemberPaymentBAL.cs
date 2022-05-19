@@ -114,5 +114,11 @@ namespace Funeral.BAL
             DataTable dr = MemberPaymetsDAL.GetMonthsToPayByMemberIddt(ID);
             return FuneralHelper.DataTableMapToList<PaymentReminderModel>(dr).FirstOrDefault();
         }
+        public static FuneralPaymentsModel FuneralPaymentList(Guid ParlourId, int ID)
+        {
+            DataTable dr = MemberPaymetsDAL.FuneralPaymentsdt(ParlourId, ID);
+            return FuneralHelper.DataTableMapToList<FuneralPaymentsModel>(dr).FirstOrDefault();
+
+        }
     }
 }

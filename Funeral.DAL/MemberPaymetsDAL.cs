@@ -524,5 +524,12 @@ namespace Funeral.DAL
             //ObjParam[1] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, parlourid);//pIntFnrlID
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetMonthsToPayByMemberId", ObjParam);
         }
+        public static DataTable FuneralPaymentsdt(Guid parlourid, int pIntFnrlID)
+        {
+            DbParameter[] ObjParam = new DbParameter[2];
+            ObjParam[0] = new DbParameter("@InvoiceID", DbParameter.DbType.VarChar, 0, pIntFnrlID);//pIntFnrlID '@InvoiceID
+            ObjParam[1] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, parlourid);//pIntFnrlID
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "FuneralPaymentList", ObjParam);
+        }
     }
 }

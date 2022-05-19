@@ -93,5 +93,30 @@ namespace Funeral.Model
 
         public string MemberType { get; set; }
 
+        public string OfficialStatus { get; set; }
+        public string PlaceOfCollection { get; set; }
+        public string PolicyNumber { get; set; }
+        public string GeneralCondition { get; set; }
+        public string Sex { get; set; }
+        public string AgeGroup { get; set; }
+        public string HeadHair { get; set; }
+        public string SkinMarks { get; set; }
+        public string DentalCondition { get; set; }
+        public string PersonalItem { get; set; }
+        public string IdentityDocument { get; set; }
+        public string CauseOfDeath { get; set; }
+        public string Status { get; set; }
+
+        public string CollectionType { get; set; }
+        public string Village { get; set; }
+        public string District { get; set; }
+        public string Branch { get; set; }
+        public string FridgeNumber { get; set; }
+        public string ShelfNumber { get; set; }
+        public string CarReg { get; set; }
+        public string Embalming { get; set; }
+        public string CoffineSize { get; set; }
+        public string BodyAndCar { get; set; }
+
     }
 }

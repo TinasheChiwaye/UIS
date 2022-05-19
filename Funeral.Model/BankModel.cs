@@ -18,4 +18,9 @@ namespace Funeral.Model
         public int ProvinceId { get; set; }
         public string ProvinceName { get; set; }
     }
+    public class FuneralStatus
+    {
+        public int FuneralStatusID { get; set; }
+        public string Status { get; set; }
+    }
 }

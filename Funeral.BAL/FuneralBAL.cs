@@ -94,9 +94,9 @@ namespace Funeral.BAL
             return FuneralDAL.UpdateAllFuneralData(pkiFuneralID, Notes, DisCount, Tax);
         }
 
-        public static int UpdateAllFuneralServiceData(int pkiFuneralID, string InvoiceNumber, Decimal DisCount, Decimal Tax)
+        public static int UpdateAllFuneralServiceData(int pkiFuneralID, string InvoiceNumber, Decimal DisCount, Decimal Tax ,string Notes)
         {
-            return FuneralDAL.UpdateAllFuneralServiceData(pkiFuneralID, InvoiceNumber, DisCount, Tax);
+            return FuneralDAL.UpdateAllFuneralServiceData(pkiFuneralID, InvoiceNumber, DisCount, Tax,Notes);
         }
         public static int SaveFuneralSupportedDocument(FuneralDocumentModel model)
         {

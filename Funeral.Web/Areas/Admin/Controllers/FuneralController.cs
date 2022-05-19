@@ -12,6 +12,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using System.Web.Security;
+using System.Web.UI.WebControls;
 
 namespace Funeral.Web.Areas.Admin.Controllers
 {
@@ -112,8 +113,32 @@ namespace Funeral.Web.Areas.Admin.Controllers
         {
             funeralModel.parlourid = ParlourId;
             ModelState.Clear();
+            //ViewBag.Provinces = CommonBAL.GetProvinces();
+            //ViewBag.Status = CommonBAL.GetFuneralStatus();
+            //ViewBag.Status = GetFuneralStatus();
+            //ViewBag.DentalCondition = CommonBAL.GetDentalCondition();
+            //ViewBag.BodyCondition = CommonBAL.GetBodyCondition();
+            //ViewBag.AgeGroup = CommonBAL.GetAgeGroup();
+            //ViewBag.HairType = CommonBAL.GetHairType();
             return PartialView("~/Areas/Admin/Views/Funeral/_FuneralAddEdit.cshtml", funeralModel);
         }
+
+        //public List<ListItem> GetFuneralStatus()
+        //{
+
+        //    List<ListItem> liList = new List<ListItem>();
+
+        //    List<FuneralStatus> objStatusModel = CommonBAL.GetFuneralStatus();
+
+        //    foreach (FuneralStatus status in objStatusModel)
+        //    {
+        //        ListItem li = new ListItem();
+        //        li.Text = status.Status;
+        //        li.Value = status.FuneralStatusID.ToString();
+        //        liList.Add(li);
+        //    }
+        //    return liList;
+        //}
 
         /// <summary>
         /// method for get the data to edit
@@ -149,7 +174,6 @@ namespace Funeral.Web.Areas.Admin.Controllers
         [PageRightsAttribute(CurrentPageId = 10)]
         public ActionResult Save(FuneralModel funeralModel)
         {
-            var funeral = FuneralBAL.SelectFuneralBypkid(funeralModel.pkiFuneralID, ParlourId);
             try
             {
                 if (ModelState.IsValid)
@@ -157,19 +181,17 @@ namespace Funeral.Web.Areas.Admin.Controllers
                     FormsIdentity formIdentity = (FormsIdentity)User.Identity;
                     funeralModel.LastModified = System.DateTime.Now;
                     funeralModel.ModifiedUser = formIdentity.Name;
-                    funeralModel.FkiClaimID = funeral.FkiClaimID;
-                    funeralModel.MemberType = funeral.MemberType;
                     if (funeralModel.pkiFuneralID != 0)
                     {
                         if (funeralModel.TimeOfFuneral == null)
                         {
                             funeralModel.TimeOfFuneral = DateTime.Now;
                         }
-                        FuneralBAL.UpdateFuneral(funeralModel);
+                        var updateFuneral = FuneralBAL.UpdateFuneral(funeralModel);
                     }
                     else
                     {
-                        FuneralBAL.SaveFuneral(funeralModel);
+                        var saveFuneral = FuneralBAL.SaveFuneral(funeralModel);
                     }
 
 
@@ -400,7 +422,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             {
                 Discount = Convert.ToDecimal(data.DisCount);
             }
-            int a = FuneralBAL.UpdateAllFuneralServiceData(data.pkiFuneralID, data.InvoiceNumber, Discount, Tax);
+            int a = FuneralBAL.UpdateAllFuneralServiceData(data.pkiFuneralID, data.InvoiceNumber, Discount, Tax, data.Notes);
 
             string result = "Successfully Saved.";
 
@@ -414,16 +436,30 @@ namespace Funeral.Web.Areas.Admin.Controllers
         }
         public ActionResult PrintForm(int funId)
         {
-            FuneralServiceVM printObj = new FuneralServiceVM();
-            printObj.Currency = Currency;
-            printObj.TaxSettings = TaxSettingBAL.GetAllTaxSettings().Select(f => new SelectListItem { Text = f.TaxText, Value = f.TaxValue.ToString() }).ToList();
-            printObj.ApplicationSettings = ToolsSetingBAL.GetApplictionByParlourID(ParlourId);
-            printObj.ServiceType = FuneralBAL.GetAllFuneralServices(ParlourId).Select(f => new SelectListItem { Text = f.ServiceName, Value = f.pkiServiceID.ToString() }).ToList();
-            printObj.objFuneralModel = FuneralBAL.SelectFuneralByFuneralId(funId, ParlourId);
-            printObj.ServiceList = FuneralBAL.SelectServiceByFuneralID(funId);
-            printObj.GetAllPackage = FuneralPackageBAL.SelectPackage(ParlourId).Select(f => new SelectListItem { Text = f.PackageName, Value = f.pkiPackageID.ToString() }).ToList();
-            printObj.ModelBankDetails = ToolsSetingBAL.GetBankingByID(ParlourId);
-            printObj.ModelTermsAndCondition = ToolsSetingBAL.SelectApplicationTermsAndCondition(ParlourId);
+            
+            FuneralListVM printObj = new FuneralListVM();
+
+            FuneralPaymentsModel funeralPayments = new FuneralPaymentsModel();
+            funeralPayments = MemberPaymentBAL.FuneralPaymentList(ParlourId, funId);
+
+            ApplicationSettingsModel model = new ApplicationSettingsModel();
+            model = ToolsSetingBAL.GetApplictionByParlourID(ParlourId);
+
+            printObj.BusinessAddressLine1 = model.BusinessAddressLine1;
+            printObj.BusinessAddressLine2 = model.BusinessAddressLine2;
+            printObj.BusinessAddressLine3 = model.BusinessAddressLine3;
+            printObj.BusinessPostalCode = model.BusinessPostalCode;
+            //printObj.FSBNumber = "FSB Number: " + model.FSBNumber;
+            printObj.telephoneNumber = model.ManageTelNumber + " | " + model.ManageCellNumber;
+            printObj.InvoiceID = funeralPayments.InvoiceID;
+            //printObj.PolicyNumber = funeralPayments.;
+            printObj.MonthPaid = funeralPayments.DatePaid.ToString("MMMM");
+            printObj.DatePaid = funeralPayments.DatePaid;
+            printObj.AmountPaid = Math.Round(funeralPayments.AmountPaid, 2);
+            printObj.PaidBy = funeralPayments.PaidBy;
+            printObj.RecievedBy = funeralPayments.RecievedBy;
+            printObj.ParlourName = ApplicationName;
+            printObj.TimePrinted = Convert.ToString(System.DateTime.Now);
 
             return View(printObj);
         }
