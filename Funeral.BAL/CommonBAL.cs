@@ -114,9 +114,9 @@ namespace Funeral.BAL
             DataTable dr = UnderwriterPremiumDAL.EditUnderwriterPremiumbyIDdt(ID, parlourid);
             return FuneralHelper.DataTableMapToList<UnderwriterPremiumModel>(dr);
         }
-        public static List<UnderwriterSetupModel> EditUnderwriterSetupbyID(int ID, Guid parlourid)
+        public static List<UnderwriterSetupModel> EditUnderwriterSetupbyID(int ID)
         {
-            DataTable dr = UnderwriterSetupDAL.EditUnderwriterSetupbyIDdt(ID, parlourid);
+            DataTable dr = UnderwriterSetupDAL.EditUnderwriterSetupbyIDdt(ID);
             return FuneralHelper.DataTableMapToList<UnderwriterSetupModel>(dr);
         }
 

@@ -51,8 +51,8 @@
                         <div class="form-group">
                             @Html.Label("Select Scheme ", new { @class = "control-label" })
                             <strong><span class="text-danger"><em>*</em></span></strong>
-                            @Html.DropDownListFor(m => m.parlourid, new SelectList(ViewBag.Companies, "parlourid", "ApplicationName"), new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.parlourid, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                            @Html.DropDownListFor(m => m.SchemeID, new SelectList(ViewBag.Companies, "parlourid", "ApplicationName"), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.SchemeID, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                         </div>
                         <div class="form-group">
                             <div class="checkbox">

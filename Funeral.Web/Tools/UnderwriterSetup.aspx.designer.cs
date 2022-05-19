@@ -220,6 +220,15 @@ namespace Funeral.Web.Tools {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
         
         /// <summary>
+        /// ddlSchemeList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlSchemeList;
+        
+        /// <summary>
         /// btnCancel control.
         /// </summary>
         /// <remarks>
@@ -238,13 +247,13 @@ namespace Funeral.Web.Tools {
         protected global::System.Web.UI.WebControls.Button btnSubmite;
         
         /// <summary>
-        /// ddlPageSize control.
+        /// ddlSchemeTableList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlPageSize;
+        protected global::System.Web.UI.WebControls.DropDownList ddlSchemeTableList;
         
         /// <summary>
         /// pnlSearch control.
@@ -274,22 +283,13 @@ namespace Funeral.Web.Tools {
         protected global::System.Web.UI.WebControls.Button btnSearch;
         
         /// <summary>
-        /// Label1 control.
+        /// ddlPageSize control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
-        
-        /// <summary>
-        /// lblRecords control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblRecords;
+        protected global::System.Web.UI.WebControls.DropDownList ddlPageSize;
         
         /// <summary>
         /// gvUnderwriterSetup control.

@@ -34,6 +34,7 @@ namespace Funeral.Model
         public string ModifiedUser { get; set; }
         public string ProductName { get; set; }
         public Guid parlourid { get; set; }
+        public Guid SchemeID { get; set; }
 
     }
 }

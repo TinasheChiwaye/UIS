@@ -134,7 +134,7 @@ namespace Funeral.Services
 
         [OperationContract]
         [WebInvoke(ResponseFormat = WebMessageFormat.Json)]
-        PlanModel EditPlanbyID(int ID, Guid ParlourId);
+        PlanModel EditPlanbyID(int ID);
 
         [OperationContract]
         [WebInvoke(ResponseFormat = WebMessageFormat.Json)]

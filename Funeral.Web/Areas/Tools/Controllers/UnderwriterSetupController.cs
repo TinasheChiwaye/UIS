@@ -139,7 +139,7 @@ namespace Funeral.Web.Areas.Tools.Controllers
 
         public PartialViewResult Edit(int PkiUnderWriterSetupId)
         {
-            var underwriterSetupModel = UnderwriterSetupBAL.EditUnderwriterSetupbyID(PkiUnderWriterSetupId, ParlourId);
+            var underwriterSetupModel = UnderwriterSetupBAL.EditUnderwriterSetupbyID(PkiUnderWriterSetupId);
             return PartialView("~/Areas/Tools/Views/UnderwriterSetup/_UnderwriterSetupAddEdit.cshtml", underwriterSetupModel);
         }
 

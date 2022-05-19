@@ -79,7 +79,7 @@ namespace Funeral.Web.Tools
         }
         public void BindAddonProductToUpdate()
         {
-            AddonProductsModal model = ToolsSetingBAL.EditAddonProductbyID(ProductID, ParlourId);
+            AddonProductsModal model = ToolsSetingBAL.EditAddonProductbyID(ProductID);
             if (model == null)
             {
                 Response.Write("<script>alert('Sorry!you are not authorized to perform edit on this Branch.');</script>");

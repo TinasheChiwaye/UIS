@@ -1155,7 +1155,7 @@ namespace Funeral.DAL
             DbParameter[] ObjParam = new DbParameter[13];
             ObjParam[0] = new DbParameter("@pkiProductID", DbParameter.DbType.UniqueIdentifier, 0, model.pkiProductID);
             ObjParam[1] = new DbParameter("@ProductName", DbParameter.DbType.NVarChar, 0, model.ProductName);
-            ObjParam[2] = new DbParameter("@Parlourid", DbParameter.DbType.UniqueIdentifier, 0, model.parlourid);
+            ObjParam[2] = new DbParameter("@Parlourid", DbParameter.DbType.UniqueIdentifier, 0, model.SchemeID);
             ObjParam[3] = new DbParameter("@LastModified", DbParameter.DbType.DateTime, 0, model.LastModified);
             ObjParam[4] = new DbParameter("@ModifiedUser", DbParameter.DbType.NVarChar, 0, model.ModifiedUser);
             ObjParam[5] = new DbParameter("@DateCreated", DbParameter.DbType.DateTime, 0, model.DateCreated);
@@ -1189,11 +1189,11 @@ namespace Funeral.DAL
             ObjParam[1] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
             return DbConnection.GetDataReader(CommandType.StoredProcedure, "EditAddonProductbyID", ObjParam);
         }
-        public static DataTable EditAddonProductbyIDdt(Guid ID, Guid ParlourId)
+        public static DataTable EditAddonProductbyIDdt(Guid ID)
         {
-            DbParameter[] ObjParam = new DbParameter[2];
+            DbParameter[] ObjParam = new DbParameter[1];
             ObjParam[0] = new DbParameter("@ID", DbParameter.DbType.UniqueIdentifier, 0, ID);
-            ObjParam[1] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+            //ObjParam[1] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "EditAddonProductbyID", ObjParam);
         }
         public static int DeleteAddonProduct(Guid id)

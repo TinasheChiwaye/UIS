@@ -324,9 +324,9 @@ namespace Funeral.BAL
             DataTable dr = ToolsSetingDAL.GetAllAddonProductesdt(ParlourId);
             return FuneralHelper.DataTableMapToList<AddonProductsModal>(dr);
         }
-        public static AddonProductsModal EditAddonProductbyID(Guid ID, Guid ParlourId)
+        public static AddonProductsModal EditAddonProductbyID(Guid ID)
         {
-            DataTable dr = ToolsSetingDAL.EditAddonProductbyIDdt(ID, ParlourId);
+            DataTable dr = ToolsSetingDAL.EditAddonProductbyIDdt(ID);
             return FuneralHelper.DataTableMapToList<AddonProductsModal>(dr).FirstOrDefault();
         }
         public static int DeleteAddonProduct(Guid ID)

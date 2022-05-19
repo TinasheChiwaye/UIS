@@ -149,11 +149,11 @@ namespace Funeral.DAL
             ObjParam[1] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
             return DbConnection.GetDataReader(CommandType.StoredProcedure, "UnderWriterSetupSelect", ObjParam);
         }
-        public static DataTable EditUnderwriterSetupbyIDdt(int ID, Guid ParlourId)
+        public static DataTable EditUnderwriterSetupbyIDdt(int ID)
         {
-            DbParameter[] ObjParam = new DbParameter[2];
+            DbParameter[] ObjParam = new DbParameter[1];
             ObjParam[0] = new DbParameter("@ID", DbParameter.DbType.Int, 0, ID);
-            ObjParam[1] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+            //ObjParam[1] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "UnderWriterSetupSelect", ObjParam);
         }
 

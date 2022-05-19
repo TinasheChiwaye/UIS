@@ -1198,7 +1198,7 @@ namespace Funeral.Services
 
         public UnderwriterSetupModel EditUnderwriterSetupbyID(int ID, Guid ParlourId)
         {
-            return UnderwriterSetupBAL.EditUnderwriterSetupbyID(ID, ParlourId);
+            return UnderwriterSetupBAL.EditUnderwriterSetupbyID(ID);
         }
 
         #endregion

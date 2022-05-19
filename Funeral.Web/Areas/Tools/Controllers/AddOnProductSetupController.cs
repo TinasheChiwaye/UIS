@@ -39,6 +39,7 @@ namespace Funeral.Web.Areas.Tools.Controllers
             ViewBag.HasEditRight = HasEditRight;
             ViewBag.HasDeleteRight = HasDeleteRight;
             Model.Search.AddOnProductSearch search = new Model.Search.AddOnProductSearch();
+            BindCompanyList("Search");
             search.PageNum = 1;
             search.PageSize = 10;
             search.SarchText = string.Empty;
@@ -59,7 +60,7 @@ namespace Funeral.Web.Areas.Tools.Controllers
 
             try
             {
-                var addOnProductSetups = ToolsSetingBAL.GetAllAddonProductes(ParlourId);
+                var addOnProductSetups = ToolsSetingBAL.GetAllAddonProductes(search.CompanyId);
                 return Json(new SearchResult<Model.Search.AddOnProductSearch, AddonProductsModal>(search, addOnProductSetups, o => o.ProductName.Contains(search.SarchText) || o.ProductDesc.Contains(search.SarchText)));
             }
             catch (Exception ex)
@@ -70,26 +71,19 @@ namespace Funeral.Web.Areas.Tools.Controllers
         [FuneralAuth(PageId = 14, Right = new Rights[] { Rights.HasAdd})]
         public PartialViewResult Add(AddonProductsModal addOnProductSetup)
         {
-            //addOnProductSetup.parlourid = ParlourId;
+            addOnProductSetup.parlourid = ParlourId;
             BindCompanyList();
-
-            FormsIdentity id = (FormsIdentity)System.Web.HttpContext.Current.User.Identity;
-            FormsAuthenticationTicket ticket = id.Ticket;
-            string[] strData = ticket.UserData.Split('|');
-            if (strData.Count() > 0)
-                addOnProductSetup.parlourid = new Guid(string.IsNullOrEmpty(strData[0]) ? "00000000-0000-0000-0000-000000000000" : strData[0]);
-            else
-                addOnProductSetup.parlourid = new Guid("00000000-0000-0000-0000-000000000000");
-
+                       
             ModelState.Clear();
             return PartialView("~/Areas/Tools/Views/AddOnProductSetup/_AddOnProductSetupAddEdit.cshtml", addOnProductSetup);
         }
         [FuneralAuth(PageId = 14, Right = new Rights[] {Rights.HasEdit })]
         public PartialViewResult Edit(Guid productId)
         {
-            var addOnProductSetup = ToolsSetingBAL.EditAddonProductbyID(productId, ParlourId);            
+            var addOnProductSetup = ToolsSetingBAL.EditAddonProductbyID(productId);            
             addOnProductSetup.ProductCost = Convert.ToDecimal(addOnProductSetup.ProductCost.ToString("0.00"));
             addOnProductSetup.ProductCover = Convert.ToDecimal(addOnProductSetup.ProductCover.ToString("0.00"));
+            BindCompanyList();
             return PartialView("~/Areas/Tools/Views/AddOnProductSetup/_AddOnProductSetupAddEdit.cshtml", addOnProductSetup);
         }
         public ActionResult Update(Guid productId)

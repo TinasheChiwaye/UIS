@@ -81,6 +81,8 @@ namespace Funeral.Web.Tools
             if (!IsPostBack)
             {
                 BindUndewriterSetupList();
+                BindSchemeList();
+                BindSchemeListTable();
             }
         }
         protected void btnSubmit_Click(object sender, EventArgs e)
@@ -113,7 +115,8 @@ namespace Funeral.Web.Tools
 
 
                     Setupmodel.ModifiedDate = System.DateTime.Now;
-                    Setupmodel.Parlourid = ParlourId;
+                    Setupmodel.Parlourid = Guid.Parse(ddlSchemeList.SelectedValue);
+                    //Setupmodel.Parlourid = ParlourId;
                     Setupmodel.ModifiedBy = UserName;
                     Setupmodel.CreateddDate = System.DateTime.Now;
                     Setupmodel.CreatedBy = UserName;
@@ -214,11 +217,12 @@ namespace Funeral.Web.Tools
         public void BindUndewriterSetupToUpdate()
         {
             // UnderwriterPremiumModel model = client.EditPlanbyID(UnderwriterPremiumId, ParlourId);
-            UnderwriterSetupModel model = UnderwriterSetupBAL.EditUnderwriterSetupbyID(PkiUnderWriterSetupId, ParlourId);
+            //UnderwriterSetupModel model = UnderwriterSetupBAL.EditUnderwriterSetupbyID(PkiUnderWriterSetupId, ParlourId);
+            UnderwriterSetupModel model = UnderwriterSetupBAL.EditUnderwriterSetupbyID(PkiUnderWriterSetupId);
 
-            if ((model == null) || (model.Parlourid != ParlourId))
+            if ((model == null) || (model.Parlourid != Guid.Parse(ddlSchemeTableList.SelectedValue)))
             {
-                Response.Write("<script>alert('Sorry!you are not authorized to perform edit on this Plan.');</script>");
+                Response.Write("<script>alert('Sorry!you are not authorized to perform edit on this Underwriter.');</script>");
             }
             else
             {
@@ -279,6 +283,7 @@ namespace Funeral.Web.Tools
             TxtContactNumber.Text = string.Empty;
             TxtContactEmail.Text = string.Empty;
             txtFSPNNumber.Text = string.Empty;
+            //ddlSchemeList.SelectedValue = string.Empty;
 
         }
 
@@ -289,8 +294,21 @@ namespace Funeral.Web.Tools
         public void BindUndewriterSetupList()
         {
             gvUnderwriterSetup.PageSize = PageSize;
-            List<UnderwriterSetupModel> model = UnderwriterSetupBAL.SelectAllUnderwriterSetupByParlourId(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
-            gvUnderwriterSetup.DataSource = model;
+            //List<UnderwriterSetupModel> model = UnderwriterSetupBAL.SelectAllUnderwriterSetupByParlourId(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
+            if (ddlSchemeTableList.SelectedValue == string.Empty)
+            {
+                List<UnderwriterSetupModel> model = UnderwriterSetupBAL.SelectAllUnderwriterSetupByParlourId(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
+                gvUnderwriterSetup.DataSource = model;
+
+            }
+            else
+            {
+                List<UnderwriterSetupModel> model = UnderwriterSetupBAL.SelectAllUnderwriterSetupByParlourId(Guid.Parse(ddlSchemeTableList.SelectedValue), PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType);
+                gvUnderwriterSetup.DataSource = model;
+
+            }
+
+            //gvUnderwriterSetup.DataSource = model;
             gvUnderwriterSetup.DataBind();
         }
 
@@ -391,7 +409,72 @@ namespace Funeral.Web.Tools
             gvUnderwriterSetup.PageIndex = e.NewPageIndex;
             // BindPlanList();
         }
-       
+
+        public void BindSchemeList()
+        {
+            List<ApplicationSettingsModel> model = new List<ApplicationSettingsModel>();
+
+            if (this.IsAdministrator)
+            {
+                model = ToolsSetingBAL.GetAllApplicationList(ParlourId, 1, 0).ToList();
+
+                if (model == null)
+                {
+                    model.Add(new ApplicationSettingsModel() { ApplicationName = ApplicationName, parlourid = ParlourId });
+                }
+            }
+            else
+            {
+                model.Add(new ApplicationSettingsModel() { ApplicationName = ApplicationName, parlourid = ParlourId });
+            }
+
+
+
+            foreach (ApplicationSettingsModel society in model)
+            {
+                ListItem li = new ListItem();
+                li.Text = society.ApplicationName;
+                li.Value = society.parlourid.ToString();
+                ddlSchemeList.Items.Add(li);
+                //DDe_society.Items.Add(li);
+            }
+
+
+            //ViewBag.Companies = model;
+        }
+        public void BindSchemeListTable()
+        {
+            List<ApplicationSettingsModel> model = new List<ApplicationSettingsModel>();
+
+            if (this.IsAdministrator)
+            {
+                model = ToolsSetingBAL.GetAllApplicationList(ParlourId, 1, 0).ToList();
+
+                if (model == null)
+                {
+                    model.Add(new ApplicationSettingsModel() { ApplicationName = ApplicationName, parlourid = ParlourId });
+                }
+            }
+            else
+            {
+                model.Add(new ApplicationSettingsModel() { ApplicationName = ApplicationName, parlourid = ParlourId });
+            }
+
+
+
+            foreach (ApplicationSettingsModel society in model)
+            {
+                ListItem li = new ListItem();
+                li.Text = society.ApplicationName;
+                li.Value = society.parlourid.ToString();
+                ddlSchemeTableList.Items.Add(li);
+                //DDe_society.Items.Add(li);
+            }
+
+
+            //ViewBag.Companies = model;
+        }
+
 
     }
 }

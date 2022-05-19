@@ -13,15 +13,15 @@
                 </div>
                 <div class="ibox-content">
                     <div class="row">
-                        <div class="col-lg-1" id="dvAdministrator">
+                        <div class="col-lg-4" id="dvAdministrator">
                             <div class="form-group">
-                                <label>Show entries</label>
-                                @Html.DropDownListFor(m => m.PageSize, new SelectList(ViewBag.EntriesCount, "Value", "Key"), new { @class = "form-control" })
+                                <label>Scheme: </label>
+                                @Html.DropDownListFor(m => m.CompanyId, new SelectList(ViewBag.Companies, "parlourid", "ApplicationName"), "Select Scheme", new { @class = "form-control" })
                             </div>
                         </div>
-                        <div class="col-sm-5 col-sm-offset-6">
+                        <div class="col-sm-6 col-sm-offset-2">
                             <div class="form-group">
-                                <label>Search Branch:</label>
+                                <label>Search Supplementary Benefits:</label>
                                 <div class="input-group">
                                     @Html.TextBoxFor(m => m.SarchText, null, new { @class = "form-control", @maxlength = "50", placeholder = "Search by keyword" })
                                     <span class="input-group-btn">
@@ -30,6 +30,14 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4" id="dvAdministrator">
+                            <div class="form-group">
+                                <label>Show entries</label>
+                                @Html.DropDownListFor(m => m.PageSize, new SelectList(ViewBag.EntriesCount, "Value", "Key"), new { @class = "form-control" })
+                            </div>
+                        </div>                        
                     </div>
                     <div class="row">
                         <div class="col-sm-9">
@@ -96,6 +104,7 @@
             var pageNum =@Html.Raw(Json.Encode(@Model.PageNum));
             var pageSize =@Html.Raw(Json.Encode(@Model.PageSize));
             var searchText =@Html.Raw(Json.Encode(@Model.SarchText));
+            var companyId = @Html.Raw(Json.Encode(@Model.CompanyId));
 
             DOMIDs.Datatable = "addOnProductSetupDataTable";
             tableConfigs.SearchUrls = '@Url.Action("SearchData", "AddOnProductSetup", new { }, Request.Url.Scheme)';
@@ -148,6 +157,7 @@
             model1.PageNum = 1;
             model1.PageSize = jQuery('#PageSize').val();
             model1.SarchText = jQuery("#SarchText").val();
+            model1.CompanyId = jQuery('#CompanyId').val();
             jQuery("#PageNum1").val(model1.PageNum);
         }
 
