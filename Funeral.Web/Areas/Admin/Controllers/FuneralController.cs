@@ -434,34 +434,51 @@ namespace Funeral.Web.Areas.Admin.Controllers
             //}
 
         }
+        //public ActionResult PrintForm(int funId)
+        //{
+            
+        //    FuneralListVM printObj = new FuneralListVM();
+
+        //    FuneralPaymentsModel funeralPayments = new FuneralPaymentsModel();
+        //    funeralPayments = MemberPaymentBAL.FuneralPaymentList(ParlourId, funId);
+
+        //    ApplicationSettingsModel model = new ApplicationSettingsModel();
+        //    model = ToolsSetingBAL.GetApplictionByParlourID(ParlourId);
+
+        //    printObj.BusinessAddressLine1 = model.BusinessAddressLine1;
+        //    printObj.BusinessAddressLine2 = model.BusinessAddressLine2;
+        //    printObj.BusinessAddressLine3 = model.BusinessAddressLine3;
+        //    printObj.BusinessPostalCode = model.BusinessPostalCode;
+        //    //printObj.FSBNumber = "FSB Number: " + model.FSBNumber;
+        //    printObj.telephoneNumber = model.ManageTelNumber + " | " + model.ManageCellNumber;
+        //    printObj.InvoiceID = funeralPayments.InvoiceID;
+        //    //printObj.PolicyNumber = funeralPayments.;
+        //    printObj.MonthPaid = funeralPayments.DatePaid.ToString("MMMM");
+        //    printObj.DatePaid = funeralPayments.DatePaid;
+        //    printObj.AmountPaid = Math.Round(funeralPayments.AmountPaid, 2);
+        //    printObj.PaidBy = funeralPayments.PaidBy;
+        //    printObj.RecievedBy = funeralPayments.RecievedBy;
+        //    printObj.ParlourName = ApplicationName;
+        //    printObj.TimePrinted = Convert.ToString(System.DateTime.Now);
+        //    //FuneralBAL.SelectServiceByFuneralID
+
+        //    return View(printObj);
+        //}
         public ActionResult PrintForm(int funId)
         {
-            
-            FuneralListVM printObj = new FuneralListVM();
+            FuneralServiceVM quotationServiceVM = new FuneralServiceVM();
+            quotationServiceVM.Currency = Currency;
+            quotationServiceVM.TaxSettings = TaxSettingBAL.GetAllTaxSettings().Select(f => new SelectListItem { Text = f.TaxText, Value = f.TaxValue.ToString() }).ToList();
+            quotationServiceVM.ApplicationSettings = ToolsSetingBAL.GetApplictionByParlourID(ParlourId);
+            quotationServiceVM.ServiceType = QuotationBAL.GetAllQuotationServices(ParlourId).Select(f => new SelectListItem { Text = f.ServiceName, Value = f.pkiServiceID.ToString() }).ToList();
+            quotationServiceVM.objFuneralModel = FuneralBAL.SelectFuneralBypkid(funId, ParlourId);
+            quotationServiceVM.ServiceList = FuneralBAL.SelectServiceByFuneralID(funId);
+            //quotationServiceVM.QuotationMessageModel = QuotationBAL.SelectQuotationMessageByID(qutId);
+            quotationServiceVM.GetAllPackage = FuneralPackageBAL.SelectPackage(ParlourId).Select(f => new SelectListItem { Text = f.PackageName, Value = f.pkiPackageID.ToString() }).ToList();
+            quotationServiceVM.ModelBankDetails = ToolsSetingBAL.GetBankingByID(ParlourId);
+            quotationServiceVM.ModelTermsAndCondition = ToolsSetingBAL.SelectApplicationTermsAndCondition(ParlourId);
 
-            FuneralPaymentsModel funeralPayments = new FuneralPaymentsModel();
-            funeralPayments = MemberPaymentBAL.FuneralPaymentList(ParlourId, funId);
-
-            ApplicationSettingsModel model = new ApplicationSettingsModel();
-            model = ToolsSetingBAL.GetApplictionByParlourID(ParlourId);
-
-            printObj.BusinessAddressLine1 = model.BusinessAddressLine1;
-            printObj.BusinessAddressLine2 = model.BusinessAddressLine2;
-            printObj.BusinessAddressLine3 = model.BusinessAddressLine3;
-            printObj.BusinessPostalCode = model.BusinessPostalCode;
-            //printObj.FSBNumber = "FSB Number: " + model.FSBNumber;
-            printObj.telephoneNumber = model.ManageTelNumber + " | " + model.ManageCellNumber;
-            printObj.InvoiceID = funeralPayments.InvoiceID;
-            //printObj.PolicyNumber = funeralPayments.;
-            printObj.MonthPaid = funeralPayments.DatePaid.ToString("MMMM");
-            printObj.DatePaid = funeralPayments.DatePaid;
-            printObj.AmountPaid = Math.Round(funeralPayments.AmountPaid, 2);
-            printObj.PaidBy = funeralPayments.PaidBy;
-            printObj.RecievedBy = funeralPayments.RecievedBy;
-            printObj.ParlourName = ApplicationName;
-            printObj.TimePrinted = Convert.ToString(System.DateTime.Now);
-
-            return View(printObj);
+            return View(quotationServiceVM);
         }
 
         public ActionResult PaymentHistory(int FuneralId)

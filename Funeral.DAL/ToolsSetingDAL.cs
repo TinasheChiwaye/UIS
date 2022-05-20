@@ -467,7 +467,7 @@ namespace Funeral.DAL
         public static DataTable SaveBankingDetaildt(BankingDetailSending Model)
         {
             AdditionalMemberInfoModel model1 = new AdditionalMemberInfoModel();
-            DbParameter[] ObjParam = new DbParameter[9];
+            DbParameter[] ObjParam = new DbParameter[15];
             ObjParam[0] = new DbParameter("@AccountHolder", DbParameter.DbType.NVarChar, 0, Model.AccountHolder);
             ObjParam[1] = new DbParameter("@Bankname", DbParameter.DbType.NVarChar, 0, Model.Bankname);
             ObjParam[2] = new DbParameter("@AccountNumber", DbParameter.DbType.NVarChar, 0, Model.AccountNumber);
@@ -478,8 +478,14 @@ namespace Funeral.DAL
             ObjParam[7] = new DbParameter("@LastModified", DbParameter.DbType.DateTime, 0, Model.LastModified);
             ObjParam[8] = new DbParameter("@ModifiedUser", DbParameter.DbType.NVarChar, 0, Model.ModifiedUser);
 
+            ObjParam[9] = new DbParameter("@Funeral_AccountHolder", DbParameter.DbType.NVarChar, 0, Model.Funeral_AccountHolder);
+            ObjParam[10] = new DbParameter("@Funeral_Bankname", DbParameter.DbType.NVarChar, 0, Model.Funeral_Bankname);
+            ObjParam[11] = new DbParameter("@Funeral_AccountNumber", DbParameter.DbType.NVarChar, 0, Model.Funeral_AccountNumber);
+            ObjParam[12] = new DbParameter("@Funeral_Accounttype", DbParameter.DbType.NVarChar, 0, Model.Funeral_Accounttype);
+            ObjParam[13] = new DbParameter("@Funeral_Branch", DbParameter.DbType.NVarChar, 0, Model.Funeral_Branch);
+            ObjParam[14] = new DbParameter("@Funeral_Branchcode", DbParameter.DbType.NVarChar, 0, Model.Funeral_Branchcode);
 
-            return DbConnection.GetDataTable(CommandType.StoredProcedure, "SaveBankingDetail", ObjParam);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "SaveBankingDetail_New", ObjParam);
         }
         public static SqlDataReader GetUserAccessByID(int ID, Guid ParlourId)
         {

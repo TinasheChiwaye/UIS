@@ -327,6 +327,13 @@ namespace Funeral.Web.Tools
                     txtaccounttype.Text = Modelbank.Accounttype;
                     txtbranch.Text = Modelbank.Branch;
                     txtbranchcode.Text = Modelbank.Branchcode;
+
+                    txtFuneralAccountholder.Text = Modelbank.Funeral_AccountHolder;
+                    txtFuneralBankname.Text = Modelbank.Funeral_Bankname;
+                    txtFuneralAccountNumber.Text = Modelbank.Funeral_AccountNumber;
+                    txtFuneralAccountType.Text = Modelbank.Funeral_Accounttype;
+                    txtFuneralBranch.Text = Modelbank.Funeral_Branch;
+                    txtFuneralBranchCode.Text = Modelbank.Funeral_Branchcode;
                 }
                 ApplicationTnCModel ModelTnc;
                 ModelTnc = ToolsSetingBAL.SelectApplicationTermsAndCondition(modelCompany.parlourid);
@@ -484,6 +491,13 @@ namespace Funeral.Web.Tools
                     txtbranch.Text = Modelbank.Branch;
                     txtbranchcode.Text = Modelbank.Branchcode;
 
+                    txtFuneralAccountholder.Text = Modelbank.Funeral_AccountHolder;
+                    txtFuneralBankname.Text = Modelbank.Funeral_Bankname;
+                    txtFuneralAccountNumber.Text = Modelbank.Funeral_AccountNumber;
+                    txtFuneralAccountType.Text = Modelbank.Funeral_Accounttype;
+                    txtFuneralBranch.Text = Modelbank.Funeral_Branch;
+                    txtFuneralBranchCode.Text = Modelbank.Funeral_Branchcode;
+
                 }
 
                 ApplicationTnCModel ModelTnc;
@@ -566,6 +580,12 @@ namespace Funeral.Web.Tools
             txtTncTombstone.Text = string.Empty;
             txtVatNo.Text = string.Empty;
             txtPolicyDeclaration.Text = string.Empty;
+            txtFuneralAccountholder.Text = string.Empty;
+            txtFuneralBankname.Text = string.Empty;
+            txtFuneralAccountNumber.Text = string.Empty;
+            txtFuneralAccountType.Text = string.Empty;
+            txtFuneralBranch.Text = string.Empty;
+            txtFuneralBranchCode.Text = string.Empty;
         }
 
         #endregion
@@ -792,6 +812,12 @@ namespace Funeral.Web.Tools
                 Model.LastModified = System.DateTime.Now;
                 Model.ModifiedUser = UserName;
                 Model.parlourid = retID;
+                Model.Funeral_AccountHolder = txtFuneralAccountholder.Text;
+                Model.Funeral_Bankname = txtFuneralBankname.Text;
+                Model.Funeral_AccountNumber = txtFuneralAccountNumber.Text;
+                Model.Funeral_Accounttype = txtFuneralAccountType.Text;
+                Model.Funeral_Branch = txtFuneralBranch.Text;
+                Model.Funeral_Branchcode = txtFuneralBranchCode.Text;
 
 
                 Model = ToolsSetingBAL.SaveBankingDetail(Model);
@@ -809,6 +835,7 @@ namespace Funeral.Web.Tools
                 objtc.TermsAndConditionTombstone = txtTncTombstone.Text;
                 objtc.QuotationTermsAndCondition = txtTncQuotation.Text;
                 objtc.Declaration = txtPolicyDeclaration.Text;
+                
                 int a = ToolsSetingBAL.SaveTermsAndCondition(objtc);
 
 

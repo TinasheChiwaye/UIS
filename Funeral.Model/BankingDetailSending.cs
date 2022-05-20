@@ -46,5 +46,23 @@ namespace Funeral.Model
         public DateTime LastModified { get; set; }
 
         public string ModifiedUser { get; set; }
+
+        [Required(ErrorMessage = "Please enter Account Holder")]
+        public string Funeral_AccountHolder { get; set; }
+
+        [Required(ErrorMessage = "Please enter Bank name")]
+        public string Funeral_Bankname { get; set; }
+
+        [Required(ErrorMessage = "Please enter Account Number")]
+        public string Funeral_AccountNumber { get; set; }
+
+        [Required(ErrorMessage = "Please enter Account type")]
+        public string Funeral_Accounttype { get; set; }
+
+        [Required(ErrorMessage = "Please enter Branch")]
+        public string Funeral_Branch { get; set; }
+
+        [Required(ErrorMessage = "Please enter Branch code")]
+        public string Funeral_Branchcode { get; set; }
     }
 }

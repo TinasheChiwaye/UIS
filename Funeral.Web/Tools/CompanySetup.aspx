@@ -325,6 +325,55 @@
                 </div>
             </div>
         </div>
+
+
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>Funeral Bank Details</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Account Holder <em>*</em> </label>
+                                <asp:TextBox MaxLength="50" runat="server" ID="txtFuneralAccountholder" name="CompanyName" type="text" class="form-control"></asp:TextBox>
+                                <asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtaccountholder" ID="RequiredFieldValidator4" ForeColor="red" runat="server" ErrorMessage="Please enter Account Holder"></asp:RequiredFieldValidator>
+                            </div>
+                            <div class="form-group">
+                                <label>Bank name<em>*</em>  </label>
+                                <asp:TextBox MaxLength="50" runat="server" ID="txtFuneralBankname" name="RegistrationNumber" type="text" class="form-control"></asp:TextBox>
+                                <asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtbankname" ID="RequiredFieldValidator5" ForeColor="red" runat="server" ErrorMessage="Please enter Bank name"></asp:RequiredFieldValidator>
+                            </div>
+                            <div class="form-group">
+                                <label>Account Number <em>*</em> </label>
+                                <asp:TextBox MaxLength="25" runat="server" ID="txtFuneralAccountNumber" name="FsbNumber" type="text" class="form-control"></asp:TextBox>
+                                <asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtaccountnumber" ID="RequiredFieldValidator7" ForeColor="red" runat="server" ErrorMessage="Please enter Account Number"></asp:RequiredFieldValidator>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Account type  <em>*</em> </label>
+                                <asp:TextBox MaxLength="50" runat="server" ID="txtFuneralAccountType" name="Email" type="text" class="form-control"></asp:TextBox>
+                                <asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtaccounttype" ID="RequiredFieldValidator8" ForeColor="red" runat="server" ErrorMessage="Please enter Account type"></asp:RequiredFieldValidator>
+                            </div>
+                            <div class="form-group">
+                                <label>Branch <em>*</em> </label>
+                                <asp:TextBox MaxLength="50" runat="server" ID="txtFuneralBranch" name="TelePhone" type="text" class="form-control"></asp:TextBox>
+                                <asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtbranch" ID="RequiredFieldValidator20" ForeColor="red" runat="server" ErrorMessage="Please enter Branch"></asp:RequiredFieldValidator>
+                            </div>
+                            <div class="form-group">
+                                <label>Branch code <em>*</em> </label>
+                                <asp:TextBox MaxLength="25" runat="server" ID="txtFuneralBranchCode" name="Funeral_Cellphone" type="text" class="form-control"></asp:TextBox>
+                                <asp:RequiredFieldValidator Display="None" ValidationGroup="CompanySetup" ControlToValidate="txtbranchcode" ID="RequiredFieldValidator21" ForeColor="red" runat="server" ErrorMessage="Please enter Branch code"></asp:RequiredFieldValidator>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <div class="col-lg-12">
             <div class="ibox ">
                 <div class="ibox-title">

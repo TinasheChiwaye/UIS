@@ -59,8 +59,6 @@
                                             </span>
                                         </div>
 
-
-
                                     </td>
                                 </tr>
                                 <tr>
@@ -168,7 +166,6 @@
                         </table>
                     </div>
                 </header>
-
                 <h1></h1>
                 <div id="company" class="clearfix" style="text-align: right">
                     <div>
@@ -192,7 +189,6 @@
                 </div>
                 <h2>To</h2>
                 <div id="project2">
-
                     <div>
                         <span>
                             <span id="lblName">@Model.objFuneralModel.ContactPerson &nbsp; @Model.objFuneralModel.FullNames</span>
@@ -226,9 +222,7 @@
                 </div>
                 <br>
                 <br>
-
                 <h1></h1>
-
 
                 <table border="1" style="font-size:12px !important;">
                     <thead>
@@ -329,29 +323,27 @@
                         </tr>
                     </tbody>
                 </table>
-
             </div>
-
             <br>
             <h1></h1>
-
             <div id="notices">
-
                 <div>NOTES:</div>
                 <div class="notice">
                     <span id="lblNotes"></span>
                 </div>
             </div>
-
             <hr>
             <div>Terms and Conditions:</div>
             <div class="notice">
                 <span id="lblTNC">@Model.ModelTermsAndCondition.TermsAndCondition</span>
             </div>
             <br>
-
             <h1></h1>
-            <div>Bank Details</div>
+            @*<div>Bank Details</div>
+            <div class="form-group pull-rigt">Bank Details</div>*@
+
+            <label>Bank Details</label>
+            <label style="display: inline-block;width: auto;text-align: right;float: right;">Funeral Bank Details</label>
             <hr>
             <div class="notice">
                 <table style="width: 100%; font-size:12px;">
@@ -365,19 +357,16 @@
                                 <b>Branch 	:</b>@Model.ModelBankDetails.Branch<br>
                                 <b>Branch code 	:</b>@Model.ModelBankDetails.Branchcode<br>
                             </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div>
-                                    <span id="lblMsg1"></span>
-                                </div>
+                            <td style="text-align: right;">
+                                <b>Account Holder 	:</b>@Model.ModelBankDetails.Funeral_AccountHolder<br>
+                                <b>Bank name 	:</b>@Model.ModelBankDetails.Funeral_Bankname<br>
+                                <b>Account Number 	:</b>@Model.ModelBankDetails.Funeral_AccountNumber<br>
+                                <b>Account type 	:</b>@Model.ModelBankDetails.Funeral_Accounttype<br>
+                                <b>Branch 	:</b>@Model.ModelBankDetails.Funeral_Branch<br>
+                                <b>Branch code 	:</b>@Model.ModelBankDetails.Funeral_Branchcode<br>
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                <span id="lblMsg2"></span>
-                            </td>
-                        </tr>
+
                         <tr>
                             <td>
                                 <footer>
