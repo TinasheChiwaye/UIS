@@ -264,8 +264,9 @@
                 <div class="pull-right">
                     <div class="btn-group">
                         <input type="submit" id="btnCopy" style="margin-right: 12px; margin-top: -5px;display:none" class="btn btn-sm btn-primary" value="CopyPolicy">
+                        <a onclick="SendReportEmail('@Model.Member.pkiMemberID')" name="btnViewPayments" value="" id="btnViewPayments" class="btn btn-sm btn-primary pull-right m-t-n-xs fa fa-envelope" style="display:inline;padding:7.5px;margin-left:1px;"></a>
                         <input type="submit" style="display:inline; margin-left:11px; font-size:12px" id="PolicyDoc" class="btn btn-sm btn-primary pull-right m-t-n-xs" value="Policy Document" onclick="location.href='@Url.Action("btnPolicyDoc", "Members")'">
-                        <input type="submit" style="display:inline; font-size:10.7px" id="PolicyDoc" class="btn btn-sm btn-primary pull-right m-t-n-xs" value="Participation Certificate" onclick="location.href='@Url.Action("btnParticipationCertificate", "Members")'">
+                        <input type="submit" style="display:inline; font-size:11px" id="PolicyDoc" class="btn btn-sm btn-primary pull-right m-t-n-xs" value="Participation Certificate" onclick="location.href='@Url.Action("btnParticipationCertificate", "Members")'">
                     </div>
                 </div>
             </div>
@@ -2429,7 +2430,7 @@
                 PolicyPremium: $("#tab-3 #txtPolicyPremium").val(),
                 PolicyPremium: $("#tab-3 #txtPolicyCoverAmount").val(),
                 Branch: $("#tab-4 #txtBankBranch").val(), //$("#ddlBankBranch :selected").text()
-                
+
 
 
             };
@@ -5010,7 +5011,7 @@
                 $("#tab-1 input[name=gender][value=1]").prop('checked', true);
             } else {
                 $("#tab-1 input[name=gender][value=0]").prop('checked', true);
-            } 
+            }
             CalculateAge(fullDate);
         }
         else {
@@ -5758,4 +5759,85 @@
             }
         });
     });
+
+
+    function PaymentHistory(funeralID) {
+
+        jQuery("#ucPaymentHistory").modal({
+            show: 'true'
+        });
+        data = {
+            FuneralId: funeralID
+        }
+        $.ajax({
+            url: '@Url.Action("PaymentHistory","Funeral")',
+            data: data,
+            type: "Get",
+        })
+        .success(function (result) {
+            if (result.FunerlaPaymentList != null) {
+                var test = "";
+                for (var i = 0; i < result.FunerlaPaymentList.length; i++) {
+                    test += "<tr>";
+                    var data = result.FunerlaPaymentList[i].DatePaid;
+
+                    var date = new Date(parseInt(data.replace('/Date(', '')));
+                    date = dateFormat(date, dateFormat.masks.isoDate, true);
+                    test += "<td class='visible-lg'>" + date.toString("dd-mm-yyyy") + "</td>";
+                    test += "<td align='right'>" + result.FunerlaPaymentList[i].AmountPaid + "</td>";
+                    test += "<td class='visible-lg'>" + result.FunerlaPaymentList[i].RecievedBy + "</td>";
+                    test += "<td class='visible-lg'>" + result.FunerlaPaymentList[i].Notes + "</td>";
+                    test += "<td class='visible-lg'>&nbsp;<a id='ucPaymenthistory' title='Click here Print' target='_blank' href='" + '@Url.Action("PrintForm","Funeral")' + "'><i class='glyphicon glyphicon-print'></i></a></td>";
+                    test += "</tr>";
+                    $("#tbodyPaymentHistory").html(test);
+
+
+                }
+
+            } else {
+
+            }
+        })
+            .error(function (xhr, status) {
+                alert(status);
+            })
+    }
+
+    @*function SendReportEmail(GetParlourId, referenceNumber) {
+            var GetUrl = "@Url.Action("SendEmailReportPartial","SchemaPayment",new {ParlourId="GetParlourId",ReferenceNumber="getreferenceNumber"})".replace("GetParlourId", GetParlourId).replace("getreferenceNumber", referenceNumber).replace("amp;","");;
+            jQuery.ajax({
+                url: GetUrl,
+                type: 'GET',
+                cache: false,
+            }).done(function (result) {
+                jQuery('#LoadPartialView_ManageClaims').empty().html(result);
+                jQuery("#RegenerateBillingModalPopUp").modal("show");
+                jQuery('.modal-backdrop').removeClass("modal-backdrop");
+                $(".DatepickerSelection").datepicker({
+                    format: 'dd M yyyy',
+                    setDate: new Date(),
+                    autoclose: true,
+                    onSelect: function (dateText) { $(this).change(); }
+                }).on("change", function () { });
+            });
+    }*@
+
+    function SendReportEmail(referenceNumber) {
+        var GetUrl = "@Url.Action("SendEmailReportPartial","Members",new {ReferenceNumber="getreferenceNumber"})".replace("getreferenceNumber", referenceNumber).replace("amp;", "");;
+            jQuery.ajax({
+                url: GetUrl,
+                type: 'GET',
+                cache: false,
+            }).done(function (result) {
+                jQuery('#LoadPartialView_ManageClaims').empty().html(result);
+                jQuery("#RegenerateBillingModalPopUp").modal("show");
+                jQuery('.modal-backdrop').removeClass("modal-backdrop");
+                $(".DatepickerSelection").datepicker({
+                    format: 'dd M yyyy',
+                    setDate: new Date(),
+                    autoclose: true,
+                    onSelect: function (dateText) { $(this).change(); }
+                }).on("change", function () { });
+            });
+        }
 </script>

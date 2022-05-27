@@ -17,6 +17,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using Funeral.Web.niws_validation;
+using System.Net.Mail;
 
 //using Funeral.Model.Search;
 
@@ -2085,6 +2086,106 @@ namespace Funeral.Web.Areas.Admin.Controllers
             //return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+
+        [HttpGet]
+        public ActionResult SendEmailReportPartial()
+        {
+            ReportParameters modal = new ReportParameters();
+            modal.parlourId = ParlourId;
+            modal.fromDate = DateTime.Now;
+            modal.toDate = DateTime.Now;
+            modal.ReferenceNumber = MemburNumber;
+            return PartialView("_ReportEmailSendModal", modal);
+        }
+        [HttpPost]
+        public ActionResult SendEmailReport(ReportParameters modal)
+        {
+            if (ModelState.IsValid)
+            {
+                string ExportTypeExtensions = "pdf";
+                modal.ReportName = "Policy Doc";
+                Warning[] warnings;
+                string[] streamids;
+                string mimeType;
+                string encoding;
+                string extension;
+                string filename;
+
+                ReportViewer rpw = new ReportViewer();
+                rpw.ProcessingMode = ProcessingMode.Remote;
+                IReportServerCredentials irsc = new MyReportServerCredentials();
+                rpw.ServerReport.ReportServerCredentials = irsc;
+
+
+                rpw.ProcessingMode = ProcessingMode.Remote;
+                rpw.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
+                rpw.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/" + modal.ReportName;
+                ReportParameterCollection reportParameters = new ReportParameterCollection();
+                //reportParameters.Add(new ReportParameter("DateFrom", modal.fromDate.ToString("yyyy/MM/dd")));
+                //reportParameters.Add(new ReportParameter("DateTo", modal.toDate.ToString("yyyy/MM/dd")));
+                reportParameters.Add(new ReportParameter("Parlourid", modal.parlourId.ToString()));
+                reportParameters.Add(new ReportParameter("MemberID", modal.ReferenceNumber.ToString()));
+                rpw.ServerReport.SetParameters(reportParameters);
+                byte[] bytes = rpw.ServerReport.Render("Excel", null, out mimeType, out encoding, out extension, out streamids, out warnings);
+                filename = string.Format("{0}.{1}", modal.ReportName, ExportTypeExtensions);
+
+                ///---------------------
+                //Warning[] warnings;
+                //string[] streamids;
+                //string mimeType;
+                //string encoding;
+                ////string filenameExtension;
+                //string filename;
+                //string result;
+
+                //ReportViewer rpw = new ReportViewer();
+                //rpw.ProcessingMode = ProcessingMode.Remote;
+                //IReportServerCredentials irsc = new MyReportServerCredentials();
+                //rpw.ServerReport.ReportServerCredentials = irsc;
+
+                //rpw.ProcessingMode = ProcessingMode.Remote;
+                //rpw.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
+                //rpw.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/Policy Doc";
+                //ReportParameterCollection reportParameters = new ReportParameterCollection();
+
+                //reportParameters.Add(new ReportParameter("MemberID", MemburNumber.ToString()));
+                //reportParameters.Add(new ReportParameter("Parlourid", CurrentParlourId.ToString()));
+                //rpw.ServerReport.SetParameters(reportParameters);
+                //string ExportTypeExtensions = "pdf";
+                //byte[] bytes = rpw.ServerReport.Render(ExportTypeExtensions, null, out mimeType, out encoding, out ExportTypeExtensions, out streamids, out warnings);
+                //filename = string.Format("{0}.{1}", "Policy Doc", ExportTypeExtensions);
+
+                //Response.ClearHeaders();
+                //Response.Clear();
+                //Response.AddHeader("Content-Disposition", "attachment;filename=" + filename);
+                //Response.ContentType = mimeType;
+                //Response.BinaryWrite(bytes);
+                //Response.Flush();
+                //Response.End();
+                //result = "true";
+                ///
+                ///
+
+
+                if (!string.IsNullOrEmpty(modal.Email))
+                {
+                    MemoryStream s = new MemoryStream(bytes);
+                    s.Seek(0, SeekOrigin.Begin);
+                    Attachment a = new Attachment(s, filename);
+                    MailMessage message = new MailMessage(ConfigurationManager.AppSettings["ReportEmailSenderId"].ToString().Trim(), modal.Email.Trim(), modal.ReportName, "");
+                    message.Attachments.Add(a);
+                    SmtpClient client = new SmtpClient();
+                    client.Send(message);
+                    TempData["message"] = ShowMessage(MessageType.Success, "Email Sent Successfully");
+                }
+                else
+                {
+                    TempData["message"] = ShowMessage(MessageType.Success, "Please Enter Email");
+                }
+            }
+
+            return Redirect(Request.UrlReferrer.ToString());
+        }
         //=================TEST
         //public JsonResult BindPlanByCompanyId(Guid CompanyId)
         //{

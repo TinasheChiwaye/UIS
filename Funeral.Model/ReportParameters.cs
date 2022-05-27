@@ -10,5 +10,6 @@ namespace Funeral.Model
         public DateTime toDate { get; set; }
         public string ReferenceNumber { get; set; }
         public string Email { get; set; }
+
     }
 }
