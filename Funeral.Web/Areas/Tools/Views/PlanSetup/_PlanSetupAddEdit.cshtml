@@ -352,15 +352,15 @@
         msg += '<tr><td>';
         msg += '<input data-val="false" name="planCreators['+rowCount+'].PlanCreatorId" type="hidden" value="0">';
         msg += '<select class="form-control usertypeDropdown"   name="planCreators['+rowCount+'].UserTypeId"><span class="field-validation-valid text-danger" data-valmsg-for="planCreators['+rowCount+'].UserTypeId" data-valmsg-replace="true" style="font-weight:bold"></span></select></td>';
-        msg += ' <td><select class="form-control AgeDropdown"  name="planCreators['+rowCount+'].FromAge"><span class="field-validation-valid text-danger" data-valmsg-for="planCreators['+rowCount+'].AgeFrom" data-valmsg-replace="true" style="font-weight:bold"></span></select></td>';
-        msg += '<td><select class="form-control AgeDropdown"  name="planCreators['+rowCount+'].ToAge"><span class="field-validation-valid text-danger" data-valmsg-for="planCreators['+rowCount+'].AgeTo" data-valmsg-replace="true" style="font-weight:bold"></span></select></td>';
+        msg += ' <td><select class="form-control AgeDropdown"  name="planCreators['+rowCount+'].AgeFrom"><span class="field-validation-valid text-danger" data-valmsg-for="planCreators['+rowCount+'].AgeFrom" data-valmsg-replace="true" style="font-weight:bold"></span></select></td>';
+        msg += '<td><select class="form-control AgeDropdown"  name="planCreators['+rowCount+'].AgeTo"><span class="field-validation-valid text-danger" data-valmsg-for="planCreators['+rowCount+'].AgeTo" data-valmsg-replace="true" style="font-weight:bold"></span></select></td>';
         msg += '<td><input type="number" class="form-control" type="number" placeholder="Enter Cover Amount"  value="0"  name="planCreators['+rowCount+'].Cover" required/><span class="field-validation-valid text-danger" data-valmsg-for="planCreators['+rowCount+'].Cover" data-valmsg-replace="true" style="font-weight:bold"></span></td>';
         msg += '<td><input type="number" class="form-control" type="number" placeholder="Enter Premium Amount" value="0"  name="planCreators['+rowCount+'].Premium" required/><span class="field-validation-valid text-danger" data-valmsg-for="planCreators['+rowCount+'].Premium" data-valmsg-replace="true" style="font-weight:bold"></span></td>';
         msg += '<td><input type="number" class="form-control" type="number" placeholder="Enter Underwriter Cover Amount" value="0"  name="planCreators['+rowCount+'].UnderwriterCover" required/><span class="field-validation-valid text-danger" data-valmsg-for="planCreators['+rowCount+'].UnderwriterCover" data-valmsg-replace="true" style="font-weight:bold"></span></td>';
         msg += '<td><input type="number" class="form-control" type="number" placeholder="Enter Underwriter Premium Amount" value="0"  name="planCreators[' + rowCount + '].UnderwriterPremium"  required/><span class="field-validation-valid text-danger" data-valmsg-for="planCreators[' + rowCount + '].UnderwriterPremium" data-valmsg-replace="true" style="font-weight:bold"></span></td>';
 
-        msg += '<td><input type="number" class="form-control" type="number" placeholder="Enter Reinsurance Premium Amount" value="0"  name="planCreators[' + rowCount + '].ReinsurancePremium"  required/><span class="field-validation-valid text-danger" data-valmsg-for="planCreators[' + rowCount + '].ReinsurancePremium" data-valmsg-replace="true" style="font-weight:bold"></span></td>';
-        msg += '<td><input type="number" class="form-control" type="number" placeholder="Enter Office Premium Amount" value="0"  name="planCreators['+rowCount+'].OfficePremium"  required/><span class="field-validation-valid text-danger" data-valmsg-for="planCreators['+rowCount+'].OfficePremium" data-valmsg-replace="true" style="font-weight:bold"></span></td>';
+        //msg += '<td><input type="number" class="form-control" type="number" placeholder="Enter Reinsurance Premium Amount" value="0"  name="planCreators[' + rowCount + '].ReinsurancePremium"  required/><span class="field-validation-valid text-danger" data-valmsg-for="planCreators[' + rowCount + '].ReinsurancePremium" data-valmsg-replace="true" style="font-weight:bold"></span></td>';
+        //msg += '<td><input type="number" class="form-control" type="number" placeholder="Enter Office Premium Amount" value="0"  name="planCreators['+rowCount+'].OfficePremium"  required/><span class="field-validation-valid text-danger" data-valmsg-for="planCreators['+rowCount+'].OfficePremium" data-valmsg-replace="true" style="font-weight:bold"></span></td>';
 
         msg += '<td><input type="button"  placeholder="Header" value="Delete" class="btn btn-danger DeleteDynamicRow" />';
           msg+='<input class="TableRawStatus" data-val="true" data-val-required="The TableRawStatus field is required." id="planCreators_'+rowCount+'__TableRawStatus" name="planCreators['+rowCount+'].TableRawStatus" type="hidden" value="False">'
@@ -397,7 +397,7 @@
                 }
             });
         option = '';
-        for (var p = 1; p <= 100; p++) {
+        for (var p = 0; p <= 100; p++) {
             option += '<option value="' + p + '">' + p + '</option>';
         }
         $('.AgeDropdown').append(option);

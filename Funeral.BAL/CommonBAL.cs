@@ -226,7 +226,7 @@ namespace Funeral.BAL
         {
             List<UserType> keyValues = new List<UserType>();
             if (includeMainMember)
-            keyValues.Add(new UserType { UserTypeId = 1, UserTypeName = "Main Member" });
+            //keyValues.Add(new UserType { UserTypeId = 1, UserTypeName = "Main Member" });
             keyValues.Add(new UserType { UserTypeId = 2, UserTypeName = "Spouse" });
             keyValues.Add(new UserType { UserTypeId = 3, UserTypeName = "Extended" });
             keyValues.Add(new UserType { UserTypeId = 4, UserTypeName = "Child" });
