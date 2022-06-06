@@ -711,12 +711,24 @@ namespace Funeral.Web.Areas.Admin.Controllers
             //PlanModel Plan = new PlanModel();
             PlanModel objPlans = MembersBAL.GetPlanByPlanID(Member.fkiPlanID, CurrentParlourId);
 
-            //if (MembersBAL.GetMemberByIDNumber(Member.IDNumber, this.ParlourId, Member.fkiPlanID) != null && Member.pkiMemberID == 0)
-            //{
-            //    //return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member Already Exists" + "</li>").ToList() }, JsonRequestBehavior.AllowGet);
-            //    return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member ID Number already exists on this Plan." + "</li>").First() }, JsonRequestBehavior.AllowGet);
-            //}
-            if (Member.Age < objPlans.AgeFrom || Member.Age > objPlans.AgeTo)
+            if (MembersBAL.GetMemberByIDNumber(Member.IDNumber, this.ParlourId, Member.fkiPlanID) != null && Member.pkiMemberID == 0)
+            {
+                //return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member Already Exists" + "</li>").ToList() }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member ID Number already exists on this Plan." + "</li>").First() }, JsonRequestBehavior.AllowGet);
+            }
+
+            //var inceptionAge = Member.InceptionDate - Member.DateOfBirth
+
+            int Years(DateTime start, DateTime end)
+            {
+                return (end.Year - start.Year - 1) +
+                    (((end.Month > start.Month) ||
+                    ((end.Month == start.Month) && (end.Day >= start.Day))) ? 1 : 0);
+            }
+            int ageFromInception = Years(Member.DateOfBirth, Member.InceptionDate);
+
+
+            if (ageFromInception < objPlans.AgeFrom || ageFromInception > objPlans.AgeTo)
             {
                 return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Memeber age is not supported under this Plan." + "</li>").First() }, JsonRequestBehavior.AllowGet);
 

@@ -489,11 +489,11 @@
                                                                         @Html.DropDownList("BranchList", Model.BranchList, "Select", new { Name = "BranchList", @id = "ddlMemberBranch", @style = "width:100%", @class = "form-control" })
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <label>Payment Method</label>
+                                                                        <label>Employment Type</label>
                                                                         @Html.DropDownList("CustomPaymentMethod", Model.CustomPaymentMethod, "Select", new { Name = "CustomPayment", @id = "ddlPopupCustom1", @style = "width:100%", @class = "form-control" })
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <label>Type of Income</label>
+                                                                        <label>Payment Type</label>
                                                                         @Html.DropDownList("CustomGrouping2", Model.CustomGrouping2, "Select", new { Name = "CustomGrouping2", @id = "ddlPopupCustom2", @style = "width:100%", @class = "form-control" })
                                                                     </div>
                                                                     <div class="form-group">
@@ -690,11 +690,11 @@
                                                 @Html.DropDownList("BranchList", Model.BranchList, "Select", new { Name = "BranchList", @id = "ddlMemberBranch", @style = "width:100%", @class = "form-control" })
                                             </div>
                                             <div class="form-group">
-                                                <label>Payment Method</label>
+                                                <label>Employment Type</label>
                                                 @Html.DropDownList("CustomPaymentMethod", Model.CustomPaymentMethod, "Select", new { Name = "CustomPayment", @id = "ddlCustom1", @style = "width:100%", @class = "form-control" })
                                             </div>
                                             <div class="form-group">
-                                                <label>Type of Income</label>
+                                                <label>Payment Type</label>
                                                 @Html.DropDownList("CustomGrouping2", Model.CustomGrouping2, "Select", new { Name = "CustomGrouping2", @id = "ddlCustom2", @style = "width:100%", @class = "form-control" })
                                             </div>
                                             <div class="form-group">
@@ -5545,7 +5545,7 @@
                 Premium: parseInt($("#txtPremiumPopup").val()).toFixed(2),
                 pkiDependentID: 0,
                 MemberId: $("#pkiMemberID").val(),
-                Relationship: 0,
+                Relationship: $("#tab-5 #ddlDependentDependencyType :selected").val(),
                 Cover:0
             };
 
