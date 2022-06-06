@@ -46,7 +46,7 @@ namespace Funeral.DAL
         {
             //string query = "SaveFuneral"; New By Mahipatsinh
             string query = "SaveFuneral_New";
-            DbParameter[] ObjParam = new DbParameter[49];
+            DbParameter[] ObjParam = new DbParameter[50];
             ObjParam[0] = new DbParameter("@pkiFuneralID", DbParameter.DbType.Int, 0, model.pkiFuneralID);
             ObjParam[1] = new DbParameter("@FullNames", DbParameter.DbType.NVarChar, 0, model.FullNames);
             ObjParam[2] = new DbParameter("@Surname", DbParameter.DbType.NVarChar, 0, model.Surname);
@@ -96,6 +96,7 @@ namespace Funeral.DAL
             ObjParam[46] = new DbParameter("@CarReg", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.CarReg));//Change by Charles Date: 22/09/2021
             ObjParam[47] = new DbParameter("@Embalming", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.Embalming));//Change by Charles Date: 22/09/2021
             ObjParam[48] = new DbParameter("@CoffineSize", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.CoffineSize));//Change by Charles Date: 22/09/2021
+            //ObjParam[49] = new DbParameter("@CustomDental", DbParameter.DbType.Int, 0, NulltoEmpty(model.CustomGrouping5));//Change by Charles Date: 22/09/2021
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
         }
         private static string NulltoEmpty(string values)

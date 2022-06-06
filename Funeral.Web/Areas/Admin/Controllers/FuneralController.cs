@@ -111,8 +111,11 @@ namespace Funeral.Web.Areas.Admin.Controllers
         [PageRightsAttribute(CurrentPageId = 10, Right = new isPageRight[] { isPageRight.HasAdd })]
         public PartialViewResult Add(FuneralModel funeralModel)
         {
+            var funeral = new FuneralModel();
             funeralModel.parlourid = ParlourId;
             ModelState.Clear();
+            funeralModel.CustomGrouping5 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.DentalCondition)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
+
             //ViewBag.Provinces = CommonBAL.GetProvinces();
             //ViewBag.Status = CommonBAL.GetFuneralStatus();
             //ViewBag.Status = GetFuneralStatus();

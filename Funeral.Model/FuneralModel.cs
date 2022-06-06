@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
+
+
 
 namespace Funeral.Model
 {
@@ -117,6 +121,7 @@ namespace Funeral.Model
         public string Embalming { get; set; }
         public string CoffineSize { get; set; }
         public string BodyAndCar { get; set; }
+        public IEnumerable<SelectListItem> CustomGrouping5 { get; set; }
 
     }
 }

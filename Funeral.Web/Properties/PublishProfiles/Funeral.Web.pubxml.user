@@ -128,86 +128,173 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Admin/Reports/CrystalReport.aspx">
       <publishTime>03/09/2020 13:21:58</publishTime>
     </File>
+    <File Include="Admin/Reports/DataSets/dsAgentCommision.Designer.cs">
+      <publishTime>03/09/2020 13:21:59</publishTime>
+    </File>
     <File Include="Admin/Reports/DataSets/dsAgentCommision.xsc">
+      <publishTime>03/09/2020 13:21:59</publishTime>
+    </File>
+    <File Include="Admin/Reports/DataSets/dsAgentCommision.xsd">
       <publishTime>03/09/2020 13:21:59</publishTime>
     </File>
     <File Include="Admin/Reports/DataSets/dsAgentCommision.xss">
       <publishTime>03/09/2020 13:21:59</publishTime>
     </File>
+    <File Include="Admin/Reports/DataSets/dsAllMember.Designer.cs">
+      <publishTime>03/09/2020 13:21:59</publishTime>
+    </File>
     <File Include="Admin/Reports/DataSets/dsAllMember.xsc">
+      <publishTime>03/09/2020 13:21:59</publishTime>
+    </File>
+    <File Include="Admin/Reports/DataSets/dsAllMember.xsd">
       <publishTime>03/09/2020 13:21:59</publishTime>
     </File>
     <File Include="Admin/Reports/DataSets/dsAllMember.xss">
       <publishTime>03/09/2020 13:21:59</publishTime>
     </File>
+    <File Include="Admin/Reports/DataSets/dsBankDetails.Designer.cs">
+      <publishTime>03/09/2020 13:21:59</publishTime>
+    </File>
     <File Include="Admin/Reports/DataSets/dsBankDetails.xsc">
+      <publishTime>03/09/2020 13:21:59</publishTime>
+    </File>
+    <File Include="Admin/Reports/DataSets/dsBankDetails.xsd">
       <publishTime>03/09/2020 13:21:59</publishTime>
     </File>
     <File Include="Admin/Reports/DataSets/dsBankDetails.xss">
       <publishTime>03/09/2020 13:21:59</publishTime>
     </File>
+    <File Include="Admin/Reports/DataSets/dsDetailedPayment.Designer.cs">
+      <publishTime>03/09/2020 13:21:59</publishTime>
+    </File>
     <File Include="Admin/Reports/DataSets/dsDetailedPayment.xsc">
+      <publishTime>03/09/2020 13:21:59</publishTime>
+    </File>
+    <File Include="Admin/Reports/DataSets/dsDetailedPayment.xsd">
       <publishTime>03/09/2020 13:21:59</publishTime>
     </File>
     <File Include="Admin/Reports/DataSets/dsDetailedPayment.xss">
       <publishTime>03/09/2020 13:21:59</publishTime>
     </File>
+    <File Include="Admin/Reports/DataSets/dsExpenses.Designer.cs">
+      <publishTime>03/09/2020 13:21:59</publishTime>
+    </File>
     <File Include="Admin/Reports/DataSets/dsExpenses.xsc">
+      <publishTime>03/09/2020 13:21:59</publishTime>
+    </File>
+    <File Include="Admin/Reports/DataSets/dsExpenses.xsd">
       <publishTime>03/09/2020 13:21:59</publishTime>
     </File>
     <File Include="Admin/Reports/DataSets/dsExpenses.xss">
       <publishTime>03/09/2020 13:21:59</publishTime>
     </File>
+    <File Include="Admin/Reports/DataSets/dsFuneralDataset.Designer.cs">
+      <publishTime>03/09/2020 13:21:59</publishTime>
+    </File>
     <File Include="Admin/Reports/DataSets/dsFuneralDataset.xsc">
+      <publishTime>03/09/2020 13:21:59</publishTime>
+    </File>
+    <File Include="Admin/Reports/DataSets/dsFuneralDataset.xsd">
       <publishTime>03/09/2020 13:21:59</publishTime>
     </File>
     <File Include="Admin/Reports/DataSets/dsFuneralDataset.xss">
       <publishTime>03/09/2020 13:21:59</publishTime>
     </File>
+    <File Include="Admin/Reports/DataSets/dsFuneralPayment.Designer.cs">
+      <publishTime>03/09/2020 13:21:59</publishTime>
+    </File>
     <File Include="Admin/Reports/DataSets/dsFuneralPayment.xsc">
+      <publishTime>03/09/2020 13:21:59</publishTime>
+    </File>
+    <File Include="Admin/Reports/DataSets/dsFuneralPayment.xsd">
       <publishTime>03/09/2020 13:21:59</publishTime>
     </File>
     <File Include="Admin/Reports/DataSets/dsFuneralPayment.xss">
       <publishTime>03/09/2020 13:21:59</publishTime>
     </File>
+    <File Include="Admin/Reports/DataSets/dsGetPlanDetailsByPlanId.Designer.cs">
+      <publishTime>03/09/2020 13:21:59</publishTime>
+    </File>
     <File Include="Admin/Reports/DataSets/dsGetPlanDetailsByPlanId.xsc">
+      <publishTime>03/09/2020 13:21:59</publishTime>
+    </File>
+    <File Include="Admin/Reports/DataSets/dsGetPlanDetailsByPlanId.xsd">
       <publishTime>03/09/2020 13:21:59</publishTime>
     </File>
     <File Include="Admin/Reports/DataSets/dsGetPlanDetailsByPlanId.xss">
       <publishTime>03/09/2020 13:21:59</publishTime>
     </File>
+    <File Include="Admin/Reports/DataSets/dsMemberTransactionHist.Designer.cs">
+      <publishTime>03/09/2020 13:21:59</publishTime>
+    </File>
     <File Include="Admin/Reports/DataSets/dsMemberTransactionHist.xsc">
+      <publishTime>03/09/2020 13:21:59</publishTime>
+    </File>
+    <File Include="Admin/Reports/DataSets/dsMemberTransactionHist.xsd">
       <publishTime>03/09/2020 13:21:59</publishTime>
     </File>
     <File Include="Admin/Reports/DataSets/dsMemberTransactionHist.xss">
       <publishTime>03/09/2020 13:21:59</publishTime>
     </File>
+    <File Include="Admin/Reports/DataSets/dsPolicyDocTotalPremium.Designer.cs">
+      <publishTime>03/09/2020 13:21:59</publishTime>
+    </File>
     <File Include="Admin/Reports/DataSets/dsPolicyDocTotalPremium.xsc">
+      <publishTime>03/09/2020 13:21:59</publishTime>
+    </File>
+    <File Include="Admin/Reports/DataSets/dsPolicyDocTotalPremium.xsd">
       <publishTime>03/09/2020 13:21:59</publishTime>
     </File>
     <File Include="Admin/Reports/DataSets/dsPolicyDocTotalPremium.xss">
       <publishTime>03/09/2020 13:21:59</publishTime>
     </File>
+    <File Include="Admin/Reports/DataSets/dsQuotationByDate.Designer.cs">
+      <publishTime>03/09/2020 13:21:59</publishTime>
+    </File>
     <File Include="Admin/Reports/DataSets/dsQuotationByDate.xsc">
+      <publishTime>03/09/2020 13:21:59</publishTime>
+    </File>
+    <File Include="Admin/Reports/DataSets/dsQuotationByDate.xsd">
       <publishTime>03/09/2020 13:21:59</publishTime>
     </File>
     <File Include="Admin/Reports/DataSets/dsQuotationByDate.xss">
       <publishTime>03/09/2020 13:21:59</publishTime>
     </File>
+    <File Include="Admin/Reports/DataSets/dsQuotationByDate1.Designer.cs">
+      <publishTime>03/09/2020 13:21:59</publishTime>
+    </File>
     <File Include="Admin/Reports/DataSets/dsQuotationByDate1.xsc">
+      <publishTime>03/09/2020 13:21:59</publishTime>
+    </File>
+    <File Include="Admin/Reports/DataSets/dsQuotationByDate1.xsd">
       <publishTime>03/09/2020 13:21:59</publishTime>
     </File>
     <File Include="Admin/Reports/DataSets/dsQuotationByDate1.xss">
       <publishTime>03/09/2020 13:21:59</publishTime>
     </File>
+    <File Include="Admin/Reports/DataSets/MembersJoinedByDate.cs">
+      <publishTime>03/09/2020 13:21:58</publishTime>
+    </File>
+    <File Include="Admin/Reports/DataSets/MembersJoinedByDate.Designer.cs">
+      <publishTime>03/09/2020 13:21:58</publishTime>
+    </File>
     <File Include="Admin/Reports/DataSets/MembersJoinedByDate.xsc">
+      <publishTime>03/09/2020 13:21:58</publishTime>
+    </File>
+    <File Include="Admin/Reports/DataSets/MembersJoinedByDate.xsd">
       <publishTime>03/09/2020 13:21:58</publishTime>
     </File>
     <File Include="Admin/Reports/DataSets/MembersJoinedByDate.xss">
       <publishTime>03/09/2020 13:21:58</publishTime>
     </File>
+    <File Include="Admin/Reports/DataSets/OutstandingPayment.Designer.cs">
+      <publishTime>03/09/2020 13:21:58</publishTime>
+    </File>
     <File Include="Admin/Reports/DataSets/OutstandingPayment.xsc">
       <publishTime>03/09/2020 13:21:58</publishTime>
+    </File>
+    <File Include="Admin/Reports/DataSets/OutstandingPayment.xsd">
+      <publishTime>03/09/2020 13:21:59</publishTime>
     </File>
     <File Include="Admin/Reports/DataSets/OutstandingPayment.xss">
       <publishTime>03/09/2020 13:21:59</publishTime>
@@ -215,25 +302,49 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Admin/Reports/FinancialReportGenerator.aspx">
       <publishTime>03/09/2020 13:21:58</publishTime>
     </File>
+    <File Include="Admin/Reports/FINANCIAL_REPORTS/DataSets/dsBankPayment.Designer.cs">
+      <publishTime>03/09/2020 13:21:59</publishTime>
+    </File>
     <File Include="Admin/Reports/FINANCIAL_REPORTS/DataSets/dsBankPayment.xsc">
+      <publishTime>03/09/2020 13:21:59</publishTime>
+    </File>
+    <File Include="Admin/Reports/FINANCIAL_REPORTS/DataSets/dsBankPayment.xsd">
       <publishTime>03/09/2020 13:21:59</publishTime>
     </File>
     <File Include="Admin/Reports/FINANCIAL_REPORTS/DataSets/dsBankPayment.xss">
       <publishTime>03/09/2020 13:21:59</publishTime>
     </File>
+    <File Include="Admin/Reports/FINANCIAL_REPORTS/DataSets/dsClaimsReport.Designer.cs">
+      <publishTime>03/09/2020 13:21:59</publishTime>
+    </File>
     <File Include="Admin/Reports/FINANCIAL_REPORTS/DataSets/dsClaimsReport.xsc">
+      <publishTime>03/09/2020 13:21:59</publishTime>
+    </File>
+    <File Include="Admin/Reports/FINANCIAL_REPORTS/DataSets/dsClaimsReport.xsd">
       <publishTime>03/09/2020 13:21:59</publishTime>
     </File>
     <File Include="Admin/Reports/FINANCIAL_REPORTS/DataSets/dsClaimsReport.xss">
       <publishTime>03/09/2020 13:21:59</publishTime>
     </File>
+    <File Include="Admin/Reports/FINANCIAL_REPORTS/DataSets/dsMemberBranches.Designer.cs">
+      <publishTime>03/09/2020 13:21:59</publishTime>
+    </File>
     <File Include="Admin/Reports/FINANCIAL_REPORTS/DataSets/dsMemberBranches.xsc">
+      <publishTime>03/09/2020 13:21:59</publishTime>
+    </File>
+    <File Include="Admin/Reports/FINANCIAL_REPORTS/DataSets/dsMemberBranches.xsd">
       <publishTime>03/09/2020 13:21:59</publishTime>
     </File>
     <File Include="Admin/Reports/FINANCIAL_REPORTS/DataSets/dsMemberBranches.xss">
       <publishTime>03/09/2020 13:21:59</publishTime>
     </File>
+    <File Include="Admin/Reports/FINANCIAL_REPORTS/DataSets/dsUnderwriterPatment.Designer.cs">
+      <publishTime>03/09/2020 13:21:59</publishTime>
+    </File>
     <File Include="Admin/Reports/FINANCIAL_REPORTS/DataSets/dsUnderwriterPatment.xsc">
+      <publishTime>03/09/2020 13:21:59</publishTime>
+    </File>
+    <File Include="Admin/Reports/FINANCIAL_REPORTS/DataSets/dsUnderwriterPatment.xsd">
       <publishTime>03/09/2020 13:21:59</publishTime>
     </File>
     <File Include="Admin/Reports/FINANCIAL_REPORTS/DataSets/dsUnderwriterPatment.xss">
@@ -312,7 +423,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/09/2020 13:21:58</publishTime>
     </File>
     <File Include="Admin/Reports/Reports.aspx">
-      <publishTime>03/02/2022 11:07:55</publishTime>
+      <publishTime>05/31/2022 12:14:36</publishTime>
     </File>
     <File Include="Admin/ScheduleEmailReport.aspx">
       <publishTime>03/09/2020 13:21:58</publishTime>
@@ -501,10 +612,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/09/2020 13:22:01</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Funeral/PrintForm.cshtml">
-      <publishTime>05/20/2022 13:54:23</publishTime>
+      <publishTime>05/27/2022 11:29:23</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Funeral/_FuneralAddEdit.cshtml">
-      <publishTime>05/19/2022 15:32:26</publishTime>
+      <publishTime>05/31/2022 10:13:33</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Funeral/_FuneralList.cshtml">
       <publishTime>09/02/2020 18:51:07</publishTime>
@@ -555,10 +666,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/29/2022 10:11:17</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Members/ManageMembers.cshtml">
-      <publishTime>05/11/2022 11:38:53</publishTime>
+      <publishTime>05/27/2022 09:37:04</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Members/_AddEditBeneficiary.cshtml">
       <publishTime>05/11/2022 09:36:33</publishTime>
+    </File>
+    <File Include="Areas/Admin/Views/Members/_ReportEmailSendModal.cshtml">
+      <publishTime>05/27/2022 11:00:47</publishTime>
     </File>
     <File Include="Areas/Admin/Views/NewBusiness/GetQuote.cshtml">
       <publishTime>04/09/2021 15:08:20</publishTime>
@@ -639,7 +753,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/09/2020 13:22:01</publishTime>
     </File>
     <File Include="Areas/Admin/Views/SchemaPayment/_SchemaList.cshtml">
-      <publishTime>04/29/2022 10:11:17</publishTime>
+      <publishTime>05/26/2022 14:02:54</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Shared/_Layout.cshtml">
       <publishTime>07/05/2021 12:39:48</publishTime>
@@ -759,7 +873,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/01/2020 12:57:00</publishTime>
     </File>
     <File Include="Areas/Tools/Views/PlanSetup/_PlanSetupAddEdit.cshtml">
-      <publishTime>05/16/2022 13:48:35</publishTime>
+      <publishTime>05/31/2022 10:15:07</publishTime>
     </File>
     <File Include="Areas/Tools/Views/PlanSetup/_PlanSetupList.cshtml">
       <publishTime>05/16/2022 14:56:32</publishTime>
@@ -1023,31 +1137,31 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/02/2019 04:39:52</publishTime>
     </File>
     <File Include="bin/Funeral.BAL.dll">
-      <publishTime>05/20/2022 13:56:14</publishTime>
+      <publishTime>05/31/2022 10:41:20</publishTime>
     </File>
     <File Include="bin/Funeral.BAL.dll.config">
       <publishTime>03/09/2020 13:21:54</publishTime>
     </File>
     <File Include="bin/Funeral.BAL.pdb">
-      <publishTime>05/20/2022 13:56:14</publishTime>
+      <publishTime>05/31/2022 10:41:20</publishTime>
     </File>
     <File Include="bin/Funeral.DAL.dll">
-      <publishTime>05/20/2022 13:56:13</publishTime>
+      <publishTime>05/31/2022 10:41:20</publishTime>
     </File>
     <File Include="bin/Funeral.DAL.dll.config">
       <publishTime>04/29/2022 12:18:33</publishTime>
     </File>
     <File Include="bin/Funeral.DAL.pdb">
-      <publishTime>05/20/2022 13:56:13</publishTime>
+      <publishTime>05/31/2022 10:41:20</publishTime>
     </File>
     <File Include="bin/Funeral.Model.dll">
-      <publishTime>05/20/2022 13:56:13</publishTime>
+      <publishTime>05/31/2022 10:41:19</publishTime>
     </File>
     <File Include="bin/Funeral.Model.dll.config">
       <publishTime>03/09/2020 13:21:56</publishTime>
     </File>
     <File Include="bin/Funeral.Model.pdb">
-      <publishTime>05/20/2022 13:56:13</publishTime>
+      <publishTime>05/31/2022 10:41:19</publishTime>
     </File>
     <File Include="bin/Funeral.Validation.dll">
       <publishTime>05/10/2022 12:09:15</publishTime>
@@ -1056,10 +1170,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/10/2022 12:09:15</publishTime>
     </File>
     <File Include="bin/Funeral.Web.dll">
-      <publishTime>05/20/2022 13:56:17</publishTime>
+      <publishTime>05/31/2022 10:41:24</publishTime>
     </File>
     <File Include="bin/Funeral.Web.pdb">
-      <publishTime>05/20/2022 13:56:17</publishTime>
+      <publishTime>05/31/2022 10:41:24</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.Identity.Core.dll">
       <publishTime>04/03/2015 17:07:22</publishTime>
@@ -3735,7 +3849,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/09/2020 13:22:14</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/19/2022 12:57:26</publishTime>
+      <publishTime>05/27/2022 09:39:27</publishTime>
     </File>
   </ItemGroup>
 </Project>

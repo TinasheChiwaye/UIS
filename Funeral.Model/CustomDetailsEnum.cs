@@ -17,7 +17,11 @@ namespace Funeral.Model
             EmploymentType = 1,
             PaymentType = 2,
             Source = 3,
-            MaritalStatus = 4
+            MaritalStatus = 4,
+            DentalCondition = 5,
+            GeneralCondition = 6,
+            AgeGroup = 7,
+            HeadHair = 8
         }
     }
 }

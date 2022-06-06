@@ -21,6 +21,10 @@
 
         document.body.innerHTML = originalContents;
     }
+    function sendMail() {
+        var mailBody = document.getElementById('mailBody').innerHTML;
+        window.location = "mailto:yourmail@domain.com?subject=hii&body=" + mailBody;
+    }
 </script>
 <style>
     #project span {
@@ -36,6 +40,7 @@
 </head>
 <body>
     <input type="button" onclick="printDiv('PrintDiv')" value="Print This..">
+    @*<input type="button" onclick="sendMail();" value="Email This..">*@
     <div id="PrintDiv">
         <div>
             <div>
@@ -340,7 +345,7 @@
             <br>
             <h1></h1>
             @*<div>Bank Details</div>
-            <div class="form-group pull-rigt">Bank Details</div>*@
+                <div class="form-group pull-rigt">Bank Details</div>*@
 
             <label>Bank Details</label>
             <label style="display: inline-block;width: auto;text-align: right;float: right;">Funeral Bank Details</label>

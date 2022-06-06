@@ -134,23 +134,23 @@
                                                                         </asp:DropDownList>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-6" style="display:none">
+                                                                <div class="col-sm-6" <%--style="display:none"--%> >
                                                                     <div class="form-group">
-                                                                        <label class="">Custom :</label>
+                                                                        <label class="">Employment Type:</label>
                                                                         <asp:DropDownList ID="ddlCustom1" runat="server" class="form-control">
                                                                         </asp:DropDownList>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-6" style="display:none">
+                                                                <div class="col-sm-6" <%--style="display:none"--%>>
                                                                     <div class="form-group">
-                                                                        <label class="">Custom 2:</label>
+                                                                        <label class="">Payment Type:</label>
                                                                         <asp:DropDownList ID="ddlCustom2" runat="server" class="form-control">
                                                                         </asp:DropDownList>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-6" style="display:none">
+                                                                <div class="col-sm-6" <%--style="display:none"--%>>
                                                                     <div class="form-group">
-                                                                        <label class="">Custom 3:</label>
+                                                                        <label class="">Source:</label>
                                                                         <asp:DropDownList ID="ddlCustom3" runat="server" class="form-control">
                                                                         </asp:DropDownList>
                                                                     </div>
