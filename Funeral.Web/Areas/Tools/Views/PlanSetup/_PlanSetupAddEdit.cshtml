@@ -96,13 +96,13 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     @Html.Label("Age From", new { @class = "control-label" })
-                                    @Html.DropDownListFor(m => m.AgeFrom, new SelectList(NumericDropdownList.Take(101).ToList(), "Text", "Value", Model.AgeFrom), new { @class = "form-control" })
+                                    @Html.DropDownListFor(m => m.AgeFrom, new SelectList(NumericDropdownList.Take(151).ToList(), "Text", "Value", Model.AgeFrom), new { @class = "form-control" })
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     @Html.Label("Age To", new { @class = "control-label" })
-                                    @Html.DropDownListFor(m => m.AgeTo, new SelectList(NumericDropdownList.Take(101).ToList(), "Text", "Value", Model.AgeTo), new { @class = "form-control" })
+                                    @Html.DropDownListFor(m => m.AgeTo, new SelectList(NumericDropdownList.Take(151).ToList(), "Text", "Value", Model.AgeTo), new { @class = "form-control" })
                                 </div>
                             </div>
                         </div>

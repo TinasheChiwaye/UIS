@@ -117,6 +117,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                                 var workSheet = currentSheet.First();
                                 var noOfCol = workSheet.Dimension.End.Column;
                                 var noOfRow = workSheet.Dimension.End.Row;
+                                groupPayment.AmountPaid = 0;
                                 if (Convert.ToString(workSheet.Cells[1, 1].Value).Replace(" ", "") == "ReferenceNumber")
                                 {
                                     for (int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
@@ -130,7 +131,10 @@ namespace Funeral.Web.Areas.Admin.Controllers
                                         if (Convert.ToString(workSheet.Cells[rowIterator, 1].Value) != "")
                                             excelData.ReferenceNumber = Convert.ToString(workSheet.Cells[rowIterator, 1].Value);
                                         if (Convert.ToString(workSheet.Cells[rowIterator, 2].Value) != "")
+                                        {
                                             excelData.AmountPaid = Convert.ToDecimal(workSheet.Cells[rowIterator, 2].Value);
+                                            groupPayment.AmountPaid += excelData.AmountPaid;
+                                        }
                                         if (Convert.ToString(workSheet.Cells[rowIterator, 3].Value) != "")
                                             excelData.Notes = Convert.ToString(workSheet.Cells[rowIterator, 3].Value);
                                         if (excelData.ReferenceNumber != null || excelData.AmountPaid != 0 || excelData.Notes != "")
