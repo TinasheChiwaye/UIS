@@ -95,7 +95,7 @@ namespace Funeral.DAL
             DbParameter[] ObjParam = new DbParameter[2];
             ObjParam[0] = new DbParameter("@MemberNo", DbParameter.DbType.NVarChar, 0, strMemberNo);
             ObjParam[1] = new DbParameter("@ParlourID", DbParameter.DbType.UniqueIdentifier, 0, pgParlourID);
-            return DbConnection.GetDataTable(CommandType.StoredProcedure, "MemberParlourIDAndMemberNoByID_New", ObjParam);//[MemberParlourIDAndMemberNoByID_New]
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "MemberParlourIDAndMemberNoByID__", ObjParam);//[MemberParlourIDAndMemberNoByID_New]
         }
 
         public static SqlDataReader ReturnMemberPlanDetailsWithBalance(string strMemberNo)
@@ -244,7 +244,7 @@ namespace Funeral.DAL
                 ObjParam[11] = new DbParameter("@MethodOfPayment", DbParameter.DbType.VarChar, 0, ModelPayment.MethodOfPayment);
                 ObjParam[12] = new DbParameter("@IsJoiningFee", DbParameter.DbType.Bit, 0, IsJoiningFee);
                 //ObjParam[13] = new DbParameter("@LatePaymentMemberId", DbParameter.DbType.Int, 0, ModelPayment.LatePaymentId);
-                returnValue = Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "AddPayment", ObjParam));
+                returnValue = Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "AddPayment_", ObjParam));
 
                 if (ModelPayment.LatePaymentPenalty > 0)
                 {
@@ -287,7 +287,7 @@ namespace Funeral.DAL
             ObjParam[0] = new DbParameter("@invoiceid", DbParameter.DbType.Int, 0, InvoiceId);
             ObjParam[1] = new DbParameter("@UserID", DbParameter.DbType.NVarChar, 0, UserId);
             ObjParam[2] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, Parlourid);
-            int newInvoiceId = Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "InvoiceReversalPayment", ObjParam));
+            int newInvoiceId = Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "InvoiceReversalPayment_", ObjParam));
             AddAudit(UserId, Parlourid, "Reversal  MemberNumber=('" + InvoiceId + "')");
             return newInvoiceId;
 

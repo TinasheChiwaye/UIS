@@ -728,7 +728,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             int ageFromInception = Years(Member.DateOfBirth, Member.InceptionDate);
 
 
-            if (ageFromInception < objPlans.AgeFrom || ageFromInception > objPlans.AgeTo)
+            if (Member.Age < objPlans.AgeFrom || Member.Age > objPlans.AgeTo)
             {
                 return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Memeber age is not supported under this Plan." + "</li>").First() }, JsonRequestBehavior.AllowGet);
 
@@ -1870,7 +1870,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (objModel.pkiBeneficiaryID == 0 && MembersBAL.GetBeneficiaryByIDNo(objModel.IDNumber_Beneficiary, ParlourId) != null)
+                    if (objModel.pkiBeneficiaryID == 0 && MembersBAL.GetBeneficiaryByIDNo(objModel.IDNumber_Beneficiary, ParlourId,MemberId) != null)
                     {
                         Message = "exist";
                     }
@@ -1939,7 +1939,10 @@ namespace Funeral.Web.Areas.Admin.Controllers
             try
             {
                 var products = MembersBAL.SearchBeneficiaryData(MemberId).ToList();
-                foreach (var prdct in products) { prdct.DependencyName = CommonBAL.GetUserTypes().Where(x => x.UserTypeId == prdct.DependencyType_Beneficiary).FirstOrDefault().UserTypeName; }
+                foreach (var prdct in products)
+                {
+                    prdct.DependencyName = CommonBAL.GetUserTypes().FirstOrDefault().UserTypeName;
+                }
                 search.TotalRecord = products.Count;
                 return Json(new Funeral.Model.SearchResult<Model.Search.BaseSearch, Beneficiary_model>(search, products, o => o.FullName_Beneficiary.Contains(search.SarchText)));
             }

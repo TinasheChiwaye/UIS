@@ -449,9 +449,9 @@ namespace Funeral.BAL
             DataTable dr = MembersDAL.GetPlanByPlanID(ID, ParlourId);
             return FuneralHelper.DataTableMapToList<PlanModel>(dr).FirstOrDefault();
         }
-        public static Beneficiary_model GetBeneficiaryByIDNo(string ID, Guid ParlourId)
+        public static Beneficiary_model GetBeneficiaryByIDNo(string ID, Guid ParlourId,int memberID)
         {
-            DataTable dr = MembersDAL.GetBeneficiaryByIDNodt(ID, ParlourId);
+            DataTable dr = MembersDAL.GetBeneficiaryByIDNodt(ID, ParlourId,memberID);
             return FuneralHelper.DataTableMapToList<Beneficiary_model>(dr).FirstOrDefault();
 
         }

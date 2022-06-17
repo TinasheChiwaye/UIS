@@ -75,7 +75,7 @@
                                             <th>ID Number</th>
                                             <th>Policy Number</th>                                              
                                             <th>Full Name</th>                                            
-                                            <th>Inception Date</th>
+                                            @*<th>Inception Date</th>*@
                                             <th>Policy Status</th>
                                             <th>Actions</th>
                                         </tr>
@@ -252,13 +252,13 @@
                             { "data": "FullNames", "title": "Full Name", "name": "Member", "autoWidth": true },
                             //{ "data": "EasyPayNo", "name": "EasyPayNo", "autoWidth": true },
                             //{ "data": "Cellphone", "name": "Cellphone", "autoWidth": true },
-                            {
-                                "data": "InceptionDate", "name": "InceptionDate", "autoWidth": true,
-                                "render": function (data) {
-                                    var date = new Date(parseInt(data.replace('/Date(', '')));
-                                    return dateFormat(date, dateFormat.masks.isoDate, true);
-                                }
-                            },
+                            //{
+                            //    "data": "InceptionDate", "name": "InceptionDate", "autoWidth": true,
+                            //    "render": function (data) {
+                            //        var date = new Date(parseInt(data.replace('/Date(', '')));
+                            //        return dateFormat(date, dateFormat.masks.isoDate, true);
+                            //    }
+                            //},
                             {
                                 "data": "PolicyStatus", "name": "Policy Status", "autoWidth": true,
                                 "render": function (data, type, full, meta) {

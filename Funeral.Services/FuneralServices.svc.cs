@@ -284,7 +284,7 @@ namespace Funeral.Services
         }
         public AddonProductsModal EditAddonProductbyID(Guid ID, Guid ParlourId)
         {
-            return ToolsSetingBAL.EditAddonProductbyID(ID, ParlourId);
+            return ToolsSetingBAL.EditAddonProductbyID(ID);
         }
         public int DeleteAddonProduct(Guid ID)
         {

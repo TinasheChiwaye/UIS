@@ -1137,7 +1137,7 @@ namespace Funeral.DAL
         }
         public static int SaveBeneficiary(Beneficiary_model ModalProduct)
         {
-            DbParameter[] ObjParam = new DbParameter[12];
+            DbParameter[] ObjParam = new DbParameter[19];
             ObjParam[0] = new DbParameter("@pkiBeneficiaryID", DbParameter.DbType.Int, 0, ModalProduct.pkiBeneficiaryID);
             ObjParam[1] = new DbParameter("@fkiMemberID", DbParameter.DbType.Int, 0, ModalProduct.pkiMemberID);
             ObjParam[2] = new DbParameter("@FullName", DbParameter.DbType.VarChar, 0, ModalProduct.FullName_Beneficiary);
@@ -1150,13 +1150,21 @@ namespace Funeral.DAL
             ObjParam[9] = new DbParameter("@LastModified", DbParameter.DbType.DateTime, 0, System.DateTime.Now);
             ObjParam[10] = new DbParameter("@Percentage", DbParameter.DbType.Decimal, 0, ModalProduct.Percentages);
             ObjParam[11] = new DbParameter("@CellPhoneNumber", DbParameter.DbType.NVarChar, 0, ModalProduct.Cellphone_Beneficiary);
-            return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "NewAddEditBeneficiaries", ObjParam));
+
+            ObjParam[12] = new DbParameter("@AccountHolder_Beneficiary", DbParameter.DbType.NVarChar, 0, String.IsNullOrWhiteSpace(ModalProduct.AccountHolder_B) ? (object)DBNull.Value : (object)ModalProduct.AccountHolder_B);
+            ObjParam[13] = new DbParameter("@AccountNumber_Beneficiary", DbParameter.DbType.NVarChar, 0, String.IsNullOrWhiteSpace(ModalProduct.AccountNumber_B) ? (object)DBNull.Value : (object)ModalProduct.AccountNumber_B);
+            ObjParam[14] = new DbParameter("@AccountType_Beneficiary", DbParameter.DbType.NVarChar, 0, String.IsNullOrWhiteSpace(ModalProduct.AccountType_B) ? (object)DBNull.Value : (object)ModalProduct.AccountType_B);
+            ObjParam[15] = new DbParameter("@BankName_Beneficiary", DbParameter.DbType.NVarChar, 0, String.IsNullOrWhiteSpace(ModalProduct.BankName_B) ? (object)DBNull.Value : (object)ModalProduct.BankName_B);
+            ObjParam[16] = new DbParameter("@BankBranch_Beneficiary", DbParameter.DbType.NVarChar, 0, String.IsNullOrWhiteSpace(ModalProduct.BankBranch_B) ? (object)DBNull.Value : (object)ModalProduct.BankBranch_B);
+            ObjParam[17] = new DbParameter("@Code_Beneficiary", DbParameter.DbType.NVarChar, 0, String.IsNullOrWhiteSpace(ModalProduct.BranchCode_B) ? (object)DBNull.Value : (object)ModalProduct.BranchCode_B);
+            ObjParam[18] = new DbParameter("@DebitDate_Beneficiary", DbParameter.DbType.NVarChar, 0, String.IsNullOrWhiteSpace(ModalProduct.DebitDate_B) ? (object)DBNull.Value : (object)ModalProduct.DebitDate_B);
+            return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "NewAddEditBeneficiaries_", ObjParam));
         }
         public static DataTable SearchBeneficiaryData(int fkiMemberid)
         {
             DbParameter[] ObjParam = new DbParameter[1];
             ObjParam[0] = new DbParameter("@fkiMemberid", DbParameter.DbType.Int, 0, fkiMemberid);
-            return DbConnection.GetDataTable(CommandType.StoredProcedure, "SelectMemberBeneficiaries", ObjParam);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "SelectMemberBeneficiaries_", ObjParam);
         }
         public static void DeleteBeneficiary(int pkiBeneficiaryID)
         {
@@ -1271,12 +1279,13 @@ namespace Funeral.DAL
             ObjParam[1] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetPlanByPlanID", ObjParam);
         }
-        public static DataTable GetBeneficiaryByIDNodt(string IDNumber, Guid ParlourId)
+        public static DataTable GetBeneficiaryByIDNodt(string IDNumber, Guid ParlourId,int memberID)
         {
-            DbParameter[] ObjParam = new DbParameter[2];
+            DbParameter[] ObjParam = new DbParameter[3];
             ObjParam[0] = new DbParameter("@ID", DbParameter.DbType.VarChar, 0, IDNumber);
             ObjParam[1] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
-            return DbConnection.GetDataTable(CommandType.StoredProcedure, "BeneficiarySelectByIDNodt", ObjParam);
+            ObjParam[2] = new DbParameter("@fkiMemberID", DbParameter.DbType.Int, 0, memberID);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "BeneficiarySelectByIDNodt_", ObjParam);
         }
         public static DataTable GetBeneficiaryByIDdt(int ID, Guid ParlourId)
         {

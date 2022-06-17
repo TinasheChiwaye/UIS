@@ -139,7 +139,17 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 {
                     ViewBag.PolicyStatus = model.PolicyStatus;
                 }
+                if (model.IsJoiningFee == false)
+                {
+                    ViewBag.IsJoiningFee = false;
+                }
+                else if (model.IsJoiningFee == true)
+                {
+                    ViewBag.IsJoiningFee = true;
+                }
 
+                var JoingingFee = model.JoiningFee;
+                ViewBag.JoingingFee = JoingingFee;
                 var policyBalance = model.Currency + " " + Convert.ToDouble(model.Balance);
                 ViewBag.policyBalance = policyBalance;
                 var latePanelty = model.Currency + " " + Convert.ToDouble(model.LatePaymentPenalty);
@@ -150,7 +160,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 ViewBag.MemberID = model.MemeberNumber;
                 ViewBag.ParlourID = ParlourID;
 
-                //ViewBag.MonthToPay = MembersBAL.GetMonthsToPay(id);
+                ViewBag.MonthToPay = MembersBAL.GetMonthsToPay(id);
             }
             var info = CultureInfo.InvariantCulture.Clone() as CultureInfo;
             info.NumberFormat.NumberDecimalSeparator = ".";
@@ -189,7 +199,21 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 return Json("Payment not added successfully.", JsonRequestBehavior.AllowGet);
             }
         }
-
+        [HttpPost]
+        [PageRightsAttribute(CurrentPageId = 34, Right = new isPageRight[] { isPageRight.HasAdd })]
+        public JsonResult JoiningFee(MembersPaymentDetailsModel data)
+        {
+            //add Joining fee boolean in method
+            MembersModel objmember = MembersBAL.GetMemberByID(data.pkiMemberID, ParlourId);
+            if (objmember.MemberBranch != "")
+            {
+                data.Branch = objmember.MemberBranch;
+            }
+            data.ParlourId = ParlourId;
+            data.NextPaymentDate = Convert.ToDateTime(data.PaymentDate).AddMonths(Convert.ToInt32(data.MonthOwing));
+            var paymentId = MemberPaymentBAL.AddPayments(data, true);
+            return Json("JoiningFee added successfully.", JsonRequestBehavior.AllowGet);
+        }
         //=============================TEST END=======================================
 
         //[HttpPost]

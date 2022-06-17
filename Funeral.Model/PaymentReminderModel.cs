@@ -11,7 +11,7 @@ namespace Funeral.Model
         public int pkiMemberId { get; set; }
         public int fkiMemberId { get; set; }
         public string Notes { get; set; }
-        public string DateLastPaid { get; set; }
+        public string LastPaid { get; set; }
         public decimal Premium { get; set; }
         public string ReferenceNumber { get; set; }
         public string MemberNotes { get; set; }

@@ -14,7 +14,7 @@ namespace Funeral.Model
         public string Surname_Beneficiary { get; set; }
         [Required(ErrorMessage = "Please enter Date of birth")]
         public DateTime DateOfBirth_Beneficiary { get; set; }
-        [Required(ErrorMessage = "Please enter ID Number2")]
+        [Required(ErrorMessage = "Please enter ID Number")]
         public string IDNumber_Beneficiary { get; set; }
         public string Code_Beneficiary { get; set; }
         [Required(ErrorMessage = "Please enter Dependency Type")]
@@ -33,6 +33,14 @@ namespace Funeral.Model
 
         [Required(ErrorMessage = "Please Enter Percentage")]
         public decimal Percentages { get; set; }
+
+        public string AccountHolder_B { get; set; }
+        public string BankName_B { get; set; }
+        public string BankBranch_B { get; set; }
+        public string AccountNumber_B { get; set; }
+        public string AccountType_B { get; set; }
+        public string DebitDate_B { get; set; }
+        public string BranchCode_B { get; set; }
 
 
     }
