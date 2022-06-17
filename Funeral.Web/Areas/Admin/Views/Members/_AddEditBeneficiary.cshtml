@@ -13,24 +13,28 @@
     <div class="col-lg-6">
         <div class="form-group">
             <label>Full Name<em>*</em></label>
-            @Html.TextBox("FullName_Beneficiary", "", new { @type = "text", @maxlength = "20", @id = "txtFullName_Beneficiary", @class = "form-control", @placeholder = "Full name" })
+            @Html.TextBox("FullName_Beneficiary", "", new { @type = "text", @maxlength = "20", @id = "txtFullName_Beneficiary", @class = "form-control", @placeholder = "Full name", @style = "text-transform:uppercase" })
         </div>
         <div class="form-group">
             <label>Surname<em>*</em></label>
-            @Html.TextBox("Surname_Beneficiary", "", new { @type = "text", @maxlength = "20", @id = "txtSurname_Beneficiary", @class = "form-control", @placeholder = "Surname" })
+            @Html.TextBox("Surname_Beneficiary", "", new { @type = "text", @maxlength = "20", @id = "txtSurname_Beneficiary", @class = "form-control", @placeholder = "Surname", @style = "text-transform:uppercase" })
         </div>
-        <div class="form-group">
-            <label>ID Number<em>*</em></label>
-            @Html.TextBox("IDNumber_Beneficiary", "", new { @maxlength = "13", @pattern = "/d*", @onkeyup = "GetIdNumberDetails_beneficiery(this);", @id = "txtIDNumber_Beneficiary", @class = "form-control", @placeholder = "ID Number" })
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label>ID Number<em>*</em></label>
+                    @Html.TextBox("IDNumber_Beneficiary", "", new { @maxlength = "13", @pattern = "/d*", @onkeyup = "GetIdNumberDetails_beneficiery(this);", @id = "txtIDNumber_Beneficiary", @class = "form-control", @placeholder = "ID Number" })
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label>Date Of Birth<em>*</em></label>
+                    @Html.TextBox("DateOfBirth_Beneficiary", "", new { @type = "text", @id = "txtDateOfBirth_Beneficiary", @class = "form-control", @placeholder = "Date Of Birth" })
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label>Date Of Birth<em>*</em></label>
-            @Html.TextBox("DateOfBirth_Beneficiary", "", new { @type = "text", @id = "txtDateOfBirth_Beneficiary", @class = "form-control", @placeholder = "Date Of Birth" })
-        </div>
-        <button class="btn btn-sm btn-primary" id="btnSaveBeneficiary" onclick="AddEditBeneficiary()">Save Beneficiary</button>
-        <button class="btn btn-sm btn-primary" id="btnCancelBeneficiary" onclick="NullInputControls()">Cancel</button>
-        <br />
-        <br />
+
     </div>
     <div class="col-lg-6">
         <div class="form-group">
@@ -41,39 +45,107 @@
             <label>Select Relationship Type</label>
             @Html.DropDownList("RelationshipType_Beneficiary", new List<SelectListItem>
                 {
-                    new SelectListItem{ Text="Spouse", Value = "Spouse" },
-                    new SelectListItem{ Text="Son", Value = "Son" },
-                    new SelectListItem{ Text="Daughter", Value = "Daughter" },
-                    new SelectListItem{ Text="Sister", Value = "Sister" },
-                    new SelectListItem{ Text="Brother", Value = "Brother" },
-                    new SelectListItem{ Text="Mother", Value = "Mother" },
-                    new SelectListItem{ Text="Father", Value = "Father" },
+                             new SelectListItem{ Text="Spouse", Value = "Spouse" },
+                            new SelectListItem{ Text="Son", Value = "Son" },
+                new SelectListItem{ Text="Daughter", Value = "Daughter" },
+                  new SelectListItem{ Text="Sister", Value = "Sister" },
+                 new SelectListItem{ Text="Brother", Value = "Brother" },
+                  new SelectListItem{ Text="Mother", Value = "Mother" },
+                  new SelectListItem{ Text="Father", Value = "Father" },
                     new SelectListItem{ Text="Aunt", Value = "Aunt" },
-                    new SelectListItem{ Text="Uncle", Value = "Uncle" },
-                    new SelectListItem{ Text="Niece", Value = "Niece" },
-                    new SelectListItem{ Text="Nephew", Value = "Nephew" },
-                    new SelectListItem{ Text="Grandmother", Value = "Grandmother" },
-                    new SelectListItem{ Text="Grandfather", Value = "Grandfather" },
-                    new SelectListItem{ Text="Granddaughter", Value = "Granddaughter" },
-                    new SelectListItem{ Text="Grandson", Value = "Grandson" },
-                    new SelectListItem{ Text="Gaurdian", Value = "Gaurdian" },
-                },new { @id = "ddlRelationshipType_Beneficiary", @style = "width:100%", @class = "form-control" })
+                   new SelectListItem{ Text="Uncle", Value = "Uncle" },
+                   new SelectListItem{ Text="Niece", Value = "Niece" },
+                  new SelectListItem{ Text="Nephew", Value = "Nephew" },
+             new SelectListItem{ Text="Grandmother", Value = "Grandmother" },
+             new SelectListItem{ Text="Grandfather", Value = "Grandfather" },
+           new SelectListItem{ Text="Granddaughter", Value = "Granddaughter" },
+                new SelectListItem{ Text="Grandson", Value = "Grandson" },
+                 new SelectListItem{ Text="Gaurdian", Value = "Gaurdian" },
+                }, new { @id = "ddlRelationshipType_Beneficiary", @style = "width:100%", @class = "form-control" })
         </div>
+
         <div class="form-group">
             <label>Percentages<em>*</em></label>
-            @Html.TextBox("Percentages_Beneficiary", "", new { @type = "number", @onInput = "return check(event,value)", @min = "0", @max = "100", @step = "0.01", @id = "txtPercentages_Beneficiary", @class = "form-control", @placeholder = "Percentages" })
+            @Html.TextBox("Percentages_Beneficiary", "", new { @type = "number", @onInput = "return check(event,value)", @min = "1", @max = "100", @step = "0.01", @id = "txtPercentages_Beneficiary", @class = "form-control", @placeholder = "Percentages" })
         </div>
-        @*<div class="form-group">
-            <label>Date Of Birth<em>*</em></label>
-            @Html.TextBox("DateOfBirth_Beneficiary", "", new { @type = "text", @id = "txtDateOfBirth_Beneficiary", @class = "form-control", @placeholder = "Date Of Birth" })
-        </div>*@
     </div>
-    @*<div class="form-group">
+</div>
+
+
+<hr style="border-width:3px;height:2px;width:100%;text-align:left;margin-left:0">
+<h4>Beneficiary Banking Details</h4>
+<br></br>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label>Account Holder</label>
+            @Html.TextBox("AccountHolder_B", "", new { @type = "text", @id = "txtAccountHolder_Beneficiary", @class = "form-control", @placeholder = "Account Holder" })
+
+        </div>
+        <div class="form-group">
+            <label>Select Bank Name</label>
+            @Html.DropDownList("BankName_B", new List<SelectListItem>
+                {
+                             new SelectListItem{ Text="Select", Value = "Select" },
+                             new SelectListItem{ Text="Investec", Value = "200355" },
+                            new SelectListItem{ Text="SA Post Bank", Value = "460005" },
+                new SelectListItem{ Text="MERCANTILE BANK", Value = "450905" },
+                  new SelectListItem{ Text="Sasfin Bank Limited", Value = "683000" },
+                 new SelectListItem{ Text="Bidvest Bank Limited", Value = "462005" },
+                  new SelectListItem{ Text="Investec Bank", Value = "012345" },
+                  new SelectListItem{ Text="Capitec Bank", Value = "470010" },
+                    new SelectListItem{ Text="Standard Bank", Value = "051001" },
+                   new SelectListItem{ Text="FNB Bank", Value = "250655" },
+                   new SelectListItem{ Text="Old Mutual", Value = "462005" },
+                  new SelectListItem{ Text="ABSA Bank", Value = "632005" },
+             new SelectListItem{ Text="Grindrod Bank Limited", Value = "223626" },
+             new SelectListItem{ Text="NedBank Limited", Value = "198765" },
+           new SelectListItem{ Text="Tyme Bank", Value = "678910" },
+                new SelectListItem{ Text="African Bank Limited", Value = "430000" },
+                 new SelectListItem{ Text="Capitec Bank", Value = "470010" },
+                 new SelectListItem{ Text="Discovery Bank Limited", Value = "679000" },
+                }, new { @id = "txtBankName_Beneficiary", @style = "width:100%", @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label>Bank Branch</label>
+            @Html.TextBox("BankBranch_B", "", new { @type = "text", @id = "txtBankBranch_Beneficiary", @class = "form-control", @placeholder = "Bank Branch" })
+        </div>
         <button class="btn btn-sm btn-primary" id="btnSaveBeneficiary" onclick="AddEditBeneficiary()">Save Beneficiary</button>
         <button class="btn btn-sm btn-primary" id="btnCancelBeneficiary" onclick="NullInputControls()">Cancel</button>
         <br />
         <br />
-    </div>*@
+    </div>
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label>Account Number</label>
+            @Html.TextBox("AccountNumber_B", "", new { @type = "text", @id = "txtAccountNumber_Beneficiary", @class = "form-control", @placeholder = "Account Number" })
+        </div>
+        @*<div class="form-group">
+            <label>Account Type<em>*</em></label>*@
+        @*@Html.TextBox("AccountType_Beneficiary", "", new { @type = "text", @id = "txtAccountType_Beneficiary", @class = "form-control", @placeholder = "Account Type" })*@
+        @*@Html.DropDownList("AccountType_B", Model.AllAccountTypesList, "Select", new { Name = "AccountType_Beneficiary", @id = "txtAccountType_Beneficiary", @style = "width:100%", @class = "form-control" })
+            </div>*@
+        <div class="form-group">
+            <label>Select Account Type</label>
+            @Html.DropDownList("AccountType_B", new List<SelectListItem>
+                {
+                            new SelectListItem{ Text="Cheque", Value = "Cheque" },
+        new SelectListItem{ Text="Current", Value = "Current" },
+        new SelectListItem{ Text="Other", Value = "Other" },
+        new SelectListItem{ Text="Savings", Value = "Savings" },
+                }, new { @id = "AccountType_Beneficiary", @style = "width:100%", @class = "form-control" })
+        </div>
+
+        @*<div class="form-group">
+                <label>Debit Date<em>*</em></label>
+                @Html.TextBox("DebitDate_B", "", new { @type = "text", @id = "txtDebitDate_Beneficiary", @class = "form-control", @placeholder = "Debit Date" })
+            </div>*@
+        <div class="form-group">
+            <label>Branch Code</label>
+            @Html.TextBox("BranchCode_B", "", new { @type = "text", @id = "txtBranchCode_Beneficiary", @class = "form-control", @placeholder = "Branch Code", @readonly = "readonly" })
+        </div>
+
+    </div>
 </div>
 <div class="row">
     <div class="col-lg-12 ">
@@ -116,11 +188,12 @@
     return true;
     }
       $('#txtDateOfBirth_Beneficiary').datepicker({format: 'dd MM yyyy', autoclose: true,setDate: new Date()});
+      $('#txtDebitDate_Beneficiary').datepicker({format: 'dd MM yyyy', autoclose: true,setDate: new Date()});
     function AddEditBeneficiary() {
         var DependencyType = $("#ddlDependentDependencyType_Beneficiary").val();
         var FullName = $("#txtFullName_Beneficiary").val();
         var Surname = $("#txtSurname_Beneficiary").val();
-        var DateOfBirth = $("#txtDateOfBirth_Beneficiary").val();
+        var DateOfBirth = dateFormat($("#txtDateOfBirth_Beneficiary").val(), 'dd-mm-yyyy', false);
         var RelationshipType = $("#ddlRelationshipType_Beneficiary").val();
         var IDNumber = $("#txtIDNumber_Beneficiary").val();
         var Code = $("#txtCode_Beneficiary").val();
@@ -128,8 +201,16 @@
         var pkiBeneficiaryID_Beneficiary = $("#txtpkiBeneficiaryID").val();
         var SaveBeneficiaryUrl = $("#SaveBeneficiaryUrl").val();
         var ActualDate = new Date().format("dd-mm-yyyy");
+        var AccountHolder = $("#txtAccountHolder_Beneficiary").val();
+        //var BankName = $("#txtBankName_Beneficiary :selected").text();
+        var BankName = $("#txtBankName_Beneficiary").val();
+        var BankBranch = $("#txtBankBranch_Beneficiary").val();
+        var AccountNumber = $("#txtAccountNumber_Beneficiary").val();
+        var AccountType = $("#AccountType_Beneficiary").val();
+        var DebitDate = $("#txtDebitDate_Beneficiary").val();
+        var BranchCode = $("#txtBranchCode_Beneficiary").val();
         if (DateOfBirth != "") {
-            ActualDate = new Date(DateOfBirth).format("dd-mm-yyyy");
+            ActualDate = dateFormat($("#txtDateOfBirth_Beneficiary").val(), 'dd-mm-yyyy', false);
         }
         $("#ValidationSummary_Beneficiary").hide();
         var objProductModel = {
@@ -144,7 +225,17 @@
             Cellphone_Beneficiary: CellPhoneNumber,
             Percentages: $("#txtPercentages_Beneficiary").val(),
             DependencyType_Beneficiary: DependencyType,
+            AccountHolder_B: AccountHolder,
+            BankName_B: BankName,
+            BankBranch_B: BankBranch,
+            AccountNumber_B: AccountNumber,
+            AccountType_B: AccountType,
+            DebitDate_B: DebitDate,
+            BranchCode_B: BranchCode,
+
             pkiMemberID: $("#pkiMemberID").val(),
+
+
         };
         $.ajax({
             url: SaveBeneficiaryUrl,
@@ -158,7 +249,7 @@
                     $("#lblMessage").html('');
                     $("#lblMessage").append('<div class="alert alert-success">Beneficiary ' + result + ' Successfully</div>');
                     $("#txtPremium").val('');
-                    //location.reload();
+                    location.reload();
                 }
                 else if (result == "PercentageLimit"){
                     $("#lblMessage").html('');
@@ -166,7 +257,7 @@
                 }
                 else if (result == "exist") {
                     $("#lblMessage").html('');
-                    $("#lblMessage").append('<div class="alert alert-danger">This beneficiary already exist</div>');
+                    $("#lblMessage").append('<div class="alert alert-danger">This Beneficiary already exist</div>');
                 }
                 else {
                     $("#ValidationSummary_Beneficiary").show();
@@ -187,8 +278,15 @@
         $("#txtIDNumber_Beneficiary").val("");
         $("#txtCode_Beneficiary").val("");
         $("#pkiBeneficiaryID").val("");
-        $("#txtCellPhoneNumber_Beneficiary").val("");
         $("#txtPercentages_Beneficiary").val("");
+        $("#txtCellPhoneNumber_Beneficiary").val("");
+        $("#txtAccountHolder_Beneficiary").val("");
+        $("#txtBankName_Beneficiary").val("");
+        $("#txtBankBranch_Beneficiary").val("");
+        $("#txtAccountNumber_Beneficiary").val("");
+        $("#txtAccountType_Beneficiary").val("");
+        $("#txtDebitDate_Beneficiary").val("");
+        $("#txtBranchCode_Beneficiary").val("");
     }
     function bindBeneficiaryDatatable()
     {
@@ -274,12 +372,29 @@
         $("#ddlDependentDependencyType_Beneficiary").val(Beneficiary.DependencyType_Beneficiary);
         $("#txtFullName_Beneficiary").val(Beneficiary.FullName_Beneficiary);
         $("#txtSurname_Beneficiary").val(Beneficiary.Surname_Beneficiary);
-        $('#txtDateOfBirth_Beneficiary').datepicker({ format: 'dd MM yyyy',autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(Beneficiary.DateOfBirth_Beneficiary)), "dd/mm/yyyy", false));
+        $('#txtDateOfBirth_Beneficiary').datepicker({ format: 'dd MM yyyy', autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(Beneficiary.DateOfBirth_Beneficiary)), "dd/mm/yyyy", false));
+        //$('#txtDateOfBirth_Beneficiary').datepicker({ format: 'dd MM yyyy', autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(member.DateOfBirth)), "dd/mm/yyyy", false));
+        ////$('#txtDebitDate_Beneficiary').datepicker({ format: 'dd MM yyyy',autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(Beneficiary.DateOfBirth_Beneficiary)), "dd/mm/yyyy", false));
+        //$('#tab-5 #txtDateOfBirth_Beneficiary').datepicker({ format: 'dd MM yyyy', autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(Beneficiary.DateOfBirth_Beneficiary)), "dd/mm/yyyy", false));
         $("#ddlRelationshipType_Beneficiary").val(Beneficiary.RelationshipType_Beneficiary);
         $("#txtPercentages_Beneficiary").val(Beneficiary.Percentages);
         $("#txtIDNumber_Beneficiary").val(Beneficiary.IDNumber_Beneficiary);
         $("#txtCode_Beneficiary").val(Beneficiary.Code_Beneficiary);
         $("#txtCellPhoneNumber_Beneficiary").val(Beneficiary.Cellphone_Beneficiary);
+        $("#txtAccountHolder_Beneficiary").val(Beneficiary.AccountHolder_B);
+        $("#txtBankName_Beneficiary").val(Beneficiary.BankName_B);
+        //$("#txtBankName_Beneficiary").val(Beneficiary.BankName_B).attr("selected", "selected");
+        $("#txtBankBranch_Beneficiary").val(Beneficiary.BankBranch_B);
+        $("#txtAccountNumber_Beneficiary").val(Beneficiary.AccountNumber_B);
+        $("#AccountType_Beneficiary").val(Beneficiary.AccountType_B);
+        //$("#txtAccountType_Beneficiary") = $(Beneficiary.AccountType_B).text();
+
+        //$("#txtDebitDate_Beneficiary").val(Beneficiary.DebitDate_Beneficiary);
+        $("#txtDebitDate_Beneficiary").datepicker({ format: 'dd MM yyyy', autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(Beneficiary.DebitDate_B)), "dd/mm/yyyy", false));
+        $("#txtBranchCode_Beneficiary").val(Beneficiary.BranchCode_B);
+
+
+
     }
      function DeleteBeneficiary(product) {
          var DeleteAddonProductURl = $("#DeleteBeneficiary").val();
@@ -303,7 +418,10 @@
     function ValidateIdNumber(idNumber) {
         var correct = true;
         if (idNumber.length != 13 || !isNumber(idNumber)) {
-            correct = false;
+            //correct = false;
+            if (idNumber.length != 6) {
+                correct = false;
+            }
         }
         var tempDate = new Date(idNumber.substring(0, 2), idNumber.substring(2, 4) - 1, idNumber.substring(4, 6));
         var id_date = tempDate.getDate();
@@ -311,11 +429,13 @@
         var dMonth = id_month + 1;
         var dMonthName = tempDate.getMonthName();
         var id_year = idNumber.substring(0, 2);
+
         var cutoff = (new Date()).getFullYear() - 2000;
         var fullDate = id_date + " " + dMonthName + " " + (id_year > cutoff ? '19' : '20') + id_year;
         if (!((tempDate.getYear() == idNumber.substring(0, 2)) && (id_month == idNumber.substring(2, 4) - 1) && (id_date == idNumber.substring(4, 6)))) {
             correct = false;
         }
+
         var citzenship = parseInt(idNumber.substring(10, 11)) == 0 ? "Yes" : "No";
         var tempTotal = 0;
         var checkSum = 0;
@@ -331,6 +451,8 @@
         if ((checkSum % 10) != 0) {
             correct = false;
         };
+
+
         if (correct) {
             $('#txtDateOfBirth_Beneficiary').datepicker({ format: 'dd M yyyy', autoclose: true }).datepicker("setDate", dateFormat(new Date(fullDate), "dd/mm/yyyy", false));
             var genderCode = idNumber.substring(6, 10);
@@ -345,4 +467,13 @@
         }
         return false;
     }
+    $("#txtBankName_Beneficiary").change(function () {
+        var bankVal = $("#txtBankName_Beneficiary").val();
+        $("#txtBranchCode").val('');
+        $("#txtBranchCode_Beneficiary").val(bankVal);
+    })
+
+ 
+    
+
 </script>

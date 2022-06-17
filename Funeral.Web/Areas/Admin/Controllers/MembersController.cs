@@ -1869,7 +1869,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (objModel.pkiBeneficiaryID == 0 && MembersBAL.GetBeneficiaryByIDNo(objModel.IDNumber_Beneficiary, ParlourId) != null)
+                    if (objModel.pkiBeneficiaryID == 0 && MembersBAL.GetBeneficiaryByIDNo(objModel.IDNumber_Beneficiary, ParlourId,MemberId) != null)
                     {
                         Message = "exist";
                     }
@@ -1938,7 +1938,10 @@ namespace Funeral.Web.Areas.Admin.Controllers
             try
             {
                 var products = MembersBAL.SearchBeneficiaryData(MemberId).ToList();
-                foreach (var prdct in products) { prdct.DependencyName = CommonBAL.GetUserTypes().Where(x => x.UserTypeId == prdct.DependencyType_Beneficiary).FirstOrDefault().UserTypeName; }
+                foreach (var prdct in products)
+                {
+                    prdct.DependencyName = CommonBAL.GetUserTypes().FirstOrDefault().UserTypeName;
+                }
                 search.TotalRecord = products.Count;
                 return Json(new Funeral.Model.SearchResult<Model.Search.BaseSearch, Beneficiary_model>(search, products, o => o.FullName_Beneficiary.Contains(search.SarchText)));
             }
