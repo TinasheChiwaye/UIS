@@ -711,7 +711,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             //PlanModel Plan = new PlanModel();
             PlanModel objPlans = MembersBAL.GetPlanByPlanID(Member.fkiPlanID, CurrentParlourId);
 
-            if (MembersBAL.GetMemberByIDNumber(Member.IDNumber, this.ParlourId, Member.fkiPlanID) != null && Member.pkiMemberID == 0)
+            if (MembersBAL.GetMemberByIDNumber(Member.IDNumber, this.ParlourId, Member.fkiPlanID) != null && Member.pkiMemberID == 0 && Member.IDNumber != "0")
             {
                 //return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member Already Exists" + "</li>").ToList() }, JsonRequestBehavior.AllowGet);
                 return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member ID Number already exists on this Plan." + "</li>").First() }, JsonRequestBehavior.AllowGet);
@@ -727,7 +727,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             int ageFromInception = Years(Member.DateOfBirth, Member.InceptionDate);
 
 
-            if (Member.Age < objPlans.AgeFrom || Member.Age > objPlans.AgeTo)
+            if ((Member.Age < objPlans.AgeFrom || Member.Age > objPlans.AgeTo) && Member.IDNumber != "0")
             {
                 return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Memeber age is not supported under this Plan." + "</li>").First() }, JsonRequestBehavior.AllowGet);
 
