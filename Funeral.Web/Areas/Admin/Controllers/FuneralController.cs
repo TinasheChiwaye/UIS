@@ -540,5 +540,11 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 return Json("No files selected.");
             }
         }
+
+
+        public ActionResult TestPage()
+        {
+            return View();
+        }
     }
 }
