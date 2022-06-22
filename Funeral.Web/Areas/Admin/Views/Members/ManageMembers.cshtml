@@ -2387,6 +2387,7 @@
                 Email: $("#txtEmail").val(),
                 Citizenship: $("#ddlCitizenship :selected").text(),
                 Passport: $("#txtPassport").val(),
+
                 Address1: $("#txtStreetPostalAddress").val(),
                 Address1_Post: $("#txtStreetPostalAddress_Post").val(),
                 parlourid: $("#ddlSelectCompany").val(),
@@ -2492,11 +2493,15 @@
         $("#chkIdORPass").change(function () {
             if ($("#tab-1 #chkIdORPass").prop('checked') == true) {
                 $("#tab-1 #txtPassport").prop("readonly", false);
+                $("#tab-1 #txtBirthDay").prop("readonly", false);
+                $("#tab-1 #txtBirthDay").prop("disabled", false);
                 $("#tab-1 #txtIdNumber").prop("readonly", true);
                 $("#tab-1 #txtIdNumber").val('');
             }
             else {
                 $("#tab-1 #txtPassport").prop("readonly", true);
+                $("#tab-1 #txtBirthDay").prop("readonly", true);
+                $("#tab-1 #txtBirthDay").prop("disabled", true);
                 $("#tab-1 #txtIdNumber").prop("readonly", false);
                 $("#tab-1 #txtPassport").val('');
             }

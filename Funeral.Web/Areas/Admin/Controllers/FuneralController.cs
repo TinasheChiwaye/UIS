@@ -540,5 +540,20 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 return Json("No files selected.");
             }
         }
+
+        public ActionResult BodyCollection ()
+        {
+            return View();
+        }
+
+        public ActionResult Mortuary ()
+        {
+            return View();
+        }
+
+        public ActionResult FuneralServices()
+        {
+            return View();
+        }
     }
 }

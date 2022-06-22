@@ -99,6 +99,7 @@
     <Compile Include="Base\BaseResult.cs" />
     <Compile Include="BatchPaymentlistModel.cs" />
     <Compile Include="Beneficiary_model.cs" />
+    <Compile Include="BodyCollectionmodel.cs" />
     <Compile Include="BranchModel.cs" />
     <Compile Include="ChangeStatusReason.cs" />
     <Compile Include="ClaimandFuneralModel.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="FuneralModel.cs" />
     <Compile Include="FuneralServiceManageModel.cs" />
     <Compile Include="FuneralServiceSelectModel.cs" />
+    <Compile Include="FuneralServicesModel.cs" />
     <Compile Include="GroupPayment.cs" />
     <Compile Include="GroupPaymentInsertResultModel.cs" />
     <Compile Include="GroupPaymentList.cs" />
@@ -148,6 +150,7 @@
     <Compile Include="MembersModel.cs" />
     <Compile Include="MembersPaymentModel.cs" />
     <Compile Include="MembersViewModel.cs" />
+    <Compile Include="MortuaryModel.cs" />
     <Compile Include="NewBusinessModel.cs" />
     <Compile Include="NewMemberInvoiceModel.cs" />
     <Compile Include="NewRightsModel.cs" />

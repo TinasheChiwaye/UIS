@@ -778,6 +778,7 @@
     <Content Include="Areas\Admin\Views\View.cshtml" />
     <Content Include="Areas\Admin\Views\Claims\ClaimDashboardChart.cshtml" />
     <Content Include="Areas\Admin\Views\Members\_ReportEmailSendModal.cshtml" />
+    <Content Include="Areas\Admin\Views\Funeral\FuneralServices.cshtml" />
     <None Include="DevDataDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DevDataDataSet.Designer.cs</LastGenOutput>

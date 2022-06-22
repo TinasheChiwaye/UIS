@@ -1,0 +1,128 @@
+﻿@model Funeral.Model.FuneralServicesModel
+
+@{
+    ViewBag.Title = "FuneralServices";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery-2.1.1.min.js"></script>
+<script src="~/Scripts/plugins/datapicker/bootstrap-timepicker.min.js"></script>
+<script src="~/Scripts/plugins/dateformat/DateFormat.js"></script>
+<script src="~/Scripts/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+<link href="~/Content/plugins/datapicker/datepicker3.css" rel="stylesheet" />
+<script src="~/Scripts/plugins/datapicker/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="col-lg-12">
+        <div class="ibox ">
+            <div class="ibox-title">
+                <h5>Funeral Services</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="panel blank-panel">
+                        <div class="panel-heading">
+                            <div class="panel-options" id="Tabs">
+
+                                <ul class="nav nav-tabs" id="myTab">
+                                    <li class="active" id="tab1"><a data-toggle="tab" href="#tab-1" id="atab1" aria-expanded="true">Body Collection</a></li>
+                                    <li class="" id="tab2"><a data-toggle="tab" href="#tab-2" id="atab2" aria-expanded="false">Mortuary</a></li>
+                                    <li class="" id="tab3"><a data-toggle="tab" href="#tab-3" id="atab3" aria-expanded="false">Funeral Arrangements</a></li>
+                                    <li class="active" id="tab4"><a data-toggle="tab" href="#tab-4" id="atab4" aria-expanded="true">Payment</a></li>
+                                    <li class="" id="tab5"><a data-toggle="tab" href="#tab-5" id="atab5" aria-expanded="false">Funeral Schedule</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="tab-content">
+                                <div id="tab-1" class="tab-pane fade in active">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            @Html.Label("Claimant Name", new { @class = "control-label" })
+                                            @*<strong><span class="text-danger"><em>*</em></span></strong>*@
+                                            @Html.TextBoxFor(m => m.ClaimantName, null, new { @class = "form-control", @maxlength = "30" })
+                                            @Html.ValidationMessageFor(m => m.ClaimantName, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.Label("Claimant Surname", new { @class = "control-label" })
+                                            @Html.TextBoxFor(m => m.ClaimantSurname, null, new { @class = "form-control", @maxlength = "25" })
+                                            @Html.ValidationMessageFor(m => m.ClaimantSurname, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.Label("Driver ID", new { @class = "control-label" })
+                                            @*<strong><span class="text-danger"><em>*</em></span></strong>*@
+                                            @Html.TextBoxFor(m => m.DriverID, null, new { @class = "form-control", @maxlength = "30" })
+                                            @Html.ValidationMessageFor(m => m.DriverID, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.Label("Driver Name", new { @class = "control-label" })
+                                            @Html.TextBoxFor(m => m.DriverName, null, new { @class = "form-control", @maxlength = "25" })
+                                            @Html.ValidationMessageFor(m => m.DriverName, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.Label("Number Plate", new { @class = "control-label" })
+                                            @*<strong><span class="text-danger"><em>*</em></span></strong>*@
+                                            @Html.TextBoxFor(m => m.NumberPlate, null, new { @class = "form-control", @maxlength = "30" })
+                                            @Html.ValidationMessageFor(m => m.NumberPlate, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.Label("Car Make", new { @class = "control-label" })
+                                            @Html.TextBoxFor(m => m.DriverName, null, new { @class = "form-control", @maxlength = "25" })
+                                            @Html.ValidationMessageFor(m => m.DriverName, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                        </div>
+                                        <div class="form-group">
+
+                                            <div class="btn-group">
+                                                <input id="btnSubmit" type="submit" value="Save" class="btn btn-w-m btn-primary" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="tab-2" class="tab-pane">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                @Html.Label("Deceased Arrival Date and Time", new { @class = "control-label" })
+                                                @*<strong><span class="text-danger"><em>*</em></span></strong>*@
+                                                @Html.TextBoxFor(m => m.DeceasedArrival, null, new { @class = "form-control", @maxlength = "30" })
+                                                @Html.ValidationMessageFor(m => m.DeceasedArrival, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.Label("Fridge Number", new { @class = "control-label" })
+                                                @Html.TextBoxFor(m => m.FridgeNumber, null, new { @class = "form-control", @maxlength = "25" })
+                                                @Html.ValidationMessageFor(m => m.FridgeNumber, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.Label("Tag Number", new { @class = "control-label" })
+                                                @*<strong><span class="text-danger"><em>*</em></span></strong>*@
+                                                @Html.TextBoxFor(m => m.TagNumber, null, new { @class = "form-control", @maxlength = "30" })
+                                                @Html.ValidationMessageFor(m => m.TagNumber, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.Label("Shelf Number", new { @class = "control-label" })
+                                                @Html.TextBoxFor(m => m.ShelfNumber, null, new { @class = "form-control", @maxlength = "25" })
+                                                @Html.ValidationMessageFor(m => m.ShelfNumber, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                            </div>
+                                            <div class="btn-group">
+                                                <input id="btnSubmit" type="submit" value="Save" class="btn btn-w-m btn-primary" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
