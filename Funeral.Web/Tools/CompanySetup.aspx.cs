@@ -315,7 +315,7 @@ namespace Funeral.Web.Tools
                     txtAccountServiceKey.Text = additionalApplicationSettingsModel.spAccountServiceKey;
                     txtLastModifiedMessage.Text = additionalApplicationSettingsModel.LastModified.ToString();
                     txtModifiedUserMessage.Text = additionalApplicationSettingsModel.ModifiedUser;
-                    txtCurrency.Text = additionalApplicationSettingsModel.Currency;
+                    txtCurrency.Text = additionalApplicationSettingsModel.Currency.TrimEnd().TrimStart();
                     txtSoftwareVendorKey.Text = additionalApplicationSettingsModel.spSoftwareVendorKey;
 
                 }
@@ -773,7 +773,7 @@ namespace Funeral.Web.Tools
                 Adsmodel.LastModified = System.DateTime.Now;
                 Adsmodel.ModifiedUser = UserName;
                 Adsmodel.spSoftwareVendorKey = txtSoftwareVendorKey.Text;
-                Adsmodel.Currency = txtCurrency.Text;
+                Adsmodel.Currency = txtCurrency.Text.TrimEnd().TrimStart();
                 //Adsmodel.spSoftwareVendorKeyMessage = spSoftwareVendorMessage.Text;
 
                 string membernumber = "no";

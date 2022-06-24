@@ -865,16 +865,20 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 Response.Add(string.IsNullOrEmpty(CommonBAL.GetPlanUnderwriterByPlanId(id)) ? string.Empty : CommonBAL.GetPlanUnderwriterByPlanId(id));
                 int WaitingPeriod = CommonBAL.GetWaitingPeriodByPlanId(id);
 
-                if (objPolicyModel != null)
+                //
+
+                if (objPolicyModel.WaitingPeriod != 0 && objPolicyModel.WaitingPeriod == null)
                 {
                     Response.Add(DateTime.Now.AddMonths(CommonBAL.GetWaitingPeriodByPlanId(id)).ToString("dd MMM yyyy"));
                 }
                 else if (date != null)
                 {
-                    //DateTime PolicystartDate = Convert.ToDateTime(date);
+                    DateTime PolicystartDate = Convert.ToDateTime(date);
                     Response.Add(date.AddMonths(CommonBAL.GetWaitingPeriodByPlanId(id)).ToString("dd MMM yyyy"));
                     //date = PolicystartDate;
                 }
+                //
+
                 if (objPolicyModel != null)
                     Response.Add(objPolicyModel.totalPremium);
                 else
