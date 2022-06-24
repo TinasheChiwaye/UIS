@@ -555,5 +555,9 @@ namespace Funeral.Web.Areas.Admin.Controllers
         {
             return View();
         }
+        public ActionResult FuneralSearch()
+        {
+            return View();
+        }
     }
 }

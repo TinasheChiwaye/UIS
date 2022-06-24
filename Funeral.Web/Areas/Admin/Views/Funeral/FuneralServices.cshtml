@@ -1,4 +1,4 @@
-﻿@model Funeral.Model.FuneralServicesModel
+﻿@model Funeral.Model.FuneralModel
 
 @{
     ViewBag.Title = "FuneralServices";
@@ -34,9 +34,10 @@
                                 <ul class="nav nav-tabs" id="myTab">
                                     <li class="active" id="tab1"><a data-toggle="tab" href="#tab-1" id="atab1" aria-expanded="true">Body Collection</a></li>
                                     <li class="" id="tab2"><a data-toggle="tab" href="#tab-2" id="atab2" aria-expanded="false">Mortuary</a></li>
-                                    <li class="" id="tab3"><a data-toggle="tab" href="#tab-3" id="atab3" aria-expanded="false">Funeral Arrangements</a></li>
-                                    <li class="active" id="tab4"><a data-toggle="tab" href="#tab-4" id="atab4" aria-expanded="true">Payment</a></li>
-                                    <li class="" id="tab5"><a data-toggle="tab" href="#tab-5" id="atab5" aria-expanded="false">Funeral Schedule</a></li>
+                                    <li class="" id="tab3"><a data-toggle="tab" href="#tab-3" id="atab3" aria-expanded="false">Deceased Info</a></li>
+                                    <li class="" id="tab4"><a data-toggle="tab" href="#tab-4" id="atab4" aria-expanded="false">Funeral Arrangements</a></li>
+                                    <li class="active" id="tab5"><a data-toggle="tab" href="#tab-5" id="atab5" aria-expanded="true">Payment</a></li>
+                                    <li class="" id="tab6"><a data-toggle="tab" href="#tab-6" id="atab6" aria-expanded="false">Funeral Schedule</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -116,13 +117,293 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div id="tab-3" class="tab-pane">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div id="vSummaryFuneral" style="color:Red;display:none;">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        @Html.HiddenFor(m => m.pkiFuneralID)
+                                        @Html.HiddenFor(m => m.parlourid)
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Full Name  <em class="text-danger">*</em> </label>
+                                                @Html.TextBoxFor(m => m.Surname, null, new { @class = "form-control", @id = "Surname", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Surname  <em class="text-danger">*</em>  </label>
+                                                @Html.TextBoxFor(m => m.FullNames, null, new { @class = "form-control", @id = "FullNames", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>ID Number <em class="text-danger">*</em>  </label>
+                                                        @Html.TextBoxFor(m => m.IDNumber, null, new { @class = "form-control", @id = "IDNumber", @pattern = "/d*", @maxlength = "20", placeholder = "", onkeyup = "DateComparisionJavascriptFun();" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Date Of Birth </label>
+                                                        @Html.TextBoxFor(m => m.DateOfBirth, null, new { @class = "form-control", @id = "BirthDay", @maxlength = "25", placeholder = "" })
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Gender</label>
+                                                        <br>
+                                                        &nbsp; &nbsp;
+                                                        <input id="MainContent_rdbtnMale" type="radio" name="ctl00$MainContent$Gender" value="rdbtnMale" checked="checked">
+                                                        <label for="MainContent_rdbtnMale">Male</label>&nbsp; &nbsp;  &nbsp; &nbsp;
+                                                        <input id="MainContent_rdbtnFemale" type="radio" name="ctl00$MainContent$Gender" value="rdbtnFemale">
+                                                        <label for="MainContent_rdbtnFemale">Female</label>
+
+                                                    </div>
+                                                </div>
+                                                @*<div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Status</label>
+                                                        @Html.DropDownListFor(m => m.Status, ddlStatus, "Select an option", new { Name = "Status", @class = "form-control  " })
+
+                                                    </div>
+
+                                                </div>*@
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Cause Of Death</label>
+                                                        @Html.TextBoxFor(m => m.CourseOfDearth, null, new { @class = "form-control", @id = "COD", @maxlength = "50", placeholder = "", @style = "text-transform:uppercase" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Date Of Death </label>
+                                                        @Html.TextBoxFor(m => m.DateOfDeath, null, new { @class = "form-control", @id = "DOD", @maxlength = "50", placeholder = "" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Collected From</label>
+                                                        @Html.TextBoxFor(m => m.BodyCollectedFrom, null, new { @class = "form-control", @id = "Collection", @maxlength = "50", placeholder = "" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Body Collection Driver  <em class="text-danger">*</em> </label>
+                                                        @Html.TextBoxFor(m => m.BodyAndCar, null, new { @class = "form-control", @id = "BodyAndCar", @maxlength = "50", placeholder = "", @style = "text-transform:uppercase" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                @*<div class="col-lg-6">
+                                                    @{
+                                                        if (Model.parlourid == new Guid("3C8FCC52-5E65-459C-B46C-92196E6F6E19"))
+                                                        {
+                                                            <div class="form-group">
+                                                                <label>Type of Collection</label>
+                                                                @Html.DropDownListFor(m => m.CollectionType, "", "Select an option", new { Name = "CollectionType", @class = "form-control  " })
+                                                            </div>
+                                                        }
+                                                    }
+                                                </div>*@
+                                            </div>
+                                            <div class="btn-group">
+                                                @*<input type="button" value="Next" class="btn btn-sm btn-primary" id="btnNextStepPersonalDetails" onclick="return goToTab(1,2)" />*@
+                                                <a data-toggle="tab" href="#tab-2" id="TabNextButton1" class="btn btn-sm btn-primary pull-right m-t-n-xs disabled" aria-expanded="true">Save</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Street Address <em class="text-danger">*</em> </label>
+                                                @Html.TextBoxFor(m => m.Address1, null, new { @class = "form-control", @id = "StreetAddress", @maxlength = "50", placeholder = "", @style = "text-transform:uppercase" })
+                                            </div>
+                                            @{
+                                                //if (Model.parlourid == new Guid("3C8FCC52-5E65-459C-B46C-92196E6F6E19"))
+                                                {
+                                                    <div class="form-group">
+                                                        <label>Village</label>
+                                                        @Html.TextBoxFor(m => m.Village, null, new { @class = "form-control", @id = "Village", @maxlength = "50", placeholder = "", @style = "text-transform:uppercase" })
+                                                    </div>
+                                                            }
+                                                            //else
+                                                            {
+                                                    <div class="form-group">
+                                                        <label>Town or City</label>
+                                                        @Html.TextBoxFor(m => m.Address2, null, new { @class = "form-control", @id = "TownOrCity", @maxlength = "50", placeholder = "", @style = "text-transform:uppercase" })
+                                                    </div>
+                                                }
+                                            }
+                                            <div class="row">
+                                                @{
+                                                    @*if (Model.parlourid == new Guid("3C8FCC52-5E65-459C-B46C-92196E6F6E19"))
+                                                    {
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label>District</label>
+                                                                @Html.DropDownListFor(m => m.District, ddlDistrict, "Select an option", new { Name = "District", @class = "form-control  " })
+
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label>Province</label>
+                                                                @Html.DropDownListFor(m => m.Address3, ddlProvince, "Select an option", new { Name = "Province", @class = "form-control  " })
+
+                                                            </div>
+                                                        </div>
+                                                    }*@
+                                                }
+                                                @{
+                                                    @*if (Model.parlourid == new Guid("3C8FCC52-5E65-459C-B46C-92196E6F6E19"))
+                                                    {
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label>Branch</label>
+                                                                @Html.DropDownListFor(m => m.Branch, ddlBranch, "Select an option", new { Name = "Branch", @class = "form-control  " })
+
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    else*@
+                                                    {
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label>Code</label>
+                                                                @Html.TextBoxFor(m => m.Address4, null, new { @class = "form-control", @id = "Code", @maxlength = "50", placeholder = "" })
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                }
+
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Contact Person</label>
+                                                        @Html.TextBoxFor(m => m.ContactPerson, null, new { @class = "form-control", @id = "ContactPerson", @maxlength = "50", placeholder = "" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Contact Number</label>
+                                                        @Html.TextBoxFor(m => m.ContactPersonNumber, null, new { @class = "form-control", @id = "ContactNumber", @maxlength = "50", placeholder = "" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Tag Number/BI663</label>
+                                                        @Html.TextBoxFor(m => m.BI1663, null, new { @class = "form-control", @id = "SerialNo", @maxlength = "50", placeholder = "" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Fridge Number</label>
+                                                        @Html.TextBoxFor(m => m.FridgeNumber, null, new { @class = "form-control", @id = "FridgeNumber", @maxlength = "50", placeholder = "" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Shelf Number</label>
+                                                        @Html.TextBoxFor(m => m.ShelfNumber, null, new { @class = "form-control", @id = "ShelfNumber", @maxlength = "50", placeholder = "" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Body Collection Car Registration</label>
+                                                        @Html.TextBoxFor(m => m.CarReg, null, new { @class = "form-control", @id = "CarReg", @maxlength = "50", placeholder = "" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div id="tab-4" class="tab-pane">
+                                    <div class="row">
+                                        <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                @Html.Label("Coffin Szie", new { @class = "control-label" })
+                                                @*<strong><span class="text-danger"><em>*</em></span></strong>*@
+                                                @Html.TextBoxFor(m => m.CoffinSize, null, new { @class = "form-control", @maxlength = "30" })
+                                                @Html.ValidationMessageFor(m => m.CoffinSize, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.Label("TypeOfCoffin", new { @class = "control-label" })
+                                                @Html.TextBoxFor(m => m.TypeOfCoffin, null, new { @class = "form-control", @maxlength = "25" })
+                                                @Html.ValidationMessageFor(m => m.TypeOfCoffin, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.Label("Other Services", new { @class = "control-label" })
+                                                @*<strong><span class="text-danger"><em>*</em></span></strong>*@
+                                                @Html.TextBoxFor(m => m.OtherServices, null, new { @class = "form-control", @maxlength = "30" })
+                                                @Html.ValidationMessageFor(m => m.OtherServices, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.Label("Date and Time of Funeral", new { @class = "control-label" })
+                                                @Html.TextBoxFor(m => m.FuneralDatetime, null, new { @class = "form-control", @maxlength = "25" })
+                                                @Html.ValidationMessageFor(m => m.FuneralDatetime, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                            </div>
+                                            <div class="btn-group">
+                                                <input id="btnSubmit" type="submit" value="Save" class="btn btn-w-m btn-primary" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                @Html.Label("Policy Number", new { @class = "control-label" })
+                                                @*<strong><span class="text-danger"><em>*</em></span></strong>*@
+                                                @Html.TextBoxFor(m => m.PolicyNumber, null, new { @class = "form-control", @maxlength = "30" })
+                                                @Html.ValidationMessageFor(m => m.PolicyNumber, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.Label("Burial Order Number", new { @class = "control-label" })
+                                                @Html.TextBoxFor(m => m.BurialOrderNo, null, new { @class = "form-control", @maxlength = "25" })
+                                                @Html.ValidationMessageFor(m => m.BurialOrderNo, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.Label("Car Make Registration", new { @class = "control-label" })
+                                                @*<strong><span class="text-danger"><em>*</em></span></strong>*@
+                                                @Html.TextBoxFor(m => m.CarMakeRegistrantion, null, new { @class = "form-control", @maxlength = "30" })
+                                                @Html.ValidationMessageFor(m => m.CarMakeRegistrantion, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.Label("Grave Number", new { @class = "control-label" })
+                                                @Html.TextBoxFor(m => m.GraveNo, null, new { @class = "form-control", @maxlength = "25" })
+                                                @Html.ValidationMessageFor(m => m.GraveNo, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 }
 
 

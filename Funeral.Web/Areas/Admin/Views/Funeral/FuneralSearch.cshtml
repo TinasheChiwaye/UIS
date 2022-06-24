@@ -1,0 +1,134 @@
+﻿@model Funeral.Model.Search.FuneralSearch
+@{
+    ViewBag.Title = "FuneralSearch";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/Content/datatablecss")
+
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/plugins/datapicker/bootstrap-timepicker.min.js"></script>
+<script src="~/Scripts/plugins/dateformat/DateFormat.js"></script>
+<script src="~/Scripts/plugins/jquery-ui/jquery-ui.min.js"></script>
+<link href="~/Content/plugins/datapicker/datepicker3.css" rel="stylesheet" />
+<script src="~/Scripts/plugins/datapicker/bootstrap-datepicker.js"></script>
+
+<div class="dataTables_wrapper">
+    <div class="col-lg-12">
+        <div class="ibox ">
+            <div class="ibox-title">
+                <h5>Funeral Search</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <div class="input-group" style="color:red;">
+                                <ul id="validationMessage" hidden></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>Status:</label>
+                                @Html.DropDownListFor(x => x.StatusId, new SelectList( "Status", "Status"), "Select", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-lg-5" id="dvAdministrator">
+                            <div class="form-group">
+                                <label>Scheme: </label>
+                                @Html.DropDownListFor(m => m.CompanyId, new SelectList( "parlourid", "ApplicationName"), new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-lg-4" id="dvAdministrator">
+                            <div class="form-group">
+                                <label>Book: </label>
+                                @Html.DropDownListFor(m => m.SocietyID, new SelectList( "pkiSocietyID", "SocietyName"), "Select Group", new { @id = "ddlClaimSociety", @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>Date From:</label>
+                                @Html.TextBoxFor(x => x.DateFrom, "{0:dd MMM yyyy}", new { @placeholder = "DD MM YYYY", @id = "txtDateFrom", @autocomplete = "off", @class = "form-control DatepickerSelection" })
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>Date To:</label>
+                                @Html.TextBoxFor(x => x.DateTo, "{0:dd MMM yyyy}", new { @placeholder = "DD MM YYYY", @id = "txtDateTo", @autocomplete = "off", @class = "form-control DatepickerSelection" })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <label>Show Entries:</label>
+                            @Html.DropDownListFor(m => m.PageSize, new SelectList( "Value", "Key"), new { @class = "form-control" })
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Search: </label>
+                                <div class="input-group">
+                                    @Html.TextBoxFor(x => x.SarchText, new { @placeholder = "Search", @class = "form-control" })
+                                    <span class="input-group-btn">
+                                        <input type="button" id="btnSearch" value="Search" class="btn btn-w-m btn-primary" />
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="ClaimDetail">
+                <div class="col-lg-12">
+                    <div class="table-responsive">
+                        @Html.EditorFor(model => model.PageNum, new { htmlAttributes = new { @class = "hidden", id = "PageNum1" } })
+                        @Html.EditorFor(model => model.PageSize, new { htmlAttributes = new { @class = "hidden", id = "PageSize1" } })
+                        <table id="claimDataTable" class="table table-responsive table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>ID Number</th>
+                                    <th>Member No.</th>
+                                    <th>Full Name</th>
+                                    @*
+                                    <th>Claim Notes</th>*@
+                                    @*
+                                    <th>Cause of Death</th>*@
+                                    @*
+                                    <th>Contact No</th>*@
+                                    <th>Last Modified</th>
+                                    <th>Created Date</th>
+                                    <th>Assigned To</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*<div id="LoadPartialView_ManageClaims"></div>*@
+
+<script>
+    jQuery(document).ready(function () {
+        jQuery(".DatepickerSelection").datepicker({
+            format: 'dd M yyyy',
+            setDate: new Date(),
+            autoclose: true,
+            onSelect: function (dateText) { $(this).change(); }
+        }).on("change", function () { });
+
+
+
+ </script>
+
+
+
+
+
+

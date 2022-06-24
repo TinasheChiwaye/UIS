@@ -20,5 +20,14 @@ namespace Funeral.Model
         public string FridgeNumber { get; set; }
         public string TagNumber { get; set; }
         public string ShelfNumber { get; set; }
+        public int CoffinSize { get; set; }
+        public string TypeOfCoffin { get; set; }
+        public string OtherServices { get; set; }
+        public DateTime FuneralDatetime { get; set; }
+        public string PolicyNumber { get; set; }
+        public string BurialOrderNumber { get; set; }
+        public string CarMakeRegistrantion { get; set; }
+        public string DriverSurname { get; set; }
+        public string GraveNumber { get; set; }
     }
 }

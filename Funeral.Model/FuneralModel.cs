@@ -122,6 +122,21 @@ namespace Funeral.Model
         public string CoffineSize { get; set; }
         public string BodyAndCar { get; set; }
         public IEnumerable<SelectListItem> CustomGrouping5 { get; set; }
-
+        public string ClaimantName { get; set; }
+        public string ClaimantSurname { get; set; }
+        public string ContactDetails { get; set; }
+        public string DeceasedAddress { get; set; }
+        public string DriverID { get; set; }
+        public string DriverName { get; set; }
+        public string NumberPlate { get; set; }
+        public string CarMake { get; set; }
+        public DateTime DeceasedArrival { get; set; }
+        public string TagNumber { get; set; }
+        public int CoffinSize { get; set; }
+        public string TypeOfCoffin { get; set; }
+        public string OtherServices { get; set; }
+        public DateTime FuneralDatetime { get; set; }
+        public string CarMakeRegistrantion { get; set; }
+        public string DriverSurname { get; set; }
     }
 }

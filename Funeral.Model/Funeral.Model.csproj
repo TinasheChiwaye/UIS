@@ -168,6 +168,8 @@
     <Compile Include="Search\AddOnProductSearch.cs" />
     <Compile Include="Search\ClaimStatusSearch.cs" />
     <Compile Include="Search\ClaimSearch.cs" />
+    <Compile Include="Search\FuneralSearch.cs" />
+    <Compile Include="Search\FuneralStatusSearch.cs" />
     <Compile Include="Search\OthrePaymentSearch.cs" />
     <Compile Include="Search\MenuSearch.cs" />
     <Compile Include="Search\PackageServiceSearch.cs" />

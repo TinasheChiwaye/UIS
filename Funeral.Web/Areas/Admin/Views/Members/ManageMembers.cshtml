@@ -363,7 +363,8 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Date of Birth </label>
-                                                <input type="text" id="txtBirthDay" name="txtBirthDay" class="form-control birthDate DatepickerSelection" readonly="readonly" disabled>
+                                                @*<input type="text" id="txtBirthDay" name="txtBirthDay" class="form-control birthDate DatepickerSelection" readonly="readonly" disabled>*@
+                                                <input type="text" id="txtBirthDay" name="txtBirthDay" class="form-control birthDate DatepickerSelection">
                                             </div>
 
                                             <div class="form-group">
@@ -2493,15 +2494,15 @@
         $("#chkIdORPass").change(function () {
             if ($("#tab-1 #chkIdORPass").prop('checked') == true) {
                 $("#tab-1 #txtPassport").prop("readonly", false);
-                $("#tab-1 #txtBirthDay").prop("readonly", false);
-                $("#tab-1 #txtBirthDay").prop("disabled", false);
+                //$("#tab-1 #txtBirthDay").prop("readonly", false);
+                //$("#tab-1 #txtBirthDay").prop("disabled", false);
                 $("#tab-1 #txtIdNumber").prop("readonly", true);
                 $("#tab-1 #txtIdNumber").val('');
             }
             else {
                 $("#tab-1 #txtPassport").prop("readonly", true);
-                $("#tab-1 #txtBirthDay").prop("readonly", true);
-                $("#tab-1 #txtBirthDay").prop("disabled", true);
+                //$("#tab-1 #txtBirthDay").prop("readonly", true);
+                //$("#tab-1 #txtBirthDay").prop("disabled", true);
                 $("#tab-1 #txtIdNumber").prop("readonly", false);
                 $("#tab-1 #txtPassport").val('');
             }

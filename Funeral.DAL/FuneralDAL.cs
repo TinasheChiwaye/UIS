@@ -46,6 +46,7 @@ namespace Funeral.DAL
         {
             //string query = "SaveFuneral"; New By Mahipatsinh
             string query = "SaveFuneral_New";
+
             DbParameter[] ObjParam = new DbParameter[49];
             ObjParam[0] = new DbParameter("@pkiFuneralID", DbParameter.DbType.Int, 0, model.pkiFuneralID);
             ObjParam[1] = new DbParameter("@FullNames", DbParameter.DbType.NVarChar, 0, model.FullNames);
