@@ -605,8 +605,11 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Areas/Admin/Views/Funeral/FuneralPayment.cshtml">
       <publishTime>11/26/2020 07:43:59</publishTime>
     </File>
+    <File Include="Areas/Admin/Views/Funeral/FuneralSearch.cshtml">
+      <publishTime>06/24/2022 08:21:23</publishTime>
+    </File>
     <File Include="Areas/Admin/Views/Funeral/FuneralServices.cshtml">
-      <publishTime>06/21/2022 23:03:26</publishTime>
+      <publishTime>06/24/2022 09:35:25</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Funeral/FuneralServiceSelect.cshtml">
       <publishTime>06/06/2022 15:13:48</publishTime>
@@ -669,7 +672,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/08/2022 11:06:22</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Members/ManageMembers.cshtml">
-      <publishTime>06/22/2022 11:59:51</publishTime>
+      <publishTime>06/24/2022 12:37:13</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Members/_AddEditBeneficiary.cshtml">
       <publishTime>06/17/2022 14:40:56</publishTime>
@@ -1140,31 +1143,31 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/02/2019 04:39:52</publishTime>
     </File>
     <File Include="bin/Funeral.BAL.dll">
-      <publishTime>06/22/2022 14:22:15</publishTime>
+      <publishTime>06/24/2022 08:50:24</publishTime>
     </File>
     <File Include="bin/Funeral.BAL.dll.config">
       <publishTime>07/17/2020 12:20:38</publishTime>
     </File>
     <File Include="bin/Funeral.BAL.pdb">
-      <publishTime>06/22/2022 14:22:15</publishTime>
+      <publishTime>06/24/2022 08:50:24</publishTime>
     </File>
     <File Include="bin/Funeral.DAL.dll">
-      <publishTime>06/22/2022 14:22:05</publishTime>
+      <publishTime>06/24/2022 08:50:24</publishTime>
     </File>
     <File Include="bin/Funeral.DAL.dll.config">
       <publishTime>06/06/2022 15:13:48</publishTime>
     </File>
     <File Include="bin/Funeral.DAL.pdb">
-      <publishTime>06/22/2022 14:22:05</publishTime>
+      <publishTime>06/24/2022 08:50:24</publishTime>
     </File>
     <File Include="bin/Funeral.Model.dll">
-      <publishTime>06/21/2022 22:15:29</publishTime>
+      <publishTime>06/24/2022 08:50:23</publishTime>
     </File>
     <File Include="bin/Funeral.Model.dll.config">
       <publishTime>07/17/2020 12:20:40</publishTime>
     </File>
     <File Include="bin/Funeral.Model.pdb">
-      <publishTime>06/21/2022 22:15:29</publishTime>
+      <publishTime>06/24/2022 08:50:23</publishTime>
     </File>
     <File Include="bin/Funeral.Validation.dll">
       <publishTime>06/08/2022 15:32:50</publishTime>
@@ -1173,10 +1176,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/08/2022 15:32:50</publishTime>
     </File>
     <File Include="bin/Funeral.Web.dll">
-      <publishTime>06/23/2022 10:17:32</publishTime>
+      <publishTime>06/24/2022 12:46:51</publishTime>
     </File>
     <File Include="bin/Funeral.Web.pdb">
-      <publishTime>06/23/2022 10:17:32</publishTime>
+      <publishTime>06/24/2022 12:46:51</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.Identity.Core.dll">
       <publishTime>04/03/2015 17:07:22</publishTime>
@@ -3852,7 +3855,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/17/2020 12:21:06</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>06/22/2022 14:22:38</publishTime>
+      <publishTime>06/24/2022 13:18:51</publishTime>
     </File>
   </ItemGroup>
 </Project>
