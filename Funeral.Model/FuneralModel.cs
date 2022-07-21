@@ -21,7 +21,7 @@ namespace Funeral.Model
             this.Surname = string.Empty;
             this.Gender = string.Empty;
             this.IDNumber = string.Empty;
-             this.DateOfBirth=DateTime.Now;
+            this.DateOfBirth = DateTime.Now;
             this.DateOfDeath = DateTime.Now;
             this.DateOfFuneral = DateTime.Now;
             this.TimeOfFuneral = DateTime.Now;
@@ -60,7 +60,7 @@ namespace Funeral.Model
         [Required(ErrorMessage = "The Surname is required")]
         public string Surname { get; set; }
         public string Gender { get; set; }
-        [Required(ErrorMessage ="The Id Number is required")]
+        [Required(ErrorMessage = "The Id Number is required")]
         public string IDNumber { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public DateTime? DateOfDeath { get; set; }
@@ -122,6 +122,7 @@ namespace Funeral.Model
         public string CoffineSize { get; set; }
         public string BodyAndCar { get; set; }
         public IEnumerable<SelectListItem> CustomGrouping5 { get; set; }
+        [Required(ErrorMessage = "Claimant name is required")]
         public string ClaimantName { get; set; }
         public string ClaimantSurname { get; set; }
         public string ContactDetails { get; set; }

@@ -553,6 +553,12 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
         public ActionResult FuneralServices()
         {
+            var funeralModel = new FuneralModel();
+            return View(funeralModel);
+        }
+        [HttpPost]
+        public ActionResult FuneralServices(FuneralModel model)
+        {
             return View();
         }
         public ActionResult FuneralSearch()
