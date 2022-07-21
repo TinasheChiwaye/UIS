@@ -140,36 +140,35 @@ new SelectListItem() { Text = "Mafeteng", Value = "Mafeteng" }
 };
 }
 
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
-
-<div class="col-lg-12">
-    <div class="ibox ">
-        <div class="ibox-title">
-            <h5>Funeral Services</h5>
-        </div>
-        <div class="ibox-content">
-            <div class="row">
-                <div class="panel blank-panel">
-                    <div class="panel-heading">
-                        <div class="panel-options" id="Tabs">
-
-                            <ul class="nav nav-tabs" id="myTab">
-                                <li class="active" id="tab1"><a data-toggle="tab" href="#tabBodyCollection" id="aBodyCollection" aria-expanded="true">Body Collection</a></li>
-                                <li class="" id="tab3"><a data-toggle="tab" href="#tabDeasedInfo" id="aDeasedInfo" aria-expanded="false">Deceased Info</a></li>
-                                <li class="" id="tab2"><a data-toggle="tab" href="#tabMortuary" id="aMortuary" aria-expanded="false">Mortuary</a></li>
-                                <li class="" id="tab4"><a data-toggle="tab" href="#tabPhysicalDescription" id="aPhysicalDescription" aria-expanded="false">Physical Description</a></li>
-                                <li class="" id="tab5"><a data-toggle="tab" href="#tabFuneralArrangement" id="aFuneralArrangement" aria-expanded="false">Funeral Arrangements</a></li>
-                                <li class="" id="tab6"><a data-toggle="tab" href="#tabPayment" id="aPayment" aria-expanded="true">Payment</a></li>
-                                <li class="" id="tab7"><a data-toggle="tab" href="#tabFuneralSchedule" id="aFuneralSchedule" aria-expanded="false">Funeral Schedule</a></li>
-                            </ul>
+    <div class="col-lg-12">
+        <div class="ibox ">
+            <div class="ibox-title">
+                <h5>Funeral Services</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="panel blank-panel">
+                        <div class="panel-heading">
+                            <div class="panel-options" id="Tabs">
+                                <ul class="nav nav-tabs" id="myTab">
+                                    <li class="active" id="tab1"><a data-toggle="tab" href="#tabBodyCollection" id="aBodyCollection" aria-expanded="true">Body Collection</a></li>
+                                    <li class="" id="tab3"><a data-toggle="tab" href="#tabDeasedInfo" id="aDeasedInfo" aria-expanded="false">Deceased Info</a></li>
+                                    <li class="" id="tab2"><a data-toggle="tab" href="#tabMortuary" id="aMortuary" aria-expanded="false">Mortuary</a></li>
+                                    <li class="" id="tab4"><a data-toggle="tab" href="#tabPhysicalDescription" id="aPhysicalDescription" aria-expanded="false">Physical Description</a></li>
+                                    <li class="" id="tab5"><a data-toggle="tab" href="#tabFuneralArrangement" id="aFuneralArrangement" aria-expanded="false">Funeral Arrangements</a></li>
+                                    <li class="" id="tab6"><a data-toggle="tab" href="#tabPayment" id="aPayment" aria-expanded="true">Payment</a></li>
+                                    <li class="" id="tab7"><a data-toggle="tab" href="#tabFuneralSchedule" id="aFuneralSchedule" aria-expanded="false">Funeral Schedule</a></li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                    <div class="panel-body">
-                        <div class="tab-content">
-                            @using (Html.BeginForm())
-                            {
-                                @Html.AntiForgeryToken()
-                                <div id="tabBodyCollection" class="tab-pane fade in active">
+                        <div class="panel-body">
+                            <div class="tab-content">
+
+                                <div id="tabBodyCollection" class="tab-pane active">
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             @Html.Label("Claimant Name", new { @class = "control-label" })
@@ -192,7 +191,7 @@ new SelectListItem() { Text = "Mafeteng", Value = "Mafeteng" }
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            @Html.Label("Driver ID Number", new { @class = "control-label" })                                            
+                                            @Html.Label("Driver ID Number", new { @class = "control-label" })
                                             @Html.TextBoxFor(m => m.DriverID, null, new { @class = "form-control", @maxlength = "30" })
                                             @Html.ValidationMessageFor(m => m.DriverID, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                                         </div>
@@ -507,15 +506,16 @@ new SelectListItem() { Text = "Mafeteng", Value = "Mafeteng" }
                                         </div>
                                     </div>
                                 </div>
-                            }
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+}
 <script type="text/javascript">
+
     function activateTab(tabName) {
         $('#' + tabName + '').trigger('click');
         return false;

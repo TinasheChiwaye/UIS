@@ -439,7 +439,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
         }
         //public ActionResult PrintForm(int funId)
         //{
-            
+
         //    FuneralListVM printObj = new FuneralListVM();
 
         //    FuneralPaymentsModel funeralPayments = new FuneralPaymentsModel();
@@ -541,12 +541,12 @@ namespace Funeral.Web.Areas.Admin.Controllers
             }
         }
 
-        public ActionResult BodyCollection ()
+        public ActionResult BodyCollection()
         {
             return View();
         }
 
-        public ActionResult Mortuary ()
+        public ActionResult Mortuary()
         {
             return View();
         }
@@ -559,7 +559,11 @@ namespace Funeral.Web.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult FuneralServices(FuneralModel model)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                var funeralId = FuneralBAL.SaveFuneral(model);
+            }
+            return View(model);
         }
         public ActionResult FuneralSearch()
         {
