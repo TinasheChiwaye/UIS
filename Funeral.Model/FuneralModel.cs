@@ -124,9 +124,11 @@ namespace Funeral.Model
         public IEnumerable<SelectListItem> CustomGrouping5 { get; set; }
         [Required(ErrorMessage = "Claimant name is required")]
         public string ClaimantName { get; set; }
+        [Required(ErrorMessage = "Surname is required")]
         public string ClaimantSurname { get; set; }
         public string ContactDetails { get; set; }
         public string DeceasedAddress { get; set; }
+        
         public string DriverID { get; set; }
         public string DriverName { get; set; }
         public string NumberPlate { get; set; }

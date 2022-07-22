@@ -224,23 +224,26 @@ new SelectListItem() { Text = "Mafeteng", Value = "Mafeteng" }
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>Full Name  <em class="text-danger">*</em> </label>
-                                                @Html.TextBoxFor(m => m.Surname, null, new { @class = "form-control", @id = "Surname", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
+                                                @Html.TextBoxFor(m => m.FullNames, null, new { @class = "form-control", @id = "Surname", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
+                                                @Html.ValidationMessageFor(m => m.FullNames, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                                             </div>
                                             <div class="form-group">
                                                 <label>Surname  <em class="text-danger">*</em>  </label>
-                                                @Html.TextBoxFor(m => m.FullNames, null, new { @class = "form-control", @id = "FullNames", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
+                                                @Html.TextBoxFor(m => m.Surname, null, new { @class = "form-control", @id = "FullNames", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
+                                                @Html.ValidationMessageFor(m => m.Surname, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                                             </div>
                                             <div class="row">
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         <label>ID Number <em class="text-danger">*</em>  </label>
                                                         @Html.TextBoxFor(m => m.IDNumber, null, new { @class = "form-control", @id = "IDNumber", @pattern = "/d*", @maxlength = "20", placeholder = "", onkeyup = "DateComparisionJavascriptFun();" })
+                                                        @Html.ValidationMessageFor(m => m.IDNumber, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         <label>Date Of Birth </label>
-                                                        @Html.TextBoxFor(m => m.DateOfBirth, null, new { @class = "form-control", @id = "BirthDay", @maxlength = "25", placeholder = "" })
+                                                        @Html.TextBoxFor(m => m.DateOfBirth, null, new { @class = "form-control datepicker", @id = "BirthDay", @maxlength = "25", placeholder = "" })
                                                     </div>
                                                 </div>
                                             </div>
@@ -269,7 +272,7 @@ new SelectListItem() { Text = "Mafeteng", Value = "Mafeteng" }
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         <label>Date Of Death </label>
-                                                        @Html.TextBoxFor(m => m.DateOfDeath, null, new { @class = "form-control", @id = "DOD", @maxlength = "50", placeholder = "" })
+                                                        @Html.TextBoxFor(m => m.DateOfDeath, null, new { @class = "form-control datepicker", @id = "DOD", @maxlength = "50", placeholder = "" })
                                                     </div>
                                                 </div>
                                             </div>
@@ -282,6 +285,7 @@ new SelectListItem() { Text = "Mafeteng", Value = "Mafeteng" }
                                             <div class="form-group">
                                                 <label>Street Address <em class="text-danger">*</em> </label>
                                                 @Html.TextBoxFor(m => m.Address1, null, new { @class = "form-control", @id = "StreetAddress", @maxlength = "50", placeholder = "", @style = "text-transform:uppercase" })
+                                                @Html.ValidationMessageFor(m => m.Address1, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                                             </div>
                                             <div class="form-group">
                                                 <label>Village</label>
@@ -321,7 +325,7 @@ new SelectListItem() { Text = "Mafeteng", Value = "Mafeteng" }
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 @Html.Label("Deceased Arrival Date and Time", new { @class = "control-label" })
-                                                @Html.TextBoxFor(m => m.DeceasedArrival, null, new { @class = "form-control", @maxlength = "30" })
+                                                @Html.TextBoxFor(m => m.DeceasedArrival, null, new { @class = "form-control datetimepicker", @maxlength = "30" })
                                                 @Html.ValidationMessageFor(m => m.DeceasedArrival, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                                             </div>
                                         </div>
@@ -440,7 +444,7 @@ new SelectListItem() { Text = "Mafeteng", Value = "Mafeteng" }
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 @Html.Label("Date and Time of Funeral", new { @class = "control-label" })
-                                                @Html.TextBoxFor(m => m.FuneralDatetime, null, new { @class = "form-control", @maxlength = "25" })
+                                                @Html.TextBoxFor(m => m.FuneralDatetime, null, new { @class = "form-control datepicker", @maxlength = "25" })
                                                 @Html.ValidationMessageFor(m => m.FuneralDatetime, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                                             </div>
                                         </div>
@@ -515,10 +519,16 @@ new SelectListItem() { Text = "Mafeteng", Value = "Mafeteng" }
     </div>
 }
 <script type="text/javascript">
+    $(document).ready(function () {
+        $(".datepicker").datepicker({ format: 'dd MM yyyy', autoclose: true });
+        $(".datetimepicker").datepicker({ format: 'dd MM yyyy', autoclose: true });
 
+    })
     function activateTab(tabName) {
-        $('#' + tabName + '').trigger('click');
-        return false;
+        if ($('form').valid()) {
+            $('#' + tabName + '').trigger('click');
+            return false;
+        }
     }
 </script>
 
