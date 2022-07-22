@@ -553,7 +553,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
         public ActionResult FuneralServices()
         {
-            var funeralModel = new FuneralModel();
+            var funeralModel = new FuneralModel() { parlourid = ParlourId };
             return View(funeralModel);
         }
         [HttpPost]
@@ -561,6 +561,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                model.parlourid = this.ParlourId;
+                model.ModifiedUser = this.UserName;
                 var funeralId = FuneralBAL.SaveFuneral(model);
             }
             return View(model);
