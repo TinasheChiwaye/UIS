@@ -173,16 +173,19 @@ new SelectListItem() { Text = "Mafeteng", Value = "Mafeteng" }
                                             <div class="row">
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
+                                                        @Html.HiddenFor(m => m.pkiFuneralID)
+                                                        @Html.HiddenFor(m => m.parlourid)
+                                                        @Html.Hidden("submitForm","bodyCollection")
                                                         @Html.Label("Claimant Name", new { @class = "control-label" })
-                                                        @Html.TextBoxFor(m => m.ClaimantName, null, new { @class = "form-control", @maxlength = "30" })
-                                                        @Html.ValidationMessageFor(m => m.ClaimantName, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                                        @Html.TextBoxFor(m => m.FullNames, null, new { @class = "form-control", @maxlength = "30" })
+                                                        @Html.ValidationMessageFor(m => m.FullNames, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         @Html.Label("Claimant Surname", new { @class = "control-label" })
-                                                        @Html.TextBoxFor(m => m.ClaimantSurname, null, new { @class = "form-control", @maxlength = "25" })
-                                                        @Html.ValidationMessageFor(m => m.ClaimantSurname, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                                        @Html.TextBoxFor(m => m.Surname, null, new { @class = "form-control", @maxlength = "25" })
+                                                        @Html.ValidationMessageFor(m => m.Surname, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
@@ -331,6 +334,9 @@ new SelectListItem() { Text = "Mafeteng", Value = "Mafeteng" }
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="form-group">
+                                                @Html.HiddenFor(m => m.pkiFuneralID)
+                                                @Html.HiddenFor(m => m.parlourid)
+                                                @Html.Hidden("submitForm", "mortuary")
                                                 @Html.Label("Deceased Arrival Date and Time", new { @class = "control-label" })
                                                 @Html.TextBoxFor(m => m.DeceasedArrival, null, new { @class = "form-control datetimepicker", @maxlength = "30" })
                                                 @Html.ValidationMessageFor(m => m.DeceasedArrival, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
@@ -372,6 +378,7 @@ new SelectListItem() { Text = "Mafeteng", Value = "Mafeteng" }
                                     <div class="row">
                                         @Html.HiddenFor(m => m.pkiFuneralID)
                                         @Html.HiddenFor(m => m.parlourid)
+                                        @Html.Hidden("submitForm", "physicaldescription")
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>Notes</label>
@@ -435,6 +442,9 @@ new SelectListItem() { Text = "Mafeteng", Value = "Mafeteng" }
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="form-group">
+                                                @Html.HiddenFor(m => m.pkiFuneralID)
+                                                @Html.HiddenFor(m => m.parlourid)
+                                                @Html.Hidden("submitForm", "funeralarrangement")
                                                 @Html.Label("Coffin Szie", new { @class = "control-label" })
                                                 @Html.TextBoxFor(m => m.CoffinSize, null, new { @class = "form-control", @maxlength = "30" })
                                                 @Html.ValidationMessageFor(m => m.CoffinSize, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
@@ -503,6 +513,9 @@ new SelectListItem() { Text = "Mafeteng", Value = "Mafeteng" }
                             <div id="tabPayment" class="tab-pane">
                                 <div class="row">
                                     <div class="col-lg-12">
+                                        @Html.HiddenFor(m => m.pkiFuneralID)
+                                        @Html.HiddenFor(m => m.parlourid)
+                                        @Html.Hidden("submitForm", "payment")
                                         Payment Information
                                     </div>
                                     <div class="col-lg-12">
@@ -515,6 +528,9 @@ new SelectListItem() { Text = "Mafeteng", Value = "Mafeteng" }
                             <div id="tabFuneralSchedule" class="tab-pane">
                                 <div class="row">
                                     <div class="col-lg-12">
+                                        @Html.HiddenFor(m => m.pkiFuneralID)
+                                        @Html.HiddenFor(m => m.parlourid)
+                                        @Html.Hidden("submitForm", "funeralschedule")                                        
                                         Funeral Schedule
                                     </div>
                                     <div class="col-lg-12">
@@ -555,10 +571,10 @@ new SelectListItem() { Text = "Mafeteng", Value = "Mafeteng" }
             $('#tab5').hide();
             $('#tab6').hide();
         }
-        else if (funeralStatus == 'Body Collection') {
+        else if (funeralStatus == 'BodyCollection') {
             tabLinks.eq(0).removeClass('active');
             $('#aMortuary').trigger('click');
-            $('#tab1').hide();
+            $('#tab1').show();
             $('#tab2').show();
             $('#tab2').addClass('active');
             $('#tab3').hide();
@@ -566,39 +582,47 @@ new SelectListItem() { Text = "Mafeteng", Value = "Mafeteng" }
             $('#tab5').hide();
             $('#tab6').hide();
         }
-        else if (funeralStatus == 'Mortuary') {
-            tabLinks.eq(0).addClass('active');
+        else if (funeralStatus == 'Mortuary') {            
+            $('#tab2').removeClass('active');
             $('#aPhysicalDescription').trigger('click');
-            $('#tab2').hide();
-            $('#tab3').hide();
+            $('#tab1').show();
+            $('#tab2').show();            
+            $('#tab3').show();
+            $('#tab3').addClass('active');
             $('#tab4').hide();
             $('#tab5').hide();
             $('#tab6').hide();
         }
-        else if (funeralStatus == 'Funeral Arrangement') {
-            tabLinks.eq(0).addClass('active');
-            $('#aFuneralArrangement').trigger('click');
-            $('#tab2').hide();
-            $('#tab3').hide();
-            $('#tab4').hide();
+        else if (funeralStatus == 'FuneralArrangement') {
+            $('#tab3').removeClass('active');
+            $('#aPayment').trigger('click');
+            $('#tab1').show();
+            $('#tab2').show();
+            $('#tab3').show();
+            $('#tab4').show();
+            $('#tab4').addClass('active');
             $('#tab5').hide();
             $('#tab6').hide();
         }
-        else if (funeralStatus == 'Payment') {
-            tabLinks.eq(0).addClass('active');
-            $('#tab2').hide();
-            $('#tab3').hide();
-            $('#tab4').hide();
-            $('#tab5').hide();
+        else if (funeralStatus == 'Payment') {            
+            $('#tab1').show();
+            $('#tab2').show();
+            $('#tab3').show();
+            $('#tab4').show();
+            $('#tab5').show();
+            $('#tab4').removeClass('active');
+            $('#tab5').addClass('active');
             $('#tab6').hide();
         }
-        else if (funeralStatus == 'Funeral Schedule') {
-            tabLinks.eq(0).addClass('active');
-            $('#tab2').hide();
-            $('#tab3').hide();
-            $('#tab4').hide();
-            $('#tab5').hide();
-            $('#tab6').hide();
+        else if (funeralStatus == 'FuneralSchedule') {
+            $('#tab1').show();
+            $('#tab2').show();
+            $('#tab3').show();
+            $('#tab4').show();
+            $('#tab5').show();
+            $('#tab6').show();
+            $('#tab5').removeClass('active');
+            $('#tab6').addClass('active');
         }
 
 

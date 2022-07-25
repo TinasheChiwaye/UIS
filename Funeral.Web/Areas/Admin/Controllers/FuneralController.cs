@@ -551,26 +551,102 @@ namespace Funeral.Web.Areas.Admin.Controllers
             return View();
         }
 
-        public ActionResult FuneralServices()
+        public ActionResult FuneralServices(int? funeralId)
         {
-            var funeralModel = new FuneralModel() { parlourid = ParlourId,Status="New" };
+            var funeralModel = new FuneralModel() { parlourid = ParlourId, Status = "New" };
+            if (funeralId.GetValueOrDefault(0) == 0)
+                return View(funeralModel);
+
+            funeralModel = FuneralBAL.SelectFuneralByFuneralId(funeralId.GetValueOrDefault(0), this.ParlourId);
             return View(funeralModel);
         }
+
         [HttpPost]
-        public ActionResult FuneralServices(FuneralModel model)
+        public ActionResult FuneralServices(FuneralModel model, string submitForm)
         {
             if (ModelState.IsValid)
             {
                 model.parlourid = this.ParlourId;
                 model.ModifiedUser = this.UserName;
-                model.Status = "Body Collection";
-                var funeralId = FuneralBAL.SaveFuneral(model);
+                model.Status = GetStatus(model.Status, submitForm);
+                if (model.pkiFuneralID == 0)
+                    model.pkiFuneralID = FuneralBAL.SaveFuneral(model);
+                else
+                    FuneralBAL.UpdateFuneral(model);
             }
             return View(model);
         }
         public ActionResult FuneralSearch()
         {
             return View();
+        }
+
+        private string GetStatus(string currentStatus, string submittedFormName)
+        {
+            int statusNumber = 0;
+            int formSubmitNumber = 0;
+            switch (currentStatus)
+            {
+                case "BodyCollection":
+                    statusNumber = 1;
+                    break;
+                case "Mortuary":
+                    statusNumber = 2;
+                    break;
+                case "PhysicalDesciption":
+                    statusNumber = 3;
+                    break;
+                case "FuneralArrangement":
+                    statusNumber = 4;
+                    break;
+                case "Payment":
+                    statusNumber = 5;
+                    break;
+                case "FuneralSchedule":
+                    statusNumber = 6;
+                    break;
+                case "CustomerFeedback":
+                    statusNumber = 7;
+                    break;
+                case "Completed":
+                    statusNumber = 8;
+                    break;
+                default:
+                    statusNumber = 0;
+                    break;
+            }
+
+            switch (submittedFormName)
+            {
+                case "bodyCollection":
+                    statusNumber = 1;
+                    break;
+                case "mortuary":
+                    statusNumber = 2;
+                    break;
+                case "physicaldescription":
+                    statusNumber = 3;
+                    break;
+                case "funeralarrangement":
+                    statusNumber = 4;
+                    break;
+                case "payment":
+                    statusNumber = 5;
+                    break;
+                case "funeralschedule":
+                    statusNumber = 6;
+                    break;
+                default:
+                    statusNumber = 0;
+                    break;
+            }
+
+            if (statusNumber >= formSubmitNumber)
+                return currentStatus;
+            else
+                statusNumber = statusNumber + 1;
+
+            return ((FuneralEnum.FuneralStatusEnum)statusNumber).ToString();
         }
     }
 }

@@ -29,18 +29,22 @@ namespace Funeral.Model
 
         public enum FuneralStatusEnum
         {
+            [Description("New")]
+            New = 0,
             [Description("Body Collection")]
             BodyCollection = 1,
             [Description("Mortuary")]
             Mortuary = 2,
+            [Description("Physical Description")]
+            PhysicalDesciption = 3,
             [Description("Funeral Arrangement")]
-            FuneralArrangement = 3,
+            FuneralArrangement = 4,
             [Description("Payment")]
-            Payment = 4,
+            Payment = 5,
             [Description("Funeral Schedule")]
-            FuneralSchedule = 5,
+            FuneralSchedule = 6,
             [Description("Customer Feedback")]
-            CustomerFeedback = 6,
+            CustomerFeedback = 7,
             [Description("Completed")]
             Completed = 7
         }
