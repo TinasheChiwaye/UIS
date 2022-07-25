@@ -50,8 +50,10 @@ namespace Funeral.Model
             this.Discount = 0;
             this.Tax = 0;
             this.FkiClaimID = 0;
+            
 
         }
+       
         public int pkiFuneralID { get; set; }
         public int FkiClaimID { get; set; }
         public string Title { get; set; }
@@ -141,5 +143,6 @@ namespace Funeral.Model
         public DateTime FuneralDatetime { get; set; }
         public string CarMakeRegistrantion { get; set; }
         public string DriverSurname { get; set; }
+        public FuneralEnum.FuneralStatusEnum FuneralStatus { get; set; }
     }
 }
