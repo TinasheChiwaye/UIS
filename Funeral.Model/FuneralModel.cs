@@ -78,7 +78,7 @@ namespace Funeral.Model
         public string Code { get; set; }
         public string MemeberNumber { get; set; }
         public string ContactPerson { get; set; }
-        [StringLength(10)]
+        [StringLength(15)]
         public string ContactPersonNumber { get; set; }
         public string BodyCollectedFrom { get; set; }
         public string CourseOfDearth { get; set; }
@@ -131,16 +131,15 @@ namespace Funeral.Model
         public string ContactDetails { get; set; }
         public string DeceasedAddress { get; set; }
         
-        public string DriverID { get; set; }
+        public string DriverIdNumber { get; set; }
         public string DriverName { get; set; }
         public string NumberPlate { get; set; }
         public string CarMake { get; set; }
-        public DateTime DeceasedArrival { get; set; }
-        public string TagNumber { get; set; }
-        public int CoffinSize { get; set; }
+        public DateTime? DeceasedArrivalDateTime { get; set; }
+        //[Required(ErrorMessage = "Tag Number is required")]
+        public string TagNumber { get; set; }       
         public string TypeOfCoffin { get; set; }
-        public string OtherServices { get; set; }
-        public DateTime FuneralDatetime { get; set; }
+        public string OtherServices { get; set; }       
         public string CarMakeRegistrantion { get; set; }
         public string DriverSurname { get; set; }
         public FuneralEnum.FuneralStatusEnum FuneralStatus { get; set; }

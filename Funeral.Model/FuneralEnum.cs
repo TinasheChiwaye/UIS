@@ -35,16 +35,16 @@ namespace Funeral.Model
             BodyCollection = 1,
             [Description("Mortuary")]
             Mortuary = 2,
-            [Description("Physical Description")]
-            PhysicalDesciption = 3,
+            //[Description("Physical Description")]
+            //PhysicalDesciption = 3,
             [Description("Funeral Arrangement")]
-            FuneralArrangement = 4,
+            FuneralArrangement = 3,
             [Description("Payment")]
-            Payment = 5,
+            Payment = 4,
             [Description("Funeral Schedule")]
-            FuneralSchedule = 6,
+            FuneralSchedule = 5,
             [Description("Customer Feedback")]
-            CustomerFeedback = 7,
+            CustomerFeedback = 6,
             [Description("Completed")]
             Completed = 7
         }

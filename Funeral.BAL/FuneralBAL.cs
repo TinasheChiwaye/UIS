@@ -28,10 +28,7 @@ namespace Funeral.BAL
             return FuneralDAL.SaveFuneral(model);
         }
 
-        public static int UpdateFuneral(FuneralModel model)
-        {
-            return FuneralDAL.UpdateFuneral(model);
-        }
+        
         public static FuneralModel SelectFuneralBypkid(int ID, Guid ParlourId)
         {
             DataTable dr = FuneralDAL.SelectFuneralBypkiddt(ID, ParlourId);

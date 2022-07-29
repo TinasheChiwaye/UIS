@@ -47,7 +47,7 @@ namespace Funeral.DAL
             //string query = "SaveFuneral"; New By Mahipatsinh
             string query = "SaveFuneral_New";
 
-            DbParameter[] ObjParam = new DbParameter[49];
+            DbParameter[] ObjParam = new DbParameter[55];
             ObjParam[0] = new DbParameter("@pkiFuneralID", DbParameter.DbType.Int, 0, model.pkiFuneralID);
             ObjParam[1] = new DbParameter("@FullNames", DbParameter.DbType.NVarChar, 0, model.FullNames);
             ObjParam[2] = new DbParameter("@Surname", DbParameter.DbType.NVarChar, 0, model.Surname);
@@ -97,6 +97,14 @@ namespace Funeral.DAL
             ObjParam[46] = new DbParameter("@CarReg", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.CarReg));//Change by Charles Date: 22/09/2021
             ObjParam[47] = new DbParameter("@Embalming", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.Embalming));//Change by Charles Date: 22/09/2021
             ObjParam[48] = new DbParameter("@CoffineSize", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.CoffineSize));//Change by Charles Date: 22/09/2021
+
+            ObjParam[49] = new DbParameter("@ClaimantName", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.ClaimantName));//Change by Charles Date: 22/09/2021
+            ObjParam[50] = new DbParameter("@ClaimantSurname", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.ClaimantSurname));//Change by Charles Date: 22/09/2021
+            ObjParam[51] = new DbParameter("@DriverIdNumber", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.DriverIdNumber));//Change by Hemant 29 July 2022
+            ObjParam[52] = new DbParameter("@DeceasedArrivalDateTime", DbParameter.DbType.DateTime, 0, model.DeceasedArrivalDateTime);//Change by Hemant 29 July 2022
+            ObjParam[53] = new DbParameter("@Notes", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.Notes));//Change by Hemant 29 July 2022
+            ObjParam[54] = new DbParameter("@OtherServices", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.OtherServices));//Change by Hemant 29 July 2022
+
             //ObjParam[49] = new DbParameter("@CustomDental", DbParameter.DbType.Int, 0, NulltoEmpty(model.CustomGrouping5));//Change by Charles Date: 22/09/2021
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
         }
@@ -104,61 +112,7 @@ namespace Funeral.DAL
         {
             return values == null ? "" : values;
         }
-        public static int UpdateFuneral(FuneralModel model)
-        {
-            string query = "SaveFuneral_New";
-            DbParameter[] ObjParam = new DbParameter[49];
-            ObjParam[0] = new DbParameter("@pkiFuneralID", DbParameter.DbType.Int, 0, model.pkiFuneralID);
-            ObjParam[1] = new DbParameter("@FullNames", DbParameter.DbType.NVarChar, 0, model.FullNames);
-            ObjParam[2] = new DbParameter("@Surname", DbParameter.DbType.NVarChar, 0, model.Surname);
-            ObjParam[3] = new DbParameter("@Gender", DbParameter.DbType.NVarChar, 0, model.Gender);
-            ObjParam[4] = new DbParameter("@IDNumber", DbParameter.DbType.NVarChar, 0, model.IDNumber);
-            ObjParam[5] = new DbParameter("@DateOfBirth", DbParameter.DbType.DateTime, 0, model.DateOfBirth);
-            ObjParam[6] = new DbParameter("@DateOfDeath", DbParameter.DbType.DateTime, 0, model.DateOfDeath);
-            ObjParam[7] = new DbParameter("@DateOfFuneral", DbParameter.DbType.DateTime, 0, model.DateOfFuneral);
-            ObjParam[8] = new DbParameter("@TimeOfFuneral", DbParameter.DbType.DateTime, 0, model.TimeOfFuneral);
-            ObjParam[9] = new DbParameter("@FuneralCemetery", DbParameter.DbType.NVarChar, 0, model.FuneralCemetery);
-            ObjParam[10] = new DbParameter("@Address1", DbParameter.DbType.NVarChar, 0, model.Address1);
-            ObjParam[11] = new DbParameter("@Address2", DbParameter.DbType.NVarChar, 0, model.Address2);
-            ObjParam[12] = new DbParameter("@Address3", DbParameter.DbType.NVarChar, 0, model.Address3);
-            ObjParam[13] = new DbParameter("@Code", DbParameter.DbType.NVarChar, 0, model.Code);
-            ObjParam[14] = new DbParameter("@BodyCollectedFrom", DbParameter.DbType.NVarChar, 0, model.BodyCollectedFrom);
-            ObjParam[15] = new DbParameter("@CourseOfDearth", DbParameter.DbType.NVarChar, 0, model.CourseOfDearth);
-            ObjParam[16] = new DbParameter("@BI1663", DbParameter.DbType.NVarChar, 0, model.BI1663);
-            ObjParam[17] = new DbParameter("@DriverAndCars", DbParameter.DbType.NVarChar, 0, model.DriverAndCars);
-            ObjParam[18] = new DbParameter("@GraveNo", DbParameter.DbType.NVarChar, 0, model.GraveNo);
-            ObjParam[19] = new DbParameter("@parlourid", DbParameter.DbType.UniqueIdentifier, 0, model.parlourid);
-            ObjParam[20] = new DbParameter("@LastModified", DbParameter.DbType.DateTime, 0, model.LastModified);
-            ObjParam[21] = new DbParameter("@ModifiedUser", DbParameter.DbType.NVarChar, 0, model.ModifiedUser);
-            ObjParam[22] = new DbParameter("@ContactPerson", DbParameter.DbType.NVarChar, 0, model.ContactPerson);
-            ObjParam[23] = new DbParameter("@ContactPersonNumber", DbParameter.DbType.NVarChar, 0, model.ContactPersonNumber);
-            ObjParam[24] = new DbParameter("@BurialOrderNo", DbParameter.DbType.NVarChar, 0, model.BurialOrderNo);
-            ObjParam[25] = new DbParameter("@MemeberNumber", DbParameter.DbType.NVarChar, 0, model.MemeberNumber);
-            ObjParam[26] = new DbParameter("@FkiClaimID", DbParameter.DbType.NVarChar, 0, model.FkiClaimID);            
-            ObjParam[27] = new DbParameter("@MemberType", DbParameter.DbType.NVarChar, 0, model.MemberType);
-            ObjParam[28] = new DbParameter("@OfficialStatus", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.OfficialStatus));//Change by Charles Date: 22/09/2021
-            ObjParam[29] = new DbParameter("@GeneralCondition", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.GeneralCondition));//Change by Charles Date: 22/09/2021
-            ObjParam[30] = new DbParameter("@PlaceOfCollection", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.PlaceOfCollection));//Change by Charles Date: 22/09/2021
-            ObjParam[31] = new DbParameter("@AgeGroup", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.AgeGroup));//Change by Charles Date: 22/09/2021
-            ObjParam[32] = new DbParameter("@PolicyNumber", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.PolicyNumber));//Change by Charles Date: 22/09/2021
-            ObjParam[33] = new DbParameter("@HeadHair", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.HeadHair));//Change by Charles Date: 22/09/2021
-            ObjParam[34] = new DbParameter("@PersonalItem", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.PersonalItem));//Change by Charles Date: 22/09/2021
-            ObjParam[35] = new DbParameter("@SkinMarks", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.SkinMarks));//Change by Charles Date: 22/09/2021
-            ObjParam[36] = new DbParameter("@IdentityDocument", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.IdentityDocument));//Change by Charles Date: 22/09/2021
-            ObjParam[37] = new DbParameter("@DentalCondition", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.DentalCondition));//Change by Charles Date: 22/09/2021
-            ObjParam[38] = new DbParameter("@Status", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.Status));//Change by Charles Date: 22/09/2021
-            ObjParam[39] = new DbParameter("@BodyAndCar", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.BodyAndCar));//Change by Charles Date: 22/09/2021--
-            ObjParam[40] = new DbParameter("@CollectionType", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.CollectionType));//Change by Charles Date: 22/09/2021
-            ObjParam[41] = new DbParameter("@Village", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.Village));//Change by Charles Date: 22/09/2021
-            ObjParam[42] = new DbParameter("@District", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.District));//Change by Charles Date: 22/09/2021
-            ObjParam[43] = new DbParameter("@Branch", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.Branch));//Change by Charles Date: 22/09/2021
-            ObjParam[44] = new DbParameter("@FridgeNumber", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.FridgeNumber));//Change by Charles Date: 22/09/2021
-            ObjParam[45] = new DbParameter("@ShelfNumber", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.ShelfNumber));//Change by Charles Date: 22/09/2021
-            ObjParam[46] = new DbParameter("@CarReg", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.CarReg));//Change by Charles Date: 22/09/2021
-            ObjParam[47] = new DbParameter("@Embalming", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.Embalming));//Change by Charles Date: 22/09/2021
-            ObjParam[48] = new DbParameter("@CoffineSize", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.CoffineSize));//Change by Charles Date: 22/09/2021
-            return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
-        }
+        
         public static SqlDataReader SelectFuneralBypkid(int ID, Guid ParlourId)
         {
             DbParameter[] ObjParam = new DbParameter[2];

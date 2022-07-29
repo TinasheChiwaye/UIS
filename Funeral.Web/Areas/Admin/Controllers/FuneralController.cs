@@ -190,7 +190,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                         {
                             funeralModel.TimeOfFuneral = DateTime.Now;
                         }
-                        var updateFuneral = FuneralBAL.UpdateFuneral(funeralModel);
+                        var updateFuneral = FuneralBAL.SaveFuneral(funeralModel);
                     }
                     else
                     {
@@ -569,10 +569,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 model.parlourid = this.ParlourId;
                 model.ModifiedUser = this.UserName;
                 model.Status = GetStatus(model.Status, submitForm);
-                if (model.pkiFuneralID == 0)
-                    model.pkiFuneralID = FuneralBAL.SaveFuneral(model);
-                else
-                    FuneralBAL.UpdateFuneral(model);
+                model.pkiFuneralID = FuneralBAL.SaveFuneral(model);
+
             }
             return View(model);
         }
@@ -592,24 +590,21 @@ namespace Funeral.Web.Areas.Admin.Controllers
                     break;
                 case "Mortuary":
                     statusNumber = 2;
-                    break;
-                case "PhysicalDesciption":
+                    break;              
+                case "FuneralArrangement":
                     statusNumber = 3;
                     break;
-                case "FuneralArrangement":
+                case "Payment":
                     statusNumber = 4;
                     break;
-                case "Payment":
+                case "FuneralSchedule":
                     statusNumber = 5;
                     break;
-                case "FuneralSchedule":
+                case "CustomerFeedback":
                     statusNumber = 6;
                     break;
-                case "CustomerFeedback":
-                    statusNumber = 7;
-                    break;
                 case "Completed":
-                    statusNumber = 8;
+                    statusNumber = 7;
                     break;
                 default:
                     statusNumber = 0;
@@ -619,25 +614,22 @@ namespace Funeral.Web.Areas.Admin.Controllers
             switch (submittedFormName)
             {
                 case "bodyCollection":
-                    statusNumber = 1;
+                    formSubmitNumber = 1;
                     break;
                 case "mortuary":
-                    statusNumber = 2;
-                    break;
-                case "physicaldescription":
-                    statusNumber = 3;
-                    break;
+                    formSubmitNumber = 2;
+                    break;               
                 case "funeralarrangement":
-                    statusNumber = 4;
+                    formSubmitNumber = 3;
                     break;
                 case "payment":
-                    statusNumber = 5;
+                    formSubmitNumber = 4;
                     break;
                 case "funeralschedule":
-                    statusNumber = 6;
+                    formSubmitNumber = 5;
                     break;
                 default:
-                    statusNumber = 0;
+                    formSubmitNumber = 0;
                     break;
             }
 
