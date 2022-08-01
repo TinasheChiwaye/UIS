@@ -369,6 +369,8 @@ new SelectListItem() { Text = "Mafeteng", Value = "Mafeteng" }
                                             <div class="row">
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
+                                                        @Html.HiddenFor(m => m.Status) 
+                                                        @Html.Hidden("submitForm", "mortuary",new { @id= "submitForm" }) 
                                                         @Html.Label("Deceased Arrival Date and Time", new { @class = "control-label" })
                                                         @Html.TextBoxFor(m => m.DeceasedArrivalDateTime, null, new { @class = "form-control datetimepicker", @maxlength = "30" })
                                                         @Html.ValidationMessageFor(m => m.DeceasedArrivalDateTime, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
@@ -512,6 +514,8 @@ new SelectListItem() { Text = "Mafeteng", Value = "Mafeteng" }
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="form-group">
+                                                @Html.HiddenFor(m => m.Status) 
+                                                @Html.Hidden("submitForm", "funeralarrangement",new { @id= "submitForm" }) 
                                                 @Html.Label("Coffin Size", new { @class = "control-label" })
                                                 @Html.TextBoxFor(m => m.CoffineSize, null, new { @class = "form-control", @maxlength = "30" })
                                                 @Html.ValidationMessageFor(m => m.CoffineSize, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
@@ -615,6 +619,8 @@ new SelectListItem() { Text = "Mafeteng", Value = "Mafeteng" }
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="btn-group">
+                                                @Html.HiddenFor(m => m.Status)
+                                                @Html.Hidden("submitForm", "payment",new { @id= "submitForm" }) 
                                                 <input id="btnSubmitPayment" type="submit" value="Next" onclick="return activateTab('payment','aFuneralSchedule')" class="btn btn-w-m btn-primary" />
                                             </div>
                                         </div>
@@ -678,6 +684,8 @@ new SelectListItem() { Text = "Mafeteng", Value = "Mafeteng" }
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="btn-group">
+                                                @Html.HiddenFor(m => m.Status)
+                                                @Html.Hidden("submitForm", "funeralschedule",new { @id= "submitForm" }) 
                                                 <input id="btnSubmitSchedule" type="submit" value="Next" onclick="return activateTab('funeralSchedule','aFuneralSchedule')" class="btn btn-w-m btn-primary" />
                                             </div>
                                         </div>
@@ -693,90 +701,60 @@ new SelectListItem() { Text = "Mafeteng", Value = "Mafeteng" }
     </div>
 </div>
 <script type="text/javascript">
-    function activateTab(fromName, tabName) {
-        alert(fromName);
+    function activateTab(fromName, tabName) { 
         console.log('Before :'+$('#submitForm').val());
-        $('#submitForm').val(fromName);
-        console.log('After :' + $('#submitForm').val());
+         
         if ($('#' + fromName + '').valid()) {
             $('#' + tabName + '').trigger('click');
         }
+
+        tabSelector();
     }
     $(document).ready(function () {
         $(".datepicker").datepicker({ format: 'dd MM yyyy', autoclose: true });
-        $(".datetimepicker").datepicker({ format: 'dd MM yyyy', autoclose: true });
-        
-        var activate = [true, false, false, false, false],
-            tabLinks = $('.nav a'),
-            tabContent = $('.tab-content').children();
+        $(".datetimepicker").datepicker({ format: 'dd MM yyyy', autoclose: true }); 
+
+        tabSelector();
+    });
+
+    function tabSelector() {
         var funeralStatus = '@Model.Status';
         if (funeralStatus === 'New') {
-            tabLinks.eq(0).addClass('active');
-            $('#aBodyCollection').trigger('click');
-            $('#tab1').show();
-            $('#tab2').hide();
-            $('#tab4').hide();
-            $('#tab5').hide();
-            $('#tab6').hide();
+            $("#tab1").addClass("active")
+            $('#aBodyCollection').trigger('click'); 
         }
-        else if (funeralStatus == 'BodyCollection') {
-            tabLinks.eq(0).removeClass('active');
+        else if (funeralStatus == 'BodyCollection') { 
+            $("#tab1").removeClass("active");
+            $("#tabBodyCollection").removeClass("active");
+            $("#tab2").addClass("active"); 
+            $("#tabMortuary").addClass("active"); 
             $('#aMortuary').trigger('click');
-            $('#tab1').show();
-            $('#tab2').show();
-            $('#tab2').addClass('active');
-            $('#tab4').hide();
-            $('#tab5').hide();
-            $('#tab6').hide();
+            $("#Status").val('Mortuary');
         }
         else if (funeralStatus == 'Mortuary') {
-            $('#tab2').removeClass('active');
-            $('#aFuneralArrangement').trigger('click');
-            $('#tab1').show();
-            $('#tab2').show();
-            $('#tab4').show();
-            $('#tab4').addClass('active');
-            $('#tab5').hide();
-            $('#tab6').hide();
+            $("#tab2").removeClass("active"); 
+            $("#tabMortuary").removeClass("active");  
+            $("#tabFuneralArrangement").addClass("active");   
+            $('#aFuneralArrangement').trigger('click'); 
+            $("#Status").val('FuneralArrangement'); 
         }
-        else if (funeralStatus == 'FuneralArrangement') {
-            $('#aPayment').trigger('click');
-            $('#tab1').show();
-            $('#tab2').show();
-            $('#tab4').show();
-            $('#tab5').addClass('active');
-            $('#tab5').show();
-            $('#tab6').hide();
+        else if (funeralStatus == 'FuneralArrangement') {  
+            $("#tabFuneralArrangement").removeClass("active");   
+            $("#tabPayment").addClass("active");   
+            $('#aPayment').trigger('click'); 
+            $("#Status").val('Payment');  
         }
         else if (funeralStatus == 'Payment') {
-            $('#aFuneralSchedule').trigger('click');
-            $('#tab1').show();
-            $('#tab2').show();
-            $('#tab4').show();
-            $('#tab5').show();
-            $('#tab4').removeClass('active');
-            $('#tab6').addClass('active');
-            $('#tab6').show();
+            $('#aFuneralSchedule').trigger('click'); 
+            $("#Status").val('funeralschedule');  
         }
-        else if (funeralStatus == 'FuneralSchedule') {
-            $('#tab1').show();
-            $('#tab2').show();
-            $('#tab4').show();
-            $('#tab5').show();
-            $('#tab6').show();
-            $('#tab5').removeClass('active');
-            $('#tab6').addClass('active');
+        else if (funeralStatus == 'FuneralSchedule') { 
+            $('#aFuneralSchedule').trigger('click');  
         }
         else {
-            tabLinks.eq(0).addClass('active');
-            $('#aBodyCollection').trigger('click');
-            $('#tab1').hide();
-            $('#tab2').hide();
-            $('#tab4').hide();
-            $('#tab5').hide();
-            $('#tab6').hide();
+            $('#aBodyCollection').trigger('click'); 
         }
-    });
+    }
 
 </script>
 

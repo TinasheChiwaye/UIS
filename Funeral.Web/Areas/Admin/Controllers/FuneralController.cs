@@ -568,7 +568,10 @@ namespace Funeral.Web.Areas.Admin.Controllers
             {
                 model.parlourid = this.ParlourId;
                 model.ModifiedUser = this.UserName;
-                model.Status = GetStatus(model.Status, submitForm);
+                if (model.Status == "funeralschedule")
+                    model.Status = "funeralschedule";
+                else
+                    model.Status = GetStatus(model.Status, submitForm);
                 model.pkiFuneralID = FuneralBAL.SaveFuneral(model);
 
             }
@@ -590,7 +593,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                     break;
                 case "Mortuary":
                     statusNumber = 2;
-                    break;              
+                    break;
                 case "FuneralArrangement":
                     statusNumber = 3;
                     break;
@@ -618,7 +621,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
                     break;
                 case "mortuary":
                     formSubmitNumber = 2;
-                    break;               
+                    break;
                 case "funeralarrangement":
                     formSubmitNumber = 3;
                     break;
