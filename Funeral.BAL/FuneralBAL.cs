@@ -13,9 +13,9 @@ namespace Funeral.BAL
         {
         }
 
-        public static List<FuneralModel> SelectAllFuneralByParlourId(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder)
+        public static List<FuneralModel> SelectAllFuneralByParlourId(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder, DateTime? FromDate, DateTime? ToDate)
         {
-            DataTable dr = FuneralDAL.SelectAllFuneralByParlourIddt(ParlourId, PageSize, PageNum, Keyword, SortBy, SortOrder);
+            DataTable dr = FuneralDAL.SelectAllFuneralByParlourIddt(ParlourId, PageSize, PageNum, Keyword, SortBy, SortOrder,FromDate,ToDate);
             return FuneralHelper.DataTableMapToList<FuneralModel>(dr);
         }
         public static int FuneralDelete(int ID, string UserName)

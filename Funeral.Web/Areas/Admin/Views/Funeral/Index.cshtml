@@ -54,7 +54,7 @@
 
     function LoadFuneralList() {
         jQuery.ajax({
-            url: '@Url.Action("List", "Funeral", new {},Request.Url.Scheme)',
+            url: '@Url.Action("List", "Funeral", new { StatusId = ViewBag.StatusId},Request.Url.Scheme)',
             type: "Get",
             contentType: "application/html; charset=utf-8",
             dataType: 'html'

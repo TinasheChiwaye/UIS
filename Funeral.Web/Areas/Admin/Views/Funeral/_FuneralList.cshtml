@@ -7,8 +7,8 @@
 <script src="~/Scripts/plugins/jquery-ui/jquery-ui.min.js"></script>
 <link href="~/Content/plugins/datapicker/datepicker3.css" rel="stylesheet" />
 <script src="~/Scripts/plugins/datapicker/bootstrap-datepicker.js"></script>
-
-<script src="~/Scripts/plugins/dateformat/DateFormat.js"></script>
+<link href="~/Content/plugins/datapicker/datepicker3.css" rel="stylesheet" />
+<script src="~/Scripts/plugins/datapicker/bootstrap-datepicker.js"></script>
 
 @using (Html.BeginForm())
 {
@@ -22,34 +22,18 @@
                     <div class="row">
                         <div class="col-sm-3">
                             <div class="form-group">
-                                <label>Status:</label>
-                                @Html.DropDownListFor(x => x.StatusId, new SelectList("", "Status", "Status"), "Select", new { @class = "form-control" })
-                            </div>
-                        </div>
-                        <div class="col-lg-5" id="dvAdministrator">
-                            <div class="form-group">
-                                <label>Scheme: </label>
-                                @Html.DropDownListFor(m => m.CompanyId, new SelectList("", "parlourid", "ApplicationName"), new { @class = "form-control" })
-                            </div>
-                        </div>
-                        <div class="col-lg-4" id="dvAdministrator">
-                            <div class="form-group">
-                                <label>Book: </label>
-                                @Html.DropDownListFor(m => m.SocietyID, new SelectList("", "pkiSocietyID", "SocietyName"), "Select Group", new { @id = "ddlClaimSociety", @class = "form-control" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <div class="form-group">
                                 <label>Date From:</label>
-                                @Html.TextBoxFor(x => x.DateFrom, "{0:dd MMM yyyy}", new { @placeholder = "DD MM YYYY", @id = "txtDateFrom", @autocomplete = "off", @class = "form-control DatepickerSelection" })
+                                @*@Html.TextBoxFor(x => x.DateFrom, new { @placeholder = "DD MM YYYY", @autocomplete = "off", @class = "form-control datepicker" })*@
+                                @Html.TextBoxFor(m => m.DateFrom, "{0:dd MMM yyyy}", new { @autocomplete = "off", @class = "form-control datepicker", @maxlength = "25" })
+
                             </div>
                         </div>
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label>Date To:</label>
-                                @Html.TextBoxFor(x => x.DateTo, "{0:dd MMM yyyy}", new { @placeholder = "DD MM YYYY", @id = "txtDateTo", @autocomplete = "off", @class = "form-control DatepickerSelection" })
+                                @*@Html.TextBoxFor(x => x.DateTo, new { @placeholder = "DD MM YYYY",, @autocomplete = "off", @class = "form-control datepicker" })*@
+                                @Html.TextBoxFor(m => m.DateTo, "{0:dd MMM yyyy}", new { @id = "txtDateTo", @autocomplete = "off", @class = "form-control datepicker", @maxlength = "25" })
+
                             </div>
                         </div>
                         <div class="col-sm-2">
@@ -77,7 +61,7 @@
                         <div class="col-lg-12 ">
                             <div class="table-responsive">
                                 @*@Html.EditorFor(model => model.PageNum, new { htmlAttributes = new { @class = "hidden", id = "PageNum1" } })
-                    @Html.EditorFor(model => model.PageSize, new { htmlAttributes = new { @class = "hidden", id = "PageSize1" } })*@
+                                    @Html.EditorFor(model => model.PageSize, new { htmlAttributes = new { @class = "hidden", id = "PageSize1" } })*@
                                 @Html.Hidden("ItemId")
                                 <table id="funeralDataTable" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
                                     <thead>
@@ -146,6 +130,10 @@
                 tableConfigs.table.fnDraw();
                 eventConfigs.searchClick.dispatchEvent();
             });
+
+            $(".datepicker").datepicker({ format: 'dd MMM yyyy', autoclose: true });
+            $(".datetimepicker").datepicker({ format: 'dd MMM yyyy', autoclose: true });
+
         });
 
         function ConfigureDatatable() {
@@ -157,7 +145,7 @@
             var searchText =@Html.Raw(Json.Encode(@Model.SarchText));
 
             DOMIDs.Datatable = "funeralDataTable";
-            tableConfigs.SearchUrls = '@Url.Action("SearchData", "Funeral", new { }, Request.Url.Scheme)';
+            tableConfigs.SearchUrls = '@Url.Action("SearchData", "Funeral", new { StatusId = ViewBag.StatusId }, Request.Url.Scheme)';
             setsearchmodel('200', sortOrder, sortBy, totalRecord, pageNum, pageSize, searchText);
 
             columnsArray =
@@ -224,6 +212,10 @@
             model1.PageNum = 1;
             model1.PageSize = jQuery('#PageSize').val();
             model1.SarchText = jQuery("#SarchText").val();
+            model1.DateFrom =  jQuery("#DateFrom").val() == '' ? null : new Date(jQuery("#DateFrom").val());
+            model1.DateTo = jQuery("#DateFrom").val() == '' ? null : new Date(jQuery("#txtDateTo").val());
+            model1.StatusId = '@Html.Raw(ViewBag.StatusId)' 
+
             jQuery("#PageNum1").val(model1.PageNum);
         }
 

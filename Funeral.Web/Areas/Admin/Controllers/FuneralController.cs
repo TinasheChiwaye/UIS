@@ -13,6 +13,7 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using System.Web.Security;
 using System.Web.UI.WebControls;
+using static Funeral.Model.FuneralEnum;
 
 namespace Funeral.Web.Areas.Admin.Controllers
 {
@@ -35,6 +36,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
         [PageRightsAttribute(CurrentPageId = 10, Right = new isPageRight[] { isPageRight.HasAccess })]
         public ActionResult Index()
         {
+            ViewBag.StatusId = Request.Params["StatusId"];
             //ViewBag.HasCreate = HasCreateRight;
             //ViewBag.HasAccess = HasAccess;
             return View("Index");
@@ -63,10 +65,11 @@ namespace Funeral.Web.Areas.Admin.Controllers
         /// </summary>
         /// <returns></returns>
         [PageRightsAttribute(CurrentPageId = 10)]
-        public PartialViewResult List()
+        public PartialViewResult List(string StatusId)
         {
             //ViewBag.HasEditRight = HasEditRight;
             //ViewBag.HasDeleteRight = HasDeleteRight;
+            ViewBag.StatusId = StatusId;
 
             Model.Search.BaseSearch search = new Model.Search.BaseSearch();
             search.PageNum = 1;
@@ -81,6 +84,9 @@ namespace Funeral.Web.Areas.Admin.Controllers
             var pageCountEntries = GetEntriesCount();
             ViewBag.EntriesCount = pageCountEntries;
 
+            search.DateFrom = null;
+            search.DateTo = null;
+
             return PartialView("~/Areas/Admin/Views/Funeral/_FuneralList.cshtml", search);
         }
 
@@ -94,12 +100,25 @@ namespace Funeral.Web.Areas.Admin.Controllers
             var searchResult = new SearchResult<Model.Search.BaseSearch, FuneralModel>(search, new List<FuneralModel>(), o => o.FullNames.Contains(search.SarchText) || o.Surname.Contains(search.SarchText) || o.IDNumber.Contains(search.SarchText));
             try
             {
-                var funeralList = FuneralBAL.SelectAllFuneralByParlourId(ParlourId, search.PageSize, search.PageNum, "", search.SortBy, search.SortOrder);
-                return Json(new SearchResult<Model.Search.BaseSearch, FuneralModel>(search, funeralList, o => o.FullNames.Contains(search.SarchText) || o.Surname.Contains(search.SarchText) || o.IDNumber.Contains(search.SarchText)));
+                var funeralList = FuneralBAL.SelectAllFuneralByParlourId(ParlourId, search.PageSize, search.PageNum, "", search.SortBy, search.SortOrder, search.DateFrom, search.DateTo);
+
+                if (search.StatusId == FuneralStatusEnum.BodyCollection.ToString()) 
+                    funeralList = funeralList.Where(x => x.FuneralStatus == FuneralStatusEnum.New || x.FuneralStatus == FuneralStatusEnum.BodyCollection).ToList(); 
+                else if(search.StatusId == FuneralStatusEnum.Mortuary.ToString())
+                    funeralList = funeralList.Where(x => x.FuneralStatus == FuneralStatusEnum.Mortuary).ToList();
+                else if(search.StatusId == FuneralStatusEnum.FuneralArrangement.ToString())
+                    funeralList = funeralList.Where(x => x.FuneralStatus == FuneralStatusEnum.FuneralArrangement).ToList();
+                else if(search.StatusId == FuneralStatusEnum.Payment.ToString())
+                    funeralList = funeralList.Where(x=>x.FuneralStatus == FuneralStatusEnum.Payment).ToList();
+                else
+                    funeralList = funeralList.Where(x => x.FuneralStatus == FuneralStatusEnum.FuneralSchedule).ToList();
+
+                 
+                return Json(new SearchResult<Model.Search.BaseSearch, FuneralModel>(search, funeralList, o => o.FullNames.Contains(search.SarchText) || o.Surname.Contains(search.SarchText) || o.IDNumber.Contains(search.SarchText)), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                return Json(WebApiResult<Model.Search.BaseSearch, FuneralModel>.Error(searchResult, ex));
+                return Json(WebApiResult<Model.Search.BaseSearch, FuneralModel>.Error(searchResult, ex), JsonRequestBehavior.AllowGet);
             }
         }
 

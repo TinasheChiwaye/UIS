@@ -701,13 +701,10 @@ new SelectListItem() { Text = "Mafeteng", Value = "Mafeteng" }
     </div>
 </div>
 <script type="text/javascript">
-    function activateTab(fromName, tabName) { 
-        console.log('Before :'+$('#submitForm').val());
-         
+    function activateTab(fromName, tabName) {  
         if ($('#' + fromName + '').valid()) {
             $('#' + tabName + '').trigger('click');
-        }
-
+        } 
         tabSelector();
     }
     $(document).ready(function () {
@@ -722,6 +719,13 @@ new SelectListItem() { Text = "Mafeteng", Value = "Mafeteng" }
         if (funeralStatus === 'New') {
             $("#tab1").addClass("active")
             $('#aBodyCollection').trigger('click'); 
+
+            $("#tab1").show();
+
+            $("#tab2").hide();
+            $("#tab4").hide();
+            $("#tab5").hide();
+            $("#tab6").hide();
         }
         else if (funeralStatus == 'BodyCollection') { 
             $("#tab1").removeClass("active");
@@ -730,6 +734,13 @@ new SelectListItem() { Text = "Mafeteng", Value = "Mafeteng" }
             $("#tabMortuary").addClass("active"); 
             $('#aMortuary').trigger('click');
             $("#Status").val('Mortuary');
+
+            $("#tab2").show();
+
+            $("#tab1").hide(); 
+            $("#tab4").hide();
+            $("#tab5").hide();
+            $("#tab6").hide();
         }
         else if (funeralStatus == 'Mortuary') {
             $("#tab2").removeClass("active"); 
@@ -737,19 +748,46 @@ new SelectListItem() { Text = "Mafeteng", Value = "Mafeteng" }
             $("#tabFuneralArrangement").addClass("active");   
             $('#aFuneralArrangement').trigger('click'); 
             $("#Status").val('FuneralArrangement'); 
+
+            $("#tab4").show();
+
+            $("#tab1").hide();
+            $("#tab2").hide(); 
+            $("#tab5").hide();
+            $("#tab6").hide();
         }
         else if (funeralStatus == 'FuneralArrangement') {  
             $("#tabFuneralArrangement").removeClass("active");   
             $("#tabPayment").addClass("active");   
             $('#aPayment').trigger('click'); 
             $("#Status").val('Payment');  
+
+            $("#tab5").show();
+             
+            $("#tab1").hide();
+            $("#tab2").hide();
+            $("#tab4").hide();
+            $("#tab6").hide();
         }
         else if (funeralStatus == 'Payment') {
             $('#aFuneralSchedule').trigger('click'); 
             $("#Status").val('funeralschedule');  
+
+            $("#tab6").show();
+              
+            $("#tab1").hide();
+            $("#tab2").hide();
+            $("#tab4").hide();
+            $("#tab5").hide(); 
         }
         else if (funeralStatus == 'FuneralSchedule') { 
             $('#aFuneralSchedule').trigger('click');  
+
+            $("#tab6").show(); 
+            $("#tab1").show();
+            $("#tab2").show();
+            $("#tab4").show();
+            $("#tab5").show(); 
         }
         else {
             $('#aBodyCollection').trigger('click'); 

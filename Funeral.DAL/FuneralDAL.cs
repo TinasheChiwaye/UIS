@@ -21,15 +21,18 @@ namespace Funeral.DAL
             return (DbConnection.GetDataReader(CommandType.StoredProcedure, "SelectAllFuneralByParlourId", ObjParam));
         }
 
-        public static DataTable SelectAllFuneralByParlourIddt(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder)
+        public static DataTable SelectAllFuneralByParlourIddt(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder,DateTime? FromDate,DateTime? ToDate)
         {
-            DbParameter[] ObjParam = new DbParameter[6];
+            DbParameter[] ObjParam = new DbParameter[8];
             ObjParam[0] = new DbParameter("@pagesize", DbParameter.DbType.Int, 0, PageSize);
             ObjParam[1] = new DbParameter("@pagenum", DbParameter.DbType.Int, 0, PageNum);
             ObjParam[2] = new DbParameter("@Keyword", DbParameter.DbType.NVarChar, 0, Keyword);
             ObjParam[3] = new DbParameter("@field", DbParameter.DbType.NVarChar, 0, SortBy);
             ObjParam[4] = new DbParameter("@orderby", DbParameter.DbType.NVarChar, 0, SortOrder);
             ObjParam[5] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+            ObjParam[6] = new DbParameter("@DateFrom", DbParameter.DbType.DateTime, 0, FromDate);
+            ObjParam[7] = new DbParameter("@DateTo", DbParameter.DbType.DateTime, 0, ToDate);
+
             return (DbConnection.GetDataTable(CommandType.StoredProcedure, "SelectAllFuneralByParlourId", ObjParam));
         }
 
