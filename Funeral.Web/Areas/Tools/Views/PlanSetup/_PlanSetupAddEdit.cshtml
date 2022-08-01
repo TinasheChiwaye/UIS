@@ -230,7 +230,7 @@
                                 <th>Premium <b>(R)</b></th>
                                 <th>Underwriter Cover <b>(R)</b></th>
                                 <th>Underwriter Premium <b>(R)</b></th>
-                                @*<th>Reinsurance Premium<b>(R)</b></th>*@
+                                <th>&nbsp; Extended Comm <b>(R)</b></th>
                                 @*<th>Office Premium <b>(R)</b></th>*@
                                 <th>Action</th>
                             </tr>
@@ -272,10 +272,10 @@
                                                 @Html.TextBoxFor(m => m.planCreators[i].UnderwriterPremium, null, new { @class = "form-control", @type = "number", placeholder = "Enter Underwriter Premium Amount" })
                                                 @Html.ValidationMessageFor(m => m.planCreators[i].UnderwriterPremium, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                                             </td>
-                                            @*<td>
+                                            <td>
                                                 @Html.TextBoxFor(m => m.planCreators[i].ReinsurancePremium, null, new { @class = "form-control", @type = "number", placeholder = "Enter Reinsurance Premium Amount" })
                                                 @Html.ValidationMessageFor(m => m.planCreators[i].ReinsurancePremium, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
-                                            </td>*@
+                                            </td>
                                             @*<td>
                                                 @Html.TextBoxFor(m => m.planCreators[i].OfficePremium, null, new { @class = "form-control", @type = "number", placeholder = "Enter Office Premium Amount" })
                                                 @Html.ValidationMessageFor(m => m.planCreators[i].OfficePremium, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
