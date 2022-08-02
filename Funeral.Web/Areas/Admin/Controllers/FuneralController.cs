@@ -102,6 +102,9 @@ namespace Funeral.Web.Areas.Admin.Controllers
             {
                 var funeralList = FuneralBAL.SelectAllFuneralByParlourId(ParlourId, search.PageSize, search.PageNum, "", search.SortBy, search.SortOrder, search.DateFrom, search.DateTo);
 
+
+                search.StatusId = Request.Params["StatusId"].ToString();
+
                 if (search.StatusId == FuneralStatusEnum.BodyCollection.ToString()) 
                     funeralList = funeralList.Where(x => x.FuneralStatus == FuneralStatusEnum.New || x.FuneralStatus == FuneralStatusEnum.BodyCollection).ToList(); 
                 else if(search.StatusId == FuneralStatusEnum.Mortuary.ToString())
