@@ -1617,9 +1617,9 @@
             var dependancyDatatable;
             var memberPolicyDatatable;
 
-            $("#txtBirthDay").datepicker({ format: 'dd MM yyyy', autoclose: true, setDate: new Date(), onSelect: function (dateText) { $(this).change(); } }).on("change", function () {
-                Validate();
-            });
+            //$("#txtBirthDay").datepicker({ format: 'dd-mm-yyyy', autoclose: true, setDate: new Date(), onSelect: function (dateText) { $(this).change(); } }).on("change", function () {
+            //    Validate();
+            //});
 
             $("#tab-1 #ddlCitizenship option").each(function () {
                 if ($(this).val() == "ZA") {
