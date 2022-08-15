@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,7 +34,7 @@ namespace Funeral.Model
 
         public string ApplicationName { get; set; }
         public DateTime? CoverDate { get; set; }
-         public string Telephone { get; set; }
+        public string Telephone { get; set; }
         public int pkiMemberID { get; set; }
         public DateTime CreateDate { get; set; }
         public string MemberType { get; set; }
@@ -136,9 +137,9 @@ namespace Funeral.Model
         {
             FuneralID = 0;
             MemberID = 0;
-            InvoiceID =0;
+            InvoiceID = 0;
             DatePaid = DateTime.Now;
-            AmountPaid =0;
+            AmountPaid = 0;
             RecievedBy = string.Empty;
             Notes = string.Empty;
             PaidBy = string.Empty;
@@ -155,5 +156,6 @@ namespace Funeral.Model
         public string Notes { get; set; }
         public string UserName { get; set; }
         public Guid ParlourId { get; set; }
+        public string DatePaidText { get { return DatePaid.ToString("dd-MM-yyyy hh:mm:ss tt", CultureInfo.InvariantCulture); } }
     }
 }

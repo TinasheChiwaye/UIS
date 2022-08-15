@@ -8,11 +8,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using System.Web.Security;
 using System.Web.UI.WebControls;
+using static Funeral.Model.FuneralEnum;
 
 namespace Funeral.Web.Areas.Admin.Controllers
 {
@@ -35,6 +37,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
         [PageRightsAttribute(CurrentPageId = 10, Right = new isPageRight[] { isPageRight.HasAccess })]
         public ActionResult Index()
         {
+            ViewBag.StatusId = Request.Params["StatusId"];
             //ViewBag.HasCreate = HasCreateRight;
             //ViewBag.HasAccess = HasAccess;
             return View("Index");
@@ -63,10 +66,11 @@ namespace Funeral.Web.Areas.Admin.Controllers
         /// </summary>
         /// <returns></returns>
         [PageRightsAttribute(CurrentPageId = 10)]
-        public PartialViewResult List()
+        public PartialViewResult List(string StatusId)
         {
             //ViewBag.HasEditRight = HasEditRight;
             //ViewBag.HasDeleteRight = HasDeleteRight;
+            ViewBag.StatusId = StatusId;
 
             Model.Search.BaseSearch search = new Model.Search.BaseSearch();
             search.PageNum = 1;
@@ -81,6 +85,9 @@ namespace Funeral.Web.Areas.Admin.Controllers
             var pageCountEntries = GetEntriesCount();
             ViewBag.EntriesCount = pageCountEntries;
 
+            search.DateFrom = null;
+            search.DateTo = null;
+
             return PartialView("~/Areas/Admin/Views/Funeral/_FuneralList.cshtml", search);
         }
 
@@ -94,12 +101,28 @@ namespace Funeral.Web.Areas.Admin.Controllers
             var searchResult = new SearchResult<Model.Search.BaseSearch, FuneralModel>(search, new List<FuneralModel>(), o => o.FullNames.Contains(search.SarchText) || o.Surname.Contains(search.SarchText) || o.IDNumber.Contains(search.SarchText));
             try
             {
-                var funeralList = FuneralBAL.SelectAllFuneralByParlourId(ParlourId, search.PageSize, search.PageNum, "", search.SortBy, search.SortOrder);
-                return Json(new SearchResult<Model.Search.BaseSearch, FuneralModel>(search, funeralList, o => o.FullNames.Contains(search.SarchText) || o.Surname.Contains(search.SarchText) || o.IDNumber.Contains(search.SarchText)));
+                var funeralList = FuneralBAL.SelectAllFuneralByParlourId(ParlourId, search.PageSize, search.PageNum, "", search.SortBy, search.SortOrder, search.DateFrom, search.DateTo);
+
+
+                search.StatusId = Request.Params["StatusId"].ToString();
+
+                if (search.StatusId == FuneralStatusEnum.BodyCollection.ToString())
+                    funeralList = funeralList.Where(x => x.FuneralStatus == FuneralStatusEnum.New || x.FuneralStatus == FuneralStatusEnum.BodyCollection).ToList();
+                else if (search.StatusId == FuneralStatusEnum.Mortuary.ToString())
+                    funeralList = funeralList.Where(x => x.FuneralStatus == FuneralStatusEnum.Mortuary).ToList();
+                else if (search.StatusId == FuneralStatusEnum.FuneralArrangement.ToString())
+                    funeralList = funeralList.Where(x => x.FuneralStatus == FuneralStatusEnum.FuneralArrangement).ToList();
+                else if (search.StatusId == FuneralStatusEnum.Payment.ToString())
+                    funeralList = funeralList.Where(x => x.FuneralStatus == FuneralStatusEnum.Payment).ToList();
+                else
+                    funeralList = funeralList.Where(x => x.FuneralStatus == FuneralStatusEnum.FuneralSchedule).ToList();
+
+
+                return Json(new SearchResult<Model.Search.BaseSearch, FuneralModel>(search, funeralList, o => o.FullNames.Contains(search.SarchText) || o.Surname.Contains(search.SarchText) || o.IDNumber.Contains(search.SarchText)), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                return Json(WebApiResult<Model.Search.BaseSearch, FuneralModel>.Error(searchResult, ex));
+                return Json(WebApiResult<Model.Search.BaseSearch, FuneralModel>.Error(searchResult, ex), JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -573,7 +596,6 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 else
                     model.Status = GetStatus(model.Status, submitForm);
                 model.pkiFuneralID = FuneralBAL.SaveFuneral(model);
-
             }
             return View(model);
         }
@@ -642,6 +664,64 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 statusNumber = statusNumber + 1;
 
             return ((FuneralEnum.FuneralStatusEnum)statusNumber).ToString();
+        }
+        public JsonResult GetIdNumberAutocompleteData(string idNumber)
+        {
+            var data = FuneralBAL.GetIdNumberAutocompleteData(idNumber, this.ParlourId);
+
+            return Json(JsonConvert.SerializeObject(data), JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public ActionResult SaveClaimSupportedDocument(int funeralID, int docType)
+        {
+            string filename = Path.GetFileName(Request.Files[0].FileName);
+            string contentType = Request.Files[0].ContentType;
+            using (Stream fs = Request.Files[0].InputStream)
+            {
+                using (BinaryReader br = new BinaryReader(fs))
+                {
+                    byte[] bytes = br.ReadBytes((Int32)fs.Length);
+                    FuneralDocumentModel ObjSupportedDocumentModel = new FuneralDocumentModel();
+                    ObjSupportedDocumentModel.DocContentType = contentType;
+                    ObjSupportedDocumentModel.ImageName = filename;
+                    ObjSupportedDocumentModel.ImageFile = bytes;
+                    ObjSupportedDocumentModel.fkiFuneralID = funeralID;
+                    ObjSupportedDocumentModel.CreateDate = System.DateTime.Now;
+                    ObjSupportedDocumentModel.Parlourid = this.ParlourId;
+                    ObjSupportedDocumentModel.LastModified = DateTime.Now;
+                    ObjSupportedDocumentModel.ModifiedUser = this.User.Identity.Name;
+                    ObjSupportedDocumentModel.DocType = docType;
+
+                    int documentId = FuneralBAL.SaveFuneralSupportedDocument(ObjSupportedDocumentModel);
+                    if (documentId > 0)
+                        return Json(new { success = true, message = "Supporting document uploaded successfully" });
+                    else
+                        return Json(new { success = false, message = "Supporting document upload failed" });
+                }
+            }
+        }
+
+        [Obsolete]
+        public ActionResult FuneralServicesPage(int funeralID)
+        {
+            string id = funeralID.ToString();
+            var plaintextBytes = Encoding.UTF8.GetBytes(id);
+            var encryptedValue = MachineKey.Encode(plaintextBytes, MachineKeyProtection.All);
+
+            return Redirect("../FuneralServicesSelect.aspx?ID=" + encryptedValue);
+        }
+        public JsonResult ViewPaymentHistory(int funeralID, string parlourId)
+        {
+            List<FuneralPaymentsModel> modelList = MemberPaymentBAL.ReturnFuneralPayments(Guid.Parse(parlourId), funeralID.ToString()).ToList();
+            return Json(new { data = modelList }, JsonRequestBehavior.AllowGet);
+        }
+
+        [Obsolete]
+        public ActionResult PrintQuotation(int funeralID)
+        { 
+            var plaintextBytes = Encoding.UTF8.GetBytes(funeralID.ToString());
+            var encryptedValue = MachineKey.Encode(plaintextBytes, MachineKeyProtection.All); 
+            return Redirect("../PrintForm.aspx?ID=" + encryptedValue);
         }
     }
 }

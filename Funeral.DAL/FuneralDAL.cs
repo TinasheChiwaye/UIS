@@ -21,15 +21,18 @@ namespace Funeral.DAL
             return (DbConnection.GetDataReader(CommandType.StoredProcedure, "SelectAllFuneralByParlourId", ObjParam));
         }
 
-        public static DataTable SelectAllFuneralByParlourIddt(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder)
+        public static DataTable SelectAllFuneralByParlourIddt(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder, DateTime? FromDate, DateTime? ToDate)
         {
-            DbParameter[] ObjParam = new DbParameter[6];
+            DbParameter[] ObjParam = new DbParameter[8];
             ObjParam[0] = new DbParameter("@pagesize", DbParameter.DbType.Int, 0, PageSize);
             ObjParam[1] = new DbParameter("@pagenum", DbParameter.DbType.Int, 0, PageNum);
             ObjParam[2] = new DbParameter("@Keyword", DbParameter.DbType.NVarChar, 0, Keyword);
             ObjParam[3] = new DbParameter("@field", DbParameter.DbType.NVarChar, 0, SortBy);
             ObjParam[4] = new DbParameter("@orderby", DbParameter.DbType.NVarChar, 0, SortOrder);
             ObjParam[5] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
+            ObjParam[6] = new DbParameter("@DateFrom", DbParameter.DbType.DateTime, 0, FromDate);
+            ObjParam[7] = new DbParameter("@DateTo", DbParameter.DbType.DateTime, 0, ToDate);
+
             return (DbConnection.GetDataTable(CommandType.StoredProcedure, "SelectAllFuneralByParlourId", ObjParam));
         }
 
@@ -47,7 +50,7 @@ namespace Funeral.DAL
             //string query = "SaveFuneral"; New By Mahipatsinh
             string query = "SaveFuneral_New";
 
-            DbParameter[] ObjParam = new DbParameter[55];
+            DbParameter[] ObjParam = new DbParameter[56];
             ObjParam[0] = new DbParameter("@pkiFuneralID", DbParameter.DbType.Int, 0, model.pkiFuneralID);
             ObjParam[1] = new DbParameter("@FullNames", DbParameter.DbType.NVarChar, 0, model.FullNames);
             ObjParam[2] = new DbParameter("@Surname", DbParameter.DbType.NVarChar, 0, model.Surname);
@@ -104,6 +107,7 @@ namespace Funeral.DAL
             ObjParam[52] = new DbParameter("@DeceasedArrivalDateTime", DbParameter.DbType.DateTime, 0, model.DeceasedArrivalDateTime);//Change by Hemant 29 July 2022
             ObjParam[53] = new DbParameter("@Notes", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.Notes));//Change by Hemant 29 July 2022
             ObjParam[54] = new DbParameter("@OtherServices", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.OtherServices));//Change by Hemant 29 July 2022
+            ObjParam[55] = new DbParameter("@TypeofCollection", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.TypeOfCollection));
 
             //ObjParam[49] = new DbParameter("@CustomDental", DbParameter.DbType.Int, 0, NulltoEmpty(model.CustomGrouping5));//Change by Charles Date: 22/09/2021
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
@@ -112,7 +116,7 @@ namespace Funeral.DAL
         {
             return values == null ? "" : values;
         }
-        
+
         public static SqlDataReader SelectFuneralBypkid(int ID, Guid ParlourId)
         {
             DbParameter[] ObjParam = new DbParameter[2];
@@ -253,7 +257,7 @@ namespace Funeral.DAL
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.Text, query, ObjParam));
         }
 
-        public static int UpdateAllFuneralServiceData(int pkiFuneralID, string InvoiceNumber, Decimal DisCount, Decimal Tax,string Notes)
+        public static int UpdateAllFuneralServiceData(int pkiFuneralID, string InvoiceNumber, Decimal DisCount, Decimal Tax, string Notes)
         {
             DbParameter[] ObjParam = new DbParameter[5];
             ObjParam[0] = new DbParameter("@pkiFuneralID", DbParameter.DbType.Int, 0, pkiFuneralID);
@@ -342,7 +346,7 @@ namespace Funeral.DAL
             ObjParam[0] = new DbParameter("@pkiClaimID", DbParameter.DbType.Int, 0, ID);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetFuneralByClaimId", ObjParam);
         }
-        public static int UpdatePolicyStatus_MemberOfDependent(int ClaimId,string IDNumber,Guid parlourid)
+        public static int UpdatePolicyStatus_MemberOfDependent(int ClaimId, string IDNumber, Guid parlourid)
         {
             DbParameter[] ObjParam = new DbParameter[3];
             ObjParam[0] = new DbParameter("@FkiClaimID", DbParameter.DbType.Int, 0, ClaimId);
@@ -351,6 +355,13 @@ namespace Funeral.DAL
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "UpdatePolicyStatus", ObjParam));
 
         }
-
+        public static DataTable GetIdNumberAutocompleteData(string idNumber, Guid parlourid)
+        {
+            string commandText = "select [ID Number] AS IdNumber,[Date Of Birth] as DOB,MemeberNumber as PolicyNumber " +
+                                 "from [dbo].[Members] " +
+                                 "where [ID Number] like '%" + idNumber + "%' " +
+                                 "and parlourid='" + parlourid + "'";
+            return DbConnection.GetDataTable(CommandType.Text, commandText);
+        }
     }
 }

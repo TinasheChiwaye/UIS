@@ -13,9 +13,9 @@ namespace Funeral.BAL
         {
         }
 
-        public static List<FuneralModel> SelectAllFuneralByParlourId(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder)
+        public static List<FuneralModel> SelectAllFuneralByParlourId(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder, DateTime? FromDate, DateTime? ToDate)
         {
-            DataTable dr = FuneralDAL.SelectAllFuneralByParlourIddt(ParlourId, PageSize, PageNum, Keyword, SortBy, SortOrder);
+            DataTable dr = FuneralDAL.SelectAllFuneralByParlourIddt(ParlourId, PageSize, PageNum, Keyword, SortBy, SortOrder, FromDate, ToDate);
             return FuneralHelper.DataTableMapToList<FuneralModel>(dr);
         }
         public static int FuneralDelete(int ID, string UserName)
@@ -28,7 +28,7 @@ namespace Funeral.BAL
             return FuneralDAL.SaveFuneral(model);
         }
 
-        
+
         public static FuneralModel SelectFuneralBypkid(int ID, Guid ParlourId)
         {
             DataTable dr = FuneralDAL.SelectFuneralBypkiddt(ID, ParlourId);
@@ -91,9 +91,9 @@ namespace Funeral.BAL
             return FuneralDAL.UpdateAllFuneralData(pkiFuneralID, Notes, DisCount, Tax);
         }
 
-        public static int UpdateAllFuneralServiceData(int pkiFuneralID, string InvoiceNumber, Decimal DisCount, Decimal Tax ,string Notes)
+        public static int UpdateAllFuneralServiceData(int pkiFuneralID, string InvoiceNumber, Decimal DisCount, Decimal Tax, string Notes)
         {
-            return FuneralDAL.UpdateAllFuneralServiceData(pkiFuneralID, InvoiceNumber, DisCount, Tax,Notes);
+            return FuneralDAL.UpdateAllFuneralServiceData(pkiFuneralID, InvoiceNumber, DisCount, Tax, Notes);
         }
         public static int SaveFuneralSupportedDocument(FuneralDocumentModel model)
         {
@@ -128,6 +128,10 @@ namespace Funeral.BAL
         public static int UpdatePolicyStatus(int ClaimId, string IDNumber, Guid parlourid)
         {
             return FuneralDAL.UpdatePolicyStatus_MemberOfDependent(ClaimId, IDNumber, parlourid);
+        }
+        public static DataTable GetIdNumberAutocompleteData(string idNumber, Guid parlourid)
+        {
+            return FuneralDAL.GetIdNumberAutocompleteData(idNumber, parlourid);
         }
     }
 }

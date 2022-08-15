@@ -50,10 +50,9 @@ namespace Funeral.Model
             this.Discount = 0;
             this.Tax = 0;
             this.FkiClaimID = 0;
-            
 
-        }
-       
+
+        } 
         public int pkiFuneralID { get; set; }
         public int FkiClaimID { get; set; }
         public string Title { get; set; }
@@ -108,6 +107,8 @@ namespace Funeral.Model
         public string HeadHair { get; set; }
         public string SkinMarks { get; set; }
         public string DentalCondition { get; set; }
+        [Required(ErrorMessage = "Type of Collection is required")]
+        public string TypeOfCollection { get; set; }
         public string PersonalItem { get; set; }
         public string IdentityDocument { get; set; }
         public string CauseOfDeath { get; set; }
@@ -130,16 +131,16 @@ namespace Funeral.Model
         public string ClaimantSurname { get; set; }
         public string ContactDetails { get; set; }
         public string DeceasedAddress { get; set; }
-        
+
         public string DriverIdNumber { get; set; }
         public string DriverName { get; set; }
         public string NumberPlate { get; set; }
         public string CarMake { get; set; }
         public DateTime? DeceasedArrivalDateTime { get; set; }
         //[Required(ErrorMessage = "Tag Number is required")]
-        public string TagNumber { get; set; }       
+        public string TagNumber { get; set; }
         public string TypeOfCoffin { get; set; }
-        public string OtherServices { get; set; }       
+        public string OtherServices { get; set; }
         public string CarMakeRegistrantion { get; set; }
         public string DriverSurname { get; set; }
         public FuneralEnum.FuneralStatusEnum FuneralStatus { get; set; }
