@@ -103,21 +103,27 @@ namespace Funeral.Web.Areas.Admin.Controllers
             {
                 var funeralList = FuneralBAL.SelectAllFuneralByParlourId(ParlourId, search.PageSize, search.PageNum, "", search.SortBy, search.SortOrder, search.DateFrom, search.DateTo);
 
-
-                search.StatusId = Request.Params["StatusId"].ToString();
-
-                if (search.StatusId == FuneralStatusEnum.BodyCollection.ToString())
-                    funeralList = funeralList.Where(x => x.FuneralStatus == FuneralStatusEnum.New || x.FuneralStatus == FuneralStatusEnum.BodyCollection).ToList();
-                else if (search.StatusId == FuneralStatusEnum.Mortuary.ToString())
-                    funeralList = funeralList.Where(x => x.FuneralStatus == FuneralStatusEnum.Mortuary).ToList();
-                else if (search.StatusId == FuneralStatusEnum.FuneralArrangement.ToString())
-                    funeralList = funeralList.Where(x => x.FuneralStatus == FuneralStatusEnum.FuneralArrangement).ToList();
-                else if (search.StatusId == FuneralStatusEnum.Payment.ToString())
-                    funeralList = funeralList.Where(x => x.FuneralStatus == FuneralStatusEnum.Payment).ToList();
-                else
-                    funeralList = funeralList.Where(x => x.FuneralStatus == FuneralStatusEnum.FuneralSchedule).ToList();
-
-
+                switch (Request.Params["StatusId"])
+                {
+                    case "BodyCollection":
+                        funeralList = funeralList.Where(x => x.FuneralStatus == FuneralStatusEnum.New || x.FuneralStatus == FuneralStatusEnum.BodyCollection).ToList();
+                        break;
+                    case "Mortuary":
+                        funeralList = funeralList.Where(x => x.FuneralStatus == FuneralStatusEnum.Mortuary).ToList();
+                        break;
+                    case "FuneralArrangement":
+                        funeralList = funeralList.Where(x => x.FuneralStatus == FuneralStatusEnum.FuneralArrangement).ToList();
+                        break;
+                    case "Payment":
+                        funeralList = funeralList.Where(x => x.FuneralStatus == FuneralStatusEnum.Payment).ToList();
+                        break;
+                    case "FuneralSchedule":
+                        funeralList = funeralList.Where(x => x.FuneralStatus == FuneralStatusEnum.FuneralSchedule).ToList();
+                        break;
+                    default:
+                        funeralList = funeralList.Where(x => x.FuneralStatus == FuneralStatusEnum.New || x.FuneralStatus == FuneralStatusEnum.BodyCollection).ToList();
+                        break;
+                }
                 return Json(new SearchResult<Model.Search.BaseSearch, FuneralModel>(search, funeralList, o => o.FullNames.Contains(search.SarchText) || o.Surname.Contains(search.SarchText) || o.IDNumber.Contains(search.SarchText)), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -718,9 +724,9 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
         [Obsolete]
         public ActionResult PrintQuotation(int funeralID)
-        { 
+        {
             var plaintextBytes = Encoding.UTF8.GetBytes(funeralID.ToString());
-            var encryptedValue = MachineKey.Encode(plaintextBytes, MachineKeyProtection.All); 
+            var encryptedValue = MachineKey.Encode(plaintextBytes, MachineKeyProtection.All);
             return Redirect("../PrintForm.aspx?ID=" + encryptedValue);
         }
     }
