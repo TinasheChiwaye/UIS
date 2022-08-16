@@ -364,7 +364,7 @@
                                             <div class="form-group">
                                                 <label>Date of Birth </label>
                                                 @*<input type="text" id="txtBirthDay" name="txtBirthDay" class="form-control birthDate DatepickerSelection" readonly="readonly" disabled>*@
-                                                <input type="text" id="txtBirthDay" name="txtBirthDay" class="form-control birthDate DatepickerSelection">
+                                                <input type="text" id="txtBirthDay" name="txtBirthDay"  class="form-control  birthDate DatepickerSelection">
                                             </div>
 
                                             <div class="form-group">
@@ -1617,9 +1617,9 @@
             var dependancyDatatable;
             var memberPolicyDatatable;
 
-            $("#txtBirthDay").datepicker({ format: 'dd MM yyyy', autoclose: true, setDate: new Date(), onSelect: function (dateText) { $(this).change(); } }).on("change", function () {
-                Validate();
-            });
+            //$("#txtBirthDay").datepicker({ format: 'dd-mm-yyyy', autoclose: true, setDate: new Date(), onSelect: function (dateText) { $(this).change(); } }).on("change", function () {
+            //    Validate();
+            //});
 
             $("#tab-1 #ddlCitizenship option").each(function () {
                 if ($(this).val() == "ZA") {
@@ -2248,7 +2248,7 @@
 
             // #region datepickerFormat
 
-            $('.date1').datepicker({ format: 'dd MM yyyy', autoclose: true, setDate: new Date() });
+            $('.date1').datepicker({ format: 'dd-mm-yyyy', autoclose: true, setDate: new Date() });
 
             $('.policyPopupDate').datepicker({ format: 'dd MM yyyy', autoclose: true, setDate: new Date() });
 
@@ -2276,12 +2276,11 @@
 
         // #endregion
 
-
-        $("#txtDependentDateOfBirth").blur(function () {
-            var mdate = dateFormat($('#txtDependentDateOfBirth').val(), 'mm-dd-yyyy', false)
+        $("#txtDependentDateOfBirth").change(function () {
+            var mdate = dateFormat($('#txtDependentDateOfBirth').val(), 'dd-mm-yyyy', false)
             var yearThen = parseInt(mdate.substring(6, 10), 10);
-            var monthThen = parseInt(mdate.substring(0, 2), 10);
-            var dayThen = parseInt(mdate.substring(3, 5), 10);
+            var monthThen = parseInt(mdate.substring(3, 5), 10);
+            var dayThen = parseInt(mdate.substring(0, 2), 10);
 
             var today = new Date();
             var birthday = new Date(yearThen, monthThen - 1, dayThen);
@@ -2297,11 +2296,32 @@
             }
         });
 
-        $("#txtBirthDay").blur(function () {
+
+        $("#txtDependentDateOfBirth").blur(function () {
+            var mdate = dateFormat($('#txtDependentDateOfBirth').val(), 'dd-mm-yyyy', false)
+            var yearThen = parseInt(mdate.substring(6, 10), 10);
+            var monthThen = parseInt(mdate.substring(3, 5), 10);
+            var dayThen = parseInt(mdate.substring(0, 2), 10);
+
+            var today = new Date();
+            var birthday = new Date(yearThen, monthThen - 1, dayThen);
+
+            var differenceInMilisecond = today.valueOf() - birthday.valueOf();
+
+            var year_age = Math.floor(differenceInMilisecond / 31536000000);
+            if (isNaN(year_age)) {
+                alert("Invalid birthday - Please try again!");
+            }
+            else {
+                $("#tab-5 #txtDependentAge").val(year_age);
+            }
+        });
+
+        $("#txtBirthDay").change(function () {
             var mdate = dateFormat($('#txtBirthDay').val(), 'dd-mm-yyyy', false)
             var yearThen = parseInt(mdate.substring(6, 10), 10);
-            var monthThen = parseInt(mdate.substring(0, 2), 10);
-            var dayThen = parseInt(mdate.substring(3, 5), 10);
+            var monthThen = parseInt(mdate.substring(3, 5), 10);
+            var dayThen = parseInt(mdate.substring(0, 2), 10);
 
             var today = new Date();
             var birthday = new Date(yearThen, monthThen - 1, dayThen);
@@ -2317,7 +2337,27 @@
             }
         });
 
-        // #region SaveUpdate Manage Member
+        $("#txtBirthDay").blur(function () {
+            var mdate = dateFormat($('#txtBirthDay').val(), 'dd-mm-yyyy', false)
+            var yearThen = parseInt(mdate.substring(6, 10), 10);
+            var monthThen = parseInt(mdate.substring(3, 5), 10);
+            var dayThen = parseInt(mdate.substring(0, 2), 10);
+
+            var today = new Date();
+            var birthday = new Date(yearThen, monthThen - 1, dayThen);
+
+            var differenceInMilisecond = today.valueOf() - birthday.valueOf();
+
+            var year_age = Math.floor(differenceInMilisecond / 31536000000);
+            if (isNaN(year_age)) {
+                alert("Invalid birthday - Please try again!");
+            }
+            else {
+                $("#txtAge").val(year_age);
+            }
+        });
+
+
 
         $("#txtSaveBtn").click(function () {
             var SaveManageMembersURl = $("#SaveManageMembers").val();
@@ -3247,7 +3287,7 @@
             });
             $.noConflict();
             jQuery(document).ready(function () {
-                $('#tab-1 #txtBirthDay').datepicker({ format: 'dd MM yyyy', autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(member.DateOfBirth)), "dd/mm/yyyy", false));
+                $('#tab-1 #txtBirthDay').datepicker({ format: 'dd-mm-yyyy', autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(member.DateOfBirth)), "dd/mm/yyyy", false));
                 $('#tab-3 #txtPolicyStartDate').datepicker({ format: 'dd MM yyyy', autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(member.StartDate)), "dd/mm/yyyy", false));
                 $('#tab-3 #txtInception').datepicker({ format: 'dd MM yyyy', autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(member.InceptionDate)), "dd/mm/yyyy", false));
                 $('#tab-3 #txtCoverDate').datepicker({ format: 'dd MM yyyy', autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(member.CoverDate)), "dd/mm/yyyy", false));
@@ -4968,8 +5008,8 @@
         // get first 6 digits as a valid date
 
         var tempDate = new Date(idNumber.substring(0, 2), idNumber.substring(2, 4) - 1, idNumber.substring(4, 6));
-        var id_date = tempDate.getDate();
-        var id_month = tempDate.getMonth();
+        var id_date = idNumber.substring(4, 6);
+        var id_month = idNumber.substring(2, 4) -1;
         var dMonth = id_month + 1;
         var dMonthName = tempDate.getMonthName();
         //var id_year = tempDate.getFullYear();
@@ -5008,7 +5048,7 @@
         // if no error found, hide the error message
         if (correct) {
             $("#txtBirthDay").val(fullDate);
-            $("#txtBirthDay").val(fullDate).datepicker('update');
+            //$("#txtBirthDay").val(fullDate).datepicker('update');
 
             if (idNumber.length)
             var genderCode = idNumber.substring(6, 10);
@@ -5083,7 +5123,7 @@
         // if no error found, hide the error message
         if (correct) {
             $("#tab-5 #txtDependentDateOfBirth").val(fullDate);
-            $("#tab-5 #txtDependentDateOfBirth").val(fullDate).datepicker('update');
+            //$("#tab-5 #txtDependentDateOfBirth").val(fullDate).datepicker('update');
 
             var genderCode = idNumber.substring(6, 10);
             var gender = parseInt(genderCode) < 5000 ? "female" : "male";
@@ -5265,10 +5305,10 @@
     }
 
     function CalculateAge(fullDate) {
-        var mdate = dateFormat(fullDate, 'mm-dd-yyyy', false)
+        var mdate = dateFormat(fullDate, 'dd-mm-yyyy', false)
         var yearThen = parseInt(mdate.substring(6, 10), 10);
-        var monthThen = parseInt(mdate.substring(0, 2), 10);
-        var dayThen = parseInt(mdate.substring(3, 5), 10);
+        var monthThen = parseInt(mdate.substring(3, 5), 10);
+        var dayThen = parseInt(mdate.substring(0, 2), 10);
 
         var today = new Date();
         var birthday = new Date(yearThen, monthThen - 1, dayThen);
@@ -5285,7 +5325,7 @@
     }
 
     function CalculateAgePopup(fullDate) {
-        var mdate = dateFormat(fullDate, 'mm-dd-yyyy', false)
+        var mdate = dateFormat(fullDate, 'dd-mm-yyyy', false)
         var yearThen = parseInt(mdate.substring(6, 10), 10);
         var monthThen = parseInt(mdate.substring(0, 2), 10);
         var dayThen = parseInt(mdate.substring(3, 5), 10);
