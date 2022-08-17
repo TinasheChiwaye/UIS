@@ -902,9 +902,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
         if (funeralStatus === 'New'.toLowerCase()) {
             $("#tab1").addClass("active")
             $('#aBodyCollection').trigger('click');
-
             $("#tab1").show();
-
             $("#tab2").hide();
             $("#tab4").hide();
             $("#tab5").hide();
@@ -917,9 +915,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
             $("#tabMortuary").addClass("active");
             $('#aMortuary').trigger('click');
             $("#Status").val('Mortuary');
-
             $("#tab2").show();
-
             $("#tab1").hide();
             $("#tab4").hide();
             $("#tab5").hide();
@@ -933,7 +929,6 @@ new SelectListItem() { Text = "Other", Value = "Other" },
             $("#Status").val('FuneralArrangement');
 
             $("#tab4").show();
-
             $("#tab1").hide();
             $("#tab2").hide();
             $("#tab5").hide();
@@ -944,9 +939,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
             $("#tabPayment").addClass("active");
             $('#aPayment').trigger('click');
             $("#Status").val('Payment');
-
             $("#tab5").show();
-
             $("#tab1").hide();
             $("#tab2").hide();
             $("#tab4").hide();
@@ -955,9 +948,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
         else if (funeralStatus == 'Payment'.toLowerCase()) {
             $('#aFuneralSchedule').trigger('click');
             $("#Status").val('funeralschedule');
-
             $("#tab6").show();
-
             $("#tab1").hide();
             $("#tab2").hide();
             $("#tab4").hide();
@@ -965,7 +956,6 @@ new SelectListItem() { Text = "Other", Value = "Other" },
         }
         else if (funeralStatus == 'FuneralSchedule'.toLowerCase()) {
             $('#aFuneralSchedule').trigger('click');
-
             $("#tab6").show();
             $("#tab1").show();
             $("#tab2").show();

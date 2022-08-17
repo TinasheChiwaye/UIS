@@ -106,22 +106,22 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 switch (Request.Params["StatusId"])
                 {
                     case "BodyCollection":
-                        funeralList = funeralList.Where(x => x.FuneralStatus == FuneralStatusEnum.New || x.FuneralStatus == FuneralStatusEnum.BodyCollection).ToList();
+                        funeralList = funeralList.Where(x => x.Status == FuneralStatusEnum.New.ToString() || x.Status == FuneralStatusEnum.BodyCollection.ToString()).ToList();
                         break;
                     case "Mortuary":
-                        funeralList = funeralList.Where(x => x.FuneralStatus == FuneralStatusEnum.Mortuary).ToList();
+                        funeralList = funeralList.Where(x => x.Status == FuneralStatusEnum.Mortuary.ToString()).ToList();
                         break;
                     case "FuneralArrangement":
-                        funeralList = funeralList.Where(x => x.FuneralStatus == FuneralStatusEnum.FuneralArrangement).ToList();
+                        funeralList = funeralList.Where(x => x.Status == FuneralStatusEnum.FuneralArrangement.ToString()).ToList();
                         break;
                     case "Payment":
-                        funeralList = funeralList.Where(x => x.FuneralStatus == FuneralStatusEnum.Payment).ToList();
+                        funeralList = funeralList.Where(x => x.Status == FuneralStatusEnum.Payment.ToString()).ToList();
                         break;
                     case "FuneralSchedule":
-                        funeralList = funeralList.Where(x => x.FuneralStatus == FuneralStatusEnum.FuneralSchedule).ToList();
+                        funeralList = funeralList.Where(x => x.Status == FuneralStatusEnum.FuneralSchedule.ToString()).ToList();
                         break;
                     default:
-                        funeralList = funeralList.Where(x => x.FuneralStatus == FuneralStatusEnum.New || x.FuneralStatus == FuneralStatusEnum.BodyCollection).ToList();
+                        funeralList = funeralList.Where(x => x.Status == FuneralStatusEnum.New.ToString() || x.FuneralStatus == FuneralStatusEnum.BodyCollection).ToList();
                         break;
                 }
                 return Json(new SearchResult<Model.Search.BaseSearch, FuneralModel>(search, funeralList, o => o.FullNames.Contains(search.SarchText) || o.Surname.Contains(search.SarchText) || o.IDNumber.Contains(search.SarchText)), JsonRequestBehavior.AllowGet);
