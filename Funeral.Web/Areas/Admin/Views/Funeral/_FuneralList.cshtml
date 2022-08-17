@@ -214,30 +214,32 @@
             model1.SarchText = jQuery("#SarchText").val();
             model1.DateFrom =  jQuery("#DateFrom").val() == '' ? null : new Date(jQuery("#DateFrom").val());
             model1.DateTo = jQuery("#DateFrom").val() == '' ? null : new Date(jQuery("#txtDateTo").val());
-            model1.StatusId = '@Html.Raw(ViewBag.StatusId)' 
+            model1.StatusId = '@Html.Raw(ViewBag.StatusId)'
 
             jQuery("#PageNum1").val(model1.PageNum);
         }
 
         function EditFuneral(pkiFuneralID) {
 
-            jQuery("#ItemId").val(pkiFuneralID);
-            var editUrl = '@Url.Action("Edit", "Funeral", new { pkiFuneralID = "pkiFuneralIDVal" },Request.Url.Scheme)';
+            jQuery("#ItemId").val(pkiFuneralID);          
+            var editUrl = '@Url.Action("FuneralServices", "Funeral", new { funeralId = "pkiFuneralIDVal"},Request.Url.Scheme)';
+            
             editUrl = editUrl.replace("pkiFuneralIDVal", pkiFuneralID);
 
-            jQuery.ajax({
-                url: editUrl,
-                type: "Get",
-                contentType: "application/html; charset=utf-8",
-                dataType: 'html'
-            })
-            .success(function (result) {
-                jQuery("#" + DOMIDs.AddEdit).html(result);
-            })
-            .error(function (xhr, status) {
-                alert(status);
-                });
-            window.scrollTo(0, 0);
+            window.location.href = editUrl;
+            //jQuery.ajax({
+            //    url: editUrl,
+            //    type: "Get",
+            //    contentType: "application/html; charset=utf-8",
+            //    dataType: 'html'
+            //})
+            //.success(function (result) {
+            //    jQuery("#" + DOMIDs.AddEdit).html(result);
+            //})
+            //.error(function (xhr, status) {
+            //    alert(status);
+            //    });
+            //window.scrollTo(0, 0);
         }
 
 		function DeleteFuneral(pkiFuneralID)

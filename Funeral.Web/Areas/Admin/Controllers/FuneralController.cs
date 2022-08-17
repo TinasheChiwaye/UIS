@@ -180,7 +180,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
         [PageRightsAttribute(CurrentPageId = 10, Right = new isPageRight[] { isPageRight.HasEdit })]
         public PartialViewResult Edit(int pkiFuneralID)
         {
-            Index();
+           // Index();
             var funeral = FuneralBAL.SelectFuneralBypkid(pkiFuneralID, ParlourId);
             return PartialView("~/Areas/Admin/Views/Funeral/_FuneralAddEdit.cshtml", funeral);
         }

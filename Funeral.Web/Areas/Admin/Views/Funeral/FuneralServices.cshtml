@@ -573,7 +573,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                     </div>
                                                     <div class="col-lg-12">
                                                         <div class="btn-group">
-                                                            <button id="btnMortuary" onclick="return activateTab('mortuary','aFuneralArrangement)" type="submit" class="btn btn-w-m btn-primary">Next</button>
+                                                            <button id="btnMortuary" onclick="return activateTab('mortuary','aFuneralArrangement')" type="submit" class="btn btn-w-m btn-primary">Next</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -898,8 +898,8 @@ new SelectListItem() { Text = "Other", Value = "Other" },
     });
 
     function tabSelector() {
-        var funeralStatus = '@Model.Status';
-        if (funeralStatus === 'New') {
+        var funeralStatus = '@Model.Status'.toLowerCase();
+        if (funeralStatus === 'New'.toLowerCase()) {
             $("#tab1").addClass("active")
             $('#aBodyCollection').trigger('click');
 
@@ -910,7 +910,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
             $("#tab5").hide();
             $("#tab6").hide();
         }
-        else if (funeralStatus == 'BodyCollection') {
+        else if (funeralStatus == 'BodyCollection'.toLowerCase()) {
             $("#tab1").removeClass("active");
             $("#tabBodyCollection").removeClass("active");
             $("#tab2").addClass("active");
@@ -925,7 +925,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
             $("#tab5").hide();
             $("#tab6").hide();
         }
-        else if (funeralStatus == 'Mortuary') {
+        else if (funeralStatus == 'Mortuary'.toLowerCase()) {
             $("#tab2").removeClass("active");
             $("#tabMortuary").removeClass("active");
             $("#tabFuneralArrangement").addClass("active");
@@ -939,7 +939,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
             $("#tab5").hide();
             $("#tab6").hide();
         }
-        else if (funeralStatus == 'FuneralArrangement') {
+        else if (funeralStatus == 'FuneralArrangement'.toLowerCase()) {
             $("#tabFuneralArrangement").removeClass("active");
             $("#tabPayment").addClass("active");
             $('#aPayment').trigger('click');
@@ -952,7 +952,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
             $("#tab4").hide();
             $("#tab6").hide();
         }
-        else if (funeralStatus == 'Payment') {
+        else if (funeralStatus == 'Payment'.toLowerCase()) {
             $('#aFuneralSchedule').trigger('click');
             $("#Status").val('funeralschedule');
 
@@ -963,7 +963,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
             $("#tab4").hide();
             $("#tab5").hide();
         }
-        else if (funeralStatus == 'FuneralSchedule') {
+        else if (funeralStatus == 'FuneralSchedule'.toLowerCase()) {
             $('#aFuneralSchedule').trigger('click');
 
             $("#tab6").show();
