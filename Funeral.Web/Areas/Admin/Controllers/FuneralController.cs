@@ -99,31 +99,15 @@ namespace Funeral.Web.Areas.Admin.Controllers
         public ActionResult SearchData(Model.Search.BaseSearch search)
         {
             var searchResult = new SearchResult<Model.Search.BaseSearch, FuneralModel>(search, new List<FuneralModel>(), o => o.FullNames.Contains(search.SarchText) || o.Surname.Contains(search.SarchText) || o.IDNumber.Contains(search.SarchText));
+            string status = Request.Params["StatusId"];
+
+            if (status == null)
+                status = search.StatusId;
+
             try
             {
-                var funeralList = FuneralBAL.SelectAllFuneralByParlourId(ParlourId, search.PageSize, search.PageNum, "", search.SortBy, search.SortOrder, search.DateFrom, search.DateTo);
+                var funeralList = FuneralBAL.SelectAllFuneralByParlourId(ParlourId, search.PageSize, search.PageNum, "", search.SortBy, search.SortOrder, search.DateFrom, search.DateTo, status);
 
-                switch (Request.Params["StatusId"])
-                {
-                    case "BodyCollection":
-                        funeralList = funeralList.Where(x => x.Status == FuneralStatusEnum.New.ToString() || x.Status == FuneralStatusEnum.BodyCollection.ToString()).ToList();
-                        break;
-                    case "Mortuary":
-                        funeralList = funeralList.Where(x => x.Status == FuneralStatusEnum.Mortuary.ToString()).ToList();
-                        break;
-                    case "FuneralArrangement":
-                        funeralList = funeralList.Where(x => x.Status == FuneralStatusEnum.FuneralArrangement.ToString()).ToList();
-                        break;
-                    case "Payment":
-                        funeralList = funeralList.Where(x => x.Status == FuneralStatusEnum.Payment.ToString()).ToList();
-                        break;
-                    case "FuneralSchedule":
-                        funeralList = funeralList.Where(x => x.Status == FuneralStatusEnum.FuneralSchedule.ToString()).ToList();
-                        break;
-                    default:
-                        funeralList = funeralList.Where(x => x.Status == FuneralStatusEnum.New.ToString() || x.FuneralStatus == FuneralStatusEnum.BodyCollection).ToList();
-                        break;
-                }
                 return Json(new SearchResult<Model.Search.BaseSearch, FuneralModel>(search, funeralList, o => o.FullNames.Contains(search.SarchText) || o.Surname.Contains(search.SarchText) || o.IDNumber.Contains(search.SarchText)), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -180,7 +164,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
         [PageRightsAttribute(CurrentPageId = 10, Right = new isPageRight[] { isPageRight.HasEdit })]
         public PartialViewResult Edit(int pkiFuneralID)
         {
-           // Index();
+            // Index();
             var funeral = FuneralBAL.SelectFuneralBypkid(pkiFuneralID, ParlourId);
             return PartialView("~/Areas/Admin/Views/Funeral/_FuneralAddEdit.cshtml", funeral);
         }
