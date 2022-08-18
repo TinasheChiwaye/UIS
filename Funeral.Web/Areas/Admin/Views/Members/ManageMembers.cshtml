@@ -3844,7 +3844,7 @@
         $("#tab-5 #txtDependentIdNumber").val(dependant.IDNumber);
 
         $('.dependantDOB').datepicker({ format: 'dd MM yyyy',autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(dependant.DateOfBirth)), "dd/mm/yyyy", false));
-        $('.dependantStartDate').datepicker({ format: 'dd MM yyyy',autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(dependant.StartDate)), "dd/mm/yyyy", false));
+        //$('.dependantStartDate').datepicker({ format: 'dd MM yyyy',autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(dependant.StartDate)), "dd/mm/yyyy", false));
         $('.dependantInceptionDate').datepicker({ format: 'dd MM yyyy',autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(dependant.InceptionDate)), "dd/mm/yyyy", false));
         $('.dependantCoverDate').datepicker({ format: 'dd MM yyyy',autoclose: true }).datepicker("setDate", dateFormat(new Date(ConvertDate(dependant.CoverDate)), "dd/mm/yyyy", false));
 
@@ -5202,7 +5202,7 @@
 
         // if no error found, hide the error message
         if (correct) {
-            $("#tab-5 #txtDependentDateOfBirth").val(fullDate);
+            //$("#tab-5 #txtDependentDateOfBirth").val(fullDate);
             $("#tab-5 #txtDependentDateOfBirth").val(fullDate).datepicker('update');
 
             var genderCode = idNumber.substring(6, 10);
