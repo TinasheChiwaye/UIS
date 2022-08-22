@@ -361,7 +361,7 @@ namespace Funeral.DAL
         }
         public static DataTable GetIdNumberAutocompleteData(string idNumber, Guid parlourid)
         {
-            string commandText = "select [ID Number] AS IdNumber,[Date Of Birth] as DOB,MemeberNumber as PolicyNumber " +
+            string commandText = "select Top 10 [ID Number] AS IdNumber,[Date Of Birth] as DOB,MemeberNumber as PolicyNumber " +
                                  "from [dbo].[Members] " +
                                  "where [ID Number] like '%" + idNumber + "%' " +
                                  "and parlourid='" + parlourid + "'";

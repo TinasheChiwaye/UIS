@@ -196,7 +196,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
                     <h4 class="modal-title" id="myModalLabel">Payment history</h4>
                 </div>
-                <div class="modal-body"> 
+                <div class="modal-body">
                     <table class="table table-striped table-bordered table-hover" id="table-Payment">
                         <thead>
                             <tr>
@@ -211,9 +211,9 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                             <tr>
                                 <th scope="row">1</th>
                                 <td>Mark</td>
-                                <td>Otto</td> 
-                                <td>Otto</td> 
-                                <td>Otto</td> 
+                                <td>Otto</td>
+                                <td>Otto</td>
+                                <td>Otto</td>
                             </tr>
                             <tr>
                                 <th scope="row">1</th>
@@ -320,19 +320,18 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                             @Html.ValidationMessageFor(m => m.TypeOfCollection, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                                                         </div>
                                                     </div>
-                                                  
-                                                        <div class="col-lg-6">
-                                                            <div class="form-group">
-                                                                <label>Contact Person</label>
-                                                                @Html.TextBoxFor(m => m.ContactPerson, null, new { @class = "form-control", @id = "ContactPerson", @maxlength = "50", placeholder = "" })
-                                                            </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>Contact Person</label>
+                                                            @Html.TextBoxFor(m => m.ContactPerson, null, new { @class = "form-control", @id = "ContactPerson", @maxlength = "50", placeholder = "" })
                                                         </div>
-                                                        <div class="col-lg-6">
-                                                            <div class="form-group">
-                                                                <label>Contact Number</label>
-                                                                @Html.TextBoxFor(m => m.ContactPersonNumber, null, new { @class = "form-control", @id = "ContactNumber", @maxlength = "15", placeholder = "" })
-                                                            </div>
-                                                        </div>                                                   
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>Contact Number</label>
+                                                            @Html.TextBoxFor(m => m.ContactPersonNumber, null, new { @class = "form-control", @id = "ContactNumber", @maxlength = "15", placeholder = "" })
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -424,7 +423,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                                     @Html.TextBoxFor(m => m.Code, null, new { @class = "form-control", @id = "Code", @maxlength = "50", placeholder = "" })
                                                                 </div>
                                                             </div>
-                                                        </div>                                                       
+                                                        </div>
                                                     </div>
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
@@ -866,6 +865,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
             return jQuery(element).css(prop, val);
         };
         $("#IDNumber").autocomplete({
+            minLength: 5,
             source: function (request, response) {
                 $.ajax({
                     url: "@Url.Action("GetIdNumberAutocompleteData", "Funeral")",
@@ -898,7 +898,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
 
     function tabSelector() {
         var funeralStatus = '@Model.Status'.toLowerCase();
-        if (funeralStatus === 'New'.toLowerCase()) {           
+        if (funeralStatus === 'New'.toLowerCase()) {
             $("#tab1").addClass("active")
             $('#aBodyCollection').trigger('click');
             $("#tab1").show();
@@ -907,7 +907,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
             $("#tab5").hide();
             $("#tab6").hide();
         }
-        else if (funeralStatus == 'BodyCollection'.toLowerCase()) {           
+        else if (funeralStatus == 'BodyCollection'.toLowerCase()) {
             $("#tab1").removeClass("active");
             $("#tabBodyCollection").removeClass("active");
             $("#tab2").addClass("active");
@@ -920,7 +920,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
             $("#tab5").hide();
             $("#tab6").hide();
         }
-        else if (funeralStatus == 'Mortuary'.toLowerCase()) {          
+        else if (funeralStatus == 'Mortuary'.toLowerCase()) {
             $("#tab2").removeClass("active");
             $("#tabMortuary").removeClass("active");
             $("#tabFuneralArrangement").addClass("active");
@@ -933,7 +933,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
             $("#tab5").hide();
             $("#tab6").hide();
         }
-        else if (funeralStatus == 'FuneralArrangement'.toLowerCase()) {           
+        else if (funeralStatus == 'FuneralArrangement'.toLowerCase()) {
             $("#tabFuneralArrangement").removeClass("active");
             $("#tabPayment").addClass("active");
             $('#aPayment').trigger('click');
@@ -954,7 +954,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
             $("#tab4").show();
             $("#tab5").show();
         }
-        else if (funeralStatus == 'FuneralSchedule'.toLowerCase()) {           
+        else if (funeralStatus == 'FuneralSchedule'.toLowerCase()) {
             $('#aFuneralSchedule').trigger('click');
             $("#tab6").show();
             $("#tab1").show();
@@ -1025,7 +1025,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                 processData: false,
                 contentType: false,
                 success: function (result) {
-                    console.log(result.data);
+                  //  console.log(result.data);
                     $("#PaymentHistoryModal").modal("show");
                     $(".modal-backdrop").hide();
 
