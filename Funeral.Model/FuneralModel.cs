@@ -144,5 +144,7 @@ namespace Funeral.Model
         public string CarMakeRegistrantion { get; set; }
         public string DriverSurname { get; set; }
         public FuneralEnum.FuneralStatusEnum FuneralStatus { get; set; }
+        public string AssignedToName { get; set; }
+        public int AssignedTo { get; set; }
     }
 }

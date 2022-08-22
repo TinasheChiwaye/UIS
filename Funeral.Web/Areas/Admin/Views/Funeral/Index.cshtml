@@ -1,6 +1,15 @@
 ﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<SelectListItem> ddlFuneralStatuses = new List<SelectListItem>()
+    {
+        new SelectListItem() { Text = "BodyCollection", Value = "BodyCollection" },
+        new SelectListItem() { Text = "Mortuary", Value = "Mortuary" },
+        new SelectListItem() { Text = "FuneralArrangement", Value = "FuneralArrangement" },
+        new SelectListItem() { Text = "Payment", Value = "Payment" },
+        new SelectListItem() { Text = "funeralschedule", Value = "funeralschedule" },
+    };
 }
 @Scripts.Render("~/bundles/jquery")
 
@@ -8,6 +17,72 @@
 <script src="~/Scripts/plugins/dateformat/DateFormat.js"></script>
 
 @*<div class="row" id="Funeraladdedit"></div>*@
+<div class="modal inmodal" id="dvAssignedToModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" onclick="$('#dvAssignedToModal').css('display', 'none');"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Change Funeral Assigned</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12" id="divAssignToUser">
+                        @using (Html.BeginForm("FuneralAssignedToUser", "Funeral", FormMethod.Get))
+                        {
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label>Select User * </label>
+                                    @Html.Hidden("PkiFuneralID")
+                                    @Html.Hidden("funeralStatus")
+                                    @Html.DropDownList("AssignedTo", new SelectList(ViewBag.AllUserList, "PkiUserID", "EmployeeFullname"), "Select User", new { @class = "form-control", @required = true })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <br />
+                                    <input type="submit" value="Submit" class="btn btn-sm btn-primary pull-right" />
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal inmodal" id="dvFuneralStatusModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" onclick="$('#dvFuneralStatusModal').css('display', 'none');"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Change Funeral Status</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        @using (Html.BeginForm("FuneralAssignedToUser", "Funeral", FormMethod.Get))
+                        {
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label>Select Status * </label>
+                                    @Html.Hidden("hdnPkiFuneralID")
+                                    @Html.Hidden("hdnfuneralStatus")
+                                    @Html.DropDownList("ddlFuneralStatus", ddlFuneralStatuses, "Select type of collection", new { @style = "width:100%", @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <br />
+                                    <input type="submit" value="Submit" class="btn btn-sm btn-primary pull-right" />
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row" id="Funerallist"></div>
 <style>
     .modal-backdrop {

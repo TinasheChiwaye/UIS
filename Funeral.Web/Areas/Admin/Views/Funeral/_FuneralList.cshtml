@@ -9,7 +9,7 @@
 <script src="~/Scripts/plugins/datapicker/bootstrap-datepicker.js"></script>
 <link href="~/Content/plugins/datapicker/datepicker3.css" rel="stylesheet" />
 <script src="~/Scripts/plugins/datapicker/bootstrap-datepicker.js"></script>
-
+ 
 @using (Html.BeginForm())
 {
     <div class="dataTables_wrapper" id="tblBranchSetupSearch_wrapper">
@@ -20,6 +20,12 @@
                 </div>
                 <div class="ibox-content">
                     <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>Status:</label>
+                                @Html.EnumDropDownListFor(x => x.FuneralStatus, new { @class = "form-control" })
+                            </div>
+                        </div>
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label>Date From:</label>
@@ -72,6 +78,8 @@
                                             <th>ID Number</th>
                                             <th>Date Of Death</th>
                                             <th>Date Of Funeral</th>
+                                            <th>Assigned To</th>
+                                            <th>Status</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -146,7 +154,11 @@
 
             DOMIDs.Datatable = "funeralDataTable";
             tableConfigs.SearchUrls = '@Url.Action("SearchData", "Funeral", new { StatusId = ViewBag.StatusId }, Request.Url.Scheme)';
-            setsearchmodel('200', sortOrder, sortBy, totalRecord, pageNum, pageSize, searchText);
+            setsearchmodel(null, sortOrder, sortBy, totalRecord, pageNum, pageSize, searchText);
+
+            if ('@ViewBag.StatusId' != null) {
+                $('#FuneralStatus').val(parseInt($('#FuneralStatus option').filter(function () { return $(this).html() == "@ViewBag.StatusId"; }).val()));
+            }
 
             columnsArray =
             [{ "data": "pkiFuneralID", "name": "pkiFuneralID", "autoWidth": true, "visible": false },
@@ -172,6 +184,26 @@
                     //var date = new Date(parseInt(data.replace('/Date(', '')));
                     var date = new Date(parseInt(data.replace("/Date(", "").replace(")/")));
                     return dateFormat(date, dateFormat.masks.isoDate, true);
+                }
+            },
+            {
+                "render": function (data, type, full, meta) {
+                    var hasEditRights = '@ViewBag.HasEditRight' == "True" ? true : false;
+
+                    if (hasEditRights)
+                        return "<a onclick='openAssignedToModal(" + full.pkiFuneralID + "," + full.AssignedTo + ")'>" + full.AssignedToName + "</a>";
+                    else
+                        return "<a>" + full.AssignedToName + "</a>";
+                }
+            },
+            {
+                "render": function (data, type, full, meta) {
+                    var hasEditRights = '@ViewBag.HasEditRight' == "True" ? true : false;
+                    var status = full.Status; 
+                    if (hasEditRights)
+                        return "<a onclick='openChangeFuneralStatusModal(" + full.pkiFuneralID + ",\"" + status + "\")'>" + status + "</a>";
+                    else
+                        return "<a>" + status + "</a>";
                 }
             },
             {
@@ -214,16 +246,16 @@
             model1.SarchText = jQuery("#SarchText").val();
             model1.DateFrom =  jQuery("#DateFrom").val() == '' ? null : new Date(jQuery("#DateFrom").val());
             model1.DateTo = jQuery("#DateFrom").val() == '' ? null : new Date(jQuery("#txtDateTo").val());
-            model1.StatusId = '@Html.Raw(ViewBag.StatusId)'
+            model1.StatusId = '@Html.Raw(ViewBag.StatusId)' == '' ? $('#FuneralStatus').find(":selected").text() : '@Html.Raw(ViewBag.StatusId)'
 
             jQuery("#PageNum1").val(model1.PageNum);
         }
 
         function EditFuneral(pkiFuneralID) {
 
-            jQuery("#ItemId").val(pkiFuneralID);          
+            jQuery("#ItemId").val(pkiFuneralID);
             var editUrl = '@Url.Action("FuneralServices", "Funeral", new { funeralId = "pkiFuneralIDVal"},Request.Url.Scheme)';
-            
+
             editUrl = editUrl.replace("pkiFuneralIDVal", pkiFuneralID);
 
             window.location.href = editUrl;
@@ -267,6 +299,23 @@
                     alert(status);
                 });
             }
+        }
+        function openAssignedToModal(pkiFuneralID, AssignedTo) {
+            if (AssignedTo != 0) {
+                $("#AssignedTo").val(AssignedTo)
+            }
+            else {
+                $("#AssignedTo").val('')
+            }
+            $('#dvAssignedToModal').css('display', 'flex');
+            $("#PkiFuneralID").val(pkiFuneralID);
+            $("#funeralStatus").val('@ViewBag.StatusId')
+        }
+        function openChangeFuneralStatusModal(pkiFuneralID, funeralStatus) {  
+            $('#dvFuneralStatusModal').css('display', 'flex');
+            $("#hdnPkiFuneralID").val(pkiFuneralID);
+            $("#hdnfuneralStatus").val('@ViewBag.StatusId')
+            $("#ddlFuneralStatus").val(funeralStatus)
         }
     </script>
 }

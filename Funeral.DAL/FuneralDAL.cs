@@ -21,9 +21,9 @@ namespace Funeral.DAL
             return (DbConnection.GetDataReader(CommandType.StoredProcedure, "SelectAllFuneralByParlourId", ObjParam));
         }
 
-        public static DataTable SelectAllFuneralByParlourIddt(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder, DateTime? FromDate, DateTime? ToDate)
+        public static DataTable SelectAllFuneralByParlourIddt(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder, DateTime? FromDate, DateTime? ToDate, string status)
         {
-            DbParameter[] ObjParam = new DbParameter[8];
+            DbParameter[] ObjParam = new DbParameter[9];
             ObjParam[0] = new DbParameter("@pagesize", DbParameter.DbType.Int, 0, PageSize);
             ObjParam[1] = new DbParameter("@pagenum", DbParameter.DbType.Int, 0, PageNum);
             ObjParam[2] = new DbParameter("@Keyword", DbParameter.DbType.NVarChar, 0, Keyword);
@@ -32,6 +32,7 @@ namespace Funeral.DAL
             ObjParam[5] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
             ObjParam[6] = new DbParameter("@DateFrom", DbParameter.DbType.DateTime, 0, FromDate);
             ObjParam[7] = new DbParameter("@DateTo", DbParameter.DbType.DateTime, 0, ToDate);
+            ObjParam[8] = new DbParameter("@Status", DbParameter.DbType.VarChar, 0, status);
 
             return (DbConnection.GetDataTable(CommandType.StoredProcedure, "SelectAllFuneralByParlourId", ObjParam));
         }
@@ -50,7 +51,7 @@ namespace Funeral.DAL
             //string query = "SaveFuneral"; New By Mahipatsinh
             string query = "SaveFuneral_New";
 
-            DbParameter[] ObjParam = new DbParameter[56];
+            DbParameter[] ObjParam = new DbParameter[58];
             ObjParam[0] = new DbParameter("@pkiFuneralID", DbParameter.DbType.Int, 0, model.pkiFuneralID);
             ObjParam[1] = new DbParameter("@FullNames", DbParameter.DbType.NVarChar, 0, model.FullNames);
             ObjParam[2] = new DbParameter("@Surname", DbParameter.DbType.NVarChar, 0, model.Surname);
@@ -108,6 +109,9 @@ namespace Funeral.DAL
             ObjParam[53] = new DbParameter("@Notes", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.Notes));//Change by Hemant 29 July 2022
             ObjParam[54] = new DbParameter("@OtherServices", DbParameter.DbType.NVarChar, 0, NulltoEmpty(model.OtherServices));//Change by Hemant 29 July 2022
             ObjParam[55] = new DbParameter("@TypeofCollection", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.TypeOfCollection));
+            ObjParam[56] = new DbParameter("@TypeofCoffine", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.TypeOfCoffin));
+            ObjParam[57] = new DbParameter("@TagNumber", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.TagNumber));
+
 
             //ObjParam[49] = new DbParameter("@CustomDental", DbParameter.DbType.Int, 0, NulltoEmpty(model.CustomGrouping5));//Change by Charles Date: 22/09/2021
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
@@ -362,6 +366,14 @@ namespace Funeral.DAL
                                  "where [ID Number] like '%" + idNumber + "%' " +
                                  "and parlourid='" + parlourid + "'";
             return DbConnection.GetDataTable(CommandType.Text, commandText);
+        }
+        public static int FuneralAssignedToUser(int? AssignedTo, int? PkiFuneralID, string ddlFuneralStatus)
+        {
+            DbParameter[] ObjParam = new DbParameter[3];
+            ObjParam[0] = new DbParameter("@AssignedToId", DbParameter.DbType.Int, 0, AssignedTo);
+            ObjParam[1] = new DbParameter("@PkiFuneralId", DbParameter.DbType.Int, 0, PkiFuneralID);
+            ObjParam[2] = new DbParameter("@FuneralStatus", DbParameter.DbType.VarChar, 0, !string.IsNullOrEmpty(ddlFuneralStatus)? ddlFuneralStatus: null);
+            return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "FuneralAssignedToUser", ObjParam));
         }
     }
 }

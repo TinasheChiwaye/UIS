@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Funeral.Model.FuneralEnum;
 
 namespace Funeral.Model.Search
 {
@@ -23,6 +24,7 @@ namespace Funeral.Model.Search
         public string StatusId { get; set; }
         public string SocietyID { get; set; }
         public string keyword { get; set; }
-        public string SearchType { get; set; }
+        public string SearchType { get; set; } 
+        public FuneralStatusEnum? FuneralStatus { get; set; }
     }
 }

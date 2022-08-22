@@ -656,7 +656,7 @@ namespace Funeral.Services
         #region Funeral
         public List<FuneralModel> SelectAllFuneralByParlourId(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder)
         {
-            return FuneralBAL.SelectAllFuneralByParlourId(ParlourId, PageSize, PageNum, Keyword, SortBy, SortOrder);
+            return FuneralBAL.SelectAllFuneralByParlourId(ParlourId, PageSize, PageNum, Keyword, SortBy, SortOrder,null,null,null);
         }
         public int FuneralDelete(int ID, string UserName)
         {

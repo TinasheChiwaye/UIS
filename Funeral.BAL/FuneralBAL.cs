@@ -13,9 +13,9 @@ namespace Funeral.BAL
         {
         }
 
-        public static List<FuneralModel> SelectAllFuneralByParlourId(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder, DateTime? FromDate, DateTime? ToDate)
+        public static List<FuneralModel> SelectAllFuneralByParlourId(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder, DateTime? FromDate, DateTime? ToDate, string status)
         {
-            DataTable dr = FuneralDAL.SelectAllFuneralByParlourIddt(ParlourId, PageSize, PageNum, Keyword, SortBy, SortOrder, FromDate, ToDate);
+            DataTable dr = FuneralDAL.SelectAllFuneralByParlourIddt(ParlourId, PageSize, PageNum, Keyword, SortBy, SortOrder, FromDate, ToDate,status);
             return FuneralHelper.DataTableMapToList<FuneralModel>(dr);
         }
         public static int FuneralDelete(int ID, string UserName)
@@ -132,6 +132,10 @@ namespace Funeral.BAL
         public static DataTable GetIdNumberAutocompleteData(string idNumber, Guid parlourid)
         {
             return FuneralDAL.GetIdNumberAutocompleteData(idNumber, parlourid);
+        }
+        public static int FuneralAssignedToUser(int? AssignedTo, int? PkiFuneralID, string ddlFuneralStatus)
+        {
+            return FuneralDAL.FuneralAssignedToUser(AssignedTo, PkiFuneralID,ddlFuneralStatus);
         }
     }
 }
