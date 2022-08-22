@@ -61,7 +61,7 @@ namespace Funeral.Model
         [Required(ErrorMessage = "The Surname is required")]
         public string Surname { get; set; }
         public string Gender { get; set; }
-        [Required(ErrorMessage = "The Id Number is required")]
+        //[Required(ErrorMessage = "The Id Number is required")]
         public string IDNumber { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public DateTime? DateOfDeath { get; set; }

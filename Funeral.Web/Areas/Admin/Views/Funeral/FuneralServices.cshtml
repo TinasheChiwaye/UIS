@@ -320,6 +320,19 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                             @Html.ValidationMessageFor(m => m.TypeOfCollection, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                                                         </div>
                                                     </div>
+                                                  
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label>Contact Person</label>
+                                                                @Html.TextBoxFor(m => m.ContactPerson, null, new { @class = "form-control", @id = "ContactPerson", @maxlength = "50", placeholder = "" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label>Contact Number</label>
+                                                                @Html.TextBoxFor(m => m.ContactPersonNumber, null, new { @class = "form-control", @id = "ContactNumber", @maxlength = "15", placeholder = "" })
+                                                            </div>
+                                                        </div>                                                   
                                                 </div>
                                             </div>
                                         </div>
@@ -411,21 +424,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                                     @Html.TextBoxFor(m => m.Code, null, new { @class = "form-control", @id = "Code", @maxlength = "50", placeholder = "" })
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-lg-6">
-                                                                <div class="form-group">
-                                                                    <label>Contact Person</label>
-                                                                    @Html.TextBoxFor(m => m.ContactPerson, null, new { @class = "form-control", @id = "ContactPerson", @maxlength = "50", placeholder = "" })
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <div class="form-group">
-                                                                    <label>Contact Number</label>
-                                                                    @Html.TextBoxFor(m => m.ContactPersonNumber, null, new { @class = "form-control", @id = "ContactNumber", @maxlength = "15", placeholder = "" })
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                        </div>                                                       
                                                     </div>
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
