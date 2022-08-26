@@ -572,12 +572,14 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 return View(funeralModel);
 
             funeralModel = FuneralBAL.SelectFuneralByFuneralId(funeralId.GetValueOrDefault(0), this.ParlourId);
+            funeralModel.FuneralDocuments = FuneralBAL.SelectFuneralDocumentsByMemberId(funeralModel.pkiFuneralID);
             return View(funeralModel);
         }
 
         [HttpPost]
         public ActionResult FuneralServices(FuneralModel model, string submitForm)
         {
+            string savedTabConfirmationMsg = model.Status == "New" ? "BodyCollection " : model.Status + " saved successfully";
             if (ModelState.IsValid)
             {
                 model.parlourid = this.ParlourId;
@@ -588,6 +590,9 @@ namespace Funeral.Web.Areas.Admin.Controllers
                     model.Status = GetStatus(model.Status, submitForm);
                 model.pkiFuneralID = FuneralBAL.SaveFuneral(model);
             }
+            if (!string.IsNullOrEmpty(savedTabConfirmationMsg))
+                TempData["savedTabConfirmationMsg"] = savedTabConfirmationMsg;
+            model.FuneralDocuments = FuneralBAL.SelectFuneralDocumentsByMemberId(model.pkiFuneralID);
             return View(model);
         }
         public ActionResult FuneralSearch()
