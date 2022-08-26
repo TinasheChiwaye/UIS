@@ -220,11 +220,11 @@
                             var editMemberUrl = '<div class="col-sm-4 text-center"><a  onclick="EditFuneral(\'' + full.pkiFuneralID + '\')"><i class="fa fa-edit"></i></a></div>';
                             dom = dom + editMemberUrl;
                         }
-                        if (hasDeleteRights) {
-							var deleteMemberUrl = '<div class="col-sm-4 text-center"> <a onclick="DeleteFuneral(\'' + full.pkiFuneralID + '\')"; ><i class="fa fa-trash-o"></i></a></div>';
-                            dom = dom + deleteMemberUrl;
-                        }
-                        var printMemberDataUrl = '<div class="col-sm-4 text-center"> <a href=@Url.Action("PrintForm", "Quotation",new { qutId = "QuotationIdVal" }, Request.Url.Scheme)><i class="fa fa-search"></i></a></div>';
+       //                 if (hasDeleteRights) {
+							//var deleteMemberUrl = '<div class="col-sm-4 text-center"> <a onclick="DeleteFuneral(\'' + full.pkiFuneralID + '\')"; ><i class="fa fa-trash-o"></i></a></div>';
+       //                     dom = dom + deleteMemberUrl;
+       //                 }
+                        var printMemberDataUrl = '<div class="col-sm-4 text-center"> <a href=@Url.Action("FuneralQuotation", "Funeral",new { funeralId = "QuotationIdVal" }, Request.Url.Scheme)><i class="fa fa-search"></i></a></div>';
                         printMemberDataUrl = printMemberDataUrl.replace("QuotationIdVal", full.pkiFuneralID);
                         dom = dom + printMemberDataUrl;
 
