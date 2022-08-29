@@ -17,12 +17,20 @@
         <div class="ibox ">
             <div class="ibox-title">
                 <h5>Funeral Quotation</h5>
+                <span class="label label-primary" style="font-size:17px;float:right;cursor:pointer;" onclick="editFuneral('@Model.pkiFuneralID')">Edit</span>
             </div>
             <div class="ibox-content">
                 <div class="panel panel-default">
                     <div class="panel-heading">Body Collection</div>
                     <div class="panel-body">
                         <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    @Html.Label("Status", new { @class = "control-label" })
+                                    :
+                                    @Html.Label(Model.Status, new { @class = "label label-primary", @style = "font-size:11px;" })
+                                </div>
+                            </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     @Html.Label("Claimant Name", new { @class = "control-label" })
@@ -62,7 +70,7 @@
                                 <div class="form-group">
                                     @Html.Label("Car Make", new { @class = "control-label" })
                                     :
-                                    @Html.Label(string.IsNullOrEmpty(Model.DriverName) ? "" : Model.DriverName, new { @class = "control-label" })
+                                    @Html.Label(string.IsNullOrEmpty(Model.CarMake) ? "" : Model.CarMake, new { @class = "control-label" })
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -86,312 +94,331 @@
                                     @Html.Label(Model.ContactPersonNumber, new { @class = "control-label" })
                                 </div>
                             </div>
-                        </div>
+                        </div>  
                     </div>
-                    <div class="panel-heading">Deceased Info</div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    @Html.Label("Full Name", new { @class = "control-label" })
-                                    :
-                                    @Html.Label(Model.FullNames, new { @class = "control-label" })
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    @Html.Label("Surname", new { @class = "control-label" })
-                                    :
-                                    @Html.Label(Model.Surname, new { @class = "control-label" })
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    @Html.Label("Policy Number", new { @class = "control-label" })
-                                    :
-                                    @Html.Label(Model.PolicyNumber, new { @class = "control-label" })
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    @Html.Label("ID Number", new { @class = "control-label" })
-                                    :
-                                    @Html.Label(Model.IDNumber, new { @class = "control-label" })
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    @Html.Label("Date Of Birth", new { @class = "control-label" })
-                                    :
-                                    @Html.Label(Model.DateOfBirth.HasValue ? Model.DateOfBirth.Value.ToString("dd MMM yyyy") : "", new { @class = "control-label" })
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    @Html.Label("Gender", new { @class = "control-label" })
-                                    :
-                                    @Html.Label(Model.Gender, new { @class = "control-label" })
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    @Html.Label("Cause Of Death", new { @class = "control-label" })
-                                    :
-                                    @Html.Label(Model.CourseOfDearth, new { @class = "control-label" })
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    @Html.Label("Date Of Death", new { @class = "control-label" })
-                                    :
-                                    @Html.Label(Model.DateOfDeath.HasValue ? Model.DateOfDeath.Value.ToString("dd MMM yyyy") : "", new { @class = "control-label" })
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    @Html.Label("BI663", new { @class = "control-label" })
-                                    :
-                                    @Html.Label(Model.BI1663, new { @class = "control-label" })
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    @Html.Label("Street Address", new { @class = "control-label" })
-                                    :
-                                    @Html.Label(Model.Address1, new { @class = "control-label" })
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    @Html.Label("Village", new { @class = "control-label" })
-                                    :
-                                    @Html.Label(Model.Village, new { @class = "control-label" })
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    @Html.Label("Town or City", new { @class = "control-label" })
-                                    :
-                                    @Html.Label(Model.Address2, new { @class = "control-label" })
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    @Html.Label("Code", new { @class = "control-label" })
-                                    :
-                                    @Html.Label(Model.Code, new { @class = "control-label" })
-                                </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">Deceased Info</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Full Name", new { @class = "control-label" })
+                                :
+                                @Html.Label(Model.FullNames, new { @class = "control-label" })
                             </div>
                         </div>
-                    </div>
-                    <div class="panel-heading">Mortuary</div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    @Html.Label("Deceased Arrival Date and Time", new { @class = "control-label" })
-                                    :
-                                    @Html.Label(Model.DeceasedArrivalDateTime.HasValue ? Model.DeceasedArrivalDateTime.Value.ToString("dd MMM yyyy hh:mm") : "", new { @class = "control-label" })
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    @Html.Label("Fridge Number", new { @class = "control-label" })
-                                    :
-                                    @Html.Label(Model.FridgeNumber, new { @class = "control-label" })
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    @Html.Label("Shelf Number", new { @class = "control-label" })
-                                    :
-                                    @Html.Label(Model.ShelfNumber, new { @class = "control-label" })
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    @Html.Label("Tag Number", new { @class = "control-label" })
-                                    :
-                                    @Html.Label(string.IsNullOrEmpty(Model.TagNumber) ? "" : Model.TagNumber, new { @class = "control-label" })
-                                </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Surname", new { @class = "control-label" })
+                                :
+                                @Html.Label(Model.Surname, new { @class = "control-label" })
                             </div>
                         </div>
-                    </div>
-                    <div class="panel-heading">Physical Description</div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Notes</label>
-                                    @Html.TextAreaFor(m => m.Notes, new { name = "OfficialStatus", rows = "10", cols = "50", id = "OfficialStatus", @class = "form-control", @readonly = "readonly" })
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            @Html.Label("Dental Condition", new { @class = "control-label" })
-                                            :
-                                            @Html.Label(string.IsNullOrEmpty(Model.DentalCondition) ? "" : Model.DentalCondition, new { @class = "control-label" })
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            @Html.Label("General Condition", new { @class = "control-label" })
-                                            :
-                                            @Html.Label(Model.GeneralCondition, new { @class = "control-label" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            @Html.Label("Age Group", new { @class = "control-label" })
-                                            :
-                                            @Html.Label(Model.AgeGroup, new { @class = "control-label" })
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            @Html.Label("Head Hair", new { @class = "control-label" })
-                                            :
-                                            @Html.Label(Model.HeadHair, new { @class = "control-label" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    @Html.Label("Skin Marks", new { @class = "control-label" })
-                                    :
-                                    @Html.Label(Model.SkinMarks, new { @class = "control-label" })
-                                </div>
-                                <div class="form-group">
-                                    @Html.Label("Personal Items", new { @class = "control-label" })
-                                    :
-                                    @Html.Label(Model.PersonalItem, new { @class = "control-label" })
-                                </div>
-                                <div class="form-group">
-                                    @Html.Label("Embalming", new { @class = "control-label" })
-                                    :
-                                    @Html.Label(Model.Embalming, new { @class = "control-label" })
-                                </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Policy Number", new { @class = "control-label" })
+                                :
+                                @Html.Label(Model.PolicyNumber, new { @class = "control-label" })
                             </div>
                         </div>
-                    </div>
-                    <div class="panel-heading">Funeral Arrangements</div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    @Html.Label("Coffin Size", new { @class = "control-label" })
-                                    :
-                                    @Html.Label(Model.CoffineSize, new { @class = "control-label" }) 
-                                </div>
-
-                                <div class="form-group">
-                                    @Html.Label("Type Of Coffin", new { @class = "control-label" })
-                                    :
-                                    @Html.Label(Model.TypeOfCoffin, new { @class = "control-label" }) 
-                                </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("ID Number", new { @class = "control-label" })
+                                :
+                                @Html.Label(Model.IDNumber, new { @class = "control-label" })
                             </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    @Html.Label("Other Services", new { @class = "control-label" })
-                                    :
-                                    @Html.Label(Model.OtherServices, new { @class = "control-label" }) 
-                                </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Date Of Birth", new { @class = "control-label" })
+                                :
+                                @Html.Label(Model.DateOfBirth.HasValue ? Model.DateOfBirth.Value.ToString("dd MMM yyyy") : "", new { @class = "control-label" })
                             </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    @Html.Label("Date and Time of Funeral", new { @class = "control-label" })
-                                    :
-                                    @Html.Label(Model.DateOfFuneral.ToString("dd MMM yyyy hh:mm"), new { @class = "control-label" }) 
-                                </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Gender", new { @class = "control-label" })
+                                :
+                                @Html.Label(Model.Gender, new { @class = "control-label" })
                             </div>
-                            <div class="col-lg-6">
-                                <div class="form-group"> 
-                                    @Html.Label("Burial Order Number", new { @class = "control-label" })
-                                    :
-                                    @Html.Label(Model.BurialOrderNo != null ? Model.BurialOrderNo : "", new { @class = "control-label" }) 
-                                </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Cause Of Death", new { @class = "control-label" })
+                                :
+                                @Html.Label(Model.CourseOfDearth, new { @class = "control-label" })
                             </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    @Html.Label("Grave Number", new { @class = "control-label" })
-                                    :
-                                    @Html.Label(Model.GraveNo, new { @class = "control-label" }) 
-                                </div>
-                            </div> 
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            Funeral Documents 
-                                        </div>
-                                        <div class="panel-body">
-                                            <table class="table table-hover">
-                                                <thead class="thead-dark">
-                                                    <tr>
-                                                        <th scope="col">Document Type</th>
-                                                        <th scope="col">Document Name</th>
-                                                        <th scope="col">Created Date</th>
-                                                        <th scope="col">Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @{
-                                                        if (Model.FuneralDocuments != null)
-                                                        {
-                                                            foreach (var item in Model.FuneralDocuments)
-                                                            {
-                                                                <tr>
-                                                                    <td>
-                                                                        @if (item.DocType == 1)
-                                                                        {
-                                                                            <span>BI663 Document</span>
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <span>Death Certificate</span>
-                                                                        }
-                                                                    </td>
-                                                                    <td>@item.ImageName</td>
-                                                                    <td>
-                                                                        @if (item.fkiFuneralID > 0)
-                                                                        {
-                                                                            @item.CreateDate.ToString("dd MMM yyyy hh:mm tt")
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <span>-----</span>
-                                                                        }
-                                                                    </td>
-                                                                    <td>
-                                                                        @{
-                                                                            if (item.fkiFuneralID > 0)
-                                                                            {
-                                                                                <a title="Download this funeral document" href="~/Handler/DocumentHandler.ashx?DocClaimID=@item.pkiFuneralPictureID"><i class="glyphicon glyphicon-download"></i></a>
-                                                                            }
-                                                                        }
-                                                                    </td>
-                                                                </tr>
-                                                                                }
-                                                        }
-                                                        else
-                                                        {
-                                                            <tr>
-                                                                <td colspan="4">No Data</td> 
-                                                            </tr>                                                                                
-                                                        }
-                                                    }
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> 
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Date Of Death", new { @class = "control-label" })
+                                :
+                                @Html.Label(Model.DateOfDeath.HasValue ? Model.DateOfDeath.Value.ToString("dd MMM yyyy") : "", new { @class = "control-label" })
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("BI663", new { @class = "control-label" })
+                                :
+                                @Html.Label(Model.BI1663, new { @class = "control-label" })
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Street Address", new { @class = "control-label" })
+                                :
+                                @Html.Label(Model.Address1, new { @class = "control-label" })
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Village", new { @class = "control-label" })
+                                :
+                                @Html.Label(Model.Village, new { @class = "control-label" })
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Town or City", new { @class = "control-label" })
+                                :
+                                @Html.Label(Model.Address2, new { @class = "control-label" })
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Code", new { @class = "control-label" })
+                                :
+                                @Html.Label(Model.Code, new { @class = "control-label" })
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">Mortuary</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Deceased Arrival Date and Time", new { @class = "control-label" })
+                                :
+                                @Html.Label(Model.DeceasedArrivalDateTime.HasValue ? Model.DeceasedArrivalDateTime.Value.ToString("dd MMM yyyy hh:mm") : "", new { @class = "control-label" })
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Fridge Number", new { @class = "control-label" })
+                                :
+                                @Html.Label(Model.FridgeNumber, new { @class = "control-label" })
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Shelf Number", new { @class = "control-label" })
+                                :
+                                @Html.Label(Model.ShelfNumber, new { @class = "control-label" })
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Tag Number", new { @class = "control-label" })
+                                :
+                                @Html.Label(string.IsNullOrEmpty(Model.TagNumber) ? "" : Model.TagNumber, new { @class = "control-label" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">Physical Description</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Notes</label>
+                                @Html.TextAreaFor(m => m.Notes, new { name = "OfficialStatus", rows = "10", cols = "50", id = "OfficialStatus", @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        @Html.Label("Dental Condition", new { @class = "control-label" })
+                                        :
+                                        @Html.Label(string.IsNullOrEmpty(Model.DentalCondition) ? "" : Model.DentalCondition, new { @class = "control-label" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        @Html.Label("General Condition", new { @class = "control-label" })
+                                        :
+                                        @Html.Label(Model.GeneralCondition, new { @class = "control-label" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        @Html.Label("Age Group", new { @class = "control-label" })
+                                        :
+                                        @Html.Label(Model.AgeGroup, new { @class = "control-label" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        @Html.Label("Head Hair", new { @class = "control-label" })
+                                        :
+                                        @Html.Label(Model.HeadHair, new { @class = "control-label" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.Label("Skin Marks", new { @class = "control-label" })
+                                :
+                                @Html.Label(Model.SkinMarks, new { @class = "control-label" })
+                            </div>
+                            <div class="form-group">
+                                @Html.Label("Personal Items", new { @class = "control-label" })
+                                :
+                                @Html.Label(Model.PersonalItem, new { @class = "control-label" })
+                            </div>
+                            <div class="form-group">
+                                @Html.Label("Embalming", new { @class = "control-label" })
+                                :
+                                @Html.Label(Model.Embalming, new { @class = "control-label" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">Funeral Arrangements</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Coffin Size", new { @class = "control-label" })
+                                :
+                                @Html.Label(Model.CoffineSize, new { @class = "control-label" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.Label("Type Of Coffin", new { @class = "control-label" })
+                                :
+                                @Html.Label(Model.TypeOfCoffin, new { @class = "control-label" })
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Other Services", new { @class = "control-label" })
+                                :
+                                @Html.Label(Model.OtherServices, new { @class = "control-label" })
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Date and Time of Funeral", new { @class = "control-label" })
+                                :
+                                @Html.Label(Model.DateOfFuneral.ToString("dd MMM yyyy hh:mm"), new { @class = "control-label" })
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Burial Order Number", new { @class = "control-label" })
+                                :
+                                @Html.Label(Model.BurialOrderNo != null ? Model.BurialOrderNo : "", new { @class = "control-label" })
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.Label("Grave Number", new { @class = "control-label" })
+                                :
+                                @Html.Label(Model.GraveNo, new { @class = "control-label" })
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Funeral Documents
+                                    </div>
+                                    <div class="panel-body">
+                                        <table class="table table-hover">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th scope="col">Document Type</th>
+                                                    <th scope="col">Document Name</th>
+                                                    <th scope="col">Created Date</th>
+                                                    <th scope="col">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    if (Model.FuneralDocuments != null)
+                                                    {
+                                                        foreach (var item in Model.FuneralDocuments)
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    @if (item.DocType == 1)
+                                                                    {
+                                                                        <span>BI663 Document</span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span>Death Certificate</span>
+                                                                    }
+                                                                </td>
+                                                                <td>@item.ImageName</td>
+                                                                <td>
+                                                                    @if (item.fkiFuneralID > 0)
+                                                                    {
+                                                                        @item.CreateDate.ToString("dd MMM yyyy hh:mm tt")
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span>-----</span>
+                                                                    }
+                                                                </td>
+                                                                <td>
+                                                                    @{
+                                                                        if (item.fkiFuneralID > 0)
+                                                                        {
+                                                                            <a title="Download this funeral document" href="~/Handler/DocumentHandler.ashx?DocClaimID=@item.pkiFuneralPictureID"><i class="glyphicon glyphicon-download"></i></a>
+                                                                        }
+                                                                    }
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <tr>
+                                                            <td colspan="4">No Data</td>
+                                                        </tr>
+
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
+<script>
+    function editFuneral(pkiFuneralID) {
+        var editUrl = '@Url.Action("FuneralServices", "Funeral", new { funeralId = "pkiFuneralIDVal"},Request.Url.Scheme)';
+
+        editUrl = editUrl.replace("pkiFuneralIDVal", pkiFuneralID);
+
+        window.location.href = editUrl;
+    }
+</script>
