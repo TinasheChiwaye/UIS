@@ -17,9 +17,9 @@
     <div class="col-lg-12" id="dvPrint">
         <div class="ibox">
             <div class="ibox-title" style="display:flex;justify-content:space-between">
-                <h5>Funeral Quotation</h5>
+                <h5>Funeral Quotation &nbsp; #@Model.pkiFuneralID</h5>
                 <div id="divBtn">
-                    <button class="btn btn-danger btn-sm" style="cursor:pointer;" onclick="printPage()">Print</button>
+                    <button class="btn btn-danger btn-sm" style="cursor:pointer;" onclick="printPage()">Download</button>
                     <button class="btn btn-primary btn-sm" style="cursor:pointer;" onclick="editFuneral('@Model.pkiFuneralID')">Edit</button>
                 </div>
             </div>
@@ -30,62 +30,62 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    @Html.Label("Status :", new { @class = "control-label" }) 
-                                    @Html.Label(string.IsNullOrEmpty(Model.Status) ? "" : Model.Status, new { @class = "label label-primary", @style = "font-size:11px;" })
+                                    @Html.Label("Status :", new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.Status) ? "" : Model.Status)</span>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    @Html.Label("Claimant Name :", new { @class = "control-label" }) 
-                                    @Html.Label(string.IsNullOrEmpty(Model.ClaimantName) ? "" : Model.ClaimantName, new { @class = "control-label" })
+                                    @Html.Label("Claimant Name :", new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.ClaimantName) ? "" : Model.ClaimantName)</span>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    @Html.Label("Claimant Surname :", new { @class = "control-label" }) 
-                                    @Html.Label(string.IsNullOrEmpty(Model.ClaimantSurname) ? "" : Model.ClaimantSurname, new { @class = "control-label" })
+                                    @Html.Label("Claimant Surname :", new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.ClaimantSurname) ? "" : Model.ClaimantSurname)</span>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    @Html.Label("Body Collection Driver :", new { @class = "control-label" }) 
-                                    @Html.Label(string.IsNullOrEmpty(Model.BodyAndCar) ? "" : Model.BodyAndCar, new { @class = "control-label" })
+                                    @Html.Label("Body Collection Driver :", new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.BodyAndCar) ? "" : Model.BodyAndCar)</span>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     @Html.Label("Driver ID Number :", new { @class = "control-label" })
-                                    @Html.Label(string.IsNullOrEmpty(Model.DriverIdNumber) ? "" : Model.DriverIdNumber, new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.DriverIdNumber) ? "" : Model.DriverIdNumber)</span>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    @Html.Label("Car Registration :", new { @class = "control-label" }) 
-                                    @Html.Label(string.IsNullOrEmpty(Model.CarReg) ? "" : Model.CarReg, new { @class = "control-label" })
+                                    @Html.Label("Car Registration :", new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.CarReg) ? "" : Model.CarReg)</span>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    @Html.Label("Car Make :", new { @class = "control-label" }) 
-                                    @Html.Label(string.IsNullOrEmpty(Model.CarMake) ? "" : Model.CarMake, new { @class = "control-label" })
+                                    @Html.Label("Car Make :", new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.CarMake) ? "" : Model.CarMake)</span>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    @Html.Label("Type of collection :", new { @class = "control-label" }) 
-                                    @Html.Label(string.IsNullOrEmpty(Model.TypeOfCollection) ? "" : Model.TypeOfCollection, new { @class = "control-label" })
+                                    @Html.Label("Type of collection :", new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.TypeOfCollection) ? "" : Model.TypeOfCollection)</span>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    @Html.Label("Contact Person :", new { @class = "control-label" }) 
-                                    @Html.Label(string.IsNullOrEmpty(Model.ContactPerson) ? "" : Model.ContactPerson, new { @class = "control-label" })
+                                    @Html.Label("Contact Person :", new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.ContactPerson) ? "" : Model.ContactPerson)</span>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    @Html.Label("Contact Number :", new { @class = "control-label" }) 
-                                    @Html.Label(string.IsNullOrEmpty(Model.ContactPersonNumber) ? "" : Model.ContactPersonNumber, new { @class = "control-label" })
+                                    @Html.Label("Contact Number :", new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.ContactPersonNumber) ? "" : Model.ContactPersonNumber)</span>
                                 </div>
                             </div>
                         </div>
@@ -97,80 +97,80 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    @Html.Label("Full Name :", new { @class = "control-label" }) 
-                                    @Html.Label(string.IsNullOrEmpty(Model.FullNames) ? "" : Model.FullNames, new { @class = "control-label" })
+                                    @Html.Label("Full Name :", new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.FullNames) ? "" : Model.FullNames)</span>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    @Html.Label("Surname :", new { @class = "control-label" }) 
-                                    @Html.Label(string.IsNullOrEmpty(Model.Surname) ? "" : Model.Surname, new { @class = "control-label" })
+                                    @Html.Label("Surname :", new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.Surname) ? "" : Model.Surname)</span>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     @Html.Label("Policy Number :", new { @class = "control-label" })
-                                    @Html.Label(string.IsNullOrEmpty(Model.PolicyNumber) ? "" : Model.PolicyNumber, new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.PolicyNumber) ? "" : Model.PolicyNumber)</span>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     @Html.Label("ID Number :", new { @class = "control-label" })
-                                    @Html.Label(string.IsNullOrEmpty(Model.IDNumber) ? "" : Model.IDNumber, new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.IDNumber) ? "" : Model.IDNumber)</span>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     @Html.Label("Date Of Birth :", new { @class = "control-label" })
-                                    @Html.Label(Model.DateOfBirth.HasValue ? Model.DateOfBirth.Value.ToString("dd MMM yyyy") : "", new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(Model.DateOfBirth.HasValue ? Model.DateOfBirth.Value.ToString("dd MMM yyyy") : "")</span>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     @Html.Label("Gender :", new { @class = "control-label" })
-                                    @Html.Label(string.IsNullOrEmpty(Model.Gender) ? "" : Model.Gender, new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.Gender) ? "" : Model.Gender)</span>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     @Html.Label("Cause Of Death :", new { @class = "control-label" })
-                                    @Html.Label(string.IsNullOrEmpty(Model.CourseOfDearth) ? "" : Model.CourseOfDearth, new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.CourseOfDearth) ? "" : Model.CourseOfDearth)</span>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     @Html.Label("Date Of Death :", new { @class = "control-label" })
-                                    @Html.Label(Model.DateOfDeath.HasValue ? Model.DateOfDeath.Value.ToString("dd MMM yyyy") : "", new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(Model.DateOfDeath.HasValue ? Model.DateOfDeath.Value.ToString("dd MMM yyyy") : "")</span>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    @Html.Label("BI663 :", new { @class = "control-label" }) 
-                                    @Html.Label(string.IsNullOrEmpty(Model.BI1663) ? "" : Model.BI1663, new { @class = "control-label" })
+                                    @Html.Label("BI663 :", new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.BI1663) ? "" : Model.BI1663)</span>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     @Html.Label("Street Address :", new { @class = "control-label" })
-                                    @Html.Label(string.IsNullOrEmpty(Model.Address1) ? "" : Model.Address1, new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.Address1) ? "" : Model.Address1)</span>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     @Html.Label("Village :", new { @class = "control-label" })
-                                    @Html.Label(string.IsNullOrEmpty(Model.Village) ? "" : Model.Village, new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.Village) ? "" : Model.Village)</span> 
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     @Html.Label("Town or City :", new { @class = "control-label" })
-                                    @Html.Label(string.IsNullOrEmpty(Model.Address2) ? "" : Model.Address2, new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.Address2) ? "" : Model.Address2)</span>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     @Html.Label("Code :", new { @class = "control-label" })
-                                    @Html.Label(string.IsNullOrEmpty(Model.Code) ? "" : Model.Code, new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.Code) ? "" : Model.Code)</span>
                                 </div>
                             </div>
                         </div>
@@ -183,25 +183,25 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     @Html.Label("Deceased Arrival Date and Time :", new { @class = "control-label" })
-                                    @Html.Label(Model.DeceasedArrivalDateTime.HasValue ? Model.DeceasedArrivalDateTime.Value.ToString("dd MMM yyyy hh:mm") : "", new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(Model.DeceasedArrivalDateTime.HasValue ? Model.DeceasedArrivalDateTime.Value.ToString("dd MMM yyyy hh:mm") : "")</span>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     @Html.Label("Fridge Number :", new { @class = "control-label" })
-                                    @Html.Label(string.IsNullOrEmpty(Model.FridgeNumber) ? "" : Model.FridgeNumber, new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.FridgeNumber) ? "" : Model.FridgeNumber)</span>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     @Html.Label("Shelf Number :", new { @class = "control-label" })
-                                    @Html.Label(string.IsNullOrEmpty(Model.ShelfNumber) ? "" : Model.ShelfNumber, new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.ShelfNumber) ? "" : Model.ShelfNumber)</span>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     @Html.Label("Tag Number :", new { @class = "control-label" })
-                                    @Html.Label(string.IsNullOrEmpty(Model.TagNumber) ? "" : Model.TagNumber, new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.TagNumber) ? "" : Model.TagNumber)</span>
                                 </div>
                             </div>
                         </div>
@@ -222,13 +222,13 @@
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             @Html.Label("Dental Condition :", new { @class = "control-label" })
-                                            @Html.Label(string.IsNullOrEmpty(Model.DentalCondition) ? "" : Model.DentalCondition, new { @class = "control-label" })
+                                            <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.DentalCondition) ? "" : Model.DentalCondition)</span> 
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             @Html.Label("General Condition :", new { @class = "control-label" })
-                                            @Html.Label(string.IsNullOrEmpty(Model.GeneralCondition) ? "" : Model.GeneralCondition, new { @class = "control-label" })
+                                            <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.GeneralCondition) ? "" : Model.GeneralCondition)</span> 
                                         </div>
                                     </div>
                                 </div>
@@ -236,27 +236,27 @@
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             @Html.Label("Age Group :", new { @class = "control-label" })
-                                            @Html.Label(string.IsNullOrEmpty(Model.AgeGroup) ? "" : Model.AgeGroup, new { @class = "control-label" })
+                                            <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.AgeGroup) ? "" : Model.AgeGroup)</span>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             @Html.Label("Head Hair :", new { @class = "control-label" })
-                                            @Html.Label(string.IsNullOrEmpty(Model.HeadHair) ? "" : Model.HeadHair, new { @class = "control-label" })
+                                            <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.HeadHair) ? "" : Model.HeadHair)</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     @Html.Label("Skin Marks :", new { @class = "control-label" })
-                                    @Html.Label(string.IsNullOrEmpty(Model.SkinMarks) ? "" : Model.SkinMarks, new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.SkinMarks) ? "" : Model.SkinMarks)</span>
                                 </div>
                                 <div class="form-group">
                                     @Html.Label("Personal Items :", new { @class = "control-label" })
-                                    @Html.Label(string.IsNullOrEmpty(Model.PersonalItem) ? "" : Model.PersonalItem, new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.PersonalItem) ? "" : Model.PersonalItem)</span>
                                 </div>
                                 <div class="form-group">
                                     @Html.Label("Embalming :", new { @class = "control-label" })
-                                    @Html.Label(string.IsNullOrEmpty(Model.Embalming) ? "" : Model.Embalming, new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.Embalming) ? "" : Model.Embalming)</span>
                                 </div>
                             </div>
                         </div>
@@ -269,107 +269,96 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     @Html.Label("Coffin Size :", new { @class = "control-label" })
-                                    @Html.Label(string.IsNullOrEmpty(Model.CoffineSize) ? "" : Model.CoffineSize, new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.CoffineSize) ? "" : Model.CoffineSize)</span> 
                                 </div>
 
                                 <div class="form-group">
                                     @Html.Label("Type Of Coffin :", new { @class = "control-label" })
-                                    @Html.Label(string.IsNullOrEmpty(Model.TypeOfCoffin) ? "" : Model.TypeOfCoffin, new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.TypeOfCoffin) ? "" : Model.TypeOfCoffin)</span> 
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     @Html.Label("Other Services :", new { @class = "control-label" })
-                                    @Html.Label(string.IsNullOrEmpty(Model.OtherServices) ? "" : Model.OtherServices, new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.OtherServices) ? "" : Model.OtherServices)</span>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     @Html.Label("Date and Time of Funeral :", new { @class = "control-label" })
-                                    @Html.Label(Model.DateOfFuneral.ToString("dd MMM yyyy hh:mm"), new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(Model.DateOfFuneral.ToString("dd MMM yyyy hh:mm"))</span>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     @Html.Label("Burial Order Number :", new { @class = "control-label" })
-                                    @Html.Label(!string.IsNullOrEmpty(Model.BurialOrderNo) ? Model.BurialOrderNo : "", new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(!string.IsNullOrEmpty(Model.BurialOrderNo) ? Model.BurialOrderNo : "")</span>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     @Html.Label("Grave Number :", new { @class = "control-label" })
-                                    @Html.Label(string.IsNullOrEmpty(Model.GraveNo) ? "" : Model.GraveNo, new { @class = "control-label" })
+                                    <span class="font-weight-normal">@(string.IsNullOrEmpty(Model.GraveNo) ? "" : Model.GraveNo)</span>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            Funeral Documents
-                                        </div>
-                                        <div class="panel-body">
-                                            <table class="table table-hover">
-                                                <thead class="thead-dark">
-                                                    <tr>
-                                                        <th scope="col">Document Type</th>
-                                                        <th scope="col">Document Name</th>
-                                                        <th scope="col">Created Date</th>
-                                                        <th scope="col">Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @{
-                                                        if (Model.FuneralDocuments != null)
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Funeral Documents</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <table class="table table-hover">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Document Type</th>
+                                        <th scope="col">Document Name</th>
+                                        <th scope="col">Created Date</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        if (Model.FuneralDocuments != null && Model.FuneralDocuments.Count > 0)
+                                        {
+                                            foreach (var item in Model.FuneralDocuments)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @if (item.DocType == 1)
                                                         {
-                                                            foreach (var item in Model.FuneralDocuments)
-                                                            {
-                                                                <tr>
-                                                                    <td>
-                                                                        @if (item.DocType == 1)
-                                                                        {
-                                                                            <span>BI663 Document</span>
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <span>Death Certificate</span>
-                                                                        }
-                                                                    </td>
-                                                                    <td>@item.ImageName</td>
-                                                                    <td>
-                                                                        @if (item.fkiFuneralID > 0)
-                                                                        {
-                                                                            @item.CreateDate.ToString("dd MMM yyyy hh:mm tt")
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <span>-----</span>
-                                                                        }
-                                                                    </td>
-                                                                    <td>
-                                                                        @{
-                                                                            if (item.fkiFuneralID > 0)
-                                                                            {
-                                                                                <a title="Download this funeral document" href="~/Handler/DocumentHandler.ashx?DocClaimID=@item.pkiFuneralPictureID"><i class="glyphicon glyphicon-download"></i></a>
-                                                                            }
-                                                                        }
-                                                                    </td>
-                                                                </tr>
-                                                            }
+                                                            <span>BI663 Document</span>
                                                         }
                                                         else
                                                         {
-                                                            <tr>
-                                                                <td colspan="4">No Data</td>
-                                                            </tr>
-
+                                                            <span>Death Certificate</span>
                                                         }
-                                                    }
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                                    </td>
+                                                    <td>@item.ImageName</td>
+                                                    <td>
+                                                        @if (item.fkiFuneralID > 0)
+                                                        {
+                                                            @item.CreateDate.ToString("dd MMM yyyy hh:mm tt")
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>-----</span>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        @{
+                                                            if (item.fkiFuneralID > 0)
+                                                            {
+                                                                <a title="Download this funeral document" href="~/Handler/DocumentHandler.ashx?DocClaimID=@item.pkiFuneralPictureID"><i class="glyphicon glyphicon-download"></i></a>
+                                                            }
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    }
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -393,7 +382,7 @@
             html2canvas: { scale: 12 },
             jsPDF: { unit: 'in', format: 'A4', orientation: 'landscape' }
         };
-        await html2pdf().set(opt).from($("#dvPrint").html()).save("test.pdf");
+        await html2pdf().set(opt).from($("#dvPrint").html()).save("Funeral-service-"+ '@Model.pkiFuneralID' + '.pdf');
 
         $("#divBtn").show();
         $('#AjaxLoader').hide();
