@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "FuneralServices";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml"; 
 }
 
 <script src="~/Scripts/bootstrap.min.js"></script>
@@ -15,7 +15,7 @@
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script> 
 
 @{
     List<SelectListItem> ddlBodyCondition = new List<SelectListItem>()
@@ -372,11 +372,8 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                                     <label>Gender</label>
                                                                     <br>
                                                                     &nbsp; &nbsp;
-                                                                    <input id="MainContent_rdbtnMale" type="radio" name="ctl00$MainContent$Gender" value="rdbtnMale" checked="checked">
-                                                                    <label for="MainContent_rdbtnMale">Male</label>&nbsp; &nbsp;  &nbsp; &nbsp;
-                                                                    <input id="MainContent_rdbtnFemale" type="radio" name="ctl00$MainContent$Gender" value="rdbtnFemale">
-                                                                    <label for="MainContent_rdbtnFemale">Female</label>
-
+                                                                    <label> @Html.RadioButtonFor(m => m.Gender, "Male")&nbsp;Male</label>
+                                                                    <label> @Html.RadioButtonFor(m => m.Gender, "Female")&nbsp;Female</label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -675,9 +672,68 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <label class="control-label">&nbsp;</label><br />
-                                                    <input id="btnAddDocs" type="button" value="Add Docs" onclick="btnAddDocsClick()" class="btn btn-sm btn-primary" />
-                                                    <input id="btnServices" type="button" value="Services " onclick="btnServicesClick()" class="btn btn-sm btn-primary" />
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading" style="line-height:3">
+                                                            Funeral Documents
+                                                            <div style="float:right;">
+                                                                <input id="btnAddDocs" type="button" value="Add Docs" onclick="btnAddDocsClick()" class="btn btn-sm btn-primary" />
+                                                                <input id="btnServices" type="button" value="Services " onclick="btnServicesClick()" class="btn btn-sm btn-primary" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <table class="table table-hover">
+                                                                <thead class="thead-dark">
+                                                                    <tr>
+                                                                        <th scope="col">Document Type</th>
+                                                                        <th scope="col">Document Name</th>
+                                                                        <th scope="col">Created Date</th>
+                                                                        <th scope="col">Action</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @{
+                                                                        if (Model.FuneralDocuments != null)
+                                                                        {
+                                                                            foreach (var item in Model.FuneralDocuments)
+                                                                            {
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        @if (item.DocType == 1)
+                                                                                        {
+                                                                                            <span>BI663 Document</span>
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            <span>Death Certificate</span>
+                                                                                        }
+                                                                                    </td>
+                                                                                    <td>@item.ImageName</td>
+                                                                                    <td>
+                                                                                        @if (item.fkiFuneralID > 0)
+                                                                                        {
+                                                                                            @item.CreateDate.ToString("dd MMM yyyy hh:mm tt")
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            <span>-----</span>
+                                                                                        }
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        @{
+                                                                                            if (item.fkiFuneralID > 0)
+                                                                                            {
+                                                                                                <a title="Download this funeral document" href="~/Handler/DocumentHandler.ashx?DocClaimID=@item.pkiFuneralPictureID"><i class="glyphicon glyphicon-download"></i></a>
+                                                                                            }
+                                                                                        }
+                                                                                    </td>
+                                                                                </tr>
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
@@ -770,54 +826,6 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                             {*@
                                         <div class="row">
                                             <div class="col-lg-12">
-
-                                                @*@Html.AntiForgeryToken()
-                                                    @Html.HiddenFor(m => m.FullNames)
-                                                    @Html.HiddenFor(m => m.ClaimantName)
-                                                    @Html.HiddenFor(m => m.ClaimantSurname)
-                                                    @Html.HiddenFor(m => m.FullNames)
-                                                    @Html.HiddenFor(m => m.Surname)
-                                                    @Html.HiddenFor(m => m.BodyAndCar)
-                                                    @Html.HiddenFor(m => m.DriverIdNumber)
-                                                    @Html.HiddenFor(m => m.CarReg)
-                                                    @Html.HiddenFor(m => m.DriverName)
-                                                    @Html.HiddenFor(m => m.FullNames)
-                                                    @Html.HiddenFor(m => m.IDNumber)
-                                                    @Html.HiddenFor(m => m.DateOfBirth)
-                                                    @Html.HiddenFor(m => m.Gender)
-                                                    @Html.HiddenFor(m => m.CourseOfDearth)
-                                                    @Html.HiddenFor(m => m.DateOfDeath)
-                                                    @Html.HiddenFor(m => m.Address1)
-                                                    @Html.HiddenFor(m => m.Village)
-                                                    @Html.HiddenFor(m => m.Address2)
-                                                    @Html.HiddenFor(m => m.Code)
-                                                    @Html.HiddenFor(m => m.ContactPerson)
-                                                    @Html.HiddenFor(m => m.ContactPersonNumber)
-                                                    @Html.HiddenFor(m => m.pkiFuneralID)
-                                                    @Html.HiddenFor(m => m.parlourid)
-                                                    @Html.HiddenFor(m => m.Status)
-                                                    @Html.HiddenFor(m => m.BI1663)
-                                                    @Html.HiddenFor(m => m.PolicyNumber)
-                                                    @Html.HiddenFor(m => m.DeceasedArrivalDateTime)
-                                                    @Html.HiddenFor(m => m.FridgeNumber)
-                                                    @Html.HiddenFor(m => m.ShelfNumber)
-                                                    @Html.HiddenFor(m => m.TagNumber)
-                                                    @Html.HiddenFor(m => m.Notes)
-                                                    @Html.HiddenFor(m => m.DentalCondition)
-                                                    @Html.HiddenFor(m => m.GeneralCondition)
-                                                    @Html.HiddenFor(m => m.AgeGroup)
-                                                    @Html.HiddenFor(m => m.HeadHair)
-                                                    @Html.HiddenFor(m => m.SkinMarks)
-                                                    @Html.HiddenFor(m => m.PersonalItem)
-                                                    @Html.HiddenFor(m => m.Embalming)
-
-                                                    @Html.HiddenFor(m => m.CoffineSize)
-                                                    @Html.HiddenFor(m => m.TypeOfCoffin)
-                                                    @Html.HiddenFor(m => m.OtherServices)
-                                                    @Html.HiddenFor(m => m.DateOfFuneral)
-                                                    @Html.HiddenFor(m => m.BurialOrderNo)
-                                                    @Html.HiddenFor(m => m.GraveNo)
-                                                    @Html.Hidden("submitForm", "funeralschedule")*@
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         @Html.Label("Type of collection", new { @class = "control-label" })
@@ -826,6 +834,9 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
+                                                <div id="calender"></div>
+                                            </div>
+                                            <div class="col-lg-12" style="margin-top:5px;">
                                                 <div class="btn-group">
                                                     @Html.HiddenFor(m => m.Status)
                                                     @Html.Hidden("submitForm", "funeralschedule", new { @id = "submitForm" })
@@ -846,6 +857,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
 </body>
 <script type="text/javascript">
     var autoCompleteData;
+    var events = [];
     function activateTab(fromName, tabName) {
         if ($('#' + fromName + '').valid()) {
             $('#' + tabName + '').trigger('click');
@@ -853,6 +865,10 @@ new SelectListItem() { Text = "Other", Value = "Other" },
         tabSelector();
     }
     $(document).ready(function () {
+        var savedMsg = '@TempData["savedTabConfirmationMsg"]';
+        if (savedMsg != '')
+            $("#MainContent_lblMessage").append('<div class="alert alert-success">' + savedMsg + '</div>')
+
         $(".datepicker").datepicker({ format: 'dd MM yyyy', autoclose: true });
         $(".datetimepicker").datepicker({ format: 'dd MM yyyy', autoclose: true });
         $("#spnFileDocumentEmpty").hide();
@@ -894,6 +910,8 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                 $('#PolicyNumber').val(selectedData.PolicyNumber);
             }
         });
+
+        GenerateCalender();
     });
 
     function tabSelector() {
@@ -1001,6 +1019,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                     $('html, body').animate({
                         scrollTop: $("#MainContent_lblMessage").offset().top
                     }, 200);
+                    window.location.reload();
                 },
                 error: function (err) {
                     $("#MainContent_lblMessage").append('<div class="alert alert-danger">error while document update</div>')
@@ -1051,6 +1070,10 @@ new SelectListItem() { Text = "Other", Value = "Other" },
     }
     function printQuotation() {
         window.location.href = "@Url.Action("PrintQuotation", "Funeral")?funeralID=" + $("#pkiFuneralID").val();
+    }
+
+    function GenerateCalender() { 
+          
     }
 </script>
 

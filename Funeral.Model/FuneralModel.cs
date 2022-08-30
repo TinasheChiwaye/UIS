@@ -146,5 +146,6 @@ namespace Funeral.Model
         public FuneralEnum.FuneralStatusEnum FuneralStatus { get; set; }
         public string AssignedToName { get; set; }
         public int AssignedTo { get; set; }
+        public List<FuneralDocumentModel> FuneralDocuments { get; set; }
     }
 }
