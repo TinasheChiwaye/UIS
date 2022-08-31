@@ -1,20 +1,20 @@
 ﻿using Funeral.BAL;
-using Funeral.Model;
+using Funeral.Model; 
 using Funeral.Web.App_Start;
 using Funeral.Web.Areas.Admin.Models.ViewModel;
 using Funeral.Web.Common;
+using Funeral.Web.DayPilot;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Script.Serialization;
 using System.Web.Security;
 using System.Web.UI.WebControls;
-using static Funeral.Model.FuneralEnum;
 
 namespace Funeral.Web.Areas.Admin.Controllers
 {
@@ -734,5 +734,9 @@ namespace Funeral.Web.Areas.Admin.Controllers
             funeralModel.FuneralDocuments = FuneralBAL.SelectFuneralDocumentsByMemberId(funeralModel.pkiFuneralID);
             return View(funeralModel);
         }
-    }
+        public ActionResult Backend(int funeralId)
+        { 
+            return new Dpc(funeralId,UserID).CallBack(this);
+        }
+    }  
 }

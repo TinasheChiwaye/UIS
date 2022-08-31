@@ -372,8 +372,43 @@ namespace Funeral.DAL
             DbParameter[] ObjParam = new DbParameter[3];
             ObjParam[0] = new DbParameter("@AssignedToId", DbParameter.DbType.Int, 0, AssignedTo);
             ObjParam[1] = new DbParameter("@PkiFuneralId", DbParameter.DbType.Int, 0, PkiFuneralID);
-            ObjParam[2] = new DbParameter("@FuneralStatus", DbParameter.DbType.VarChar, 0, !string.IsNullOrEmpty(ddlFuneralStatus)? ddlFuneralStatus: null);
+            ObjParam[2] = new DbParameter("@FuneralStatus", DbParameter.DbType.VarChar, 0, !string.IsNullOrEmpty(ddlFuneralStatus) ? ddlFuneralStatus : null);
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "FuneralAssignedToUser", ObjParam));
         }
+        public static int FuneralScheduleAddEvent(int funeralId, int userId, string eventDescription, DateTime startDate, DateTime endDate)
+        {
+            DbParameter[] ObjParam = new DbParameter[7];
+
+            ObjParam[0] = new DbParameter("@EventDescription", DbParameter.DbType.Text, 0, eventDescription);
+            ObjParam[1] = new DbParameter("@FuneralId", DbParameter.DbType.Int, 0, funeralId);
+            ObjParam[2] = new DbParameter("@StartDate", DbParameter.DbType.DateTime, 0, startDate);
+            ObjParam[3] = new DbParameter("@EndDate", DbParameter.DbType.DateTime, 0, endDate);
+            ObjParam[4] = new DbParameter("@UserId", DbParameter.DbType.Int, 0, userId);
+            ObjParam[5] = new DbParameter("@isEdit", DbParameter.DbType.Int, 0, 0);
+            ObjParam[6] = new DbParameter("@id", DbParameter.DbType.Int, 0, null);
+
+            return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "FuneralScheduleAddEditEvent", ObjParam));
+        }
+        public static int FuneralScheduleEditEvent(DateTime startDate, DateTime endDate, int id)
+        {
+            DbParameter[] ObjParam = new DbParameter[7];
+
+            ObjParam[0] = new DbParameter("@EventDescription", DbParameter.DbType.Text, 0, null);
+            ObjParam[1] = new DbParameter("@FuneralId", DbParameter.DbType.Int, 0, null);
+            ObjParam[2] = new DbParameter("@StartDate", DbParameter.DbType.DateTime, 0, startDate);
+            ObjParam[3] = new DbParameter("@EndDate", DbParameter.DbType.DateTime, 0, endDate);
+            ObjParam[4] = new DbParameter("@UserId", DbParameter.DbType.Int, 0, null);
+            ObjParam[5] = new DbParameter("@isEdit", DbParameter.DbType.Int, 0, 1);
+            ObjParam[6] = new DbParameter("@id", DbParameter.DbType.Int, 0, id);
+
+            return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "FuneralScheduleAddEditEvent", ObjParam));
+        }
+        public static DataTable GetFuneralScheduleEvents(int funeralId)
+        {
+            DbParameter[] ObjParam = new DbParameter[1];
+            ObjParam[0] = new DbParameter("@FuneralId", DbParameter.DbType.Int, 0, funeralId);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetFuneralScheduleEvents", ObjParam);
+        }
+
     }
 }

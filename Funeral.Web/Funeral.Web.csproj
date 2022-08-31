@@ -52,6 +52,9 @@
       <HintPath>..\packages\ClosedXML.0.76.0\lib\net40-client\ClosedXML.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="DayPilot.Web.Mvc">
+      <HintPath>C:\Users\pct8\Desktop\DayPilotLiteMvc-1.5.434\Binary\Mvc5\DayPilot.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
       <Private>True</Private>
@@ -402,6 +405,21 @@
     <Content Include="Content\plugins\summernote\summernote-bs3.css" />
     <Content Include="Content\plugins\summernote\summernote.css" />
     <Content Include="Content\plugins\switchery\switchery.css" />
+    <Content Include="Content\plugins\Themes\calendar_blue.css" />
+    <Content Include="Content\plugins\Themes\calendar_g.css" />
+    <Content Include="Content\plugins\Themes\calendar_green.css" />
+    <Content Include="Content\plugins\Themes\calendar_traditional.css" />
+    <Content Include="Content\plugins\Themes\calendar_transparent.css" />
+    <Content Include="Content\plugins\Themes\calendar_white.css" />
+    <Content Include="Content\plugins\Themes\month_blue.css" />
+    <Content Include="Content\plugins\Themes\month_g.css" />
+    <Content Include="Content\plugins\Themes\month_green.css" />
+    <Content Include="Content\plugins\Themes\month_traditional.css" />
+    <Content Include="Content\plugins\Themes\month_transparent.css" />
+    <Content Include="Content\plugins\Themes\month_white.css" />
+    <Content Include="Content\plugins\Themes\navigator_green.css" />
+    <Content Include="Content\plugins\Themes\navigator_transparent.css" />
+    <Content Include="Content\plugins\Themes\navigator_white.css" />
     <Content Include="Content\plugins\toastr\toastr.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\style.css" />
@@ -941,6 +959,7 @@
     <None Include="Properties\PublishProfiles\uispolicy - ReadOnly - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\uispolicy - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\DayPilot\daypilot-all.min.js" />
     <Content Include="Scripts\GridScroll\x.js" />
     <Content Include="Scripts\GridScroll\xtableheaderfixed.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -2107,6 +2126,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ExternalUserController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
+    <Compile Include="DayPilot\Dpc.cs" />
+    <Compile Include="DayPilot\EventManager.cs" />
     <Compile Include="DevDataDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

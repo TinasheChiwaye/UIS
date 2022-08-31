@@ -4,6 +4,7 @@
     ViewBag.Title = "FuneralServices";
     Layout = "~/Views/Shared/_Layout.cshtml"; 
 }
+@using DayPilot.Web.Mvc
 
 <script src="~/Scripts/bootstrap.min.js"></script>
 <script src="~/Scripts/plugins/datapicker/bootstrap-timepicker.min.js"></script>
@@ -15,7 +16,8 @@
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script> 
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="~/Scripts/DayPilot/daypilot-all.min.js"></script>
 
 @{
     List<SelectListItem> ddlBodyCondition = new List<SelectListItem>()
@@ -146,7 +148,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
 };
 
 }
-<body>
+<body> 
     <div id="GSCCModal" style="z-index:900" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -834,7 +836,17 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
-                                                <div id="calender"></div>
+                                                @(Html.DayPilotCalendar("dpc", new DayPilotCalendarConfig {
+                                                BackendUrl = Url.Action("Backend","Funeral") + "?funeralId=" + Model.pkiFuneralID,
+                                                ViewType = DayPilot.Web.Mvc.Enums.Calendar.ViewType.Week, 
+                                                Theme = "calendar_green",
+
+                                                TimeRangeSelectedHandling = DayPilot.Web.Mvc.Events.Calendar.TimeRangeSelectedHandlingType.JavaScript,
+                                                TimeRangeSelectedJavaScript = "createEvent(start, end)",
+                                                EventMoveHandling = DayPilot.Web.Mvc.Events.Calendar.EventMoveHandlingType.CallBack,
+                                                EventResizeHandling = DayPilot.Web.Mvc.Events.Calendar.EventResizeHandlingType.CallBack,
+                                                EventClickHandling = DayPilot.Web.Mvc.Events.Calendar.EventClickHandlingType.CallBack
+                                            })) 
                                             </div>
                                             <div class="col-lg-12" style="margin-top:5px;">
                                                 <div class="btn-group">
@@ -909,9 +921,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                 $('#BirthDay').datepicker("setDate", new Date(selectedData.DOB));
                 $('#PolicyNumber').val(selectedData.PolicyNumber);
             }
-        });
-
-        GenerateCalender();
+        }); 
     });
 
     function tabSelector() {
@@ -1072,8 +1082,14 @@ new SelectListItem() { Text = "Other", Value = "Other" },
         window.location.href = "@Url.Action("PrintQuotation", "Funeral")?funeralID=" + $("#pkiFuneralID").val();
     }
 
-    function GenerateCalender() { 
-          
+    function createEvent(start, end) {
+        var name = prompt("New Event Name:", "New Event");
+        if (!name) { return; }
+        dpc.timeRangeSelectedCallBack(start, end, null, { name: name });
+        dpc.clearSelection();
+    }
+    function eventClick() {
+        alert("click")
     }
 </script>
 
