@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "All Funeral Schedules";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using DayPilot.Web.Mvc
+
+<head>
+    <title>@ViewBag.Title</title>
+    <script src="~/Scripts/DayPilot/daypilot-all.min.js"></script>
+</head>
+<body>
+    <div class="col-lg-12">
+        <div class="ibox ">
+            <div class="ibox-title">
+                <h5>Funeral Schedules</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-md-12 m-b-xs">
+                        <div style="float:right;">
+                            <a class="btn" style="color: white; background-color: #666;" href="javascript:dpc.startDate = dpc.startDate.addDays(-7); dpc.update();">Previous</a>
+
+                            <a class="btn" style="color: white; background-color: #666;" href="javascript:dpc.startDate = dpc.startDate.addDays(7); dpc.update();">Next</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        @(Html.DayPilotCalendar("dpc", new DayPilotCalendarConfig {
+                        BackendUrl = Url.Action("Backend","Funeral"),
+                        ViewType = DayPilot.Web.Mvc.Enums.Calendar.ViewType.Week,
+                        Theme = "calendar_green",
+
+                        TimeRangeSelectedHandling = DayPilot.Web.Mvc.Events.Calendar.TimeRangeSelectedHandlingType.Disabled, 
+                        EventMoveHandling = DayPilot.Web.Mvc.Events.Calendar.EventMoveHandlingType.CallBack,
+                        EventResizeHandling = DayPilot.Web.Mvc.Events.Calendar.EventResizeHandlingType.CallBack,
+                        EventClickHandling = DayPilot.Web.Mvc.Events.Calendar.EventClickHandlingType.CallBack,
+                        HeightSpec= DayPilot.Web.Mvc.Enums.Calendar.HeightSpec.Full 
+                    }))
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

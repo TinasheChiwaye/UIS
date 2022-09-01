@@ -799,6 +799,8 @@
     <Content Include="Areas\Admin\Views\Funeral\FuneralServices.cshtml" />
     <Content Include="Areas\Admin\Views\Funeral\FuneralSearch.cshtml" />
     <Content Include="Areas\Admin\Views\Funeral\FuneralQuotation.cshtml" />
+    <Content Include="Areas\Admin\Views\Funeral\AllFuneralSchedules.cshtml" />
+    <Content Include="Areas\Admin\Views\Funeral\FuneralService.cshtml" />
     <None Include="DevDataDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DevDataDataSet.Designer.cs</LastGenOutput>

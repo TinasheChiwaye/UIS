@@ -1,5 +1,5 @@
 ﻿using Funeral.BAL;
-using Funeral.Model; 
+using Funeral.Model;
 using Funeral.Web.App_Start;
 using Funeral.Web.Areas.Admin.Models.ViewModel;
 using Funeral.Web.Common;
@@ -706,6 +706,15 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
             return Redirect("../FuneralServicesSelect.aspx?ID=" + encryptedValue);
         }
+        public ActionResult FuneralService(int funeralId)
+        {
+            FuneralServiceViewModel model = new FuneralServiceViewModel();
+            model.FuneralModel = FuneralBAL.SelectFuneralBypkid(funeralId, ParlourId);
+            model.ApplicationSettingsModel = ToolsSetingBAL.GetApplictionByParlourID(ParlourId);
+            ViewBag.ddlPackages = FuneralPackageBAL.GetAllPackage(this.ParlourId);
+            return View(model);
+
+        }
         public JsonResult ViewPaymentHistory(int funeralID, string parlourId)
         {
             List<FuneralPaymentsModel> modelList = MemberPaymentBAL.ReturnFuneralPayments(Guid.Parse(parlourId), funeralID.ToString()).ToList();
@@ -734,9 +743,13 @@ namespace Funeral.Web.Areas.Admin.Controllers
             funeralModel.FuneralDocuments = FuneralBAL.SelectFuneralDocumentsByMemberId(funeralModel.pkiFuneralID);
             return View(funeralModel);
         }
-        public ActionResult Backend(int funeralId)
-        { 
-            return new Dpc(funeralId,UserID).CallBack(this);
+        public ActionResult Backend(int? funeralId)
+        {
+            return new Dpc(funeralId, UserID).CallBack(this);
         }
-    }  
+        public ActionResult AllFuneralSchedules()
+        {
+            return View();
+        }
+    }
 }
