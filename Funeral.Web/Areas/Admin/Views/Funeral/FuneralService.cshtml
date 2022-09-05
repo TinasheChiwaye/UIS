@@ -5,9 +5,13 @@
 }
 <head>
     <title>@ViewBag.Title</title>
-</head> 
+</head>
 <body>
-    <div class="ibox ">
+    <div class="col-lg-12">
+        <span id="MainContent_lblMessage"></span>
+    </div>
+    @Html.HiddenFor(x => x.Funeral.pkiFuneralID)
+    <div class="ibox">
         <div class="ibox-title">
             <h5>Invoice</h5>
         </div>
@@ -18,14 +22,14 @@
                         <div class="form-group">
                             <label>Bill From</label>
                             @{
-                                string billFrom = Model.ApplicationSettingsModel.ApplicationName + Environment.NewLine + Model.ApplicationSettingsModel.BusinessAddressLine1 + "," + Environment.NewLine + Model.ApplicationSettingsModel.BusinessAddressLine2 + "," + Environment.NewLine + Model.ApplicationSettingsModel.BusinessAddressLine3 + "," + Environment.NewLine + Model.ApplicationSettingsModel.BusinessAddressLine4 + Environment.NewLine + Model.ApplicationSettingsModel.BusinessPostalCode;
+                                string billFrom = Model.ApplicationSettings.ApplicationName + Environment.NewLine + Model.ApplicationSettings.BusinessAddressLine1 + "," + Environment.NewLine + Model.ApplicationSettings.BusinessAddressLine2 + "," + Environment.NewLine + Model.ApplicationSettings.BusinessAddressLine3 + "," + Environment.NewLine + Model.ApplicationSettings.BusinessAddressLine4 + Environment.NewLine + Model.ApplicationSettings.BusinessPostalCode;
                             }
                             @Html.TextArea("BillFrom", billFrom, new { @class = "form-control", @multiline = "multiline", @rows = "6", @ReadOnly = "true" })
                         </div>
                         <div class="form-group">
                             <label>Bill to </label>
                             @{
-                                string billTo = Model.FuneralModel.Surname + " " + Model.FuneralModel.FullNames + Environment.NewLine + Model.FuneralModel.Address1 + "," + Environment.NewLine + Model.FuneralModel.Address2 + "," + Environment.NewLine + Model.FuneralModel.Address3 + "," + Environment.NewLine + Model.FuneralModel.Address4 + Environment.NewLine + Model.FuneralModel.Code;
+                                string billTo = Model.Funeral.Surname + " " + Model.Funeral.FullNames + Environment.NewLine + Model.Funeral.Address1 + "," + Environment.NewLine + Model.Funeral.Address2 + "," + Environment.NewLine + Model.Funeral.Address3 + "," + Environment.NewLine + Model.Funeral.Address4 + Environment.NewLine + Model.Funeral.Code;
                             }
                             @Html.TextArea("BillTo", billTo, new { @class = "form-control", @multiline = "multiline", @rows = "6", @ReadOnly = "true" })
                         </div>
@@ -43,20 +47,20 @@
                                 <div class="form-group">
                                     <div class="form-group">
                                         <label>Invoice Number</label>
-                                        @Html.TextBoxFor(x => x.FuneralModel.InvoiceNumber, new { @class = "form-control", @ReadOnly = "true" })
+                                        @Html.TextBoxFor(x => x.Funeral.InvoiceNumber, new { @class = "form-control", @ReadOnly = "true" })
                                     </div>
                                     <div class="form-group">
                                         <label>Date</label>
                                         @{
                                             string date = string.Empty;
-                                            string CreatedDate = Model.FuneralModel.CreatedDate.ToString();
+                                            string CreatedDate = Model.Funeral.CreatedDate.ToString();
                                             if (CreatedDate == null || CreatedDate == "01-01-0001 00:00:00")
                                             {
                                                 date = System.DateTime.Now.ToString("dd/MMM/yyyy");
                                             }
                                             else
                                             {
-                                                date = Model.FuneralModel.CreatedDate.ToString("dd/MMM/yyyy");
+                                                date = Model.Funeral.CreatedDate.ToString("dd/MMM/yyyy");
                                             }
                                         }
                                         @Html.TextBox("Date", date, new { @class = "form-control", @ReadOnly = "true" })
@@ -77,89 +81,300 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>Services</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Package</label>
+                        @Html.DropDownList("ddlPackage", ViewBag.ddlPackages as IEnumerable<SelectListItem>, "Select Package", new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label>Select Services</label>
+                        @Html.Hidden("serviceSelectId")
+                        @Html.DropDownList("ddlService", ViewBag.ddlServices as IEnumerable<SelectListItem>, "Select Service", new { @class = "form-control", @onChange = "ddlServiceChange()" })
+                        <span id="spnSelectServiceValidation" class="text-danger">Please select something</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Qty</label>
+                        @Html.TextBox("txtQty", "", new { @class = "form-control", @onchange = "setTotal()" })
+                        <span id="spnQtyValidation" class="text-danger">This Field Required</span>
+                    </div>
 
-        <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <h5>Services</h5>
-            </div>
-            <div class="ibox-content">
-
-                <asp:UpdatePanel ID="UpddlBranch" runat="server" UpdateMode="Conditional">
-                    <ContentTemplate>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label>Package</label>
-                                <asp:DropDownList runat="server" ID="ddlPackage" class="form-control m-b" AutoPostBack="true">
-                                </asp:DropDownList>
-                            </div>
-                            <div class="form-group">
-                                <label>Select Services</label>
-                                <asp:DropDownList runat="server" ID="ddlServices" class="form-control m-b" AutoPostBack="true" OnSelectedIndexChanged="ChangeData">
-                                </asp:DropDownList>
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="ddlServices" InitialValue="0" ErrorMessage="Please select something" ValidationGroup="vadd" />
-                            </div>
-                            <div class="form-group">
-                                <label>Qty</label>
-                                <asp:TextBox MaxLength="10" runat="server" ID="txtNumber" name="txtNumber" type="number" class="form-control" OnTextChanged="calculation" AutoPostBack="true"></asp:TextBox>
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="This Field Required" ControlToValidate="txtNumber" ValidationGroup="vadd"></asp:RequiredFieldValidator>
-                            </div>
-
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label>Desctiption</label>
-                                <asp:TextBox MaxLength="10" runat="server" ID="txtSerDes" name="" type="text" class="form-control" ReadOnly="true"></asp:TextBox>
-                            </div>
-                            <div class="form-group">
-                                <label>Rate</label>
-                                <asp:TextBox MaxLength="10" runat="server" ID="txtRate" name="" type="text" class="form-control" AutoPostBack="true" OnTextChanged="calculation" onkeypress="return isDecimalNumber1(event,this);">0</asp:TextBox>
-
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="This Field Required" ControlToValidate="txtRate" ValidationGroup="vadd"></asp:RequiredFieldValidator>
-
-                            </div>
-                            <div class="form-group">
-                                <label>Total</label>
-                                <asp:TextBox MaxLength="10" runat="server" ID="txtTotal" name="" type="text" class="form-control" ReadOnly="true"></asp:TextBox>
-
-                            </div>
-                        </div>
-                    </ContentTemplate>
-                </asp:UpdatePanel>
-                <div class="form-group">
-                    <asp:Button ID="btnPackageService" CssClass="btn btn-sm btn-primary" runat="server" Text="Add Package" OnClick="btnPackageService_Click" />
-                    <asp:Button ID="AddServ" CssClass="btn btn-sm btn-primary" runat="server" Text="Add Service" ValidationGroup="vadd" OnClick="btncrtService_Click" />
                 </div>
-
-                <%--start --%>
-                <asp:GridView ID="gvServiceList" OnRowDataBound="gvServiceList_RowDataBound" runat="server" Width="100%" CssClass="table table-striped table-bordered table-hover" AutoGenerateColumns="False" EmptyDataText="There are no Service added." OnRowCommand="gvService_RowCommand">
-                    <PagerStyle CssClass="pagination-ys" />
-                    <Columns>
-                        <asp:BoundField DataField="ServiceName" HeaderText="Service Name" ReadOnly="True" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg" />
-
-                        <asp:BoundField DataField="ServiceDesc" HeaderText="Desctiption" ReadOnly="True" ItemStyle-CssClass="visible-lg" HeaderStyle-CssClass="visible-lg" />
-
-                        <asp:BoundField DataField="ServiceRate" HeaderText="Rate" ReadOnly="True" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg" />
-                        <asp:BoundField DataField="Quantity" HeaderText="QTY" ReadOnly="True" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg" />
-                        <%--<asp:BoundField DataField="DateOfQuotation" HeaderText="QuoatationDate" ReadOnly="True" SortExpression="DateOfQuotation" DataFormatString="{0:d}" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg" />--%>
-
-                        <asp:BoundField DataField="Amount" HeaderText="Amount" ReadOnly="True" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg" />
-                        <asp:TemplateField HeaderText="Actions">
-                            <ItemTemplate>
-                                <%if (this.HasEditRight)
-                                { %>
-                                <asp:LinkButton runat="server" ID="lbtnEditDependant" ToolTip="Click here To Edit Service" CommandArgument='<%#Eval("pkiFuneralServiceSelectionID") %>' CommandName="EditService"><i class="fa fa-edit"></i></asp:LinkButton>
-                                &nbsp;
-                                <%}
-                                if (this.HasDeleteRight)
-                                {%>
-                                <asp:LinkButton runat="server" ID="lbtnDeleteDependatn" ToolTip="Click here To Delete Service" OnClientClick="return confirm('Are you sure you want to delete it?')" CommandArgument='<%#Eval("pkiFuneralServiceSelectionID") %>' CommandName="DeleteService"><i class="fa fa-trash"></i></asp:LinkButton>
-                                <%} %>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                    </Columns>
-                </asp:GridView>
-
-                <%-- end --%>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Desctiption</label>
+                        @Html.TextBox("txtSerDes", "", new { @readonly = "true", @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label>Rate</label>
+                        @Html.TextBox("txtRate", "", new { @class = "form-control", @onchange = "setTotal()" })
+                    </div>
+                    <div class="form-group">
+                        <label>Total</label>
+                        @Html.TextBox("txtTotal", "", new { @class = "form-control", @readonly = "true" })
+                    </div>
+                    <div class="form-group">
+                        <button id="btnAddPackage" onclick="addFuneralPackage()" class="btn btn-sm btn-primary">Add Package</button>
+                        <button id="btnAddService" class="btn btn-sm btn-primary" onclick="addFuneralService()">Add Service</button>
+                        <button id="btnUpdateFuneralService" class="btn btn-sm btn-primary" onclick="addFuneralService()">Update</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-bordered table-hover" id="table-Payment">
+                        <thead>
+                            <tr>
+                                <th scope="col">Service Name</th>
+                                <th scope="col">Desctiption</th>
+                                <th scope="col">Rate</th>
+                                <th scope="col">QTY</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var services in Model.FuneralServiceSelect)
+                                {
+                                    <tr>
+                                        <td>@services.ServiceName</td>
+                                        <td>@services.ServiceDesc</td>
+                                        <td>@services.ServiceRate</td>
+                                        <td>@services.Quantity</td>
+                                        <td align="right">R @services.Amount</td>
+                                        <td>
+                                            <i style="color:#337ab7;cursor:pointer" title="Click here To Edit Service" class="fa fa-edit" onclick="btnUpdateFuneralServiceClick('@services.pkiFuneralServiceSelectionID', '@services.ServiceName', '@services.Quantity', '@services.ServiceRate')"></i>&nbsp;
+                                            <i style="color: #337ab7; cursor: pointer" title="Click here To Delete Service" class="fa fa-trash" onclick="deleteFuneralService('@services.pkiFuneralServiceSelectionID')"></i>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
+    </div>
+
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>Payment</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-bordered table-hover" id="table-Payment">
+                        <thead>
+                            <tr>
+                                <th scope="col">Date paid</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Recieved by</th>
+                                <th scope="col">Months Paid & Notes</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var services in Model.FuneralPayments)
+                                {
+                                    <tr>
+                                        <td>@services.DatePaidText</td>
+                                        <td align="right">R @services.AmountPaid</td>
+                                        <td>@services.RecievedBy</td>
+                                        <td>@services.Notes</td>
+                                        <td>
+                                            <i style="color:#337ab7;cursor:pointer;" onclick="printQuotation();" title="Click to Print" class="glyphicon glyphicon-print"></i>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ibox float-e-margins">
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Notes</label>
+                            <div class="col-sm-10">
+                                @Html.TextArea("Notes", Model.Funeral.Notes, new { @class = "form-control", @multiline = "multiline", @rows = "4", @cols = "20" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Terms and Condition </label>
+                            <div class="col-sm-10">
+                                @Html.TextArea("Terms", Model.ApplicationTnCModel.TermsAndCondition, new { @class = "form-control", @multiline = "multiline", @rows = "4", @cols = "20", @readonly = true })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">SubTotal</label>
+                            <div class="col-sm-8">
+                                @Html.TextBox("SubTotal", Model.FuneralServiceSelect.Sum(x => x.Amount), new { @class = "form-control", @readonly = true })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Tax</label>
+                            <div class="col-sm-8">
+                                <asp:DropDownList ID="ddlTax" CssClass="form-control" runat="server" OnSelectedIndexChanged="eveDiscountChange" AutoPostBack="true">
+                                </asp:DropDownList>
+                                <span>Tax Amounr: +0.00</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Discount in %</label>
+                            <div class="col-sm-8">
+                                @Html.TextBox("discount", "0", new { @class = "form-control" })
+                                <span>Discount Amount: Less:0.00</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Total</label>
+                            <div class="col-sm-8">
+                                @Html.TextBox("txtGrandTotal", "", new { @class = "form-control", @readOnly = "true" })
+                                <asp:TextBox MaxLength="30" runat="server" ID="txtGrandTotal" name="ttxtCemetery" type="text" class="form-control" ReadOnly="true"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="form-group pull-right">
+                            <asp:Button ID="ReCalculate" CssClass="btn btn-sm btn-primary" runat="server" Text="ReCalculate" OnClick="eveDiscountChange" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group">
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="btn-group">
+                            <div class="form-group">
+                                <button ID="btnCancel" class="btn btn-sm btn-primary" OnClick="btnCancel_Click">Cancel</button>
+                            </div>
+                        </div>
+                        <div class="btn-group">
+                            <div class="form-group">
+                                <button ID="btnSave" class="btn btn-sm btn-primary" OnClick="SaveAllDetails">Save</button>
+                            </div>
+                        </div>
+                        <div class="btn-group">
+                            <div class="form-group">
+                                <button ID="btnPrint" class="btn btn-sm btn-primary" onclick="printForm()">Print</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
+<script>
+
+    $(document).ready(function () {
+        $("#spnSelectServiceValidation").hide();
+        $("#spnQtyValidation").hide();
+        $("#btnUpdateFuneralService").hide();
+    })
+
+    function ddlServiceChange() {
+        var serviceId = $("#ddlService").val();
+        if (serviceId != '') {
+            $.get('@Url.Action("ServiceChange", "Funeral")?serviceId=' + serviceId, function (response) {
+                console.log(response)
+                $("#txtSerDes").val(response.Description);
+                $("#txtRate").val(response.Rate);
+                setTotal();
+            });
+        }
+    }
+
+    function setTotal() {
+        var qty = parseFloat($("#txtQty").val() == '' ? '1' : $("#txtQty").val());
+        var rate = parseFloat($("#txtRate").val() == '' ? '1' : $("#txtRate").val());
+
+        $("#txtTotal").val((qty * rate).toString());
+
+    }
+    function addFuneralPackage() {
+        $.get('@Url.Action("AddPackage", "Funeral")?packageId=' + $("#ddlPackage").val() + "&funeralId=" + $("#Funeral_pkiFuneralID").val(), function (response) {
+            $("#MainContent_lblMessage").append('<div class="alert alert-success">' + response.message + '</div>');
+            $('html, body').animate({
+                scrollTop: $("#MainContent_lblMessage").offset().top
+            }, 200);
+            window.location.reload();
+        });
+    }
+    function addFuneralService() {
+        if ($("#ddlService").val() != '' && $("#txtQty").val() != '') {
+
+            var rate = parseFloat($("#txtRate").val() == '' ? '1' : $("#txtRate").val());
+            var qty = parseFloat($("#txtQty").val());
+
+            $.get('@Url.Action("AddService", "Funeral")?funeralId=' + $("#Funeral_pkiFuneralID").val() + "&serviceId=" + $("#ddlService").val() + "&quantity=" + qty + "&rate=" + rate + "&pkiFuneralServiceSelectionID=" + $("#serviceSelectId").val(), function (response) {
+                $("#MainContent_lblMessage").append('<div class="alert alert-success">' + response.message + '</div>');
+                $('html, body').animate({
+                    scrollTop: $("#MainContent_lblMessage").offset().top
+                }, 200);
+                window.location.reload();
+            });
+        }
+        else {
+            if ($("#ddlService").val() == '') {
+                $("#spnSelectServiceValidation").show();
+            }
+            else {
+                $("#spnSelectServiceValidation").hide();
+            }
+            if ($("#txtQty").val() == '') {
+                $("#spnQtyValidation").show();
+            }
+            else {
+                $("#spnQtyValidation").hide();
+            }
+        }
+    }
+    function btnUpdateFuneralServiceClick(serviceId, ddlServiceName, quantity, rate) {
+        $("#ddlService option:contains("+ ddlServiceName +")").attr('selected', 'selected');
+        $("#txtQty").val(quantity);
+        $("#txtRate").val(rate);
+        $("#serviceSelectId").val(serviceId);
+
+        $('#btnUpdateFuneralService').show();
+        $('#btnAddService').hide();
+
+        setTotal();
+    }
+    function deleteFuneralService(serviceId) {
+        var confirmDelete = confirm("Are you sure you want to delete it?");
+        if (confirmDelete) {
+            $.get('@Url.Action("DeleteFuneralService", "Funeral")?pkiFuneralServiceSelectionID=' + serviceId, function (response) {
+                $("#MainContent_lblMessage").append('<div class="alert alert-success">' + response.message + '</div>');
+                $('html, body').animate({
+                    scrollTop: $("#MainContent_lblMessage").offset().top
+                }, 200);
+                window.location.reload();
+            });
+        }
+    }
+    function printQuotation() {
+        window.location.href = "@Url.Action("PrintQuotation", "Funeral")?funeralID=" + $("#Funeral_pkiFuneralID").val();
+    }
+    function printForm() {
+        window.location.href = "@Url.Action("PrintFuneralQuotation", "Funeral")?funeralID=" + $("#Funeral_pkiFuneralID").val();
+    }
+</script>

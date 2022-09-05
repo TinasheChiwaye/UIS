@@ -8,7 +8,10 @@ namespace Funeral.Model
 {
     public class FuneralServiceViewModel
     {
-        public FuneralModel FuneralModel { get; set; }
-        public ApplicationSettingsModel ApplicationSettingsModel { get; set; }
+        public FuneralModel Funeral { get; set; }
+        public ApplicationSettingsModel ApplicationSettings { get; set; }
+        public List<FuneralServiceSelectModel> FuneralServiceSelect { get; set; }
+        public List<FuneralPaymentsModel> FuneralPayments { get; set; }
+        public ApplicationTnCModel ApplicationTnCModel { get; set; } 
     }
 }

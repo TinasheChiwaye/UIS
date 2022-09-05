@@ -709,9 +709,15 @@ namespace Funeral.Web.Areas.Admin.Controllers
         public ActionResult FuneralService(int funeralId)
         {
             FuneralServiceViewModel model = new FuneralServiceViewModel();
-            model.FuneralModel = FuneralBAL.SelectFuneralBypkid(funeralId, ParlourId);
-            model.ApplicationSettingsModel = ToolsSetingBAL.GetApplictionByParlourID(ParlourId);
-            ViewBag.ddlPackages = FuneralPackageBAL.GetAllPackage(this.ParlourId);
+            model.Funeral = FuneralBAL.SelectFuneralBypkid(funeralId, ParlourId);
+            model.ApplicationSettings = ToolsSetingBAL.GetApplictionByParlourID(ParlourId);
+            model.FuneralServiceSelect = FuneralBAL.SelectServiceByFuneralID(funeralId);
+            model.FuneralPayments = MemberPaymentBAL.ReturnFuneralPayments(ParlourId, funeralId.ToString()).ToList();
+            model.ApplicationTnCModel = ToolsSetingBAL.SelectApplicationTermsAndCondition(ParlourId);
+
+            ViewBag.ddlPackages = FuneralPackageBAL.GetAllPackage(this.ParlourId).Select(x => new SelectListItem() { Text = x.PackageName, Value = x.PackageName });
+            ViewBag.ddlServices = QuotationBAL.GetAllQuotationServices(ParlourId).Select(x => new SelectListItem() { Text = x.ServiceName, Value = x.pkiServiceID.ToString() });
+
             return View(model);
 
         }
@@ -727,6 +733,13 @@ namespace Funeral.Web.Areas.Admin.Controllers
             var plaintextBytes = Encoding.UTF8.GetBytes(funeralID.ToString());
             var encryptedValue = MachineKey.Encode(plaintextBytes, MachineKeyProtection.All);
             return Redirect("../PrintForm.aspx?ID=" + encryptedValue);
+        }
+        [Obsolete]
+        public ActionResult PrintFuneralQuotation(int funeralID)
+        {
+            var plaintextBytes = Encoding.UTF8.GetBytes(funeralID.ToString());
+            var encryptedValue = MachineKey.Encode(plaintextBytes, MachineKeyProtection.All); 
+            return Redirect("../PrintForm.aspx?FID=" + encryptedValue);
         }
         public ActionResult FuneralAssignedToUser(int? AssignedTo, int? PkiFuneralID, string funeralStatus, string ddlFuneralStatus)
         {
@@ -750,6 +763,61 @@ namespace Funeral.Web.Areas.Admin.Controllers
         public ActionResult AllFuneralSchedules()
         {
             return View();
+        }
+        public ActionResult ServiceChange(int serviceId)
+        {
+            int Description = Convert.ToInt32(serviceId);
+            QuotationServicesModel objQuotation = QuotationBAL.GetServiceByID(Description);
+            decimal money = objQuotation.ServiceCost;
+
+            string rate = string.Format("{0:#.00}", money);
+            return Json(new
+            {
+                Description = objQuotation.ServiceDesc,
+                Rate = rate
+            }, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult AddPackage(string packageId, int funeralId)
+        {
+            List<PackageServicesSelectionModel> modelList = FuneralPackageBAL.GetPackageService(this.ParlourId, packageId);
+            FuneralServiceSelectModel objSer = null;
+
+            foreach (var item in modelList)
+            {
+                objSer = new FuneralServiceSelectModel();
+                objSer.fkiFuneralID = funeralId;
+                objSer.fkiServiceID = item.fkiServiceID;
+                objSer.Quantity = 1;
+                objSer.lastModified = System.DateTime.Now;
+                objSer.modifiedUser = UserName;
+                objSer.ServiceRate = item.ServiceCost;
+
+                FuneralBAL.SaveFuneralService(objSer);
+            }
+            return Json(new { message = "Package Successfully Added." }, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult AddService(int funeralId, int serviceId, int quantity, int rate,int? pkiFuneralServiceSelectionID)
+        {
+            FuneralServiceSelectModel objSer = new FuneralServiceSelectModel();
+            if (pkiFuneralServiceSelectionID.HasValue)
+                objSer.pkiFuneralServiceSelectionID = pkiFuneralServiceSelectionID.Value;
+
+            objSer.fkiFuneralID = funeralId;
+            objSer.fkiServiceID = serviceId;
+            objSer.Quantity = quantity;
+            objSer.lastModified = System.DateTime.Now;
+            objSer.modifiedUser = UserName;
+            objSer.ServiceRate = rate;
+
+            int a = FuneralBAL.SaveFuneralService(objSer);
+
+            return Json(new { message = "Service Successfully Saved." }, JsonRequestBehavior.AllowGet);  
+        }
+        public ActionResult DeleteFuneralService(int pkiFuneralServiceSelectionID)
+        {
+            FuneralBAL.DeleteFuneralServiceByID(pkiFuneralServiceSelectionID);
+
+            return Json(new { message = "Service Successfully Deleted." }, JsonRequestBehavior.AllowGet); 
         }
     }
 }
