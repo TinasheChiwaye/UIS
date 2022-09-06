@@ -88,12 +88,15 @@
         </div>
         <div class="ibox-content">
             <div class="row">
+                <div class="col-lg-12 m-b-md">
+                    <input type="checkbox" id="chkhideShowServicePackage" onchange="hideShowServicePakcage()"/> <strong>Add Service</strong>
+                </div>
                 <div class="col-lg-6">
-                    <div class="form-group">
+                    <div class="form-group" id="dvPackage">
                         <label>Package</label>
                         @Html.DropDownList("ddlPackage", ViewBag.ddlPackages as IEnumerable<SelectListItem>, "Select Package", new { @class = "form-control" })
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" id="dvService">
                         <label>Select Services</label>
                         @Html.Hidden("serviceSelectId")
                         @Html.DropDownList("ddlService", ViewBag.ddlServices as IEnumerable<SelectListItem>, "Select Service", new { @class = "form-control", @onChange = "ddlServiceChange()" })
@@ -101,7 +104,7 @@
                     </div>
                     <div class="form-group">
                         <label>Qty</label>
-                        @Html.TextBox("txtQty", "", new { @class = "form-control", @onchange = "setTotal()" })
+                        @Html.TextBox("txtQty", "", new { @class = "form-control", @onchange = "setTotal()", @type = "number" })
                         <span id="spnQtyValidation" class="text-danger">This Field Required</span>
                     </div>
 
@@ -113,7 +116,7 @@
                     </div>
                     <div class="form-group">
                         <label>Rate</label>
-                        @Html.TextBox("txtRate", "", new { @class = "form-control", @onchange = "setTotal()" })
+                        @Html.TextBox("txtRate", "", new { @class = "form-control", @onchange = "setTotal()", @type = "number" })
                     </div>
                     <div class="form-group">
                         <label>Total</label>
@@ -122,7 +125,7 @@
                     <div class="form-group">
                         <button id="btnAddPackage" onclick="addFuneralPackage()" class="btn btn-sm btn-primary">Add Package</button>
                         <button id="btnAddService" class="btn btn-sm btn-primary" onclick="addFuneralService()">Add Service</button>
-                        <button id="btnUpdateFuneralService" class="btn btn-sm btn-primary" onclick="addFuneralService()">Update</button>
+                        <button id="btnUpdateFuneralService" class="btn btn-sm btn-primary" onclick="addFuneralService()">Update Service</button>
                     </div>
                 </div>
             </div>
@@ -148,7 +151,7 @@
                                         <td>@services.ServiceDesc</td>
                                         <td>@services.ServiceRate</td>
                                         <td>@services.Quantity</td>
-                                        <td align="right">R @services.Amount</td>
+                                        <td align="right">@ViewBag.Currency @services.Amount</td>
                                         <td>
                                             <i style="color:#337ab7;cursor:pointer" title="Click here To Edit Service" class="fa fa-edit" onclick="btnUpdateFuneralServiceClick('@services.pkiFuneralServiceSelectionID', '@services.ServiceName', '@services.Quantity', '@services.ServiceRate')"></i>&nbsp;
                                             <i style="color: #337ab7; cursor: pointer" title="Click here To Delete Service" class="fa fa-trash" onclick="deleteFuneralService('@services.pkiFuneralServiceSelectionID')"></i>
@@ -186,7 +189,7 @@
                                 {
                                     <tr>
                                         <td>@services.DatePaidText</td>
-                                        <td align="right">R @services.AmountPaid</td>
+                                        <td align="right">@ViewBag.Currency @services.AmountPaid</td>
                                         <td>@services.RecievedBy</td>
                                         <td>@services.Notes</td>
                                         <td>
@@ -232,16 +235,17 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Tax</label>
                             <div class="col-sm-8">
-                                <asp:DropDownList ID="ddlTax" CssClass="form-control" runat="server" OnSelectedIndexChanged="eveDiscountChange" AutoPostBack="true">
-                                </asp:DropDownList>
-                                <span>Tax Amounr: +0.00</span>
+                                @Html.DropDownList("ddlTax", ViewBag.TaxSettings as IEnumerable<SelectListItem>, "Select Package", new { @class = "form-control", @onchange = "discountCal()" })
+                                <span>Tax Amount: <span id="spnTaxAmt">+ 0.00</span></span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Discount in %</label>
                             <div class="col-sm-8">
-                                @Html.TextBox("discount", "0", new { @class = "form-control" })
-                                <span>Discount Amount: Less:0.00</span>
+                                @Html.TextBox("discount", Model.Funeral.Discount, new { @class = "form-control", @type = "number", @onchange = "discountCal()" })
+                                <span>
+                                    Discount Amount: <span id="spnDiscountAmount">Less: 0.00</span>
+                                </span>
                             </div>
                         </div>
 
@@ -249,7 +253,6 @@
                             <label class="col-sm-4 control-label">Total</label>
                             <div class="col-sm-8">
                                 @Html.TextBox("txtGrandTotal", "", new { @class = "form-control", @readOnly = "true" })
-                                <asp:TextBox MaxLength="30" runat="server" ID="txtGrandTotal" name="ttxtCemetery" type="text" class="form-control" ReadOnly="true"></asp:TextBox>
                             </div>
                         </div>
                         <div class="form-group pull-right">
@@ -263,12 +266,12 @@
                     <div class="col-lg-6">
                         <div class="btn-group">
                             <div class="form-group">
-                                <button ID="btnCancel" class="btn btn-sm btn-primary" OnClick="btnCancel_Click">Cancel</button>
+                                <button ID="btnCancel" class="btn btn-sm btn-primary" OnClick="btnCancelClick()">Cancel</button>
                             </div>
                         </div>
                         <div class="btn-group">
                             <div class="form-group">
-                                <button ID="btnSave" class="btn btn-sm btn-primary" OnClick="SaveAllDetails">Save</button>
+                                <button ID="btnSave" class="btn btn-sm btn-primary" OnClick="saveAllDetails()">Save</button>
                             </div>
                         </div>
                         <div class="btn-group">
@@ -289,6 +292,9 @@
         $("#spnSelectServiceValidation").hide();
         $("#spnQtyValidation").hide();
         $("#btnUpdateFuneralService").hide();
+        $("#dvService").hide();
+        $("#btnAddService").hide();
+        discountCal();
     })
 
     function ddlServiceChange() {
@@ -376,5 +382,45 @@
     }
     function printForm() {
         window.location.href = "@Url.Action("PrintFuneralQuotation", "Funeral")?funeralID=" + $("#Funeral_pkiFuneralID").val();
+    }
+    function discountCal() {
+        var tax = $("#ddlTax").val() == '' ? 0 : $("#ddlTax").val();
+        var discount = $("#discount").val() == '' ? 0 : $("#discount").val();
+
+        $.get('@Url.Action("DiscountCal", "Funeral")?subTotal=' + $("#SubTotal").val() + '&tax=' + tax + '&discount=' + discount, function (response) {
+            console.log(response)
+            $("#spnTaxAmt").text(response.tax2);
+            $("#spnDiscountAmount").text(response.lblDisAmt2);
+            $("#txtGrandTotal").val (response.txtGrandTotal);
+        });
+    }
+    function saveAllDetails() {
+        var tax = $("#ddlTax").val() == '' ? 0 : $("#ddlTax").val();
+        var discount = $("#discount").val() == '' ? 0 : $("#discount").val();
+
+        $.get('@Url.Action("SaveAllDetails", "Funeral")?funeralId=' + $("#Funeral_pkiFuneralID").val() + '&notes=' + $("#Notes").val() + '&tax=' + tax + '&discount=' + parseInt(discount), function (response) {
+            $("#MainContent_lblMessage").append('<div class="alert alert-success">' + response.message + '</div>');
+        $('html, body').animate({
+            scrollTop: $("#MainContent_lblMessage").offset().top
+        }, 200);
+        window.location.reload();
+        });
+    }
+    function btnCancelClick() {
+        window.location.href = '@Url.Action("FuneralServices","Funeral")?funeralId=' + $('#Funeral_pkiFuneralID').val();
+    }
+    function hideShowServicePakcage() { 
+        if ($("#chkhideShowServicePackage:checked").length > 0) {
+            $("#btnAddPackage").hide();
+            $("#btnAddService").show();
+            $("#dvService").show();
+            $("#dvPackage").hide();
+        }
+        else {
+            $("#btnAddPackage").show();
+            $("#btnAddService").hide();
+            $("#dvPackage").show();
+            $("#dvService").hide();
+        }
     }
 </script>

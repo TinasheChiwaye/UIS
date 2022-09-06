@@ -74,51 +74,57 @@ namespace Funeral.Web.Areas.Admin.Controllers
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             this._filterContext = filterContext;
-
-            if (dbPageId != 0)
+            if (System.Web.HttpContext.Current.User != null && System.Web.HttpContext.Current.User.Identity != null && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
-
-                List<Model.tblPageModel> obj = SideMenuModelList;
-
-                HasAccess = obj.Where(x => x.ID == dbPageId).Select(x => x.HasAccess).FirstOrDefault();
-                HasCreateRight = obj.Where(x => x.ID == dbPageId).Select(x => x.IsWrite).FirstOrDefault();
-                HasReadRight = obj.Where(x => x.ID == dbPageId).Select(x => x.IsRead).FirstOrDefault();
-                HasDeleteRight = obj.Where(x => x.ID == dbPageId).Select(x => x.IsDelete).FirstOrDefault();//false
-                HasEditRight = obj.Where(x => x.ID == dbPageId).Select(x => x.IsUpdate).FirstOrDefault();
-                HasReversalPayment = obj.Where(x => x.ID == dbPageId).Select(x => x.IsReversalPayment).FirstOrDefault();
-
-                List<Funeral.Model.SecureUserGroupsModel> grp = SecurUserGroupModel;//privateClient.EditSecurUserbyID(UserID);
-                List<int> list = new List<int>();
-                list.Add(4);
-                list.Add(12);
-                if (!(grp.Where(x => list.Contains(x.fkiSecureGroupID)).FirstOrDefault() == null))
+                if (dbPageId != 0)
                 {
-                    HasAccess = true;
-                    HasCreateRight = true;
-                    HasReadRight = true;
-                    HasDeleteRight = true;//false;
-                    HasEditRight = true;
-                    HasReversalPayment = true;
+
+                    List<Model.tblPageModel> obj = SideMenuModelList;
+
+                    HasAccess = obj.Where(x => x.ID == dbPageId).Select(x => x.HasAccess).FirstOrDefault();
+                    HasCreateRight = obj.Where(x => x.ID == dbPageId).Select(x => x.IsWrite).FirstOrDefault();
+                    HasReadRight = obj.Where(x => x.ID == dbPageId).Select(x => x.IsRead).FirstOrDefault();
+                    HasDeleteRight = obj.Where(x => x.ID == dbPageId).Select(x => x.IsDelete).FirstOrDefault();//false
+                    HasEditRight = obj.Where(x => x.ID == dbPageId).Select(x => x.IsUpdate).FirstOrDefault();
+                    HasReversalPayment = obj.Where(x => x.ID == dbPageId).Select(x => x.IsReversalPayment).FirstOrDefault();
+
+                    List<Funeral.Model.SecureUserGroupsModel> grp = SecurUserGroupModel;//privateClient.EditSecurUserbyID(UserID);
+                    List<int> list = new List<int>();
+                    list.Add(4);
+                    list.Add(12);
+                    if (!(grp.Where(x => list.Contains(x.fkiSecureGroupID)).FirstOrDefault() == null))
+                    {
+                        HasAccess = true;
+                        HasCreateRight = true;
+                        HasReadRight = true;
+                        HasDeleteRight = true;//false;
+                        HasEditRight = true;
+                        HasReversalPayment = true;
+                    }
                 }
+                else
+                {
+                    //HttpContext.Response.Redirect("~/Admin/403Error.aspx");
+                    Redirect(string.Format("{0}://{1}{2}/{3}", Request.Url.Scheme, Request.Url.Authority, Url.Content("~").Remove(Url.Content("~").Length - 1), "Error"));
+
+                    return;
+                }
+
+
+                System.Web.HttpContext.Current.Session["HasAccess"] = HasAccess;
+                System.Web.HttpContext.Current.Session["HasAccess"] = HasAccess;
+                System.Web.HttpContext.Current.Session["HasCreateRight"] = HasCreateRight;
+                System.Web.HttpContext.Current.Session["HasReadRight"] = HasReadRight;
+                System.Web.HttpContext.Current.Session["HasDeleteRight"] = HasDeleteRight;
+                System.Web.HttpContext.Current.Session["HasEditRight"] = false;
+                System.Web.HttpContext.Current.Session["HasReversalPayment"] = HasReversalPayment;
+
+                base.OnActionExecuting(filterContext);
             }
             else
-            {
-                //HttpContext.Response.Redirect("~/Admin/403Error.aspx");
-                Redirect(string.Format("{0}://{1}{2}/{3}", Request.Url.Scheme, Request.Url.Authority, Url.Content("~").Remove(Url.Content("~").Length - 1), "Error"));
-
-                return;
-            }
-
-
-            System.Web.HttpContext.Current.Session["HasAccess"] = HasAccess;
-            System.Web.HttpContext.Current.Session["HasAccess"] = HasAccess;
-            System.Web.HttpContext.Current.Session["HasCreateRight"] = HasCreateRight;
-            System.Web.HttpContext.Current.Session["HasReadRight"] = HasReadRight;
-            System.Web.HttpContext.Current.Session["HasDeleteRight"] = HasDeleteRight;
-            System.Web.HttpContext.Current.Session["HasEditRight"] = false;
-            System.Web.HttpContext.Current.Session["HasReversalPayment"] = HasReversalPayment;
-
-            base.OnActionExecuting(filterContext);
+            { 
+                this._filterContext.HttpContext.Response.Redirect(string.Format("{0}://{1}{2}/{3}", this._filterContext.HttpContext.Request.Url.Scheme, this._filterContext.HttpContext.Request.Url.Authority, this._filterContext.HttpContext.Request.ApplicationPath, "Admin/Login.aspx"));
+            } 
         }
         public int dbPageId { get; set; }
         public bool HasReadRight { get; set; }

@@ -12,6 +12,6 @@ namespace Funeral.Model
         public ApplicationSettingsModel ApplicationSettings { get; set; }
         public List<FuneralServiceSelectModel> FuneralServiceSelect { get; set; }
         public List<FuneralPaymentsModel> FuneralPayments { get; set; }
-        public ApplicationTnCModel ApplicationTnCModel { get; set; } 
+        public ApplicationTnCModel ApplicationTnCModel { get; set; }  
     }
 }
