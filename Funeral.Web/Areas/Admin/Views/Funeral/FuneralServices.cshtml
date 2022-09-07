@@ -1050,7 +1050,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
         $(".modal-backdrop").hide();
     }
     function btnServicesClick() {
-        window.location.href = "@Url.Action("FuneralServicesPage", "Funeral")?funeralID=" + $("#pkiFuneralID").val();
+        window.location.href = "@Url.Action("FuneralService", "Funeral")?funeralId=" + $("#pkiFuneralID").val();
     }
     function btnProcessPaymentClick() {
         window.location.href = "../../Admin/FuneralPayment.aspx?FID=" + $("#pkiFuneralID").val();

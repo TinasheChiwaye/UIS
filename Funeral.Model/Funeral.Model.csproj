@@ -121,6 +121,7 @@
     <Compile Include="DebitBatchListModel.cs" />
     <Compile Include="DebitOrderTransactionModel.cs" />
     <Compile Include="DebitTransactionListModel.cs" />
+    <Compile Include="DownloadSchedulesViewModel.cs" />
     <Compile Include="ExpensesModel.cs" />
     <Compile Include="ExternalUserLink.cs" />
     <Compile Include="FamilyDependencyModel.cs" />

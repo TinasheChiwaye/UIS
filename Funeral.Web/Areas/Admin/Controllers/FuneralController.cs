@@ -715,8 +715,10 @@ namespace Funeral.Web.Areas.Admin.Controllers
             model.FuneralPayments = MemberPaymentBAL.ReturnFuneralPayments(ParlourId, funeralId.ToString()).ToList();
             model.ApplicationTnCModel = ToolsSetingBAL.SelectApplicationTermsAndCondition(ParlourId);
 
+            ViewBag.TaxSettings = TaxSettingBAL.GetAllTaxSettings().Select(x => new SelectListItem() { Text = x.TaxText, Value = x.TaxValue.ToString(), Selected = x.TaxValue == Convert.ToInt16(model.Funeral.Tax) ? true : false });
             ViewBag.ddlPackages = FuneralPackageBAL.GetAllPackage(this.ParlourId).Select(x => new SelectListItem() { Text = x.PackageName, Value = x.PackageName });
             ViewBag.ddlServices = QuotationBAL.GetAllQuotationServices(ParlourId).Select(x => new SelectListItem() { Text = x.ServiceName, Value = x.pkiServiceID.ToString() });
+            ViewBag.Currency = Currency;
 
             return View(model);
 
@@ -738,7 +740,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
         public ActionResult PrintFuneralQuotation(int funeralID)
         {
             var plaintextBytes = Encoding.UTF8.GetBytes(funeralID.ToString());
-            var encryptedValue = MachineKey.Encode(plaintextBytes, MachineKeyProtection.All); 
+            var encryptedValue = MachineKey.Encode(plaintextBytes, MachineKeyProtection.All);
             return Redirect("../PrintForm.aspx?FID=" + encryptedValue);
         }
         public ActionResult FuneralAssignedToUser(int? AssignedTo, int? PkiFuneralID, string funeralStatus, string ddlFuneralStatus)
@@ -796,7 +798,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             }
             return Json(new { message = "Package Successfully Added." }, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult AddService(int funeralId, int serviceId, int quantity, int rate,int? pkiFuneralServiceSelectionID)
+        public ActionResult AddService(int funeralId, int serviceId, int quantity, int rate, int? pkiFuneralServiceSelectionID)
         {
             FuneralServiceSelectModel objSer = new FuneralServiceSelectModel();
             if (pkiFuneralServiceSelectionID.HasValue)
@@ -811,13 +813,106 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
             int a = FuneralBAL.SaveFuneralService(objSer);
 
-            return Json(new { message = "Service Successfully Saved." }, JsonRequestBehavior.AllowGet);  
+            return Json(new { message = "Service Successfully Saved." }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult DeleteFuneralService(int pkiFuneralServiceSelectionID)
         {
             FuneralBAL.DeleteFuneralServiceByID(pkiFuneralServiceSelectionID);
 
-            return Json(new { message = "Service Successfully Deleted." }, JsonRequestBehavior.AllowGet); 
+            return Json(new { message = "Service Successfully Deleted." }, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult DiscountCal(decimal subTotal, decimal? tax, string discount)
+        {
+            decimal Dis = 0;
+            decimal DisAmt = 0;
+            decimal sub = Convert.ToDecimal(subTotal);
+            decimal Tax = Convert.ToDecimal(tax);
+            decimal TaxAmt = 0;
+            decimal ttl = 0;
+            decimal a = 0;
+
+            TaxAmt = (((sub * Tax) / 100));
+            a = (sub + TaxAmt);
+            var tax2 = " + " + (TaxAmt).ToString("N2");
+            if (tax == null)
+                Dis = 0;
+            else
+                Dis = Convert.ToDecimal(discount);
+
+            DisAmt = (((a * Dis) / 100));
+            var lblDisAmt2 = "Less:" + (DisAmt).ToString("N2");
+
+            ttl = (a - DisAmt);
+            var txtGrandTotal = (ttl).ToString("N2");
+
+            return Json(new
+            {
+                tax2 = tax2,
+                lblDisAmt2 = lblDisAmt2,
+                txtGrandTotal = txtGrandTotal
+            }, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult SaveAllDetails(int funeralId, string notes, int tax, int discount)
+        {
+            int a = FuneralBAL.UpdateAllFuneralData(funeralId, notes, discount, tax);
+            return Json(new { message = "Successfully Saved." }, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult DownLoadSchedules()
+        {
+            var model = new List<DownloadSchedulesViewModel>();
+            model = FuneralBAL.GetDownLoadCalenderList();
+
+            return View(model);
+        }
+        public void DownLoadCalender(long funeralId, string description, DateTime startDate, DateTime endDate)
+        {
+            string Summary = description;
+            string Description = description;
+            string FileName = "Funeral-Scedule-" + funeralId;
+             
+            StringBuilder sb = new StringBuilder();
+
+            //start the calendar item
+            sb.AppendLine("BEGIN:VCALENDAR");
+            sb.AppendLine("VERSION:2.0");
+            sb.AppendLine("PRODID:stackoverflow.com");
+            sb.AppendLine("CALSCALE:GREGORIAN");
+            sb.AppendLine("METHOD:PUBLISH");
+
+            //create a time zone if needed
+            sb.AppendLine("BEGIN:VTIMEZONE");
+            sb.AppendLine("TZID:Europe/Amsterdam");
+            sb.AppendLine("BEGIN:STANDARD");
+            sb.AppendLine("TZOFFSETTO:+0100");
+            sb.AppendLine("TZOFFSETFROM:+0100");
+            sb.AppendLine("END:STANDARD");
+            sb.AppendLine("END:VTIMEZONE");
+
+            //add the event
+            sb.AppendLine("BEGIN:VEVENT");
+
+            //with time zone specified
+            sb.AppendLine("DTSTART;TZID=Europe/Amsterdam:" + startDate.ToString("yyyyMMddTHHmm00"));
+            sb.AppendLine("DTEND;TZID=Europe/Amsterdam:" + endDate.ToString("yyyyMMddTHHmm00"));
+            //or without
+            sb.AppendLine("DTSTART:" + startDate.ToString("yyyyMMddTHHmm00"));
+            sb.AppendLine("DTEND:" + endDate.ToString("yyyyMMddTHHmm00"));
+
+            sb.AppendLine("SUMMARY:" + Summary + "");
+            sb.AppendLine("DESCRIPTION:" + Description + "");
+            sb.AppendLine("END:VEVENT"); 
+            sb.AppendLine("END:VCALENDAR");
+             
+            string CalendarItem = sb.ToString();
+             
+            Response.ClearHeaders();
+            Response.Clear();
+            Response.Buffer = true;
+            Response.ContentType = "text/calendar";
+            Response.AddHeader("content-length", CalendarItem.Length.ToString());
+            Response.AddHeader("content-disposition", "attachment; filename=\"" + FileName + ".ics\"");
+            Response.Write(CalendarItem);
+            Response.Flush();
         }
     }
 }

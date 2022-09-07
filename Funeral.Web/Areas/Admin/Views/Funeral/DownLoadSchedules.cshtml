@@ -1,0 +1,49 @@
+﻿@model List<Funeral.Model.DownloadSchedulesViewModel>
+@{
+    ViewBag.Title = "DownLoad Schedules";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <title>
+        @ViewBag.Title
+    </title>
+</head>
+<body>
+    <div class="ibox">
+        <div class="ibox-title">
+            <h5>Funeral Schedules</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <table class="table table-bordered table-hover" id="table-Payment">
+                    <thead>
+                        <tr>
+                            <th scope="col">Funeral ID</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Funeral Date</th>
+                            <th scope="col">Funeral Time</th>
+                            <th scope="col">Download</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            foreach (var funeralDownload in Model)
+                            {
+                                <tr>
+                                    <td>@funeralDownload.FuneralId</td>
+                                    <td>@funeralDownload.Description</td>
+                                    <td>@funeralDownload.FuneralStartDate.ToString("dd/MM/yyyy")</td>
+                                    <td>@funeralDownload.FuneralStartDate.ToString("hh:mm tt")</td>
+                                    <td>
+                                        <a href="@Url.Action("DownLoadCalender","Funeral",new {funeralId = funeralDownload.FuneralId,description = funeralDownload.Description,startDate = funeralDownload.FuneralStartDate,endDate=funeralDownload.FuneralEndDate })" title="Download scheduler to add to outlook"><i style="color:#337ab7;cursor:pointer" class="fa fa-download"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
