@@ -147,5 +147,31 @@ namespace Funeral.Model
         public string AssignedToName { get; set; }
         public int AssignedTo { get; set; }
         public List<FuneralDocumentModel> FuneralDocuments { get; set; }
+
+        public string CollectionAddress { get; set; }
+        public string ContactPersonNumber2 { get; set; }
+        public DateTime TimeOfDispatch { get; set; }
+        public string DeceasedAge { get; set; }
+        public string NextOfKinFullNames { get; set; }
+        public string NextOfKinSurname { get; set; }
+        public string ChiefFullNames { get; set; }
+        public string ChiefSurname { get; set; }
+        public string MortuaryAttendent { get; set; }
+        public string SkinColour { get; set; }
+        public string CoffinClassification { get; set; }
+        public string CoffinCode { get; set; }
+        public string CoffinType { get; set; }
+        public string CoffinColour { get; set; }
+        public string CoffinSize { get; set; }
+        public string TypeOfService { get; set; }
+        public string Programs { get; set; }
+        public string GraveMarkers { get; set; }
+        public string Cremation { get; set; }
+        public string GraveSite { get; set; }
+        public string TombstoneType { get; set; }
+        public string TombstoneCode { get; set; }
+        public string TombstonePolish { get; set; }
+        public string ServiceType { get; set; }
+        public DateTime TimeOfBodyArrival { get; set; }
     }
 }

@@ -221,6 +221,8 @@
         <!-- #region ActionUrls -->
         @Html.Hidden("Members", Url.Action("GetPremiumForPolicy"))
         @Html.Hidden("SaveManageMembers", Url.Action("SaveManageMembers"))
+        @Html.Hidden("SaveManageMembersDuplicate", Url.Action("SaveManageMembersDuplicate"))
+        @Html.Hidden("SaveManageMembersWrongAge", Url.Action("SaveManageMembersWrongAge"))
         @Html.Hidden("BindPolicyCoverDateUrl", Url.Action("BindPolicyCoverDate"))
         @Html.Hidden("BindDependentCoverDateUrl", Url.Action("BindDependentCoverDate"))
         @Html.Hidden("GetMemberToUpdate", Url.Action("GetMember"))
@@ -2361,6 +2363,8 @@
 
         $("#txtSaveBtn").click(function () {
             var SaveManageMembersURl = $("#SaveManageMembers").val();
+            var SaveManageMembersDuplicateURl = $("#SaveManageMembersDuplicate").val();
+            var SaveManageMembersWrongAgeURl = $("#SaveManageMembersWrongAge").val();
             var idNumber = 0;
             var CustomId1 = 0;
             var CustomId2 = 0;
@@ -2493,12 +2497,106 @@
                 cache: false,
                 success: function (result) {
                     console.log(result);
+
                     if (result.success == false) {
 
                         $("#validationTab4Message").show();
                         $("#validationTab4Message").empty().append(result.errors);
 
                     }
+                    
+                    else if (result.success == "WrongAge") {
+                        var IsConfirmed = confirm("Member age is not supported under this plan. Do you want to continue?");
+                        if (IsConfirmed == true) {
+                            $.ajax({
+                                url: SaveManageMembersWrongAgeURl,
+                                data: {
+                                    Member: data,
+                                    fkiMemberid: fkiMemberid,
+                                    ProductName: productName,
+                                    ProductCost: productCost,
+                                    fkiProductID: fkiProductID,
+                                    //PlanName: PlanName
+                                },
+                                type: "post",
+                                cache: false,
+                                success: function (result) {
+                                    console.log(result)
+                                    if (result.success == false) {
+                                        $("#validationTab4Message").show();
+                                        $("#validationTab4Message").empty().append(result.errors);
+
+                                    } else {
+                                        if (result.pkiMemberID == 0 || result.pkiMemberID == "undefined") {
+                                            window.location.href = '@Url.Action("ManageMembers", "Members")';
+                                        } else {
+                                            var printMemberDataUrl = '@Url.Action("ManageMembers", "Members", new { pkiMemberID = "pkiMemberIDVal" }, Request.Url.Scheme)';
+                                            printMemberDataUrl = printMemberDataUrl.replace("pkiMemberIDVal", result.pkiMemberID);
+                                            window.location.href = printMemberDataUrl;
+                                            $("#tab5").addClass('active');
+                                            alert("Member saved successfully...!!");
+                                        }
+                                    }
+                                },
+                                error: function (xhr, ajaxOptions, thrownError) {
+                                    $("#validationTab4Message").show();
+                                    $("#validationTab4Message").empty().append(result.errors);
+                                }
+                            })
+
+                        } else {
+                            //when user presses cancel
+                            return false;
+                        }
+                    }
+
+
+                    else if (result.success == "Duplicate") {
+                        var IsConfirmed = confirm("Member ID Number already exists on this Plan. Do you want to continue?");
+                        if (IsConfirmed == true) {
+                            $.ajax({
+                                url: SaveManageMembersDuplicateURl,
+                                data: {
+                                    Member: data,
+                                    fkiMemberid: fkiMemberid,
+                                    ProductName: productName,
+                                    ProductCost: productCost,
+                                    fkiProductID: fkiProductID,
+                                    //PlanName: PlanName
+                                },
+                                type: "post",
+                                cache: false,
+                                success: function (result) {
+                                    console.log(result)
+                                    if (result.success == false) {
+                                        $("#validationTab4Message").show();
+                                        $("#validationTab4Message").empty().append(result.errors);
+
+                                    } else {
+                                        if (result.pkiMemberID == 0 || result.pkiMemberID == "undefined") {
+                                        window.location.href = '@Url.Action("ManageMembers", "Members")';
+                                        } else {
+                                            var printMemberDataUrl = '@Url.Action("ManageMembers", "Members", new { pkiMemberID = "pkiMemberIDVal" }, Request.Url.Scheme)';
+                                            printMemberDataUrl = printMemberDataUrl.replace("pkiMemberIDVal", result.pkiMemberID);
+                                            window.location.href = printMemberDataUrl;
+                                            $("#tab5").addClass('active');
+                                            alert("Member saved successfully...!!");
+                                        }
+                                    }                                    
+                                },
+                                error: function (xhr, ajaxOptions, thrownError) {
+                                    $("#validationTab4Message").show();
+                                    $("#validationTab4Message").empty().append(result.errors);
+                                }
+                            })
+
+                        } else {
+                            //when user presses cancel
+                            return false;
+                        }
+                    }  
+
+
                     else {
                         if (result.pkiMemberID == 0 || result.pkiMemberID == "undefined") {
                             window.location.href = '@Url.Action("ManageMembers", "Members")';
