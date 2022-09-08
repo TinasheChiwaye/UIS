@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Funeral.Web.Admin {
-    
-    
-    public partial class FuneralServicesSelect {
-        
+namespace Funeral.Web.Admin
+{
+
+
+    public partial class FuneralServicesSelect
+    {
+
         /// <summary>
         /// scriptManager1 control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.ScriptManager scriptManager1;
-        
+
         /// <summary>
         /// lblMessage control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMessage;
-        
+
         /// <summary>
         /// txtcompanyRules control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtcompanyRules;
-        
+
         /// <summary>
         /// txtTo control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtTo;
-        
+
         /// <summary>
         /// txtInvoiceNumber control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtInvoiceNumber;
-        
+
         /// <summary>
         /// txtDate control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDate;
-        
+
         /// <summary>
         /// txtDueDate control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDueDate;
-        
+
         /// <summary>
         /// UpddlBranch control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpddlBranch;
-        
+
         /// <summary>
         /// ddlPackage control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlPackage;
-        
+
         /// <summary>
         /// ddlServices control.
         /// </summary>
@@ -101,7 +103,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlServices;
-        
+
         /// <summary>
         /// RequiredFieldValidator3 control.
         /// </summary>
@@ -110,7 +112,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator3;
-        
+
         /// <summary>
         /// txtNumber control.
         /// </summary>
@@ -119,7 +121,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtNumber;
-        
+
         /// <summary>
         /// RequiredFieldValidator2 control.
         /// </summary>
@@ -128,7 +130,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
-        
+
         /// <summary>
         /// txtSerDes control.
         /// </summary>
@@ -137,7 +139,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtSerDes;
-        
+
         /// <summary>
         /// txtRate control.
         /// </summary>
@@ -146,7 +148,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtRate;
-        
+
         /// <summary>
         /// RequiredFieldValidator1 control.
         /// </summary>
@@ -155,7 +157,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
-        
+
         /// <summary>
         /// txtTotal control.
         /// </summary>
@@ -164,7 +166,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtTotal;
-        
+
         /// <summary>
         /// btnPackageService control.
         /// </summary>
@@ -173,7 +175,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnPackageService;
-        
+
         /// <summary>
         /// AddServ control.
         /// </summary>
@@ -182,7 +184,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button AddServ;
-        
+
         /// <summary>
         /// gvServiceList control.
         /// </summary>
@@ -191,7 +193,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvServiceList;
-        
+
         /// <summary>
         /// UcFuneralPaymentHistory1 control.
         /// </summary>
@@ -200,7 +202,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Funeral.Web.UserControl.ctrlFuneralPaymentHistory UcFuneralPaymentHistory1;
-        
+
         /// <summary>
         /// txtNotes control.
         /// </summary>
@@ -209,7 +211,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtNotes;
-        
+
         /// <summary>
         /// txtTnc control.
         /// </summary>
@@ -218,7 +220,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtTnc;
-        
+
         /// <summary>
         /// UpdatePanel1 control.
         /// </summary>
@@ -227,7 +229,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
-        
+
         /// <summary>
         /// SubTotal control.
         /// </summary>
@@ -236,7 +238,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox SubTotal;
-        
+
         /// <summary>
         /// ddlTax control.
         /// </summary>
@@ -245,7 +247,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlTax;
-        
+
         /// <summary>
         /// lblTax1 control.
         /// </summary>
@@ -254,7 +256,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTax1;
-        
+
         /// <summary>
         /// lblTax2 control.
         /// </summary>
@@ -263,7 +265,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTax2;
-        
+
         /// <summary>
         /// txtDiscount control.
         /// </summary>
@@ -272,7 +274,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDiscount;
-        
+
         /// <summary>
         /// lblDisAmt1 control.
         /// </summary>
@@ -281,7 +283,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblDisAmt1;
-        
+
         /// <summary>
         /// lblDisAmt2 control.
         /// </summary>
@@ -290,7 +292,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblDisAmt2;
-        
+
         /// <summary>
         /// txtGrandTotal control.
         /// </summary>
@@ -299,7 +301,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtGrandTotal;
-        
+
         /// <summary>
         /// ReCalculate control.
         /// </summary>
@@ -308,7 +310,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button ReCalculate;
-        
+
         /// <summary>
         /// btnCancel control.
         /// </summary>
@@ -317,7 +319,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCancel;
-        
+
         /// <summary>
         /// btnSave control.
         /// </summary>
@@ -326,7 +328,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSave;
-        
+
         /// <summary>
         /// btnPrint control.
         /// </summary>
@@ -335,7 +337,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnPrint;
-        
+
         /// <summary>
         /// txtReject control.
         /// </summary>
@@ -344,7 +346,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtReject;
-        
+
         /// <summary>
         /// RequiredFieldValidator4 control.
         /// </summary>
@@ -353,7 +355,7 @@ namespace Funeral.Web.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator4;
-        
+
         /// <summary>
         /// Submit control.
         /// </summary>

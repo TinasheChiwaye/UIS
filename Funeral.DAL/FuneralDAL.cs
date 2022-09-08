@@ -409,6 +409,12 @@ namespace Funeral.DAL
             ObjParam[0] = new DbParameter("@FuneralId", DbParameter.DbType.Int, 0, funeralId);
             return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetFuneralScheduleEvents", ObjParam);
         }
+        public static DataTable GetDownLoadCalenderList()
+        {
+            string commandText = "select FuneralId,EventDetail AS[Description],StartDate AS [FuneralStartDate],EndDate AS [FuneralEndDate] from FuneralSchedule where DeletedDate IS NULL"; 
+            return DbConnection.GetDataTable(CommandType.Text, commandText);
+
+        }
 
     }
 }

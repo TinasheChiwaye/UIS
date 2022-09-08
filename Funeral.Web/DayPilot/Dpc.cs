@@ -13,9 +13,9 @@ namespace Funeral.Web.DayPilot
         private int _FuneralId { get; set; }
         private int _userId { get; set; }
 
-        public Dpc(int FuneralId, int userId)
+        public Dpc(int? FuneralId, int userId)
         {
-            _FuneralId = FuneralId;
+            _FuneralId = FuneralId.HasValue ? FuneralId.Value : 0;
             _userId = userId;
         }
         protected override void OnTimeRangeSelected(TimeRangeSelectedArgs e)
@@ -59,7 +59,7 @@ namespace Funeral.Web.DayPilot
                 string[] backColors = { "#FFE599", "#9FC5E8", "#B6D7A8", "#EA9999" };
                 string[] borderColors = { "#F1C232", "#3D85C6", "#6AA84F", "#CC0000" };
                 e.BackgroundColor = backColors[colorIndex];
-                e.BorderColor = borderColors[colorIndex]; 
+                e.BorderColor = borderColors[colorIndex];
                 i++;
             }
         }
