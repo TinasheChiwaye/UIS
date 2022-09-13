@@ -27,5 +27,6 @@ namespace Funeral.Web.Areas.Admin.Models.ViewModel
 
         public string SurName { get; set; }
         public string FullName { get; set; }
+        public string Barcode { get;set; }
     }
 }

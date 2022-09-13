@@ -11,6 +11,10 @@ using System.Threading;
 using System.Web.Mvc;
 using System.Data;
 using System.Linq;
+using System.IO;
+using System.Drawing;
+using System.Drawing.Imaging;
+using BarcodeLib;
 
 namespace Funeral.Web.Areas.Admin.Controllers
 {
@@ -232,6 +236,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 printObj.TimePrinted = Convert.ToString(System.DateTime.Now);
             }
 
+            printObj.Barcode = GenerateBarcode(printObj.PolicyNumber);
+
             return View(printObj);
         }
         public void bindInvoices(Guid ParlourId, int MemberId)
@@ -427,6 +433,24 @@ namespace Funeral.Web.Areas.Admin.Controllers
         //    int retID = MembersBAL.SaveMembers(model);
         //    MemberId = retID;
         //    return Json(model, JsonRequestBehavior.AllowGet);
-        //}
+        //}  
+        public static string GenerateBarcode(string text)
+        {
+            using (var ms = new MemoryStream())
+            {
+                Barcode barcodLib = new Barcode();
+
+                int imageWidth = 250;
+                int imageHeight = 110;
+                Color foreColor = Color.Black;
+                Color backColor = Color.White;
+
+                Image barcodeImage = barcodLib.Encode(TYPE.CODE128, text, foreColor, backColor, imageWidth, imageHeight);
+
+                barcodeImage.Save(ms, ImageFormat.Jpeg);
+
+                return "data:image/png;base64," + Convert.ToBase64String(ms.ToArray());
+            }
+        }
     }
 }
