@@ -375,39 +375,37 @@
         var GetPremiumForPolicyURl = $("#CalculateAmount").val();
         var data = {
             noOfMonths: $("#ddlNoOfMonths").val(),
-			TotalPremieum: parseInt($("#txtTotalPremium").val()),
-			@*TotalPremieum: parseInt($("#txtTotalPremium").val().replace("@Model.Currency ", "")),*@
+			TotalPremieum: parseInt($("#txtTotalPremium").val().replace("@Model.Currency ", "")),
 			LatePanelty: parseInt(0),
             NextDate: $("#NextPaymentDate").val()
         };
         if ($("#ddlPolicy :selected").val() != "") {
             $.ajax({
-                url: GetPremiumForPolicyURl,
+                                        url: GetPremiumForPolicyURl,
                 data: data,
                 type: "get",
                 cache: false,
                 success: function (result) {
-                    var newResult = result.split('~');
+                                                var newResult = result.split('~');
                     $("#txtAmount").val('');
-					//$("#txtAmount").val('USD ' + newResult[0]);
-					var a = parseInt(newResult[0]);
-					@*$("#txtAmount").val("@Model.Currency" + " " + a.toFixed(2));*@
-					$("#txtAmount").val(a.toFixed(2));
-                    if ($("#ddlNoOfMonths").val() == "1") {
+                                                //$("#txtAmount").val('USD ' + newResult[0]);
+                                                var a = parseInt(newResult[0]);
+					$("#txtAmount").val("@Model.Currency" + " " + a.toFixed(2));
+                                                if ($("#ddlNoOfMonths").val() == "1") {
                         $("#txtMonthPaid").val('');
                         $("#txtMonthPaid").val('@ViewBag.PaymentDate');
-                    } else if ($("#ddlNoOfMonths").val() == "0") {
+                                                } else if ($("#ddlNoOfMonths").val() == "0") {
                         $("#txtMonthPaid").val('');
                         $("#txtMonthPaid").val('@ViewBag.PaymentDate');
-                    } else {
+                                                } else {
                         $("#txtMonthPaid").val('');
                         $("#txtMonthPaid").val(newResult[1]);
-                    }
-                },
+                                                }
+                                            },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    alert(thrownError);
-                }
-            })
+                                                alert(thrownError);
+                                            }
+                                        })
         } else {
             alert("Please select policy..!");
         }

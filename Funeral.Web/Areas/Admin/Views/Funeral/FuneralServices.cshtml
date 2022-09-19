@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "FuneralServices";
-    Layout = "~/Views/Shared/_Layout.cshtml"; 
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @using DayPilot.Web.Mvc
 
@@ -36,6 +36,13 @@ new SelectListItem() { Text = "Child", Value = "Child" }
 
 };
 
+    List<SelectListItem> ddlSkinColour = new List<SelectListItem>()
+{
+new SelectListItem() { Text = "Light-Skinned", Value = "LightSkinned" },
+new SelectListItem() { Text = "Dark-Skinned", Value = "DarkSkinned" }
+
+};
+
     List<SelectListItem> ddlHeadHair = new List<SelectListItem>()
 {
 new SelectListItem() { Text = "African", Value = "African" },
@@ -50,13 +57,128 @@ new SelectListItem() { Text = "Local Embalming", Value = "LocalEmbalming" }
 
 };
 
+
+    List<SelectListItem> ddlCoffinClassification = new List<SelectListItem>()
+{
+new SelectListItem() { Text = "Flat Lid Coffin", Value = "FlatLidCoffin" },
+new SelectListItem() { Text = "Open Face Coffin", Value = "OpenFaceCoffin" },
+new SelectListItem() { Text = "Flat Lid Casket", Value = "FlatLidCasket" },
+new SelectListItem() { Text = "Open Face Casket", Value = "OpenFaceCasket" },
+new SelectListItem() { Text = "Marble Casket", Value = "MarlbleCasket" },
+new SelectListItem() { Text = "Half View Casket", Value = "HalfViewCasket" },
+new SelectListItem() { Text = "Dome Casket", Value = "DomeCasket" },
+
+};
+
     List<SelectListItem> ddlCoffineSize = new List<SelectListItem>()
 {
 new SelectListItem() { Text = "Normal", Value = "Normal" },
 new SelectListItem() { Text = "Oversize", Value = "Oversize" },
-new SelectListItem() { Text = "Overlength", Value = "Overlength" }
+new SelectListItem() { Text = "Over Length", Value = "Overlength" },
+new SelectListItem() { Text = "Baby Coffin", Value = "BabyCoffin" }
 
 };
+    List<SelectListItem> ddlTypeOfService = new List<SelectListItem>()
+{
+new SelectListItem() { Text = "Type B", Value = "TypeB" },
+new SelectListItem() { Text = "Type A", Value = "TypeA" },
+new SelectListItem() { Text = "Executive", Value = "Executive" }
+};
+
+    List<SelectListItem> ddlCremation = new List<SelectListItem>()
+{
+new SelectListItem() { Text = "Yes", Value = "Yes" },
+new SelectListItem() { Text = "No", Value = "no" },
+
+};
+
+    List<SelectListItem> ddlCoffinType = new List<SelectListItem>()
+{
+new SelectListItem() { Text = "VB", Value = "VB" },
+new SelectListItem() { Text = "Swing bar", Value = "Swingbar" },
+new SelectListItem() { Text = "Economy", Value = "Economy" },
+new SelectListItem() { Text = "Standard", Value = "Standard" },
+new SelectListItem() { Text = "Steel", Value = "Steel" },
+new SelectListItem() { Text = "Leather Range", Value = "Leather Range" },
+new SelectListItem() { Text = "Dutch", Value = "Dutch" },
+new SelectListItem() { Text = "Premium Range", Value = "PremiumRange" }
+
+};
+
+    List<SelectListItem> ddlCoffinColour = new List<SelectListItem>()
+{
+new SelectListItem() { Text = "Palamino", Value = "Palamino" },
+new SelectListItem() { Text = "Kiat", Value = "Kiat" },
+new SelectListItem() { Text = "Brazilian", Value = "Brazilian" },
+new SelectListItem() { Text = "Light Wave", Value = "LightWave" },
+new SelectListItem() { Text = "Cherry", Value = "Cherry" },
+new SelectListItem() { Text = "Hemlock", Value = "Hemlock" },
+new SelectListItem() { Text = "Honey Dew", Value = "HoneyDew" },
+new SelectListItem() { Text = "Chestnut", Value = "Chestnut" },
+new SelectListItem() { Text = "Maroon", Value = "Maroon" },
+new SelectListItem() { Text = "Walnut", Value = "Walnut" },
+new SelectListItem() { Text = "White", Value = "White" },
+new SelectListItem() { Text = "Gold", Value = "Gold" },
+new SelectListItem() { Text = "White Gold", Value = "White Gold" },
+new SelectListItem() { Text = "Peacan", Value = "Peacan" },
+new SelectListItem() { Text = "Maloti", Value = "Maloti" },
+new SelectListItem() { Text = "Black", Value = "Black" },
+
+
+};
+
+
+    List<SelectListItem> ddlPrograms = new List<SelectListItem>()
+{
+new SelectListItem() { Text = "Black & White", Value = "Black & White" },
+new SelectListItem() { Text = "Colour", Value = "Colour" },
+new SelectListItem() { Text = "Gloss", Value = "Gloss" }
+};
+
+    List<SelectListItem> ddlGraveMarkers = new List<SelectListItem>()
+{
+new SelectListItem() { Text = "Granite", Value = "Granite" },
+new SelectListItem() { Text = "Steel - MM01", Value = "SteelMM01" },
+new SelectListItem() { Text = "Steel - MM02", Value = "SteelMM02" },
+new SelectListItem() { Text = "Steel - MM03", Value = "SteelMM03" },
+new SelectListItem() { Text = "Steel - MM04", Value = "SteelMM04" },
+new SelectListItem() { Text = "Steel - MM05", Value = "SteelMM05" },
+new SelectListItem() { Text = "Steel - MM06", Value = "SteelMM06" },
+new SelectListItem() { Text = "Steel - MM07", Value = "SteelMM07" },
+new SelectListItem() { Text = "Steel - MM08", Value = "SteelMM08" }
+};
+
+    List<SelectListItem> ddlOtherServices = new List<SelectListItem>()
+{
+new SelectListItem() { Text = "Programs", Value = "Programs" },
+new SelectListItem() { Text = "Fresh Flowers", Value = "TypeA" },
+new SelectListItem() { Text = "Executive", Value = "Executive" }
+};
+
+    List<SelectListItem> ddlTombstoneType = new List<SelectListItem>()
+{
+new SelectListItem() { Text = "Head-Only", Value = "HeadOnly" },
+new SelectListItem() { Text = "Head & Base", Value = "HeadAndBase" },
+new SelectListItem() { Text = "Marble Chips", Value = "MarbleChips" },
+new SelectListItem() { Text = "Slab", Value = "Slab" }
+};
+
+    List<SelectListItem> ddlTombstonePolished = new List<SelectListItem>()
+{
+new SelectListItem() { Text = "Top-Polished", Value = "TopPolished" },
+new SelectListItem() { Text = "Two-Face Polished", Value = "TwoFacePolishe" },
+new SelectListItem() { Text = "All-Polished", Value = "AllPolished" }
+};
+
+    List<SelectListItem> ddlTombstoneCode = new List<SelectListItem>()
+{
+new SelectListItem() { Text = "Head-Only", Value = "HeadOnly" },
+new SelectListItem() { Text = "Head & Base", Value = "HeadAndBase" },
+new SelectListItem() { Text = "Marble Chips", Value = "MarbleChips" },
+new SelectListItem() { Text = "Slab", Value = "Slab" }
+};
+
+
 
     List<SelectListItem> ddlStatus = new List<SelectListItem>()
 {
@@ -142,13 +264,14 @@ new SelectListItem() { Text = "Repatriation", Value = "Repatriation" },
 new SelectListItem() { Text = "Transfer", Value = "Transfer" },
 new SelectListItem() { Text = "Hospital", Value = "Hospital" },
 new SelectListItem() { Text = "Home", Value = "Home" },
-new SelectListItem() { Text = "Post-mortem", Value = "Post-mortem" },
+new SelectListItem() { Text = "Post-Mortem", Value = "Post-mortem" },
+new SelectListItem() { Text = "Police", Value = "Police" },
 new SelectListItem() { Text = "Other", Value = "Other" },
 
 };
 
 }
-<body> 
+<body>
     <div id="GSCCModal" style="z-index:900" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -256,6 +379,8 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                         <li class="active" id="tab1"><a data-toggle="tab" href="#tabBodyCollection" id="aBodyCollection" aria-expanded="true">Body Collection</a></li>
                                         <li class="" id="tab2"><a data-toggle="tab" href="#tabMortuary" id="aMortuary" aria-expanded="false">Mortuary</a></li>
                                         <li class="" id="tab4"><a data-toggle="tab" href="#tabFuneralArrangement" id="aFuneralArrangement" aria-expanded="false">Funeral Arrangements</a></li>
+                                        <li class="" id="tab7"><a data-toggle="tab" href="#tabBurial" id="aBurial" aria-expanded="true">Burial</a></li>
+                                        <li class="" id="tab8"><a data-toggle="tab" href="#tabTombstone" id="aTombstone" aria-expanded="true">Tombstone</a></li>
                                         <li class="" id="tab5"><a data-toggle="tab" href="#tabPayment" id="aPayment" aria-expanded="true">Payment</a></li>
                                         <li class="" id="tab6"><a data-toggle="tab" href="#tabFuneralSchedule" id="aFuneralSchedule" aria-expanded="false">Funeral Schedule</a></li>
                                     </ul>
@@ -265,8 +390,8 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                 <div class="tab-content">
                                     <div id="tabBodyCollection" class="tab-pane active">
                                         @*@using (Html.BeginForm("FuneralServices", "Funeral", FormMethod.Post, new { id = "frmBodyCollection" }))
-                                            {
-                                                @Html.AntiForgeryToken()*@
+            {
+                @Html.AntiForgeryToken()*@
                                         <div class="panel panel-default">
                                             <div class="panel-heading">Body Collection</div>
                                             <div class="panel-body">
@@ -297,9 +422,9 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            @Html.Label("Driver ID Number", new { @class = "control-label" })
+                                                            @Html.Label("Collection Address", new { @class = "control-label" })
                                                             @Html.TextBoxFor(m => m.DriverIdNumber, null, new { @class = "form-control", @maxlength = "30" })
-                                                            @Html.ValidationMessageFor(m => m.DriverIdNumber, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                                            @Html.ValidationMessageFor(m => m.CollectionAddress, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
@@ -308,11 +433,33 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                             @Html.TextBoxFor(m => m.CarReg, null, new { @class = "form-control", @id = "CarReg", @maxlength = "50", placeholder = "" })
                                                         </div>
                                                     </div>
+                                                    @*Collection dropdown local/other*@
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
                                                             @Html.Label("Car Make", new { @class = "control-label" })
                                                             @Html.TextBoxFor(m => m.DriverName, null, new { @class = "form-control", @maxlength = "25" })
-                                                            @Html.ValidationMessageFor(m => m.DriverName, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                                            @Html.ValidationMessageFor(m => m.CarMake, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>Contact Number 1</label>
+                                                            @Html.TextBoxFor(m => m.ContactPersonNumber, null, new { @class = "form-control", @id = "ContactPerson", @maxlength = "50", placeholder = "" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>Contact Number 2</label>
+                                                            @Html.TextBoxFor(m => m.ContactPersonNumber2, null, new { @class = "form-control", @id = "ContactNumber", @maxlength = "15", placeholder = "" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>Time of Dispatch </label>
+                                                            @Html.TextBoxFor(m => m.TimeOfDispatch, "{0:dd MMM yyyy}", new { @class = "form-control datepicker", @id = "DOD", @maxlength = "50", placeholder = "" })
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
@@ -320,18 +467,6 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                             <label>Type of collection</label>
                                                             @Html.DropDownListFor(m => m.TypeOfCollection, ddlTypeOfCollection, "Select type of collection", new { @style = "width:100%", @class = "form-control" })
                                                             @Html.ValidationMessageFor(m => m.TypeOfCollection, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group">
-                                                            <label>Contact Person</label>
-                                                            @Html.TextBoxFor(m => m.ContactPerson, null, new { @class = "form-control", @id = "ContactPerson", @maxlength = "50", placeholder = "" })
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group">
-                                                            <label>Contact Number</label>
-                                                            @Html.TextBoxFor(m => m.ContactPersonNumber, null, new { @class = "form-control", @id = "ContactNumber", @maxlength = "15", placeholder = "" })
                                                         </div>
                                                     </div>
                                                 </div>
@@ -344,18 +479,18 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
                                                             <label>Full Name  <em class="text-danger">*</em> </label>
-                                                            @Html.TextBoxFor(m => m.FullNames, null, new { @class = "form-control", @id = "Surname", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
+                                                            @Html.TextBoxFor(m => m.FullNames, null, new { @class = "form-control", @id = "FullNames", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
                                                             @Html.ValidationMessageFor(m => m.FullNames, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                                                         </div>
                                                         <div class="form-group">
                                                             <label>Surname  <em class="text-danger">*</em>  </label>
-                                                            @Html.TextBoxFor(m => m.Surname, null, new { @class = "form-control", @id = "FullNames", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
+                                                            @Html.TextBoxFor(m => m.Surname, null, new { @class = "form-control", @id = "Surname", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
                                                             @Html.ValidationMessageFor(m => m.Surname, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                                                         </div>
 
                                                         <div class="form-group">
                                                             @Html.Label("Policy Number", new { @class = "control-label" })
-                                                            @Html.TextBoxFor(m => m.PolicyNumber, null, new { @class = "form-control", @maxlength = "30" })
+                                                            @Html.TextBoxFor(m => m.PolicyNumber, null, new { @class = "form-control", @maxlength = "30", @readonly = "readonly" })
                                                             @Html.ValidationMessageFor(m => m.PolicyNumber, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                                                         </div>
                                                         <div class="form-group">
@@ -367,17 +502,44 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                             <label>Date Of Birth </label>
                                                             @Html.TextBoxFor(m => m.DateOfBirth, "{0:dd MMM yyyy}", new { @class = "form-control datepicker", @id = "BirthDay", @maxlength = "25", placeholder = "" })
                                                         </div>
+                                                        <div class="form-group">
+                                                            <label>Age  </label>
+                                                            @Html.TextBoxFor(m => m.DeceasedAge, null, new { @class = "form-control", @id = "DeceasedAge", @pattern = "/d*", @maxlength = "20", placeholder = "", @readonly = "readonly" })
+                                                            @*@Html.ValidationMessageFor(m => m.IDNumber, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })*@
+                                                        </div>
+                                                        @*<div class="row">*@
+                                                        @*<div class="col-lg-6">*@
+                                                        <div class="form-group">
+                                                            <label>Gender</label>
+                                                            <br>
+                                                            &nbsp; &nbsp;
+                                                            <label> @Html.RadioButtonFor(m => m.Gender, "Male")&nbsp;Male</label>
+                                                            <label> @Html.RadioButtonFor(m => m.Gender, "Female")&nbsp;Female</label>
+                                                        </div>
+                                                        @*</div>*@
+                                                        @*</div>*@
 
                                                         <div class="row">
-                                                            <div class="col-lg-6">
-                                                                <div class="form-group">
-                                                                    <label>Gender</label>
-                                                                    <br>
-                                                                    &nbsp; &nbsp;
-                                                                    <label> @Html.RadioButtonFor(m => m.Gender, "Male")&nbsp;Male</label>
-                                                                    <label> @Html.RadioButtonFor(m => m.Gender, "Female")&nbsp;Female</label>
-                                                                </div>
-                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>Home Address </label>
+                                                            @Html.TextBoxFor(m => m.Address1, null, new { @class = "form-control", @id = "StreetAddress", @maxlength = "50", placeholder = "", @style = "text-transform:uppercase" })
+                                                            @*@Html.ValidationMessageFor(m => m.Address1, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })*@
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Village</label>
+                                                            @Html.TextBoxFor(m => m.Village, null, new { @class = "form-control", @id = "Village", @maxlength = "50", placeholder = "", @style = "text-transform:uppercase" })
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Town or City</label>
+                                                            @Html.TextBoxFor(m => m.Address2, null, new { @class = "form-control", @id = "TownOrCity", @maxlength = "50", placeholder = "", @style = "text-transform:uppercase" })
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Code</label>
+                                                            @Html.TextBoxFor(m => m.Code, null, new { @class = "form-control", @id = "Code", @maxlength = "50", placeholder = "" })
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-lg-6">
@@ -394,6 +556,12 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
+                                                                    <label>Time of Body Arrival </label>
+                                                                    @Html.TextBoxFor(m => m.TimeOfBodyArrival, "{0:dd MMM yyyy}", new { @class = "form-control datepicker", @id = "DOD", @maxlength = "50", placeholder = "" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-6">
+                                                                <div class="form-group">
                                                                     @Html.Label("BI663", new { @class = "control-label" })
                                                                     @Html.TextBoxFor(m => m.BI1663, null, new { @class = "form-control", @maxlength = "30" })
                                                                     @Html.ValidationMessageFor(m => m.BI1663, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
@@ -401,27 +569,46 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">Next Of Kin</div>
+                                            <div class="panel-body">
+                                                <div class="row">
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <label>Street Address <em class="text-danger">*</em> </label>
-                                                            @Html.TextBoxFor(m => m.Address1, null, new { @class = "form-control", @id = "StreetAddress", @maxlength = "50", placeholder = "", @style = "text-transform:uppercase" })
-                                                            @Html.ValidationMessageFor(m => m.Address1, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                                            <label> Full Name </label>
+                                                            @Html.TextBoxFor(m => m.NextOfKinFullNames, null, new { @class = "form-control", @id = "NextOfKinFullNames", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
+                                                            @*@Html.ValidationMessageFor(m => m.NextOfKinFullName, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })*@
                                                         </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <label>Village</label>
-                                                            @Html.TextBoxFor(m => m.Village, null, new { @class = "form-control", @id = "Village", @maxlength = "50", placeholder = "", @style = "text-transform:uppercase" })
+                                                            <label>Surname </label>
+                                                            @Html.TextBoxFor(m => m.NextOfKinSurname, null, new { @class = "form-control", @id = "NextOfKinSurname", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
+                                                            @*@Html.ValidationMessageFor(m => m.Surname, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })*@
                                                         </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">Chief Details</div>
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <label>Town or City</label>
-                                                            @Html.TextBoxFor(m => m.Address2, null, new { @class = "form-control", @id = "TownOrCity", @maxlength = "50", placeholder = "", @style = "text-transform:uppercase" })
+                                                            <label>Full Name </label>
+                                                            @Html.TextBoxFor(m => m.ChiefFullNames, null, new { @class = "form-control", @id = "ChiefFullName", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
+                                                            @*@Html.ValidationMessageFor(m => m.NextOfKinFullNames, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })*@
                                                         </div>
-                                                        <div class="row">
-                                                            <div class="col-lg-6">
-                                                                <div class="form-group">
-                                                                    <label>Code</label>
-                                                                    @Html.TextBoxFor(m => m.Code, null, new { @class = "form-control", @id = "Code", @maxlength = "50", placeholder = "" })
-                                                                </div>
-                                                            </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label> Surname </label>
+                                                            @Html.TextBoxFor(m => m.ChiefSurname, null, new { @class = "form-control", @id = "ChiefSurname", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
+                                                            @Html.ValidationMessageFor(m => m.Surname, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-12">
@@ -438,36 +625,36 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                     </div>
                                     <div id="tabMortuary" class="tab-pane">
                                         @*@using (Html.BeginForm("FuneralServices", "Funeral", FormMethod.Post, new { id = "frmMortuary" }))
-                                            {
-                                                @Html.AntiForgeryToken()
-                                                @Html.HiddenFor(m => m.FullNames)
-                                                @Html.HiddenFor(m => m.ClaimantName)
-                                                @Html.HiddenFor(m => m.ClaimantSurname)
-                                                @Html.HiddenFor(m => m.FullNames)
-                                                @Html.HiddenFor(m => m.Surname)
-                                                @Html.HiddenFor(m => m.BodyAndCar)
-                                                @Html.HiddenFor(m => m.DriverIdNumber)
-                                                @Html.HiddenFor(m => m.CarReg)
-                                                @Html.HiddenFor(m => m.DriverName)
-                                                @Html.HiddenFor(m => m.FullNames)
-                                                @Html.HiddenFor(m => m.IDNumber)
-                                                @Html.HiddenFor(m => m.DateOfBirth)
-                                                @Html.HiddenFor(m => m.Gender)
-                                                @Html.HiddenFor(m => m.CourseOfDearth)
-                                                @Html.HiddenFor(m => m.DateOfDeath)
-                                                @Html.HiddenFor(m => m.Address1)
-                                                @Html.HiddenFor(m => m.Village)
-                                                @Html.HiddenFor(m => m.Address2)
-                                                @Html.HiddenFor(m => m.Code)
-                                                @Html.HiddenFor(m => m.ContactPerson)
-                                                @Html.HiddenFor(m => m.ContactPersonNumber)
-                                                @Html.HiddenFor(m => m.pkiFuneralID)
-                                                @Html.HiddenFor(m => m.parlourid)
-                                                @Html.HiddenFor(m => m.Status)
-                                                @Html.HiddenFor(m => m.BI1663)
-                                                @Html.HiddenFor(m => m.PolicyNumber)
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.FullNames)
+                @Html.HiddenFor(m => m.ClaimantName)
+                @Html.HiddenFor(m => m.ClaimantSurname)
+                @Html.HiddenFor(m => m.FullNames)
+                @Html.HiddenFor(m => m.Surname)
+                @Html.HiddenFor(m => m.BodyAndCar)
+                @Html.HiddenFor(m => m.DriverIdNumber)
+                @Html.HiddenFor(m => m.CarReg)
+                @Html.HiddenFor(m => m.DriverName)
+                @Html.HiddenFor(m => m.FullNames)
+                @Html.HiddenFor(m => m.IDNumber)
+                @Html.HiddenFor(m => m.DateOfBirth)
+                @Html.HiddenFor(m => m.Gender)
+                @Html.HiddenFor(m => m.CourseOfDearth)
+                @Html.HiddenFor(m => m.DateOfDeath)
+                @Html.HiddenFor(m => m.Address1)
+                @Html.HiddenFor(m => m.Village)
+                @Html.HiddenFor(m => m.Address2)
+                @Html.HiddenFor(m => m.Code)
+                @Html.HiddenFor(m => m.ContactPerson)
+                @Html.HiddenFor(m => m.ContactPersonNumber)
+                @Html.HiddenFor(m => m.pkiFuneralID)
+                @Html.HiddenFor(m => m.parlourid)
+                @Html.HiddenFor(m => m.Status)
+                @Html.HiddenFor(m => m.BI1663)
+                @Html.HiddenFor(m => m.PolicyNumber)
 
-                                                @Html.Hidden("submitForm", "mortuary")*@
+                @Html.Hidden("submitForm", "mortuary")*@
                                         <div class="panel panel-default">
                                             <div class="panel-heading">Mortuary</div>
                                             <div class="panel-body">
@@ -476,9 +663,9 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                         <div class="form-group">
                                                             @Html.HiddenFor(m => m.Status)
                                                             @Html.Hidden("submitForm", "mortuary", new { @id = "submitForm" })
-                                                            @Html.Label("Deceased Arrival Date and Time", new { @class = "control-label" })
-                                                            @Html.TextBoxFor(m => m.DeceasedArrivalDateTime, null, new { @class = "form-control datetimepicker", @maxlength = "30" })
-                                                            @Html.ValidationMessageFor(m => m.DeceasedArrivalDateTime, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                                            @Html.Label("Mortuary Attendent", new { @class = "control-label" })
+                                                            @Html.TextBoxFor(m => m.MortuaryAttendent, null, new { @class = "form-control datetimepicker", @maxlength = "30" })
+                                                            @Html.ValidationMessageFor(m => m.MortuaryAttendent, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
@@ -507,6 +694,13 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                         <div class="form-group">
                                                             @Html.Label("Type of collection", new { @class = "control-label" })
                                                             @Html.TextBoxFor(m => m.TypeOfCollection, null, new { @class = "form-control", @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            @Html.Label("Cause of Death", new { @class = "control-label" })
+                                                            @Html.TextBoxFor(m => m.CauseOfDeath, null, new { @class = "form-control", @maxlength = "30", @readonly = "readonly" })
+                                                            @*@Html.ValidationMessageFor(m => m.TagNumber, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })*@
                                                         </div>
                                                     </div>
 
@@ -554,18 +748,30 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-6">
+                                                                <div class="form-group">
+                                                                    <label>Skin Colour</label>
+                                                                    @Html.DropDownListFor(m => m.SkinColour, ddlSkinColour, "Select an option", new { Name = "SkinColour", @class = "form-control  " })
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-6">
+                                                                <div class="form-group">
+                                                                    <label>Embalming</label>
+                                                                    @Html.DropDownListFor(m => m.Embalming, ddlEmbalming, "Select an option", new { Name = "Embalming", @class = "form-control  " })
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                         <div class="form-group">
                                                             <label>Skin Marks</label>
                                                             @Html.TextBoxFor(m => m.SkinMarks, null, new { @class = "form-control", @id = "SkinMarks", @maxlength = "50", placeholder = "" })
 
                                                         </div>
+
                                                         <div class="form-group">
                                                             <label>Personal Items</label>
                                                             @Html.TextBoxFor(m => m.PersonalItem, null, new { @class = "form-control", @id = "PersonalItem", @maxlength = "50", placeholder = "", @style = "text-transform:uppercase" })
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>Embalming</label>
-                                                            @Html.DropDownListFor(m => m.Embalming, ddlEmbalming, "Select an option", new { Name = "Embalming", @class = "form-control  " })
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-12">
@@ -580,71 +786,154 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                     </div>
                                     <div id="tabFuneralArrangement" class="tab-pane">
                                         @*@using (Html.BeginForm("FuneralServices", "Funeral", FormMethod.Post, new { id = "frmFuneralArrangement" }))
-                                            {
-                                                @Html.AntiForgeryToken()
-                                                @Html.HiddenFor(m => m.FullNames)
-                                                @Html.HiddenFor(m => m.ClaimantName)
-                                                @Html.HiddenFor(m => m.ClaimantSurname)
-                                                @Html.HiddenFor(m => m.FullNames)
-                                                @Html.HiddenFor(m => m.Surname)
-                                                @Html.HiddenFor(m => m.BodyAndCar)
-                                                @Html.HiddenFor(m => m.DriverIdNumber)
-                                                @Html.HiddenFor(m => m.CarReg)
-                                                @Html.HiddenFor(m => m.DriverName)
-                                                @Html.HiddenFor(m => m.FullNames)
-                                                @Html.HiddenFor(m => m.IDNumber)
-                                                @Html.HiddenFor(m => m.DateOfBirth)
-                                                @Html.HiddenFor(m => m.Gender)
-                                                @Html.HiddenFor(m => m.CourseOfDearth)
-                                                @Html.HiddenFor(m => m.DateOfDeath)
-                                                @Html.HiddenFor(m => m.Address1)
-                                                @Html.HiddenFor(m => m.Village)
-                                                @Html.HiddenFor(m => m.Address2)
-                                                @Html.HiddenFor(m => m.Code)
-                                                @Html.HiddenFor(m => m.ContactPerson)
-                                                @Html.HiddenFor(m => m.ContactPersonNumber)
-                                                @Html.HiddenFor(m => m.pkiFuneralID)
-                                                @Html.HiddenFor(m => m.parlourid)
-                                                @Html.HiddenFor(m => m.Status)
-                                                @Html.HiddenFor(m => m.BI1663)
-                                                @Html.HiddenFor(m => m.PolicyNumber)
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.FullNames)
+                @Html.HiddenFor(m => m.ClaimantName)
+                @Html.HiddenFor(m => m.ClaimantSurname)
+                @Html.HiddenFor(m => m.FullNames)
+                @Html.HiddenFor(m => m.Surname)
+                @Html.HiddenFor(m => m.BodyAndCar)
+                @Html.HiddenFor(m => m.DriverIdNumber)
+                @Html.HiddenFor(m => m.CarReg)
+                @Html.HiddenFor(m => m.DriverName)
+                @Html.HiddenFor(m => m.FullNames)
+                @Html.HiddenFor(m => m.IDNumber)
+                @Html.HiddenFor(m => m.DateOfBirth)
+                @Html.HiddenFor(m => m.Gender)
+                @Html.HiddenFor(m => m.CourseOfDearth)
+                @Html.HiddenFor(m => m.DateOfDeath)
+                @Html.HiddenFor(m => m.Address1)
+                @Html.HiddenFor(m => m.Village)
+                @Html.HiddenFor(m => m.Address2)
+                @Html.HiddenFor(m => m.Code)
+                @Html.HiddenFor(m => m.ContactPerson)
+                @Html.HiddenFor(m => m.ContactPersonNumber)
+                @Html.HiddenFor(m => m.pkiFuneralID)
+                @Html.HiddenFor(m => m.parlourid)
+                @Html.HiddenFor(m => m.Status)
+                @Html.HiddenFor(m => m.BI1663)
+                @Html.HiddenFor(m => m.PolicyNumber)
 
-                                                @Html.HiddenFor(m => m.DeceasedArrivalDateTime)
-                                                @Html.HiddenFor(m => m.FridgeNumber)
-                                                @Html.HiddenFor(m => m.ShelfNumber)
-                                                @Html.HiddenFor(m => m.TagNumber)
-                                                @Html.HiddenFor(m => m.Notes)
-                                                @Html.HiddenFor(m => m.DentalCondition)
-                                                @Html.HiddenFor(m => m.GeneralCondition)
-                                                @Html.HiddenFor(m => m.AgeGroup)
-                                                @Html.HiddenFor(m => m.HeadHair)
-                                                @Html.HiddenFor(m => m.SkinMarks)
-                                                @Html.HiddenFor(m => m.PersonalItem)
-                                                @Html.HiddenFor(m => m.Embalming)
-                                                @Html.Hidden("submitForm", "funeralarrangement")*@
+                @Html.HiddenFor(m => m.DeceasedArrivalDateTime)
+                @Html.HiddenFor(m => m.FridgeNumber)
+                @Html.HiddenFor(m => m.ShelfNumber)
+                @Html.HiddenFor(m => m.TagNumber)
+                @Html.HiddenFor(m => m.Notes)
+                @Html.HiddenFor(m => m.DentalCondition)
+                @Html.HiddenFor(m => m.GeneralCondition)
+                @Html.HiddenFor(m => m.AgeGroup)
+                @Html.HiddenFor(m => m.HeadHair)
+                @Html.HiddenFor(m => m.SkinMarks)
+                @Html.HiddenFor(m => m.PersonalItem)
+                @Html.HiddenFor(m => m.Embalming)
+                @Html.Hidden("submitForm", "funeralarrangement")*@
+
                                         <div class="row">
+
+
+
                                             <div class="col-lg-6">
+
                                                 <div class="form-group">
-                                                    @Html.HiddenFor(m => m.Status)
-                                                    @Html.Hidden("submitForm", "funeralarrangement", new { @id = "submitForm" })
-                                                    @Html.Label("Coffin Size", new { @class = "control-label" })
-                                                    @Html.TextBoxFor(m => m.CoffineSize, null, new { @class = "form-control", @maxlength = "30" })
-                                                    @Html.ValidationMessageFor(m => m.CoffineSize, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                                    <label>Coffin Classification</label>
+                                                    @Html.DropDownListFor(m => m.CoffinClassification, ddlCoffinClassification, "Select an option", new { Name = "CoffinClassification", @class = "form-control  " })
                                                 </div>
 
                                                 <div class="form-group">
-                                                    @Html.Label("Type Of Coffin", new { @class = "control-label" })
-                                                    @Html.TextBoxFor(m => m.TypeOfCoffin, null, new { @class = "form-control", @maxlength = "25" })
-                                                    @Html.ValidationMessageFor(m => m.TypeOfCoffin, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                                    <label>Coffin Code</label>
+                                                    @Html.DropDownListFor(m => m.CoffinCode, ddlCoffinClassification, "Select an option", new { Name = "CoffinCode", @class = "form-control  " })
                                                 </div>
+
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    @Html.Label("Other Services", new { @class = "control-label" })
-                                                    @Html.TextBoxFor(m => m.OtherServices, null, new { @class = "form-control", @maxlength = "30" })
-                                                    @Html.ValidationMessageFor(m => m.OtherServices, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                                    <label>Coffin Type</label>
+                                                    @Html.DropDownListFor(m => m.CoffinType, ddlCoffinType, "Select an option", new { Name = "CoffinType", @class = "form-control  " })
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Coffin Colour</label>
+                                                    @Html.DropDownListFor(m => m.CoffinColour, ddlCoffinColour, "Select an option", new { Name = "CoffinColour", @class = "form-control  " })
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class="col-lg-6">
+
+
+                                                <div class="form-group">
+                                                    <label>Coffin Size</label>
+                                                    @Html.DropDownListFor(m => m.CoffinSize, ddlCoffineSize, "Select an option", new { Name = "CoffinSize", @class = "form-control  " })
+                                                </div>
+
+
+
+
+                                            </div>
+                                            <div class="col-lg-6">
+
+                                                <div class="form-group">
+                                                    <label>Type of Service</label>
+                                                    @Html.DropDownListFor(m => m.TypeOfService, ddlTypeOfService, "Select an option", new { Name = "TypeOfService", @class = "form-control  " })
                                                 </div>
                                             </div>
+                                            <div class="col-lg-6">
+
+                                                <div class="form-group">
+                                                    <label>Programs</label>
+                                                    @Html.DropDownListFor(m => m.Programs, ddlPrograms, "Select an option", new { Name = "Programs", @class = "form-control  " })
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+
+                                                <div class="form-group">
+                                                    <label>Grave Markers</label>
+                                                    @Html.DropDownListFor(m => m.GraveMarkers, ddlGraveMarkers, "Select an option", new { Name = "GraveMarkers", @class = "form-control  " })
+                                                </div>
+                                            </div>
+
+                                            @*<div class="col-lg-6">*@
+
+                                            @*<div class="form-group">
+                        <label>Tombstone Type</label>
+                        @Html.DropDownListFor(m => m.Embalming, ddlTombstoneType, "Select an option", new { Name = "Embalming", @class = "form-control  " })
+                    </div>
+                </div>
+                <div class="col-lg-6">
+
+                    <div class="form-group">
+                        <label>Tombstone code</label>
+                        @Html.DropDownListFor(m => m.Embalming, ddlTombstoneCode, "Select an option", new { Name = "Embalming", @class = "form-control  " })
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+
+                    <div class="form-group">
+                        <label>Tombstone Polish</label>
+                        @Html.DropDownListFor(m => m.Embalming, ddlTombstonePolished, "Select an option", new { Name = "Embalming", @class = "form-control  " })
+                    </div>
+                </div>*@
+                                            @*<div class="col-lg-6">
+                   <div class="form-group">
+                       <label>Cremation</label><br />
+                       <asp:RadioButton ID="rdbYes" GroupName="Erect" runat="server" Text="Yes" Checked="true" />
+                       <asp:RadioButton ID="rdbNo" GroupName="Erect" runat="server" Text="No" />
+                   </div>
+                </div>*@
+
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Cremation</label>
+                                                    <br>
+                                                    &nbsp; &nbsp;
+                                                    <label> @Html.RadioButtonFor(m => m.Cremation, "Yes")&nbsp;Yes</label>
+                                                    <label> @Html.RadioButtonFor(m => m.Cremation, "No")&nbsp;No</label>
+                                                </div>
+                                            </div>
+
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     @Html.Label("Date and Time of Funeral", new { @class = "control-label" })
@@ -661,9 +950,9 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    @Html.Label("Grave Number", new { @class = "control-label" })
-                                                    @Html.TextBoxFor(m => m.GraveNo, null, new { @class = "form-control", @maxlength = "25" })
-                                                    @Html.ValidationMessageFor(m => m.GraveNo, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                                    @Html.Label("Grave Site", new { @class = "control-label" })
+                                                    @Html.TextBoxFor(m => m.GraveSite, null, new { @class = "form-control", @maxlength = "25" })
+                                                    @*@Html.ValidationMessageFor(m => m.GraveNo, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })*@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
@@ -672,6 +961,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                     @Html.TextBoxFor(m => m.TypeOfCollection, null, new { @class = "form-control", @readonly = "readonly" })
                                                 </div>
                                             </div>
+
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <div class="panel panel-default">
@@ -747,58 +1037,151 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                         </div>
                                         @*}*@
                                     </div>
+
+                                    <div id="tabTombstone" class="tab-pane">
+                                        <div class="col-lg-6">
+
+                                            <div class="form-group">
+                                                <label>Tombstone Type</label>
+                                                @Html.DropDownListFor(m => m.TombstoneType, ddlTombstoneType, "Select an option", new { Name = "TombstoneType", @class = "form-control  " })
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+
+                                            <div class="form-group">
+                                                <label>Tombstone code</label>
+                                                @Html.DropDownListFor(m => m.TombstoneCode, ddlTombstoneCode, "Select an option", new { Name = "TombstoneCode", @class = "form-control  " })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6">
+
+                                            <div class="form-group">
+                                                <label>Tombstone Polish</label>
+                                                @Html.DropDownListFor(m => m.TombstonePolish, ddlTombstonePolished, "Select an option", new { Name = "TombstonePolish", @class = "form-control  " })
+                                            </div>
+                                        </div>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading" style="line-height:3">
+                                                        Tombstone Documents
+                                                        <div style="float:left;">
+                                                            <input id="btnAddDocs" type="button" value="Add Docs" onclick="btnAddDocsClick()" class="btn btn-sm btn-primary" />
+                                                            <input id="btnServices" type="button" value="Services " onclick="btnServicesClick()" class="btn btn-sm btn-primary" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <table class="table table-hover">
+                                                            <thead class="thead-dark">
+                                                                <tr>
+                                                                    <th scope="col">Document Type</th>
+                                                                    <th scope="col">Document Name</th>
+                                                                    <th scope="col">Created Date</th>
+                                                                    <th scope="col">Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @{
+                                                                    if (Model.FuneralDocuments != null)
+                                                                    {
+                                                                        foreach (var item in Model.FuneralDocuments)
+                                                                        {
+                                                                            <tr>
+                                                                                <td>
+                                                                                    @if (item.DocType == 1)
+                                                                                    {
+                                                                                        <span>BI663 Document</span>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <span>Death Certificate</span>
+                                                                                    }
+                                                                                </td>
+                                                                                <td>@item.ImageName</td>
+                                                                                <td>
+                                                                                    @if (item.fkiFuneralID > 0)
+                                                                                    {
+                                                                                        @item.CreateDate.ToString("dd MMM yyyy hh:mm tt")
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <span>-----</span>
+                                                                                    }
+                                                                                </td>
+                                                                                <td>
+                                                                                    @{
+                                                                                        if (item.fkiFuneralID > 0)
+                                                                                        {
+                                                                                            <a title="Download this funeral document" href="~/Handler/DocumentHandler.ashx?DocClaimID=@item.pkiFuneralPictureID"><i class="glyphicon glyphicon-download"></i></a>
+                                                                                        }
+                                                                                    }
+                                                                                </td>
+                                                                            </tr>
+                                                                        }
+                                                                    }
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div id="tabPayment" class="tab-pane">
                                         @*@using (Html.BeginForm("FuneralServices", "Funeral", FormMethod.Post, new { id = "frmFuneralPayment" }))
-                                            {*@
+            {*@
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 @*@Html.Hidden("submitForm", "payment")
-                                                    @Html.AntiForgeryToken()
-                                                    @Html.HiddenFor(m => m.FullNames)
-                                                    @Html.HiddenFor(m => m.ClaimantName)
-                                                    @Html.HiddenFor(m => m.ClaimantSurname)
-                                                    @Html.HiddenFor(m => m.FullNames)
-                                                    @Html.HiddenFor(m => m.Surname)
-                                                    @Html.HiddenFor(m => m.BodyAndCar)
-                                                    @Html.HiddenFor(m => m.DriverIdNumber)
-                                                    @Html.HiddenFor(m => m.CarReg)
-                                                    @Html.HiddenFor(m => m.DriverName)
-                                                    @Html.HiddenFor(m => m.FullNames)
-                                                    @Html.HiddenFor(m => m.IDNumber)
-                                                    @Html.HiddenFor(m => m.DateOfBirth)
-                                                    @Html.HiddenFor(m => m.Gender)
-                                                    @Html.HiddenFor(m => m.CourseOfDearth)
-                                                    @Html.HiddenFor(m => m.DateOfDeath)
-                                                    @Html.HiddenFor(m => m.Address1)
-                                                    @Html.HiddenFor(m => m.Village)
-                                                    @Html.HiddenFor(m => m.Address2)
-                                                    @Html.HiddenFor(m => m.Code)
-                                                    @Html.HiddenFor(m => m.ContactPerson)
-                                                    @Html.HiddenFor(m => m.ContactPersonNumber)
-                                                    @Html.HiddenFor(m => m.pkiFuneralID)
-                                                    @Html.HiddenFor(m => m.parlourid)
-                                                    @Html.HiddenFor(m => m.Status)
-                                                    @Html.HiddenFor(m => m.BI1663)
-                                                    @Html.HiddenFor(m => m.PolicyNumber)
-                                                    @Html.HiddenFor(m => m.DeceasedArrivalDateTime)
-                                                    @Html.HiddenFor(m => m.FridgeNumber)
-                                                    @Html.HiddenFor(m => m.ShelfNumber)
-                                                    @Html.HiddenFor(m => m.TagNumber)
-                                                    @Html.HiddenFor(m => m.Notes)
-                                                    @Html.HiddenFor(m => m.DentalCondition)
-                                                    @Html.HiddenFor(m => m.GeneralCondition)
-                                                    @Html.HiddenFor(m => m.AgeGroup)
-                                                    @Html.HiddenFor(m => m.HeadHair)
-                                                    @Html.HiddenFor(m => m.SkinMarks)
-                                                    @Html.HiddenFor(m => m.PersonalItem)
-                                                    @Html.HiddenFor(m => m.Embalming)
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.FullNames)
+                    @Html.HiddenFor(m => m.ClaimantName)
+                    @Html.HiddenFor(m => m.ClaimantSurname)
+                    @Html.HiddenFor(m => m.FullNames)
+                    @Html.HiddenFor(m => m.Surname)
+                    @Html.HiddenFor(m => m.BodyAndCar)
+                    @Html.HiddenFor(m => m.DriverIdNumber)
+                    @Html.HiddenFor(m => m.CarReg)
+                    @Html.HiddenFor(m => m.DriverName)
+                    @Html.HiddenFor(m => m.FullNames)
+                    @Html.HiddenFor(m => m.IDNumber)
+                    @Html.HiddenFor(m => m.DateOfBirth)
+                    @Html.HiddenFor(m => m.Gender)
+                    @Html.HiddenFor(m => m.CourseOfDearth)
+                    @Html.HiddenFor(m => m.DateOfDeath)
+                    @Html.HiddenFor(m => m.Address1)
+                    @Html.HiddenFor(m => m.Village)
+                    @Html.HiddenFor(m => m.Address2)
+                    @Html.HiddenFor(m => m.Code)
+                    @Html.HiddenFor(m => m.ContactPerson)
+                    @Html.HiddenFor(m => m.ContactPersonNumber)
+                    @Html.HiddenFor(m => m.pkiFuneralID)
+                    @Html.HiddenFor(m => m.parlourid)
+                    @Html.HiddenFor(m => m.Status)
+                    @Html.HiddenFor(m => m.BI1663)
+                    @Html.HiddenFor(m => m.PolicyNumber)
+                    @Html.HiddenFor(m => m.DeceasedArrivalDateTime)
+                    @Html.HiddenFor(m => m.FridgeNumber)
+                    @Html.HiddenFor(m => m.ShelfNumber)
+                    @Html.HiddenFor(m => m.TagNumber)
+                    @Html.HiddenFor(m => m.Notes)
+                    @Html.HiddenFor(m => m.DentalCondition)
+                    @Html.HiddenFor(m => m.GeneralCondition)
+                    @Html.HiddenFor(m => m.AgeGroup)
+                    @Html.HiddenFor(m => m.HeadHair)
+                    @Html.HiddenFor(m => m.SkinMarks)
+                    @Html.HiddenFor(m => m.PersonalItem)
+                    @Html.HiddenFor(m => m.Embalming)
 
-                                                    @Html.HiddenFor(m => m.CoffineSize)
-                                                    @Html.HiddenFor(m => m.TypeOfCoffin)
-                                                    @Html.HiddenFor(m => m.OtherServices)
-                                                    @Html.HiddenFor(m => m.DateOfFuneral)
-                                                    @Html.HiddenFor(m => m.BurialOrderNo)
-                                                    @Html.HiddenFor(m => m.GraveNo)*@
+                    @Html.HiddenFor(m => m.CoffineSize)
+                    @Html.HiddenFor(m => m.TypeOfCoffin)
+                    @Html.HiddenFor(m => m.OtherServices)
+                    @Html.HiddenFor(m => m.DateOfFuneral)
+                    @Html.HiddenFor(m => m.BurialOrderNo)
+                    @Html.HiddenFor(m => m.GraveNo)*@
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         @Html.Label("Type of collection", new { @class = "control-label" })
@@ -823,9 +1206,62 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                         </div>
                                         @*}*@
                                     </div>
+
+                                    <div id="tabBurial" class="tab-pane">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Grave Site</label>
+                                                @Html.TextBoxFor(m => m.GraveSite, null, new { @class = "form-control", @id = "COD", @maxlength = "50", placeholder = "", @style = "text-transform:uppercase", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Service Type</label>
+                                                @Html.TextBoxFor(m => m.ServiceType, null, new { @class = "form-control", @id = "COD", @maxlength = "50", placeholder = "", @style = "text-transform:uppercase", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Full Name   </label>
+                                                @Html.TextBoxFor(m => m.FullNames, null, new { @class = "form-control", @id = "Surname", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase", @readonly = "readonly" })
+                                                @Html.ValidationMessageFor(m => m.FullNames, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Surname    </label>
+                                                @Html.TextBoxFor(m => m.Surname, null, new { @class = "form-control", @id = "FullNames", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase", @readonly = "readonly" })
+                                                @Html.ValidationMessageFor(m => m.Surname, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Contact Number  1  </label>
+                                                @Html.TextBoxFor(m => m.ContactPersonNumber, null, new { @class = "form-control", @id = "FullNames", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase", @readonly = "readonly" })
+                                                @*@Html.ValidationMessageFor(m => m.Surname, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })*@
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Contact Number  2  </label>
+                                                @Html.TextBoxFor(m => m.ContactPersonNumber2, null, new { @class = "form-control", @id = "FullNames", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase", @readonly = "readonly" })
+                                                @*@Html.ValidationMessageFor(m => m.Surname, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })*@
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <div class="btn-group">
+                                                    <button id="btnBodyCollection" type="submit" onclick="return activateTab('bodyCollection','aMortuary')" class="btn btn-w-m btn-primary">Save & Next</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
                                     <div id="tabFuneralSchedule" class="tab-pane">
                                         @*@using (Html.BeginForm("FuneralServices", "Funeral", FormMethod.Post, new { id = "frmFuneralSchedule" }))
-                                            {*@
+            {*@
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <div class="col-lg-6">
@@ -841,20 +1277,21 @@ new SelectListItem() { Text = "Other", Value = "Other" },
 
                                                     <a class="btn" style="color: white; background-color: #666;" href="javascript:dpc.startDate = dpc.startDate.addDays(7); dpc.update();">Next</a>
                                                 </div>
-                                            </div> 
+                                            </div>
                                             <div class="col-lg-12">
-                                                @(Html.DayPilotCalendar("dpc", new DayPilotCalendarConfig {
-                                                BackendUrl = Url.Action("Backend","Funeral") + "?funeralId=" + Model.pkiFuneralID,
-                                                ViewType = DayPilot.Web.Mvc.Enums.Calendar.ViewType.Week,
-                                                Theme = "calendar_green",
+                                                @(Html.DayPilotCalendar("dpc", new DayPilotCalendarConfig
+                                                    {
+                                                        BackendUrl = Url.Action("Backend", "Funeral") + "?funeralId=" + Model.pkiFuneralID,
+                                                        ViewType = DayPilot.Web.Mvc.Enums.Calendar.ViewType.Week,
+                                                        Theme = "calendar_green",
 
-                                                TimeRangeSelectedHandling = DayPilot.Web.Mvc.Events.Calendar.TimeRangeSelectedHandlingType.JavaScript,
-                                                TimeRangeSelectedJavaScript = "createEvent(start, end)",
-                                                EventMoveHandling = DayPilot.Web.Mvc.Events.Calendar.EventMoveHandlingType.CallBack,
-                                                EventResizeHandling = DayPilot.Web.Mvc.Events.Calendar.EventResizeHandlingType.CallBack,
-                                                EventClickHandling = DayPilot.Web.Mvc.Events.Calendar.EventClickHandlingType.CallBack,
-                                                HeightSpec = DayPilot.Web.Mvc.Enums.Calendar.HeightSpec.Full
-                                            }))
+                                                        TimeRangeSelectedHandling = DayPilot.Web.Mvc.Events.Calendar.TimeRangeSelectedHandlingType.JavaScript,
+                                                        TimeRangeSelectedJavaScript = "createEvent(start, end)",
+                                                        EventMoveHandling = DayPilot.Web.Mvc.Events.Calendar.EventMoveHandlingType.CallBack,
+                                                        EventResizeHandling = DayPilot.Web.Mvc.Events.Calendar.EventResizeHandlingType.CallBack,
+                                                        EventClickHandling = DayPilot.Web.Mvc.Events.Calendar.EventClickHandlingType.CallBack,
+                                                        HeightSpec = DayPilot.Web.Mvc.Enums.Calendar.HeightSpec.Full
+                                                    }))
                                             </div>
                                             <div class="col-lg-12" style="margin-top:5px;">
                                                 <div class="btn-group">
@@ -866,6 +1303,8 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                         </div>
                                         @*}*@
                                     </div>
+
+
                                 </div>
                             </div>
                         </div>
@@ -929,12 +1368,12 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                 $('#BirthDay').datepicker("setDate", new Date(selectedData.DOB));
                 $('#PolicyNumber').val(selectedData.PolicyNumber);
             }
-        }); 
+        });
     });
 
     function tabSelector() {
         var funeralStatus = '@Model.Status'.toLowerCase();
-        if (funeralStatus === 'New'.toLowerCase()) {
+        if (funeralStatus == 'New'.toLowerCase()) {
             $("#tab1").addClass("active")
             $('#aBodyCollection').trigger('click');
             $("#tab1").show();
@@ -942,6 +1381,8 @@ new SelectListItem() { Text = "Other", Value = "Other" },
             $("#tab4").hide();
             $("#tab5").hide();
             $("#tab6").hide();
+            $("#tab7").hide();
+            $("#tab8").hide();
         }
         else if (funeralStatus == 'BodyCollection'.toLowerCase()) {
             $("#tab1").removeClass("active");
@@ -955,6 +1396,8 @@ new SelectListItem() { Text = "Other", Value = "Other" },
             $("#tab4").hide();
             $("#tab5").hide();
             $("#tab6").hide();
+            $("#tab7").hide();
+            $("#tab8").hide();
         }
         else if (funeralStatus == 'Mortuary'.toLowerCase()) {
             $("#tab2").removeClass("active");
@@ -968,6 +1411,8 @@ new SelectListItem() { Text = "Other", Value = "Other" },
             $("#tab2").show();
             $("#tab5").hide();
             $("#tab6").hide();
+            $("#tab7").hide();
+            $("#tab8").hide();
         }
         else if (funeralStatus == 'FuneralArrangement'.toLowerCase()) {
             $("#tabFuneralArrangement").removeClass("active");
@@ -979,6 +1424,8 @@ new SelectListItem() { Text = "Other", Value = "Other" },
             $("#tab2").show();
             $("#tab4").show();
             $("#tab6").hide();
+            $("#tab7").hide();
+            $("#tab8").hide();
         }
         else if (funeralStatus == 'Payment'.toLowerCase()) {
             debugger
@@ -997,6 +1444,8 @@ new SelectListItem() { Text = "Other", Value = "Other" },
             $("#tab2").show();
             $("#tab4").show();
             $("#tab5").show();
+            $("#tab7").show();
+            $("#tab8").show();
         }
         else {
             $('#aBodyCollection').trigger('click');
@@ -1050,7 +1499,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
         $(".modal-backdrop").hide();
     }
     function btnServicesClick() {
-        window.location.href = "@Url.Action("FuneralService", "Funeral")?funeralId=" + $("#pkiFuneralID").val();
+        window.location.href = "@Url.Action("FuneralServicesPage", "Funeral")?funeralID=" + $("#pkiFuneralID").val();
     }
     function btnProcessPaymentClick() {
         window.location.href = "../../Admin/FuneralPayment.aspx?FID=" + $("#pkiFuneralID").val();
