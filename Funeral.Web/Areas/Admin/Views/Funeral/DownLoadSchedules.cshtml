@@ -1,49 +1,77 @@
-﻿@model List<Funeral.Model.DownloadSchedulesViewModel>
+﻿@model  List<Funeral.Model.DownloadSchedulesViewModel>
 @{
     ViewBag.Title = "DownLoad Schedules";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<head>
-    <title>
-        @ViewBag.Title
-    </title>
-</head>
-<body>
-    <div class="ibox">
-        <div class="ibox-title">
-            <h5>Funeral Schedules</h5>
-        </div>
-        <div class="ibox-content">
-            <div class="row">
-                <table class="table table-bordered table-hover" id="table-Payment">
-                    <thead>
-                        <tr>
-                            <th scope="col">Funeral ID</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Funeral Date</th>
-                            <th scope="col">Funeral Time</th>
-                            <th scope="col">Download</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @{
-                            foreach (var funeralDownload in Model)
-                            {
-                                <tr>
-                                    <td>@funeralDownload.FuneralId</td>
-                                    <td>@funeralDownload.Description</td>
-                                    <td>@funeralDownload.FuneralStartDate.ToString("dd/MM/yyyy")</td>
-                                    <td>@funeralDownload.FuneralStartDate.ToString("hh:mm tt")</td>
-                                    <td>
-                                        <a href="@Url.Action("DownLoadCalender","Funeral",new {funeralId = funeralDownload.FuneralId,description = funeralDownload.Description,startDate = funeralDownload.FuneralStartDate,endDate=funeralDownload.FuneralEndDate })" title="Download scheduler to add to outlook"><i style="color:#337ab7;cursor:pointer" class="fa fa-download"></i></a>
-                                    </td>
-                                </tr>
-                            }
-                        }
-                    </tbody>
-                </table>
-            </div>
+<div class="ibox">
+    <div class="ibox-title">
+        <h5>Funeral Schedules</h5>
+    </div>
+    <div class="ibox-content">
+        <div class="row">
+            <table class="table table-bordered table-hover" id="downloadSchedle">
+                <thead>
+                    <tr>
+                        <th scope="col">Funeral ID</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Funeral Date</th>
+                        <th scope="col">Funeral Time</th>                        
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                <tbody>
+                </tbody>
+            </table>
         </div>
     </div>
-</body>
+</div>
+<script type="text/javascript" src="~/Scripts/plugins/dataTables/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="~/Scripts/plugins/dataTables/jszip.min.js"></script>
+<script type="text/javascript" src="~/Scripts/plugins/dataTables/pdfmake.min.js"></script>
+<script type="text/javascript" src="~/Scripts/plugins/dataTables/vfs_fonts.js"></script>
+<script type="text/javascript" src="~/Scripts/plugins/dataTables/buttons.html5.min.js"></script>
+<link rel="stylesheet" href="~/Scripts/plugins/dataTables/buttons.dataTables.min.css" />
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#downloadSchedle").DataTable(
+            {
+            "processing": true, // for show progress bar
+            "serverSide": true, // for process server side
+            "filter": false, // this is for disable filter (search box)
+            "ajax": {
+                "url": '@Url.Action("DownloadScheduleData", "Funeral", null, Request.Url.Scheme)',
+                "type": "GET",
+                "datatype": "json",
+                "dataSrc": ""
+            },
+            "columns": [
+                { "data": "FuneralId", "name": "FuneralId", "autoWidth": true },
+                { "data": "Description", "name": "Description", "autoWidth": true },
+                    { "data": "FuneralStartDate", "name": "FuneralStartDate", "autoWidth": true,
+                    "render": function (value) {
+                        if (value === null) return "";
+                        var pattern = /Date\(([^)]+)\)/;
+                        var results = pattern.exec(value);
+                        var dt = new Date(parseFloat(results[1]));
+                        return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear() + " " + dt.toLocaleTimeString([], { timeStyle: 'short' });
+                    }
+             },
+                {
+                    "data": "FuneralEndDate", "name": "FuneralEndDate", "autoWidth": true, "render": function (value) {
+                        if (value === null) return "";
+                        var pattern = /Date\(([^)]+)\)/;
+                        var results = pattern.exec(value);
+                        var dt = new Date(parseFloat(results[1]));
+                        var options = { hour12: true }                                  
+                        return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear() + " " + dt.toLocaleTimeString([], { timeStyle: 'short' });
+                    }
+},
+                ],
+                dom: 'Bfrtip',
+                buttons: [
+                    'pdf', 'csv'
+                ]
+        });
+    });
+</script>
 

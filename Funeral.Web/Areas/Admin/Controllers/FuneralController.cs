@@ -1,4 +1,5 @@
-﻿using Funeral.BAL;
+﻿using DocumentFormat.OpenXml.Wordprocessing;
+using Funeral.BAL;
 using Funeral.Model;
 using Funeral.Web.App_Start;
 using Funeral.Web.Areas.Admin.Models.ViewModel;
@@ -12,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Security;
 using System.Web.UI.WebControls;
@@ -859,17 +861,23 @@ namespace Funeral.Web.Areas.Admin.Controllers
         }
         public ActionResult DownLoadSchedules()
         {
-            var model = new List<DownloadSchedulesViewModel>();
-            model = FuneralBAL.GetDownLoadCalenderList();
-
-            return View(model);
+            var downloadLists = FuneralBAL.GetDownLoadCalenderList();
+            //return Json(downloadLists, JsonRequestBehavior.AllowGet);
+            return View(downloadLists);
         }
+
+        public JsonResult DownloadScheduleData()
+        {   
+           var calendarList = FuneralBAL.GetDownLoadCalenderList();
+            return Json(calendarList, JsonRequestBehavior.AllowGet);
+        }
+
         public void DownLoadCalender(long funeralId, string description, DateTime startDate, DateTime endDate)
         {
             string Summary = description;
             string Description = description;
             string FileName = "Funeral-Scedule-" + funeralId;
-             
+
             StringBuilder sb = new StringBuilder();
 
             //start the calendar item
@@ -900,11 +908,11 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
             sb.AppendLine("SUMMARY:" + Summary + "");
             sb.AppendLine("DESCRIPTION:" + Description + "");
-            sb.AppendLine("END:VEVENT"); 
+            sb.AppendLine("END:VEVENT");
             sb.AppendLine("END:VCALENDAR");
-             
+
             string CalendarItem = sb.ToString();
-             
+
             Response.ClearHeaders();
             Response.Clear();
             Response.Buffer = true;
