@@ -371,7 +371,7 @@
 
 
 <script>
-    $("#ddlNoOfMonths").change(function () {
+    @*$("#ddlNoOfMonths").change(function () {
         var GetPremiumForPolicyURl = $("#CalculateAmount").val();
         var data = {
             noOfMonths: $("#ddlNoOfMonths").val(),
@@ -394,12 +394,12 @@
                                                 if ($("#ddlNoOfMonths").val() == "1") {
                         $("#txtMonthPaid").val('');
                         $("#txtMonthPaid").val('@ViewBag.PaymentDate');
-                                                } else if ($("#ddlNoOfMonths").val() == "0") {
+                                                } else if ($("#ddlNoOfMonths").val() > "1") {
                         $("#txtMonthPaid").val('');
                         $("#txtMonthPaid").val('@ViewBag.PaymentDate');
                                                 } else {
                         $("#txtMonthPaid").val('');
-                        $("#txtMonthPaid").val(newResult[1]);
+                        $("#txtMonthPaid").val('@ViewBag.PaymentDate');
                                                 }
                                             },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -409,7 +409,7 @@
         } else {
             alert("Please select policy..!");
         }
-    });
+    });*@
 
     $("#btnPay").click(function () {
         var ManageMembersPaymentURL = $("#AddPayments").val();

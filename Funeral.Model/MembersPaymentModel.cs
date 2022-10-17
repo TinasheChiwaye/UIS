@@ -116,6 +116,8 @@ namespace Funeral.Model
         //public string Cover { get; set; }
         public decimal Cover { get; set; }
 
+        public bool IsJoiningFee { get; set; }
+
         //public Guid ParlourId { get; set; }
 
         public DateTime NextPaymentDate { get; set; }

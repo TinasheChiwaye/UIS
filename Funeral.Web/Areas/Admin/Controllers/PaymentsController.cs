@@ -131,6 +131,17 @@ namespace Funeral.Web.Areas.Admin.Controllers
                     ViewBag.PolicyStatus = model.PolicyStatus;
                 }
 
+
+                if (model.IsJoiningFee == false || model.IsJoiningFee.Equals(null))
+                {
+                    ViewBag.IsJoiningFee = false;
+                }
+                else if (model.IsJoiningFee == true)
+                {
+                    ViewBag.IsJoiningFee = true;
+                }
+
+
                 var policyBalance = model.Currency + " " + Convert.ToDouble(model.Balance);
                 ViewBag.policyBalance = policyBalance;
                 var latePanelty = model.Currency + " " + Convert.ToDouble(model.LatePaymentPenalty);
@@ -140,6 +151,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 ViewBag.MemberInvoiceList = MembersBAL.GetInvoicesByMemberID(ParlourID, id);
                 ViewBag.MemberID = model.MemeberNumber;
                 ViewBag.ParlourID = ParlourID;
+                var JoingingFee = model.JoiningFee;
+                ViewBag.JoingingFee = JoingingFee;
             }
             var info = CultureInfo.InvariantCulture.Clone() as CultureInfo;
             info.NumberFormat.NumberDecimalSeparator = ".";
@@ -173,6 +186,20 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 TempData["message"] = ShowMessage(MessageType.Danger, "Payment not added successfully");
                 return Json("Payment not added successfully.", JsonRequestBehavior.AllowGet);
             }
+        }
+
+        public JsonResult JoiningFee(MembersPaymentDetailsModel data)
+        {
+            //add Joining fee boolean in method
+            MembersModel objmember = MembersBAL.GetMemberByID(data.pkiMemberID, ParlourId);
+            if (objmember.MemberBranch != "")
+            {
+                data.Branch = objmember.MemberBranch;
+            }
+            data.ParlourId = ParlourId;
+            data.NextPaymentDate = Convert.ToDateTime(data.PaymentDate).AddMonths(Convert.ToInt32(data.MonthOwing));
+            var paymentId = MemberPaymentBAL.AddPayments(data, true);
+            return Json("JoiningFee added successfully.", JsonRequestBehavior.AllowGet);
         }
         public ActionResult PrintPaymentReceipt(int id, int Type, string PolicyNumber, string DatePaid, string AmountPaid, string PaidBy, string ReceivedBy, string MonthPaid, int memberId, Guid parlourId)
         {
@@ -269,8 +296,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
                     monthPaid = string.Format("{0} {1}-{2} {3}", NextDate1.ToString("MMM"), NextDate1.ToString("yyyy"), NextDate1.AddMonths(noOfMonths - 1).ToString("MMM"), NextDate1.AddMonths(noOfMonths - 1).ToString("yyyy"));
 
             }
-            else
-                monthPaid = string.Format("{0}-{1}", NextDate1.AddMonths(noOfMonths - 1).ToString("MMM"), NextDate1.AddMonths(noOfMonths - 1).ToString("yyyy"));
+            //else
+            //    monthPaid = string.Format("{0}-{1}", NextDate1.AddMonths(noOfMonths - 1).ToString("MMM"), NextDate1.AddMonths(noOfMonths - 1).ToString("yyyy"));
 
             double TotalPremium = Convert.ToDouble(TotalPremieum * Convert.ToInt32(noOfMonths) + LatePanelty);
 
