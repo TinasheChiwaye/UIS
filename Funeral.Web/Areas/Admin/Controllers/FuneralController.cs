@@ -105,16 +105,16 @@ namespace Funeral.Web.Areas.Admin.Controllers
             if (status == null)
                 status = search.StatusId;
 
-            try
-            {
+            //try
+            //{
                 var funeralList = FuneralBAL.SelectAllFuneralByParlourId(ParlourId, search.PageSize, search.PageNum, "", search.SortBy, search.SortOrder, search.DateFrom, search.DateTo, status);
 
                 return Json(new SearchResult<Model.Search.BaseSearch, FuneralModel>(search, funeralList, o => o.FullNames.Contains(search.SarchText) || o.Surname.Contains(search.SarchText) || o.IDNumber.Contains(search.SarchText)), JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                return Json(WebApiResult<Model.Search.BaseSearch, FuneralModel>.Error(searchResult, ex), JsonRequestBehavior.AllowGet);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    return Json(WebApiResult<Model.Search.BaseSearch, FuneralModel>.Error(searchResult, ex), JsonRequestBehavior.AllowGet);
+            //}
         }
 
         /// <summary>

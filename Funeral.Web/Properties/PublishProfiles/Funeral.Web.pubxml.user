@@ -5,7 +5,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 -->
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <_PublishTargetUrl>C:\Users\Moshoeshoe\source\Dev Deployment</_PublishTargetUrl>
+    <_PublishTargetUrl>C:\Users\Moshoeshoe\source\Azure-Funeral Deployment</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="Admin/403Error.aspx">
@@ -627,7 +627,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/29/2022 11:38:07</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Funeral/Index.cshtml">
-      <publishTime>08/30/2022 14:27:28</publishTime>
+      <publishTime>10/17/2022 14:39:10</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Funeral/PrintForm.cshtml">
       <publishTime>08/29/2022 11:38:07</publishTime>
@@ -636,7 +636,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/29/2022 11:38:07</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Funeral/_FuneralList.cshtml">
-      <publishTime>08/30/2022 14:27:29</publishTime>
+      <publishTime>10/18/2022 16:14:44</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Funeral/_PaymentHistory.cshtml">
       <publishTime>07/17/2020 12:20:47</publishTime>
@@ -1197,10 +1197,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/14/2022 11:44:51</publishTime>
     </File>
     <File Include="bin/Funeral.Web.dll">
-      <publishTime>10/17/2022 11:16:30</publishTime>
+      <publishTime>10/18/2022 16:03:45</publishTime>
     </File>
     <File Include="bin/Funeral.Web.pdb">
-      <publishTime>10/17/2022 11:16:30</publishTime>
+      <publishTime>10/18/2022 16:03:45</publishTime>
     </File>
     <File Include="bin/itextsharp.dll">
       <publishTime>02/24/2022 13:50:06</publishTime>
@@ -4161,7 +4161,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/17/2020 12:21:02</publishTime>
     </File>
     <File Include="Tools/FuneralServices.aspx">
-      <publishTime>11/26/2020 07:44:02</publishTime>
+      <publishTime>10/17/2022 11:50:02</publishTime>
     </File>
     <File Include="Tools/ManageMenu.aspx">
       <publishTime>07/17/2020 12:21:02</publishTime>
@@ -4248,7 +4248,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/17/2020 12:21:06</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>10/14/2022 11:45:17</publishTime>
+      <publishTime>10/20/2022 09:58:41</publishTime>
     </File>
   </ItemGroup>
 </Project>

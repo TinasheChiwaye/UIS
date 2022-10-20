@@ -35,13 +35,13 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label>Service Name  <em>*</em> </label>
-                                <asp:TextBox MaxLength="30" runat="server" ID="txtServicename" name="name" type="text" class="form-control"></asp:TextBox>
+                                <asp:TextBox runat="server" ID="txtServicename" name="name" type="text" class="form-control"></asp:TextBox>
                                 <asp:RequiredFieldValidator Display="None" ValidationGroup="tab1" ControlToValidate="txtServicename" ID="RequiredFieldValidator1" ForeColor="red" runat="server" ErrorMessage="Please enter Service Name"></asp:RequiredFieldValidator>
 
                             </div>
                             <div class="form-group">
                                 <label>Service Cost <em>*</em> </label>
-                                <asp:TextBox MaxLength="25" runat="server" ID="txtServiceCost" name="name" type="text" class="form-control" onkeypress="return isDecimalNumber1(event,this);"></asp:TextBox>
+                                <asp:TextBox  runat="server" ID="txtServiceCost" name="name" type="text" class="form-control" onkeypress="return isDecimalNumber1(event,this);"></asp:TextBox>
                                 <asp:RequiredFieldValidator Display="None" ValidationGroup="tab1" ControlToValidate="txtServiceCost" ID="RequiredFieldValidator2" ForeColor="red" runat="server" ErrorMessage="Please enter Service Cost"></asp:RequiredFieldValidator>
                             </div>
                             <div class="form-group">
@@ -56,15 +56,15 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label>Service Description  </label>
-                                <asp:TextBox MaxLength="30" runat="server" ID="txtServiceDesc" name="name" type="text" class="form-control"></asp:TextBox>
+                                <asp:TextBox runat="server" ID="txtServiceDesc" name="name" type="text" class="form-control"></asp:TextBox>
                             </div>
                             <div class="form-group">
                                 <label>QTY</label>
-                                <asp:TextBox MaxLength="30" runat="server" ID="txtQty" name="name" type="text" class="form-control" onkeypress="return isDecimalNumber1(event,this);"></asp:TextBox>
+                                <asp:TextBox  runat="server" ID="txtQty" name="name" type="text" class="form-control" onkeypress="return isDecimalNumber1(event,this);"></asp:TextBox>
                             </div>
                             <div class="form-group">
                                 <label>Cost Of Sale</label>
-                                <asp:TextBox MaxLength="30" runat="server" ID="txtCostOfSale" name="name" type="text" class="form-control" onkeypress="return isDecimalNumber1(event,this);"></asp:TextBox>
+                                <asp:TextBox  runat="server" ID="txtCostOfSale" name="name" type="text" class="form-control" onkeypress="return isDecimalNumber1(event,this);"></asp:TextBox>
                             </div>
                         </div>
                     </div>
@@ -111,7 +111,7 @@
                                 <label>Search Service :</label>
 
                                 <asp:Panel ID="pnlSearch" CssClass="input-group" DefaultButton="btnSearch" runat="server">
-                                    <asp:TextBox runat="server" ID="txtKeyword" MaxLength="50" CssClass="form-control" placeholder="Search by keyword"></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txtKeyword" CssClass="form-control" placeholder="Search by keyword"></asp:TextBox>
                                     <span class="input-group-btn">&nbsp;<asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="btn btn-w-m btn-primary" OnClick="btnSearch_Click" />
                                         <br />
                                     </span>
