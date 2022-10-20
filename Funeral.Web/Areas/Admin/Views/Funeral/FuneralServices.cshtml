@@ -876,7 +876,31 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                <asp:RadioButton ID="rdbNo" GroupName="Erect" runat="server" Text="No" />
            </div>
         </div>*@
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-title">
+                                                    <h5>Services</h5>
+                                                </div>
+                                                <div class="ibox-content">
+                                                    <input type="hidden" id="objFuneralModel_pkiFuneralID" value="@Model.pkiFuneralID"/>
+                                                    @Html.Partial("_FuneralServicesSection", Model.FuneralServiceVM)
+                                                </div>
+                                            </div>
 
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-title">
+                                                    <h5>Payment</h5>
+                                                </div>
+                                                <div class="ibox-content">
+                                                    @Html.Partial("_FuneralSearvicePaymentSection", Model.FuneralServiceVM)
+                                                </div>
+                                            </div>
+
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-content">
+                                                    <input type="hidden" id="txtQuotationNumber" value="@Model.InvoiceNumber"/>
+                                                    @Html.Partial("_FuneralSearviceDetailSection", Model.FuneralServiceVM)
+                                                </div>
+                                            </div>
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label>Cremation</label>
@@ -1277,6 +1301,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
         tabSelector();
     }
     $(document).ready(function () {
+        $("#btnCancel").hide();
         var savedMsg = '@TempData["savedTabConfirmationMsg"]';
         if (savedMsg != '')
             $("#MainContent_lblMessage").append('<div class="alert alert-success">' + savedMsg + '</div>')
@@ -1325,7 +1350,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
     });
 
     function tabSelector() {
-        var funeralStatus = '@Model.Status'.toLowerCase();
+        var funeralStatus = $("#Status").val().toLowerCase();
         if (funeralStatus == 'New'.toLowerCase()) {
             $("#tab1").addClass("active")
             $('#aBodyCollection').trigger('click');

@@ -173,5 +173,6 @@ namespace Funeral.Model
         public string TombstonePolish { get; set; }
         public string ServiceType { get; set; }
         public DateTime TimeOfBodyArrival { get; set; }
-    }
+        public FuneralServiceVM FuneralServiceVM { get; set; }
+    } 
 }

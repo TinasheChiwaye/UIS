@@ -1,5 +1,4 @@
-﻿using DocumentFormat.OpenXml.Wordprocessing;
-using Funeral.BAL;
+﻿using Funeral.BAL;
 using Funeral.Model;
 using Funeral.Web.App_Start;
 using Funeral.Web.Areas.Admin.Models.ViewModel;
@@ -13,7 +12,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
-using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Security;
 using System.Web.UI.WebControls;
@@ -257,7 +255,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             objFuneral.ModelBankDetails = ToolsSetingBAL.GetBankingByID(ParlourId);
             objFuneral.ModelTermsAndCondition = ToolsSetingBAL.SelectApplicationTermsAndCondition(ParlourId);
             //objFuneral.FuneralPaymentModelList = TombStonesPaymentBAL.TombStonesPaymentSelectByTombstoneID(ParlourId, pkiFuneralID);
-            objFuneral.FuneralPaymentModelList = null;
+            objFuneral.FuneralPaymentModelList = MemberPaymentBAL.ReturnFuneralPayments(ParlourId, pkiFuneralID.ToString()).ToList(); ;
             var dueDate = objFuneral.objFuneralModel.CreatedDate;
             DateTime newDueDate = dueDate.AddHours(48);
             ViewBag.DueDate = newDueDate.ToString("dd/MMM/yyyy");
@@ -575,6 +573,28 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
             funeralModel = FuneralBAL.SelectFuneralByFuneralId(funeralId.GetValueOrDefault(0), this.ParlourId);
             funeralModel.FuneralDocuments = FuneralBAL.SelectFuneralDocumentsByMemberId(funeralModel.pkiFuneralID);
+
+            FuneralServiceVM objFuneral = new FuneralServiceVM();
+
+            if (funeralId.HasValue)
+            {
+                objFuneral.Currency = Currency;
+                objFuneral.TaxSettings = TaxSettingBAL.GetAllTaxSettings().Select(f => new SelectListItem { Text = f.TaxText, Value = f.TaxValue.ToString() }).ToList();
+                objFuneral.ApplicationSettings = ToolsSetingBAL.GetApplictionByParlourID(ParlourId);
+                objFuneral.ServiceType = FuneralBAL.GetAllFuneralServices(ParlourId).Select(f => new SelectListItem { Text = f.ServiceName, Value = f.pkiServiceID.ToString() }).ToList();
+                objFuneral.objFuneralModel = FuneralBAL.SelectFuneralByParlAndPki(funeralId.Value, ParlourId);
+                objFuneral.ServiceList = FuneralBAL.SelectServiceByFuneralID(funeralId.Value);
+                objFuneral.GetAllPackage = FuneralPackageBAL.SelectAllPackage(ParlourId).Select(f => new SelectListItem { Text = f.PackageName, Value = f.pkiPackageID.ToString() }).ToList();
+                objFuneral.ModelBankDetails = ToolsSetingBAL.GetBankingByID(ParlourId);
+                objFuneral.ModelTermsAndCondition = ToolsSetingBAL.SelectApplicationTermsAndCondition(ParlourId);
+                //objFuneral.FuneralPaymentModelList = TombStonesPaymentBAL.TombStonesPaymentSelectByTombstoneID(ParlourId, pkiFuneralID);
+                objFuneral.FuneralPaymentModelList = MemberPaymentBAL.ReturnFuneralPayments(ParlourId, funeralId.Value.ToString()).ToList(); ;
+                var dueDate = objFuneral.objFuneralModel.CreatedDate;
+                DateTime newDueDate = dueDate.AddHours(48);
+                ViewBag.DueDate = newDueDate.ToString("dd/MMM/yyyy");
+                ViewBag.CreatedDate = objFuneral.objFuneralModel.CreatedDate.ToString("dd/MMM/yyyy");
+            }
+            funeralModel.FuneralServiceVM = objFuneral;
             return View(funeralModel);
         }
 
