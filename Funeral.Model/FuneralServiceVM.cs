@@ -9,6 +9,8 @@ namespace Funeral.Model
 {
     public class FuneralServiceVM
     {
+        public string SubTotal { get; set; }
+        public string Total { get; set; }
         public string Currency { get; set; }
         public List<SelectListItem> TaxSettings { get; set; }
         public ApplicationSettingsModel ApplicationSettings { get; set; }

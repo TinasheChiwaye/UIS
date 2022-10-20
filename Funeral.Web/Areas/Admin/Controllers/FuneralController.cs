@@ -5,6 +5,7 @@ using Funeral.Web.Areas.Admin.Models.ViewModel;
 using Funeral.Web.Common;
 using Funeral.Web.DayPilot;
 using Newtonsoft.Json;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -250,7 +251,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             objFuneral.ApplicationSettings = ToolsSetingBAL.GetApplictionByParlourID(ParlourId);
             objFuneral.ServiceType = FuneralBAL.GetAllFuneralServices(ParlourId).Select(f => new SelectListItem { Text = f.ServiceName, Value = f.pkiServiceID.ToString() }).ToList();
             objFuneral.objFuneralModel = FuneralBAL.SelectFuneralByParlAndPki(pkiFuneralID, ParlourId);
-            objFuneral.ServiceList = FuneralBAL.SelectServiceByFuneralID(pkiFuneralID);
+            objFuneral.ServiceList = GetServicesList(pkiFuneralID);
             objFuneral.GetAllPackage = FuneralPackageBAL.SelectAllPackage(ParlourId).Select(f => new SelectListItem { Text = f.PackageName, Value = f.pkiPackageID.ToString() }).ToList();
             objFuneral.ModelBankDetails = ToolsSetingBAL.GetBankingByID(ParlourId);
             objFuneral.ModelTermsAndCondition = ToolsSetingBAL.SelectApplicationTermsAndCondition(ParlourId);
@@ -262,7 +263,10 @@ namespace Funeral.Web.Areas.Admin.Controllers
             ViewBag.CreatedDate = objFuneral.objFuneralModel.CreatedDate.ToString("dd/MMM/yyyy");
             return View(objFuneral);
         }
-
+        public List<FuneralServiceSelectModel> GetServicesList(int pkiFuneralID)
+        {
+            return FuneralBAL.SelectServiceByFuneralID(pkiFuneralID);
+        }
         /// <summary>
         /// Funeral Payment Method to bind All service and invoices to page
         /// </summary>
@@ -593,6 +597,14 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 DateTime newDueDate = dueDate.AddHours(48);
                 ViewBag.DueDate = newDueDate.ToString("dd/MMM/yyyy");
                 ViewBag.CreatedDate = objFuneral.objFuneralModel.CreatedDate.ToString("dd/MMM/yyyy");
+
+                List<FuneralServiceSelectModel> objServ = FuneralBAL.SelectServiceByFuneralID(funeralId.Value);
+                decimal Amt = 0;
+                foreach (var item in objServ)
+                {
+                    Amt = Amt + item.Amount;
+                }
+                objFuneral.SubTotal = Amt.ToString(); 
             }
             funeralModel.FuneralServiceVM = objFuneral;
             return View(funeralModel);

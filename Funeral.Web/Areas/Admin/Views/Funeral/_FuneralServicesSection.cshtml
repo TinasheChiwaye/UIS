@@ -1,42 +1,43 @@
 ﻿@model Funeral.Model.FuneralServiceVM
-@{ 
+@{
     Layout = null;
     var totalServiceAmount = 0.0;
 }
 <div id="MainContent_UpddlBranch">
-    <div class="col-lg-6">
-        <div class="form-group">
-            <label>Package</label>
-            @Html.DropDownListFor(m => m.GetAllPackage, Model.GetAllPackage, "Select Package", new { Name = "GetAllPackageList", @placeholder = "Select Package", @class = "form-control" })
-            <span id="RequiredFieldValidator4" style="color:red;" hidden>Please select something</span>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>Package</label>
+                @Html.DropDownListFor(m => m.GetAllPackage, Model.GetAllPackage, "Select Package", new { Name = "GetAllPackageList", @placeholder = "Select Package", @class = "form-control" })
+                <span id="RequiredFieldValidator4" style="color:red;" hidden>Please select package</span>
+            </div>
+            <div class="form-group">
+                <label>Services</label>
+                @Html.DropDownListFor(m => m.ServiceType, Model.ServiceType, "Select Service", new { Name = "GetServiceType", @placeholder = "Select ServiceType", @class = "form-control" })
+                <span id="RequiredFieldValidator3" style="color:red;" hidden>Please select service</span>
+            </div>
+            <div class="form-group">
+                <label>Quantity</label>
+                <input name="txtNumber" maxlength="10" onchange="" onkeypress="" id="txtNumber" type="number" class="form-control" min="0">
+                <span id="MainContent_RequiredFieldValidator2" style="color:red;" hidden>Quantity is required</span>
+            </div>
         </div>
-        <div class="form-group">
-            <label>Services</label>
-            @Html.DropDownListFor(m => m.ServiceType, Model.ServiceType, "Select ServiceType", new { Name = "GetServiceType", @placeholder = "Select ServiceType", @class = "form-control" })
-            <span id="RequiredFieldValidator3" style="color:red;" hidden>Please select something</span>
-        </div>
-        <div class="form-group">
-            <label>Qty</label>
-            <input name="txtNumber" maxlength="10" onchange="" onkeypress="" id="txtNumber" type="number" class="form-control" min="0">
-            <span id="MainContent_RequiredFieldValidator2" style="visibility:hidden;">This Field Required</span>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>Description</label>
+                <input name="txtSerDes" readonly="readonly" maxlength="10" id="txtSerDes" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Rate</label>
+                <input name="txtRate" value="0" maxlength="10" id="txtRate" type="text" class="form-control">
+                <span id="RequiredFieldValidator1" style="color:red;" hidden>Rate is required</span>
+            </div>
+            <div class="form-group">
+                <label>Total</label>
+                <input name="txtTotal" maxlength="10" readonly="readonly" id="txtTotal" type="text" class="form-control">
+            </div>
         </div>
     </div>
-    <div class="col-lg-6">
-        <div class="form-group">
-            <label>Description</label>
-            <input name="txtSerDes" maxlength="10" readonly="readonly" id="txtSerDes" type="text" class="form-control">
-        </div>
-        <div class="form-group">
-            <label>Rate</label>
-            <input name="txtRate" value="0" maxlength="10" id="txtRate" type="text" class="form-control">
-            <span id="RequiredFieldValidator1" style="visibility:hidden;">This Field Required</span>
-        </div>
-        <div class="form-group">
-            <label>Total</label>
-            <input name="txtTotal" maxlength="10" readonly="readonly" id="txtTotal" type="text" class="form-control">
-        </div>
-    </div>
-
 </div>
 <div class="form-group">
     <a name="btnPackage" value="Add Package" id="btnPackage" class="btn btn-sm btn-primary">Add Package</a>
@@ -84,7 +85,8 @@
         </tbody>
     </table>
 </div>
-<script> 
+<script>
+
     $("#btnPackageService").click(function () {
         objServiceVm = {
             PackageName: $("#GetAllPackage :selected").text(),
@@ -110,37 +112,63 @@
     });
 
     $("#btnPackage").click(function () {
-        if ($("#GetAllPackage :selected").val() == "") {
-            $("#RequiredFieldValidator4").show()
-            return;
-        } else {
-            $("#RequiredFieldValidator4").hide()
-        } 
-        $.ajax({
-            type: "GET",
-            url: '@Url.Action("AddPackage", "Funeral")?packageId=' + $("#GetAllPackage :selected").val() + '&funeralId=' + $("#objFuneralModel_pkiFuneralID").val(),
-            success: function (result) {
-                if (result != null) {
-                    alert("Service Successfully Added."); 
-                    window.location.reload();  
-                }
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
-            }
-        });  
-    });
-    $("#btnService").click(function () {
+        $("#RequiredFieldValidator3").hide();
 
-        if ($("#ServiceType :selected").val() == "") {
-            $("#RequiredFieldValidator3").show()
-            return
-        } else {
-            $("#RequiredFieldValidator3").hide()
+        if ($("#GetAllPackage :selected").val() == "")
+            $("#RequiredFieldValidator4").show()
+        else
+            $("#RequiredFieldValidator4").hide()
+
+        if ($("#txtNumber").val() == '')
+            $("#MainContent_RequiredFieldValidator2").show();
+        else
+            $("#MainContent_RequiredFieldValidator2").hide();
+
+        if ($("#txtRate").val() == '')
+            $("#RequiredFieldValidator1").show();
+        else
+            $("#RequiredFieldValidator1").hide();
+
+        if ($("#GetAllPackage :selected").val() != "" && $("#txtNumber").val() != '' && $("#txtRate").val() != '') {
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("AddPackage", "Funeral")?packageId=' + $("#GetAllPackage :selected").text() + '&funeralId=' + $("#objFuneralModel_pkiFuneralID").val(),
+                success: function (result) {
+                    if (result != null) {
+                        alert("Package Successfully Added.");
+                        window.location.reload();
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
+                }
+            });
         }
+    });
+
+    $("#btnService").click(function () { 
+        $("#RequiredFieldValidator4").hide()
+
+        if ($("#ServiceType :selected").val() == "")
+            $("#RequiredFieldValidator3").show();
+        else
+            $("#RequiredFieldValidator3").hide();
+
+        if ($("#txtNumber").val() == '')
+            $("#MainContent_RequiredFieldValidator2").show();
+        else
+            $("#MainContent_RequiredFieldValidator2").hide();
+
+        if ($("#txtRate").val() == '')
+            $("#RequiredFieldValidator1").show();
+        else
+            $("#RequiredFieldValidator1").hide();
+
         if (typeof pkiFuneralServiceSelectionID == "undefined") {
             pkiFuneralServiceSelectionID = 0;
         }
+
+        if ($("#ServiceType :selected").val() != "" && $("#txtNumber").val() != '' && $("#txtRate").val() != '') {
             tssp = {
                 pkiFuneralSelectionID: pkiFuneralServiceSelectionID,
                 PackageName: $("#GetAllPackage :selected").text(),
@@ -152,21 +180,22 @@
                 fkiFuneralID: $("#objFuneralModel_pkiFuneralID").val(),
                 PackageID: $("#GetAllPackage :selected").val()
             }
-        $.ajax({
-            type: "post",
-            url: '@Url.Action("SaveServiceForFuneralService", "Funeral")',
-            data: tssp,
-            success: function (result) {
-                if (result != null) {
-                    alert("Service Successfully Added.");
-                    window.location.reload(); 
+            $.ajax({
+                type: "post",
+                url: '@Url.Action("SaveServiceForFuneralService", "Funeral")',
+                data: tssp,
+                success: function (result) {
+                    if (result != null) {
+                        alert("Service Successfully Added.");
+                        window.location.reload();
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
                 }
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
-            }
-        });
-    })
+            });
+        }
+    });
 
     function GetDataEditService(ServiceID, FuneralID) {
         data = {
@@ -224,17 +253,6 @@
             });
         }
     })
-    $("#txtNumber").focusout(function () {
-        var qty = $("#txtNumber").val();
-        if (qty == 0) {
-            alert("Please insert qty");
-        } else {
-            var rate = $("#txtRate").val();
-            var total = rate * qty;
-            $("#txtTotal").val('');
-            $("#txtTotal").val(parseFloat(total));
-        }
-    })
     function DeleteServiceById(ServiceId) {
         if (confirm("Are you sure you want to delete this?")) {
             data = {
@@ -259,5 +277,5 @@
         } else {
             return false;
         }
-    } 
+    }
 </script>

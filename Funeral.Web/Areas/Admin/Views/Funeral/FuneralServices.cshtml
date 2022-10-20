@@ -945,8 +945,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                         <div class="panel-heading" style="line-height:3">
                                                             Funeral Documents
                                                             <div style="float:right;">
-                                                                <input id="btnAddDocs" type="button" value="Add Docs" onclick="btnAddDocsClick()" class="btn btn-sm btn-primary" />
-                                                                <input id="btnServices" type="button" value="Services " onclick="btnServicesClick()" class="btn btn-sm btn-primary" />
+                                                                <input id="btnAddDocs" type="button" value="Add Docs" onclick="btnAddDocsClick()" class="btn btn-sm btn-primary" /> 
                                                             </div>
                                                         </div>
                                                         <div class="panel-body">
@@ -1045,8 +1044,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                     <div class="panel-heading" style="line-height:3">
                                                         Tombstone Documents
                                                         <div style="float:left;">
-                                                            <input id="btnAddDocs" type="button" value="Add Docs" onclick="btnAddDocsClick()" class="btn btn-sm btn-primary" />
-                                                            <input id="btnServices" type="button" value="Services " onclick="btnServicesClick()" class="btn btn-sm btn-primary" />
+                                                            <input id="btnAddDocs" type="button" value="Add Docs" onclick="btnAddDocsClick()" class="btn btn-sm btn-primary" /> 
                                                         </div>
                                                     </div>
                                                     <div class="panel-body">
@@ -1475,10 +1473,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
     function btnAddDocsClick() {
         $("#GSCCModal").modal("show");
         $(".modal-backdrop").hide();
-    }
-    function btnServicesClick() {
-        window.location.href = "@Url.Action("FuneralServicesPage", "Funeral")?funeralID=" + $("#pkiFuneralID").val();
-    }
+    } 
     function btnProcessPaymentClick() {
         window.location.href = "../../Admin/FuneralPayment.aspx?FID=" + $("#pkiFuneralID").val();
     }

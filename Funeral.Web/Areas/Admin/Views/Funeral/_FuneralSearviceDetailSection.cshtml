@@ -1,7 +1,6 @@
 ﻿@model Funeral.Model.FuneralServiceVM
 @{
-    Layout = null;
-    var totalServiceAmount = 0.0;
+    Layout = null; 
 }
 <div class="row">
     <div class="col-lg-7">
@@ -29,7 +28,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">SubTotal</label>
                     <div class="col-sm-10">
-                        <input name="SubTotal" value="@totalServiceAmount" maxlength="10" id="SubTotal" disabled="disabled" class="aspNetDisabled form-control" type="text">
+                        <input name="SubTotal" value="@Model.SubTotal" maxlength="10" id="SubTotal" disabled="disabled" class="aspNetDisabled form-control" type="text">
                     </div>
                 </div>
                 <div class="form-group">
@@ -43,7 +42,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Discount in %</label>
                     <div class="col-sm-10">
-                        <input name="txtDiscount" value="0.00" maxlength="10" onchange="" id="txtDiscount" type="text" class="form-control">
+                        <input name="txtDiscount" value="@Model.objFuneralModel.Discount" maxlength="10" onchange="" id="txtDiscount" type="text" class="form-control">
                         <span id="lblDisAmt1">Discount Amount:</span>
                         <span id="lblDisAmt2"></span>
                     </div>
@@ -91,14 +90,27 @@
     </div>
 </div>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function () { 
         var subTotal = $("#SubTotal").val();
         var discValue = $("#txtDiscount").val();
         var total = (subTotal * discValue) / 100;
         $("#lblDisAmt2").html("Less:" + total);
         $("#txtGrandTotal").val(subTotal - total);
         var pkiFuneralServiceSelectionID = 0;
+        calculateDiscount();
     })
+    $("#ReCalculate").click(function () {
+        calculateDiscount();
+    });
+    function calculateDiscount() {
+        var tax = $("#TaxSettings :selected").val() == '' ? "0" : $("#TaxSettings :selected").val();
+        $.get("@Url.Action("DiscountCal", "Funeral")?subTotal=" + parseFloat($("#SubTotal").val().replace(',', '.').replace(' ', '')) + "&tax=" + tax + "&discount=" + $("#txtDiscount").val(), function (response) {
+            console.log(response);
+            $("#lblDisAmt1").text(response.lblDisAmt2)
+            $("#tax2").text(response.tax2)
+            $("#txtGrandTotal").val(response.txtGrandTotal)
+        });
+    }
     $("#btnSave").click(function () {
         data = {
             pkiFuneralID: $("#objFuneralModel_pkiFuneralID").val(),
