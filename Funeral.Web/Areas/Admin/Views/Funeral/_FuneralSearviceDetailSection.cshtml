@@ -22,8 +22,7 @@
         </div>
     </div>
     <div class="col-lg-5">
-        <div id="MainContent_UpdatePanel1">
-
+        <div id="MainContent_UpdatePanel1"> 
             <div class="form-horizontal">
                 <div class="form-group">
                     <label class="col-sm-2 control-label">SubTotal</label>
@@ -54,14 +53,25 @@
                         <input name="txtGrandTotal" value="" maxlength="30" readonly="readonly" id="txtGrandTotal" type="text" class="form-control">
                     </div>
                 </div>
-                <div class="form-group">
-                    <a name="ReCalculate" value="ReCalculate" id="ReCalculate" class="btn btn-sm btn-primary">ReCalculate</a>
+                <div class="form-group text-right">
+                    <div class="col-sm-2">&nbsp;</div>
+                    <div class="col-sm-10">
+                        <input type="button" name="btnSave" value="Save" id="btnSave" class="btn btn-sm btn-primary">
+                        <a name="ReCalculate" value="ReCalculate" id="ReCalculate" class="btn btn-sm btn-primary">ReCalculate</a>
+                        @{
+                            string id = Model.objFuneralModel.pkiFuneralID.ToString();
+                            var plaintextBytes = System.Text.Encoding.UTF8.GetBytes(id);
+                            var encryptedValue = MachineKey.Encode(plaintextBytes, MachineKeyProtection.All);
+                            @*<a href="~/Admin/PrintForm.aspx?FID=@encryptedValue" name="btnPrint" value="" id="btnPrint" class="btn btn-sm btn-primary">Print</a>*@
+                            <a href="@Url.Action("PrintForm","Funeral",new { funId = Model.objFuneralModel.pkiFuneralID})" name="btnPrint" value="" id="btnPrint" class="btn btn-sm btn-primary">Print</a>
+                        }
+                    </div> 
                 </div>
             </div>
 
         </div>
     </div>
-    <div class="col-lg-12">
+    @*<div class="col-lg-12">
         <div class="form-group">
             <div class="col-lg-6">
                 <div class="btn-group">
@@ -73,21 +83,10 @@
                     <div class="form-group">
                         <input type="button" name="btnSave" value="Save" id="btnSave" class="btn btn-sm btn-primary">
                     </div>
-                </div>
-                <div class="btn-group">
-                    <div class="form-group">
-                        @{
-                            string id = Model.objFuneralModel.pkiFuneralID.ToString();
-                            var plaintextBytes = System.Text.Encoding.UTF8.GetBytes(id);
-                            var encryptedValue = MachineKey.Encode(plaintextBytes, MachineKeyProtection.All);
-                            @*<a href="~/Admin/PrintForm.aspx?FID=@encryptedValue" name="btnPrint" value="" id="btnPrint" class="btn btn-sm btn-primary">Print</a>*@
-                            <a href="@Url.Action("PrintForm","Funeral",new { funId = Model.objFuneralModel.pkiFuneralID})" name="btnPrint" value="" id="btnPrint" class="btn btn-sm btn-primary">Print</a>
-                        }
-                    </div>
-                </div>
+                </div> 
             </div>
         </div>
-    </div>
+    </div>*@
 </div>
 <script>
     $(document).ready(function () { 

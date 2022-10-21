@@ -8,6 +8,24 @@
         <h5>Funeral Schedules</h5>
     </div>
     <div class="ibox-content">
+        <div class="row" style="display:flex;align-items:center;">
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label>Date From:</label>
+                    @Html.TextBox("datefrom", "", new { @autocomplete = "off", @type = "date", @class = "form-control datepicker", @maxlength = "25" })
+
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label>Date To:</label>
+                    @Html.TextBox("dateto", "", new { @id = "txtDateTo", @type = "date", @autocomplete = "off", @class = "form-control datepicker", @maxlength = "25" })
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <input type="button" id="btnSearch" value="Search" class="btn btn-w-m btn-primary" onclick="filterDataByDates()"/>
+            </div>
+        </div>
         <div class="row">
             <table class="table table-bordered table-hover" id="downloadSchedle">
                 <thead>
@@ -15,7 +33,10 @@
                         <th scope="col">Funeral ID</th>
                         <th scope="col">Description</th>
                         <th scope="col">Funeral Date</th>
-                        <th scope="col">Funeral Time</th>                        
+                        <th scope="col">Funeral Time</th>
+                        <th scope="col">Grave Site</th>
+                        <th scope="col">Driver and Car</th>
+                        <th scope="col">Download</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -30,48 +51,131 @@
 <script type="text/javascript" src="~/Scripts/plugins/dataTables/pdfmake.min.js"></script>
 <script type="text/javascript" src="~/Scripts/plugins/dataTables/vfs_fonts.js"></script>
 <script type="text/javascript" src="~/Scripts/plugins/dataTables/buttons.html5.min.js"></script>
+<link href="~/Content/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+<script src="~/Scripts/plugins/dataTables/dataTables.bootstrap.js"></script>
 <link rel="stylesheet" href="~/Scripts/plugins/dataTables/buttons.dataTables.min.css" />
 <script type="text/javascript">
+    var table;
     $(document).ready(function () {
-        $("#downloadSchedle").DataTable(
+        table = $("#downloadSchedle").DataTable(
             {
-            "processing": true, // for show progress bar
-            "serverSide": true, // for process server side
-            "filter": false, // this is for disable filter (search box)
-            "ajax": {
-                "url": '@Url.Action("DownloadScheduleData", "Funeral", null, Request.Url.Scheme)',
-                "type": "GET",
-                "datatype": "json",
-                "dataSrc": ""
-            },
-            "columns": [
-                { "data": "FuneralId", "name": "FuneralId", "autoWidth": true },
-                { "data": "Description", "name": "Description", "autoWidth": true },
-                    { "data": "FuneralStartDate", "name": "FuneralStartDate", "autoWidth": true,
-                    "render": function (value) {
-                        if (value === null) return "";
-                        var pattern = /Date\(([^)]+)\)/;
-                        var results = pattern.exec(value);
-                        var dt = new Date(parseFloat(results[1]));
-                        return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear() + " " + dt.toLocaleTimeString([], { timeStyle: 'short' });
+                "paging": true,
+                "searching":false,
+                "processing": true, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": false, // this is for disable filter (search box), 
+                "ajax": {
+                    "url": '@Url.Action("DownloadScheduleData", "Funeral", null, Request.Url.Scheme)',
+                    "type": "GET",
+                    "datatype": "json",
+                    "dataSrc": ""
+                },
+                "columns": [
+                    { "data": "FuneralId", "name": "FuneralId", "autoWidth": true },
+                    { "data": "Description", "name": "Description", "autoWidth": true },
+                        { "data": "FuneralStartDate", "name": "FuneralStartDate", "autoWidth": true,
+                        "render": function (value) {
+                            if (value === null) return "";
+                            var pattern = /Date\(([^)]+)\)/;
+                            var results = pattern.exec(value);
+                            var dt = new Date(parseFloat(results[1]));
+                            return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear() + " " + dt.toLocaleTimeString([], { timeStyle: 'short' });
+                        }
+                    },
+                    {
+                        "data": "FuneralEndDate", "name": "FuneralEndDate", "autoWidth": true, "render": function (value) {
+                            if (value === null) return "";
+                            var pattern = /Date\(([^)]+)\)/;
+                            var results = pattern.exec(value);
+                            var dt = new Date(parseFloat(results[1]));
+                            var options = { hour12: true }
+                            return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear() + " " + dt.toLocaleTimeString([], { timeStyle: 'short' });
+                        }
+                    },
+                    { "data": "GraveNo", "name": "GraveNo", "autoWidth": true },
+                    { "data": "DriverAndCars", "name": "DriverAndCars", "autoWidth": true },
+                    {
+                        "data": "FuneralId", "name": "FuneralId", "autoWidth": true,
+                        "render": function (data, type, row) {
+                            return "<center><i class='fa fa-download' onClick='generatePdf(" + JSON.stringify(row) + ")' style='cursor:pointer'></i></center></a>";
+                        }
                     }
-             },
-                {
-                    "data": "FuneralEndDate", "name": "FuneralEndDate", "autoWidth": true, "render": function (value) {
-                        if (value === null) return "";
-                        var pattern = /Date\(([^)]+)\)/;
-                        var results = pattern.exec(value);
-                        var dt = new Date(parseFloat(results[1]));
-                        var options = { hour12: true }                                  
-                        return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear() + " " + dt.toLocaleTimeString([], { timeStyle: 'short' });
-                    }
-},
-                ],
-                dom: 'Bfrtip',
-                buttons: [
-                    'pdf', 'csv'
-                ]
-        });
+                    ],
+                    dom: 'Bfrtip',
+                    buttons: [
+                        {
+                            extend: 'pdf',
+                            exportOptions: {
+                                columns: [0,1,2,3,4,5]  
+                            }
+                        }, 
+                        {
+                            extend: 'csv',
+                            exportOptions: {
+                                columns: [0, 1, 2, 3, 4, 5]
+                            }
+                        }, 
+                    ]
+                });
     });
-</script>
+    function generatePdf(data) {
+        const documentDefinition = getDocumentDefinition(data);
+        pdfMake.createPdf(documentDefinition).download("funeralSchedule_" + data.FuneralId + ".pdf");
+    }
 
+    function getDocumentDefinition(data) {
+        var pattern = /Date\(([^)]+)\)/;
+        var FuneralStartDate = pattern.exec(data.FuneralStartDate);
+        var FuneralEndDate = pattern.exec(data.FuneralStartDate);
+
+        return {
+            pageMargins: [40, 40, 40, 100],
+            content: [  
+                {
+                    text:"dsfsd"
+                },
+                {
+                    table: {
+                        header: 'simple text',
+                        headerRows: 6,
+                        defaultStyle: {
+                            fontSize: 15,
+                            bold: true,
+                            alignment: "center",
+                            background:"red"
+                        },
+                        width: "auto",
+                        body: [
+                            ['Funeral ID', 'Description', 'Funeral Date', 'Funeral Time', 'Grave Site', 'Driver and Car'],
+                            [data.FuneralId, data.Description, new Date(parseFloat(FuneralStartDate[1])).toLocaleDateString(), new Date(parseFloat(FuneralEndDate[1])).toLocaleTimeString(), data.GraveNo, data.DriverAndCars],
+                        ]
+                    }
+                }
+            ]
+        };
+    }
+    function filterDataByDates() {
+        if ($("#datefrom").val() != '' && $("#txtDateTo").val() != '') {
+
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("DownloadScheduleData", "Funeral")?dateFrom=' + new Date($("#datefrom").val()).toISOString() + '&dateTo=' + new Date($("#txtDateTo").val()).toISOString(),
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            }).done(function (result) {
+                table.clear();
+                $.each(result, function (idx, obj) {
+                    table.row.add(result[idx]);
+                });
+                table.draw();
+            }).fail(function (result) {
+            });
+        }
+    }
+</script>
+<style>
+    #downloadSchedle_filter input {
+        margin: 5px;
+    }
+</style>

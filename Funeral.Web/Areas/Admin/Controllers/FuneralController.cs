@@ -1,10 +1,12 @@
 ﻿using Funeral.BAL;
 using Funeral.Model;
+using Funeral.Web.Admin;
 using Funeral.Web.App_Start;
 using Funeral.Web.Areas.Admin.Models.ViewModel;
 using Funeral.Web.Common;
 using Funeral.Web.DayPilot;
 using Newtonsoft.Json;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using System;
 using System.Collections.Generic;
@@ -110,7 +112,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             {
                 var funeralList = FuneralBAL.SelectAllFuneralByParlourId(ParlourId, search.PageSize, search.PageNum, "", search.SortBy, search.SortOrder, search.DateFrom, search.DateTo, status);
 
-                return Json(new SearchResult<Model.Search.BaseSearch, FuneralModel>(search, funeralList, o => o.FullNames.Contains(search.SarchText) || o.Surname.Contains(search.SarchText) || o.IDNumber.Contains(search.SarchText)), JsonRequestBehavior.AllowGet);
+                return Json(new SearchResult<Model.Search.BaseSearch, FuneralModel>(search, funeralList, o => o.FullNames.Contains(search.SarchText) || o.Surname.Contains(search.SarchText) || o.IDNumber.Contains(search.SarchText) || o.AssignedToName.Contains(search.SarchText) || o.Status.Contains(search.SarchText)), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -572,41 +574,9 @@ namespace Funeral.Web.Areas.Admin.Controllers
         public ActionResult FuneralServices(int? funeralId)
         {
             var funeralModel = new FuneralModel() { parlourid = ParlourId, Status = "New" };
-            if (funeralId.GetValueOrDefault(0) == 0)
-                return View(funeralModel);
 
-            funeralModel = FuneralBAL.SelectFuneralByFuneralId(funeralId.GetValueOrDefault(0), this.ParlourId);
-            funeralModel.FuneralDocuments = FuneralBAL.SelectFuneralDocumentsByMemberId(funeralModel.pkiFuneralID);
+            funeralModel = GetFuneralModel(funeralId, funeralModel);
 
-            FuneralServiceVM objFuneral = new FuneralServiceVM();
-
-            if (funeralId.HasValue)
-            {
-                objFuneral.Currency = Currency;
-                objFuneral.TaxSettings = TaxSettingBAL.GetAllTaxSettings().Select(f => new SelectListItem { Text = f.TaxText, Value = f.TaxValue.ToString() }).ToList();
-                objFuneral.ApplicationSettings = ToolsSetingBAL.GetApplictionByParlourID(ParlourId);
-                objFuneral.ServiceType = FuneralBAL.GetAllFuneralServices(ParlourId).Select(f => new SelectListItem { Text = f.ServiceName, Value = f.pkiServiceID.ToString() }).ToList();
-                objFuneral.objFuneralModel = FuneralBAL.SelectFuneralByParlAndPki(funeralId.Value, ParlourId);
-                objFuneral.ServiceList = FuneralBAL.SelectServiceByFuneralID(funeralId.Value);
-                objFuneral.GetAllPackage = FuneralPackageBAL.SelectAllPackage(ParlourId).Select(f => new SelectListItem { Text = f.PackageName, Value = f.pkiPackageID.ToString() }).ToList();
-                objFuneral.ModelBankDetails = ToolsSetingBAL.GetBankingByID(ParlourId);
-                objFuneral.ModelTermsAndCondition = ToolsSetingBAL.SelectApplicationTermsAndCondition(ParlourId);
-                //objFuneral.FuneralPaymentModelList = TombStonesPaymentBAL.TombStonesPaymentSelectByTombstoneID(ParlourId, pkiFuneralID);
-                objFuneral.FuneralPaymentModelList = MemberPaymentBAL.ReturnFuneralPayments(ParlourId, funeralId.Value.ToString()).ToList(); ;
-                var dueDate = objFuneral.objFuneralModel.CreatedDate;
-                DateTime newDueDate = dueDate.AddHours(48);
-                ViewBag.DueDate = newDueDate.ToString("dd/MMM/yyyy");
-                ViewBag.CreatedDate = objFuneral.objFuneralModel.CreatedDate.ToString("dd/MMM/yyyy");
-
-                List<FuneralServiceSelectModel> objServ = FuneralBAL.SelectServiceByFuneralID(funeralId.Value);
-                decimal Amt = 0;
-                foreach (var item in objServ)
-                {
-                    Amt = Amt + item.Amount;
-                }
-                objFuneral.SubTotal = Amt.ToString(); 
-            }
-            funeralModel.FuneralServiceVM = objFuneral;
             return View(funeralModel);
         }
 
@@ -627,7 +597,49 @@ namespace Funeral.Web.Areas.Admin.Controllers
             if (!string.IsNullOrEmpty(savedTabConfirmationMsg))
                 TempData["savedTabConfirmationMsg"] = savedTabConfirmationMsg;
             model.FuneralDocuments = FuneralBAL.SelectFuneralDocumentsByMemberId(model.pkiFuneralID);
+
+            model = GetFuneralModel(model.pkiFuneralID, model);
+
             return View(model);
+        }
+        private FuneralModel GetFuneralModel(int? funeralId, FuneralModel funeralModel)
+        {
+            var objFuneral = new FuneralServiceVM();
+            if (funeralId.HasValue)
+            {
+                funeralModel = FuneralBAL.SelectFuneralByFuneralId(funeralId.GetValueOrDefault(0), this.ParlourId);
+                funeralModel.FuneralDocuments = FuneralBAL.SelectFuneralDocumentsByMemberId(funeralModel.pkiFuneralID);
+                objFuneral.Currency = Currency;
+                objFuneral.objFuneralModel = FuneralBAL.SelectFuneralByParlAndPki(funeralId.Value, ParlourId);
+                objFuneral.ServiceList = FuneralBAL.SelectServiceByFuneralID(funeralId.Value);
+                objFuneral.FuneralPaymentModelList = MemberPaymentBAL.ReturnFuneralPayments(ParlourId, funeralId.Value.ToString()).ToList(); ;
+                var dueDate = objFuneral.objFuneralModel.CreatedDate;
+                DateTime newDueDate = dueDate.AddHours(48);
+                ViewBag.DueDate = newDueDate.ToString("dd/MMM/yyyy");
+                ViewBag.CreatedDate = objFuneral.objFuneralModel.CreatedDate.ToString("dd/MMM/yyyy");
+
+                List<FuneralServiceSelectModel> objServ = FuneralBAL.SelectServiceByFuneralID(funeralId.Value);
+                decimal Amt = 0;
+                foreach (var item in objServ)
+                {
+                    Amt = Amt + item.Amount;
+                }
+                objFuneral.SubTotal = Amt.ToString();
+            }
+            else
+            {
+                objFuneral.objFuneralModel = new FuneralModel();
+            }
+            objFuneral.GetAllPackage = FuneralPackageBAL.SelectAllPackage(ParlourId).Select(f => new SelectListItem { Text = f.PackageName, Value = f.pkiPackageID.ToString() }).ToList();
+            objFuneral.ModelBankDetails = ToolsSetingBAL.GetBankingByID(ParlourId);
+            objFuneral.ModelTermsAndCondition = ToolsSetingBAL.SelectApplicationTermsAndCondition(ParlourId);
+            objFuneral.TaxSettings = TaxSettingBAL.GetAllTaxSettings().Select(f => new SelectListItem { Text = f.TaxText, Value = f.TaxValue.ToString() }).ToList();
+            objFuneral.ApplicationSettings = ToolsSetingBAL.GetApplictionByParlourID(ParlourId);
+            objFuneral.ServiceType = FuneralBAL.GetAllFuneralServices(ParlourId).Select(f => new SelectListItem { Text = f.ServiceName, Value = f.pkiServiceID.ToString() }).ToList();
+
+            funeralModel.FuneralServiceVM = objFuneral;
+
+            return funeralModel;
         }
         public ActionResult FuneralSearch()
         {
@@ -893,14 +905,14 @@ namespace Funeral.Web.Areas.Admin.Controllers
         }
         public ActionResult DownLoadSchedules()
         {
-            var downloadLists = FuneralBAL.GetDownLoadCalenderList();
+            var downloadLists = FuneralBAL.GetDownLoadCalenderList(null, null);
             //return Json(downloadLists, JsonRequestBehavior.AllowGet);
             return View(downloadLists);
         }
 
-        public JsonResult DownloadScheduleData()
-        {   
-           var calendarList = FuneralBAL.GetDownLoadCalenderList();
+        public JsonResult DownloadScheduleData(DateTime? dateFrom, DateTime? dateTo)
+        {
+            var calendarList = FuneralBAL.GetDownLoadCalenderList(dateFrom, dateTo);
             return Json(calendarList, JsonRequestBehavior.AllowGet);
         }
 

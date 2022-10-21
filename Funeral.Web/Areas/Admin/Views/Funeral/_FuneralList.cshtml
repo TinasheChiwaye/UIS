@@ -30,7 +30,7 @@
                             <div class="form-group">
                                 <label>Date From:</label>
                                 @*@Html.TextBoxFor(x => x.DateFrom, new { @placeholder = "DD MM YYYY", @autocomplete = "off", @class = "form-control datepicker" })*@
-                                @Html.TextBoxFor(m => m.DateFrom, "{0:dd MMM yyyy}", new { @autocomplete = "off", @class = "form-control datepicker", @maxlength = "25" })
+                                @Html.TextBoxFor(m => m.DateFrom, "{0:dd MM yyyy}", new { @autocomplete = "off", @class = "form-control datepicker", @maxlength = "25" })
 
                             </div>
                         </div>
@@ -38,7 +38,7 @@
                             <div class="form-group">
                                 <label>Date To:</label>
                                 @*@Html.TextBoxFor(x => x.DateTo, new { @placeholder = "DD MM YYYY",, @autocomplete = "off", @class = "form-control datepicker" })*@
-                                @Html.TextBoxFor(m => m.DateTo, "{0:dd MMM yyyy}", new { @id = "txtDateTo", @autocomplete = "off", @class = "form-control datepicker", @maxlength = "25" })
+                                @Html.TextBoxFor(m => m.DateTo, "{0:dd MM yyyy}", new { @id = "txtDateTo", @autocomplete = "off", @class = "form-control datepicker", @maxlength = "25" })
 
                             </div>
                         </div>
@@ -117,8 +117,7 @@
 
     <script type="text/javascript">
 
-        $(document).ready(function () {
-
+        $(document).ready(function () { 
             ConfigureDatatable();
             InitDataTable();
 
@@ -130,17 +129,17 @@
             $('#PageSize').change(function () {
                 InitModel();
                 tableConfigs.table.DataTable().page.len(model1.PageSize).draw();
-                eventConfigs.pageChange.dispatchEvent();
+                //eventConfigs.pageChange.dispatchEvent();
             });
 
             $("#btnSearch").click(function () {
                 InitModel();
                 tableConfigs.table.fnDraw();
-                eventConfigs.searchClick.dispatchEvent();
+                //eventConfigs.searchClick.dispatchEvent();
             });
 
-            $(".datepicker").datepicker({ format: 'dd MMM yyyy', autoclose: true });
-            $(".datetimepicker").datepicker({ format: 'dd MMM yyyy', autoclose: true });
+            $(".datepicker").datepicker({ format: 'dd MM yyyy', autoclose: true });
+            $(".datetimepicker").datepicker({ format: 'dd MM yyyy', autoclose: true });
 
         });
 

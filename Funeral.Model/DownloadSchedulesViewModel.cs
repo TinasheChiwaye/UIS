@@ -12,5 +12,8 @@ namespace Funeral.Model
         public string Description { get; set; }
         public DateTime FuneralStartDate { get; set; }
         public DateTime FuneralEndDate { get; set; }
+        public string GraveNo { get; set; }
+        public string DriverAndCars { get; set; }
+
     }
 }
