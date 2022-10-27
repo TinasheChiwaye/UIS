@@ -149,9 +149,9 @@ namespace Funeral.BAL
         {
             return FuneralDAL.FuneralScheduleEditEvent(startDate, endDate, id);
         }
-        public static List<DownloadSchedulesViewModel> GetDownLoadCalenderList()
+        public static List<DownloadSchedulesViewModel> GetDownLoadCalenderList(DateTime? dateFrom, DateTime? dateTo)
         {
-            return FuneralHelper.DataTableMapToList<DownloadSchedulesViewModel>(FuneralDAL.GetDownLoadCalenderList());
+            return FuneralHelper.DataTableMapToList<DownloadSchedulesViewModel>(FuneralDAL.GetDownLoadCalenderList(dateFrom,dateTo));
         }
     }
 }
