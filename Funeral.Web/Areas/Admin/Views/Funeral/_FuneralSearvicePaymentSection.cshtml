@@ -26,7 +26,7 @@
                                     <td class="visible-lg">@item.Notes</td>
                                     <td>
                                         &nbsp;
-                                        <a id="gvInvoices" title="Click here Print " href="@Url.Action("PrintForm","Funeral")"><i class="glyphicon glyphicon-print"></i></a>
+                                        <a id="gvInvoices" title="Click here Print " href="@Url.Action("PrintForm","Funeral", new { funId=item.FuneralID})"><i class="glyphicon glyphicon-print"></i></a>
 
                                     </td>
                                 </tr>

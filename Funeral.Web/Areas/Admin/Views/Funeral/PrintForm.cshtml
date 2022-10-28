@@ -1,4 +1,4 @@
-﻿@model Funeral.Web.Areas.Admin.Models.ViewModel.FuneralServiceVM
+﻿@model Funeral.Model.FuneralServiceVM
 
 @{
     Layout = null;
@@ -6,7 +6,7 @@
     var taxAmount = 0.00;
     var discAmount = 0.00;
     var totalAmount = 0.00;
-    var base64 = Convert.ToBase64String(Model.ApplicationSettings.ApplicationLogo);
+    var base64 = Model.ApplicationSettings.ApplicationLogo == null ? "" : Convert.ToBase64String(Model.ApplicationSettings.ApplicationLogo);
     var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
 }
 <link href="~/Content/Invoice/style.css" rel="stylesheet" />
@@ -146,7 +146,7 @@
                                     </td>
                                     <td><b>:</b></td>
                                     <td style="text-align: left;">
-                                        <span id="lblNumber2">@Model.objFuneralModel.MemeberNumber</span>
+                                        <span id="lblNumber2">@Model.objFuneralModel.pkiFuneralID</span>
                                     </td>
                                 </tr>
                                 <tr>
