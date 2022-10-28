@@ -262,7 +262,7 @@ namespace Funeral.Web.Admin.Reports
                 rpw.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
                 rpw.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/" + hfAdminReport.Value;
                 ReportParameterCollection reportParameters = new ReportParameterCollection();
-                //DateTime DateTo = new DateTime();
+                DateTime DateTo = new DateTime();
 
                 if (chk_dateDisabled.Checked)
                 {
@@ -279,12 +279,16 @@ namespace Funeral.Web.Admin.Reports
                 }
                 else
                 {
-                    //txtDateTo = DateTime.Parse(txtDateTo.Text);
+                    DateTo = DateTime.Parse(txtDateTo.Text);
+
+                    DateTime dateToTest = DateTo.AddDays(1).AddSeconds(-1);
+                    //string test = dateToTest.ToString("dd MMMM yyyy");
                     if (!string.IsNullOrEmpty(txtDateFrom.Text))
                         reportParameters.Add(new ReportParameter("DateFrom", txtDateFrom.Text));
                     if (!string.IsNullOrEmpty(txtDateTo.Text))
-                        reportParameters.Add(new ReportParameter("DateTo", txtDateTo.Text));
-                    //reportParameters.Add(new ReportParameter("DateTo", DateTo.AddDays(1).AddSeconds(-1).ToString()));
+                        //reportParameters.Add(new ReportParameter("DateTo", txtDateTo.Text));
+                    //reportParameters.Add(new ReportParameter("DateTo", dateToTest.ToString("dd MMMM yyyy")));
+                    reportParameters.Add(new ReportParameter("DateTo", dateToTest.ToString("yyyy - MM - dd HH: mm:ss.fff")));
                 }
 
                 if (IsAdministrator != true)
