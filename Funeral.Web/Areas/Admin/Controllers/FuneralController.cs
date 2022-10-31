@@ -287,11 +287,11 @@ namespace Funeral.Web.Areas.Admin.Controllers
             {
                 Amt = Amt + item.Amount;
             }
-            var test = CalculateFinal(Amt, tax, processPayment.objFuneralModel.Discount, TotalPayment);
+            var totalAmount = CalculateFinal(Amt, tax, processPayment.objFuneralModel.Discount, TotalPayment);
             processPayment.FuneralNumber = Convert.ToString(funeralId);
             processPayment.ReceivedBy = User.Identity.Name;
-            processPayment.TotalAmount = test;
-            //processPayment.MonthPaid = 
+            processPayment.TotalAmount = totalAmount.ToString();
+            processPayment.MonthPaid = processPayment.MonthPaid;
             return View(processPayment);
         }
         public string CalculateFinal(Decimal sub, decimal Tax, decimal Dis, decimal totalPaid)
@@ -583,7 +583,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult FuneralServices(FuneralModel model, string submitForm)
         {
-            string savedTabConfirmationMsg = model.Status == "New" ? "BodyCollection " : model.Status + " saved successfully";
+            string savedTabConfirmationMsg = model.Status == "New" ? "BodyCollection" : model.Status;
+            savedTabConfirmationMsg = savedTabConfirmationMsg + " saved successfully";
             if (ModelState.IsValid)
             {
                 model.parlourid = this.ParlourId;
@@ -640,6 +641,12 @@ namespace Funeral.Web.Areas.Admin.Controllers
             funeralModel.FuneralServiceVM = objFuneral;
 
             return funeralModel;
+        }
+        [HttpGet]
+        public ActionResult GetFuneralServicesByFuneralId(int funeralId)
+        {
+            var services = FuneralBAL.SelectServiceByFuneralID(funeralId);
+            return Json(JsonConvert.SerializeObject(services), JsonRequestBehavior.AllowGet);
         }
         public ActionResult FuneralSearch()
         {

@@ -287,7 +287,7 @@ namespace Funeral.DAL
             ObjParam[3] = new DbParameter("@Tax", DbParameter.DbType.Money, 0, Tax);
             ObjParam[4] = new DbParameter("@Notes", DbParameter.DbType.NVarChar, 0, Notes);
 
-            string query = " update Funerals set InvoiceNumber=@InvoiceNumber,DisCount=@DisCount,Tax=@Tax,Notes = @Notes where pkiFuneralID=@pkiFuneralID";
+            string query = " update Funerals set InvoiceNumber=@InvoiceNumber,DisCount=@DisCount,Tax=@Tax,FuneralArrangemmentsNotes = @Notes where pkiFuneralID=@pkiFuneralID";
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.Text, query, ObjParam));
         }
         public static int SaveFuneralSupportedDocument(FuneralDocumentModel model)

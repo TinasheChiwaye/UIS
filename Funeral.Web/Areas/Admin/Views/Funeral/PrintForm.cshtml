@@ -9,6 +9,7 @@
     var base64 = Model.ApplicationSettings.ApplicationLogo == null ? "" : Convert.ToBase64String(Model.ApplicationSettings.ApplicationLogo);
     var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
 }
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
 <link href="~/Content/Invoice/style.css" rel="stylesheet" />
 <script>
     function printDiv(divName) {
@@ -39,7 +40,7 @@
 <head>
 </head>
 <body>
-    <input type="button" onclick="printDiv('PrintDiv')" value="Print This..">
+    <button type="button" class="btn btn-info btn-sm" onclick="printDiv('PrintDiv')">Print This..</button>
     @*<input type="button" onclick="sendMail();" value="Email This..">*@
     <div id="PrintDiv">
         <div>

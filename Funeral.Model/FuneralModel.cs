@@ -93,6 +93,7 @@ namespace Funeral.Model
         public string InvoiceNumber { get; set; }
         public string InvoiceNumber2 { get; set; }
         public string Notes { get; set; }
+        public string FuneralArrangemmentsNotes { get; set; }
         public Decimal Discount { get; set; }
         public Decimal Tax { get; set; }
 

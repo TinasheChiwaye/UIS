@@ -893,7 +893,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                 <div class="ibox-content">
                                                     @Html.Partial("_FuneralSearvicePaymentSection", Model.FuneralServiceVM)
                                                 </div>
-                                            </div> 
+                                            </div>
                                             <div>
                                                 <input type="hidden" id="txtQuotationNumber" value="@Model.InvoiceNumber" />
                                                 @Html.Partial("_FuneralSearviceDetailSection", Model.FuneralServiceVM)
@@ -1012,95 +1012,95 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                     </div>
 
                                     @*<div id="tabTombstone" class="tab-pane">
-                                        <div class="col-lg-6">
+                                            <div class="col-lg-6">
 
-                                            <div class="form-group">
-                                                <label>Tombstone Type</label>
-                                                @Html.DropDownListFor(m => m.TombstoneType, ddlTombstoneType, "Select an option", new { Name = "TombstoneType", @class = "form-control  " })
+                                                <div class="form-group">
+                                                    <label>Tombstone Type</label>
+                                                    @Html.DropDownListFor(m => m.TombstoneType, ddlTombstoneType, "Select an option", new { Name = "TombstoneType", @class = "form-control  " })
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-6">
+                                            <div class="col-lg-6">
 
-                                            <div class="form-group">
-                                                <label>Tombstone code</label>
-                                                @Html.DropDownListFor(m => m.TombstoneCode, ddlTombstoneCode, "Select an option", new { Name = "TombstoneCode", @class = "form-control  " })
+                                                <div class="form-group">
+                                                    <label>Tombstone code</label>
+                                                    @Html.DropDownListFor(m => m.TombstoneCode, ddlTombstoneCode, "Select an option", new { Name = "TombstoneCode", @class = "form-control  " })
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div class="col-lg-6">
+                                            <div class="col-lg-6">
 
-                                            <div class="form-group">
-                                                <label>Tombstone Polish</label>
-                                                @Html.DropDownListFor(m => m.TombstonePolish, ddlTombstonePolished, "Select an option", new { Name = "TombstonePolish", @class = "form-control  " })
+                                                <div class="form-group">
+                                                    <label>Tombstone Polish</label>
+                                                    @Html.DropDownListFor(m => m.TombstonePolish, ddlTombstonePolished, "Select an option", new { Name = "TombstonePolish", @class = "form-control  " })
+                                                </div>
                                             </div>
-                                        </div>
-                                        &nbsp;&nbsp;&nbsp;
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading" style="line-height:3">
-                                                        Tombstone Documents
-                                                        <div style="float:left;">
-                                                            <input id="btnAddDocs" type="button" value="Add Docs" onclick="btnAddDocsClick()" class="btn btn-sm btn-primary" />
+                                            &nbsp;&nbsp;&nbsp;
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading" style="line-height:3">
+                                                            Tombstone Documents
+                                                            <div style="float:left;">
+                                                                <input id="btnAddDocs" type="button" value="Add Docs" onclick="btnAddDocsClick()" class="btn btn-sm btn-primary" />
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="panel-body">
-                                                        <table class="table table-hover">
-                                                            <thead class="thead-dark">
-                                                                <tr>
-                                                                    <th scope="col">Document Type</th>
-                                                                    <th scope="col">Document Name</th>
-                                                                    <th scope="col">Created Date</th>
-                                                                    <th scope="col">Action</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @{
-                                                                    if (Model.FuneralDocuments != null)
-                                                                    {
-                                                                        foreach (var item in Model.FuneralDocuments)
+                                                        <div class="panel-body">
+                                                            <table class="table table-hover">
+                                                                <thead class="thead-dark">
+                                                                    <tr>
+                                                                        <th scope="col">Document Type</th>
+                                                                        <th scope="col">Document Name</th>
+                                                                        <th scope="col">Created Date</th>
+                                                                        <th scope="col">Action</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @{
+                                                                        if (Model.FuneralDocuments != null)
                                                                         {
-                                                                            <tr>
-                                                                                <td>
-                                                                                    @if (item.DocType == 1)
-                                                                                    {
-                                                                                        <span>BI663 Document</span>
-                                                                                    }
-                                                                                    else
-                                                                                    {
-                                                                                        <span>Death Certificate</span>
-                                                                                    }
-                                                                                </td>
-                                                                                <td>@item.ImageName</td>
-                                                                                <td>
-                                                                                    @if (item.fkiFuneralID > 0)
-                                                                                    {
-                                                                                        @item.CreateDate.ToString("dd MMM yyyy hh:mm tt")
-                                                                                    }
-                                                                                    else
-                                                                                    {
-                                                                                        <span>-----</span>
-                                                                                    }
-                                                                                </td>
-                                                                                <td>
-                                                                                    @{
-                                                                                        if (item.fkiFuneralID > 0)
+                                                                            foreach (var item in Model.FuneralDocuments)
+                                                                            {
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        @if (item.DocType == 1)
                                                                                         {
-                                                                                            <a title="Download this funeral document" href="~/Handler/DocumentHandler.ashx?DocClaimID=@item.pkiFuneralPictureID"><i class="glyphicon glyphicon-download"></i></a>
+                                                                                            <span>BI663 Document</span>
                                                                                         }
-                                                                                    }
-                                                                                </td>
-                                                                            </tr>
+                                                                                        else
+                                                                                        {
+                                                                                            <span>Death Certificate</span>
+                                                                                        }
+                                                                                    </td>
+                                                                                    <td>@item.ImageName</td>
+                                                                                    <td>
+                                                                                        @if (item.fkiFuneralID > 0)
+                                                                                        {
+                                                                                            @item.CreateDate.ToString("dd MMM yyyy hh:mm tt")
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            <span>-----</span>
+                                                                                        }
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        @{
+                                                                                            if (item.fkiFuneralID > 0)
+                                                                                            {
+                                                                                                <a title="Download this funeral document" href="~/Handler/DocumentHandler.ashx?DocClaimID=@item.pkiFuneralPictureID"><i class="glyphicon glyphicon-download"></i></a>
+                                                                                            }
+                                                                                        }
+                                                                                    </td>
+                                                                                </tr>
+                                                                            }
                                                                         }
                                                                     }
-                                                                }
-                                                            </tbody>
-                                                        </table>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>*@
+                                        </div>*@
 
                                     <div id="tabPayment" class="tab-pane">
                                         @*@using (Html.BeginForm("FuneralServices", "Funeral", FormMethod.Post, new { id = "frmFuneralPayment" }))
@@ -1472,7 +1472,8 @@ new SelectListItem() { Text = "Other", Value = "Other" },
         $(".modal-backdrop").hide();
     }
     function btnProcessPaymentClick() {
-        window.location.href = "../../Admin/FuneralPayment.aspx?FID=" + $("#pkiFuneralID").val();
+        //window.location.href = "../../Admin/FuneralPayment.aspx?FID=" + $("#pkiFuneralID").val();
+        window.location.href = "@Url.Action("FuneralPayment", "Funeral")?funeralId=" + $("#pkiFuneralID").val();
     }
     function btnViewPaymentHistoryClick() {
         $.ajax({
