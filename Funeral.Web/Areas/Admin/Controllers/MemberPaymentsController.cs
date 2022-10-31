@@ -346,7 +346,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
 
         //=========================test===============================
-        public JsonResult CalculateAmount(int noOfMonths, int TotalPremieum, int LatePanelty, string NextDate)
+        public JsonResult CalculateAmount(int noOfMonths, decimal TotalPremieum, int LatePanelty, string NextDate)
         {
             var info = CultureInfo.InvariantCulture.Clone() as CultureInfo;
             info.NumberFormat.NumberDecimalSeparator = ".";
