@@ -81,8 +81,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
             List<SelectListItem> entriesItems = new List<SelectListItem>();
             keyValues.Add(new KeyValue { Key = "10", Value = "10" });
             keyValues.Add(new KeyValue { Key = "20", Value = "20" });
-            keyValues.Add(new KeyValue { Key = "25", Value = "25" });
             keyValues.Add(new KeyValue { Key = "50", Value = "50" });
+            keyValues.Add(new KeyValue { Key = "25", Value = "25" });
             keyValues.Add(new KeyValue { Key = "100", Value = "100" });
             keyValues.Add(new KeyValue { Key = "200", Value = "200" });
             keyValues.Add(new KeyValue { Key = "250", Value = "250" });
@@ -711,7 +711,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             //PlanModel Plan = new PlanModel();
             PlanModel objPlans = MembersBAL.GetPlanByPlanID(Member.fkiPlanID, CurrentParlourId);
 
-            if (MembersBAL.GetMemberByIDNumber(Member.IDNumber, this.ParlourId, Member.fkiPlanID) != null && Member.pkiMemberID == 0)
+            if (MembersBAL.GetMemberByIDNumber(Member.IDNumber, this.ParlourId, Member.fkiPlanID) != null && Member.pkiMemberID == 0 && Member.IDNumber != "0")
             {
                 //return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member Already Exists" + "</li>").ToList() }, JsonRequestBehavior.AllowGet);
                 return Json(new { success = "Duplicate", errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member ID Number already exists on this Plan." + "</li>").First() }, JsonRequestBehavior.AllowGet);

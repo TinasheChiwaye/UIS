@@ -18,12 +18,18 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using System.Web.UI.WebControls;
+//using Funeral.Model.Search;
+using Microsoft.Reporting.WebForms;
+using System.Data.SqlClient;
+using System.Globalization;
+using Funeral.Web.niws_validation;
+using System.Net.Mail;
 
 namespace Funeral.Web.Areas.Admin.Controllers
 {
     public class FuneralController : BaseAdminController
     {
-
+        public int pkiFuneralID { get; set; }
 
         /// <summary>
         /// Base of Page which allow to access the page
@@ -32,6 +38,9 @@ namespace Funeral.Web.Areas.Admin.Controllers
         {
             this.dbPageId = 10;
         }
+
+        private readonly ISiteSettings _siteConfig = new SiteSettings();
+
 
         /// <summary>
         /// Index method to Display List
@@ -397,6 +406,69 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 throw ex;
             }
             return Json("Service Successfully Saved.", JsonRequestBehavior.AllowGet);
+        }
+
+        //public ActionResult Download(string fileName)
+        //{
+        //    string path = Server.MapPath("~/Handler");
+
+        //    byte[] fileBytes = System.IO.File.ReadAllBytes(path + @"\" + fileName);
+
+        //    return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        //}
+
+        public void btnMortuaryLetter(int pkiFuneralID)
+        {
+            Warning[] warnings;
+            string[] streamids;
+            string mimeType;
+            string encoding;
+            //string filenameExtension;
+            string filename;
+            string result;
+
+            try
+            {
+                ReportViewer rpw = new ReportViewer();
+                rpw.ProcessingMode = ProcessingMode.Remote;
+                IReportServerCredentials irsc = new MyReportServerCredentials();
+
+                rpw.ServerReport.ReportServerCredentials = irsc;
+
+                rpw.ProcessingMode = ProcessingMode.Remote;
+                rpw.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
+                rpw.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/Mortuary Letter";
+                ReportParameterCollection reportParameters = new ReportParameterCollection();
+                FuneralModel funeralModel = new FuneralModel();
+                //FuneralServiceVM objFuneral = new FuneralServiceVM();
+                //FuneralServiceSelectModel objSer = new FuneralServiceSelectModel();
+                //var funeral = FuneralBAL.SelectFuneralBypkid(pkiFuneralID, ParlourId);
+
+
+                reportParameters.Add(new ReportParameter("FuneralID", pkiFuneralID.ToString()));
+                reportParameters.Add(new ReportParameter("Parlourid", CurrentParlourId.ToString()));
+                rpw.ServerReport.SetParameters(reportParameters);
+                string ExportTypeExtensions = "pdf";
+                byte[] bytes = rpw.ServerReport.Render(ExportTypeExtensions, null, out mimeType, out encoding, out ExportTypeExtensions, out streamids, out warnings);
+                filename = string.Format("{0}.{1}", "Mortuary Letter", ExportTypeExtensions);
+
+                Response.ClearHeaders();
+                Response.Clear();
+                Response.AddHeader("Content-Disposition", "attachment;filename=" + filename);
+                Response.ContentType = mimeType;
+                Response.BinaryWrite(bytes);
+                Response.Flush();
+                Response.End();
+                result = "true";
+
+            }
+            catch (Exception ex)
+            {
+                result = ex.Message;
+                //result = "The attempt to connect to the report server failed.  Check your connection information and that the report server is a compatible version.    ";
+                //ShowMessage(ref lblMessage, MessageType.Danger, exc.Message);
+            }
+            //return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>

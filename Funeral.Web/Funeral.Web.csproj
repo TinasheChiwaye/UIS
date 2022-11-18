@@ -933,6 +933,7 @@
     <Content Include="GET_Dependent_And_Extended_Family.xss">
       <DependentUpon>GET_Dependent_And_Extended_Family.xsd</DependentUpon>
     </Content>
+    <Content Include="Handler\Mortuary Letter.pdf" />
     <None Include="MemberSelect.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>MemberSelect.Designer.cs</LastGenOutput>
