@@ -40,7 +40,7 @@
 <head>
 </head>
 <body>
-    <button type="button" class="btn btn-info btn-sm" onclick="printDiv('PrintDiv')">Print This..</button>
+    <button type="button" class="btn btn-danger btn-sm" style="margin:2px !important" onclick="printDiv('PrintDiv')">Print</button>
     @*<input type="button" onclick="sendMail();" value="Email This..">*@
     <div id="PrintDiv">
         <div>
@@ -89,7 +89,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="padding-top: .0em; padding-bottom: .0em; text-align: left; padding-left: 0">
+                                    <td style="padding-top: .0em; padding-bottom: .0em; text-align: left;">
                                         <div>
                                             <span id="lblAdd4">@Model.ApplicationSettings.BusinessAddressLine4</span>
                                         </div>
@@ -154,7 +154,7 @@
                                     <td><b>Date</b></td>
                                     <td><b>:</b></td>
                                     <td style="text-align: left;">
-                                        <span id="lblDate">@Model.objFuneralModel.DateOfFuneral.ToString("dd MM yyyy")</span>
+                                        <span id="lblDate">@Model.objFuneralModel.DateOfFuneral.ToString("dd/MM/yyyy")</span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -175,9 +175,6 @@
                 <h1></h1>
                 <div id="company" class="clearfix" style="text-align: right">
                     <div>
-                        <span id="lblInvoiceDateTitle">Funeral date</span>:<span id="lblInvoiceDate">@Model.objFuneralModel.DateOfFuneral.ToString("dd MM yyyy")</span>
-                    </div>
-                    <div>
                         <span id="lblDecename1"></span>:<span id="lblDecename2"></span>
                     </div>
                     <div>
@@ -193,11 +190,18 @@
                         <span id="lblDeceDate1"></span><span id="lblDeceDate2"></span>
                     </div>
                 </div>
-                <h2>To</h2>
+                <h2>To,</h2>
                 <div id="project2">
                     <div>
                         <span>
-                            <span id="lblName">@Model.objFuneralModel.ContactPerson &nbsp; @Model.objFuneralModel.FullNames</span>
+                            @if (string.IsNullOrWhiteSpace(Model.objFuneralModel.ContactPerson))
+                            {
+                                <span id="lblName">@Model.objFuneralModel.FullNames</span>
+                            }
+                            else
+                            {
+                                <span id="lblName">@Model.objFuneralModel.ContactPerson &nbsp; @Model.objFuneralModel.FullNames</span>
+                            }
                         </span>
                     </div>
                     <div>
@@ -230,7 +234,7 @@
                 <br>
                 <h1></h1>
 
-                <table border="1" style="font-size:12px !important;">
+                <table border="1" style="font-size:12px !important;" class="table table-bordered">
                     <thead>
                         <tr>
                             <th class="service">SERVICE</th>
@@ -330,51 +334,45 @@
                     </tbody>
                 </table>
             </div>
-            <br>
-            <h1></h1>
             <div id="notices">
-                <div>NOTES:</div>
+                <div><b style="font-size:14px;">NOTES:</b></div>
                 <div class="notice">
-                    <span id="lblNotes"></span>
+                    <span id="lblNotes">@Model.objFuneralModel.Notes</span>
                 </div>
             </div>
             <hr>
-            <div>Terms and Conditions:</div>
-            <div class="notice">
-                <span id="lblTNC">@Model.ModelTermsAndCondition.TermsAndCondition</span>
+            <div id="notices">
+                <div><b style="font-size:14px;">Terms and Conditions:</b></div>
+                <div class="notice">
+                    <span id="lblNotes">@Model.ModelTermsAndCondition.TermsAndCondition</span>
+                </div>
             </div>
-            <br>
-            <h1></h1>
-            @*<div>Bank Details</div>
-                <div class="form-group pull-rigt">Bank Details</div>*@
-
-            <label>Bank Details</label>
-            <label style="display: inline-block;width: auto;text-align: right;float: right;">Funeral Bank Details</label>
             <hr>
+            <label style="font-size:14px;">Bank Details</label>
+            <label style="display: inline-block;width: auto;text-align: right;float: right;font-size:14px;">Funeral Bank Details</label>
             <div class="notice">
                 <table style="width: 100%; font-size:12px;">
                     <tbody>
                         <tr>
                             <td style="text-align: left;">
-                                <b>Account Holder 	:</b>@Model.ModelBankDetails.AccountHolder<br>
-                                <b>Bank name 	:</b>@Model.ModelBankDetails.Bankname<br>
-                                <b>Account Number 	:</b>@Model.ModelBankDetails.AccountNumber<br>
-                                <b>Account type 	:</b>@Model.ModelBankDetails.Accounttype<br>
-                                <b>Branch 	:</b>@Model.ModelBankDetails.Branch<br>
-                                <b>Branch code 	:</b>@Model.ModelBankDetails.Branchcode<br>
+                                <b>Account Holder:</b>&nbsp;@Model.ModelBankDetails.AccountHolder<br>
+                                <b>Bank name:</b>&nbsp;@Model.ModelBankDetails.Bankname<br>
+                                <b>Account Number:</b>&nbsp;@Model.ModelBankDetails.AccountNumber<br>
+                                <b>Account type:</b>&nbsp;@Model.ModelBankDetails.Accounttype<br>
+                                <b>Branch:</b>&nbsp;@Model.ModelBankDetails.Branch<br>
+                                <b>Branch code:</b>&nbsp;@Model.ModelBankDetails.Branchcode<br>
                             </td>
                             <td style="text-align: right;">
-                                <b>Account Holder 	:</b>@Model.ModelBankDetails.Funeral_AccountHolder<br>
-                                <b>Bank name 	:</b>@Model.ModelBankDetails.Funeral_Bankname<br>
-                                <b>Account Number 	:</b>@Model.ModelBankDetails.Funeral_AccountNumber<br>
-                                <b>Account type 	:</b>@Model.ModelBankDetails.Funeral_Accounttype<br>
-                                <b>Branch 	:</b>@Model.ModelBankDetails.Funeral_Branch<br>
-                                <b>Branch code 	:</b>@Model.ModelBankDetails.Funeral_Branchcode<br>
+                                <b>Account Holder:</b>&nbsp;@Model.ModelBankDetails.Funeral_AccountHolder<br>
+                                <b>Bank name:</b>&nbsp;@Model.ModelBankDetails.Funeral_Bankname<br>
+                                <b>Account Number:</b>&nbsp;@Model.ModelBankDetails.Funeral_AccountNumber<br>
+                                <b>Account type:</b>&nbsp;@Model.ModelBankDetails.Funeral_Accounttype<br>
+                                <b>Branch:</b>&nbsp;@Model.ModelBankDetails.Funeral_Branch<br>
+                                <b>Branch code:</b>&nbsp;@Model.ModelBankDetails.Funeral_Branchcode<br>
                             </td>
                         </tr>
-
                         <tr>
-                            <td>
+                            <td colspan="2">
                                 <footer>
                                     <div style="text-align: center;">
                                         <span id="lblSlogan">@Model.ApplicationSettings.ManageSlogan</span>
