@@ -114,6 +114,7 @@ namespace Funeral.Model
         public string IdentityDocument { get; set; }
         public string CauseOfDeath { get; set; }
         public string Status { get; set; }
+        public string SelectedTab { get; set; }
 
         public string CollectionType { get; set; }
         public string Village { get; set; }
