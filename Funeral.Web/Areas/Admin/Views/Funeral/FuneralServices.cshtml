@@ -583,7 +583,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                         </div>
                                                         <div class="form-group">
                                                             <label> Contact Number </label>
-                                                            @Html.TextBoxFor(m => m.NextOfKinFullNames, null, new { @class = "form-control", @id = "NextOfKinContactNumber", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
+                                                            @Html.TextBoxFor(m => m.NextOfKinContactNumber, null, new { @class = "form-control", @id = "NextOfKinContactPerson", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
@@ -593,7 +593,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                         </div>
                                                         <div class="form-group">
                                                             <label>Address </label>
-                                                            @Html.TextBoxFor(m => m.NextOfKinSurname, null, new { @class = "form-control", @id = "NextOfKinSurname", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
+                                                            @Html.TextBoxFor(m => m.NextOfKinAddress, null, new { @class = "form-control", @id = "NextOfKinAddress", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
                                                         </div>
                                                     </div>
                                                 </div>
@@ -611,7 +611,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                         </div>
                                                         <div class="form-group">
                                                             <label>Contact Number </label>
-                                                            @Html.TextBoxFor(m => m.ChiefFullNames, null, new { @class = "form-control", @id = "ChiefFullName", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
+                                                            @Html.TextBoxFor(m => m.ChiefContactPerson, null, new { @class = "form-control", @id = "ChiefFullName", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
                                                             @*@Html.ValidationMessageFor(m => m.NextOfKinFullNames, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })*@
                                                         </div>
                                                     </div>
@@ -623,7 +623,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                         </div>
                                                         <div class="form-group">
                                                             <label> Address </label>
-                                                            @Html.TextBoxFor(m => m.ChiefSurname, null, new { @class = "form-control", @id = "ChiefSurname", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
+                                                            @Html.TextBoxFor(m => m.ChiefAddress, null, new { @class = "form-control", @id = "ChiefSurname", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
                                                             @Html.ValidationMessageFor(m => m.Surname, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                                                         </div>
                                                     </div>

@@ -155,8 +155,14 @@ namespace Funeral.Model
         public string DeceasedAge { get; set; }
         public string NextOfKinFullNames { get; set; }
         public string NextOfKinSurname { get; set; }
+        public string NextOfKinAddress { get; set; }
+        public string NextOfKinContactPerson { get; set; }
+        public string NextOfKinContactNumber { get; set; }
         public string ChiefFullNames { get; set; }
         public string ChiefSurname { get; set; }
+        public string ChiefAddress { get; set; }
+        public string ChiefContactPerson { get; set; }
+        public string ChiefContactNumber { get; set; }
         public string MortuaryAttendent { get; set; }
         public string SkinColour { get; set; }
         public string CoffinClassification { get; set; }
