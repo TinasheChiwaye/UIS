@@ -656,7 +656,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
         public ActionResult FuneralServices(FuneralModel model, string submitForm)
         {
             string savedTabConfirmationMsg = model.Status == "New" ? "BodyCollection" : model.Status;
-            savedTabConfirmationMsg = savedTabConfirmationMsg + " saved successfully";
+            //savedTabConfirmationMsg = savedTabConfirmationMsg + " saved successfully";
+            savedTabConfirmationMsg = "Saved successfully";
             if (ModelState.IsValid)
             {
                 model.parlourid = this.ParlourId;

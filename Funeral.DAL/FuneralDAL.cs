@@ -124,12 +124,12 @@ namespace Funeral.DAL
             ObjParam[57] = new DbParameter("@TagNumber", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.TagNumber));
             ObjParam[58] = new DbParameter("@NextOfKinFullNames", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.NextOfKinFullNames));
             ObjParam[59] = new DbParameter("@NextOfKinSurname", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.NextOfKinSurname));
-            ObjParam[60] = new DbParameter("@NextOfContactNumber", DbParameter.DbType.VarChar, 0, model.NextOfKinContactNumber);
-            ObjParam[61] = new DbParameter("@NextOfKinAddress", DbParameter.DbType.VarChar, 0, model.NextOfKinAddress); 
+            ObjParam[60] = new DbParameter("@NextofKinContactNumber", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.NextOfKinContactNumber));
+            ObjParam[61] = new DbParameter("@NextOfKinAddress", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.NextOfKinAddress)); 
             ObjParam[62] = new DbParameter("@ChiefFullNames", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.ChiefFullNames));
             ObjParam[63] = new DbParameter("@ChiefSurname", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.ChiefSurname));
-            ObjParam[64] = new DbParameter("@ChiefContactNumber", DbParameter.DbType.VarChar, 0, model.ChiefContactNumber);
-            ObjParam[65] = new DbParameter("@ChiefAddress", DbParameter.DbType.VarChar, 0, model.ChiefAddress);
+            ObjParam[64] = new DbParameter("@ChiefContactNumber", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.ChiefContactNumber));
+            ObjParam[65] = new DbParameter("@ChiefAddress", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.ChiefAddress));
               
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
         }
