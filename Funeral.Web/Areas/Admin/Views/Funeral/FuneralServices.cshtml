@@ -374,15 +374,15 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                     <div class="row">
                         <div class="panel blank-panel">
                             <div class="panel-heading">
-                                <div class="panel-options" id="Tabs">
+                                <div class="panel-options" id="Tabs">  
                                     <ul class="nav nav-tabs" id="myTab">
-                                        <li class="active" id="tab1"><a data-toggle="tab" href="#tabBodyCollection" id="aBodyCollection" aria-expanded="true">Body Collection</a></li>
-                                        <li class="" id="tab2"><a data-toggle="tab" href="#tabMortuary" id="aMortuary" aria-expanded="false">Mortuary</a></li>
-                                        <li class="" id="tab4"><a data-toggle="tab" href="#tabFuneralArrangement" id="aFuneralArrangement" aria-expanded="false">Funeral Arrangements</a></li>
-                                        @*<li class="" id="tab7"><a data-toggle="tab" href="#tabBurial" id="aBurial" aria-expanded="true">Burial</a></li>*@
+                                        <li class="active" id="tab1"><a data-toggle="tab" href="#tabBodyCollection" id="aBodyCollection" aria-expanded="true" onclick="tabClick('BodyCollection')">Body Collection</a></li>
+                                        <li class="" id="tab2"><a data-toggle="tab" href="#tabMortuary" id="aMortuary" aria-expanded="false" onclick="tabClick('Mortuary')">Mortuary</a></li>
+                                        <li class="" id="tab4"><a data-toggle="tab" href="#tabFuneralArrangement" id="aFuneralArrangement" aria-expanded="false" onclick="tabClick('FuneralArrangement')">Funeral Arrangements</a></li>
+                                        <li class="" id="tab7"><a data-toggle="tab" href="#tabBurial" id="aBurial" aria-expanded="true" onclick="tabClick('Burial')">Burial</a></li>
                                         @*<li class="" id="tab8"><a data-toggle="tab" href="#tabTombstone" id="aTombstone" aria-expanded="true">Tombstone</a></li>*@
-                                        <li class="" id="tab5"><a data-toggle="tab" href="#tabPayment" id="aPayment" aria-expanded="true">Payment</a></li>
-                                        <li class="" id="tab6"><a data-toggle="tab" href="#tabFuneralSchedule" id="aFuneralSchedule" aria-expanded="false">Funeral Schedule</a></li>
+                                        <li class="" id="tab5"><a data-toggle="tab" href="#tabPayment" id="aPayment" aria-expanded="true" onclick="tabClick('Payment')">Payment</a></li>
+                                        <li class="" id="tab6"><a data-toggle="tab" href="#tabFuneralSchedule" id="aFuneralSchedule" aria-expanded="false" onclick="tabClick('FuneralSchedule')">Funeral Schedule</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -401,6 +401,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                             <input type="hidden" value="@Model.pkiFuneralID" name="pkiFuneralID" id="pkiFuneralID" />
                                                             @Html.HiddenFor(m => m.parlourid)
                                                             @Html.HiddenFor(m => m.Status)
+                                                            @Html.HiddenFor(m => m.SelectedTab)
                                                             @Html.Hidden("submitForm", "bodyCollection", new { @id = "submitForm" })
                                                             @Html.Label("Claimant Name", new { @class = "control-label" })
                                                             @Html.TextBoxFor(m => m.ClaimantName, null, new { @class = "form-control", @maxlength = "30" })
@@ -580,20 +581,14 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                         <div class="form-group">
                                                             <label> Full Name </label>
                                                             @Html.TextBoxFor(m => m.NextOfKinFullNames, null, new { @class = "form-control", @id = "NextOfKinFullNames", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label> Contact Number </label>
-                                                            @Html.TextBoxFor(m => m.NextOfKinContactNumber, null, new { @class = "form-control", @id = "NextOfKinContactPerson", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
+                                                            @*@Html.ValidationMessageFor(m => m.NextOfKinFullName, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })*@
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
                                                             <label>Surname </label>
                                                             @Html.TextBoxFor(m => m.NextOfKinSurname, null, new { @class = "form-control", @id = "NextOfKinSurname", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>Address </label>
-                                                            @Html.TextBoxFor(m => m.NextOfKinAddress, null, new { @class = "form-control", @id = "NextOfKinAddress", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
+                                                            @*@Html.ValidationMessageFor(m => m.Surname, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })*@
                                                         </div>
                                                     </div>
                                                 </div>
@@ -609,21 +604,11 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                             @Html.TextBoxFor(m => m.ChiefFullNames, null, new { @class = "form-control", @id = "ChiefFullName", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
                                                             @*@Html.ValidationMessageFor(m => m.NextOfKinFullNames, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })*@
                                                         </div>
-                                                        <div class="form-group">
-                                                            <label>Contact Number </label>
-                                                            @Html.TextBoxFor(m => m.ChiefContactPerson, null, new { @class = "form-control", @id = "ChiefFullName", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
-                                                            @*@Html.ValidationMessageFor(m => m.NextOfKinFullNames, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })*@
-                                                        </div>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
                                                             <label> Surname </label>
                                                             @Html.TextBoxFor(m => m.ChiefSurname, null, new { @class = "form-control", @id = "ChiefSurname", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
-                                                            @Html.ValidationMessageFor(m => m.Surname, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label> Address </label>
-                                                            @Html.TextBoxFor(m => m.ChiefAddress, null, new { @class = "form-control", @id = "ChiefSurname", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
                                                             @Html.ValidationMessageFor(m => m.Surname, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                                                         </div>
                                                     </div>
@@ -680,7 +665,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                             @Html.HiddenFor(m => m.Status)
                                                             @Html.Hidden("submitForm", "mortuary", new { @id = "submitForm" })
                                                             @Html.Label("Mortuary Attendent", new { @class = "control-label" })
-                                                            @Html.TextBoxFor(m => m.MortuaryAttendent, null, new { @class = "form-control", @maxlength = "30" })
+                                                            @Html.TextBoxFor(m => m.MortuaryAttendent, null, new { @class = "form-control datetimepicker", @maxlength = "30" })
                                                             @Html.ValidationMessageFor(m => m.MortuaryAttendent, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                                                         </div>
                                                     </div>
@@ -715,7 +700,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
                                                             @Html.Label("Cause of Death", new { @class = "control-label" })
-                                                            @Html.TextBoxFor(m => m.CourseOfDearth, null, new { @class = "form-control", @maxlength = "30", @readonly = "readonly" })
+                                                            @Html.TextBoxFor(m => m.CauseOfDeath, null, new { @class = "form-control", @maxlength = "30", @readonly = "readonly" })
                                                             @*@Html.ValidationMessageFor(m => m.TagNumber, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })*@
                                                         </div>
                                                     </div>
@@ -789,22 +774,10 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                             <label>Personal Items</label>
                                                             @Html.TextBoxFor(m => m.PersonalItem, null, new { @class = "form-control", @id = "PersonalItem", @maxlength = "50", placeholder = "", @style = "text-transform:uppercase" })
                                                         </div>
-
                                                     </div>
                                                     <div class="col-lg-12">
                                                         <div class="btn-group">
-                                                            <button id="btnMortuary" onclick="return activateTab('mortuary','aFuneralArrangement')" type="reset" class="btn btn-w-m btn-primary">Save & Next</button>
-                                                        </div>
-                                                        <div class="btn-group" style="margin-left: 480px">
-                                                            @*@Html.Hidden("btnMortuaryLetterUrl", Url.Action("btnMortuaryLetter"))*@
-                                                            @*@Html.ActionLink("Mortuary Letter", "Download", new { fileName = "Mortuary Letter.pdf" }, new { @class = "btn btn-w-m btn-primary" })*@
-                                                            @*<input type="button" style="display:inline" id="MortuaryLetter" class="btn btn-w-m btn-primary" name="Mortuary Letter" value="pkiFuneralID" onclick="location.href='@Url.Action("btnMortuaryLetter", "Funeral")'">*@
-                                                            @Html.ActionLink(
-                                                                  "Mortuary Letter",
-                                                                  "btnMortuaryLetter",                         // controller action
-                                                                  "Funeral",        // controller
-                                                                  new { Model.pkiFuneralID },         // action parameters aka route values
-                                                                  new { @class = "btn btn-w-m btn-primary" })
+                                                            <button id="btnMortuary" onclick="return activateTab('mortuary','aFuneralArrangement')" type="submit" class="btn btn-w-m btn-primary">Save & Next</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1373,83 +1346,112 @@ new SelectListItem() { Text = "Other", Value = "Other" },
     });
 
     function tabSelector() {
-        var funeralStatus = '@Model.Status'.toLowerCase();
-        if (funeralStatus == 'New'.toLowerCase()) {
-            $("#tab1").addClass("active")
-            $('#aBodyCollection').trigger('click');
-            $("#tab1").show();
-            $("#tab2").hide();
-            $("#tab4").hide();
-            $("#tab5").hide();
-            $("#tab6").hide();
-            //$("#tab7").hide();
-            $("#tab8").hide();
-        }
-        else if (funeralStatus == 'BodyCollection'.toLowerCase()) {
-            $("#tab1").removeClass("active");
-            $("#tabBodyCollection").removeClass("active");
-            $("#tab2").addClass("active");
-            $("#tabMortuary").addClass("active");
-            $('#aMortuary').trigger('click');
-            $("#Status").val('Mortuary');
-            $("#tab2").show();
-            $("#tab1").show();
-            $("#tab4").hide();
-            $("#tab5").hide();
-            $("#tab6").hide();
-            //$("#tab7").hide();
-            $("#tab8").hide();
-        }
-        else if (funeralStatus == 'Mortuary'.toLowerCase()) {
-            $("#tab2").removeClass("active");
-            $("#tabMortuary").removeClass("active");
-            $("#tabFuneralArrangement").addClass("active");
-            $('#aFuneralArrangement').trigger('click');
-            $("#Status").val('FuneralArrangement');
+        var selectedTab = $("#SelectedTab").val();
+        if (selectedTab == '') {
+            var funeralStatus = $("#Status").val().toLowerCase();
+            if (funeralStatus == 'New'.toLowerCase()) {
+                $("#tab1").addClass("active")
+                $('#aBodyCollection').trigger('click');
+                $("#tab1").show();
+                $("#tab2").hide();
+                $("#tab4").hide();
+                $("#tab5").hide();
+                $("#tab6").hide();
+                $("#tab7").hide();
+                $("#tab8").hide();
+            }
+            else if (funeralStatus == 'BodyCollection'.toLowerCase()) {
+                $("#tab1").removeClass("active");
+                $("#tabBodyCollection").removeClass("active");
+                $("#tab2").addClass("active");
+                $("#tabMortuary").addClass("active");
+                $('#aMortuary').trigger('click');
+                $("#Status").val('Mortuary');
+                $("#tab2").show();
+                $("#tab1").show();
+                $("#tab4").hide();
+                $("#tab5").hide();
+                $("#tab6").hide();
+                $("#tab7").hide();
+                $("#tab8").hide();
+            }
+            else if (funeralStatus == 'Mortuary'.toLowerCase()) {
+                $("#tab2").removeClass("active");
+                $("#tabMortuary").removeClass("active");
+                $("#tabFuneralArrangement").addClass("active");
+                $('#aFuneralArrangement').trigger('click');
+                $("#Status").val('FuneralArrangement');
 
-            $("#tab4").show();
-            $("#tab1").show();
-            $("#tab2").show();
-            $("#tab5").hide();
-            $("#tab6").hide();
-            //$("#tab7").hide();
-            $("#tab8").hide();
-        }
-        else if (funeralStatus == 'FuneralArrangement'.toLowerCase()) {
-            $("#tabFuneralArrangement").removeClass("active");
-            $("#tabPayment").addClass("active");
-            $('#aPayment').trigger('click');
-            $("#Status").val('Payment');
-            $("#tab5").show();
-            $("#tab1").show();
-            $("#tab2").show();
-            $("#tab4").show();
-            $("#tab6").hide();
-            //$("#tab7").hide();
-            $("#tab8").hide();
-        }
-        else if (funeralStatus == 'Payment'.toLowerCase()) {
-            debugger
-            $('#aFuneralSchedule').trigger('click');
-            $("#Status").val('funeralschedule');
-            $("#tab6").show();
-            $("#tab1").show();
-            $("#tab2").show();
-            $("#tab4").show();
-            $("#tab5").show();
-        }
-        else if (funeralStatus == 'FuneralSchedule'.toLowerCase()) {
-            $('#aFuneralSchedule').trigger('click');
-            $("#tab6").show();
-            $("#tab1").show();
-            $("#tab2").show();
-            $("#tab4").show();
-            $("#tab5").show();
-            //$("#tab7").show();
-            $("#tab8").show();
+                $("#tab4").show();
+                $("#tab1").show();
+                $("#tab2").show();
+                $("#tab5").hide();
+                $("#tab6").hide();
+                $("#tab7").hide();
+                $("#tab8").hide();
+            }
+            else if (funeralStatus == 'FuneralArrangement'.toLowerCase()) {
+                $("#tabFuneralArrangement").removeClass("active");
+                $("#tabPayment").addClass("active");
+                $('#aBurial').trigger('click');
+                $("#Status").val('Burial');
+                $("#tab5").show();
+                $("#tab1").show();
+                $("#tab2").show();
+                $("#tab4").show();
+                $("#tab6").hide();
+                $("#tab7").hide();
+                $("#tab8").hide();
+            }
+            else if (funeralStatus == 'Burial'.toLowerCase()) {
+                $('#aPayment').trigger('click');
+                $("#Status").val('Payment');
+                $("#tab6").show();
+                $("#tab1").show();
+                $("#tab2").show();
+                $("#tab4").show();
+                $("#tab5").show();
+            }
+
+            else if (funeralStatus == 'Payment'.toLowerCase()) {
+                $('#aFuneralSchedule').trigger('click');
+                $("#Status").val('funeralschedule');
+                $("#tab6").show();
+                $("#tab1").show();
+                $("#tab2").show();
+                $("#tab4").show();
+                $("#tab5").show();
+            }
+            else if (funeralStatus == 'FuneralSchedule'.toLowerCase()) {
+                $('#aFuneralSchedule').trigger('click');
+                $("#tab6").show();
+                $("#tab1").show();
+                $("#tab2").show();
+                $("#tab4").show();
+                $("#tab5").show();
+                $("#tab7").show();
+                $("#tab8").show();
+            }
+            else {
+                $('#aBodyCollection').trigger('click');
+            }
         }
         else {
-            $('#aBodyCollection').trigger('click');
+            if (selectedTab == 'aMortuary') {
+                $('#aMortuary').trigger('click');
+            }
+            if (selectedTab == 'aFuneralArrangement') {
+                $('#aFuneralArrangement').trigger('click');
+            }
+            if (selectedTab == 'aBurial') {
+                $('#aBurial').trigger('click');
+            }
+            if (selectedTab == 'aPayment') {
+                $('#aPayment').trigger('click');
+            }
+            if (selectedTab == 'aFuneralSchedule') {
+                $('#aFuneralSchedule').trigger('click');
+            }
         }
     }
     function btnSaveDocument() {
@@ -1546,6 +1548,26 @@ new SelectListItem() { Text = "Other", Value = "Other" },
     }
     function eventClick() {
         alert("click")
+    }
+    function tabClick(selectedTab) { 
+        if (selectedTab == 'BodyCollection') {
+            $("#SelectedTab").val("aMortuary")
+        }
+        if (selectedTab == 'Mortuary') {
+            $("#SelectedTab").val("aFuneralArrangement")
+        }
+        if (selectedTab == 'FuneralArrangement') {
+            $("#SelectedTab").val("aBurial")
+        } 
+        if (selectedTab == 'Burial') {
+            $("#SelectedTab").val("aPayment")
+        }
+        if (selectedTab == 'Payment') {
+            $("#SelectedTab").val("aFuneralSchedule")
+        }
+        if (selectedTab == 'FuneralSchedule') {
+            $("#SelectedTab").val("aFuneralSchedule")
+        }      
     }
 </script>
 

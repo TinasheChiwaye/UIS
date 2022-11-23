@@ -559,15 +559,15 @@ namespace Funeral.Web.Areas.Admin.Controllers
 
         //    return View(printObj);
         //}
-        public ActionResult PrintForm(int funId)
+        public ActionResult PrintForm(int FuneralId)
         {
             FuneralServiceVM quotationServiceVM = new FuneralServiceVM();
             quotationServiceVM.Currency = Currency;
             quotationServiceVM.TaxSettings = TaxSettingBAL.GetAllTaxSettings().Select(f => new SelectListItem { Text = f.TaxText, Value = f.TaxValue.ToString() }).ToList();
             quotationServiceVM.ApplicationSettings = ToolsSetingBAL.GetApplictionByParlourID(ParlourId);
             quotationServiceVM.ServiceType = QuotationBAL.GetAllQuotationServices(ParlourId).Select(f => new SelectListItem { Text = f.ServiceName, Value = f.pkiServiceID.ToString() }).ToList();
-            quotationServiceVM.objFuneralModel = FuneralBAL.SelectFuneralBypkid(funId, ParlourId);
-            quotationServiceVM.ServiceList = FuneralBAL.SelectServiceByFuneralID(funId);
+            quotationServiceVM.objFuneralModel = FuneralBAL.SelectFuneralBypkid(FuneralId, ParlourId);
+            quotationServiceVM.ServiceList = FuneralBAL.SelectServiceByFuneralID(FuneralId);
             //quotationServiceVM.QuotationMessageModel = QuotationBAL.SelectQuotationMessageByID(qutId);
             quotationServiceVM.GetAllPackage = FuneralPackageBAL.SelectPackage(ParlourId).Select(f => new SelectListItem { Text = f.PackageName, Value = f.pkiPackageID.ToString() }).ToList();
             quotationServiceVM.ModelBankDetails = ToolsSetingBAL.GetBankingByID(ParlourId);

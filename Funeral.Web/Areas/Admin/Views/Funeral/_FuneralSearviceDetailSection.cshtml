@@ -63,7 +63,7 @@
                             var plaintextBytes = System.Text.Encoding.UTF8.GetBytes(id);
                             var encryptedValue = MachineKey.Encode(plaintextBytes, MachineKeyProtection.All);
                             @*<a href="~/Admin/PrintForm.aspx?FID=@encryptedValue" name="btnPrint" value="" id="btnPrint" class="btn btn-sm btn-primary">Print</a>*@
-                            <a href="@Url.Action("PrintForm","Funeral",new { funId = Model.objFuneralModel.pkiFuneralID})" name="btnPrint" value="" id="btnPrint" class="btn btn-sm btn-primary">Print</a>
+                            <a href="@Url.Action("PrintForm","Funeral",new { FuneralId = Model.objFuneralModel.pkiFuneralID})" name="btnPrint" value="" id="btnPrint" class="btn btn-sm btn-primary">Print</a>
                         }
                     </div> 
                 </div>

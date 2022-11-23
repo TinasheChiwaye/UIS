@@ -134,11 +134,30 @@
                                         }
                                     </div>
                                 </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        @*<button id="btnPrint" class="btn btn-md btn-primary" value="Print"></button>*@
+                                        @*<asp:Button runat="server" ID="btnPrint" CssClass="btn btn-md btn-primary" Text="Print" Width="95%" OnClick="btnPrint_Click" />*@
+                                    </div>
+                                </div>
 
-                                
+                            </div>
 
+                            @*<div class="col-lg-6">*@
+                                @if (IsjoiningFee == false)
+                                {
+                                    <div class="form-group">
+                                        <button id="btnJoiningFee" class="btn btn-md btn-primary" value="Rejoin Policy" style="width: 46%;">Pay Joining Fee</button>
+                                    </div>
+                                }
+                                else if (IsjoiningFee == true || JoingingFee <= 0)
+                                {
+                                    <div class="form-group">
+                                        <button id="btnJoiningFee" class="btn btn-md btn-primary" value="Rejoin Policy" style="width: 46%;" disabled>Pay Joining Fee</button>
+                                    </div>
+                                }
 
-                        </div>
+                            @*</div>*@
                             @*<div class="row">
             <div class="col-lg-6">
                 @if (policyStatus == "Active" || policyStatus == "1")
@@ -297,24 +316,11 @@
 
 
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="form-group">
-                                        <a href="@Url.Action("btnStatement", "Payments", new { memberId = MemberId,parlourId=ParlourID})" class="btn btn-md btn-primary" style="width: 100%" id="lbtnStatement">Statement</a>
+                                        <a href="@Url.Action("btnStatement", "Payments", new { memberId = MemberId,parlourId=ParlourID})" class="btn btn-md btn-primary" id="lbtnStatement">Statement</a>
                                     </div>
                                 </div>
-                                    @if (IsjoiningFee == false)
-                                    {
-                                        <div class="form-group">
-                                            <button id="btnJoiningFee" class="btn btn-md btn-primary" value="Rejoin Policy" style="width: 46%; margin-left: 12px;">Pay Joining Fee</button>
-                                        </div>
-                                    }
-                                    else if (IsjoiningFee == true || JoingingFee <= 0)
-                                    {
-                                        <div class="form-group">
-                                            <button id="btnJoiningFee" class="btn btn-md btn-primary" value="Rejoin Policy" style="width: 46%;" disabled>Pay Joining Fee</button>
-                                        </div>
-                                    }
-
                             </div>
                         </div>
                     </div>
