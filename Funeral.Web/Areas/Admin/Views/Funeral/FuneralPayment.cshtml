@@ -161,7 +161,7 @@
                                             <td class="visible-lg">@item.Notes</td>
                                             <td>
                                                 &nbsp;
-                                                <a id="ucPaymenthistory" title="Click here Print " href="@Url.Action("PrintForm","Funeral")"><i class="glyphicon glyphicon-print"></i></a>
+                                                <a id="ucPaymenthistory" title="Click here Print " href="@Url.Action("PrintForm","Funeral", new { FuneralId=item.FuneralID})"><i class="glyphicon glyphicon-print"></i></a>
 
                                             </td>
                                             @*<td>
