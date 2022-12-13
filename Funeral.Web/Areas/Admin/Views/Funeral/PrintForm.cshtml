@@ -147,14 +147,14 @@
                                     </td>
                                     <td><b>:</b></td>
                                     <td style="text-align: left;">
-                                        <span id="lblNumber2">@Model.objFuneralModel.pkiFuneralID</span>
+                                        <span id="lblNumber2">@Model.FuneralModel.pkiFuneralID</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td><b>Date</b></td>
                                     <td><b>:</b></td>
                                     <td style="text-align: left;">
-                                        <span id="lblDate">@Model.objFuneralModel.DateOfFuneral.ToString("dd/MM/yyyy")</span>
+                                        <span id="lblDate">@Model.FuneralModel.DateOfFuneral.ToString("dd/MM/yyyy")</span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -194,39 +194,39 @@
                 <div id="project2">
                     <div>
                         <span>
-                            @if (string.IsNullOrWhiteSpace(Model.objFuneralModel.ContactPerson))
+                            @if (string.IsNullOrWhiteSpace(Model.FuneralModel.ContactPerson))
                             {
-                                <span id="lblName">@Model.objFuneralModel.FullNames</span>
+                                <span id="lblName">@Model.FuneralModel.FullNames</span>
                             }
                             else
                             {
-                                <span id="lblName">@Model.objFuneralModel.ContactPerson &nbsp; @Model.objFuneralModel.FullNames</span>
+                                <span id="lblName">@Model.FuneralModel.ContactPerson &nbsp; @Model.FuneralModel.FullNames</span>
                             }
                         </span>
                     </div>
                     <div>
                         <span>
-                            <span id="lblcAdd1">@Model.objFuneralModel.Address1 </span>
+                            <span id="lblcAdd1">@Model.FuneralModel.Address1 </span>
                         </span>
                     </div>
                     <div>
                         <span>
-                            <span id="lblcAdd2">@Model.objFuneralModel.Address2 </span>
+                            <span id="lblcAdd2">@Model.FuneralModel.Address2 </span>
                         </span>
                     </div>
                     <div>
                         <span>
-                            <span id="lblcAdd3">@Model.objFuneralModel.Address3 </span>
+                            <span id="lblcAdd3">@Model.FuneralModel.Address3 </span>
                         </span>
                     </div>
                     <div>
                         <span>
-                            <span id="lblcAdd4">@Model.objFuneralModel.Address4 </span>
+                            <span id="lblcAdd4">@Model.FuneralModel.Address4 </span>
                         </span>
                     </div>
                     <div>
                         <span>
-                            <span id="lblcCode">@Model.objFuneralModel.Code </span>
+                            <span id="lblcCode">@Model.FuneralModel.Code </span>
                         </span>
                     </div>
                 </div>
@@ -277,11 +277,11 @@
                             <td colspan="4"><b style="font-size: 11px"></b></td>
                             <td class="total">
                                 TAX:
-                                <span id="lblTax">@Model.objFuneralModel.Tax.ToString("0.00")</span>%
+                                <span id="lblTax">@Model.FuneralModel.Tax.ToString("0.00")</span>%
                             </td>
                             <td>
                                 @{
-                                    taxAmount = totalServiceAmount * Convert.ToInt64(Model.objFuneralModel.Tax.ToString("0.")) / 100;
+                                    taxAmount = totalServiceAmount * Convert.ToInt64(Model.FuneralModel.Tax.ToString("0.")) / 100;
                                 }
                                 <span id="lblTax2">+ @taxAmount.ToString("0.00")</span>
                             </td>
@@ -295,11 +295,11 @@
                             <td colspan="4"><b style="font-size: 11px"></b></td>
                             <td class="total">
                                 Discount:
-                                <span id="lblDiscount">@Model.objFuneralModel.Discount</span>%
+                                <span id="lblDiscount">@Model.FuneralModel.Discount</span>%
                             </td>
                             <td>
                                 @{
-                                    discAmount = (totalServiceAmount + taxAmount) * Convert.ToInt64(Model.objFuneralModel.Discount.ToString("0.")) / 100;
+                                    discAmount = (totalServiceAmount + taxAmount) * Convert.ToInt64(Model.FuneralModel.Discount.ToString("0.")) / 100;
                                 }
                                 <span id="lblDisAmt2">- @discAmount.ToString("0.00")</span>
                             </td>
@@ -337,7 +337,7 @@
             <div id="notices">
                 <div><b style="font-size:14px;">NOTES:</b></div>
                 <div class="notice">
-                    <span id="lblNotes">@Model.objFuneralModel.Notes</span>
+                    <span id="lblNotes">@Model.FuneralModel.Notes</span>
                 </div>
             </div>
             <hr>

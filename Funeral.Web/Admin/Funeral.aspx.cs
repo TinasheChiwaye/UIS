@@ -147,8 +147,8 @@ namespace Funeral.Web.Admin
         public void bindFuneralList()
         {
             gvFuneralList.PageSize = PageSize;
-            List<FuneralModel> objFuneralModel = FuneralBAL.SelectAllFuneralByParlourId(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType,null,null,null);
-            gvFuneralList.DataSource = objFuneralModel;
+            List<FuneralModel> FuneralModel = FuneralBAL.SelectAllFuneralByParlourId(ParlourId, PageSize, PageNum, txtKeyword.Text, sortBYExpression, sortType,null,null,null);
+            gvFuneralList.DataSource = FuneralModel;
             gvFuneralList.DataBind();
         }
 

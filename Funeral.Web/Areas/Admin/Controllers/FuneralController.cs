@@ -261,17 +261,17 @@ namespace Funeral.Web.Areas.Admin.Controllers
             objFuneral.TaxSettings = TaxSettingBAL.GetAllTaxSettings().Select(f => new SelectListItem { Text = f.TaxText, Value = f.TaxValue.ToString() }).ToList();
             objFuneral.ApplicationSettings = ToolsSetingBAL.GetApplictionByParlourID(ParlourId);
             objFuneral.ServiceType = FuneralBAL.GetAllFuneralServices(ParlourId).Select(f => new SelectListItem { Text = f.ServiceName, Value = f.pkiServiceID.ToString() }).ToList();
-            objFuneral.objFuneralModel = FuneralBAL.SelectFuneralByParlAndPki(pkiFuneralID, ParlourId);
+            objFuneral.FuneralModel = FuneralBAL.SelectFuneralByParlAndPki(pkiFuneralID, ParlourId);
             objFuneral.ServiceList = GetServicesList(pkiFuneralID);
             objFuneral.GetAllPackage = FuneralPackageBAL.SelectAllPackage(ParlourId).Select(f => new SelectListItem { Text = f.PackageName, Value = f.pkiPackageID.ToString() }).ToList();
             objFuneral.ModelBankDetails = ToolsSetingBAL.GetBankingByID(ParlourId);
             objFuneral.ModelTermsAndCondition = ToolsSetingBAL.SelectApplicationTermsAndCondition(ParlourId);
             //objFuneral.FuneralPaymentModelList = TombStonesPaymentBAL.TombStonesPaymentSelectByTombstoneID(ParlourId, pkiFuneralID);
             objFuneral.FuneralPaymentModelList = MemberPaymentBAL.ReturnFuneralPayments(ParlourId, pkiFuneralID.ToString()).ToList(); ;
-            var dueDate = objFuneral.objFuneralModel.CreatedDate;
+            var dueDate = objFuneral.FuneralModel.CreatedDate;
             DateTime newDueDate = dueDate.AddHours(48);
             ViewBag.DueDate = newDueDate.ToString("dd/MMM/yyyy");
-            ViewBag.CreatedDate = objFuneral.objFuneralModel.CreatedDate.ToString("dd/MMM/yyyy");
+            ViewBag.CreatedDate = objFuneral.FuneralModel.CreatedDate.ToString("dd/MMM/yyyy");
             return View(objFuneral);
         }
         public List<FuneralServiceSelectModel> GetServicesList(int pkiFuneralID)
@@ -290,13 +290,13 @@ namespace Funeral.Web.Areas.Admin.Controllers
             var processPayment = new FuneralPaymentVM();
             processPayment.FunerlaPaymentList = MemberPaymentBAL.ReturnFuneralPayments(ParlourId, Convert.ToString(funeralId));
             processPayment.FuneralServiceList = FuneralBAL.SelectServiceByFuneralID(funeralId);
-            processPayment.objFuneralModel = FuneralBAL.SelectFuneralBypkid(funeralId, ParlourId);
+            processPayment.FuneralModel = FuneralBAL.SelectFuneralBypkid(funeralId, ParlourId);
             var TotalPayment = MemberPaymentBAL.ReturnFuneralPayments(ParlourId, Convert.ToString(funeralId)).ToList().Sum(x => x.AmountPaid);
             foreach (var item in processPayment.FuneralServiceList)
             {
                 Amt = Amt + item.Amount;
             }
-            var totalAmount = CalculateFinal(Amt, tax, processPayment.objFuneralModel.Discount, TotalPayment);
+            var totalAmount = CalculateFinal(Amt, tax, processPayment.FuneralModel.Discount, TotalPayment);
             processPayment.FuneralNumber = Convert.ToString(funeralId);
             processPayment.ReceivedBy = User.Identity.Name;
             processPayment.TotalAmount = totalAmount.ToString();
@@ -566,7 +566,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             quotationServiceVM.TaxSettings = TaxSettingBAL.GetAllTaxSettings().Select(f => new SelectListItem { Text = f.TaxText, Value = f.TaxValue.ToString() }).ToList();
             quotationServiceVM.ApplicationSettings = ToolsSetingBAL.GetApplictionByParlourID(ParlourId);
             quotationServiceVM.ServiceType = QuotationBAL.GetAllQuotationServices(ParlourId).Select(f => new SelectListItem { Text = f.ServiceName, Value = f.pkiServiceID.ToString() }).ToList();
-            quotationServiceVM.objFuneralModel = FuneralBAL.SelectFuneralBypkid(FuneralId, ParlourId);
+            quotationServiceVM.FuneralModel = FuneralBAL.SelectFuneralBypkid(FuneralId, ParlourId);
             quotationServiceVM.ServiceList = FuneralBAL.SelectServiceByFuneralID(FuneralId);
             //quotationServiceVM.QuotationMessageModel = QuotationBAL.SelectQuotationMessageByID(qutId);
             quotationServiceVM.GetAllPackage = FuneralPackageBAL.SelectPackage(ParlourId).Select(f => new SelectListItem { Text = f.PackageName, Value = f.pkiPackageID.ToString() }).ToList();
@@ -684,13 +684,13 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 funeralModel = FuneralBAL.SelectFuneralByFuneralId(funeralId.GetValueOrDefault(0), this.ParlourId);
                 funeralModel.FuneralDocuments = FuneralBAL.SelectFuneralDocumentsByMemberId(funeralModel.pkiFuneralID);
                 objFuneral.Currency = Currency;
-                objFuneral.objFuneralModel = FuneralBAL.SelectFuneralByParlAndPki(funeralId.Value, ParlourId);
+                objFuneral.FuneralModel = FuneralBAL.SelectFuneralByParlAndPki(funeralId.Value, ParlourId);
                 objFuneral.ServiceList = FuneralBAL.SelectServiceByFuneralID(funeralId.Value);
                 objFuneral.FuneralPaymentModelList = MemberPaymentBAL.ReturnFuneralPayments(ParlourId, funeralId.Value.ToString()).ToList(); ;
-                var dueDate = objFuneral.objFuneralModel.CreatedDate;
+                var dueDate = objFuneral.FuneralModel.CreatedDate;
                 DateTime newDueDate = dueDate.AddHours(48);
                 ViewBag.DueDate = newDueDate.ToString("dd/MMM/yyyy");
-                ViewBag.CreatedDate = objFuneral.objFuneralModel.CreatedDate.ToString("dd/MMM/yyyy");
+                ViewBag.CreatedDate = objFuneral.FuneralModel.CreatedDate.ToString("dd/MMM/yyyy");
 
                 List<FuneralServiceSelectModel> objServ = FuneralBAL.SelectServiceByFuneralID(funeralId.Value);
                 decimal Amt = 0;
@@ -702,7 +702,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             }
             else
             {
-                objFuneral.objFuneralModel = new FuneralModel();
+                objFuneral.FuneralModel = new FuneralModel();
             }
             objFuneral.GetAllPackage = FuneralPackageBAL.SelectAllPackage(ParlourId).Select(f => new SelectListItem { Text = f.PackageName, Value = f.pkiPackageID.ToString() }).ToList();
             objFuneral.ModelBankDetails = ToolsSetingBAL.GetBankingByID(ParlourId);
@@ -1045,6 +1045,14 @@ namespace Funeral.Web.Areas.Admin.Controllers
             Response.AddHeader("content-disposition", "attachment; filename=\"" + FileName + ".ics\"");
             Response.Write(CalendarItem);
             Response.Flush();
+        }
+
+        public JsonResult GetFuneralServiceList(int funeralType) // its a GET, not a POST
+        {
+            var serviceList = FuneralBAL.GetAllFuneralServices(ParlourId);//.Select(f => new SelectListItem { Text = f.ServiceName, Value = f.pkiServiceID.ToString() }).ToList();
+            var funeralServiceList = serviceList.Where(x => x.FuneralServiceType == (FuneralEnum.FuneralServiceType)funeralType).Select(f => new SelectListItem { Text = f.ServiceName, Value = f.pkiServiceID.ToString() }).ToList(); ;
+            
+            return Json(funeralServiceList, JsonRequestBehavior.AllowGet);
         }
     }
 }

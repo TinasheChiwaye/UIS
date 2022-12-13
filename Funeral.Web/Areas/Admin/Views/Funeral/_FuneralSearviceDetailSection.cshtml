@@ -8,7 +8,7 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">Notes</label>
                 <div class="col-sm-10">
-                    @Html.TextAreaFor(m => m.objFuneralModel.FuneralArrangemmentsNotes, new { name = "txtNotes", rows = "4", cols = "20", id = "txtNotes", @class = "form-control" })
+                    @Html.TextAreaFor(m => m.FuneralModel.FuneralArrangemmentsNotes, new { name = "txtNotes", rows = "4", cols = "20", id = "txtNotes", @class = "form-control" })
                     @*<textarea name="txtNotes" rows="4" cols="20" id="txtNotes" type="text" class="form-control">Todays Invoice</textarea>*@
                 </div>
             </div>
@@ -41,7 +41,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Discount in %</label>
                     <div class="col-sm-10">
-                        <input name="txtDiscount" value="@Model.objFuneralModel.Discount" maxlength="10" onchange="" id="txtDiscount" type="text" class="form-control">
+                        <input name="txtDiscount" value="@Model.FuneralModel.Discount" maxlength="10" onchange="" id="txtDiscount" type="text" class="form-control">
                         <span id="lblDisAmt1">Discount Amount:</span>
                         <span id="lblDisAmt2"></span>
                     </div>
@@ -59,11 +59,11 @@
                         <input type="button" name="btnSave" value="Save" id="btnSave" class="btn btn-sm btn-primary">
                         <a name="ReCalculate" value="ReCalculate" id="ReCalculate" class="btn btn-sm btn-primary">ReCalculate</a>
                         @{
-                            string id = Model.objFuneralModel.pkiFuneralID.ToString();
+                            string id = Model.FuneralModel.pkiFuneralID.ToString();
                             var plaintextBytes = System.Text.Encoding.UTF8.GetBytes(id);
                             var encryptedValue = MachineKey.Encode(plaintextBytes, MachineKeyProtection.All);
                             @*<a href="~/Admin/PrintForm.aspx?FID=@encryptedValue" name="btnPrint" value="" id="btnPrint" class="btn btn-sm btn-primary">Print</a>*@
-                            <a href="@Url.Action("PrintForm","Funeral",new { FuneralId = Model.objFuneralModel.pkiFuneralID})" name="btnPrint" value="" id="btnPrint" class="btn btn-sm btn-primary">Print</a>
+                            <a href="@Url.Action("PrintForm","Funeral",new { FuneralId = Model.FuneralModel.pkiFuneralID})" name="btnPrint" value="" id="btnPrint" class="btn btn-sm btn-primary">Print</a>
                         }
                     </div> 
                 </div>
@@ -112,7 +112,7 @@
     }
     $("#btnSave").click(function () {
         data = {
-            pkiFuneralID: $("#objFuneralModel_pkiFuneralID").val(),
+            pkiFuneralID: $("#FuneralModel_pkiFuneralID").val(),
             Tax: $("#TaxSettings :selected").val(),
             DisCount: $("#txtDiscount").val(),
             InvoiceNumber: $("#txtQuotationNumber").val(),

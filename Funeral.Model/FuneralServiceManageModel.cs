@@ -19,8 +19,10 @@ namespace Funeral.Model
             this.ServiceDesc=string.Empty;
             this.QTY=0;
             this.ServiceCost = 0;
+            this.FuneralServiceType = FuneralEnum.FuneralServiceType.FuneralService;
         }
         public int  pkiServiceID { get; set; }
+        public FuneralEnum.FuneralServiceType FuneralServiceType { get; set; }
         public string ServiceName { get; set; } 
         public string ServiceDesc { get; set; }
         public Decimal ServiceCost { get; set; }

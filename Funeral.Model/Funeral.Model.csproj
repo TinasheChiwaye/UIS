@@ -135,6 +135,7 @@
     <Compile Include="FuneralServiceManageModel.cs" />
     <Compile Include="FuneralServiceSelectModel.cs" />
     <Compile Include="FuneralServicesModel.cs" />
+    <Compile Include="FuneralServiceType.cs" />
     <Compile Include="FuneralServiceViewModel.cs" />
     <Compile Include="FuneralServiceVM.cs" />
     <Compile Include="GroupPayment.cs" />

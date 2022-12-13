@@ -114,6 +114,7 @@ namespace Funeral.Web.Tools
             if (!IsPostBack)
             {
                 ddlPageSize.SelectedIndex = ddlPageSize.Items.IndexOf(ddlPageSize.Items.FindByValue(PageSize.ToString()));
+                BindFuneralServiceType();
                 bindFuneralServiceList();
                 ddlCompanyList.Visible = false;
                 // SecureUserGroupsModel model = client.GetSuperUserAccessByID(UserID, ParlourId).Where(x => x.fkiSecureGroupID == 12).FirstOrDefault();
@@ -134,6 +135,13 @@ namespace Funeral.Web.Tools
         #endregion
 
         #region Method
+        public void BindFuneralServiceType()
+        {
+            ddlServiecType.DataSource = Enumeration.GetAll<FuneralEnum.FuneralServiceType>();
+            ddlServiecType.DataTextField = "Value";
+            ddlServiecType.DataValueField = "Key";
+            ddlServiecType.DataBind();
+        }
         public void bindCompanyType()
         {
             try
@@ -214,6 +222,7 @@ namespace Funeral.Web.Tools
             }
             else
             {
+                ddlServiecType.SelectedValue = Convert.ToInt32(model.FuneralServiceType).ToString();
                 ServiceID = model.pkiServiceID;
                 txtServicename.Text = model.ServiceName;
                 txtServiceCost.Text = (model.ServiceCost).ToString("N2");
@@ -241,6 +250,7 @@ namespace Funeral.Web.Tools
             txtServiceCost.Text = string.Empty;
             txtServiceDesc.Text = string.Empty;
             txtServicename.Text = string.Empty;
+            ddlServiecType.SelectedIndex = -1;
             ddlVendor.SelectedValue = "0";
             txtCostOfSale.Text = string.Empty;
             btnAddService.Text = "Save My Service";
@@ -288,7 +298,7 @@ namespace Funeral.Web.Tools
                     { objModel.parlourid = ParlourId; }
 
                     objModel.ModifiedUser = UserName;
-
+                    objModel.FuneralServiceType =(FuneralEnum.FuneralServiceType)Convert.ToInt32( ddlServiecType.SelectedValue)  ;
 
                     int a = ToolsSetingBAL.SaveFuneralManageService(objModel);
 
