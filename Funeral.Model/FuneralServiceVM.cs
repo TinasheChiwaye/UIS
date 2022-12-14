@@ -15,7 +15,8 @@ namespace Funeral.Model
         public List<SelectListItem> TaxSettings { get; set; }
         public ApplicationSettingsModel ApplicationSettings { get; set; }
         public List<SelectListItem> ServiceType { get; set; }
-        public FuneralModel objFuneralModel { get; set; }
+        public List<SelectListItem> FuneralServiceType { get; set; }
+        public FuneralModel FuneralModel { get; set; }
         public List<FuneralServiceSelectModel> ServiceList { get; set; }
         public List<SelectListItem> GetAllPackage { get; set; }
         public ApplicationTnCModel ModelTermsAndCondition { get; set; }

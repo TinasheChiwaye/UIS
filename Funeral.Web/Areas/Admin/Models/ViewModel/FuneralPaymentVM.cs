@@ -10,7 +10,7 @@ namespace Funeral.Web.Areas.Admin.Models.ViewModel
     {
         public List<FuneralPaymentsModel> FunerlaPaymentList { get; set; }
         public List<FuneralServiceSelectModel> FuneralServiceList { get; set; }
-        public FuneralModel objFuneralModel { get; set; }
+        public FuneralModel FuneralModel { get; set; }
         public string FuneralNumber { get; set; }
         public string ReceivedBy { get; set; }
         public string TotalAmount { get; set; }

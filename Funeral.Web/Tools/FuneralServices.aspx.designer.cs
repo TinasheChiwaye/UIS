@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Funeral.Web.Tools {
-    
-    
-    public partial class FuneralServices {
-        
+namespace Funeral.Web.Tools
+{
+
+
+    public partial class FuneralServices
+    {
+
         /// <summary>
         /// ScriptManager1 control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace Funeral.Web.Tools {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.ScriptManager ScriptManager1;
-        
+
         /// <summary>
         /// lblMessage control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace Funeral.Web.Tools {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMessage;
-        
+
         /// <summary>
         /// ddlCompanyList control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace Funeral.Web.Tools {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlCompanyList;
-        
+
         /// <summary>
         /// vSummaryFuneral control.
         /// </summary>
@@ -47,7 +49,25 @@ namespace Funeral.Web.Tools {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ValidationSummary vSummaryFuneral;
-        
+
+        /// <summary>
+        /// ddlServiecType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlServiecType;
+
+        /// <summary>
+        /// RequiredFieldValidator3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator3;
+
         /// <summary>
         /// txtServicename control.
         /// </summary>
@@ -56,7 +76,7 @@ namespace Funeral.Web.Tools {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtServicename;
-        
+
         /// <summary>
         /// RequiredFieldValidator1 control.
         /// </summary>
@@ -65,7 +85,7 @@ namespace Funeral.Web.Tools {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
-        
+
         /// <summary>
         /// txtServiceCost control.
         /// </summary>
@@ -74,7 +94,7 @@ namespace Funeral.Web.Tools {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtServiceCost;
-        
+
         /// <summary>
         /// RequiredFieldValidator2 control.
         /// </summary>
@@ -83,7 +103,7 @@ namespace Funeral.Web.Tools {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
-        
+
         /// <summary>
         /// ddlVendor control.
         /// </summary>
@@ -92,7 +112,7 @@ namespace Funeral.Web.Tools {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlVendor;
-        
+
         /// <summary>
         /// txtServiceDesc control.
         /// </summary>
@@ -101,7 +121,7 @@ namespace Funeral.Web.Tools {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtServiceDesc;
-        
+
         /// <summary>
         /// txtQty control.
         /// </summary>
@@ -110,7 +130,7 @@ namespace Funeral.Web.Tools {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtQty;
-        
+
         /// <summary>
         /// txtCostOfSale control.
         /// </summary>
@@ -119,7 +139,7 @@ namespace Funeral.Web.Tools {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtCostOfSale;
-        
+
         /// <summary>
         /// btnAddService control.
         /// </summary>
@@ -128,7 +148,7 @@ namespace Funeral.Web.Tools {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAddService;
-        
+
         /// <summary>
         /// btnReset control.
         /// </summary>
@@ -137,7 +157,7 @@ namespace Funeral.Web.Tools {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnReset;
-        
+
         /// <summary>
         /// ddlPageSize control.
         /// </summary>
@@ -146,7 +166,7 @@ namespace Funeral.Web.Tools {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlPageSize;
-        
+
         /// <summary>
         /// pnlSearch control.
         /// </summary>
@@ -155,7 +175,7 @@ namespace Funeral.Web.Tools {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlSearch;
-        
+
         /// <summary>
         /// txtKeyword control.
         /// </summary>
@@ -164,7 +184,7 @@ namespace Funeral.Web.Tools {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtKeyword;
-        
+
         /// <summary>
         /// btnSearch control.
         /// </summary>
@@ -173,7 +193,7 @@ namespace Funeral.Web.Tools {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSearch;
-        
+
         /// <summary>
         /// Label1 control.
         /// </summary>
@@ -182,7 +202,7 @@ namespace Funeral.Web.Tools {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label1;
-        
+
         /// <summary>
         /// lblRecords control.
         /// </summary>
@@ -191,7 +211,7 @@ namespace Funeral.Web.Tools {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblRecords;
-        
+
         /// <summary>
         /// gvFuneralServiceList control.
         /// </summary>

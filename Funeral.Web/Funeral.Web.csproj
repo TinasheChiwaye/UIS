@@ -316,6 +316,8 @@
     <Content Include="Admin\TombstonePayment.aspx" />
     <Content Include="Admin\TombStoneServiceSelect.aspx" />
     <Content Include="Admin\UserRight.aspx" />
+    <Content Include="bin\DayPilot.Web.Mvc.dll" />
+    <Content Include="bin\DayPilot.Web.Mvc.xml" />
     <Content Include="Content\animate.css" />
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -2098,6 +2100,7 @@
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\EnumatorExtention.cs" />
+    <Compile Include="App_Start\EnumExtension.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\MyReportServerCredentials.cs" />
@@ -2150,6 +2153,7 @@
     <Compile Include="Areas\Tools\Controllers\UnderwriterPremiumsController.cs" />
     <Compile Include="Areas\Tools\Controllers\UnderwriterSetupController.cs" />
     <Compile Include="Areas\Tools\Models\ExcelModel.cs" />
+    <Compile Include="Common\Extension.cs" />
     <Compile Include="Common\FuneralAuthAttribute.cs" />
     <Compile Include="Common\OtherPaymentsWebApiResult.cs" />
     <Compile Include="Common\WebApiResult.cs" />

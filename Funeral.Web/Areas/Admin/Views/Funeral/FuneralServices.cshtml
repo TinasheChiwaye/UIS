@@ -374,7 +374,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                     <div class="row">
                         <div class="panel blank-panel">
                             <div class="panel-heading">
-                                <div class="panel-options" id="Tabs">  
+                                <div class="panel-options" id="Tabs">
                                     <ul class="nav nav-tabs" id="myTab">
                                         <li class="active" id="tab1"><a data-toggle="tab" href="#tabBodyCollection" id="aBodyCollection" aria-expanded="true" onclick="tabClick('BodyCollection')">Body Collection</a></li>
                                         <li class="" id="tab2"><a data-toggle="tab" href="#tabMortuary" id="aMortuary" aria-expanded="false" onclick="tabClick('Mortuary')">Mortuary</a></li>
@@ -815,103 +815,13 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                         @*}*@
                                     </div>
                                     <div id="tabFuneralArrangement" class="tab-pane">
-
                                         <div class="row">
-                                            @*<div class="col-lg-6">
-                                                    <div class="form-group">
-                                                        <label>Coffin Classification</label>
-                                                        @Html.DropDownListFor(m => m.CoffinClassification, ddlCoffinClassification, "Select an option", new { Name = "CoffinClassification", @class = "form-control  " })
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label>Coffin Code</label>
-                                                        @Html.DropDownListFor(m => m.CoffinCode, ddlCoffinClassification, "Select an option", new { Name = "CoffinCode", @class = "form-control  " })
-                                                    </div>
-
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <div class="form-group">
-                                                        <label>Coffin Type</label>
-                                                        @Html.DropDownListFor(m => m.CoffinType, ddlCoffinType, "Select an option", new { Name = "CoffinType", @class = "form-control  " })
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label>Coffin Colour</label>
-                                                        @Html.DropDownListFor(m => m.CoffinColour, ddlCoffinColour, "Select an option", new { Name = "CoffinColour", @class = "form-control  " })
-                                                    </div>
-
-                                                </div>
-
-
-                                                <div class="col-lg-6">
-
-
-                                                    <div class="form-group">
-                                                        <label>Coffin Size</label>
-                                                        @Html.DropDownListFor(m => m.CoffinSize, ddlCoffineSize, "Select an option", new { Name = "CoffinSize", @class = "form-control  " })
-                                                    </div>
-
-
-
-
-                                                </div>
-                                                <div class="col-lg-6">
-
-                                                    <div class="form-group">
-                                                        <label>Type of Service</label>
-                                                        @Html.DropDownListFor(m => m.TypeOfService, ddlTypeOfService, "Select an option", new { Name = "TypeOfService", @class = "form-control  " })
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6">
-
-                                                    <div class="form-group">
-                                                        <label>Programs</label>
-                                                        @Html.DropDownListFor(m => m.Programs, ddlPrograms, "Select an option", new { Name = "Programs", @class = "form-control  " })
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6">
-
-                                                    <div class="form-group">
-                                                        <label>Grave Markers</label>
-                                                        @Html.DropDownListFor(m => m.GraveMarkers, ddlGraveMarkers, "Select an option", new { Name = "GraveMarkers", @class = "form-control  " })
-                                                    </div>
-                                                </div>
-                                            *@
-                                            @*<div class="col-lg-6">*@
-
-                                            @*<div class="form-group">
-                                                        <label>Tombstone Type</label>
-                                                        @Html.DropDownListFor(m => m.Embalming, ddlTombstoneType, "Select an option", new { Name = "Embalming", @class = "form-control  " })
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6">
-
-                                                    <div class="form-group">
-                                                        <label>Tombstone code</label>
-                                                        @Html.DropDownListFor(m => m.Embalming, ddlTombstoneCode, "Select an option", new { Name = "Embalming", @class = "form-control  " })
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-lg-6">
-
-                                                    <div class="form-group">
-                                                        <label>Tombstone Polish</label>
-                                                        @Html.DropDownListFor(m => m.Embalming, ddlTombstonePolished, "Select an option", new { Name = "Embalming", @class = "form-control  " })
-                                                    </div>
-                                                </div>*@
-                                            @*<div class="col-lg-6">
-                                                   <div class="form-group">
-                                                       <label>Cremation</label><br />
-                                                       <asp:RadioButton ID="rdbYes" GroupName="Erect" runat="server" Text="Yes" Checked="true" />
-                                                       <asp:RadioButton ID="rdbNo" GroupName="Erect" runat="server" Text="No" />
-                                                   </div>
-                                                </div>*@
                                             <div class="ibox float-e-margins">
                                                 <div class="ibox-title">
                                                     <h5>Services</h5>
                                                 </div>
                                                 <div class="ibox-content" style="padding-bottom:0px;">
-                                                    <input type="hidden" id="objFuneralModel_pkiFuneralID" value="@Model.pkiFuneralID" />
+                                                    <input type="hidden" id="FuneralModel_pkiFuneralID" value="@Model.pkiFuneralID" />
                                                     @Html.Partial("_FuneralServicesSection", Model.FuneralServiceVM)
                                                 </div>
                                             </div>
@@ -1578,7 +1488,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
     function eventClick() {
         alert("click")
     }
-    function tabClick(selectedTab) { 
+    function tabClick(selectedTab) {
         if (selectedTab == 'BodyCollection') {
             $("#SelectedTab").val("aMortuary")
         }
@@ -1587,7 +1497,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
         }
         if (selectedTab == 'FuneralArrangement') {
             $("#SelectedTab").val("aBurial")
-        } 
+        }
         if (selectedTab == 'Burial') {
             $("#SelectedTab").val("aPayment")
         }
@@ -1596,7 +1506,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
         }
         if (selectedTab == 'FuneralSchedule') {
             $("#SelectedTab").val("aFuneralSchedule")
-        }      
+        }
     }
 </script>
 
