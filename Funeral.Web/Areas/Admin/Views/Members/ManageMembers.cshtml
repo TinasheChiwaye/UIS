@@ -5038,14 +5038,14 @@
     }
 
     function IdNumberBasicValidation(IdNumber) {
-        if (IdNumber.value.length != 0 && IdNumber.value.length != 6 && IdNumber.value.length != 13) {
+        if (IdNumber.value.length != 0 && IdNumber.value.length != 6 && IdNumber.value.length != 13 && IdNumber.value.length != 12) {
         alert("Id Number is not valid");
             IdNumber.value = "";
         }
     }
 
     function IdNumberValidation(IdNumber) {
-        if (IdNumber.value.length != 0 && IdNumber.value.length != 13) {
+        if (IdNumber.value.length != 0 && IdNumber.value.length != 13 && IdNumber.value.length != 12) {
             alert("Id Number is not valid");
             IdNumber.value = "";
         }

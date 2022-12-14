@@ -797,7 +797,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                         <div class="btn-group">
                                                             <button id="btnMortuary" onclick="return activateTab('mortuary','aFuneralArrangement')" type="submit" class="btn btn-w-m btn-primary">Save & Next</button>
                                                         </div>
-                                                        <div class="btn-group" style="margin-left: 480px">
+                                                        <div class="btn-group" style="float: right;">
                                                             @*@Html.Hidden("btnMortuaryLetterUrl", Url.Action("btnMortuaryLetter"))*@
                                                             @*@Html.ActionLink("Mortuary Letter", "Download", new { fileName = "Mortuary Letter.pdf" }, new { @class = "btn btn-w-m btn-primary" })*@
                                                             @*<input type="button" style="display:inline" id="MortuaryLetter" class="btn btn-w-m btn-primary" name="Mortuary Letter" value="pkiFuneralID" onclick="location.href='@Url.Action("btnMortuaryLetter", "Funeral")'">*@
