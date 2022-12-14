@@ -108,7 +108,7 @@ namespace Funeral.Model
         public string HeadHair { get; set; }
         public string SkinMarks { get; set; }
         public string DentalCondition { get; set; }
-        [Required(ErrorMessage = "Type of Collection is required")]
+        //[Required(ErrorMessage = "Type of Collection is required")]
         public string TypeOfCollection { get; set; }
         public string PersonalItem { get; set; }
         public string IdentityDocument { get; set; }
