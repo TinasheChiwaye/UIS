@@ -145,7 +145,7 @@
                                         <asp:BoundField DataField="QTY" HeaderText="QTY" ReadOnly="True" ItemStyle-CssClass="visible-lg" HeaderStyle-CssClass="visible-lg" />
                                         <asp:BoundField DataField="VendorName" HeaderText="VendorName" ReadOnly="True" ItemStyle-CssClass="visible-lg" HeaderStyle-CssClass="visible-lg" />
                                         <asp:BoundField DataField="CostOfSale" HeaderText="CostOfSale" ReadOnly="True" ItemStyle-CssClass="visible-lg" HeaderStyle-CssClass="visible-lg" />
-                                        <asp:BoundField DataField="FuneralServiceType" HeaderText="Service Type" ReadOnly="True" ItemStyle-CssClass="visible-lg" HeaderStyle-CssClass="visible-lg" />
+                                        <asp:BoundField DataField="FuneralServiceTypeText" HeaderText="Service Type" ReadOnly="True" ItemStyle-CssClass="visible-lg" HeaderStyle-CssClass="visible-lg" />
 
                                         <asp:TemplateField HeaderText="Actions">
                                             <ItemTemplate>

@@ -137,9 +137,9 @@ namespace Funeral.Web.Tools
         #region Method
         public void BindFuneralServiceType()
         {
-            ddlServiecType.DataSource = Enumeration.GetAll<FuneralEnum.FuneralServiceType>();
-            ddlServiecType.DataTextField = "Value";
-            ddlServiecType.DataValueField = "Key";
+            ddlServiecType.DataSource = FuneralServiceTypeBAL.SelectAll();
+            ddlServiecType.DataTextField = "FuneralServiceType";
+            ddlServiecType.DataValueField = "Id";
             ddlServiecType.DataBind();
         }
         public void bindCompanyType()
@@ -222,7 +222,13 @@ namespace Funeral.Web.Tools
             }
             else
             {
-                ddlServiecType.SelectedValue = Convert.ToInt32(model.FuneralServiceType).ToString();
+                //ddlServiecType.SelectedValue = model.FuneralServiceType.ToString();
+                ddlServiecType.ClearSelection();
+               var selectedValue = ddlServiecType.Items.FindByValue(model.FuneralServiceType.ToString());
+                if(selectedValue != null)
+                {
+                    selectedValue.Selected = true;
+                }
                 ServiceID = model.pkiServiceID;
                 txtServicename.Text = model.ServiceName;
                 txtServiceCost.Text = (model.ServiceCost).ToString("N2");
@@ -298,7 +304,7 @@ namespace Funeral.Web.Tools
                     { objModel.parlourid = ParlourId; }
 
                     objModel.ModifiedUser = UserName;
-                    objModel.FuneralServiceType =(FuneralEnum.FuneralServiceType)Convert.ToInt32( ddlServiecType.SelectedValue)  ;
+                    objModel.FuneralServiceType =Convert.ToInt32( ddlServiecType.SelectedValue)  ;
 
                     int a = ToolsSetingBAL.SaveFuneralManageService(objModel);
 

@@ -847,6 +847,9 @@
     <Content Include="Areas\Admin\Views\Funeral\_FuneralServicesSection.cshtml" />
     <Content Include="Areas\Admin\Views\Funeral\_FuneralSearviceDetailSection.cshtml" />
     <Content Include="Areas\Admin\Views\Funeral\_FuneralSearvicePaymentSection.cshtml" />
+    <Content Include="Areas\Tools\Views\FuneralServiceType\_AddUpdate.cshtml" />
+    <Content Include="Areas\Tools\Views\FuneralServiceType\_FuneralTypeList.cshtml" />
+    <Content Include="Areas\Tools\Views\FuneralServiceType\Index.cshtml" />
     <None Include="DevDataDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DevDataDataSet.Designer.cs</LastGenOutput>
@@ -2143,6 +2146,7 @@
     <Compile Include="Areas\Tools\Controllers\BaseAdminController.cs" />
     <Compile Include="Areas\Tools\Controllers\ClaimToolsController.cs" />
     <Compile Include="Areas\Tools\Controllers\FuneralServicesController.cs" />
+    <Compile Include="Areas\Tools\Controllers\FuneralServiceTypeController.cs" />
     <Compile Include="Areas\Tools\Controllers\PlanSetupController.cs" />
     <Compile Include="Areas\Tools\Controllers\MenuController.cs" />
     <Compile Include="Areas\Admin\Models\ViewModel\QuotationServiceVM.cs" />

@@ -22,12 +22,9 @@
                 <span id="RequiredFieldValidator4" style="color:red;" hidden>Please select package</span>
             </div>
             <div class="form-group" id="dvServieType">
-                <label>Services</label>
-                @Html.DropDownList("ddlFuneralServiceType",
-    EnumHelper.GetSelectList(typeof(Funeral.Model.FuneralEnum.FuneralServiceType)),
-    "Select Service Type",
-    new { @class = "form-control" })
-
+                <label>Service Type</label>
+                @Html.DropDownListFor(m => m.FuneralServiceType, Model.FuneralServiceType, "Select Service Type", new { Name = "FuneralServiceType", @placeholder = "Select Service Type", @class = "form-control" })
+               &nbsp;@Html.ActionLink("View Service Types", "Index", "FuneralServiceType", new { area = "Tools" }, null)
             </div>
             <div class="form-group" id="divservices">
                 <label>Services</label>
@@ -111,7 +108,7 @@
         $("#dvServieType").hide();
 
           var url = '@Url.Action("GetFuneralServiceList", "Funeral", new { Area = "Admin" })'; // Don't hard code your url's!
-        $("#ddlFuneralServiceType").change(function () {           
+        $("#FuneralServiceType").change(function () {           
             var serviceTypes = $('#ServiceType'); // cache it
             var id = $(this).val(); // Use $(this) so you don't traverse the DOM again
             $.getJSON(url, { funeralType: id }, function (response) {

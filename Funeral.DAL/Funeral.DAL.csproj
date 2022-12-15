@@ -77,6 +77,7 @@
     <Compile Include="DebitOrderTransactionsDAL.cs" />
     <Compile Include="FuneralDAL.cs" />
     <Compile Include="FuneralPackageDAL.cs" />
+    <Compile Include="FuneralServiceTypeDAL.cs" />
     <Compile Include="Helper\DatabaseFactory.cs" />
     <Compile Include="Helper\DbConnection.cs" />
     <Compile Include="Helper\DbParameter.cs" />
