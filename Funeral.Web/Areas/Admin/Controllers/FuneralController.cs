@@ -710,7 +710,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             objFuneral.TaxSettings = TaxSettingBAL.GetAllTaxSettings().Select(f => new SelectListItem { Text = f.TaxText, Value = f.TaxValue.ToString() }).ToList();
             objFuneral.ApplicationSettings = ToolsSetingBAL.GetApplictionByParlourID(ParlourId);
             objFuneral.ServiceType = FuneralBAL.GetAllFuneralServices(ParlourId).Select(f => new SelectListItem { Text = f.ServiceName, Value = f.pkiServiceID.ToString() }).ToList();
-
+            objFuneral.FuneralServiceType = FuneralServiceTypeBAL.SelectAll().Select(f => new SelectListItem { Text = f.FuneralServiceType, Value = f.Id.ToString() }).ToList();
             funeralModel.FuneralServiceVM = objFuneral;
 
             return funeralModel;
