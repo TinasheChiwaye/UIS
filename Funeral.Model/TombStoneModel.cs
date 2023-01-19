@@ -19,6 +19,7 @@ namespace Funeral.Model
             this.Title=string.Empty;
             this.LastName=string.Empty;
             this.FirstName=string.Empty;
+            this.PolicyNumber = string.Empty;
            // this.DateOfApplication=DateTime.MinValue;
             this.Address1=string.Empty;
             this.Address2=string.Empty;
@@ -55,6 +56,8 @@ namespace Funeral.Model
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public string IDNumber { get; set; }
+
+        public string PolicyNumber { get; set; }
         public DateTime? DateOfApplication { get; set; }
         public string Address1 { get; set; }
         public string Address2 { get; set; }

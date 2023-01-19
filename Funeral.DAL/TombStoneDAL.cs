@@ -47,7 +47,7 @@ namespace Funeral.DAL
         public static int SaveTombStone(TombStoneModel model)
         {
             string query = "SaveTombStone";
-            DbParameter[] ObjParam = new DbParameter[26];
+            DbParameter[] ObjParam = new DbParameter[27];
 
             ObjParam[0] = new DbParameter("@pkiTombstoneID", DbParameter.DbType.Int, 0, model.pkiTombstoneID);
             ObjParam[1] = new DbParameter("@LastName", DbParameter.DbType.NVarChar, 0, model.LastName);
@@ -76,6 +76,8 @@ namespace Funeral.DAL
 
             ObjParam[24] = new DbParameter("@ContactPerson", DbParameter.DbType.NVarChar, 0, (model.ContactPerson == null ? "" : model.ContactPerson));
             ObjParam[25] = new DbParameter("@ContactPersonNumber", DbParameter.DbType.NVarChar, 0, (model.ContactPersonNumber == null ? "" : model.ContactPersonNumber));
+            ObjParam[26] = new DbParameter("@PolicyNumber", DbParameter.DbType.NVarChar, 0, model.PolicyNumber);
+
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
         }
 

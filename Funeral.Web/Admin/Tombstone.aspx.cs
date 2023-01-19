@@ -140,6 +140,7 @@ namespace Funeral.Web.Admin
             txtLastName.Text = string.Empty;
             txtFirstName.Text = string.Empty;
             txtIdNumber1.Text = string.Empty;
+            txtPolicyNumber.Text = string.Empty;
             txtAppDate.Text = string.Empty;
             txtTel.Text = string.Empty;
             txtAdd1.Text = string.Empty;
@@ -181,6 +182,7 @@ namespace Funeral.Web.Admin
                 txtLastName.Text = model.LastName.ToString();
                 txtFirstName.Text = model.FirstName.ToString();
                 txtIdNumber1.Text = model.IDNumber.ToString();
+                txtPolicyNumber.Text = model.PolicyNumber.ToString();
                 if (model.DateOfApplication != null)
                     txtAppDate.Text = (Convert.ToDateTime(model.DateOfApplication)).ToString("dd MMM yyyy");
 
@@ -309,6 +311,7 @@ namespace Funeral.Web.Admin
                         objTomb.LastName = txtLastName.Text;
                         objTomb.FirstName = txtFirstName.Text;
                         objTomb.IDNumber = txtIdNumber1.Text;
+                        objTomb.PolicyNumber = txtPolicyNumber.Text;
                         if (txtAppDate.Text == null || txtAppDate.Text == "")
                         { objTomb.DateOfApplication = null; }
                         else

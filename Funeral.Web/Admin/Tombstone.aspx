@@ -56,6 +56,14 @@
                                 <asp:CustomValidator ErrorMessage="Invalid Id Number" ID="cvIdvalidation" OnServerValidate="cvIdvalidation_ServerValidate" ControlToValidate="txtIdNumber1" ValidationGroup="tomb" runat="server" />
                                 <%--<asp:RequiredFieldValidator Display="None" ValidationGroup="tab1" ControlToValidate="txtIdNumber1" ID="RequiredFieldValidator7" ForeColor="red" runat="server" ErrorMessage="Please enter id number"></asp:RequiredFieldValidator>--%>
                             </div>
+             
+                            <div class="form-group">
+                                <label>Policy Number <em>*</em>  </label>
+                                <asp:TextBox MaxLength="25" runat="server" ID="txtPolicyNumber" name="name" type="text" class="form-control"></asp:TextBox>
+                                <asp:RequiredFieldValidator Display="None" ValidationGroup="tomb" ControlToValidate="txtFirstName" ID="RequiredFieldValidator11" ForeColor="red" runat="server" ErrorMessage="Please enter Policy Number"></asp:RequiredFieldValidator>
+                                <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator4" ValidationGroup="tab1" runat="server" ControlToValidate="txtPolicyNumber" ErrorMessage="Enter Valid Policy Number" ValidationExpression="[a-zA-Z ]*$" />
+                            </div>
+
                             <div class="form-group">
                                 <label>Date of Application </label>
                                 <asp:TextBox MaxLength="30" runat="server" ID="txtAppDate" name="name" type="text" class="form-control" CssClass="form-control datepicker" placeholder="DD/MM/YYYY"></asp:TextBox>
@@ -303,7 +311,7 @@
 
                                                 <asp:BoundField DataField="LastName" HeaderText="Surname" SortExpression="LastName" ReadOnly="True" ItemStyle-CssClass="visible-lg" HeaderStyle-CssClass="visible-lg" />
                                                 <asp:BoundField DataField="FirstName" HeaderText="full name" SortExpression="FirstName" ReadOnly="True" ItemStyle-CssClass="visible-lg" HeaderStyle-CssClass="visible-lg" />
-
+                                                <asp:BoundField DataField="PolicyNumber" HeaderText="Policy Number" SortExpression="PolicyNumber" ReadOnly="True" ItemStyle-CssClass="visible-lg" HeaderStyle-CssClass="visible-lg" />
                                                 <asp:BoundField DataField="TelNumber" HeaderText="Tel Number" SortExpression="TelNumber" ReadOnly="True" ItemStyle-CssClass="visible-lg" HeaderStyle-CssClass="visible-lg" />
                                                 <asp:BoundField DataField="DeceasedIDNumber" HeaderText="Deceased ID Number" SortExpression="DeceasedIDNumber" ReadOnly="True" ItemStyle-CssClass="visible-lg" HeaderStyle-CssClass="visible-lg" />
                                                 <asp:BoundField DataField="DateOfApplication" HeaderText="Date Of Application" SortExpression="DateOfApplication" ReadOnly="True" ItemStyle-CssClass="visible-lg" HeaderStyle-CssClass="visible-lg" DataFormatString="{0:dd/M/yyy}" />
