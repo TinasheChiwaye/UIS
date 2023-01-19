@@ -59,9 +59,9 @@ namespace Funeral.DAL
         public static int SaveFuneral(FuneralModel model)
         {
             //string query = "SaveFuneral"; New By Mahipatsinh
-            string query = "SaveFuneral_Dt";
+            string query = "SaveFuneral";
 
-            DbParameter[] ObjParam = new DbParameter[66];
+            DbParameter[] ObjParam = new DbParameter[69];
 
             ObjParam[0] = new DbParameter("@pkiFuneralID", DbParameter.DbType.Int, 0, model.pkiFuneralID);
             ObjParam[1] = new DbParameter("@FullNames", DbParameter.DbType.NVarChar, 0, model.FullNames);
@@ -130,7 +130,12 @@ namespace Funeral.DAL
             ObjParam[63] = new DbParameter("@ChiefSurname", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.ChiefSurname));
             ObjParam[64] = new DbParameter("@ChiefContactNumber", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.ChiefContactNumber));
             ObjParam[65] = new DbParameter("@ChiefAddress", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.ChiefAddress));
-              
+            ObjParam[66] = new DbParameter("@TimeOfDispatch", DbParameter.DbType.DateTime, 0, model.TimeOfDispatch);
+            ObjParam[67] = new DbParameter("@ContactPersonNumber2", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.ContactPersonNumber2));
+            ObjParam[68] = new DbParameter("@MortuaryAttendent", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.MortuaryAttendent));
+
+
+
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
         }
         private static string NulltoEmpty(string values)

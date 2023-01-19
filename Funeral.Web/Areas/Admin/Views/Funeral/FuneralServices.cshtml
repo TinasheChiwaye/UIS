@@ -438,7 +438,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
                                                             @Html.Label("Car Make", new { @class = "control-label" })
-                                                            @Html.TextBoxFor(m => m.DriverName, null, new { @class = "form-control", @maxlength = "25" })
+                                                            @Html.TextBoxFor(m => m.CarMake, null, new { @class = "form-control", @maxlength = "25" })
                                                             @Html.ValidationMessageFor(m => m.CarMake, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                                                         </div>
                                                     </div>
@@ -460,7 +460,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
                                                             <label>Time of Dispatch </label>
-                                                            @Html.TextBoxFor(m => m.TimeOfDispatch, "{0:dd MMM yyyy}", new { @class = "form-control datepicker", @id = "DOD", @maxlength = "50", placeholder = "" })
+                                                            @Html.TextBoxFor(m => m.TimeOfDispatch, "{0:dd MMM yyyy}", new { @class = "form-control datepicker", @id = "TimeOfDispactch", @maxlength = "50", placeholder = "" })
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
@@ -558,7 +558,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <label>Time of Body Arrival </label>
-                                                                    @Html.TextBoxFor(m => m.TimeOfBodyArrival, "{0:dd MMM yyyy}", new { @class = "form-control datepicker", @id = "DOD", @maxlength = "50", placeholder = "" })
+                                                                    @Html.TextBoxFor(m => m.DeceasedArrivalDateTime, "{0:dd MMM yyyy}", new { @class = "form-control datepicker", @id = "TimeOfBodyArrival", @maxlength = "50", placeholder = "" })
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-6">
@@ -614,7 +614,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                         </div>
                                                         <div class="form-group">
                                                             <label>Contact Number </label>
-                                                            @Html.TextBoxFor(m => m.ChiefContactPerson, null, new { @class = "form-control", @id = "ChiefFullName", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
+                                                            @Html.TextBoxFor(m => m.ChiefContactNumber, null, new { @class = "form-control", @id = "ChiefContactNumber", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
                                                             @*@Html.ValidationMessageFor(m => m.NextOfKinFullNames, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })*@
                                                         </div>
                                                     </div>
@@ -622,12 +622,12 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                         <div class="form-group">
                                                             <label> Surname </label>
                                                             @Html.TextBoxFor(m => m.ChiefSurname, null, new { @class = "form-control", @id = "ChiefSurname", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
-                                                            @Html.ValidationMessageFor(m => m.Surname, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                                            @*@Html.ValidationMessageFor(m => m.Surname, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })*@
                                                         </div>
                                                         <div class="form-group">
                                                             <label> Address </label>
-                                                            @Html.TextBoxFor(m => m.ChiefAddress, null, new { @class = "form-control", @id = "ChiefSurname", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
-                                                            @Html.ValidationMessageFor(m => m.Surname, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                                                            @Html.TextBoxFor(m => m.ChiefAddress, null, new { @class = "form-control", @id = "ChiefAddress", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase" })
+                                                            @*@Html.ValidationMessageFor(m => m.Surname, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })*@
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-12">
@@ -683,7 +683,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                             @Html.HiddenFor(m => m.Status)
                                                             @Html.Hidden("submitForm", "mortuary", new { @id = "submitForm" })
                                                             @Html.Label("Mortuary Attendent", new { @class = "control-label" })
-                                                            @Html.TextBoxFor(m => m.MortuaryAttendent, null, new { @class = "form-control datetimepicker", @maxlength = "30" })
+                                                            @Html.TextBoxFor(m => m.MortuaryAttendent, null, new { @class = "form-control", @maxlength = "30" })
                                                             @Html.ValidationMessageFor(m => m.MortuaryAttendent, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                                                         </div>
                                                     </div>
@@ -705,7 +705,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
                                                             @Html.Label("Tag Number", new { @class = "control-label" })
-                                                            @Html.TextBoxFor(m => m.TagNumber, null, new { @class = "form-control", @maxlength = "30" })
+                                                            @Html.TextBoxFor(m => m.TagNumber, null, new { @class = "form-control", @maxlength = "30", @readonly="readonly" })
                                                             @Html.ValidationMessageFor(m => m.TagNumber, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                                                         </div>
                                                     </div>
@@ -718,7 +718,7 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
                                                             @Html.Label("Cause of Death", new { @class = "control-label" })
-                                                            @Html.TextBoxFor(m => m.CauseOfDeath, null, new { @class = "form-control", @maxlength = "30", @readonly = "readonly" })
+                                                            @Html.TextBoxFor(m => m.CourseOfDearth, null, new { @class = "form-control", @maxlength = "30", @readonly = "readonly" })
                                                             @*@Html.ValidationMessageFor(m => m.TagNumber, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })*@
                                                         </div>
                                                     </div>
@@ -1142,28 +1142,28 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>Surname    </label>
-                                                @Html.TextBoxFor(m => m.Surname, null, new { @class = "form-control", @id = "FullNames", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase", @readonly = "readonly" })
+                                                @Html.TextBoxFor(m => m.Surname, null, new { @class = "form-control", @id = "Surname", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase", @readonly = "readonly" })
                                                 @Html.ValidationMessageFor(m => m.Surname, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>Contact Number  1  </label>
-                                                @Html.TextBoxFor(m => m.ContactPersonNumber, null, new { @class = "form-control", @id = "FullNames", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase", @readonly = "readonly" })
+                                                @Html.TextBoxFor(m => m.ContactPersonNumber, null, new { @class = "form-control", @id = "ContactPersonNumber", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase", @readonly = "readonly" })
                                                 @*@Html.ValidationMessageFor(m => m.Surname, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })*@
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>Contact Number  2  </label>
-                                                @Html.TextBoxFor(m => m.ContactPersonNumber2, null, new { @class = "form-control", @id = "FullNames", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase", @readonly = "readonly" })
+                                                @Html.TextBoxFor(m => m.ContactPersonNumber2, null, new { @class = "form-control", @id = "ContactPersonNumber2", @maxlength = "25", placeholder = "", @style = "text-transform:uppercase", @readonly = "readonly" })
                                                 @*@Html.ValidationMessageFor(m => m.Surname, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })*@
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <div class="btn-group">
-                                                    <button id="btnBodyCollection" type="submit" onclick="return activateTab('bodyCollection','aMortuary')" class="btn btn-w-m btn-primary">Save & Next</button>
+                                                    <button id="btnBurial" type="submit" onclick="return activateTab('Burial','aFuneralSchedule')" class="btn btn-w-m btn-primary">Save & Next</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -1282,6 +1282,46 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                 $('#PolicyNumber').val(selectedData.PolicyNumber);
             }
         });
+    });
+
+    $("#BirthDay").change(function () {
+        var mdate = dateFormat($('#BirthDay').val(), 'dd-mm-yyyy', false)
+        var yearThen = parseInt(mdate.substring(6, 10), 10);
+        var monthThen = parseInt(mdate.substring(3, 5), 10);
+        var dayThen = parseInt(mdate.substring(0, 2), 10);
+
+        var today = new Date();
+        var birthday = new Date(yearThen, monthThen - 1, dayThen);
+
+        var differenceInMilisecond = today.valueOf() - birthday.valueOf();
+
+        var year_age = Math.floor(differenceInMilisecond / 31536000000);
+        if (isNaN(year_age)) {
+            alert("Invalid birthday - Please try again!");
+        }
+        else {
+            $("#DeceasedAge").val(year_age);
+        }
+    });
+
+    $("#BirthDay").blur(function () {
+        var mdate = dateFormat($('#BirthDay').val(), 'dd-mm-yyyy', false)
+        var yearThen = parseInt(mdate.substring(6, 10), 10);
+        var monthThen = parseInt(mdate.substring(3, 5), 10);
+        var dayThen = parseInt(mdate.substring(0, 2), 10);
+
+        var today = new Date();
+        var birthday = new Date(yearThen, monthThen - 1, dayThen);
+
+        var differenceInMilisecond = today.valueOf() - birthday.valueOf();
+
+        var year_age = Math.floor(differenceInMilisecond / 31536000000);
+        if (isNaN(year_age)) {
+            alert("Invalid birthday - Please try again!");
+        }
+        else {
+            $("#txtAge").val(year_age);
+        }
     });
 
     function tabSelector() {
@@ -1475,6 +1515,9 @@ new SelectListItem() { Text = "Other", Value = "Other" },
                 }
             });
     }
+
+
+
     function printQuotation() {
         window.location.href = "@Url.Action("PrintQuotation", "Funeral")?funeralID=" + $("#pkiFuneralID").val();
     }

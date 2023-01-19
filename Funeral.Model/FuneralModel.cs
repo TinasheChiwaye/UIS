@@ -50,6 +50,15 @@ namespace Funeral.Model
             this.Discount = 0;
             this.Tax = 0;
             this.FkiClaimID = 0;
+            this.ChiefAddress = string.Empty;
+            this.ChiefContactNumber = string.Empty;
+            this.ChiefFullNames = string.Empty;
+            this.ChiefSurname = string.Empty;
+            this.NextOfKinAddress = string.Empty;
+            this.NextOfKinContactNumber = string.Empty;
+            this.NextOfKinContactPerson = string.Empty;
+            this.NextOfKinFullNames = string.Empty;
+            this.NextOfKinSurname = string.Empty;
 
 
         } 
