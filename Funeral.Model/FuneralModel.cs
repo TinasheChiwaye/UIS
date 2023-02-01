@@ -59,7 +59,8 @@ namespace Funeral.Model
             this.NextOfKinContactPerson = string.Empty;
             this.NextOfKinFullNames = string.Empty;
             this.NextOfKinSurname = string.Empty;
-
+            this.TimeOfDispatch = DateTime.Now;
+            this.CarMake = string.Empty;
 
         } 
         public int pkiFuneralID { get; set; }

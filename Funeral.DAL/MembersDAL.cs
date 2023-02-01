@@ -14,8 +14,8 @@ namespace Funeral.DAL
             try
             {
                 AdditionalMemberInfoModel model1 = new AdditionalMemberInfoModel();
-                string query = "SaveMembers_New";
-                DbParameter[] ObjParam = new DbParameter[60];
+                string query = "SaveMembers_DT";
+                DbParameter[] ObjParam = new DbParameter[66];
                 ObjParam[0] = new DbParameter("@pkiMemberID", DbParameter.DbType.Int, 0, model.pkiMemberID);
                 ObjParam[1] = new DbParameter("@CreateDate", DbParameter.DbType.DateTime, 0, System.DateTime.Now);
                 ObjParam[2] = new DbParameter("@MemberType", DbParameter.DbType.NVarChar, 0, model.MemberType);
@@ -84,6 +84,12 @@ namespace Funeral.DAL
                 ObjParam[57] = new DbParameter("@CustomId4", DbParameter.DbType.Int, 0, model.CustomId4);
                 ObjParam[58] = new DbParameter("@AutogenerateEasyPay", DbParameter.DbType.Bit, 0, model.AutogenerateEasyPay);
                 ObjParam[59] = new DbParameter("@ValidateBankAccount", DbParameter.DbType.Bit, 0, model.AccountNumberVerified);
+                ObjParam[60] = new DbParameter("@ResidenceList", DbParameter.DbType.VarChar, 0, String.IsNullOrWhiteSpace(model.CountryOfResidence) ? (object)DBNull.Value : (object)model.CountryOfResidence);
+                ObjParam[61] = new DbParameter("@BirthList", DbParameter.DbType.VarChar, 0, String.IsNullOrWhiteSpace(model.CountryOfBirth) ? (object)DBNull.Value : (object)model.CountryOfBirth);
+                ObjParam[62] = new DbParameter("@CustomIdClientMatch", DbParameter.DbType.Int, 0, model.CustomIdClientMatch);
+                ObjParam[63] = new DbParameter("@CustomIdClientRelaitonship", DbParameter.DbType.Int, 0, model.CustomIdClientRelationship);
+                ObjParam[64] = new DbParameter("@CustomIdTransactionFrequency", DbParameter.DbType.Int, 0, model.CustomIdTransactionFrequency);
+                ObjParam[65] = new DbParameter("@CustomIdDeliveryChannel", DbParameter.DbType.Int, 0, model.CustomIdDeliveryChannel);
 
                 return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
             }

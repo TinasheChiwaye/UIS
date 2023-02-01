@@ -59,9 +59,9 @@ namespace Funeral.DAL
         public static int SaveFuneral(FuneralModel model)
         {
             //string query = "SaveFuneral"; New By Mahipatsinh
-            string query = "SaveFuneral";
+            string query = "SaveFuneral_DT";
 
-            DbParameter[] ObjParam = new DbParameter[69];
+            DbParameter[] ObjParam = new DbParameter[70];
 
             ObjParam[0] = new DbParameter("@pkiFuneralID", DbParameter.DbType.Int, 0, model.pkiFuneralID);
             ObjParam[1] = new DbParameter("@FullNames", DbParameter.DbType.NVarChar, 0, model.FullNames);
@@ -133,6 +133,7 @@ namespace Funeral.DAL
             ObjParam[66] = new DbParameter("@TimeOfDispatch", DbParameter.DbType.DateTime, 0, model.TimeOfDispatch);
             ObjParam[67] = new DbParameter("@ContactPersonNumber2", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.ContactPersonNumber2));
             ObjParam[68] = new DbParameter("@MortuaryAttendent", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.MortuaryAttendent));
+            ObjParam[69] = new DbParameter("@CarMake", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.CarMake));
 
 
 

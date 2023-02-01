@@ -366,7 +366,11 @@
                                             <div class="form-group">
                                                 <label>Date of Birth </label>
                                                 @*<input type="text" id="txtBirthDay" name="txtBirthDay" class="form-control birthDate DatepickerSelection" readonly="readonly" disabled>*@
-                                                <input type="text" id="txtBirthDay" name="txtBirthDay"  class="form-control  birthDate DatepickerSelection">
+                                                <input type="text" id="txtBirthDay" name="txtBirthDay" class="form-control  birthDate DatepickerSelection">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Age</label>
+                                                <input type="text" maxlength="25" id="txtAge" name="txtAge" class="form-control" readonly placeholder="Will be Calculated From Date Of Birth">
                                             </div>
 
                                             <div class="form-group">
@@ -399,8 +403,36 @@
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
-                                                        <label>Citizenship</label>
+                                                        <label>Nationality</label>
                                                         @Html.DropDownList("CitizenShipList", Model.countryList, "Select", new { Name = "CitizenShip", @id = "ddlCitizenship", @style = "width:100%", @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Country of birth</label>
+                                                        @Html.DropDownList("countryOfBirth", Model.countryList, "Select", new { Name = "CountryOfBirth", @id = "ddlCountryOfBirth", @style = "width:100%", @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Country of residence</label>
+                                                        @Html.DropDownList("residenceList", Model.countryList, "Select", new { Name = "ResidenceList", @id = "ddlCountryOfResidence", @style = "width:100%", @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Client is a true match on</label>
+                                                        @Html.DropDownList("CustomGroupingClientMatch", Model.CustomGroupingClientMatch, "Select", new { Name = "CustomGroupingClientMatch", @id = "ddlCustomClientMatch", @style = "width:100%", @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Relationship to client</label>
+                                                        @Html.DropDownList("CustomGroupingClientRelationship", Model.CustomGroupingClientRelationship, "Select", new { Name = "CustomGroupingClientRelationship", @id = "ddlCustomClientRelationship", @style = "width:100%", @class = "form-control" })
                                                     </div>
                                                 </div>
                                             </div>
@@ -411,10 +443,6 @@
                                             <div class="form-group">
                                                 <input type="checkbox" id="chkIdORPass">&nbsp;
                                                 <label>Either Allow Passport Number Or ID Number</label>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Age</label>
-                                                <input type="text" maxlength="25" id="txtAge" name="txtAge" class="form-control" readonly placeholder="Will be Calculated From Date Of Birth">
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
@@ -496,11 +524,11 @@
                                                                         @Html.DropDownList("CustomPaymentMethod", Model.CustomPaymentMethod, "Select", new { Name = "CustomPayment", @id = "ddlPopupCustom1", @style = "width:100%", @class = "form-control" })
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <label>Payment Type</label>
+                                                                        <label>Method of transaction</label>
                                                                         @Html.DropDownList("CustomGrouping2", Model.CustomGrouping2, "Select", new { Name = "CustomGrouping2", @id = "ddlPopupCustom2", @style = "width:100%", @class = "form-control" })
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <label>Source</label>
+                                                                        <label>Source of funds</label>
                                                                         @Html.DropDownList("CustomGrouping3", Model.CustomGrouping3, "Select", new { Name = "CustomGrouping3", @id = "ddlPopupCustom3", @style = "width:100%", @class = "form-control" })
                                                                     </div>
                                                                 </div>
@@ -697,14 +725,29 @@
                                                 @Html.DropDownList("CustomPaymentMethod", Model.CustomPaymentMethod, "Select", new { Name = "CustomPayment", @id = "ddlCustom1", @style = "width:100%", @class = "form-control" })
                                             </div>
                                             <div class="form-group">
-                                                <label>Payment Type</label>
+                                                <label>Method of transaction</label>
                                                 @Html.DropDownList("CustomGrouping2", Model.CustomGrouping2, "Select", new { Name = "CustomGrouping2", @id = "ddlCustom2", @style = "width:100%", @class = "form-control" })
                                             </div>
                                             <div class="form-group">
-                                                <label>Source</label>
+                                                <label>Source of funds</label>
                                                 @Html.DropDownList("CustomGrouping3", Model.CustomGrouping3, "Select", new { Name = "CustomGrouping3", @id = "ddlCustom3", @style = "width:100%", @class = "form-control" })
                                             </div>
-
+                                            <div class="col-lg-6">
+                                                <div class="form-group" style="margin-top:20px">
+                                                    <div class="btn-group">
+                                                        @*<a data-toggle="tab" href="#tab-2" class="btn btn-sm btn-primary pull-right m-t-n-xs" aria-expanded="true"></a>*@
+                                                        <a data-toggle="tab" href="#tab-2" id="tab3BackButton" class="btn btn-sm btn-primary pull-right m-t-n-xs" aria-expanded="true">Back</a>
+                                                        @*<button class="btn btn-sm btn-primary pull-right m-t-n-xs" onclick="return goToTab(3,2);">Back</button>*@
+                                                    </div>
+                                                    <div class="btn-group" style="display:none">
+                                                        <button class="btn btn-sm btn-primary pull-right m-t-n-xs" id="btnResetTab3">Reset</button>
+                                                    </div>
+                                                    <div class="btn-group">
+                                                        <a data-toggle="tab" href="#tab-4" id="tab3NextButton" class="btn btn-sm btn-primary pull-right m-t-n-xs" aria-expanded="true">Next</a>
+                                                        @*<button class="btn btn-sm btn-primary pull-right m-t-n-xs" id="policyNextButton" onclick="return goToTab(3,9);">Next</button>*@
+                                                    </div>
+                                                </div>
+                                            </div>
 
                                         </div>
                                         <div class="col-lg-6">
@@ -796,23 +839,17 @@
                                                 <label>Employee Number</label>
                                                 <input type="text" maxlength="50" id="txtReferenceNumber" name="name" class="form-control">
                                             </div>
-                                        </div>
-                                        <div class="col-lg-12">
                                             <div class="form-group">
-                                                <div class="btn-group">
-                                                    @*<a data-toggle="tab" href="#tab-2" class="btn btn-sm btn-primary pull-right m-t-n-xs" aria-expanded="true"></a>*@
-                                                    <a data-toggle="tab" href="#tab-2" id="tab3BackButton" class="btn btn-sm btn-primary pull-right m-t-n-xs" aria-expanded="true">Back</a>
-                                                    @*<button class="btn btn-sm btn-primary pull-right m-t-n-xs" onclick="return goToTab(3,2);">Back</button>*@
-                                                </div>
-                                                <div class="btn-group" style="display:none">
-                                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs" id="btnResetTab3">Reset</button>
-                                                </div>
-                                                <div class="btn-group">
-                                                    <a data-toggle="tab" href="#tab-4" id="tab3NextButton" class="btn btn-sm btn-primary pull-right m-t-n-xs" aria-expanded="true">Next</a>
-                                                    @*<button class="btn btn-sm btn-primary pull-right m-t-n-xs" id="policyNextButton" onclick="return goToTab(3,9);">Next</button>*@
-                                                </div>
+                                                <label>Frequency of transaction</label>
+                                                @Html.DropDownList("CustomGroupingTransactionFrequency", Model.CustomGroupingTransactionFrequency, "Select", new { Name = "CustomGroupingTransactionFrequency", @id = "ddlCustomTransactionFrequency", @style = "width:100%", @class = "form-control" })
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Delivery channel</label>
+                                                @Html.DropDownList("CustomGroupingDeliveryChannel", Model.CustomGroupingDeliveryChannel, "Select", new { Name = "CustomGroupingDeliveryChannel", @id = "ddlCustomDeliveryChannel", @style = "width:100%", @class = "form-control" })
                                             </div>
                                         </div>
+
                                     </div>
 
                                 </div>
@@ -1625,6 +1662,18 @@
                 }
             });
 
+            $("#tab-1 #ddlCountryOfBirth option").each(function () {
+                if ($(this).val() == "ZA") {
+                    $(this).attr('selected', 'selected');
+                }
+            });
+
+            $("#tab-1 #ddlCountryOfResidence option").each(function () {
+                if ($(this).val() == "ZA") {
+                    $(this).attr('selected', 'selected');
+                }
+            });
+
             if (@memberId== 0) {
                 $("#productDataTable").parent().hide();
             }
@@ -2366,6 +2415,11 @@
             var CustomId2 = 0;
             var CustomId3 = 0;
             var CustomId4 = 0;
+            var CustomIdClientMatch = 0;
+            var CustomIdClientRelationship = 0;
+            var CustomIdTransactionFrequency = 0;
+            var CustomIdDeliveryChannel = 0;
+       
 
             var Agent = 0;
             var productName = null;
@@ -2382,6 +2436,19 @@
             if ($("#tab-3 #ddlCustom3").val() != null) {
                 CustomId3 = $("#tab-3 #ddlCustom3").val();
             }
+            if ($("#tab-3 #ddlCustomTransactionFrequency").val() != null) {
+                CustomIdTransactionFrequency = $("#tab-3 #ddlCustomTransactionFrequency").val();
+            }
+            if ($("#tab-3 #ddlCustomDeliveryChannel").val() != null) {
+                CustomIdDeliveryChannel = $("#tab-3 #ddlCustomDeliveryChannel").val();
+            }
+            if ($("#tab-1 #ddlCustomClientMatch").val() != null) {
+                CustomIdClientMatch = $("#tab-1 #ddlCustomClientMatch").val();
+            }
+            if ($("#tab-1 #ddlCustomClientRelationship").val() != null) {
+                CustomIdClientRelationship = $("#tab-1 #ddlCustomClientRelationship").val();
+            }
+
 
             if ($("#tab-1 #txtIdNumber").val() != "") {
                 idNumber = $("#tab-1 #txtIdNumber").val();
@@ -2427,6 +2494,8 @@
                 Cellphone: $("#txtCellphone").val(),
                 Email: $("#txtEmail").val(),
                 Citizenship: $("#ddlCitizenship :selected").text(),
+                CountryOfBirth: $("#ddlCountryOfBirth :selected").text(),
+                CountryOfResidence: $("#ddlCountryOfResidence :selected").text(),
                 Passport: $("#txtPassport").val(),
 
                 Address1: $("#txtStreetPostalAddress").val(),
@@ -2452,6 +2521,10 @@
                 CustomId2: CustomId2,
                 CustomId3: CustomId3,
                 CustomId4: CustomId4,
+                CustomIdClientMatch: CustomIdClientMatch,
+                CustomIdClientRelationship: CustomIdClientRelationship,
+                CustomIdTransactionFrequency: CustomIdTransactionFrequency,
+                CustomIdDeliveryChannel: CustomIdDeliveryChannel,
                 MemberSociety: $("#tab-1 #ddlMemberSociety :selected").text(),
                 StartDate: dateFormat($("#tab-3 #txtPolicyStartDate").val(), 'dd-mm-yyyy', false),
                 InceptionDate: dateFormat($("#tab-3 #txtInception").val(), 'dd-mm-yyyy', false),
@@ -2649,10 +2722,14 @@
             $("#tab-1 #txtBirthDay").val('');
             $("#tab-1 #txtAge").val('');
             $("#tab-1 #ddlCitizenship").val('');
+            $("#tab-1 #ddlCountryOfBirth").val('');
+            $("#tab-1 #ddlCountryOfResidence").val('');
             $("#txtCellphone").val('');
             $("#txtTelePhone").val('');
             $("#txtEmail").val('');
             $("#tab-1 #ddlCustom4").val('');
+            $("#tab-1 #ddlCustomClientMatch").val('');
+            $("#tab-1 #ddlCustomClientRelationship").val('');
 
         })
         $("#btnResetTab3").click(function () {
@@ -2666,6 +2743,8 @@
             $("#tab-3 #ddlCustom1").val('');
             $("#tab-3 #ddlCustom2").val('');
             $("#tab-3 #ddlCustom3").val('');
+            $("#tab-3 #ddlCustomTransactionFrequency").val('');
+            $("#tab-3 #CustomGroupingDeliveryChannel").val('');
             $("#tab-3 #txtCoverDate").val('');
             $("#tab-1 #ddlMemberSociety").val('');
             $("#tab-3 #txtPolicyStartDate").val('');
@@ -3281,6 +3360,7 @@
                 CustomId1: $("#PolicyUpdatePopupModel .modal-body #ddlPopupCustom1").val(),
                 CustomId2: $("#PolicyUpdatePopupModel .modal-body #ddlPopupCustom2").val(),
                 CustomId3: $("#PolicyUpdatePopupModel .modal-body #ddlPopupCustom3").val(),
+                CustomIdClientMatch: $("#PolicyUpdatePopupModel .modal-body #ddlPopupCustomClientMatch").val(),
                 MemberSociety: $("#PolicyUpdatePopupModel .modal-body #ddlMemberSociety :selected").val(),
                 StartDate: $("#PolicyUpdatePopupModel .modal-body #txtPolicyStartDate").val(),
                 // StartDate: dateFormat($(".policystartdate1").val(), 'dd-mm-yyyy', false),
@@ -3341,6 +3421,12 @@
             $("#ddlCitizenship option").filter(function () {
                 return this.text == member.Citizenship;
             }).attr('selected', true);
+            $("#ddlCountryOfBirth option").filter(function () {
+                return this.text == member.CountryOfBirth;
+            }).attr('selected', true);
+            $("#ddlCountryOfResidence option").filter(function () {
+                return this.text == member.CountryOfResidence;
+            }).attr('selected', true);
             $("#tab-3 #ddlPolicy option").each(function () {
                 if ($(this).val() == member.fkiPlanID) {
                     $(this).attr('selected', 'selected');
@@ -3370,7 +3456,11 @@
             $("#tab-3 #ddlCustom1").val(member.CustomId1);
             $("#tab-3 #ddlCustom2").val(member.CustomId2);
             $("#tab-3 #ddlCustom3").val(member.CustomId3);
+            $("#tab-3 #ddlCustomTransactionFrequency").val(member.CustomIdTransactionFrequency);
+            $("#tab-3 #ddlCustomDeliveryChannel").val(member.CustomIdDeliveryChannel);
             $("#tab-1 #ddlCustom4").val(member.CustomId4);
+            $("#tab-1 #ddlCustomClientMatch").val(member.CustomIdClientMatch); //CustomIdClientMatch
+            $("#tab-1 #ddlCustomClientRelationship").val(member.CustomIdClientRelationship);
 
             $("#tab-1 #ddlMemberSociety option:selected").text(member.MemberSociety);
 
@@ -4847,6 +4937,12 @@
                 return;
             }
         });
+        jQuery('select#ddlPopupCustomClientMatch option').each(function () {
+            if (jQuery(this).val() == data.CustomIdClientMatch) {
+                jQuery(this).prop('selected', 'selected');
+                return;
+            }
+        });
 
         jQuery('select#ddlAgent option').each(function () {
             if (jQuery(this).text() == data.Agent) {
@@ -5034,14 +5130,14 @@
     }
 
     function IdNumberBasicValidation(IdNumber) {
-        if (IdNumber.value.length != 0 && IdNumber.value.length != 6 && IdNumber.value.length != 13 && IdNumber.value.length != 12) {
+        if (IdNumber.value.length != 0 && IdNumber.value.length != 6 && IdNumber.value.length != 13 && IdNumber.value.length != 12 && IdNumber.value.length != 9) {
         alert("Id Number is not valid");
             IdNumber.value = "";
         }
     }
 
     function IdNumberValidation(IdNumber) {
-        if (IdNumber.value.length != 0 && IdNumber.value.length != 13 && IdNumber.value.length != 12) {
+        if (IdNumber.value.length != 0 && IdNumber.value.length != 13 && IdNumber.value.length != 12 && IdNumber.value.length != 9) {
             alert("Id Number is not valid");
             IdNumber.value = "";
         }

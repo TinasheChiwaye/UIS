@@ -228,6 +228,10 @@ namespace Funeral.Web.Areas.Admin.Controllers
             Managemembers.CustomGrouping2 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.PaymentType)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
             Managemembers.CustomGrouping3 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Source)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
             Managemembers.CustomGrouping4 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.MaritalStatus)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
+            Managemembers.CustomGroupingClientMatch = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.ClientMatch)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
+            Managemembers.CustomGroupingClientRelationship = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.ClientRelationship)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
+            Managemembers.CustomGroupingTransactionFrequency = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.TransactionFrequency)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
+            Managemembers.CustomGroupingDeliveryChannel = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.DeliveryChannel)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
             Managemembers.Member = member;
             //Managemembers.DependencyTypeList = CommonBAL.GetUserTypes().Select(x => new SelectListItem() { Text = x.UserTypeName, Value = x.UserTypeId.ToString() });
             Managemembers.DependencyTypeList = CommonBAL.GetUserTypesByMemberID(MemberId, member.fkiPlanID, CurrentParlourId).Select(x => new SelectListItem() { Text = x.UserTypeName, Value = x.CreatorID.ToString() });
@@ -1753,6 +1757,12 @@ namespace Funeral.Web.Areas.Admin.Controllers
             model.CustomId1 = policy.CustomId1;
             model.CustomId2 = policy.CustomId2;
             model.CustomId3 = policy.CustomId3;
+            model.CustomIdClientMatch = policy.CustomIdClientMatch;
+            model.CustomIdClientRelationship = policy.CustomIdClientRelationship;
+            model.CustomIdTransactionFrequency = policy.CustomIdTransactionFrequency;
+            model.CustomIdDeliveryChannel = policy.CustomIdDeliveryChannel;
+
+
 
             //================================================================ 
             int retID = MembersBAL.SaveMembers(model);

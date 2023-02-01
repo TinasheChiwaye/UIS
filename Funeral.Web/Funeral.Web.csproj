@@ -317,7 +317,6 @@
     <Content Include="Admin\TombStoneServiceSelect.aspx" />
     <Content Include="Admin\UserRight.aspx" />
     <Content Include="bin\DayPilot.Web.Mvc.dll" />
-    <Content Include="bin\DayPilot.Web.Mvc.xml" />
     <Content Include="Content\animate.css" />
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-theme.css" />

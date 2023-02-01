@@ -111,7 +111,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
         /// <returns></returns>
         public ActionResult SearchData(Model.Search.BaseSearch search)
         {
-            var searchResult = new SearchResult<Model.Search.BaseSearch, FuneralModel>(search, new List<FuneralModel>(), o => o.FullNames.Contains(search.SarchText) || o.Surname.Contains(search.SarchText) || o.IDNumber.Contains(search.SarchText));
+            var searchResult = new SearchResult<Model.Search.BaseSearch, FuneralModel>(search, new List<FuneralModel>(), o => o.FullNames.ToLower().Contains(search.SarchText.ToLower()) || o.Surname.ToLower().Contains(search.SarchText.ToLower()) || o.IDNumber.ToLower().Contains(search.SarchText.ToLower()));
             string status = Request.Params["StatusId"];
 
             if (status == null)
@@ -121,7 +121,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             {
                 var funeralList = FuneralBAL.SelectAllFuneralByParlourId(ParlourId, search.PageSize, search.PageNum, "", search.SortBy, search.SortOrder, search.DateFrom, search.DateTo, status);
 
-                return Json(new SearchResult<Model.Search.BaseSearch, FuneralModel>(search, funeralList, o => o.FullNames.Contains(search.SarchText) || o.Surname.Contains(search.SarchText) || o.IDNumber.Contains(search.SarchText) || o.AssignedToName.Contains(search.SarchText) || o.Status.Contains(search.SarchText)), JsonRequestBehavior.AllowGet);
+                return Json(new SearchResult<Model.Search.BaseSearch, FuneralModel>(search, funeralList, o => o.FullNames.ToLower().Contains(search.SarchText.ToLower()) || o.Surname.ToLower().Contains(search.SarchText.ToLower()) || o.IDNumber.ToLower().Contains(search.SarchText.ToLower()) || o.AssignedToName.ToLower().Contains(search.SarchText.ToLower()) || o.Status.ToLower().Contains(search.SarchText.ToLower())), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
