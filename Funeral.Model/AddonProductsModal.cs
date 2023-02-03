@@ -18,10 +18,13 @@ namespace Funeral.Model
             LastModified = System.DateTime.Now;
             ModifiedUser = string.Empty;
             ProductName = string.Empty;
+            InceptionDate = System.DateTime.Now;
 
         }
         public Guid pkiProductID { get; set; }
         public DateTime DateCreated { get; set; }
+        public DateTime InceptionDate { get; set; }
+
         public string UserID { get; set; }
         public string ProductDesc { get; set; }
         public decimal ProductCost { get; set; }
@@ -35,6 +38,8 @@ namespace Funeral.Model
         public string ProductName { get; set; }
         public Guid parlourid { get; set; }
         public Guid SchemeID { get; set; }
+
+
 
     }
 }

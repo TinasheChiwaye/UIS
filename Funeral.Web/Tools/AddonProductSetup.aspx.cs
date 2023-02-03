@@ -139,6 +139,7 @@ namespace Funeral.Web.Tools
                     model = new AddonProductsModal();
                     model.pkiProductID = ProductID;
                     model.DateCreated = System.DateTime.Now;
+                    model.InceptionDate = System.DateTime.Now;
                     model.UserID = UserID.ToString();
                     model.ProductDesc = txtDescription.Text;
                     model.ProductCost = Convert.ToDecimal(txtPremium.Text);

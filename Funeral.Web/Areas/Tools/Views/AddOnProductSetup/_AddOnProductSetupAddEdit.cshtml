@@ -34,6 +34,14 @@
                             @Html.TextBoxFor(m => m.ProductCost, null, new { @class = "form-control", @maxlength = "25", placeholder = "Premium" })
                             @Html.ValidationMessageFor(m => m.ProductCost, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                         </div>
+
+
+                        <div class="form-group">
+                            @Html.Label("Inception Date", new { @class = "control-label" })
+                            <strong><span class="text-danger"><em>*</em></span></strong>
+                            @Html.TextBoxFor(m => m.InceptionDate, null, new { @class = "form-control", @maxlength = "25", placeholder = "Inception Date" })
+                            @Html.ValidationMessageFor(m => m.InceptionDate, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
@@ -92,6 +100,7 @@
 
             jQuery("#btnCancel").click(function (event) {
                 jQuery("#ProductName").val("");
+                jQuery("#InceptionDate").val("");
                 jQuery("#ProductDesc").val("");
                 jQuery("#ProductCost").val("");
                 jQuery("#ProductCover").val("");
