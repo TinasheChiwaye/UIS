@@ -262,7 +262,7 @@ namespace Funeral.Web.Admin.Reports
                 rpw.ServerReport.ReportServerUrl = new Uri(_siteConfig.SSRSUrl);
                 rpw.ServerReport.ReportPath = "/" + _siteConfig.SSRSFolderName + "/" + hfAdminReport.Value;
                 ReportParameterCollection reportParameters = new ReportParameterCollection();
-
+                //DateTime DateTo = new DateTime();
 
                 if (chk_dateDisabled.Checked)
                 {
@@ -279,10 +279,12 @@ namespace Funeral.Web.Admin.Reports
                 }
                 else
                 {
+                    //txtDateTo = DateTime.Parse(txtDateTo.Text);
                     if (!string.IsNullOrEmpty(txtDateFrom.Text))
                         reportParameters.Add(new ReportParameter("DateFrom", txtDateFrom.Text));
                     if (!string.IsNullOrEmpty(txtDateTo.Text))
                         reportParameters.Add(new ReportParameter("DateTo", txtDateTo.Text));
+                    //reportParameters.Add(new ReportParameter("DateTo", DateTo.AddDays(1).AddSeconds(-1).ToString()));
                 }
 
                 if (IsAdministrator != true)
@@ -343,32 +345,37 @@ namespace Funeral.Web.Admin.Reports
                     ExportTypeExtensions = "xls";
                 //
 
-                byte[] bytes = rpw.ServerReport.Render(ExportTypeName, null, out mimeType, out encoding, out extension, out streamids, out warnings);
-                filename = string.Format("{0}.{1}", hfAdminReport.Value, ExportTypeExtensions);
+                //byte[] bytes = rpw.ServerReport.Render(ExportTypeName, null, out mimeType, out encoding, out extension, out streamids, out warnings);
+                //filename = string.Format("{0}.{1}", hfAdminReport.Value, ExportTypeExtensions);
                 //MailSend
                 if (!string.IsNullOrEmpty(txtcemail.Text))
                 {
-                    MemoryStream s = new MemoryStream(bytes);
-                    s.Seek(0, SeekOrigin.Begin);
-                    Attachment a = new Attachment(s, filename);
-                    MailMessage message = new MailMessage(ConfigurationManager.AppSettings["ReportEmailSenderId"].ToString().Trim(), txtcemail.Text.Trim(), hfAdminReport.Value, "");
-                    message.Attachments.Add(a);
-                    SmtpClient client = new SmtpClient();
-                    //ServicePointManager.ServerCertificateValidationCallback = delegate(object d, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
-                    client.Send(message);
+
+                    //MemoryStream s = new MemoryStream(bytes);
+                    //s.Seek(0, SeekOrigin.Begin);
+                    //Attachment a = new Attachment(s, filename);
+                    //MailMessage message = new MailMessage(ConfigurationManager.AppSettings["ReportEmailSenderId"].ToString().Trim(), txtcemail.Text.Trim(), hfAdminReport.Value, "");
+                    //message.Attachments.Add(a);
+                    //SmtpClient client = new SmtpClient();
+                    ////ServicePointManager.ServerCertificateValidationCallback = delegate(object d, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
+                    //client.Send(message);
+                    CommonBAL.SendReportParamemters(txtDateFrom.Text, txtDateTo.Text, ddlBranch.SelectedItem.Text, ddlSociety.SelectedItem.Text, ddlAgent.SelectedItem.Text,
+                        ddlUnderwriter.SelectedItem.Text, ddlMethod.SelectedItem.Text, ddlPolicyStatus.SelectedItem.Text, ddlCustom1.SelectedValue, ddlCustom2.SelectedValue,
+                        ddlCustom3.SelectedValue, this.ParlourId, txtcemail.Text, hfAdminReport.Value);
+            
                     lblMessage.ForeColor = System.Drawing.Color.Green;
-                    lblMessage.Text = "Email Sent Successfully.";
+                    lblMessage.Text = "Email Report has been scheduled Successfully and will be sent in 15 mins";
                 }
                 //
                 else
                 {
-                    Response.ClearHeaders();
-                    Response.Clear();
-                    Response.AddHeader("Content-Disposition", "attachment;filename=" + filename);
-                    Response.ContentType = mimeType;
-                    Response.BinaryWrite(bytes);
-                    Response.Flush();
-                    Response.End();
+                    //Response.ClearHeaders();
+                    //Response.Clear();
+                    //Response.AddHeader("Content-Disposition", "attachment;filename=" + filename);
+                    //Response.ContentType = mimeType;
+                    //Response.BinaryWrite(bytes);
+                    //Response.Flush();
+                    //Response.End();
                 }
             }
             catch (Exception ex)
@@ -376,6 +383,8 @@ namespace Funeral.Web.Admin.Reports
                 ShowMessage(ref lblMessage, MessageType.Danger, ex.Message);
             }
         }
+
+
         #endregion
 
         #region Custom Field Impementation

@@ -53,6 +53,8 @@ namespace Funeral.Model
             Email = string.Empty;
             Passport = string.Empty;
             Citizenship = string.Empty;
+            CountryOfBirth = string.Empty;
+            CountryOfResidence = string.Empty;
             EasyPayNo = string.Empty;
             RefNumber = string.Empty;
             PlanName = string.Empty;
@@ -146,6 +148,8 @@ namespace Funeral.Model
         [RegularExpression(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", ErrorMessage = "Please enter valid email address")]
         public string Email { get; set; }
         public string Citizenship { get; set; }
+        public string CountryOfBirth { get; set; }
+        public string CountryOfResidence { get; set; }
 
         //[Required(ErrorMessage = "Enter Passport Number")]
         public string Passport { get; set; }
@@ -160,6 +164,10 @@ namespace Funeral.Model
         public int CustomId2 { get; set; }
         public int CustomId3 { get; set; }
         public int CustomId4 { get; set; }
+        public int CustomIdClientMatch { get; set; }
+        public int CustomIdClientRelationship { get; set; }
+        public int CustomIdTransactionFrequency { get; set; }
+        public int CustomIdDeliveryChannel { get; set; }
         public int FK_MemberId { get; set; }
         public int ClaimExistCount { get; set; }
         public string ApplicationName { get; set; }

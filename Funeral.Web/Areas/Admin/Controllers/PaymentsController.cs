@@ -11,6 +11,10 @@ using System.Threading;
 using System.Web.Mvc;
 using System.Data;
 using System.Linq;
+using System.IO;
+using System.Drawing;
+using System.Drawing.Imaging;
+using BarcodeLib;
 
 namespace Funeral.Web.Areas.Admin.Controllers
 {
@@ -127,6 +131,17 @@ namespace Funeral.Web.Areas.Admin.Controllers
                     ViewBag.PolicyStatus = model.PolicyStatus;
                 }
 
+
+                if (model.IsJoiningFee == false || model.IsJoiningFee.Equals(null))
+                {
+                    ViewBag.IsJoiningFee = false;
+                }
+                else if (model.IsJoiningFee == true)
+                {
+                    ViewBag.IsJoiningFee = true;
+                }
+
+
                 var policyBalance = model.Currency + " " + Convert.ToDouble(model.Balance);
                 ViewBag.policyBalance = policyBalance;
                 var latePanelty = model.Currency + " " + Convert.ToDouble(model.LatePaymentPenalty);
@@ -136,6 +151,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 ViewBag.MemberInvoiceList = MembersBAL.GetInvoicesByMemberID(ParlourID, id);
                 ViewBag.MemberID = model.MemeberNumber;
                 ViewBag.ParlourID = ParlourID;
+                var JoingingFee = model.JoiningFee;
+                ViewBag.JoingingFee = JoingingFee;
             }
             var info = CultureInfo.InvariantCulture.Clone() as CultureInfo;
             info.NumberFormat.NumberDecimalSeparator = ".";
@@ -169,6 +186,20 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 TempData["message"] = ShowMessage(MessageType.Danger, "Payment not added successfully");
                 return Json("Payment not added successfully.", JsonRequestBehavior.AllowGet);
             }
+        }
+
+        public JsonResult JoiningFee(MembersPaymentDetailsModel data)
+        {
+            //add Joining fee boolean in method
+            MembersModel objmember = MembersBAL.GetMemberByID(data.pkiMemberID, ParlourId);
+            if (objmember.MemberBranch != "")
+            {
+                data.Branch = objmember.MemberBranch;
+            }
+            data.ParlourId = ParlourId;
+            data.NextPaymentDate = Convert.ToDateTime(data.PaymentDate).AddMonths(Convert.ToInt32(data.MonthOwing));
+            var paymentId = MemberPaymentBAL.AddPayments(data, true);
+            return Json("JoiningFee added successfully.", JsonRequestBehavior.AllowGet);
         }
         public ActionResult PrintPaymentReceipt(int id, int Type, string PolicyNumber, string DatePaid, string AmountPaid, string PaidBy, string ReceivedBy, string MonthPaid, int memberId, Guid parlourId)
         {
@@ -232,6 +263,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 printObj.TimePrinted = Convert.ToString(System.DateTime.Now);
             }
 
+            printObj.Barcode = GenerateBarcode(printObj.PolicyNumber);
+
             return View(printObj);
         }
         public void bindInvoices(Guid ParlourId, int MemberId)
@@ -263,8 +296,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
                     monthPaid = string.Format("{0} {1}-{2} {3}", NextDate1.ToString("MMM"), NextDate1.ToString("yyyy"), NextDate1.AddMonths(noOfMonths - 1).ToString("MMM"), NextDate1.AddMonths(noOfMonths - 1).ToString("yyyy"));
 
             }
-            else
-                monthPaid = string.Format("{0}-{1}", NextDate1.AddMonths(noOfMonths - 1).ToString("MMM"), NextDate1.AddMonths(noOfMonths - 1).ToString("yyyy"));
+            //else
+            //    monthPaid = string.Format("{0}-{1}", NextDate1.AddMonths(noOfMonths - 1).ToString("MMM"), NextDate1.AddMonths(noOfMonths - 1).ToString("yyyy"));
 
             double TotalPremium = Convert.ToDouble(TotalPremieum * Convert.ToInt32(noOfMonths) + LatePanelty);
 
@@ -427,6 +460,24 @@ namespace Funeral.Web.Areas.Admin.Controllers
         //    int retID = MembersBAL.SaveMembers(model);
         //    MemberId = retID;
         //    return Json(model, JsonRequestBehavior.AllowGet);
-        //}
+        //}  
+        public static string GenerateBarcode(string text)
+        {
+            using (var ms = new MemoryStream())
+            {
+                Barcode barcodLib = new Barcode();
+
+                int imageWidth = 250;
+                int imageHeight = 110;
+                Color foreColor = Color.Black;
+                Color backColor = Color.White;
+
+                Image barcodeImage = barcodLib.Encode(TYPE.CODE128, text, foreColor, backColor, imageWidth, imageHeight);
+
+                barcodeImage.Save(ms, ImageFormat.Jpeg);
+
+                return "data:image/png;base64," + Convert.ToBase64String(ms.ToArray());
+            }
+        }
     }
 }

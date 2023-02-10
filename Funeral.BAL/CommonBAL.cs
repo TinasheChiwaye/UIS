@@ -293,6 +293,8 @@ namespace Funeral.BAL
             return Claimdashboard;
         }
 
+
+
         public static int SMSTopup_save(ConsumableOrders Model)
         {
             return CommonDAL.SMSTopup_save(Model);
@@ -688,6 +690,15 @@ namespace Funeral.BAL
         {
             return CommonDAL.AddAudit(Username, ParlourId, AuditDesc);
         }
+
+        public static int SendReportParamemters(string DateFrom, string DateTo, string Branch, string Society, string Agent, string Underwriter, 
+            string PaymentType, string PolicyStatus, string Custom1, string Custom2, string Custom3, Guid ParlourId, string Email, string ReportName)
+        {
+            return CommonDAL.SendReportParameters(DateFrom, DateTo, Branch, Society, Agent, Underwriter, PaymentType, PolicyStatus,
+            Custom1, Custom2, Custom3, ParlourId, Email, ReportName);
+        }
+
+
         public static List<UserType> GetUserTypesByMemberID(int MemberId, int planID, Guid parlourid)
         {
             DataTable dr = MembersDAL.GetUserTypesByMemberID(MemberId, planID, parlourid);

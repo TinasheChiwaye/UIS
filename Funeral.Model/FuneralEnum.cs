@@ -48,5 +48,14 @@ namespace Funeral.Model
             [Description("Completed")]
             Completed = 7
         }
+
+        public enum FuneralServiceType
+        {
+            [Description("Funeral Service")]
+            FuneralService = 1,
+            [Description("Tombstone Service")]
+            TombstoneService = 2,
+          
+        }
     }
 }

@@ -50,7 +50,17 @@ namespace Funeral.Model
             this.Discount = 0;
             this.Tax = 0;
             this.FkiClaimID = 0;
-
+            this.ChiefAddress = string.Empty;
+            this.ChiefContactNumber = string.Empty;
+            this.ChiefFullNames = string.Empty;
+            this.ChiefSurname = string.Empty;
+            this.NextOfKinAddress = string.Empty;
+            this.NextOfKinContactNumber = string.Empty;
+            this.NextOfKinContactPerson = string.Empty;
+            this.NextOfKinFullNames = string.Empty;
+            this.NextOfKinSurname = string.Empty;
+            this.TimeOfDispatch = DateTime.Now;
+            this.CarMake = string.Empty;
 
         } 
         public int pkiFuneralID { get; set; }
@@ -93,6 +103,7 @@ namespace Funeral.Model
         public string InvoiceNumber { get; set; }
         public string InvoiceNumber2 { get; set; }
         public string Notes { get; set; }
+        public string FuneralArrangemmentsNotes { get; set; }
         public Decimal Discount { get; set; }
         public Decimal Tax { get; set; }
 
@@ -107,12 +118,13 @@ namespace Funeral.Model
         public string HeadHair { get; set; }
         public string SkinMarks { get; set; }
         public string DentalCondition { get; set; }
-        [Required(ErrorMessage = "Type of Collection is required")]
+        //[Required(ErrorMessage = "Type of Collection is required")]
         public string TypeOfCollection { get; set; }
         public string PersonalItem { get; set; }
         public string IdentityDocument { get; set; }
         public string CauseOfDeath { get; set; }
         public string Status { get; set; }
+        public string SelectedTab { get; set; }
 
         public string CollectionType { get; set; }
         public string Village { get; set; }
@@ -147,5 +159,38 @@ namespace Funeral.Model
         public string AssignedToName { get; set; }
         public int AssignedTo { get; set; }
         public List<FuneralDocumentModel> FuneralDocuments { get; set; }
-    }
+
+        public string CollectionAddress { get; set; }
+        public string ContactPersonNumber2 { get; set; }
+        public DateTime TimeOfDispatch { get; set; }
+        public string DeceasedAge { get; set; }
+        public string NextOfKinFullNames { get; set; }
+        public string NextOfKinSurname { get; set; }
+        public string NextOfKinAddress { get; set; }
+        public string NextOfKinContactPerson { get; set; }
+        public string NextOfKinContactNumber { get; set; }
+        public string ChiefFullNames { get; set; }
+        public string ChiefSurname { get; set; }
+        public string ChiefAddress { get; set; }
+        public string ChiefContactPerson { get; set; }
+        public string ChiefContactNumber { get; set; }
+        public string MortuaryAttendent { get; set; }
+        public string SkinColour { get; set; }
+        public string CoffinClassification { get; set; }
+        public string CoffinCode { get; set; }
+        public string CoffinType { get; set; }
+        public string CoffinColour { get; set; }
+        public string CoffinSize { get; set; }
+        public string TypeOfService { get; set; }
+        public string Programs { get; set; }
+        public string GraveMarkers { get; set; }
+        public string Cremation { get; set; }
+        public string GraveSite { get; set; }
+        public string TombstoneType { get; set; }
+        public string TombstoneCode { get; set; }
+        public string TombstonePolish { get; set; }
+        public string ServiceType { get; set; }
+        public DateTime TimeOfBodyArrival { get; set; }
+        public FuneralServiceVM FuneralServiceVM { get; set; }
+    } 
 }

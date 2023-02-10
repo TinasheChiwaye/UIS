@@ -21,7 +21,11 @@ namespace Funeral.Model
             DentalCondition = 5,
             GeneralCondition = 6,
             AgeGroup = 7,
-            HeadHair = 8
+            HeadHair = 8,
+            ClientMatch = 9,
+            ClientRelationship = 10,
+            TransactionFrequency = 11,
+            DeliveryChannel = 12
         }
     }
 }

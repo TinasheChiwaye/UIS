@@ -20,6 +20,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Web.UI.WebControls;
+using DocumentFormat.OpenXml.Office2013.PowerPoint.Roaming;
 
 
 namespace Funeral.Web.Areas.Admin.Controllers
@@ -435,6 +436,12 @@ namespace Funeral.Web.Areas.Admin.Controllers
         public ActionResult ClaimAddEdit(ClaimandFuneralModel claimandFuneral)
         {
             string errorMsg = "";
+            claimandFuneral.funeralModel.ClaimantName = claimandFuneral.claimsModel.ClaimantFullname;
+            claimandFuneral.funeralModel.ClaimantSurname = claimandFuneral.claimsModel.ClaimantSurname;
+           
+            ModelState["funeralModel.ClaimantName"].Errors.Clear();
+            ModelState["funeralModel.ClaimantSurname"].Errors.Clear();
+           
             if (ModelState.IsValid)
             {
 

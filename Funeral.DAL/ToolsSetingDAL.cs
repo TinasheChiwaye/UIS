@@ -1553,7 +1553,7 @@ namespace Funeral.DAL
         public static int SaveFuneralManageService(FuneralServiceManageModel Model1)
         {
             string query = "SaveFuneralManageService";
-            DbParameter[] ObjParam = new DbParameter[9];
+            DbParameter[] ObjParam = new DbParameter[10];
             ObjParam[0] = new DbParameter("@pkiServiceID", DbParameter.DbType.Int, 0, Model1.pkiServiceID);
             ObjParam[1] = new DbParameter("@ServiceName", DbParameter.DbType.NVarChar, 0, Model1.ServiceName);
             ObjParam[2] = new DbParameter("@ServiceDesc", DbParameter.DbType.NVarChar, 0, Model1.ServiceDesc);
@@ -1563,6 +1563,7 @@ namespace Funeral.DAL
             ObjParam[6] = new DbParameter("@ModifiedUser", DbParameter.DbType.VarChar, 0, Model1.ModifiedUser);
             ObjParam[7] = new DbParameter("@VendorId", DbParameter.DbType.Int, 0, Model1.VendorId);
             ObjParam[8] = new DbParameter("@CostOfSale", DbParameter.DbType.Money, 0, Model1.CostOfSale);
+            ObjParam[9] = new DbParameter("@FuneralServiceType", DbParameter.DbType.Int, 0, Model1.FuneralServiceType);
 
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
         }

@@ -10,6 +10,8 @@
     var LatePanelty = ViewBag.LatePanelty;
     var MemberId = ViewBag.MemberID;
     var ParlourID = ViewBag.ParlourID;
+    var IsjoiningFee = ViewBag.IsJoiningFee;
+    var JoingingFee = ViewBag.JoingingFee;
 }
 
 <style>
@@ -24,6 +26,8 @@
 </style>
 @Html.Hidden("CalculateAmount", Url.Action("CalculateAmount"))
 @Html.Hidden("AddPayments", Url.Action("AddPayments"))
+@Html.Hidden("JoiningFee", Url.Action("JoiningFee"))
+
 
 <div class="row">
     <div class="col-lg-12">
@@ -126,7 +130,7 @@
                                     <div class="form-group">
                                         @if (ViewBag.HasCreateRight)
                                         {
-                                            <button id="btnPay" class="btn btn-md btn-primary" value="Add Payment" style="width: 96%;">Add Payment</button>
+                                            <button id="btnPay"  class="btn btn-md btn-primary" value="Add Payment" style="width: 96%;">Add Payment</button>
                                         }
                                     </div>
                                 </div>
@@ -138,38 +142,57 @@
                                 </div>
 
                             </div>
+
+                            @*<div class="col-lg-6">*@
+                                @if (IsjoiningFee == false)
+                                {
+                                    <div class="form-group">
+                                        <button id="btnJoiningFee" class="btn btn-md btn-primary" value="Rejoin Policy" style="width: 46%;">Pay Joining Fee</button>
+                                    </div>
+                                }
+                                else if (IsjoiningFee == true || JoingingFee <= 0)
+                                {
+                                    <div class="form-group">
+                                        <button id="btnJoiningFee" class="btn btn-md btn-primary" value="Rejoin Policy" style="width: 46%;" disabled>Pay Joining Fee</button>
+                                    </div>
+                                }
+
+                            @*</div>*@
                             @*<div class="row">
-                                    <div class="col-lg-6">
-                                        @if (policyStatus == "Active" || policyStatus == "1")
-                                        {
-                                            <div class="form-group">
-                                                <button id="btnReunstate" class="btn btn-md btn-primary" value="Reinstate Policy" style="width: 96%;" disabled>Reinstate Policy</button>
-                                            </div>
-                                        }
-                                        else
-                                        {
-                                            <div class="form-group">
-                                                <button id="btnReunstate" class="btn btn-md btn-primary" value="Reinstate Policy" style="width: 96%;">Reinstate Policy</button>
-                                            </div>
-                                        }
+            <div class="col-lg-6">
+                @if (policyStatus == "Active" || policyStatus == "1")
+                {
+                    <div class="form-group">
+                        <button id="btnReunstate" class="btn btn-md btn-primary" value="Reinstate Policy" style="width: 96%;" disabled>Reinstate Policy</button>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group">
+                        <button id="btnReunstate" class="btn btn-md btn-primary" value="Reinstate Policy" style="width: 96%;">Reinstate Policy</button>
+                    </div>
+                }
 
-                                    </div>
-                                    <div class="col-lg-6">
-                                        @if (policyStatus == "Active" || policyStatus == "1")
-                                        {
-                                            <div class="form-group">
-                                                <button id="btnRejoin" class="btn btn-md btn-primary" value="Rejoin Policy" style="width: 96%;" disabled>Rejoin Policy</button>
-                                            </div>
-                                        }
-                                        else
-                                        {
-                                            <div class="form-group">
-                                                <button id="btnRejoin" class="btn btn-md btn-primary" value="Rejoin Policy" style="width: 96%;">Rejoin Policy</button>
-                                            </div>
-                                        }
+            </div>
+            <div class="col-lg-6">
+                @if (policyStatus == "Active" || policyStatus == "1")
+                {
+                    <div class="form-group">
+                        <button id="btnRejoin" class="btn btn-md btn-primary" value="Rejoin Policy" style="width: 96%;" disabled>Rejoin Policy</button>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group">
+                        <button id="btnRejoin" class="btn btn-md btn-primary" value="Rejoin Policy" style="width: 96%;">Rejoin Policy</button>
+                    </div>
+                }
 
-                                    </div>
-                                </div>*@
+            </div>
+        </div>*@
+
+
+
                             <div class="row">
                                 <div class="col-lg-3">
                                     <div class="form-group">
@@ -198,7 +221,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>Premium <em>*</em> </label>
-                                        @Html.EditorFor(Model => Model.PlanSubscription, new { @class = "form-control", @maxlength = "255", @id = "txtPremium", @name = "txtPremium", @readonly = "readonly" })
+                                        @Html.EditorFor(Model => Model.PlanSubscription, new { htmlAttributes = new { @class = "form-control", @maxlength = "255", @id = "txtPremium", @name = "txtPremium", @readonly = "readonly" } })
                                     </div>
                                 </div>
                             </div>
@@ -426,9 +449,7 @@
             parlourid: $("#parlourid").val(),
             FullNames: $("#txtMember").val()
         };
-
-
-        $.ajax({
+                $.ajax({
             url: ManageMembersPaymentURL,
             data: data,
             type: "post",
@@ -444,6 +465,44 @@
         //    alert("Please select policy..!");
         //}
     });
+
+    $("#btnJoiningFee").click(function () {
+        var PayJoiningFeeURL = $("#JoiningFee").val();
+        var data = {
+            pkiMemberID: $("#pkiMemberID").val(),
+            //Amount: $("#txtAmount").val().replace("USD ", ""),
+            Amount: $("#txtJoiningFee").val().replace("@Model.Currency", ""),
+            LatePaymentPenalty: 0,
+            ReceivedBy: $("#txtReceivedBy").val(),
+            Notes: $("#ddlMethod :selected").text() + ' - ' + $("#txtMonthPaid").val() + ' Joining Fee',
+            MethodOfPayment: $("#ddlMethod :selected").text(),
+            MemeberNumber: $("#txtMemberNo").val(),
+            PaymentDate: $("#txtNextPaymentDate").val(),
+            NextPaymentDate: $("#NextPaymentDate").val(),
+            Branch: "test",
+            parlourid: $("#parlourid").val(),
+            FullNames: $("#txtMember").val()
+        };
+        $.ajax({
+            url: PayJoiningFeeURL,
+            data: data,
+            type: "post",
+            cache: false,
+            success: function (result) {
+                if (result == "JoiningFee added successfully.") {
+                    alert("JoiningFee added successfully.");
+                    location.reload();
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
+            }
+        })
+
+    });
+
+
+
 
     $(".paymentreversal").click(function () {
         var confirmStatus =confirm("You are about to make a REVERSAL PAYMENT.Continue?");

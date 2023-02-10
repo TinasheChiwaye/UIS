@@ -2,6 +2,8 @@
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
+using System.Security.Policy;
 
 namespace Funeral.DAL
 {
@@ -30,8 +32,16 @@ namespace Funeral.DAL
             ObjParam[3] = new DbParameter("@field", DbParameter.DbType.NVarChar, 0, SortBy);
             ObjParam[4] = new DbParameter("@orderby", DbParameter.DbType.NVarChar, 0, SortOrder);
             ObjParam[5] = new DbParameter("@ParlourId", DbParameter.DbType.UniqueIdentifier, 0, ParlourId);
-            ObjParam[6] = new DbParameter("@DateFrom", DbParameter.DbType.DateTime, 0, FromDate);
-            ObjParam[7] = new DbParameter("@DateTo", DbParameter.DbType.DateTime, 0, ToDate);
+            if (FromDate.HasValue)
+                ObjParam[6] = new DbParameter("@DateFrom", DbParameter.DbType.DateTime, 0, DateTime.ParseExact(FromDate.Value.ToString("dd-MM-yyyy"), "dd-MM-yyyy", CultureInfo.InvariantCulture));
+            else
+                ObjParam[6] = new DbParameter("@DateFrom", DbParameter.DbType.DateTime, 0, null);
+
+            if (ToDate.HasValue)
+                ObjParam[7] = new DbParameter("@DateTo", DbParameter.DbType.DateTime, 0, DateTime.ParseExact(ToDate.Value.ToString("dd-MM-yyyy"), "dd-MM-yyyy", CultureInfo.InvariantCulture));
+            else
+                ObjParam[7] = new DbParameter("@DateTo", DbParameter.DbType.DateTime, 0, null);
+
             ObjParam[8] = new DbParameter("@Status", DbParameter.DbType.VarChar, 0, status);
 
             return (DbConnection.GetDataTable(CommandType.StoredProcedure, "SelectAllFuneralByParlourId", ObjParam));
@@ -49,9 +59,10 @@ namespace Funeral.DAL
         public static int SaveFuneral(FuneralModel model)
         {
             //string query = "SaveFuneral"; New By Mahipatsinh
-            string query = "SaveFuneral_New";
+            string query = "SaveFuneral_DT";
 
-            DbParameter[] ObjParam = new DbParameter[58];
+            DbParameter[] ObjParam = new DbParameter[70];
+
             ObjParam[0] = new DbParameter("@pkiFuneralID", DbParameter.DbType.Int, 0, model.pkiFuneralID);
             ObjParam[1] = new DbParameter("@FullNames", DbParameter.DbType.NVarChar, 0, model.FullNames);
             ObjParam[2] = new DbParameter("@Surname", DbParameter.DbType.NVarChar, 0, model.Surname);
@@ -111,9 +122,21 @@ namespace Funeral.DAL
             ObjParam[55] = new DbParameter("@TypeofCollection", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.TypeOfCollection));
             ObjParam[56] = new DbParameter("@TypeofCoffine", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.TypeOfCoffin));
             ObjParam[57] = new DbParameter("@TagNumber", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.TagNumber));
+            ObjParam[58] = new DbParameter("@NextOfKinFullNames", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.NextOfKinFullNames));
+            ObjParam[59] = new DbParameter("@NextOfKinSurname", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.NextOfKinSurname));
+            ObjParam[60] = new DbParameter("@NextofKinContactNumber", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.NextOfKinContactNumber));
+            ObjParam[61] = new DbParameter("@NextOfKinAddress", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.NextOfKinAddress)); 
+            ObjParam[62] = new DbParameter("@ChiefFullNames", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.ChiefFullNames));
+            ObjParam[63] = new DbParameter("@ChiefSurname", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.ChiefSurname));
+            ObjParam[64] = new DbParameter("@ChiefContactNumber", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.ChiefContactNumber));
+            ObjParam[65] = new DbParameter("@ChiefAddress", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.ChiefAddress));
+            ObjParam[66] = new DbParameter("@TimeOfDispatch", DbParameter.DbType.DateTime, 0, model.TimeOfDispatch);
+            ObjParam[67] = new DbParameter("@ContactPersonNumber2", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.ContactPersonNumber2));
+            ObjParam[68] = new DbParameter("@MortuaryAttendent", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.MortuaryAttendent));
+            ObjParam[69] = new DbParameter("@CarMake", DbParameter.DbType.VarChar, 0, NulltoEmpty(model.CarMake));
 
 
-            //ObjParam[49] = new DbParameter("@CustomDental", DbParameter.DbType.Int, 0, NulltoEmpty(model.CustomGrouping5));//Change by Charles Date: 22/09/2021
+
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam));
         }
         private static string NulltoEmpty(string values)
@@ -270,7 +293,7 @@ namespace Funeral.DAL
             ObjParam[3] = new DbParameter("@Tax", DbParameter.DbType.Money, 0, Tax);
             ObjParam[4] = new DbParameter("@Notes", DbParameter.DbType.NVarChar, 0, Notes);
 
-            string query = " update Funerals set InvoiceNumber=@InvoiceNumber,DisCount=@DisCount,Tax=@Tax,Notes = @Notes where pkiFuneralID=@pkiFuneralID";
+            string query = " update Funerals set InvoiceNumber=@InvoiceNumber,DisCount=@DisCount,Tax=@Tax,FuneralArrangemmentsNotes = @Notes where pkiFuneralID=@pkiFuneralID";
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.Text, query, ObjParam));
         }
         public static int SaveFuneralSupportedDocument(FuneralDocumentModel model)
@@ -372,8 +395,53 @@ namespace Funeral.DAL
             DbParameter[] ObjParam = new DbParameter[3];
             ObjParam[0] = new DbParameter("@AssignedToId", DbParameter.DbType.Int, 0, AssignedTo);
             ObjParam[1] = new DbParameter("@PkiFuneralId", DbParameter.DbType.Int, 0, PkiFuneralID);
-            ObjParam[2] = new DbParameter("@FuneralStatus", DbParameter.DbType.VarChar, 0, !string.IsNullOrEmpty(ddlFuneralStatus)? ddlFuneralStatus: null);
+            ObjParam[2] = new DbParameter("@FuneralStatus", DbParameter.DbType.VarChar, 0, !string.IsNullOrEmpty(ddlFuneralStatus) ? ddlFuneralStatus : null);
             return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "FuneralAssignedToUser", ObjParam));
         }
+        public static int FuneralScheduleAddEvent(int funeralId, int userId, string eventDescription, DateTime startDate, DateTime endDate)
+        {
+            DbParameter[] ObjParam = new DbParameter[7];
+
+            ObjParam[0] = new DbParameter("@EventDescription", DbParameter.DbType.Text, 0, eventDescription);
+            ObjParam[1] = new DbParameter("@FuneralId", DbParameter.DbType.Int, 0, funeralId);
+            ObjParam[2] = new DbParameter("@StartDate", DbParameter.DbType.DateTime, 0, startDate);
+            ObjParam[3] = new DbParameter("@EndDate", DbParameter.DbType.DateTime, 0, endDate);
+            ObjParam[4] = new DbParameter("@UserId", DbParameter.DbType.Int, 0, userId);
+            ObjParam[5] = new DbParameter("@isEdit", DbParameter.DbType.Int, 0, 0);
+            ObjParam[6] = new DbParameter("@id", DbParameter.DbType.Int, 0, null);
+
+            return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "FuneralScheduleAddEditEvent", ObjParam));
+        }
+        public static int FuneralScheduleEditEvent(DateTime startDate, DateTime endDate, int id)
+        {
+            DbParameter[] ObjParam = new DbParameter[7];
+
+            ObjParam[0] = new DbParameter("@EventDescription", DbParameter.DbType.Text, 0, null);
+            ObjParam[1] = new DbParameter("@FuneralId", DbParameter.DbType.Int, 0, null);
+            ObjParam[2] = new DbParameter("@StartDate", DbParameter.DbType.DateTime, 0, startDate);
+            ObjParam[3] = new DbParameter("@EndDate", DbParameter.DbType.DateTime, 0, endDate);
+            ObjParam[4] = new DbParameter("@UserId", DbParameter.DbType.Int, 0, null);
+            ObjParam[5] = new DbParameter("@isEdit", DbParameter.DbType.Int, 0, 1);
+            ObjParam[6] = new DbParameter("@id", DbParameter.DbType.Int, 0, id);
+
+            return Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "FuneralScheduleAddEditEvent", ObjParam));
+        }
+        public static DataTable GetFuneralScheduleEvents(int funeralId)
+        {
+            DbParameter[] ObjParam = new DbParameter[1];
+            ObjParam[0] = new DbParameter("@FuneralId", DbParameter.DbType.Int, 0, funeralId);
+            return DbConnection.GetDataTable(CommandType.StoredProcedure, "GetFuneralScheduleEvents", ObjParam);
+        }
+        public static DataTable GetDownLoadCalenderList(DateTime? dateFrom, DateTime? dateTo)
+        {
+            string commandText = "select GraveNo,DriverAndCars,FuneralId,EventDetail AS[Description],StartDate AS [FuneralStartDate],EndDate AS [FuneralEndDate] from FuneralSchedule JOIN  Funerals Funeral ON Funeral.pkiFuneralID = FuneralId";
+            if (dateFrom.HasValue && dateTo.HasValue)
+            {
+                commandText += " where TRY_CAST(StartDate as date) between TRY_CAST('" + dateFrom.Value.ToString("MM-dd-yyyy") + "' as date) and TRY_CAST('" + dateTo.Value.ToString("MM-dd-yyyy") + "' as date)";
+            }
+            return DbConnection.GetDataTable(CommandType.Text, commandText);
+
+        }
+
     }
 }

@@ -200,7 +200,7 @@
                                                                     @if (Model.claimsModel.pkiClaimID > 0)
                                                                     {
                                                                         <div class="form-group">
-                                                                            <h3>Supporting documents s</h3>
+                                                                            <h3>Supporting documents</h3>
                                                                             <label id="lblDataMsg" hidden>There is no document uploaded.</label>
                                                                             <div class="table-responsive">
                                                                                 <table id="documentDataTable" class="table table-bordered table-hover table-striped" cellspacing="0">
@@ -574,7 +574,7 @@
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
                                                                     <label>Contact Person </label>
-                                                                    @Html.TextBoxFor(x => x.funeralModel.ContactPerson, new { @id = "txtDeceaseContactPerson",@onkeypress="return onlyNumberKey(event)", @maxlength = "13", @class = "form-control" })
+                                                                    @Html.TextBoxFor(x => x.funeralModel.ContactPerson, new { @id = "txtDeceaseContactPerson",@maxlength = "40", @class = "form-control" })
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -582,7 +582,7 @@
                                                             <div class="col-sm-6">
                                                                 <div class="form-group">
                                                                     <label>ID Number  <em>*</em> </label>
-                                                                    @Html.TextBoxFor(x => x.funeralModel.IDNumber, new { @id = "txtDeceaseIDNumber", @maxlength = "50", @class = "form-control", @required = true, @readonly = true })
+                                                                    @Html.TextBoxFor(x => x.funeralModel.IDNumber, new { @id = "txtDeceaseIDNumber", @maxlength = "20", @class = "form-control", @required = true, @readonly = true })
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-6">

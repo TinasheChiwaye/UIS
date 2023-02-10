@@ -335,7 +335,7 @@ namespace Funeral.Web.Admin
 
         protected void btnBack_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Admin/Funeral.aspx?FID=" + FuneralId);
+            Response.Redirect("~/Admin/Funeral/FuneralServices?funeralId=" + FuneralId);
         }
 
         public string CalculateFinal(Decimal sub, decimal Tax, decimal Dis, decimal totalPaid)

@@ -1,0 +1,168 @@
+﻿@model Funeral.Model.FuneralServiceVM
+@{
+    Layout = null; 
+}
+<div class="row">
+    <div class="col-lg-7">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Notes</label>
+                <div class="col-sm-10">
+                    @Html.TextAreaFor(m => m.FuneralModel.FuneralArrangemmentsNotes, new { name = "txtNotes", rows = "4", cols = "20", id = "txtNotes", @class = "form-control" })
+                    @*<textarea name="txtNotes" rows="4" cols="20" id="txtNotes" type="text" class="form-control">Todays Invoice</textarea>*@
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Terms and Condition </label>
+                <div class="col-sm-10">
+                    @Html.TextAreaFor(m => m.ModelTermsAndCondition.TermsAndConditionFuneral, new { name = "txtNotes", rows = "4", cols = "20", id = "txtTnc", @class = "form-control", @readOnly = "readonly" })
+                    @*<textarea name="txtTnc" rows="4" cols="20" readonly="readonly" id="txtTnc" type="text" class="form-control">New Terms And Conditions</textarea>*@
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div id="MainContent_UpdatePanel1"> 
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">SubTotal</label>
+                    <div class="col-sm-10">
+                        <input name="SubTotal" value="@Model.SubTotal" maxlength="10" id="SubTotal" disabled="disabled" class="aspNetDisabled form-control" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Tax</label>
+                    <div class="col-sm-10">
+                        @Html.DropDownListFor(m => m.TaxSettings, Model.TaxSettings, "Select Tax.", new { Name = "TaxSettingsList", @placeholder = "Select Tax.", @class = "form-control" })
+                        <span id="MainContent_lblTax1">Tax Amount:</span>
+                        <span id="MainContent_lblTax2"> + 0.00</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Discount in %</label>
+                    <div class="col-sm-10">
+                        <input name="txtDiscount" value="@Model.FuneralModel.Discount" maxlength="10" onchange="" id="txtDiscount" type="text" class="form-control">
+                        <span id="lblDisAmt1">Discount Amount:</span>
+                        <span id="lblDisAmt2"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Total</label>
+                    <div class="col-sm-10">
+                        <input name="txtGrandTotal" value="" maxlength="30" readonly="readonly" id="txtGrandTotal" type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group text-right">
+                    <div class="col-sm-2">&nbsp;</div>
+                    <div class="col-sm-10">
+                        <input type="button" name="btnSave" value="Save" id="btnSave" class="btn btn-sm btn-primary">
+                        <a name="ReCalculate" value="ReCalculate" id="ReCalculate" class="btn btn-sm btn-primary">ReCalculate</a>
+                        @{
+                            string id = Model.FuneralModel.pkiFuneralID.ToString();
+                            var plaintextBytes = System.Text.Encoding.UTF8.GetBytes(id);
+                            var encryptedValue = MachineKey.Encode(plaintextBytes, MachineKeyProtection.All);
+                            @*<a href="~/Admin/PrintForm.aspx?FID=@encryptedValue" name="btnPrint" value="" id="btnPrint" class="btn btn-sm btn-primary">Print</a>*@
+                            <a href="@Url.Action("PrintForm","Funeral",new { FuneralId = Model.FuneralModel.pkiFuneralID})" name="btnPrint" value="" id="btnPrint" class="btn btn-sm btn-primary">Print</a>
+                        }
+                    </div> 
+                </div>
+            </div>
+
+        </div>
+    </div>
+    @*<div class="col-lg-12">
+        <div class="form-group">
+            <div class="col-lg-6">
+                <div class="btn-group">
+                    <div class="form-group">
+                        <a href="@Url.Action("Index","Quotation")" name="btnCancel" value="Cancel" id="btnCancel" class="btn btn-sm btn-primary">Cancel</a>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <div class="form-group">
+                        <input type="button" name="btnSave" value="Save" id="btnSave" class="btn btn-sm btn-primary">
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </div>*@
+</div>
+<script>
+    $(document).ready(function () { 
+        var subTotal = $("#SubTotal").val();
+        var discValue = $("#txtDiscount").val();
+        var total = (subTotal * discValue) / 100;
+        $("#lblDisAmt2").html("Less:" + total);
+        $("#txtGrandTotal").val(subTotal - total);
+        var pkiFuneralServiceSelectionID = 0;
+        calculateDiscount();
+    })
+    $("#ReCalculate").click(function () {
+        calculateDiscount();
+    });
+    function calculateDiscount() {
+        var tax = $("#TaxSettings :selected").val() == '' ? "0" : $("#TaxSettings :selected").val();
+        $.get("@Url.Action("DiscountCal", "Funeral")?subTotal=" + parseFloat($("#SubTotal").val().replace(',', '.').replace(' ', '')) + "&tax=" + tax + "&discount=" + $("#txtDiscount").val(), function (response) {
+            console.log(response);
+            $("#lblDisAmt1").text(response.lblDisAmt2)
+            $("#tax2").text(response.tax2)
+            $("#txtGrandTotal").val(response.txtGrandTotal)
+        });
+    }
+    $("#btnSave").click(function () {
+        data = {
+            pkiFuneralID: $("#FuneralModel_pkiFuneralID").val(),
+            Tax: $("#TaxSettings :selected").val(),
+            DisCount: $("#txtDiscount").val(),
+            InvoiceNumber: $("#txtQuotationNumber").val(),
+            Notes: $("#txtNotes").val()
+        }  
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SaveFuneralService", "Funeral")',
+            data: data,
+            success: function (result) {
+                if (result == "Successfully Saved.") {
+                    $("#MainContent_lblMessage").append('<div class="alert alert-success">Successfully Saved.</div>')
+                    $('html, body').animate({
+                        scrollTop: $("#MainContent_lblMessage").offset().top
+                    }, 200);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
+            }
+        });
+    })
+    $("#TaxSettings").change(function () {
+        var taxVal = $("#TaxSettings").val();
+        var testTotal = $("#SubTotal").val();
+        var subTotal = parseFloat(testTotal)
+        var disc = $("#txtDiscount").val();
+        var TaxAmount = subTotal * taxVal / 100;
+        $("#MainContent_lblTax2").html(" " + "+" + " " + TaxAmount);
+        var testDiscAmt = subTotal + TaxAmount;
+        var testDisc = testDiscAmt * parseInt(disc);
+        var DiscAmount = testDisc / 100;
+        $("#lblDisAmt2").html(DiscAmount);
+        var totalAmount = (subTotal + TaxAmount) - DiscAmount;
+        $("#txtGrandTotal").val(totalAmount);
+    })
+
+    $("#txtDiscount").focusout(function () {
+        var tempSubTotal = $("#SubTotal").val();
+        var subTotal = parseFloat(tempSubTotal);
+        var tempTaxAmount = $("#MainContent_lblTax2").html().split(' ');
+        var taxAmount = parseFloat(tempTaxAmount[2]);
+        var tempTotal = subTotal + taxAmount;
+        var tempDisc = $("#txtDiscount").val();
+        var tempDiscValue = parseFloat(tempDisc);
+        var discValue = tempTotal * tempDiscValue / 100;
+        $("#lblDisAmt2").html("Less:" + discValue);
+
+        var tempGrandTotal = subTotal + taxAmount - discValue;
+        $("#txtGrandTotal").val(tempGrandTotal);
+
+    })
+</script>

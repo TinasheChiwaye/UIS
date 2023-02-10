@@ -15,7 +15,7 @@ namespace Funeral.BAL
 
         public static List<FuneralModel> SelectAllFuneralByParlourId(Guid ParlourId, int PageSize, int PageNum, string Keyword, string SortBy, string SortOrder, DateTime? FromDate, DateTime? ToDate, string status)
         {
-            DataTable dr = FuneralDAL.SelectAllFuneralByParlourIddt(ParlourId, PageSize, PageNum, Keyword, SortBy, SortOrder, FromDate, ToDate,status);
+            DataTable dr = FuneralDAL.SelectAllFuneralByParlourIddt(ParlourId, PageSize, PageNum, Keyword, SortBy, SortOrder, FromDate, ToDate, status);
             return FuneralHelper.DataTableMapToList<FuneralModel>(dr);
         }
         public static int FuneralDelete(int ID, string UserName)
@@ -135,7 +135,23 @@ namespace Funeral.BAL
         }
         public static int FuneralAssignedToUser(int? AssignedTo, int? PkiFuneralID, string ddlFuneralStatus)
         {
-            return FuneralDAL.FuneralAssignedToUser(AssignedTo, PkiFuneralID,ddlFuneralStatus);
+            return FuneralDAL.FuneralAssignedToUser(AssignedTo, PkiFuneralID, ddlFuneralStatus);
+        }
+        public static int FuneralScheduleAddEvent(int funeralId, int userId, string eventDescription, DateTime startDate, DateTime endDate)
+        {
+            return FuneralDAL.FuneralScheduleAddEvent(funeralId, userId, eventDescription, startDate, endDate);
+        }
+        public static DataTable GetFuneralScheduleEvents(int funeralId)
+        {
+            return FuneralDAL.GetFuneralScheduleEvents(funeralId);
+        }
+        public static int FuneralScheduleEditEvent(DateTime startDate, DateTime endDate, int id)
+        {
+            return FuneralDAL.FuneralScheduleEditEvent(startDate, endDate, id);
+        }
+        public static List<DownloadSchedulesViewModel> GetDownLoadCalenderList(DateTime? dateFrom, DateTime? dateTo)
+        {
+            return FuneralHelper.DataTableMapToList<DownloadSchedulesViewModel>(FuneralDAL.GetDownLoadCalenderList(dateFrom,dateTo));
         }
     }
 }

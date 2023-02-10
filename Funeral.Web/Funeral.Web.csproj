@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Funeral.Web</RootNamespace>
     <AssemblyName>Funeral.Web</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -26,6 +26,7 @@
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
     <UseGlobalApplicationHostFile />
     <Use64BitIISExpress />
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -48,9 +49,18 @@
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="BarcodeStandard, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BarcodeLib.2.4.0\lib\netstandard2.0\BarcodeStandard.dll</HintPath>
+    </Reference>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.9\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
     <Reference Include="ClosedXML, Version=0.76.0.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
       <HintPath>..\packages\ClosedXML.0.76.0\lib\net40-client\ClosedXML.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="DayPilot.Web.Mvc">
+      <HintPath>C:\Users\pct8\Desktop\DayPilotLiteMvc-1.5.434\Binary\Mvc5\DayPilot.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
@@ -72,6 +82,9 @@
     <Reference Include="ExcelDataReader.DataSet, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
       <HintPath>..\packages\ExcelDataReader.DataSet.3.6.0\lib\net35\ExcelDataReader.DataSet.dll</HintPath>
     </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.3, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13.3\lib\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
@@ -80,6 +93,9 @@
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Owin">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Owin">
@@ -147,14 +163,43 @@
       <HintPath>..\packages\PayFast.AspNet.1.0.4\lib\net45\PayFast.AspNet.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing.Common, Version=4.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Drawing.Common.5.0.2\lib\net461\System.Drawing.Common.dll</HintPath>
+    </Reference>
     <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.4\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Text.Encodings.Web, Version=5.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.5.0.1\lib\net461\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=5.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.5.0.2\lib\net461\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -163,8 +208,6 @@
     <Reference Include="System.Data">
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
@@ -199,13 +242,13 @@
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WebGrease">
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
     </Reference>
@@ -273,6 +316,7 @@
     <Content Include="Admin\TombstonePayment.aspx" />
     <Content Include="Admin\TombStoneServiceSelect.aspx" />
     <Content Include="Admin\UserRight.aspx" />
+    <Content Include="bin\DayPilot.Web.Mvc.dll" />
     <Content Include="Content\animate.css" />
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -402,6 +446,21 @@
     <Content Include="Content\plugins\summernote\summernote-bs3.css" />
     <Content Include="Content\plugins\summernote\summernote.css" />
     <Content Include="Content\plugins\switchery\switchery.css" />
+    <Content Include="Content\plugins\Themes\calendar_blue.css" />
+    <Content Include="Content\plugins\Themes\calendar_g.css" />
+    <Content Include="Content\plugins\Themes\calendar_green.css" />
+    <Content Include="Content\plugins\Themes\calendar_traditional.css" />
+    <Content Include="Content\plugins\Themes\calendar_transparent.css" />
+    <Content Include="Content\plugins\Themes\calendar_white.css" />
+    <Content Include="Content\plugins\Themes\month_blue.css" />
+    <Content Include="Content\plugins\Themes\month_g.css" />
+    <Content Include="Content\plugins\Themes\month_green.css" />
+    <Content Include="Content\plugins\Themes\month_traditional.css" />
+    <Content Include="Content\plugins\Themes\month_transparent.css" />
+    <Content Include="Content\plugins\Themes\month_white.css" />
+    <Content Include="Content\plugins\Themes\navigator_green.css" />
+    <Content Include="Content\plugins\Themes\navigator_transparent.css" />
+    <Content Include="Content\plugins\Themes\navigator_white.css" />
     <Content Include="Content\plugins\toastr\toastr.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\style.css" />
@@ -781,6 +840,15 @@
     <Content Include="Areas\Admin\Views\Funeral\FuneralServices.cshtml" />
     <Content Include="Areas\Admin\Views\Funeral\FuneralSearch.cshtml" />
     <Content Include="Areas\Admin\Views\Funeral\FuneralQuotation.cshtml" />
+    <Content Include="Areas\Admin\Views\Funeral\AllFuneralSchedules.cshtml" />
+    <Content Include="Areas\Admin\Views\Funeral\FuneralService.cshtml" />
+    <Content Include="Areas\Admin\Views\Funeral\DownLoadSchedules.cshtml" />
+    <Content Include="Areas\Admin\Views\Funeral\_FuneralServicesSection.cshtml" />
+    <Content Include="Areas\Admin\Views\Funeral\_FuneralSearviceDetailSection.cshtml" />
+    <Content Include="Areas\Admin\Views\Funeral\_FuneralSearvicePaymentSection.cshtml" />
+    <Content Include="Areas\Tools\Views\FuneralServiceType\_AddUpdate.cshtml" />
+    <Content Include="Areas\Tools\Views\FuneralServiceType\_FuneralTypeList.cshtml" />
+    <Content Include="Areas\Tools\Views\FuneralServiceType\Index.cshtml" />
     <None Include="DevDataDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DevDataDataSet.Designer.cs</LastGenOutput>
@@ -936,11 +1004,14 @@
     <Content Include="Properties\DataSources\Funeral.Model.ScheduleEmailReportModel.datasource" />
     <Content Include="Properties\DataSources\Funeral.Model.MembersPaymentModel.datasource" />
     <Content Include="Properties\DataSources\Funeral.Model.ProgressStatus.datasource" />
+    <Content Include="Properties\DataSources\Funeral.DAL.niws_partner.ValidateComplianceResponse.datasource" />
+    <Content Include="Properties\DataSources\Funeral.DAL.niws_partner.ValidateServiceKeyResponse.datasource" />
     <None Include="Properties\PublishProfiles\Funeral.Web.pubxml" />
     <None Include="Properties\PublishProfiles\uispolicy - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\uispolicy - ReadOnly - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\uispolicy - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\DayPilot\daypilot-all.min.js" />
     <Content Include="Scripts\GridScroll\x.js" />
     <Content Include="Scripts\GridScroll\xtableheaderfixed.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -1480,12 +1551,6 @@
     <Content Include="packages.config" />
     <None Include="Service References\FuneralServiceReference\FuneralServices1.disco" />
     <None Include="Service References\FuneralServiceReference\FuneralServices11.disco" />
-    <Content Include="Service References\niws_partner\Funeral.Web.niws_partner.ValidateComplianceResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\niws_partner\Funeral.Web.niws_partner.ValidateServiceKeyResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
     <None Include="Service References\niws_partner\NIWS_Partner.disco" />
     <None Include="Service References\niws_partner\configuration91.svcinfo" />
     <None Include="Service References\niws_partner\configuration.svcinfo" />
@@ -2037,6 +2102,7 @@
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\EnumatorExtention.cs" />
+    <Compile Include="App_Start\EnumExtension.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\MyReportServerCredentials.cs" />
@@ -2078,6 +2144,7 @@
     <Compile Include="Areas\Tools\Controllers\BaseAdminController.cs" />
     <Compile Include="Areas\Tools\Controllers\ClaimToolsController.cs" />
     <Compile Include="Areas\Tools\Controllers\FuneralServicesController.cs" />
+    <Compile Include="Areas\Tools\Controllers\FuneralServiceTypeController.cs" />
     <Compile Include="Areas\Tools\Controllers\PlanSetupController.cs" />
     <Compile Include="Areas\Tools\Controllers\MenuController.cs" />
     <Compile Include="Areas\Admin\Models\ViewModel\QuotationServiceVM.cs" />
@@ -2089,6 +2156,7 @@
     <Compile Include="Areas\Tools\Controllers\UnderwriterPremiumsController.cs" />
     <Compile Include="Areas\Tools\Controllers\UnderwriterSetupController.cs" />
     <Compile Include="Areas\Tools\Models\ExcelModel.cs" />
+    <Compile Include="Common\Extension.cs" />
     <Compile Include="Common\FuneralAuthAttribute.cs" />
     <Compile Include="Common\OtherPaymentsWebApiResult.cs" />
     <Compile Include="Common\WebApiResult.cs" />
@@ -2107,6 +2175,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ExternalUserController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
+    <Compile Include="DayPilot\Dpc.cs" />
+    <Compile Include="DayPilot\EventManager.cs" />
     <Compile Include="DevDataDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

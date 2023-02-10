@@ -81,8 +81,8 @@ namespace Funeral.Web.Areas.Admin.Controllers
             List<SelectListItem> entriesItems = new List<SelectListItem>();
             keyValues.Add(new KeyValue { Key = "10", Value = "10" });
             keyValues.Add(new KeyValue { Key = "20", Value = "20" });
-            keyValues.Add(new KeyValue { Key = "25", Value = "25" });
             keyValues.Add(new KeyValue { Key = "50", Value = "50" });
+            keyValues.Add(new KeyValue { Key = "25", Value = "25" });
             keyValues.Add(new KeyValue { Key = "100", Value = "100" });
             keyValues.Add(new KeyValue { Key = "200", Value = "200" });
             keyValues.Add(new KeyValue { Key = "250", Value = "250" });
@@ -228,6 +228,10 @@ namespace Funeral.Web.Areas.Admin.Controllers
             Managemembers.CustomGrouping2 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.PaymentType)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
             Managemembers.CustomGrouping3 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.Source)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
             Managemembers.CustomGrouping4 = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.MaritalStatus)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
+            Managemembers.CustomGroupingClientMatch = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.ClientMatch)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
+            Managemembers.CustomGroupingClientRelationship = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.ClientRelationship)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
+            Managemembers.CustomGroupingTransactionFrequency = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.TransactionFrequency)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
+            Managemembers.CustomGroupingDeliveryChannel = CustomDetailsBAL.GetAllCustomDetailsByParlourId(CurrentParlourId, Convert.ToInt32(CustomDetailsEnums.CustomDetailsType.DeliveryChannel)).Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() });
             Managemembers.Member = member;
             //Managemembers.DependencyTypeList = CommonBAL.GetUserTypes().Select(x => new SelectListItem() { Text = x.UserTypeName, Value = x.UserTypeId.ToString() });
             Managemembers.DependencyTypeList = CommonBAL.GetUserTypesByMemberID(MemberId, member.fkiPlanID, CurrentParlourId).Select(x => new SelectListItem() { Text = x.UserTypeName, Value = x.CreatorID.ToString() });
@@ -712,12 +716,13 @@ namespace Funeral.Web.Areas.Admin.Controllers
             //PlanModel Plan = new PlanModel();
             PlanModel objPlans = MembersBAL.GetPlanByPlanID(Member.fkiPlanID, CurrentParlourId);
 
-            //if (MembersBAL.GetMemberByIDNumber(Member.IDNumber, this.ParlourId, Member.fkiPlanID) != null && Member.pkiMemberID == 0 && Member.IDNumber != "0")
-            //{
-            //    //return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member Already Exists" + "</li>").ToList() }, JsonRequestBehavior.AllowGet);
-            //    return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member ID Number already exists on this Plan." + "</li>").First() }, JsonRequestBehavior.AllowGet);
-            //}
-            
+            if (MembersBAL.GetMemberByIDNumber(Member.IDNumber, this.ParlourId, Member.fkiPlanID) != null && Member.pkiMemberID == 0 && Member.IDNumber != "0")
+            {
+                //return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member Already Exists" + "</li>").ToList() }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = "Duplicate", errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member ID Number already exists on this Plan." + "</li>").First() }, JsonRequestBehavior.AllowGet);
+            }
+
+            //var inceptionAge = Member.InceptionDate - Member.DateOfBirth
 
             int Years(DateTime start, DateTime end)
             {
@@ -728,47 +733,44 @@ namespace Funeral.Web.Areas.Admin.Controllers
             int ageFromInception = Years(Member.DateOfBirth, Member.InceptionDate);
 
 
-            if ((Member.Age < objPlans.AgeFrom || Member.Age > objPlans.AgeTo) && Member.IDNumber != "0")
+            if (Member.Age < objPlans.AgeFrom || Member.Age > objPlans.AgeTo)
             {
-                return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Memeber age is not supported under this Plan." + "</li>").First() }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = "WrongAge", errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Memeber age is not supported under this Plan." + "</li>").First() }, JsonRequestBehavior.AllowGet);
 
             }
-
-
-
             if (!ModelState.IsValid)
-                {
-                    return Json(new { success = false, errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => "<li>" + x.ErrorMessage + "</li>").ToList() }, JsonRequestBehavior.AllowGet);
-                }
-                Member.pkiMemberID = MemberId;
-                Member.PolicyStatus = Member.PolicyStatus;
-                Member.CreateDate = System.DateTime.Now;
-                if (Member.Passport == null)
-                    Member.Passport = "";
-                if (Member.Title == null)
-                    Member.Title = "";
-                if (Member.DateOfBirth == null || Member.DateOfBirth == DateTime.MinValue)
-                    Member.DateOfBirth = DateTime.MaxValue;
-                if (Member.DebitDate == null || Member.DebitDate == DateTime.MinValue)
-                    Member.DebitDate = DateTime.MaxValue;
+            {
+                return Json(new { success = false, errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => "<li>" + x.ErrorMessage + "</li>").ToList() }, JsonRequestBehavior.AllowGet);
+            }
+            Member.pkiMemberID = MemberId;
+            Member.PolicyStatus = Member.PolicyStatus;
+            Member.CreateDate = System.DateTime.Now;
+            if (Member.Passport == null)
+                Member.Passport = "";
+            if (Member.Title == null)
+                Member.Title = "";
+            if (Member.DateOfBirth == null || Member.DateOfBirth == DateTime.MinValue)
+                Member.DateOfBirth = DateTime.MaxValue;
+            if (Member.DebitDate == null || Member.DebitDate == DateTime.MinValue)
+                Member.DebitDate = DateTime.MaxValue;
 
-                if (Member.parlourid != Guid.Empty && ParlourId != Member.parlourid && IsAdministrator)
-                    Member.parlourid = Member.parlourid; 
-                else
-                    Member.parlourid = CurrentParlourId;
-                Member.MemeberNumber = Member.PolicyNumber;
+            if (Member.parlourid != Guid.Empty && ParlourId != Member.parlourid && IsAdministrator)
+                Member.parlourid = Member.parlourid;
+            else
+                Member.parlourid = CurrentParlourId;
+            Member.MemeberNumber = Member.PolicyNumber;
 
-                Member.pkiAdditionalMemberInfo = Guid.NewGuid();
+            Member.pkiAdditionalMemberInfo = Guid.NewGuid();
 
-                if (Member.StartDate == null || Member.StartDate == DateTime.MinValue)
-                {
-                    Member.StartDate = DateTime.Now;
-                }
+            if (Member.StartDate == null || Member.StartDate == DateTime.MinValue)
+            {
+                Member.StartDate = DateTime.Now;
+            }
 
-                if (Member.CoverDate == null || Member.CoverDate == DateTime.MinValue)
-                {
-                    Member.CoverDate = DateTime.Now;
-                }
+            if (Member.CoverDate == null || Member.CoverDate == DateTime.MinValue)
+            {
+                Member.CoverDate = DateTime.Now;
+            }
 
             //SocietyModel society = new SocietyModel();
             //Member.MemberSociety = society.pkiSocietyID.ToString();
@@ -781,40 +783,278 @@ namespace Funeral.Web.Areas.Admin.Controllers
             Member.AccountNumberVerified = ValidateBankAccount(Member.ServiceKey, Member.AccountNumber, Member.BranchCode, Member.AccountType); //"d2fbc8dc-b9e3-4722-8555-c1ec8505be16", "1577844775", "470010","2");
 
             int retId = MembersBAL.SaveMembers(Member);
-                Member.pkiMemberID = retId;
+            Member.pkiMemberID = retId;
 
 
-                //string error = "id number already exists";
-                //var dtidnum = MembersBAL.GetMemberByIDNum(Member.IDNumber, this.ParlourId).ToString();
-                //if (Member.IDNumber == dtidnum)
-                //{
-                //    return Json(new { success = "false", responsetext = error });
-                //}
+            //string error = "id number already exists";
+            //var dtidnum = MembersBAL.GetMemberByIDNum(Member.IDNumber, this.ParlourId).ToString();
+            //if (Member.IDNumber == dtidnum)
+            //{
+            //    return Json(new { success = "false", responsetext = error });
+            //}
 
 
-                if (Request.QueryString["ID"] == null)
-                { saveAddproduct(retId); }
-                //Add On Product
-                //var addOnProduct = new MemberAddonProductsModel();
-                //if (ProductName != "Select" && ProductCost != "0")
-                //{
-                //    addOnProduct.fkiMemberid = retId;
-                //    addOnProduct.LastModified = DateTime.Now;
-                //    addOnProduct.UserID = Request.LogonUserIdentity.User.ToString();
-                //    addOnProduct.ModifiedUser = this.User.Identity.Name;
-                //    addOnProduct.Deleted = 0;
-                //    addOnProduct.parlourid = this.ParlourId;
-                //    addOnProduct.pkiMemberProductID = Guid.NewGuid();
-                //    addOnProduct.ProductName = ProductName;
-                //    addOnProduct.ProductPrice = ProductCost;
-                //    addOnProduct.ProductCost = Convert.ToDecimal(ProductCost);
-                //    addOnProduct.fkiProductID = fkiProductID;
-                //    if (addOnProduct.fkiMemberid != 0)
-                //    { var AddonProductID = MembersBAL.SaveAddonProducts(addOnProduct); }
-                //}
-                return Json(Member, JsonRequestBehavior.AllowGet);
-            
+            if (Request.QueryString["ID"] == null)
+            { saveAddproduct(retId); }
+            //Add On Product
+            //var addOnProduct = new MemberAddonProductsModel();
+            //if (ProductName != "Select" && ProductCost != "0")
+            //{
+            //    addOnProduct.fkiMemberid = retId;
+            //    addOnProduct.LastModified = DateTime.Now;
+            //    addOnProduct.UserID = Request.LogonUserIdentity.User.ToString();
+            //    addOnProduct.ModifiedUser = this.User.Identity.Name;
+            //    addOnProduct.Deleted = 0;
+            //    addOnProduct.parlourid = this.ParlourId;
+            //    addOnProduct.pkiMemberProductID = Guid.NewGuid();
+            //    addOnProduct.ProductName = ProductName;
+            //    addOnProduct.ProductPrice = ProductCost;
+            //    addOnProduct.ProductCost = Convert.ToDecimal(ProductCost);
+            //    addOnProduct.fkiProductID = fkiProductID;
+            //    if (addOnProduct.fkiMemberid != 0)
+            //    { var AddonProductID = MembersBAL.SaveAddonProducts(addOnProduct); }
+            //}
+            return Json(Member, JsonRequestBehavior.AllowGet);
+
         }
+
+        public JsonResult SaveManageMembersDuplicate(MembersModel Member, int fkiMemberid, string ProductName, string ProductCost, Guid fkiProductID)
+        {
+            if (ModelState["pkiMemberID"] != null && ModelState["pkiMemberID"].Errors.Count > 0)
+                ModelState["pkiMemberID"].Errors.Clear();
+            if (ModelState["Passport"] != null && ModelState["Passport"].Errors.Count > 0)
+                ModelState["Passport"].Errors.Clear();
+            if (ModelState["MemberBranch"] != null && ModelState["MemberBranch"].Errors.Count > 0)
+                ModelState["MemberBranch"].Errors.Clear();
+            if (ModelState["parlourid"] != null && ModelState["parlourid"].Errors.Count > 0)
+                ModelState["parlourid"].Errors.Clear();
+            if (ModelState["FK_MemberId"] != null && ModelState["FK_MemberId"].Errors.Count > 0)
+                ModelState["FK_MemberId"].Errors.Clear();
+
+            //PlanModel Plan = new PlanModel();
+            PlanModel objPlans = MembersBAL.GetPlanByPlanID(Member.fkiPlanID, CurrentParlourId);
+
+            //if (MembersBAL.GetMemberByIDNumber(Member.IDNumber, this.ParlourId, Member.fkiPlanID) != null && Member.pkiMemberID == 0)
+            //{
+            //    //return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member Already Exists" + "</li>").ToList() }, JsonRequestBehavior.AllowGet);
+            //    return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member ID Number already exists on this Plan." + "</li>").First() }, JsonRequestBehavior.AllowGet);
+            //}
+
+            //var inceptionAge = Member.InceptionDate - Member.DateOfBirth
+
+            int Years(DateTime start, DateTime end)
+            {
+                return (end.Year - start.Year - 1) +
+                    (((end.Month > start.Month) ||
+                    ((end.Month == start.Month) && (end.Day >= start.Day))) ? 1 : 0);
+            }
+            int ageFromInception = Years(Member.DateOfBirth, Member.InceptionDate);
+
+
+            //if (Member.Age < objPlans.AgeFrom || Member.Age > objPlans.AgeTo)
+            //{
+            //    return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Memeber age is not supported under this Plan." + "</li>").First() }, JsonRequestBehavior.AllowGet);
+
+            //}
+            if (!ModelState.IsValid)
+            {
+                return Json(new { success = false, errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => "<li>" + x.ErrorMessage + "</li>").ToList() }, JsonRequestBehavior.AllowGet);
+            }
+            Member.pkiMemberID = MemberId;
+            Member.PolicyStatus = Member.PolicyStatus;
+            Member.CreateDate = System.DateTime.Now;
+            if (Member.Passport == null)
+                Member.Passport = "";
+            if (Member.Title == null)
+                Member.Title = "";
+            if (Member.DateOfBirth == null || Member.DateOfBirth == DateTime.MinValue)
+                Member.DateOfBirth = DateTime.MaxValue;
+            if (Member.DebitDate == null || Member.DebitDate == DateTime.MinValue)
+                Member.DebitDate = DateTime.MaxValue;
+
+            if (Member.parlourid != Guid.Empty && ParlourId != Member.parlourid && IsAdministrator)
+                Member.parlourid = Member.parlourid;
+            else
+                Member.parlourid = CurrentParlourId;
+            Member.MemeberNumber = Member.PolicyNumber;
+
+            Member.pkiAdditionalMemberInfo = Guid.NewGuid();
+
+            if (Member.StartDate == null || Member.StartDate == DateTime.MinValue)
+            {
+                Member.StartDate = DateTime.Now;
+            }
+
+            if (Member.CoverDate == null || Member.CoverDate == DateTime.MinValue)
+            {
+                Member.CoverDate = DateTime.Now;
+            }
+
+            //SocietyModel society = new SocietyModel();
+            //Member.MemberSociety = society.pkiSocietyID.ToString();
+            AdditionalApplicationSettingsModel additionalApplicationSettingsModel;
+            additionalApplicationSettingsModel = ToolsSetingBAL.GetAdditionalApplicationSettingsByParlourID(ParlourId);
+            Member.ModifiedUser = UserID.ToString();
+            Member.Active = false;
+            Member.ServiceKey = additionalApplicationSettingsModel.spAccountServiceKey;
+            Member.AutogenerateEasyPay = additionalApplicationSettingsModel.GenerateEasyPay;
+            Member.AccountNumberVerified = ValidateBankAccount(Member.ServiceKey, Member.AccountNumber, Member.BranchCode, Member.AccountType); //"d2fbc8dc-b9e3-4722-8555-c1ec8505be16", "1577844775", "470010","2");
+
+            int retId = MembersBAL.SaveMembers(Member);
+            Member.pkiMemberID = retId;
+
+
+            //string error = "id number already exists";
+            //var dtidnum = MembersBAL.GetMemberByIDNum(Member.IDNumber, this.ParlourId).ToString();
+            //if (Member.IDNumber == dtidnum)
+            //{
+            //    return Json(new { success = "false", responsetext = error });
+            //}
+
+
+            if (Request.QueryString["ID"] == null)
+            { saveAddproduct(retId); }
+            //Add On Product
+            //var addOnProduct = new MemberAddonProductsModel();
+            //if (ProductName != "Select" && ProductCost != "0")
+            //{
+            //    addOnProduct.fkiMemberid = retId;
+            //    addOnProduct.LastModified = DateTime.Now;
+            //    addOnProduct.UserID = Request.LogonUserIdentity.User.ToString();
+            //    addOnProduct.ModifiedUser = this.User.Identity.Name;
+            //    addOnProduct.Deleted = 0;
+            //    addOnProduct.parlourid = this.ParlourId;
+            //    addOnProduct.pkiMemberProductID = Guid.NewGuid();
+            //    addOnProduct.ProductName = ProductName;
+            //    addOnProduct.ProductPrice = ProductCost;
+            //    addOnProduct.ProductCost = Convert.ToDecimal(ProductCost);
+            //    addOnProduct.fkiProductID = fkiProductID;
+            //    if (addOnProduct.fkiMemberid != 0)
+            //    { var AddonProductID = MembersBAL.SaveAddonProducts(addOnProduct); }
+            //}
+            return Json(Member, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public JsonResult SaveManageMembersWrongAge(MembersModel Member, int fkiMemberid, string ProductName, string ProductCost, Guid fkiProductID)
+        {
+            if (ModelState["pkiMemberID"] != null && ModelState["pkiMemberID"].Errors.Count > 0)
+                ModelState["pkiMemberID"].Errors.Clear();
+            if (ModelState["Passport"] != null && ModelState["Passport"].Errors.Count > 0)
+                ModelState["Passport"].Errors.Clear();
+            if (ModelState["MemberBranch"] != null && ModelState["MemberBranch"].Errors.Count > 0)
+                ModelState["MemberBranch"].Errors.Clear();
+            if (ModelState["parlourid"] != null && ModelState["parlourid"].Errors.Count > 0)
+                ModelState["parlourid"].Errors.Clear();
+            if (ModelState["FK_MemberId"] != null && ModelState["FK_MemberId"].Errors.Count > 0)
+                ModelState["FK_MemberId"].Errors.Clear();
+
+            //PlanModel Plan = new PlanModel();
+            PlanModel objPlans = MembersBAL.GetPlanByPlanID(Member.fkiPlanID, CurrentParlourId);
+
+            //if (MembersBAL.GetMemberByIDNumber(Member.IDNumber, this.ParlourId, Member.fkiPlanID) != null && Member.pkiMemberID == 0)
+            //{
+            //    //return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member Already Exists" + "</li>").ToList() }, JsonRequestBehavior.AllowGet);
+            //    return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Member ID Number already exists on this Plan." + "</li>").First() }, JsonRequestBehavior.AllowGet);
+            //}
+
+            //var inceptionAge = Member.InceptionDate - Member.DateOfBirth
+
+            int Years(DateTime start, DateTime end)
+            {
+                return (end.Year - start.Year - 1) +
+                    (((end.Month > start.Month) ||
+                    ((end.Month == start.Month) && (end.Day >= start.Day))) ? 1 : 0);
+            }
+            int ageFromInception = Years(Member.DateOfBirth, Member.InceptionDate);
+
+
+            //if (Member.Age < objPlans.AgeFrom || Member.Age > objPlans.AgeTo)
+            //{
+            //    return Json(new { success = false, errors = ModelState.Select(x => x.Value).Select(x => "<li>" + "Memeber age is not supported under this Plan." + "</li>").First() }, JsonRequestBehavior.AllowGet);
+
+            //}
+            if (!ModelState.IsValid)
+            {
+                return Json(new { success = false, errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => "<li>" + x.ErrorMessage + "</li>").ToList() }, JsonRequestBehavior.AllowGet);
+            }
+            Member.pkiMemberID = MemberId;
+            Member.PolicyStatus = Member.PolicyStatus;
+            Member.CreateDate = System.DateTime.Now;
+            if (Member.Passport == null)
+                Member.Passport = "";
+            if (Member.Title == null)
+                Member.Title = "";
+            if (Member.DateOfBirth == null || Member.DateOfBirth == DateTime.MinValue)
+                Member.DateOfBirth = DateTime.MaxValue;
+            if (Member.DebitDate == null || Member.DebitDate == DateTime.MinValue)
+                Member.DebitDate = DateTime.MaxValue;
+
+            if (Member.parlourid != Guid.Empty && ParlourId != Member.parlourid && IsAdministrator)
+                Member.parlourid = Member.parlourid;
+            else
+                Member.parlourid = CurrentParlourId;
+            Member.MemeberNumber = Member.PolicyNumber;
+
+            Member.pkiAdditionalMemberInfo = Guid.NewGuid();
+
+            if (Member.StartDate == null || Member.StartDate == DateTime.MinValue)
+            {
+                Member.StartDate = DateTime.Now;
+            }
+
+            if (Member.CoverDate == null || Member.CoverDate == DateTime.MinValue)
+            {
+                Member.CoverDate = DateTime.Now;
+            }
+
+            //SocietyModel society = new SocietyModel();
+            //Member.MemberSociety = society.pkiSocietyID.ToString();
+            AdditionalApplicationSettingsModel additionalApplicationSettingsModel;
+            additionalApplicationSettingsModel = ToolsSetingBAL.GetAdditionalApplicationSettingsByParlourID(ParlourId);
+            Member.ModifiedUser = UserID.ToString();
+            Member.Active = false;
+            Member.ServiceKey = additionalApplicationSettingsModel.spAccountServiceKey;
+            Member.AutogenerateEasyPay = additionalApplicationSettingsModel.GenerateEasyPay;
+            Member.AccountNumberVerified = ValidateBankAccount(Member.ServiceKey, Member.AccountNumber, Member.BranchCode, Member.AccountType); //"d2fbc8dc-b9e3-4722-8555-c1ec8505be16", "1577844775", "470010","2");
+
+            int retId = MembersBAL.SaveMembers(Member);
+            Member.pkiMemberID = retId;
+
+
+            //string error = "id number already exists";
+            //var dtidnum = MembersBAL.GetMemberByIDNum(Member.IDNumber, this.ParlourId).ToString();
+            //if (Member.IDNumber == dtidnum)
+            //{
+            //    return Json(new { success = "false", responsetext = error });
+            //}
+
+
+            if (Request.QueryString["ID"] == null)
+            { saveAddproduct(retId); }
+            //Add On Product
+            //var addOnProduct = new MemberAddonProductsModel();
+            //if (ProductName != "Select" && ProductCost != "0")
+            //{
+            //    addOnProduct.fkiMemberid = retId;
+            //    addOnProduct.LastModified = DateTime.Now;
+            //    addOnProduct.UserID = Request.LogonUserIdentity.User.ToString();
+            //    addOnProduct.ModifiedUser = this.User.Identity.Name;
+            //    addOnProduct.Deleted = 0;
+            //    addOnProduct.parlourid = this.ParlourId;
+            //    addOnProduct.pkiMemberProductID = Guid.NewGuid();
+            //    addOnProduct.ProductName = ProductName;
+            //    addOnProduct.ProductPrice = ProductCost;
+            //    addOnProduct.ProductCost = Convert.ToDecimal(ProductCost);
+            //    addOnProduct.fkiProductID = fkiProductID;
+            //    if (addOnProduct.fkiMemberid != 0)
+            //    { var AddonProductID = MembersBAL.SaveAddonProducts(addOnProduct); }
+            //}
+            return Json(Member, JsonRequestBehavior.AllowGet);
+
+        }
+
+
         //public JsonResult BindPolicyCoverDate(int id, DateTime date)
         //{
         //    PolicyModel objPolicyModel = CommonBAL.GetPlanSubscriptionByPlanIdNewMember(id).ToList().FirstOrDefault();
@@ -1518,6 +1758,12 @@ namespace Funeral.Web.Areas.Admin.Controllers
             model.CustomId1 = policy.CustomId1;
             model.CustomId2 = policy.CustomId2;
             model.CustomId3 = policy.CustomId3;
+            model.CustomIdClientMatch = policy.CustomIdClientMatch;
+            model.CustomIdClientRelationship = policy.CustomIdClientRelationship;
+            model.CustomIdTransactionFrequency = policy.CustomIdTransactionFrequency;
+            model.CustomIdDeliveryChannel = policy.CustomIdDeliveryChannel;
+
+
 
             //================================================================ 
             int retID = MembersBAL.SaveMembers(model);

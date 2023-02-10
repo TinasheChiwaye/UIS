@@ -31,40 +31,46 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="col-lg-6">
                             <div class="form-group">
+                                <label>Service Type  <em>*</em> </label>
+                                <asp:DropDownList ID="ddlServiecType" CssClass="form-control" runat="server" AutoPostBack="false">
+                                    <asp:ListItem Value="0">Select Serivce Type</asp:ListItem>
+                                </asp:DropDownList>
+                                <asp:RequiredFieldValidator Display="None" ValidationGroup="tab1" ControlToValidate="txtServicename" ID="RequiredFieldValidator3" ForeColor="red" runat="server" ErrorMessage="Please enter Service Name"></asp:RequiredFieldValidator>
+
+                            </div>
+                            <div class="form-group">
                                 <label>Service Name  <em>*</em> </label>
-                                <asp:TextBox  runat="server" ID="txtServicename" name="name" type="text" class="form-control"></asp:TextBox>
+                                <asp:TextBox runat="server" ID="txtServicename" name="name" type="text" class="form-control"></asp:TextBox>
                                 <asp:RequiredFieldValidator Display="None" ValidationGroup="tab1" ControlToValidate="txtServicename" ID="RequiredFieldValidator1" ForeColor="red" runat="server" ErrorMessage="Please enter Service Name"></asp:RequiredFieldValidator>
 
                             </div>
                             <div class="form-group">
                                 <label>Service Cost <em>*</em> </label>
-                                <asp:TextBox  runat="server" ID="txtServiceCost" name="name" type="text" class="form-control" onkeypress="return isDecimalNumber1(event,this);"></asp:TextBox>
+                                <asp:TextBox runat="server" ID="txtServiceCost" name="name" type="text" class="form-control" onkeypress="return isDecimalNumber1(event,this);"></asp:TextBox>
                                 <asp:RequiredFieldValidator Display="None" ValidationGroup="tab1" ControlToValidate="txtServiceCost" ID="RequiredFieldValidator2" ForeColor="red" runat="server" ErrorMessage="Please enter Service Cost"></asp:RequiredFieldValidator>
                             </div>
                             <div class="form-group">
                                 <label>Vendor Name</label>
-                                 <asp:DropDownList ID="ddlVendor" CssClass="form-control" runat="server" AutoPostBack="false">
-                                <asp:ListItem Value="0">Select Vendor Name</asp:ListItem> 
-                                     </asp:DropDownList>
+                                <asp:DropDownList ID="ddlVendor" CssClass="form-control" runat="server" AutoPostBack="false">
+                                    <asp:ListItem Value="0">Select Vendor Name</asp:ListItem>
+                                </asp:DropDownList>
                                 <%--<asp:TextBox MaxLength="25" runat="server" ID="TextBox1" name="name" type="text" class="form-control" onkeypress="return isDecimalNumber1(event,this);"></asp:TextBox>--%>
-                                
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label>Service Description  </label>
-                                <asp:TextBox  runat="server" ID="txtServiceDesc" name="name" type="text" class="form-control"></asp:TextBox>
+                                <asp:TextBox runat="server" ID="txtServiceDesc" name="name" type="text" class="form-control"></asp:TextBox>
                             </div>
                             <div class="form-group">
                                 <label>QTY</label>
-                                <asp:TextBox  runat="server" ID="txtQty" name="name" type="text" class="form-control" onkeypress="return isDecimalNumber1(event,this);"></asp:TextBox>
+                                <asp:TextBox runat="server" ID="txtQty" name="name" type="text" class="form-control" onkeypress="return isDecimalNumber1(event,this);"></asp:TextBox>
                             </div>
                             <div class="form-group">
                                 <label>Cost Of Sale</label>
-                                <asp:TextBox  runat="server" ID="txtCostOfSale" name="name" type="text" class="form-control" onkeypress="return isDecimalNumber1(event,this);"></asp:TextBox>
+                                <asp:TextBox runat="server" ID="txtCostOfSale" name="name" type="text" class="form-control" onkeypress="return isDecimalNumber1(event,this);"></asp:TextBox>
                             </div>
                         </div>
                     </div>
@@ -111,7 +117,7 @@
                                 <label>Search Service :</label>
 
                                 <asp:Panel ID="pnlSearch" CssClass="input-group" DefaultButton="btnSearch" runat="server">
-                                    <asp:TextBox runat="server" ID="txtKeyword" MaxLength="50" CssClass="form-control" placeholder="Search by keyword"></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txtKeyword" CssClass="form-control" placeholder="Search by keyword"></asp:TextBox>
                                     <span class="input-group-btn">&nbsp;<asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="btn btn-w-m btn-primary" OnClick="btnSearch_Click" />
                                         <br />
                                     </span>
@@ -139,14 +145,16 @@
                                         <asp:BoundField DataField="QTY" HeaderText="QTY" ReadOnly="True" ItemStyle-CssClass="visible-lg" HeaderStyle-CssClass="visible-lg" />
                                         <asp:BoundField DataField="VendorName" HeaderText="VendorName" ReadOnly="True" ItemStyle-CssClass="visible-lg" HeaderStyle-CssClass="visible-lg" />
                                         <asp:BoundField DataField="CostOfSale" HeaderText="CostOfSale" ReadOnly="True" ItemStyle-CssClass="visible-lg" HeaderStyle-CssClass="visible-lg" />
+                                        <asp:BoundField DataField="FuneralServiceTypeText" HeaderText="Service Type" ReadOnly="True" ItemStyle-CssClass="visible-lg" HeaderStyle-CssClass="visible-lg" />
 
                                         <asp:TemplateField HeaderText="Actions">
                                             <ItemTemplate>
                                                 <% if (this.HasEditRight)
-                                                   {%>
+                                                    {%>
                                                 <asp:LinkButton runat="server" ID="lbtnEditDependant" ToolTip="Click here To Edite Funeral" CommandArgument='<%#Eval("pkiServiceID") %>' CommandName="EditFuneralService"><i class="fa fa-edit"></i></asp:LinkButton>
                                                 &nbsp;
-                                           <%} if (this.HasDeleteRight)
+                                           <%}
+                                               if (this.HasDeleteRight)
                                                {%>
                                                 <asp:LinkButton runat="server" ID="lbtnDelete" OnClientClick="return confirm('Are you sure you want to delete?')" CommandArgument='<%#Eval("pkiServiceID")%>' CommandName="deleteFuneral"><i class="fa fa-trash" aria-hidden="true"></i></asp:LinkButton>
                                                 <% }%>

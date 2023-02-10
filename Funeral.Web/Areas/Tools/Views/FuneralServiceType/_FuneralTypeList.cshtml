@@ -1,0 +1,66 @@
+﻿@model List<Funeral.Model.FuneralServiceTypeVm>
+@Styles.Render("~/Content/datatablecss")
+<div class="dataTables_wrapper" id="tblFuneralSearchList">
+    <div class="col-lg-12">
+        <div class="ibox ">
+            <div class="ibox-title">
+                <h5>Funeral Service Type List</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-lg-12 ">
+                        <div class="table-responsive">
+
+                            @Html.Hidden("Id")
+                            <table id="FuneralServiceDataTable" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Funeral Service Type</th>
+                                        <th>IsActive</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var itemList in Model)
+                                    {
+                                        <tr>
+                                            <td>@itemList.Id</td>
+                                            <td>@itemList.FuneralServiceType</td>
+                                            <td>@itemList.IsActive</td>
+                                            <td><a onclick="EditFuneral(@itemList.Id)"><i class="fa fa-edit"></i></a></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#FuneralServiceDataTable").DataTable();
+    });
+            function EditFuneral(id) {
+                jQuery("#Id").val(id);
+                var editUrl = '@Url.Action("GetRecord", "FuneralServiceType", new { id = "FuneralServiceUrl" },Request.Url.Scheme)';
+                editUrl = editUrl.replace("FuneralServiceUrl", id);
+
+                jQuery.ajax({
+                    url: editUrl,
+                    type: "Get",
+                    contentType: "application/html; charset=utf-8",
+                    dataType: 'html'
+                })
+                .success(function (result) {
+                    jQuery("#" + DOMIDs.AddEdit).html(result);
+                    window.scrollTo(0, 0);
+                })
+                .error(function (xhr, status) {
+                    alert(status);
+                });
+            }
+</script>

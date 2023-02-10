@@ -1,0 +1,335 @@
+﻿@model Funeral.Model.FuneralServiceVM
+@{
+    Layout = null;
+    var totalServiceAmount = 0.0;
+}
+<div id="MainContent_UpddlBranch">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <label class="radio-inline">
+                    <input type="radio" id="Package" name="pkgser" value="Package" checked onclick="packageServiceCheck()"> Package
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" id="Service" name="pkgser" value="Service" onclick="packageServiceCheck()"> Service
+                </label>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group" id="divPackage">
+                <label>Package</label>
+                @Html.DropDownListFor(m => m.GetAllPackage, Model.GetAllPackage, "Select Package", new { Name = "GetAllPackageList", @placeholder = "Select Package", @class = "form-control" })
+                <span id="RequiredFieldValidator4" style="color:red;" hidden>Please select package</span>
+            </div>
+            <div class="form-group" id="dvServieType">
+                <label>Service Type</label>
+                @Html.DropDownListFor(m => m.FuneralServiceType, Model.FuneralServiceType, "Select Service Type", new { Name = "FuneralServiceType", @placeholder = "Select Service Type", @class = "form-control" })
+               &nbsp;@Html.ActionLink("View Service Types", "Index", "FuneralServiceType", new { area = "Tools" }, null)
+            </div>
+            <div class="form-group" id="divservices">
+                <label>Services</label>
+                @Html.DropDownListFor(m => m.ServiceType, Model.ServiceType, "Select Service", new { Name = "GetServiceType", @placeholder = "Select ServiceType", @class = "form-control" })
+                <span id="RequiredFieldValidator3" style="color:red;" hidden>Please select service</span>
+            </div>
+            <div class="form-group">
+                <label>Quantity</label>
+                <input name="txtNumber" maxlength="10" onchange="" onkeypress="" id="txtNumber" type="number" class="form-control" min="0">
+                <span id="MainContent_RequiredFieldValidator2" style="color:red;" hidden>Quantity is required</span>
+            </div>
+            <div class="form-group">
+                <br />
+                <a name="btnPackage" value="Add Package" id="btnPackage" class="btn btn-sm btn-primary">Add Package</a>
+                <a name="btnService" value="Add Service" id="btnService" class="btn btn-sm btn-primary">Add Service</a>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>Description</label>
+                <input name="txtSerDes" readonly="readonly" maxlength="10" id="txtSerDes" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Rate</label>
+                <input name="txtRate" value="0" maxlength="10" id="txtRate" type="text" class="form-control">
+                <span id="RequiredFieldValidator1" style="color:red;" hidden>Rate is required</span>
+            </div>
+            <div class="form-group">
+                <label>Total</label>
+                <input name="txtTotal" maxlength="10" readonly="readonly" id="txtTotal" type="text" class="form-control">
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <table class="table table-striped table-bordered table-hover" cellspacing="0" rules="all" border="1" id="MainContent_gvServiceList" style="width:100%;border-collapse:collapse;">
+        <tbody>
+            @if (Model.ServiceList != null && Model.ServiceList.Count > 0)
+            {
+                var hasEditRights = ViewBag.HasEditRight == "True" ? true : false;
+                var hasDeleteRights = ViewBag.HasDeleteRight == "True" ? true : false;
+                <tr>
+                    <th class="visible-lg" scope="col">Service Name</th>
+                    <th class="visible-lg" scope="col">Desctiption</th>
+                    <th class="visible-lg" scope="col">Rate</th>
+                    <th class="visible-lg" scope="col">QTY</th>
+                    <th class="visible-lg" scope="col">Amount</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                foreach (var item in Model.ServiceList)
+                {
+                    @*< input type = "hidden" id = "totalServiceAmountHidden" value = "" /> *@
+                    totalServiceAmount = totalServiceAmount + Convert.ToInt32(item.Amount);
+                    <tr>
+                        <td class="service" width="auto">@item.ServiceName</td>
+                        <td class="desc" width="auto">@item.ServiceDesc</td>
+                        <td class="unit" width="auto">@item.ServiceCost.ToString("0.00")</td>
+                        <td class="qty" width="auto">@item.Quantity</td>
+                        <td class="total" width="auto" style="text-align: right;">@Model.Currency @((item.ServiceCost * item.Quantity).ToString("0.00"))</td>
+                        <td width="auto">
+                            <a id="lbtnEditService" title="Click here To Edit Service" onclick="GetDataEditService(@item.pkiFuneralServiceSelectionID,@item.fkiFuneralID)"><i class="fa fa-edit"></i></a>
+                            &nbsp;
+                            <a onclick="DeleteServiceById(@item.pkiFuneralServiceSelectionID)" id="lbtnDelete" title="Click here To Delete Service"><i class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="6">There are no Service added.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#divservices").hide();
+        $("#btnService").hide();
+        $("#dvServieType").hide();
+
+          var url = '@Url.Action("GetFuneralServiceList", "Funeral", new { Area = "Admin" })'; // Don't hard code your url's!
+        $("#FuneralServiceType").change(function () {           
+            var serviceTypes = $('#ServiceType'); // cache it
+            var id = $(this).val(); // Use $(this) so you don't traverse the DOM again
+            $.getJSON(url, { funeralType: id }, function (response) {
+                serviceTypes.empty(); // remove any existing options
+                serviceTypes.append($('<option></option>').text("Select service").val("0"));
+                $.each(response, function (index, item) { // item is now an object containing properties ID and Text
+                    serviceTypes.append($('<option></option>').text(item.Text).val(item.Value));
+                });
+            });
+            });
+    });
+        function packageServiceCheck() {       
+        if ($("#Package").is(':checked')) {
+            $("#divservices").hide();
+            $("#btnService").hide();
+            $("#dvServieType").hide();
+
+            $("#divPackage").show();
+            $("#btnPackage").show();
+        }
+        else {
+            $("#divservices").show();
+            $("#btnService").show();
+            $("#dvServieType").show();
+
+            $("#divPackage").hide();
+            $("#btnPackage").hide();
+        }
+    }
+    $("#btnPackageService").click(function () {
+        objServiceVm = {
+            PackageName: $("#GetAllPackage :selected").text(),
+            serviceId: $("#ServiceType").val(),
+            Quantity: $("#txtNumber").val(),
+            ServiceDesc: $("#txtSerDes").val(),
+            ServiceRate: $("#txtRate").val(),
+            Amount: $("#txtTotal").val()
+        }
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SavePackageForQuatationService","Quotation")',
+            data: objServiceVm,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                alert("We returned: " + result);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
+            }
+        });
+    });
+
+    $("#btnPackage").click(function () {
+        $("#RequiredFieldValidator3").hide();
+
+        if ($("#GetAllPackage :selected").val() == "")
+            $("#RequiredFieldValidator4").show()
+        else
+            $("#RequiredFieldValidator4").hide()
+
+        if ($("#txtNumber").val() == '')
+            $("#MainContent_RequiredFieldValidator2").show();
+        else
+            $("#MainContent_RequiredFieldValidator2").hide();
+
+        if ($("#txtRate").val() == '')
+            $("#RequiredFieldValidator1").show();
+        else
+            $("#RequiredFieldValidator1").hide();
+
+        if ($("#GetAllPackage :selected").val() != "" && $("#txtNumber").val() != '' && $("#txtRate").val() != '') {
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("AddPackage", "Funeral")?packageId=' + $("#GetAllPackage :selected").text() + '&funeralId=' + $("#FuneralModel_pkiFuneralID").val(),
+                success: function (result) {
+                    if (result != null) {
+                        alert("Package Successfully Added.");
+                        $("#SelectedTab").val('aFuneralArrangement');
+                        $("#frmBodyCollection").submit();
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
+                }
+            });
+        }
+    });
+
+    $("#btnService").click(function () {
+        $("#RequiredFieldValidator4").hide()
+
+        if ($("#ServiceType :selected").val() == "")
+            $("#RequiredFieldValidator3").show();
+        else
+            $("#RequiredFieldValidator3").hide();
+
+        if ($("#txtNumber").val() == '')
+            $("#MainContent_RequiredFieldValidator2").show();
+        else
+            $("#MainContent_RequiredFieldValidator2").hide();
+
+        if ($("#txtRate").val() == '')
+            $("#RequiredFieldValidator1").show();
+        else
+            $("#RequiredFieldValidator1").hide();
+
+        if (typeof pkiFuneralServiceSelectionID == "undefined") {
+            pkiFuneralServiceSelectionID = 0;
+        }
+
+        if ($("#ServiceType :selected").val() != "" && $("#txtNumber").val() != '' && $("#txtRate").val() != '') {
+            tssp = {
+                pkiFuneralSelectionID: pkiFuneralServiceSelectionID,
+                PackageName: $("#GetAllPackage :selected").text(),
+                fkiServiceID: $("#ServiceType :selected").val(),
+                Quantity: $("#txtNumber").val(),
+                ServiceDesc: $("#txtSerDes").val(),
+                ServiceCost: $("#txtRate").val(),
+                ServiceRate: $("#txtTotal").val(),
+                fkiFuneralID: $("#FuneralModel_pkiFuneralID").val(),
+                PackageID: $("#GetAllPackage :selected").val()
+            }
+            $.ajax({
+                type: "post",
+                url: '@Url.Action("SaveServiceForFuneralService", "Funeral")',
+                data: tssp,
+                success: function (result) {
+                    if (result != null) {
+                        alert("Service Successfully Added.");
+                        $("#SelectedTab").val('aFuneralArrangement');
+                        $("#frmBodyCollection").submit();
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
+                }
+            });
+        }
+    });
+
+    function GetDataEditService(ServiceID, FuneralID) {
+        data = {
+            FID: FuneralID,
+            serviceID: ServiceID
+        }
+        $.ajax({
+            type: "get",
+            url: '@Url.Action("GetDataForServiceSelect", "Funeral")',
+            data: data,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                if (result == "Sorry!you are not authorized to perform edit on this Quotation.") {
+                    alert("Sorry!you are not authorized to perform edit on this Quotation.");
+                } else {
+                    if (result.pkiFuneralServiceSelectionID != null) {
+                        pkiFuneralServiceSelectionID = result.pkiFuneralServiceSelectionID;
+                    }
+                    $("#ServiceType").val(result.pkiServiceID);
+                    $("#txtSerDes").val(result.ServiceDesc);
+                    $("#txtRate").val(result.ServiceRate);
+                    $("#txtNumber").val(result.Quantity);
+                    var totalPremium = result.ServiceRate * result.Quantity;
+                    $("#txtTotal").val(totalPremium);
+                    $("#btnService").text('Update');
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
+            }
+        });
+    }
+    $("#ServiceType").change(function () {
+        var ServiceID = $("#ServiceType").val();
+        if (ServiceID == "") {
+            alert("Please Select Service");
+        } else {
+            jQuery("#ItemId").val(ServiceID);
+            var editUrl = '@Url.Action("GetServiceDataOnChange", "Quotation", new { ServiceID = "ServiceIDVal" },Request.Url.Scheme)';
+            editUrl = editUrl.replace("ServiceIDVal", ServiceID);
+
+            jQuery.ajax({
+                url: editUrl,
+                type: "Get",
+                contentType: "application/html; charset=utf-8",
+            })
+            .success(function (result) {
+                $("#txtSerDes").val(result.ServiceDesc);
+                $("#txtRate").val(result.ServiceCost);
+                $("#txtTotal").val(result.ServiceCost);
+            })
+            .error(function (xhr, status) {
+                alert(status);
+            });
+        }
+    })
+    function DeleteServiceById(ServiceId) {
+        if (confirm("Are you sure you want to delete this?")) {
+            data = {
+                serviceID: ServiceId
+            }
+            $.ajax({
+                type: "get",
+                url: '@Url.Action("DeletePackageForServiceSelect", "Funeral")',
+                data: data,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (result) {
+                    if (result == 0) {
+                        alert("Service deleted successfully ...!!");
+                        $("#SelectedTab").val('aFuneralArrangement');
+                        $("#frmBodyCollection").submit();
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
+                }
+            });
+        } else {
+            return false;
+        }
+    }
+</script>

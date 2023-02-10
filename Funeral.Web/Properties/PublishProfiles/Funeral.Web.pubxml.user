@@ -423,7 +423,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/17/2020 12:20:44</publishTime>
     </File>
     <File Include="Admin/Reports/Reports.aspx">
-      <publishTime>08/03/2022 09:51:18</publishTime>
+      <publishTime>08/29/2022 11:38:07</publishTime>
     </File>
     <File Include="Admin/ScheduleEmailReport.aspx">
       <publishTime>07/17/2020 12:20:43</publishTime>
@@ -549,7 +549,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/26/2020 07:43:59</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Claims/ClaimAddEdit.cshtml">
-      <publishTime>02/10/2022 11:21:06</publishTime>
+      <publishTime>12/14/2022 13:42:46</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Claims/ClaimDashboard.cshtml">
       <publishTime>02/10/2022 11:21:06</publishTime>
@@ -558,7 +558,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/10/2022 11:21:06</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Claims/ClaimStatusHistory.cshtml">
-      <publishTime>08/03/2022 09:51:18</publishTime>
+      <publishTime>08/29/2022 11:38:07</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Claims/Index.cshtml">
       <publishTime>06/30/2022 02:13:12</publishTime>
@@ -602,29 +602,50 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Areas/Admin/Views/Error/Error403.cshtml">
       <publishTime>07/17/2020 12:20:47</publishTime>
     </File>
+    <File Include="Areas/Admin/Views/Funeral/AllFuneralSchedules.cshtml">
+      <publishTime>09/08/2022 16:53:37</publishTime>
+    </File>
+    <File Include="Areas/Admin/Views/Funeral/DownLoadSchedules.cshtml">
+      <publishTime>10/27/2022 12:34:41</publishTime>
+    </File>
     <File Include="Areas/Admin/Views/Funeral/FuneralPayment.cshtml">
-      <publishTime>11/26/2020 07:43:59</publishTime>
+      <publishTime>12/14/2022 13:42:46</publishTime>
+    </File>
+    <File Include="Areas/Admin/Views/Funeral/FuneralQuotation.cshtml">
+      <publishTime>08/30/2022 14:28:18</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Funeral/FuneralSearch.cshtml">
-      <publishTime>08/03/2022 09:51:18</publishTime>
+      <publishTime>08/29/2022 11:38:07</publishTime>
+    </File>
+    <File Include="Areas/Admin/Views/Funeral/FuneralService.cshtml">
+      <publishTime>11/19/2022 14:25:57</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Funeral/FuneralServices.cshtml">
-      <publishTime>08/17/2022 12:46:48</publishTime>
+      <publishTime>01/19/2023 11:26:33</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Funeral/FuneralServiceSelect.cshtml">
-      <publishTime>08/03/2022 09:51:18</publishTime>
+      <publishTime>12/14/2022 13:42:46</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Funeral/Index.cshtml">
-      <publishTime>08/15/2022 12:26:37</publishTime>
+      <publishTime>01/18/2023 15:41:24</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Funeral/PrintForm.cshtml">
-      <publishTime>08/03/2022 09:51:18</publishTime>
+      <publishTime>12/14/2022 13:42:46</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Funeral/_FuneralAddEdit.cshtml">
-      <publishTime>08/03/2022 09:51:18</publishTime>
+      <publishTime>12/19/2022 10:03:14</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Funeral/_FuneralList.cshtml">
-      <publishTime>08/17/2022 12:46:48</publishTime>
+      <publishTime>10/27/2022 12:34:41</publishTime>
+    </File>
+    <File Include="Areas/Admin/Views/Funeral/_FuneralSearviceDetailSection.cshtml">
+      <publishTime>12/14/2022 13:42:46</publishTime>
+    </File>
+    <File Include="Areas/Admin/Views/Funeral/_FuneralSearvicePaymentSection.cshtml">
+      <publishTime>10/28/2022 10:53:44</publishTime>
+    </File>
+    <File Include="Areas/Admin/Views/Funeral/_FuneralServicesSection.cshtml">
+      <publishTime>12/19/2022 10:03:14</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Funeral/_PaymentHistory.cshtml">
       <publishTime>07/17/2020 12:20:47</publishTime>
@@ -639,7 +660,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/10/2022 09:49:06</publishTime>
     </File>
     <File Include="Areas/Admin/Views/GroupPayment/_AddGroupPayment.cshtml">
-      <publishTime>08/03/2022 09:51:18</publishTime>
+      <publishTime>08/29/2022 11:38:07</publishTime>
     </File>
     <File Include="Areas/Admin/Views/GroupPayment/_GroupPaymentList.cshtml">
       <publishTime>02/10/2022 09:49:06</publishTime>
@@ -666,19 +687,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/10/2022 09:49:06</publishTime>
     </File>
     <File Include="Areas/Admin/Views/MemberPayments/ManageMembersPayment.cshtml">
-      <publishTime>08/03/2022 09:58:56</publishTime>
+      <publishTime>11/23/2022 17:49:31</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Members/Index.cshtml">
       <publishTime>06/08/2022 11:06:22</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Members/ManageMembers.cshtml">
-      <publishTime>08/15/2022 11:48:13</publishTime>
+      <publishTime>01/30/2023 13:05:08</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Members/_AddEditBeneficiary.cshtml">
-      <publishTime>08/03/2022 09:51:18</publishTime>
+      <publishTime>08/29/2022 11:38:07</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Members/_ReportEmailSendModal.cshtml">
-      <publishTime>08/03/2022 09:51:18</publishTime>
+      <publishTime>08/29/2022 11:38:07</publishTime>
     </File>
     <File Include="Areas/Admin/Views/NewBusiness/GetQuote.cshtml">
       <publishTime>02/10/2022 09:49:06</publishTime>
@@ -720,10 +741,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/26/2020 07:44:00</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Payments/ManageMembersPayment.cshtml">
-      <publishTime>08/03/2022 09:51:18</publishTime>
+      <publishTime>09/19/2022 21:11:57</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Payments/PrintPaymentReceipt.cshtml">
-      <publishTime>08/03/2022 09:58:56</publishTime>
+      <publishTime>12/20/2022 00:05:10</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Payments/_PaymentList.cshtml">
       <publishTime>02/10/2022 09:49:06</publishTime>
@@ -735,7 +756,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/26/2020 07:44:00</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Quotation/QuotationService.cshtml">
-      <publishTime>08/03/2022 09:51:18</publishTime>
+      <publishTime>08/29/2022 11:38:07</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Quotation/_QuotationAddEdit.cshtml">
       <publishTime>11/26/2020 07:44:00</publishTime>
@@ -759,10 +780,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/26/2020 07:44:00</publishTime>
     </File>
     <File Include="Areas/Admin/Views/SchemaPayment/_SchemaList.cshtml">
-      <publishTime>08/03/2022 09:51:18</publishTime>
+      <publishTime>11/02/2022 12:06:27</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Shared/_Layout.cshtml">
-      <publishTime>08/03/2022 09:58:56</publishTime>
+      <publishTime>08/30/2022 14:27:29</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Tombstone/Index.cshtml">
       <publishTime>07/17/2020 12:20:47</publishTime>
@@ -798,10 +819,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/17/2020 12:20:48</publishTime>
     </File>
     <File Include="Areas/Tools/Views/AddOnProductSetup/_AddOnProductSetupAddEdit.cshtml">
-      <publishTime>08/03/2022 09:51:18</publishTime>
+      <publishTime>08/29/2022 11:38:07</publishTime>
     </File>
     <File Include="Areas/Tools/Views/AddOnProductSetup/_AddOnProductSetupList.cshtml">
-      <publishTime>08/03/2022 09:51:18</publishTime>
+      <publishTime>08/29/2022 11:38:07</publishTime>
     </File>
     <File Include="Areas/Tools/Views/BranchSetup/Index.cshtml">
       <publishTime>07/17/2020 12:20:48</publishTime>
@@ -831,10 +852,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/14/2022 12:45:36</publishTime>
     </File>
     <File Include="Areas/Tools/Views/CustomManagement/_CustomManagementAddEdit.cshtml">
-      <publishTime>08/03/2022 09:51:18</publishTime>
+      <publishTime>08/29/2022 11:38:07</publishTime>
     </File>
     <File Include="Areas/Tools/Views/CustomManagement/_CustomManagementList.cshtml">
-      <publishTime>08/03/2022 09:51:18</publishTime>
+      <publishTime>08/29/2022 11:38:07</publishTime>
     </File>
     <File Include="Areas/Tools/Views/ExpenseCategory/Index.cshtml">
       <publishTime>07/17/2020 12:20:48</publishTime>
@@ -853,6 +874,15 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Areas/Tools/Views/FuneralServices/_FuneralServicesList.cshtml">
       <publishTime>07/17/2020 12:20:48</publishTime>
+    </File>
+    <File Include="Areas/Tools/Views/FuneralServiceType/Index.cshtml">
+      <publishTime>12/19/2022 10:03:14</publishTime>
+    </File>
+    <File Include="Areas/Tools/Views/FuneralServiceType/_AddUpdate.cshtml">
+      <publishTime>12/19/2022 10:03:14</publishTime>
+    </File>
+    <File Include="Areas/Tools/Views/FuneralServiceType/_FuneralTypeList.cshtml">
+      <publishTime>12/19/2022 10:03:14</publishTime>
     </File>
     <File Include="Areas/Tools/Views/Menu/Index.cshtml">
       <publishTime>07/17/2020 12:20:48</publishTime>
@@ -879,10 +909,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/26/2020 07:44:00</publishTime>
     </File>
     <File Include="Areas/Tools/Views/PlanSetup/_PlanSetupAddEdit.cshtml">
-      <publishTime>08/03/2022 09:58:56</publishTime>
+      <publishTime>08/30/2022 14:27:29</publishTime>
     </File>
     <File Include="Areas/Tools/Views/PlanSetup/_PlanSetupList.cshtml">
-      <publishTime>08/03/2022 09:51:18</publishTime>
+      <publishTime>11/14/2022 10:02:53</publishTime>
     </File>
     <File Include="Areas/Tools/Views/QuotationEngine/Index.cshtml">
       <publishTime>11/26/2020 07:44:00</publishTime>
@@ -936,7 +966,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/26/2020 07:44:00</publishTime>
     </File>
     <File Include="bin/Admin/Reports/DataSets/dsAgentCommision.Designer.cs">
-      <publishTime>07/17/2020 12:20:44</publishTime>
+      <publishTime>09/19/2022 15:46:47</publishTime>
     </File>
     <File Include="bin/Admin/Reports/DataSets/dsAgentCommision.xsc">
       <publishTime>07/17/2020 12:20:44</publishTime>
@@ -948,7 +978,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/17/2020 12:20:44</publishTime>
     </File>
     <File Include="bin/Admin/Reports/DataSets/dsDetailedPayment.Designer.cs">
-      <publishTime>07/17/2020 12:20:44</publishTime>
+      <publishTime>09/19/2022 15:46:47</publishTime>
     </File>
     <File Include="bin/Admin/Reports/DataSets/dsDetailedPayment.xsc">
       <publishTime>07/17/2020 12:20:44</publishTime>
@@ -960,7 +990,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/17/2020 12:20:44</publishTime>
     </File>
     <File Include="bin/Admin/Reports/DataSets/dsExpenses.Designer.cs">
-      <publishTime>07/17/2020 12:20:44</publishTime>
+      <publishTime>09/19/2022 15:46:47</publishTime>
     </File>
     <File Include="bin/Admin/Reports/DataSets/dsExpenses.xsc">
       <publishTime>07/17/2020 12:20:44</publishTime>
@@ -972,7 +1002,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/17/2020 12:20:44</publishTime>
     </File>
     <File Include="bin/Admin/Reports/DataSets/dsFuneralPayment.Designer.cs">
-      <publishTime>07/17/2020 12:20:44</publishTime>
+      <publishTime>09/19/2022 15:46:47</publishTime>
     </File>
     <File Include="bin/Admin/Reports/DataSets/dsFuneralPayment.xsc">
       <publishTime>07/17/2020 12:20:44</publishTime>
@@ -984,7 +1014,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/17/2020 12:20:44</publishTime>
     </File>
     <File Include="bin/Admin/Reports/DataSets/dsQuotationByDate.Designer.cs">
-      <publishTime>07/17/2020 12:20:44</publishTime>
+      <publishTime>09/19/2022 15:46:47</publishTime>
     </File>
     <File Include="bin/Admin/Reports/DataSets/dsQuotationByDate.xsc">
       <publishTime>07/17/2020 12:20:45</publishTime>
@@ -996,10 +1026,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/17/2020 12:20:45</publishTime>
     </File>
     <File Include="bin/Admin/Reports/DataSets/MembersJoinedByDate.cs">
-      <publishTime>07/17/2020 12:20:44</publishTime>
+      <publishTime>09/19/2022 15:46:47</publishTime>
     </File>
     <File Include="bin/Admin/Reports/DataSets/MembersJoinedByDate.Designer.cs">
-      <publishTime>07/17/2020 12:20:44</publishTime>
+      <publishTime>09/19/2022 15:46:47</publishTime>
     </File>
     <File Include="bin/Admin/Reports/DataSets/MembersJoinedByDate.xsc">
       <publishTime>07/17/2020 12:20:44</publishTime>
@@ -1011,7 +1041,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/17/2020 12:20:44</publishTime>
     </File>
     <File Include="bin/Admin/Reports/FINANCIAL_REPORTS/DataSets/dsBankPayment.Designer.cs">
-      <publishTime>07/17/2020 12:20:45</publishTime>
+      <publishTime>09/19/2022 15:46:47</publishTime>
     </File>
     <File Include="bin/Admin/Reports/FINANCIAL_REPORTS/DataSets/dsBankPayment.xsc">
       <publishTime>07/17/2020 12:20:45</publishTime>
@@ -1023,7 +1053,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/17/2020 12:20:45</publishTime>
     </File>
     <File Include="bin/Admin/Reports/FINANCIAL_REPORTS/DataSets/dsClaimsReport.Designer.cs">
-      <publishTime>07/17/2020 12:20:45</publishTime>
+      <publishTime>09/19/2022 15:46:47</publishTime>
     </File>
     <File Include="bin/Admin/Reports/FINANCIAL_REPORTS/DataSets/dsClaimsReport.xsc">
       <publishTime>07/17/2020 12:20:45</publishTime>
@@ -1035,7 +1065,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/17/2020 12:20:45</publishTime>
     </File>
     <File Include="bin/Admin/Reports/FINANCIAL_REPORTS/DataSets/dsUnderwriterPatment.Designer.cs">
-      <publishTime>07/17/2020 12:20:45</publishTime>
+      <publishTime>09/19/2022 15:46:47</publishTime>
     </File>
     <File Include="bin/Admin/Reports/FINANCIAL_REPORTS/DataSets/dsUnderwriterPatment.xsc">
       <publishTime>07/17/2020 12:20:45</publishTime>
@@ -1109,8 +1139,17 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/Antlr3.Runtime.pdb">
       <publishTime>02/22/2013 08:43:40</publishTime>
     </File>
+    <File Include="bin/BarcodeStandard.dll">
+      <publishTime>05/09/2021 17:19:26</publishTime>
+    </File>
+    <File Include="bin/BouncyCastle.Crypto.dll">
+      <publishTime>12/08/2020 18:05:32</publishTime>
+    </File>
     <File Include="bin/ClosedXML.dll">
       <publishTime>12/16/2014 14:35:14</publishTime>
+    </File>
+    <File Include="bin/DayPilot.Web.Mvc.dll">
+      <publishTime>01/15/2017 00:00:00</publishTime>
     </File>
     <File Include="bin/DocumentFormat.OpenXml.dll">
       <publishTime>08/04/2013 13:21:24</publishTime>
@@ -1143,43 +1182,46 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/02/2019 04:39:52</publishTime>
     </File>
     <File Include="bin/Funeral.BAL.dll">
-      <publishTime>08/15/2022 12:29:23</publishTime>
+      <publishTime>01/30/2023 16:54:52</publishTime>
     </File>
     <File Include="bin/Funeral.BAL.dll.config">
       <publishTime>07/17/2020 12:20:38</publishTime>
     </File>
     <File Include="bin/Funeral.BAL.pdb">
-      <publishTime>08/15/2022 12:29:23</publishTime>
+      <publishTime>01/30/2023 16:54:52</publishTime>
     </File>
     <File Include="bin/Funeral.DAL.dll">
-      <publishTime>08/15/2022 12:29:22</publishTime>
+      <publishTime>01/30/2023 16:54:51</publishTime>
     </File>
     <File Include="bin/Funeral.DAL.dll.config">
-      <publishTime>08/03/2022 09:51:17</publishTime>
+      <publishTime>08/29/2022 11:38:07</publishTime>
     </File>
     <File Include="bin/Funeral.DAL.pdb">
-      <publishTime>08/15/2022 12:29:22</publishTime>
+      <publishTime>01/30/2023 16:54:51</publishTime>
     </File>
     <File Include="bin/Funeral.Model.dll">
-      <publishTime>08/15/2022 12:29:22</publishTime>
+      <publishTime>01/27/2023 13:39:15</publishTime>
     </File>
     <File Include="bin/Funeral.Model.dll.config">
       <publishTime>07/17/2020 12:20:40</publishTime>
     </File>
     <File Include="bin/Funeral.Model.pdb">
-      <publishTime>08/15/2022 12:29:22</publishTime>
+      <publishTime>01/27/2023 13:39:15</publishTime>
     </File>
     <File Include="bin/Funeral.Validation.dll">
-      <publishTime>08/12/2022 13:52:26</publishTime>
+      <publishTime>01/27/2023 13:39:14</publishTime>
     </File>
     <File Include="bin/Funeral.Validation.pdb">
-      <publishTime>08/12/2022 13:52:26</publishTime>
+      <publishTime>01/27/2023 13:39:14</publishTime>
     </File>
     <File Include="bin/Funeral.Web.dll">
-      <publishTime>08/17/2022 12:47:45</publishTime>
+      <publishTime>01/30/2023 16:56:24</publishTime>
     </File>
     <File Include="bin/Funeral.Web.pdb">
-      <publishTime>08/17/2022 12:47:45</publishTime>
+      <publishTime>01/30/2023 16:56:24</publishTime>
+    </File>
+    <File Include="bin/itextsharp.dll">
+      <publishTime>02/24/2022 13:50:06</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.Identity.Core.dll">
       <publishTime>04/03/2015 17:07:22</publishTime>
@@ -1189,6 +1231,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="bin/Microsoft.AspNet.Identity.Owin.dll">
       <publishTime>04/03/2015 17:07:22</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Bcl.AsyncInterfaces.dll">
+      <publishTime>10/19/2020 18:40:36</publishTime>
     </File>
     <File Include="bin/Microsoft.MSXML.dll">
       <publishTime>03/28/2019 23:37:11</publishTime>
@@ -1289,6 +1334,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/Microsoft.Web.Infrastructure.dll">
       <publishTime>07/25/2012 11:48:56</publishTime>
     </File>
+    <File Include="bin/Microsoft.Win32.Primitives.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
     <File Include="bin/Microsoft.Windows.Design.Extensibility.dll">
       <publishTime>02/21/2011 16:04:48</publishTime>
     </File>
@@ -1297,6 +1345,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="bin/Neodynamic.SDK.WebClientPrint.dll">
       <publishTime>12/16/2013 11:49:46</publishTime>
+    </File>
+    <File Include="bin/netstandard.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>04/22/2019 01:06:16</publishTime>
@@ -1331,11 +1382,299 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/stdole.dll">
       <publishTime>03/28/2019 23:37:11</publishTime>
     </File>
+    <File Include="bin/System.AppContext.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Buffers.dll">
+      <publishTime>02/19/2020 10:05:18</publishTime>
+    </File>
+    <File Include="bin/System.Collections.Concurrent.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Collections.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Collections.NonGeneric.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Collections.Specialized.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.ComponentModel.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.ComponentModel.EventBasedAsync.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.ComponentModel.Primitives.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.ComponentModel.TypeConverter.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Console.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Data.Common.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
     <File Include="bin/System.Data.dll">
-      <publishTime>09/26/2012 03:16:08</publishTime>
+      <publishTime>11/05/2015 20:36:48</publishTime>
+    </File>
+    <File Include="bin/System.Diagnostics.Contracts.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Diagnostics.Debug.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Diagnostics.FileVersionInfo.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Diagnostics.Process.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Diagnostics.StackTrace.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Diagnostics.TextWriterTraceListener.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Diagnostics.Tools.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Diagnostics.TraceSource.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Diagnostics.Tracing.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Drawing.Common.dll">
+      <publishTime>01/19/2021 20:29:18</publishTime>
+    </File>
+    <File Include="bin/System.Drawing.Primitives.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Dynamic.Runtime.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Globalization.Calendars.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Globalization.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Globalization.Extensions.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.IO.Compression.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.IO.Compression.ZipFile.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.IO.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.IO.FileSystem.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.IO.FileSystem.DriveInfo.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.IO.FileSystem.Primitives.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.IO.FileSystem.Watcher.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.IO.IsolatedStorage.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.IO.MemoryMappedFiles.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.IO.Pipes.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.IO.UnmanagedMemoryStream.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Linq.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Linq.Expressions.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Linq.Parallel.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Linq.Queryable.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Memory.dll">
+      <publishTime>02/19/2020 10:05:18</publishTime>
+    </File>
+    <File Include="bin/System.Net.Http.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
     </File>
     <File Include="bin/System.Net.Http.Formatting.dll">
       <publishTime>02/01/2018 12:17:18</publishTime>
+    </File>
+    <File Include="bin/System.Net.NameResolution.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Net.NetworkInformation.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Net.Ping.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Net.Primitives.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Net.Requests.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Net.Security.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Net.Sockets.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Net.WebHeaderCollection.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Net.WebSockets.Client.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Net.WebSockets.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Numerics.Vectors.dll">
+      <publishTime>05/15/2018 13:29:44</publishTime>
+    </File>
+    <File Include="bin/System.ObjectModel.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Reflection.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Reflection.Extensions.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Reflection.Primitives.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Resources.Reader.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Resources.ResourceManager.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Resources.Writer.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Runtime.CompilerServices.Unsafe.dll">
+      <publishTime>10/19/2020 18:46:30</publishTime>
+    </File>
+    <File Include="bin/System.Runtime.CompilerServices.VisualC.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Runtime.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Runtime.Extensions.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Runtime.Handles.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Runtime.InteropServices.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Runtime.InteropServices.RuntimeInformation.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Runtime.Numerics.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Runtime.Serialization.Formatters.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Runtime.Serialization.Json.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Runtime.Serialization.Primitives.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Runtime.Serialization.Xml.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Security.Claims.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Security.Cryptography.Algorithms.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Security.Cryptography.Csp.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Security.Cryptography.Encoding.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Security.Cryptography.Primitives.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Security.Cryptography.X509Certificates.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Security.Principal.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Security.SecureString.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Text.Encoding.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Text.Encoding.Extensions.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Text.Encodings.Web.dll">
+      <publishTime>02/16/2021 21:53:20</publishTime>
+    </File>
+    <File Include="bin/System.Text.Json.dll">
+      <publishTime>03/16/2021 22:34:50</publishTime>
+    </File>
+    <File Include="bin/System.Text.RegularExpressions.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Threading.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Threading.Overlapped.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Threading.Tasks.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Threading.Tasks.Extensions.dll">
+      <publishTime>02/19/2020 10:05:18</publishTime>
+    </File>
+    <File Include="bin/System.Threading.Tasks.Parallel.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Threading.Thread.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Threading.ThreadPool.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Threading.Timer.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.ValueTuple.dll">
+      <publishTime>05/15/2018 13:29:52</publishTime>
     </File>
     <File Include="bin/System.Web.Helpers.dll">
       <publishTime>01/28/2015 04:04:30</publishTime>
@@ -1363,6 +1702,24 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="bin/System.Web.WebPages.Razor.dll">
       <publishTime>01/28/2015 04:04:30</publishTime>
+    </File>
+    <File Include="bin/System.Xml.ReaderWriter.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Xml.XDocument.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Xml.XmlDocument.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Xml.XmlSerializer.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Xml.XPath.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
+    </File>
+    <File Include="bin/System.Xml.XPath.XDocument.dll">
+      <publishTime>04/13/2020 14:51:43</publishTime>
     </File>
     <File Include="bin/VSLangProj.dll">
       <publishTime>06/06/2020 13:22:24</publishTime>
@@ -1491,7 +1848,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/17/2020 12:20:50</publishTime>
     </File>
     <File Include="Content/Invoice/style.css">
-      <publishTime>07/17/2020 12:20:50</publishTime>
+      <publishTime>11/23/2022 17:49:31</publishTime>
     </File>
     <File Include="Content/jquery-ui.min.css">
       <publishTime>07/17/2020 12:20:49</publishTime>
@@ -1774,6 +2131,51 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Content/plugins/switchery/switchery.css">
       <publishTime>07/17/2020 12:20:52</publishTime>
+    </File>
+    <File Include="Content/plugins/Themes/calendar_blue.css">
+      <publishTime>09/01/2022 09:33:50</publishTime>
+    </File>
+    <File Include="Content/plugins/Themes/calendar_g.css">
+      <publishTime>09/01/2022 09:33:50</publishTime>
+    </File>
+    <File Include="Content/plugins/Themes/calendar_green.css">
+      <publishTime>09/01/2022 09:33:50</publishTime>
+    </File>
+    <File Include="Content/plugins/Themes/calendar_traditional.css">
+      <publishTime>09/01/2022 09:33:50</publishTime>
+    </File>
+    <File Include="Content/plugins/Themes/calendar_transparent.css">
+      <publishTime>09/01/2022 09:33:50</publishTime>
+    </File>
+    <File Include="Content/plugins/Themes/calendar_white.css">
+      <publishTime>09/01/2022 09:33:50</publishTime>
+    </File>
+    <File Include="Content/plugins/Themes/month_blue.css">
+      <publishTime>09/01/2022 09:33:50</publishTime>
+    </File>
+    <File Include="Content/plugins/Themes/month_g.css">
+      <publishTime>09/01/2022 09:33:50</publishTime>
+    </File>
+    <File Include="Content/plugins/Themes/month_green.css">
+      <publishTime>09/01/2022 09:33:50</publishTime>
+    </File>
+    <File Include="Content/plugins/Themes/month_traditional.css">
+      <publishTime>09/01/2022 09:33:50</publishTime>
+    </File>
+    <File Include="Content/plugins/Themes/month_transparent.css">
+      <publishTime>09/01/2022 09:33:50</publishTime>
+    </File>
+    <File Include="Content/plugins/Themes/month_white.css">
+      <publishTime>09/01/2022 09:33:50</publishTime>
+    </File>
+    <File Include="Content/plugins/Themes/navigator_green.css">
+      <publishTime>09/01/2022 09:33:50</publishTime>
+    </File>
+    <File Include="Content/plugins/Themes/navigator_transparent.css">
+      <publishTime>09/01/2022 09:33:50</publishTime>
+    </File>
+    <File Include="Content/plugins/Themes/navigator_white.css">
+      <publishTime>09/01/2022 09:33:50</publishTime>
     </File>
     <File Include="Content/plugins/toastr/toastr.min.css">
       <publishTime>07/17/2020 12:20:52</publishTime>
@@ -2133,7 +2535,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/17/2020 12:20:41</publishTime>
     </File>
     <File Include="packages.config">
-      <publishTime>11/26/2020 07:44:05</publishTime>
+      <publishTime>09/19/2022 15:46:47</publishTime>
+    </File>
+    <File Include="Properties/DataSources/Funeral.DAL.niws_partner.ValidateComplianceResponse.datasource">
+      <publishTime>09/19/2022 15:46:47</publishTime>
+    </File>
+    <File Include="Properties/DataSources/Funeral.DAL.niws_partner.ValidateServiceKeyResponse.datasource">
+      <publishTime>09/19/2022 15:46:47</publishTime>
     </File>
     <File Include="Properties/DataSources/Funeral.Model.AccountTypeModel.datasource">
       <publishTime>07/17/2020 12:20:52</publishTime>
@@ -2364,7 +2772,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/17/2020 12:20:54</publishTime>
     </File>
     <File Include="Scripts/app/searchdatatable.js">
-      <publishTime>08/03/2022 09:51:18</publishTime>
+      <publishTime>08/29/2022 11:38:07</publishTime>
     </File>
     <File Include="Scripts/app/ValidateIdNumber.js">
       <publishTime>11/26/2020 07:44:01</publishTime>
@@ -2380,6 +2788,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Scripts/bootstrap.min.js">
       <publishTime>07/17/2020 12:20:54</publishTime>
+    </File>
+    <File Include="Scripts/DayPilot/daypilot-all.min.js">
+      <publishTime>09/01/2022 09:33:50</publishTime>
     </File>
     <File Include="Scripts/GridScroll/x.js">
       <publishTime>11/26/2020 07:44:01</publishTime>
@@ -3720,10 +4131,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/17/2020 12:20:54</publishTime>
     </File>
     <File Include="Service References/niws_partner/Funeral.Web.niws_partner.ValidateComplianceResponse.datasource">
-      <publishTime>08/03/2022 09:51:18</publishTime>
+      <publishTime>08/29/2022 11:38:07</publishTime>
     </File>
     <File Include="Service References/niws_partner/Funeral.Web.niws_partner.ValidateServiceKeyResponse.datasource">
-      <publishTime>08/03/2022 09:51:18</publishTime>
+      <publishTime>08/29/2022 11:38:07</publishTime>
     </File>
     <File Include="SqlServerTypes/readme.htm">
       <publishTime>07/17/2020 12:21:01</publishTime>
@@ -3756,7 +4167,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/17/2020 12:21:02</publishTime>
     </File>
     <File Include="Tools/CompanySetup.aspx">
-      <publishTime>08/03/2022 09:51:19</publishTime>
+      <publishTime>08/29/2022 11:38:07</publishTime>
     </File>
     <File Include="Tools/CustomManagement.aspx">
       <publishTime>07/17/2020 12:21:02</publishTime>
@@ -3768,7 +4179,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/17/2020 12:21:02</publishTime>
     </File>
     <File Include="Tools/FuneralServices.aspx">
-      <publishTime>11/26/2020 07:44:02</publishTime>
+      <publishTime>12/19/2022 10:03:14</publishTime>
     </File>
     <File Include="Tools/ManageMenu.aspx">
       <publishTime>07/17/2020 12:21:02</publishTime>
@@ -3801,7 +4212,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/17/2020 12:21:02</publishTime>
     </File>
     <File Include="Tools/UnderwriterSetup.aspx">
-      <publishTime>08/03/2022 09:51:19</publishTime>
+      <publishTime>08/29/2022 11:38:07</publishTime>
     </File>
     <File Include="Tools/UserSetup.aspx">
       <publishTime>11/26/2020 07:44:02</publishTime>
@@ -3846,7 +4257,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/17/2020 12:21:06</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>08/15/2022 12:26:37</publishTime>
+      <publishTime>09/01/2022 09:33:50</publishTime>
     </File>
     <File Include="Views/web.config">
       <publishTime>07/17/2020 12:21:06</publishTime>
@@ -3855,7 +4266,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/17/2020 12:21:06</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>08/15/2022 12:29:28</publishTime>
+      <publishTime>12/19/2022 15:43:01</publishTime>
     </File>
   </ItemGroup>
 </Project>

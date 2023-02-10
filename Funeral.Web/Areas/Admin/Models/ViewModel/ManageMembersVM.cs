@@ -23,6 +23,13 @@ namespace Funeral.Web.Areas.Admin.Models.ViewModel
         public IEnumerable<SelectListItem> CustomGrouping3 { get; set; }
         public IEnumerable<SelectListItem> CustomGrouping4 { get; set; }
 
+        public IEnumerable<SelectListItem> CustomGroupingClientMatch { get; set; }
+
+        public IEnumerable<SelectListItem> CustomGroupingClientRelationship { get; set; }
+        public IEnumerable<SelectListItem> CustomGroupingTransactionFrequency { get; set; }
+        public IEnumerable<SelectListItem> CustomGroupingDeliveryChannel { get; set; }
+
+
         public IEnumerable<SelectListItem> ProductAddOnList { get; set; }
         public IEnumerable<SelectListItem> DependencyTypeList { get; set; }
         public IEnumerable<SelectListItem> ExtendedFamily { get; set; }
