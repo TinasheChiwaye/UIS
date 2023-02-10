@@ -40,6 +40,18 @@
                                 <asp:TextBox MaxLength="50" runat="server" ID="txtDescription" name="Description" type="text" class="form-control"></asp:TextBox>
                                 <asp:RequiredFieldValidator Display="None" ValidationGroup="AddonSetup" ControlToValidate="txtDescription" ID="RequiredFieldValidator2" ForeColor="red" runat="server" ErrorMessage="Please enter Description"></asp:RequiredFieldValidator>
                             </div>
+                            <div class="form-group">
+                                <label>Start Date <em>*</em> </label>
+                                <asp:TextBox MaxLength="25" runat="server" ID="txtStartDate" name="txtStartDate" type="text" class="form-control"></asp:TextBox>
+<%--                                <asp:RequiredFieldValidator Display="None" ValidationGroup="AddonSetup" ControlToValidate="txtInceptionDate"" ID="RequiredFieldValidator5" ForeColor="red" runat="server" ErrorMessage="Please enter Inception Date"></asp:RequiredFieldValidator>--%>
+                                <%--<asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator2" ValidationGroup="AddonSetup" runat="server" ControlToValidate="txtInceptionDate"" ErrorMessage="Please enter correct Inception Date"  />--%>
+                            </div>
+                            <div class="form-group">
+                                <label>Cover Date <em>*</em> </label>
+                                <asp:TextBox MaxLength="25" runat="server" ID="txtCoverDate" name="txtCoverDate" type="text" class="form-control"></asp:TextBox>
+<%--                                <asp:RequiredFieldValidator Display="None" ValidationGroup="AddonSetup" ControlToValidate="txtInceptionDate"" ID="RequiredFieldValidator5" ForeColor="red" runat="server" ErrorMessage="Please enter Inception Date"></asp:RequiredFieldValidator>--%>
+                                <%--<asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator2" ValidationGroup="AddonSetup" runat="server" ControlToValidate="txtInceptionDate"" ErrorMessage="Please enter correct Inception Date"  />--%>
+                            </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
@@ -48,19 +60,29 @@
                                 <asp:RequiredFieldValidator Display="None" ValidationGroup="AddonSetup" ControlToValidate="txtPremium" ID="RequiredFieldValidator3" ForeColor="red" runat="server" ErrorMessage="Please enter Premium"></asp:RequiredFieldValidator>
                                 <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator7" ValidationGroup="AddonSetup" runat="server" ControlToValidate="txtPremium" ErrorMessage="Premium Enter Only Number With 2 Desimal" ValidationExpression="((\d+)((\.\d{1,2})?))$" />
                             </div>
+
+                             
+                            <div class="form-group">
+                                <label>Inception Date <em>*</em> </label>
+                                <asp:TextBox MaxLength="25" runat="server" ID="txtInceptionDate" name="txtInceptionDate" type="text" class="form-control"></asp:TextBox>
+<%--                                <asp:RequiredFieldValidator Display="None" ValidationGroup="AddonSetup" ControlToValidate="txtInceptionDate"" ID="RequiredFieldValidator5" ForeColor="red" runat="server" ErrorMessage="Please enter Inception Date"></asp:RequiredFieldValidator>--%>
+                                <%--<asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator2" ValidationGroup="AddonSetup" runat="server" ControlToValidate="txtInceptionDate"" ErrorMessage="Please enter correct Inception Date"  />--%>
+                            </div>
+
                             <div class="form-group">
                                 <label>Cover <em>*</em> </label>
                                 <asp:TextBox MaxLength="25" runat="server" ID="txtCover" name="Cover" type="text" class="form-control"></asp:TextBox>
                                 <asp:RequiredFieldValidator Display="None" ValidationGroup="AddonSetup" ControlToValidate="txtCover" ID="RequiredFieldValidator4" ForeColor="red" runat="server" ErrorMessage="Please enter Cover"></asp:RequiredFieldValidator>
                                 <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator1" ValidationGroup="AddonSetup" runat="server" ControlToValidate="txtCover" ErrorMessage="Cover Enter Only Number With 2 Desimal" ValidationExpression="((\d+)((\.\d{1,2})?))$" />
                             </div>
-
-                              <div class="form-group">
-                                <label>Inception Date <em>*</em> </label>
-                                <asp:TextBox MaxLength="25" runat="server" ID="" name="txtInceptionDate" type="text" class="form-control"></asp:TextBox>
-                                <asp:RequiredFieldValidator Display="None" ValidationGroup="AddonSetup" ControlToValidate="txtInceptionDate"" ID="RequiredFieldValidator5" ForeColor="red" runat="server" ErrorMessage="Please enter Inception Date"></asp:RequiredFieldValidator>
-                                <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator2" ValidationGroup="AddonSetup" runat="server" ControlToValidate="txtInceptionDate"" ErrorMessage="Please enter correct Inception Date"  />
+                             <div class="form-group">
+                                <label>Waiting Period <em>*</em> </label>
+                                <asp:TextBox MaxLength="25" runat="server" ID="txtWaitPeriod" name="txtWaitPeriod" type="text" class="form-control"></asp:TextBox>
+                               <%-- <asp:RequiredFieldValidator Display="None" ValidationGroup="AddonSetup" ControlToValidate="txtCover" ID="RequiredFieldValidator5" ForeColor="red" runat="server" ErrorMessage="Please enter Cover"></asp:RequiredFieldValidator>
+                                <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator2" ValidationGroup="AddonSetup" runat="server" ControlToValidate="txtCover" ErrorMessage="Cover Enter Only Number With 2 Desimal" ValidationExpression="((\d+)((\.\d{1,2})?))$" />--%>
                             </div>
+
+                              
 
                             <div class="form-group">
                                 <div class="checkbox">
@@ -143,6 +165,24 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+
+
+      <%--  $(function () {
+
+            $("#<%=txte_sdate.ClientID %>").datepicker({ format: 'dd MM yyyy' });
+
+        });
+
+        $(document).ready(function () {
+            var currentTime = new Date();
+            var startDateTo = new Date(currentTime.getFullYear(), currentTime.getMonth() + 1, 0);
+            //set InceptionDates
+<%--            $("#<%=txte_sdate.ClientID %>").datepicker();--%>
+            $("#<%=txtCoverDate.ClientID %>").datepicker({ format: 'dd MM yyyy' });
+            //$("#<%=txtInceptionDate.ClientID %>").val('<%=System.DateTime.Now.ToString("dd MMM yyyy")%>');
+            </script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ScriptControl" runat="server">
+    
 </asp:Content>
