@@ -43,14 +43,14 @@
                             <div class="form-group">
                                 <label>Start Date <em>*</em> </label>
                                 <asp:TextBox MaxLength="25" runat="server" ID="txtStartDate" name="txtStartDate" type="text" class="form-control"></asp:TextBox>
-<%--                                <asp:RequiredFieldValidator Display="None" ValidationGroup="AddonSetup" ControlToValidate="txtInceptionDate"" ID="RequiredFieldValidator5" ForeColor="red" runat="server" ErrorMessage="Please enter Inception Date"></asp:RequiredFieldValidator>--%>
-                                <%--<asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator2" ValidationGroup="AddonSetup" runat="server" ControlToValidate="txtInceptionDate"" ErrorMessage="Please enter correct Inception Date"  />--%>
+                                <asp:RequiredFieldValidator Display="None" ValidationGroup="AddonSetup" ControlToValidate="txtInceptionDate" ID="RequiredFieldValidator5" ForeColor="red" runat="server" ErrorMessage="Please enter Inception Date"></asp:RequiredFieldValidator>
+                                <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator2" ValidationGroup="AddonSetup" runat="server" ControlToValidate="txtInceptionDate" ErrorMessage="Please enter correct Inception Date"  />
                             </div>
                             <div class="form-group">
                                 <label>Cover Date <em>*</em> </label>
                                 <asp:TextBox MaxLength="25" runat="server" ID="txtCoverDate" name="txtCoverDate" type="text" class="form-control"></asp:TextBox>
-<%--                                <asp:RequiredFieldValidator Display="None" ValidationGroup="AddonSetup" ControlToValidate="txtInceptionDate"" ID="RequiredFieldValidator5" ForeColor="red" runat="server" ErrorMessage="Please enter Inception Date"></asp:RequiredFieldValidator>--%>
-                                <%--<asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator2" ValidationGroup="AddonSetup" runat="server" ControlToValidate="txtInceptionDate"" ErrorMessage="Please enter correct Inception Date"  />--%>
+                             <asp:RequiredFieldValidator Display="None" ValidationGroup="AddonSetup" ControlToValidate="txtCoverDate" ID="RequiredFieldValidator6" ForeColor="red" runat="server" ErrorMessage="Please enter Cover Date"></asp:RequiredFieldValidator>
+                                <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator3" ValidationGroup="AddonSetup" runat="server" ControlToValidate="txtCoverDate" ErrorMessage="Please enter correct Cover Date"  />
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -65,8 +65,8 @@
                             <div class="form-group">
                                 <label>Inception Date <em>*</em> </label>
                                 <asp:TextBox MaxLength="25" runat="server" ID="txtInceptionDate" name="txtInceptionDate" type="text" class="form-control"></asp:TextBox>
-<%--                                <asp:RequiredFieldValidator Display="None" ValidationGroup="AddonSetup" ControlToValidate="txtInceptionDate"" ID="RequiredFieldValidator5" ForeColor="red" runat="server" ErrorMessage="Please enter Inception Date"></asp:RequiredFieldValidator>--%>
-                                <%--<asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator2" ValidationGroup="AddonSetup" runat="server" ControlToValidate="txtInceptionDate"" ErrorMessage="Please enter correct Inception Date"  />--%>
+                            <asp:RequiredFieldValidator Display="None" ValidationGroup="AddonSetup" ControlToValidate="txtInceptionDate" ID="RequiredFieldValidator7" ForeColor="red" runat="server" ErrorMessage="Please enter Inception Date"></asp:RequiredFieldValidator>--%>
+                               <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator4" ValidationGroup="AddonSetup" runat="server" ControlToValidate="txtInceptionDate" ErrorMessage="Please enter correct Inception Date"  />--%>
                             </div>
 
                             <div class="form-group">
