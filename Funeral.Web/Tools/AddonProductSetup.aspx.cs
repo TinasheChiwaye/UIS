@@ -90,6 +90,13 @@ namespace Funeral.Web.Tools
                 txtDescription.Text = model.ProductDesc;
                 txtPremium.Text = model.ProductCost.ToString("#,0.00");
                 txtCover.Text = model.ProductCover.ToString("#,0.00");
+                 txtInceptionDate.Text = model.InceptionDate.ToShortDateString();
+                txtCoverDate.Text = model.CoverDate.ToShortDateString();
+                txtStartDate.Text = model.StartDate.ToShortDateString();
+                txtWaitingPeriod.Text = model.WaitingPeriod.ToString();
+                txtLapsePeriod.Text = model.LapsePeriod.ToString();
+               
+                
                 chkongoing.Checked = false;
                 if (model.IsProductOngoing == 1)
                     chkongoing.Checked = true;
@@ -110,6 +117,11 @@ namespace Funeral.Web.Tools
             txtDescription.Text = string.Empty;
             txtPremium.Text = string.Empty;
             txtCover.Text = string.Empty;
+            txtInceptionDate.Text = string.Empty;
+            txtWaitingPeriod.Text = string.Empty;
+            txtCoverDate.Text = string.Empty;
+            txtStartDate.Text = string.Empty;
+            txtLapsePeriod.Text = string.Empty;
             chkongoing.Checked = false;
             chkLaybye.Checked = false;
             txtAddonName.Text = string.Empty; ;
@@ -139,11 +151,15 @@ namespace Funeral.Web.Tools
                     model = new AddonProductsModal();
                     model.pkiProductID = ProductID;
                     model.DateCreated = System.DateTime.Now;
-                    model.InceptionDate = System.DateTime.Now;
                     model.UserID = UserID.ToString();
                     model.ProductDesc = txtDescription.Text;
                     model.ProductCost = Convert.ToDecimal(txtPremium.Text);
                     model.ProductCover = Convert.ToDecimal(txtCover.Text);
+                    model.InceptionDate = System.DateTime.Now;
+                    model.StartDate = System.DateTime.Now;
+                    model.CoverDate = System.DateTime.Now;
+                    model.WaitingPeriod =Convert.ToInt32(txtWaitingPeriod.Text);
+                    model.LapsePeriod = Convert.ToInt32(txtLapsePeriod.Text);
                     model.IsProductOngoing = 0;
                     if (chkongoing.Checked)
                         model.IsProductOngoing = 1;

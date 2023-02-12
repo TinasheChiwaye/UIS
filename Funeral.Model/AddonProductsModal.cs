@@ -28,7 +28,9 @@ namespace Funeral.Model
         public DateTime DateCreated { get; set; }
         public DateTime InceptionDate { get; set; }
 
-        public int WaitingPeriod { get; set; }
+        //public int WaitingPeriod { get; set; }
+        public int WaitingPeriod { get;  set; }
+
         public int LapsePeriod { get; set; }
 
 
