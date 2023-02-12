@@ -437,7 +437,6 @@ namespace Funeral.Web.Areas.Admin.Controllers
             addOnProduct.Deleted = 0;
             addOnProduct.parlourid = this.CurrentParlourId;
             addOnProduct.pkiMemberProductID = Guid.NewGuid();
-            
             if (addOnProduct.fkiMemberid != 0)
             { var AddonProductID = MembersBAL.NewSaveAddonProducts(addOnProduct); }
             if (addOnProduct.fkiMemberid == 0)

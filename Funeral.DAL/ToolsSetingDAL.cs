@@ -1159,7 +1159,7 @@ namespace Funeral.DAL
         {
             AdditionalMemberInfoModel model1 = new AdditionalMemberInfoModel();
             string query = "SaveAddonProductDetails_new";// "SaveAddonProductDetails";
-            DbParameter[] ObjParam = new DbParameter[18];
+            DbParameter[] ObjParam = new DbParameter[13];
             ObjParam[0] = new DbParameter("@pkiProductID", DbParameter.DbType.UniqueIdentifier, 0, model.pkiProductID);
             ObjParam[1] = new DbParameter("@ProductName", DbParameter.DbType.NVarChar, 0, model.ProductName);
             ObjParam[2] = new DbParameter("@Parlourid", DbParameter.DbType.UniqueIdentifier, 0, model.SchemeID);
@@ -1173,17 +1173,6 @@ namespace Funeral.DAL
             ObjParam[10] = new DbParameter("@IsProductLaybye", DbParameter.DbType.Int, 0, model.IsProductLaybye);
             ObjParam[11] = new DbParameter("@UserId", DbParameter.DbType.NVarChar, 0, model.UserID);
             ObjParam[12] = new DbParameter("@UnderwriterPremium", DbParameter.DbType.Decimal, 0, model.UnderwriterPremium);
-            ObjParam[13] = new DbParameter("@InceptionDate", DbParameter.DbType.DateTime, 0, model.InceptionDate);
-            ObjParam[14] = new DbParameter("@StartDate", DbParameter.DbType.DateTime, 0, model.StartDate);
-            ObjParam[15] = new DbParameter("@CoverDate", DbParameter.DbType.DateTime, 0, model.CoverDate);
-            ObjParam[16] = new DbParameter("@WaitingPeriod", DbParameter.DbType.Int, 0, model.WaitingPeriod);
-            ObjParam[17] = new DbParameter("@LapsePeriod", DbParameter.DbType.Int, 0, model.LapsePeriod);
-
-
-
-
-
-
             return new Guid(DbConnection.GetScalarValue(CommandType.StoredProcedure, query, ObjParam).ToString());
         }
         public static SqlDataReader GetAllAddonProductes(Guid ParlourId)
