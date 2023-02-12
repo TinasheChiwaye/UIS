@@ -139,7 +139,11 @@
                             </div>
                             <div class="form-group">
                                 <label>ID Number <em class="text-danger">*</em>  </label>
-                                @Html.TextBoxFor(m => m.IDNumber, null, new { @class = "form-control", @id = "IDNumber",@pattern = "/d*", @maxlength = "20", placeholder = "ID Number" })
+                                @Html.TextBoxFor(m => m.IDNumber, null, new { @class = "form-control", @id = "IDNumber", @pattern = "/d*", @maxlength = "20", placeholder = "ID Number" })
+                            </div>
+                            <div class="form-group">
+                                <label>Policy Number <em class="text-danger">*</em>  </label>
+                                @Html.TextBoxFor(m => m.PolicyNumber, null, new { @class = "form-control", @id = "PolicyNumber", @maxlength = "25", placeholder = "Policy Number" })
                             </div>
                             <div class="form-group">
                                 <label>Deceased</label><br>
@@ -150,11 +154,11 @@
                             </div>
                             <div class="form-group">
                                 <label>Contact Person </label>
-                                @Html.TextBoxFor(m => m.ContactPerson, null, new { @class = "form-control",@onkeypress="return onlyNumberKey(event)", @id = "DateOfApplication", @maxlength = "13" })
+                                @Html.TextBoxFor(m => m.ContactPerson, null, new { @class = "form-control", @onkeypress = "return onlyNumberKey(event)", @id = "DateOfApplication", @maxlength = "13" })
                             </div>
                             <div class="form-group">
                                 <label>Contact Number </label>
-                                @Html.TextBoxFor(m => m.ContactPersonNumber, null, new { @class = "form-control",@onkeypress="return onlyNumberKey(event)", @id = "TelNumber", @maxlength = "13" })
+                                @Html.TextBoxFor(m => m.ContactPersonNumber, null, new { @class = "form-control", @onkeypress = "return onlyNumberKey(event)", @id = "TelNumber", @maxlength = "13" })
                             </div>
                         </div>
                         <div class="col-lg-6">

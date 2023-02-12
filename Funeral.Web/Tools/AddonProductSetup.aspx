@@ -42,13 +42,13 @@
                             </div>
                             <div class="form-group">
                                 <label>Inception Date <em>*</em> </label>
-                                <asp:TextBox MaxLength="25" runat="server" ID="txtInceptionDate" name="InceptionDate" type="text" class="form-control"></asp:TextBox>
+                                <asp:TextBox MaxLength="25" runat="server" ID="txtInceptionDate" name="InceptionDate" type="text" CssClass="form-control datepicker" placeholder="DD/MM/YYYY">></asp:TextBox>
                             <asp:RequiredFieldValidator Display="None" ValidationGroup="AddonSetup" ControlToValidate="txtInceptionDate" ID="RequiredFieldValidator7" ForeColor="red" runat="server" ErrorMessage="Please enter Inception Date"></asp:RequiredFieldValidator>
                                <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator4" ValidationGroup="AddonSetup" runat="server" ControlToValidate="txtInceptionDate" ErrorMessage="Please enter correct Inception Date"  />
                             </div>
                             <div class="form-group">
                                 <label>Start Date <em>*</em> </label>
-                                <asp:TextBox MaxLength="25" runat="server" ID="txtStartDate" name="StartDate" type="text" class="form-control"></asp:TextBox>
+                                <asp:TextBox MaxLength="25" runat="server" ID="txtStartDate" name="StartDate" type="text" CssClass="form-control datepicker" placeholder="DD/MM/YYYY">></asp:TextBox>
                                 <asp:RequiredFieldValidator Display="None" ValidationGroup="AddonSetup" ControlToValidate="txtStartDate" ID="RequiredFieldValidator8" ForeColor="red" runat="server" ErrorMessage="Please enter Start Date"></asp:RequiredFieldValidator>
                                 <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator2" ValidationGroup="AddonSetup" runat="server" ControlToValidate="txtStartDate" ErrorMessage="Please enter correct Start Date"  />
                             </div>
@@ -71,7 +71,7 @@
                             </div>
                              <div class="form-group">
                                 <label>Cover Date <em>*</em> </label>
-                                <asp:TextBox MaxLength="25" runat="server" ID="txtCoverDate" name="CoverDate" type="text" class="form-control"></asp:TextBox>
+                                <asp:TextBox MaxLength="25" runat="server" ID="txtCoverDate" name="CoverDate" type="text" CssClass="form-control datepicker" placeholder="DD/MM/YYYY">></asp:TextBox>
                              <asp:RequiredFieldValidator Display="None" ValidationGroup="AddonSetup" ControlToValidate="txtCoverDate" ID="RequiredFieldValidator6" ForeColor="red" runat="server" ErrorMessage="Please enter Cover Date"></asp:RequiredFieldValidator>
                                 <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator3" ValidationGroup="AddonSetup" runat="server" ControlToValidate="txtCoverDate" ErrorMessage="Please enter correct Cover Date"  />
                             </div>
@@ -169,24 +169,18 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript">
-
-
-      <%--  $(function () {
-
-            $("#<%=txte_sdate.ClientID %>").datepicker({ format: 'dd MM yyyy' });
-
-        });
-
-        $(document).ready(function () {
-            var currentTime = new Date();
-            var startDateTo = new Date(currentTime.getFullYear(), currentTime.getMonth() + 1, 0);
-            //set InceptionDates
-<%--            $("#<%=txte_sdate.ClientID %>").datepicker();--%>
-            $("#<%=txtCoverDate.ClientID %>").datepicker({ format: 'dd MM yyyy' });
-            //$("#<%=txtInceptionDate.ClientID %>").val('<%=System.DateTime.Now.ToString("dd MMM yyyy")%>');
-            </script>
+    
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ScriptControl" runat="server">
+     <script type="text/javascript">
+        function pageLoad(sender, args) {
+            $(".datepicker").datepicker({ format: 'dd MM yyyy' });
+            $(".datepicker").on('changeDate',
+                function(ev) {
+                    $(this).datepicker('hide');
+                });
+        }
+        
+    </script>
     
 </asp:Content>

@@ -25,6 +25,8 @@
                         </div>
                         <div class="form-group">
                             @Html.Label("Description", new { @class = "control-label" })
+                            <strong><span class="text-danger"><em>*</em></span></strong>
+
                             @Html.TextBoxFor(m => m.ProductDesc, null, new { @class = "form-control", @maxlength = "50", placeholder = "Product Description" })
                             @Html.ValidationMessageFor(m => m.ProductDesc, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                         </div>
@@ -34,8 +36,6 @@
                             @Html.TextBoxFor(m => m.ProductCost, null, new { @class = "form-control", @maxlength = "25", placeholder = "Premium" })
                             @Html.ValidationMessageFor(m => m.ProductCost, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                         </div>
-                    </div>
-                    <div class="col-lg-6">
                         <div class="form-group">
                             @Html.Label("Underwriter Premium", new { @class = "control-label" })
                             <strong><span class="text-danger"><em>*</em></span></strong>
@@ -43,10 +43,33 @@
                             @Html.ValidationMessageFor(m => m.UnderwriterPremium, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                         </div>
                         <div class="form-group">
+                            <strong><span class="text-danger"><em>*</em></span></strong>
+                            @Html.Label("InceptionDate", new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.InceptionDate, null, new { @class = "form-control", @maxlength = "25", placeholder = "Inception Date" })
+                            @Html.ValidationMessageFor(m => m.InceptionDate, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        
+
+
+                        <div class="form-group">
                             @Html.Label("Cover", new { @class = "control-label" })
                             <strong><span class="text-danger"><em>*</em></span></strong>
                             @Html.TextBoxFor(m => m.ProductCover, null, new { @class = "form-control", @maxlength = "25", placeholder = "Cover" })
                             @Html.ValidationMessageFor(m => m.ProductCover, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Cover Date", new { @class = "control-label" })
+                            <strong><span class="text-danger"><em>*</em></span></strong>
+                            @Html.TextBoxFor(m => m.CoverDate, null, new { @class = "form-control", @maxlength = "25", placeholder = "Cover Date" })
+                            @Html.ValidationMessageFor(m => m.CoverDate, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Waiting Period", new { @class = "control-label" })
+                            <strong><span class="text-danger"><em>*</em></span></strong>
+                            @Html.TextBoxFor(m => m.WaitingPeriod, null, new { @class = "form-control", @maxlength = "25", placeholder = "Waiting Period" })
+                            @Html.ValidationMessageFor(m => m.WaitingPeriod, string.Empty, new { @class = "text-danger", style = "font-weight:bold" })
                         </div>
                         <div class="form-group">
                             @Html.Label("Select Scheme ", new { @class = "control-label" })
@@ -96,6 +119,12 @@
                 jQuery("#ProductCost").val("");
                 jQuery("#ProductCover").val("");
                 jQuery("#UnderwriterPremium").val("");
+                jQuery("#StartDate").val("");
+                jQuery("#CoverDate").val("");
+                jQuery("#InceptionDate").val("");
+                jQuery("#LapsePeriod").val("");
+                jQuery("#WaitingPeriod").val("");
+
             })
 
             var form = jQuery("#addOnProductSetupAddEditform");

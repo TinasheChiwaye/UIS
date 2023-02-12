@@ -46,7 +46,7 @@ namespace Funeral.DAL
 
         public static int SaveTombStone(TombStoneModel model)
         {
-            string query = "SaveTombStone";
+            string query = "SaveTombStone_new";
             DbParameter[] ObjParam = new DbParameter[27];
 
             ObjParam[0] = new DbParameter("@pkiTombstoneID", DbParameter.DbType.Int, 0, model.pkiTombstoneID);
