@@ -19,26 +19,11 @@ namespace Funeral.Model
             ModifiedUser = string.Empty;
             ProductName = string.Empty;
             InceptionDate = System.DateTime.Now;
-            StartDate = System.DateTime.Now;
-            CoverDate = System.DateTime.Now;
-            WaitingPeriod = 0;
-            LapsePeriod = 0;
+
         }
         public Guid pkiProductID { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime InceptionDate { get; set; }
-
-        //public int WaitingPeriod { get; set; }
-        public int WaitingPeriod { get;  set; }
-
-        public int LapsePeriod { get; set; }
-
-
-
-        public DateTime StartDate{ get; set; }
-        public DateTime CoverDate { get; set; }
-
-
 
         public string UserID { get; set; }
         public string ProductDesc { get; set; }
