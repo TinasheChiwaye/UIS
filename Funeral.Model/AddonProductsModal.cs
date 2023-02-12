@@ -24,6 +24,14 @@ namespace Funeral.Model
         public Guid pkiProductID { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime InceptionDate { get; set; }
+      public DateTime StartDate { get; set; }
+        public DateTime CoverDate { get; set; }
+
+        public int WaitingPeriod { get; set; }
+
+        public int LapsePeriod { get; set; }
+
+
 
         public string UserID { get; set; }
         public string ProductDesc { get; set; }
