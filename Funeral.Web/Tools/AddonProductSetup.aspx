@@ -147,13 +147,13 @@
                                                         <asp:BoundField DataField="LastModified" HeaderText="Modified date" DataFormatString="{0:d}" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg" />
                                                         <asp:TemplateField HeaderText="Actions">
                                                             <ItemTemplate>
-                                                                <% if (this.HasEditRight)
-                                                                   {%>
+                                                                 if (this.HasEditRight)
+                                                                   {
                                                                 <asp:LinkButton runat="server" ToolTip='Click here to Edit - ' ID="lbtnEdit" CommandArgument='<%#Eval("pkiProductID")%>' CommandName="EditAddon"><i class="fa fa-edit"></i></asp:LinkButton>
-                                                                <%} if (this.HasDeleteRight)
-                                                                   { %>
+                                                                } if (this.HasDeleteRight)
+                                                                   { 
                                                                 <asp:LinkButton runat="server" ID="lbtnDelete" OnClientClick="return confirm('Are you sure you want to delete?')" CommandArgument='<%#Eval("pkiProductID")%>' CommandName="deleteAddon"><i class="fa fa-trash-o"></i></asp:LinkButton>
-                                                                <%} %>
+                                                                } 
                                                             </ItemTemplate>
                                                         </asp:TemplateField>
                                                     </Columns>
