@@ -60,7 +60,7 @@
                             <div class="form-group">
                                 <label>Policy Number <em>*</em>  </label>
                                 <asp:TextBox MaxLength="25" runat="server" ID="txtPolicyNumber" name="name" type="text" class="form-control"></asp:TextBox>
-                                <asp:RequiredFieldValidator Display="None" ValidationGroup="tomb" ControlToValidate="txtPolicyNumber" ID="RequiredFieldValidator11" ForeColor="red" runat="server" ErrorMessage="Please enter Policy Number"></asp:RequiredFieldValidator>
+                                <asp:RequiredFieldValidator Display="None" ValidationGroup="tomb" ControlToValidate="txtFirstName" ID="RequiredFieldValidator11" ForeColor="red" runat="server" ErrorMessage="Please enter Policy Number"></asp:RequiredFieldValidator>
                                 <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator4" ValidationGroup="tab1" runat="server" ControlToValidate="txtPolicyNumber" ErrorMessage="Enter Valid Policy Number" ValidationExpression="[a-zA-Z ]*$" />
                             </div>
 
