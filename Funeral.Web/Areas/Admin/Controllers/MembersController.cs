@@ -437,6 +437,11 @@ namespace Funeral.Web.Areas.Admin.Controllers
             addOnProduct.Deleted = 0;
             addOnProduct.parlourid = this.CurrentParlourId;
             addOnProduct.pkiMemberProductID = Guid.NewGuid();
+            addOnProduct.InceptionDate = DateTime.Now;
+            addOnProduct.CoverDate = DateTime.Now;
+            addOnProduct.StartDate = DateTime.Now;
+
+
             if (addOnProduct.fkiMemberid != 0)
             { var AddonProductID = MembersBAL.NewSaveAddonProducts(addOnProduct); }
             if (addOnProduct.fkiMemberid == 0)
@@ -460,6 +465,9 @@ namespace Funeral.Web.Areas.Admin.Controllers
             addOnProduct.Deleted = 0;
             addOnProduct.parlourid = this.CurrentParlourId;
             addOnProduct.pkiMemberProductID = addOnProduct.pkiMemberProductID;
+            addOnProduct.InceptionDate = DateTime.Now;
+            addOnProduct.CoverDate = DateTime.Now;
+            addOnProduct.StartDate = DateTime.Now;
             var AddonProductID = MembersBAL.NewAddonProductUpdateMember(addOnProduct);
             return Json(new { success = true, Product = addOnProduct, msg = "Product Updated Successfully" }, JsonRequestBehavior.AllowGet);
         }
@@ -2030,6 +2038,9 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 objProductModel.parlourid = CurrentParlourId;
                 objProductModel.Deleted = 0;
                 objProductModel.pkiMemberProductID = Guid.NewGuid();
+                objProductModel.InceptionDate = DateTime.Now;
+                objProductModel.CoverDate = DateTime.Now;
+                objProductModel.StartDate = DateTime.Now;
                 if (objProductModel.fkiMemberid != 0)
                 {
                     var AddOnProductID = MembersBAL.NewSaveAddonProducts(objProductModel);

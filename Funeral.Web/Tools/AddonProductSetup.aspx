@@ -40,18 +40,7 @@
                                 <asp:TextBox MaxLength="50" runat="server" ID="txtDescription" name="Description" type="text" class="form-control"></asp:TextBox>
                                 <asp:RequiredFieldValidator Display="None" ValidationGroup="AddonSetup" ControlToValidate="txtDescription" ID="RequiredFieldValidator2" ForeColor="red" runat="server" ErrorMessage="Please enter Description"></asp:RequiredFieldValidator>
                             </div>
-                            <div class="form-group">
-                                <label>Inception Date <em>*</em> </label>
-                                <asp:TextBox MaxLength="25" runat="server" ID="txtInceptionDate" name="InceptionDate" type="text" CssClass="form-control datepicker" placeholder="DD/MM/YYYY">></asp:TextBox>
-                            <asp:RequiredFieldValidator Display="None" ValidationGroup="AddonSetup" ControlToValidate="txtInceptionDate" ID="RequiredFieldValidator7" ForeColor="red" runat="server" ErrorMessage="Please enter Inception Date"></asp:RequiredFieldValidator>
-                               <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator4" ValidationGroup="AddonSetup" runat="server" ControlToValidate="txtInceptionDate" ErrorMessage="Please enter correct Inception Date"  />
-                            </div>
-                            <div class="form-group">
-                                <label>Start Date <em>*</em> </label>
-                                <asp:TextBox MaxLength="25" runat="server" ID="txtStartDate" name="StartDate" type="text" CssClass="form-control datepicker" placeholder="DD/MM/YYYY">></asp:TextBox>
-                                <asp:RequiredFieldValidator Display="None" ValidationGroup="AddonSetup" ControlToValidate="txtStartDate" ID="RequiredFieldValidator8" ForeColor="red" runat="server" ErrorMessage="Please enter Start Date"></asp:RequiredFieldValidator>
-                                <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator2" ValidationGroup="AddonSetup" runat="server" ControlToValidate="txtStartDate" ErrorMessage="Please enter correct Start Date"  />
-                            </div>
+                           
                            
                         </div>
                         <div class="col-lg-6">
@@ -69,23 +58,7 @@
                                 <asp:RequiredFieldValidator Display="None" ValidationGroup="AddonSetup" ControlToValidate="txtCover" ID="RequiredFieldValidator4" ForeColor="red" runat="server" ErrorMessage="Please enter Cover"></asp:RequiredFieldValidator>
                                 <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator1" ValidationGroup="AddonSetup" runat="server" ControlToValidate="txtCover" ErrorMessage="Cover Enter Only Number With 2 Desimal" ValidationExpression="((\d+)((\.\d{1,2})?))$" />
                             </div>
-                             <div class="form-group">
-                                <label>Cover Date <em>*</em> </label>
-                                <asp:TextBox MaxLength="25" runat="server" ID="txtCoverDate" name="CoverDate" type="text" CssClass="form-control datepicker" placeholder="DD/MM/YYYY">></asp:TextBox>
-                             <asp:RequiredFieldValidator Display="None" ValidationGroup="AddonSetup" ControlToValidate="txtCoverDate" ID="RequiredFieldValidator6" ForeColor="red" runat="server" ErrorMessage="Please enter Cover Date"></asp:RequiredFieldValidator>
-                                <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator3" ValidationGroup="AddonSetup" runat="server" ControlToValidate="txtCoverDate" ErrorMessage="Please enter correct Cover Date"  />
-                            </div>
-                             <div class="form-group">
-                                <label>Waiting Period <em>*</em> </label>
-                                <asp:TextBox MaxLength="25" runat="server" ID="txtWaitingPeriod" name="WaitPeriod" type="text" class="form-control"></asp:TextBox>
-                               <asp:RequiredFieldValidator Display="None" ValidationGroup="AddonSetup" ControlToValidate="txtWaitingPeriod" ID="RequiredFieldValidator5" ForeColor="red" runat="server" ErrorMessage="Please enter Waiting Period"></asp:RequiredFieldValidator>
-                                <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator5" ValidationGroup="AddonSetup" runat="server" ControlToValidate="txtWaitingPeriod" ErrorMessage="Please Enter Waiting Period" ValidationExpression="((\d+)((\.\d{1,2})?))$" />
-                            </div>
-                             <div class="form-group">
-                                <label>Lapse Period <em>*</em> </label>
-                                <asp:TextBox MaxLength="25" runat="server" ID="txtLapsePeriod" name="LapsePeriod" type="text" class="form-control"></asp:TextBox>
-                                <asp:RequiredFieldValidator Display="None" ValidationGroup="AddonSetup" ControlToValidate="txtLapsePeriod" ID="RequiredFieldValidator9" ForeColor="red" runat="server" ErrorMessage="Please enter Lapse Period"></asp:RequiredFieldValidator>
-                            </div>
+                             
                               
 
                             <div class="form-group">

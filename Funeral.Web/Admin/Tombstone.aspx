@@ -61,7 +61,7 @@
                                 <label>Policy Number <em>*</em>  </label>
                                 <asp:TextBox MaxLength="25" runat="server" ID="txtPolicyNumber" name="PolicyNumber" type="text" class="form-control"></asp:TextBox>
                                 <asp:RequiredFieldValidator Display="None" ValidationGroup="tomb" ControlToValidate="txtPolicyNumber" ID="RequiredFieldValidator11" ForeColor="red" runat="server" ErrorMessage="Please enter Policy Number"></asp:RequiredFieldValidator>
-                                <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator4" ValidationGroup="tomb" runat="server" ControlToValidate="txtPolicyNumber" ErrorMessage="Enter Valid Policy Number" ValidationExpression="[a-zA-Z ]*$" />
+<%--                                <asp:RegularExpressionValidator Display="None" ID="RegularExpressionValidator4" ValidationGroup="tomb" runat="server" ControlToValidate="txtPolicyNumber" ErrorMessage="Enter Valid Policy Number" />--%>
                             </div>
 
                             <div class="form-group">
@@ -319,19 +319,20 @@
 
                                                 <asp:TemplateField HeaderText="Actions">
                                                     <ItemTemplate>
-                                                         if (this.HasEditRight)
-                                                           {
+                                                         <% if (this.HasEditRight)
+                                                           {%>
                                                         <asp:LinkButton runat="server" ID="lbtnEditDependant" ToolTip="Click here To Edite Funeral" CommandArgument='<%#Eval("pkiTombstoneID") %>' CommandName="EditTombStone"><i class="fa fa-edit"></i></asp:LinkButton>
                                                         &nbsp;
-                                                         } if (this.HasDeleteRight)
-                                                           {
+                                                        <% } if (this.HasDeleteRight)
+                                                           {%>
                                                         <asp:LinkButton runat="server" ID="lbtnDeleteDependatn" ToolTip="Click here To Delete TombStone" OnClientClick="return confirm('Are you sure you want to delete it?')" CommandArgument='<%#Eval("pkiTombstoneID") %>' CommandName="DeleteTombStone"><i class="fa fa-trash"></i></asp:LinkButton>
                                                         &nbsp;
-                                                } if (this.HasReadRight)
-                                                           {
+                                               <% } if (this.HasReadRight)
+                                                           {%>
                                                         <asp:LinkButton runat="server" ID="LinkButton1" ToolTip="Click here Print " CommandArgument='<%#Eval("pkiTombstoneID") %>' CommandName="PrintTombstone"><i class="fa fa-search"></i></asp:LinkButton>
-                                                        } 
+                                                       <%  } %>
                                                     </ItemTemplate>
+
                                                 </asp:TemplateField>
 
                                             </Columns>

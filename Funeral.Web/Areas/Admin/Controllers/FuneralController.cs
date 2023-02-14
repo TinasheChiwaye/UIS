@@ -884,10 +884,10 @@ namespace Funeral.Web.Areas.Admin.Controllers
             funeralModel.FuneralDocuments = FuneralBAL.SelectFuneralDocumentsByMemberId(funeralModel.pkiFuneralID);
             return View(funeralModel);
         }
-        public ActionResult Backend(int? funeralId)
-        {
-            return new Dpc(funeralId, UserID).CallBack(this);
-        }
+        //public ActionResult Backend(int? funeralId)
+        //{
+        //    return new Dpc(funeralId, UserID).CallBack(this);
+        //}
         public ActionResult AllFuneralSchedules()
         {
             return View();

@@ -19,6 +19,15 @@ namespace Funeral.Model
         [Required(ErrorMessage = "ProductName is required.")]
         public Guid fkiProductID { get; set; }
         public int fkiMemberid { get; set; }
+        
+        public DateTime StartDate { get; set; }
+        public DateTime CoverDate { get; set; }
+        public DateTime InceptionDate { get; set; }
+
+
+
+
+
         public Guid parlourid { get; set; }
         public DateTime LastModified { get; set; }
         public string ModifiedUser { get; set; }

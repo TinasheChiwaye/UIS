@@ -2588,7 +2588,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>3863</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:4092/</IISUrl>
+          <IISUrl>http://localhost:6092/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:6092/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

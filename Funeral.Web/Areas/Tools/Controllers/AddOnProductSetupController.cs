@@ -13,8 +13,6 @@ namespace Funeral.Web.Areas.Tools.Controllers
 {
     public class AddOnProductSetupController : BaseToolController
     {
-        public int WaitingPeriod { get;  set; }
-        public int LapsePeriod { get; set; }
 
         public AddOnProductSetupController():base(14) {
             this.dbPageId = 14;
@@ -111,13 +109,9 @@ namespace Funeral.Web.Areas.Tools.Controllers
                     //addOnProductSetup.Parlourid = ParlourId;
                     addOnProductSetup.LastModified = System.DateTime.Now;
                     addOnProductSetup.ModifiedUser = UserName;
-                    addOnProductSetup.InceptionDate = System.DateTime.Now;
-                    addOnProductSetup.CoverDate = System.DateTime.Now;
-                    addOnProductSetup.StartDate = System.DateTime.Now;
-                    //Local Fields--Fix The 2 below
-                    addOnProductSetup.WaitingPeriod = Convert.ToInt32(WaitingPeriod);
-                    addOnProductSetup.LapsePeriod = Convert.ToInt32(LapsePeriod);
-
+                   
+                  
+                   
 
                     Guid retID = ToolsSetingBAL.SaveAddonProductDetails(addOnProductSetup);                    
 

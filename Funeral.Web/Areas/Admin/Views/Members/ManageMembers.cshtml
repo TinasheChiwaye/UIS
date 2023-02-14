@@ -885,7 +885,19 @@
                                                 @Html.DropDownList("ProductAddOnList", Model.ProductAddOnList, "Select", new { Name = "ProductAddOn", @id = "drpProductName", @style = "width:100%", @class = "form-control" })
                                             </div>
                                             <div class="form-group">
-                                                <button class="btn btn-sm btn-primary" id="btnSaveProduct">Save AddonProducts</button> @*onclick="SaveAddOnProduct()"*@
+                                                <label>Inception Date</label>
+                                                @*<input type="hidden" id="hdnInceptionDate" name="hdnInceptionDate" value="">*@
+                                                <input type="text" maxlength="20" id="txtInceptionDate" name="name" class="form-control" placeholder="DD/MM/YYYY">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Start Date</label>
+
+                                                <input type="text" maxlength="20" id="txtStartDate" name="name" class="form-control" placeholder="DD/MM/YYYY">
+                                            </div>
+                                           
+                                            
+                                            <div class="form-group">
+                                                <button class="btn btn-sm btn-primary" id="btnSaveProduct" onclick="SaveAddOnProduct()">Save AddonProducts</button> 
                                                 <button class="btn btn-sm btn-primary" id="btnUpdateProduct" onclick="UpdateAddOnProduct()">Update AddonProducts</button>
                                                 <br />
                                                 <br />
@@ -902,6 +914,12 @@
                                                 <input type="hidden" id="hdnSupCover" name="hdnSupCover" value="">
                                                 <input type="text" maxlength="20" id="txtSupCover" name="name" class="form-control" placeholder="Cover" step="0.01" value="0.00" disabled>
                                             </div>
+                                            <div class="form-group">
+                                                <label>Cover Date</label>
+                                                @*<input type="hidden" id="hdnInceptionDate" name="hdnInceptionDate" value="">*@
+                                                <input type="text" maxlength="20" id="txtCoverDate" name="name" class="form-control" placeholder="DD/MM/YYYY">
+                                            </div>
+
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="form-group">
@@ -3303,7 +3321,11 @@
                         Deleted: 0,
                         fkiProductID: $("#drpProductName").val(),
                         parlourid: 0,
-                        pkiMemberProductID: 0
+                        pkiMemberProductID: 0,
+                        InceptionDate: 0,
+                        StartDate: 0,
+                        CoverDate :0
+
                     };
 
                     $.ajax({
@@ -4783,7 +4805,12 @@
             ProductName: $("#drpProductName option:selected").text(),
             ProductCost: $("#hdnPremium").val(),
             pkiMemberProductID: $("#pkiMemberProductID").val(),
-            fkiProductID: $("#drpProductName option:selected").val()
+            fkiProductID: $("#drpProductName option:selected").val(),
+            InceptionDate: $("#InceptionDate").val(),
+            CoverDate: $("#CoverDate").val(),
+            StartDate: $("#StartDate").val(),
+
+
         };
 
         $.ajax({
@@ -4803,6 +4830,9 @@
                     //$("#txtSupCover").val('');
                     $("#hdnSupCover").val('');
                     $("#pkiMemberProductID").val('');
+                    $("#InceptionDate").val('')
+                    $("#StartDate").val('')
+                    $("#CoverDate").val('')
                     $("#btnSaveProduct").prop('disabled', false);
                     $("#btnUpdateProduct").prop('disabled', true);
 
@@ -4840,6 +4870,9 @@
         $("#pkiMemberProductID").val(product.pkiMemberProductID);
         $("#fkiMemberid").val(product.fkiMemberid);
         $("#pkiMemberID").val(product.fkiMemberid);
+        $("#InceptionDate").val(product.InceptionDate);
+        $("#StartDate").val(product.StartDate);
+        $("#CoverDate").val(product.CoverDate);
     }
     //#endregion
 
