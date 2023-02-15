@@ -533,6 +533,21 @@
                                                     <asp:RequiredFieldValidator ValidationGroup="tabs-9" ControlToValidate="txtPremium" ID="RequiredFieldValidator30" ForeColor="red" runat="server" ErrorMessage="Please enter premium amount" Display="None"></asp:RequiredFieldValidator>
                                                 </div>
                                                 <div class="form-group">
+                                                    <label>Inception Date<em>*</em></label>
+                                                    <asp:TextBox MaxLength="20" runat="server" ID="txtProductInceptionDate" placeholder="InceptionDate" name="name" type="text" class="form-control"></asp:TextBox>
+<%--                                                    <asp:RequiredFieldValidator ValidationGroup="tabs-9" ControlToValidate="txtPremium" ID="RequiredFieldValidator9" ForeColor="red" runat="server" ErrorMessage="Please enter premium amount" Display="None"></asp:RequiredFieldValidator>--%>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Cover Date<em>*</em></label>
+                                                    <asp:TextBox MaxLength="20" runat="server" ID="txtProductCoverDate" placeholder="CoverDate" name="name" type="text" class="form-control"></asp:TextBox>
+<%--                                                    <asp:RequiredFieldValidator ValidationGroup="tabs-9" ControlToValidate="txtPremium" ID="RequiredFieldValidator9" ForeColor="red" runat="server" ErrorMessage="Please enter premium amount" Display="None"></asp:RequiredFieldValidator>--%>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Start Date<em>*</em></label>
+                                                    <asp:TextBox MaxLength="20" runat="server" ID="txtProductStartDate" placeholder="StartDate" name="name" type="text" class="form-control"></asp:TextBox>
+<%--                                                    <asp:RequiredFieldValidator ValidationGroup="tabs-9" ControlToValidate="txtPremium" ID="RequiredFieldValidator9" ForeColor="red" runat="server" ErrorMessage="Please enter premium amount" Display="None"></asp:RequiredFieldValidator>--%>
+                                                </div>
+                                                <div class="form-group">
                                                     <asp:Button ID="btnAdd" CssClass="btn btn-sm btn-primary" ValidationGroup="tabs-9" runat="server" Text="Save AddonProducts" OnClick="btnAdd_Click" />
                                                     <asp:Button ID="btnUpdateProduct" class="btn btn-sm btn-primary" ValidationGroup="tabs-9" Visible="false" runat="server" Text="Update AddonProducts" OnClick="btnUpdateProduct_Click" />
                                                     <br />
@@ -562,6 +577,12 @@
                                                             <asp:BoundField DataField="ProductName" HeaderText="Product Name" ReadOnly="True" />
                                                             <asp:BoundField DataField="DateCreated" HeaderText="Date Created" ItemStyle-CssClass="visible-lg" HeaderStyle-CssClass="visible-lg" />
                                                             <asp:BoundField DataField="ProductCost" HeaderText="Product Cost" ItemStyle-CssClass="visible-lg" HeaderStyle-CssClass="visible-lg" DataFormatString="{0:n}" />
+                                                            <%--<asp:BoundField DataField="InceptionDate" HeaderText="InceptionDate"  DataFormatString="{0:d}" ItemStyle-CssClass="visible-lg" HeaderStyle-CssClass="visible-lg" />
+                                                            <asp:BoundField DataField="Cover Date" HeaderText="CoverDate"  DataFormatString="{0:d}" ItemStyle-CssClass  ="visible-lg" HeaderStyle-CssClass="visible-lg" />
+                                                            <asp:BoundField DataField="Start Date" HeaderText="StartDate "  DataFormatString="{0:d}" ItemStyle-CssClass="visible-lg" HeaderStyle-CssClass="visible-lg" />
+--%>
+
+
                                                             <asp:TemplateField HeaderText="Actions">
                                                                 <ItemTemplate>
                                                                     <asp:LinkButton runat="server" ID="btnEditProduct" CommandName="EditProduct" ToolTip="Click here to edit product" CommandArgument='<%#Eval("pkiMemberProductID") %>'><i class="fa fa-edit"></i></asp:LinkButton>

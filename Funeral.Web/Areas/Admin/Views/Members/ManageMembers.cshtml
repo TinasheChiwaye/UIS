@@ -1241,6 +1241,7 @@
                                                 <input type="hidden" id="hdnSupCover" name="hdnSupCover" value="">
                                                 <input type="text" maxlength="20" id="txtSupCover" name="name" class="form-control" placeholder="Cover" step="0.01" value="0.00" disabled>
                                             </div>
+                                            
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="form-group">
@@ -3213,7 +3214,7 @@
             };
 
             $(document).ready(function () {
-                $("#btnSbtnSaveProductaveProduct").prop('disabled', false);
+                $("#btnSbtnSaveProductaveProduct").prop('Enabled', true);
                 $("#btnUpdateProduct").prop('disabled', true);
                 jQuery.noConflict();
                 productDatatable = $($('#productDataTable')[0]).on('page.dt', function () {
@@ -3322,9 +3323,9 @@
                         fkiProductID: $("#drpProductName").val(),
                         parlourid: 0,
                         pkiMemberProductID: 0,
-                        InceptionDate: 0,
-                        StartDate: 0,
-                        CoverDate :0
+                        InceptionDate:0,
+                        StartDate:0,
+                        CoverDate: 0
 
                     };
 
@@ -4735,7 +4736,7 @@
         }
     }
 
-    @*function SaveAddOnProduct() {
+    function SaveAddOnProduct() {
         if($("#txtPremium").val() != ""){
             $("li#txtPremiumAmountId").hide();
             $("li#txtPremiumAmountId").html('');
@@ -4747,7 +4748,10 @@
                     ProductName: $("#drpProductName option:selected").text(),
                     ProductCost: $("#hdnPremium").val(),
                     pkiMemberProductID: $("#MemberType").val(),
-                    fkiProductID: $("#drpProductName option:selected").val()
+                    fkiProductID: $("#drpProductName option:selected").val(),
+                    InceptionDate: $("#InceptionDate").val(),
+                    StartDate: $("#StartDate").val(),
+                    CoverDate: $("#CoverDate").val()
                 };
 
                 $.ajax({
@@ -4788,7 +4792,7 @@
             $("#ValidationSummary5").append('<li id="txtPremiumAmountId">Please enter premium amount.</li>');
             return false;
         }
-    }*@
+    }
 
     function UpdateAddOnProduct() {
         $("#hdnPremium").val($("#txtPremium").val().split(" ")[$("#txtPremium").val().split(" ").length - 1]);
@@ -4830,9 +4834,10 @@
                     //$("#txtSupCover").val('');
                     $("#hdnSupCover").val('');
                     $("#pkiMemberProductID").val('');
-                    $("#InceptionDate").val('')
-                    $("#StartDate").val('')
-                    $("#CoverDate").val('')
+                    $("#InceptionDate").val('');
+                    $("#StartDate").val('');
+                    $("#CoverDate").val('');
+                    
                     $("#btnSaveProduct").prop('disabled', false);
                     $("#btnUpdateProduct").prop('disabled', true);
 

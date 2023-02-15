@@ -787,7 +787,7 @@ namespace Funeral.DAL
 
         public static int AddonProductUpdateMember(MemberAddonProductsModel ModelProduct) //Update
         {
-            DbParameter[] ObjParam = new DbParameter[5];
+            DbParameter[] ObjParam = new DbParameter[8];
             // ObjParam[0] = new DbParameter("@DateCreated", DbParameter.DbType.DateTime, 0, System.DateTime.Now);
             // ObjParam[1] = new DbParameter("@UserID", DbParameter.DbType.VarChar, 0, ModalProduct.UserID);
             ObjParam[0] = new DbParameter("@pkiMemberProductID", DbParameter.DbType.UniqueIdentifier, 0, ModelProduct.pkiMemberProductID);
@@ -798,8 +798,13 @@ namespace Funeral.DAL
             ObjParam[3] = new DbParameter("@fkiProductID", DbParameter.DbType.UniqueIdentifier, 0, ModelProduct.fkiProductID);
             // ObjParam[6] = new DbParameter("@UserId", DbParameter.DbType.VarChar, 0, ModalProduct.UserID);
             ObjParam[4] = new DbParameter("@ModifiedUser", DbParameter.DbType.VarChar, 0, ModelProduct.ModifiedUser);
-            // ObjParam[8] = new DbParameter("@Deleted", DbParameter.DbType.Int, 0, ModalProduct.Deleted);         
+            // ObjParam[8] = new DbParameter("@Deleted", DbParameter.DbType.Int, 0, ModalProduct.Deleted);  
+            ObjParam[5] = new DbParameter("@InceptionDate", DbParameter.DbType.DateTime, 0, ModelProduct.InceptionDate);
+            ObjParam[6] = new DbParameter("@CoverDate", DbParameter.DbType.DateTime, 0, ModelProduct.CoverDate);
+            ObjParam[7] = new DbParameter("@StartDate", DbParameter.DbType.DateTime, 0, ModelProduct.StartDate);
+
             return (Convert.ToInt32(DbConnection.GetScalarValue(CommandType.StoredProcedure, "UpdateAddonProduct", ObjParam)));
+
         }
         public static int NewAddonProductUpdateMember(MemberAddonProductsModel ModelProduct) //Update
         {

@@ -497,6 +497,12 @@ namespace Funeral.Web.Areas.Admin.Controllers
             addOnProduct.Deleted = 0;
             addOnProduct.parlourid = this.CurrentParlourId;
             addOnProduct.pkiMemberProductID = Guid.NewGuid();
+            addOnProduct.InceptionDate = addOnProduct.InceptionDate;
+            addOnProduct.CoverDate = addOnProduct.CoverDate;
+            addOnProduct.StartDate = addOnProduct.StartDate;
+
+
+
             if (addOnProduct.fkiMemberid != 0)
             { var AddonProductID = MembersBAL.NewSaveAddonProducts(addOnProduct); }
             if (addOnProduct.fkiMemberid == 0)
@@ -520,6 +526,10 @@ namespace Funeral.Web.Areas.Admin.Controllers
             addOnProduct.Deleted = 0;
             addOnProduct.parlourid = this.CurrentParlourId;
             addOnProduct.pkiMemberProductID = addOnProduct.pkiMemberProductID;
+            addOnProduct.InceptionDate = addOnProduct.InceptionDate;
+            addOnProduct.CoverDate = addOnProduct.CoverDate;
+            addOnProduct.StartDate = addOnProduct.StartDate;
+
             var AddonProductID = MembersBAL.NewAddonProductUpdateMember(addOnProduct);
             return Json(new { success = true, Product = addOnProduct, msg = "Product Updated Successfully" }, JsonRequestBehavior.AllowGet);
         }
@@ -1426,6 +1436,7 @@ namespace Funeral.Web.Areas.Admin.Controllers
             var Message = string.Empty;
             try
             {
+                
                 objProductModel.DateCreated = DateTime.Now;
                 objProductModel.LastModified = DateTime.Now;
                 objProductModel.UserID = UserID.ToString();
@@ -1433,6 +1444,10 @@ namespace Funeral.Web.Areas.Admin.Controllers
                 objProductModel.parlourid = CurrentParlourId;
                 objProductModel.Deleted = 0;
                 objProductModel.pkiMemberProductID = Guid.NewGuid();
+                objProductModel.InceptionDate = DateTime.Now;
+                objProductModel.CoverDate = objProductModel.CoverDate;
+                objProductModel.StartDate = objProductModel.StartDate;
+
                 if (objProductModel.fkiMemberid != 0)
                 {
                     var AddOnProductID = MembersBAL.NewSaveAddonProducts(objProductModel);

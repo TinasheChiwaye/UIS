@@ -961,6 +961,10 @@ namespace Funeral.Web.Admin
                     objProductModel.ModifiedUser = this.User.Identity.Name;
                     objProductModel.Deleted = 0;
                     objProductModel.fkiProductID = new Guid(drpProductName.SelectedValue);
+                    objProductModel.InceptionDate = DateTime.Now;
+
+                    objProductModel.CoverDate = DateTime.Now;
+                    objProductModel.StartDate = DateTime.Now;
 
                     // objProductModel.UserID = drpUsername.SelectedItem.ToString();
                     //   objProductModel.ProductName = drpProductName.SelectedItem.ToString();
@@ -1031,6 +1035,12 @@ namespace Funeral.Web.Admin
                     objProductModel.LastModified = DateTime.Now;
                     objProductModel.ModifiedUser = this.User.Identity.Name;
                     objProductModel.fkiProductID = new Guid(drpProductName.SelectedValue);
+
+                    objProductModel.InceptionDate = Convert.ToDateTime(txtProductInceptionDate.Text);
+
+                    objProductModel.CoverDate = Convert.ToDateTime(txtProductCoverDate.Text);
+                    objProductModel.StartDate = Convert.ToDateTime(txtProductStartDate.Text);
+
                     int AddonProductID = MembersBAL.AddonProductUpdateMember(objProductModel);
                     BindAddonProducts();
                     txtPremium.Text = string.Empty;
@@ -1069,6 +1079,9 @@ namespace Funeral.Web.Admin
                 drpProductName.SelectedValue = k.fkiProductID.ToString();
                 txtPremium.Text = Convert.ToDecimal(k.ProductCost).ToString();
                 hdnProductId.Value = k.pkiMemberProductID.ToString();
+                txtProductInceptionDate.Text = Convert.ToDateTime(k.InceptionDate).ToString();
+                txtProductCoverDate.Text = Convert.ToDateTime(k.CoverDate).ToString();
+                txtProductStartDate.Text = Convert.ToDateTime(k.StartDate).ToString();
             }
             else if (e.CommandName == "DeleteProduct")
             {
